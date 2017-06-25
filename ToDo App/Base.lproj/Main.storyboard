@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="TxU-OW-Isc">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="15G1010" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="TxU-OW-Isc">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -223,7 +223,7 @@
         <!--Navigation Controller-->
         <scene sceneID="qiB-h4-Vd0">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="cwG-Zj-FhD" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="ItemsListTableView" automaticallyAdjustsScrollViewInsets="NO" id="cwG-Zj-FhD" sceneMemberID="viewController">
                     <toolbarItems/>
                     <nil key="simulatedStatusBarMetrics"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="V3n-RD-uQt">

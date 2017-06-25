@@ -16,7 +16,9 @@ class ItemsTableViewController: UITableViewController {
         startObservingDatabase()
     }
     
+    // ------------------------------
     // MARK: - Table view data source
+    // ------------------------------
     
     override func numberOfSections(in tableView: UITableView) -> Int {
         return 1
@@ -39,6 +41,11 @@ class ItemsTableViewController: UITableViewController {
             item.ref?.removeValue()
         }
     }
+    
+    
+    // ------------------------------
+    // MARK: Buttons - Sign Out & Add
+    // ------------------------------
     
     @IBAction func didTapSignOut(_ sender: UIBarButtonItem) {
         do {
