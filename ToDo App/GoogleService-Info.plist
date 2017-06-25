@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>AD_UNIT_ID_FOR_BANNER_TEST</key>
+	<string>ca-app-pub-3940256099942544/2934735716</string>
+	<key>AD_UNIT_ID_FOR_INTERSTITIAL_TEST</key>
+	<string>ca-app-pub-3940256099942544/4411468910</string>
+	<key>CLIENT_ID</key>
+	<string>1098749454429-b5q6i6sbvigu0qak0smeb5mqvs120ic8.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.1098749454429-b5q6i6sbvigu0qak0smeb5mqvs120ic8</string>
+	<key>API_KEY</key>
+	<string>AIzaSyCUWBffWAoUuTTWCoF0_QyGuyP3AHBE81w</string>
+	<key>GCM_SENDER_ID</key>
+	<string>1098749454429</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.moneypantssolution.The-Moneypants-Solution</string>
+	<key>PROJECT_ID</key>
+	<string>the-moneypants-solution</string>
+	<key>STORAGE_BUCKET</key>
+	<string>the-moneypants-solution.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<true/>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false/>
+	<key>IS_APPINVITE_ENABLED</key>
+	<false/>
+	<key>IS_GCM_ENABLED</key>
+	<true/>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true/>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:1098749454429:ios:e944d5dd4bd94416</string>
+	<key>DATABASE_URL</key>
+	<string>https://the-moneypants-solution.firebaseio.com</string>
+</dict>
+</plist>
