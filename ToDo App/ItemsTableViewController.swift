@@ -3,8 +3,13 @@ import Firebase
 
 class ItemsTableViewController: UITableViewController {
 
+    
+    // ---------------
+    // MARK: Variables
+    // ---------------
+
     var user: FIRUser!
-    var items = [Item]()
+    var users = [Item]()
     var ref: FIRDatabaseReference!
     private var databaseHandle: FIRDatabaseHandle!
     
@@ -15,6 +20,7 @@ class ItemsTableViewController: UITableViewController {
         ref = FIRDatabase.database().reference()
         startObservingDatabase()
     }
+
     
     // ------------------------------
     // MARK: - Table view data source
@@ -25,19 +31,19 @@ class ItemsTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return items.count
+        return users.count
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
-        let item = items[indexPath.row]
+        let item = users[indexPath.row]
         cell.textLabel?.text = item.title
         return cell
     }
     
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            let item = items[indexPath.row]
+            let item = users[indexPath.row]
             item.ref?.removeValue()
         }
     }
@@ -70,6 +76,7 @@ class ItemsTableViewController: UITableViewController {
         present(prompt, animated: true, completion: nil);
         
     }
+        
     
     func startObservingDatabase () {
         databaseHandle = ref.child("users/\(self.user.uid)/items").observe(.value, with: { (snapshot) in
@@ -80,7 +87,7 @@ class ItemsTableViewController: UITableViewController {
                 newItems.append(item)
             }
             
-            self.items = newItems
+            self.users = newItems
             self.tableView.reloadData()
             
         })
