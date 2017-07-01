@@ -16,7 +16,35 @@
 		89FB676A1D5C82F5002B2484 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89FB67691D5C82F5002B2484 /* LoginViewController.swift */; };
 		89FB676C1D5C837D002B2484 /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89FB676B1D5C837D002B2484 /* SignUpViewController.swift */; };
 		89FB676E1D5C8411002B2484 /* ItemsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89FB676D1D5C8411002B2484 /* ItemsTableViewController.swift */; };
+		CE1CB50B1F01AD10009A8DAC /* Step1ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE1CB50A1F01AD10009A8DAC /* Step1ViewController.swift */; };
+		CE1CB5131F01AD9E009A8DAC /* Arista2.0 Alternate light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = CE1CB50D1F01AD9E009A8DAC /* Arista2.0 Alternate light.ttf */; };
+		CE1CB5141F01AD9E009A8DAC /* Arista2.0 light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = CE1CB50E1F01AD9E009A8DAC /* Arista2.0 light.ttf */; };
+		CE1CB5151F01AD9E009A8DAC /* Arista2.0.ttf in Resources */ = {isa = PBXBuildFile; fileRef = CE1CB50F1F01AD9E009A8DAC /* Arista2.0.ttf */; };
+		CE1CB5161F01AD9E009A8DAC /* Arista2.0_fat.ttf in Resources */ = {isa = PBXBuildFile; fileRef = CE1CB5101F01AD9E009A8DAC /* Arista2.0_fat.ttf */; };
+		CE1CB5171F01AD9E009A8DAC /* Arista2.0Alternate.ttf in Resources */ = {isa = PBXBuildFile; fileRef = CE1CB5111F01AD9E009A8DAC /* Arista2.0Alternate.ttf */; };
+		CE1CB5181F01AD9E009A8DAC /* Arista2.0Alternate_full.ttf in Resources */ = {isa = PBXBuildFile; fileRef = CE1CB5121F01AD9E009A8DAC /* Arista2.0Alternate_full.ttf */; };
+		CE1CB51A1F01AF48009A8DAC /* Step2PopoverViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE1CB5191F01AF48009A8DAC /* Step2PopoverViewController.swift */; };
+		CE1CB5201F02117F009A8DAC /* Step2ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE1CB51F1F02117F009A8DAC /* Step2ViewController.swift */; };
+		CE1CB5271F0214BB009A8DAC /* Aiden.jpg in Resources */ = {isa = PBXBuildFile; fileRef = CE1CB5221F0214BB009A8DAC /* Aiden.jpg */; };
+		CE1CB5281F0214BB009A8DAC /* Dad.jpg in Resources */ = {isa = PBXBuildFile; fileRef = CE1CB5231F0214BB009A8DAC /* Dad.jpg */; };
+		CE1CB5291F0214BB009A8DAC /* Mom.jpg in Resources */ = {isa = PBXBuildFile; fileRef = CE1CB5241F0214BB009A8DAC /* Mom.jpg */; };
+		CE1CB52A1F0214BB009A8DAC /* Savannah.jpg in Resources */ = {isa = PBXBuildFile; fileRef = CE1CB5251F0214BB009A8DAC /* Savannah.jpg */; };
+		CE1CB52B1F0214BB009A8DAC /* Sophie.jpg in Resources */ = {isa = PBXBuildFile; fileRef = CE1CB5261F0214BB009A8DAC /* Sophie.jpg */; };
+		CE1CB52D1F0215EA009A8DAC /* Step2CustomCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE1CB52C1F0215EA009A8DAC /* Step2CustomCell.swift */; };
+		CE24A4381F07121D00A03FA2 /* Step5VC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE24A4371F07121D00A03FA2 /* Step5VC.swift */; };
+		CE39D9281F05A3CE00159EC1 /* Step4ParentsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE39D9271F05A3CE00159EC1 /* Step4ParentsVC.swift */; };
+		CE39D92A1F05A42C00159EC1 /* Step4ParentCustomCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE39D9291F05A42C00159EC1 /* Step4ParentCustomCell.swift */; };
+		CE5579671F05E15C006FE40B /* Step4ParentHabitVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE5579661F05E15C006FE40B /* Step4ParentHabitVC.swift */; };
+		CE5579691F05E44B006FE40B /* Step4ParentHabitCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE5579681F05E44B006FE40B /* Step4ParentHabitCell.swift */; };
+		CE55796D1F06134F006FE40B /* ChoreSummaryVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE55796C1F06134F006FE40B /* ChoreSummaryVC.swift */; };
+		CE55796F1F0633B3006FE40B /* ChoreSummaryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE55796E1F0633B3006FE40B /* ChoreSummaryCell.swift */; };
+		CE7160F91F04A2A10045AA05 /* Step4HabitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE7160F81F04A2A10045AA05 /* Step4HabitViewController.swift */; };
+		CE7160FB1F04A9270045AA05 /* Step4HabitCustomCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE7160FA1F04A9270045AA05 /* Step4HabitCustomCell.swift */; };
 		CEB2FD541EFF4DB300763862 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = CEB2FD531EFF4DB300763862 /* GoogleService-Info.plist */; };
+		CED509E21F030F560058728F /* Step4ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED509E11F030F560058728F /* Step4ViewController.swift */; };
+		CED509E41F0310740058728F /* Step4CustomCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED509E31F0310740058728F /* Step4CustomCell.swift */; };
+		CEF1A4931F022F3F00C010F9 /* Step3ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEF1A4921F022F3F00C010F9 /* Step3ViewController.swift */; };
+		CEF1A4951F02472700C010F9 /* Step3CustomCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEF1A4941F02472700C010F9 /* Step3CustomCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,7 +60,35 @@
 		89FB67691D5C82F5002B2484 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		89FB676B1D5C837D002B2484 /* SignUpViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
 		89FB676D1D5C8411002B2484 /* ItemsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ItemsTableViewController.swift; sourceTree = "<group>"; };
+		CE1CB50A1F01AD10009A8DAC /* Step1ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Step1ViewController.swift; sourceTree = "<group>"; };
+		CE1CB50D1F01AD9E009A8DAC /* Arista2.0 Alternate light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Arista2.0 Alternate light.ttf"; sourceTree = "<group>"; };
+		CE1CB50E1F01AD9E009A8DAC /* Arista2.0 light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Arista2.0 light.ttf"; sourceTree = "<group>"; };
+		CE1CB50F1F01AD9E009A8DAC /* Arista2.0.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Arista2.0.ttf; sourceTree = "<group>"; };
+		CE1CB5101F01AD9E009A8DAC /* Arista2.0_fat.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Arista2.0_fat.ttf; sourceTree = "<group>"; };
+		CE1CB5111F01AD9E009A8DAC /* Arista2.0Alternate.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Arista2.0Alternate.ttf; sourceTree = "<group>"; };
+		CE1CB5121F01AD9E009A8DAC /* Arista2.0Alternate_full.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Arista2.0Alternate_full.ttf; sourceTree = "<group>"; };
+		CE1CB5191F01AF48009A8DAC /* Step2PopoverViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Step2PopoverViewController.swift; sourceTree = "<group>"; };
+		CE1CB51F1F02117F009A8DAC /* Step2ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Step2ViewController.swift; sourceTree = "<group>"; };
+		CE1CB5221F0214BB009A8DAC /* Aiden.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Aiden.jpg; sourceTree = "<group>"; };
+		CE1CB5231F0214BB009A8DAC /* Dad.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Dad.jpg; sourceTree = "<group>"; };
+		CE1CB5241F0214BB009A8DAC /* Mom.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Mom.jpg; sourceTree = "<group>"; };
+		CE1CB5251F0214BB009A8DAC /* Savannah.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Savannah.jpg; sourceTree = "<group>"; };
+		CE1CB5261F0214BB009A8DAC /* Sophie.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Sophie.jpg; sourceTree = "<group>"; };
+		CE1CB52C1F0215EA009A8DAC /* Step2CustomCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Step2CustomCell.swift; sourceTree = "<group>"; };
+		CE24A4371F07121D00A03FA2 /* Step5VC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Step5VC.swift; sourceTree = "<group>"; };
+		CE39D9271F05A3CE00159EC1 /* Step4ParentsVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Step4ParentsVC.swift; sourceTree = "<group>"; };
+		CE39D9291F05A42C00159EC1 /* Step4ParentCustomCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Step4ParentCustomCell.swift; sourceTree = "<group>"; };
+		CE5579661F05E15C006FE40B /* Step4ParentHabitVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Step4ParentHabitVC.swift; sourceTree = "<group>"; };
+		CE5579681F05E44B006FE40B /* Step4ParentHabitCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Step4ParentHabitCell.swift; sourceTree = "<group>"; };
+		CE55796C1F06134F006FE40B /* ChoreSummaryVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChoreSummaryVC.swift; sourceTree = "<group>"; };
+		CE55796E1F0633B3006FE40B /* ChoreSummaryCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChoreSummaryCell.swift; sourceTree = "<group>"; };
+		CE7160F81F04A2A10045AA05 /* Step4HabitViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Step4HabitViewController.swift; sourceTree = "<group>"; };
+		CE7160FA1F04A9270045AA05 /* Step4HabitCustomCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Step4HabitCustomCell.swift; sourceTree = "<group>"; };
 		CEB2FD531EFF4DB300763862 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		CED509E11F030F560058728F /* Step4ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Step4ViewController.swift; sourceTree = "<group>"; };
+		CED509E31F0310740058728F /* Step4CustomCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Step4CustomCell.swift; sourceTree = "<group>"; };
+		CEF1A4921F022F3F00C010F9 /* Step3ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Step3ViewController.swift; sourceTree = "<group>"; };
+		CEF1A4941F02472700C010F9 /* Step3CustomCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Step3CustomCell.swift; sourceTree = "<group>"; };
 		DC50B92E978A56DFC5AEAE2F /* Pods-ToDo App.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ToDo App.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ToDo App/Pods-ToDo App.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -63,6 +119,8 @@
 				89FB67551D5C82AB002B2484 /* Products */,
 				DB9D2389DB4710644994D7D8 /* Pods */,
 				328E13F2F7272BD62CDD1B82 /* Frameworks */,
+				CE1CB50C1F01AD9E009A8DAC /* arista_2_0 */,
+				CE1CB5211F0214BB009A8DAC /* Sample Data & Images */,
 			);
 			sourceTree = "<group>";
 		};
@@ -85,10 +143,52 @@
 				89FB676B1D5C837D002B2484 /* SignUpViewController.swift */,
 				0EEB60791ED918BB005B2813 /* Item.swift */,
 				89FB676D1D5C8411002B2484 /* ItemsTableViewController.swift */,
+				CE1CB50A1F01AD10009A8DAC /* Step1ViewController.swift */,
+				CE1CB51F1F02117F009A8DAC /* Step2ViewController.swift */,
+				CE1CB52C1F0215EA009A8DAC /* Step2CustomCell.swift */,
+				CE1CB5191F01AF48009A8DAC /* Step2PopoverViewController.swift */,
+				CEF1A4921F022F3F00C010F9 /* Step3ViewController.swift */,
+				CEF1A4941F02472700C010F9 /* Step3CustomCell.swift */,
+				CED509E11F030F560058728F /* Step4ViewController.swift */,
+				CED509E31F0310740058728F /* Step4CustomCell.swift */,
+				CE7160F81F04A2A10045AA05 /* Step4HabitViewController.swift */,
+				CE7160FA1F04A9270045AA05 /* Step4HabitCustomCell.swift */,
+				CE39D9271F05A3CE00159EC1 /* Step4ParentsVC.swift */,
+				CE39D9291F05A42C00159EC1 /* Step4ParentCustomCell.swift */,
 				89FB67631D5C82AB002B2484 /* Info.plist */,
 				CEB2FD531EFF4DB300763862 /* GoogleService-Info.plist */,
+				CE5579661F05E15C006FE40B /* Step4ParentHabitVC.swift */,
+				CE5579681F05E44B006FE40B /* Step4ParentHabitCell.swift */,
+				CE55796C1F06134F006FE40B /* ChoreSummaryVC.swift */,
+				CE55796E1F0633B3006FE40B /* ChoreSummaryCell.swift */,
+				CE24A4371F07121D00A03FA2 /* Step5VC.swift */,
 			);
 			path = "ToDo App";
+			sourceTree = "<group>";
+		};
+		CE1CB50C1F01AD9E009A8DAC /* arista_2_0 */ = {
+			isa = PBXGroup;
+			children = (
+				CE1CB50D1F01AD9E009A8DAC /* Arista2.0 Alternate light.ttf */,
+				CE1CB50E1F01AD9E009A8DAC /* Arista2.0 light.ttf */,
+				CE1CB50F1F01AD9E009A8DAC /* Arista2.0.ttf */,
+				CE1CB5101F01AD9E009A8DAC /* Arista2.0_fat.ttf */,
+				CE1CB5111F01AD9E009A8DAC /* Arista2.0Alternate.ttf */,
+				CE1CB5121F01AD9E009A8DAC /* Arista2.0Alternate_full.ttf */,
+			);
+			path = arista_2_0;
+			sourceTree = "<group>";
+		};
+		CE1CB5211F0214BB009A8DAC /* Sample Data & Images */ = {
+			isa = PBXGroup;
+			children = (
+				CE1CB5221F0214BB009A8DAC /* Aiden.jpg */,
+				CE1CB5231F0214BB009A8DAC /* Dad.jpg */,
+				CE1CB5241F0214BB009A8DAC /* Mom.jpg */,
+				CE1CB5251F0214BB009A8DAC /* Savannah.jpg */,
+				CE1CB5261F0214BB009A8DAC /* Sophie.jpg */,
+			);
+			path = "Sample Data & Images";
 			sourceTree = "<group>";
 		};
 		DB9D2389DB4710644994D7D8 /* Pods */ = {
@@ -131,7 +231,7 @@
 			attributes = {
 				LastSwiftUpdateCheck = 0730;
 				LastUpgradeCheck = 0800;
-				ORGANIZATIONNAME = Echessa;
+				ORGANIZATIONNAME = "Rumble Productions, Inc.";
 				TargetAttributes = {
 					89FB67531D5C82AB002B2484 = {
 						CreatedOnToolsVersion = 7.3.1;
@@ -164,9 +264,20 @@
 			buildActionMask = 2147483647;
 			files = (
 				89FB67621D5C82AB002B2484 /* LaunchScreen.storyboard in Resources */,
+				CE1CB52A1F0214BB009A8DAC /* Savannah.jpg in Resources */,
+				CE1CB5141F01AD9E009A8DAC /* Arista2.0 light.ttf in Resources */,
+				CE1CB5271F0214BB009A8DAC /* Aiden.jpg in Resources */,
+				CE1CB52B1F0214BB009A8DAC /* Sophie.jpg in Resources */,
+				CE1CB5281F0214BB009A8DAC /* Dad.jpg in Resources */,
 				CEB2FD541EFF4DB300763862 /* GoogleService-Info.plist in Resources */,
+				CE1CB5291F0214BB009A8DAC /* Mom.jpg in Resources */,
+				CE1CB5161F01AD9E009A8DAC /* Arista2.0_fat.ttf in Resources */,
+				CE1CB5151F01AD9E009A8DAC /* Arista2.0.ttf in Resources */,
+				CE1CB5131F01AD9E009A8DAC /* Arista2.0 Alternate light.ttf in Resources */,
 				89FB675F1D5C82AB002B2484 /* Assets.xcassets in Resources */,
+				CE1CB5181F01AD9E009A8DAC /* Arista2.0Alternate_full.ttf in Resources */,
 				89FB675D1D5C82AB002B2484 /* Main.storyboard in Resources */,
+				CE1CB5171F01AD9E009A8DAC /* Arista2.0Alternate.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -225,11 +336,28 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CE5579671F05E15C006FE40B /* Step4ParentHabitVC.swift in Sources */,
+				CE7160F91F04A2A10045AA05 /* Step4HabitViewController.swift in Sources */,
+				CE55796D1F06134F006FE40B /* ChoreSummaryVC.swift in Sources */,
+				CEF1A4931F022F3F00C010F9 /* Step3ViewController.swift in Sources */,
 				0EEB607A1ED918BB005B2813 /* Item.swift in Sources */,
 				89FB676C1D5C837D002B2484 /* SignUpViewController.swift in Sources */,
+				CE7160FB1F04A9270045AA05 /* Step4HabitCustomCell.swift in Sources */,
+				CE39D9281F05A3CE00159EC1 /* Step4ParentsVC.swift in Sources */,
+				CE1CB52D1F0215EA009A8DAC /* Step2CustomCell.swift in Sources */,
 				89FB676A1D5C82F5002B2484 /* LoginViewController.swift in Sources */,
+				CE1CB51A1F01AF48009A8DAC /* Step2PopoverViewController.swift in Sources */,
+				CE5579691F05E44B006FE40B /* Step4ParentHabitCell.swift in Sources */,
+				CEF1A4951F02472700C010F9 /* Step3CustomCell.swift in Sources */,
+				CE39D92A1F05A42C00159EC1 /* Step4ParentCustomCell.swift in Sources */,
+				CE1CB5201F02117F009A8DAC /* Step2ViewController.swift in Sources */,
 				89FB676E1D5C8411002B2484 /* ItemsTableViewController.swift in Sources */,
+				CE55796F1F0633B3006FE40B /* ChoreSummaryCell.swift in Sources */,
+				CED509E41F0310740058728F /* Step4CustomCell.swift in Sources */,
+				CE24A4381F07121D00A03FA2 /* Step5VC.swift in Sources */,
+				CE1CB50B1F01AD10009A8DAC /* Step1ViewController.swift in Sources */,
 				89FB67581D5C82AB002B2484 /* AppDelegate.swift in Sources */,
+				CED509E21F030F560058728F /* Step4ViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
