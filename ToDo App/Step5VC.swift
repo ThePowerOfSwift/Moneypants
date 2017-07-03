@@ -1,35 +1,34 @@
-//
-//  Step5VC.swift
-//  ToDo App
-//
-//  Created by Phontaine Judd on 6/30/17.
-//  Copyright © 2017 Rumble Productions, Inc. All rights reserved.
-//
-
 import UIKit
 
 class Step5VC: UIViewController {
+    
+    @IBOutlet weak var yesButton: UIButton!
+    @IBOutlet weak var noButton: UIButton!
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
     }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    @IBAction func yesButtonTapped(_ sender: UIButton) {
+        yesButton.isSelected = true
+        noButton.isSelected = false
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    @IBAction func noButtonTapped(_ sender: UIButton) {
+        noButton.isSelected = true
+        yesButton.isSelected = false
     }
-    */
 
+    // ----------------------------------------
+    // perform segue based off of 'yes' or 'no'
+    // ----------------------------------------
+    
+    @IBAction func nextButtonTapped(_ sender: UIButton) {
+        if yesButton.isSelected {
+            performSegue(withIdentifier: "IncomeDetailSegue", sender: self)
+        } else {
+            performSegue(withIdentifier: "NoOutsideIncomeSegue", sender: self)
+        }
+    }
 }
