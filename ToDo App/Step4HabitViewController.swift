@@ -13,7 +13,7 @@ class Step4HabitViewController: UIViewController, UITableViewDataSource, UITable
         ("get self & buddy ready for day", 1, false, true),
         ("personal meditation (10 min)", 1, false, true),
         ("daily exercise", 1, false, true),
-        ("develop personal talents (20 min)", 1, false, true),
+        ("develop talents (20 min)", 1, false, true),
         ("homework done by 5:pm", 1, false, true),
         ("good manners", 1, false, true),
         ("peacemaking (no fighting)", 1, false, true),

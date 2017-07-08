@@ -41,10 +41,15 @@
 		CE7160F91F04A2A10045AA05 /* Step4HabitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE7160F81F04A2A10045AA05 /* Step4HabitViewController.swift */; };
 		CE7160FB1F04A9270045AA05 /* Step4HabitCustomCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE7160FA1F04A9270045AA05 /* Step4HabitCustomCell.swift */; };
 		CE8EFD431F08D88300BF4A3C /* Step5IncomeDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE8EFD421F08D88300BF4A3C /* Step5IncomeDetail.swift */; };
+		CE8FF9FE1F0F7D88004A53BE /* Step5ExpensesCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE8FF9FD1F0F7D88004A53BE /* Step5ExpensesCell.swift */; };
+		CE8FFA001F109FC2004A53BE /* Step5ExpenseDetailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE8FF9FF1F109FC2004A53BE /* Step5ExpenseDetailVC.swift */; };
 		CE99F07E1F0AB53D007E01E7 /* Step5IncomeSummaryVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE99F07D1F0AB53D007E01E7 /* Step5IncomeSummaryVC.swift */; };
+		CE99F0A81F0B6B5D007E01E7 /* Step5ExpensesVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE99F0A71F0B6B5D007E01E7 /* Step5ExpensesVC.swift */; };
 		CEB2FD541EFF4DB300763862 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = CEB2FD531EFF4DB300763862 /* GoogleService-Info.plist */; };
 		CED509E21F030F560058728F /* Step4ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED509E11F030F560058728F /* Step4ViewController.swift */; };
 		CED509E41F0310740058728F /* Step4CustomCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED509E31F0310740058728F /* Step4CustomCell.swift */; };
+		CEE4D6A41F0F4433009BAE6C /* Step5ExpensesInputVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEE4D6A31F0F4433009BAE6C /* Step5ExpensesInputVC.swift */; };
+		CEE4D6AC1F0F70EC009BAE6C /* Step5HeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEE4D6AB1F0F70EC009BAE6C /* Step5HeaderCell.swift */; };
 		CEF1A4931F022F3F00C010F9 /* Step3ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEF1A4921F022F3F00C010F9 /* Step3ViewController.swift */; };
 		CEF1A4951F02472700C010F9 /* Step3CustomCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEF1A4941F02472700C010F9 /* Step3CustomCell.swift */; };
 /* End PBXBuildFile section */
@@ -87,10 +92,15 @@
 		CE7160F81F04A2A10045AA05 /* Step4HabitViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Step4HabitViewController.swift; sourceTree = "<group>"; };
 		CE7160FA1F04A9270045AA05 /* Step4HabitCustomCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Step4HabitCustomCell.swift; sourceTree = "<group>"; };
 		CE8EFD421F08D88300BF4A3C /* Step5IncomeDetail.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Step5IncomeDetail.swift; sourceTree = "<group>"; };
+		CE8FF9FD1F0F7D88004A53BE /* Step5ExpensesCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Step5ExpensesCell.swift; sourceTree = "<group>"; };
+		CE8FF9FF1F109FC2004A53BE /* Step5ExpenseDetailVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Step5ExpenseDetailVC.swift; sourceTree = "<group>"; };
 		CE99F07D1F0AB53D007E01E7 /* Step5IncomeSummaryVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Step5IncomeSummaryVC.swift; sourceTree = "<group>"; };
+		CE99F0A71F0B6B5D007E01E7 /* Step5ExpensesVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Step5ExpensesVC.swift; sourceTree = "<group>"; };
 		CEB2FD531EFF4DB300763862 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		CED509E11F030F560058728F /* Step4ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Step4ViewController.swift; sourceTree = "<group>"; };
 		CED509E31F0310740058728F /* Step4CustomCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Step4CustomCell.swift; sourceTree = "<group>"; };
+		CEE4D6A31F0F4433009BAE6C /* Step5ExpensesInputVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Step5ExpensesInputVC.swift; sourceTree = "<group>"; };
+		CEE4D6AB1F0F70EC009BAE6C /* Step5HeaderCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Step5HeaderCell.swift; sourceTree = "<group>"; };
 		CEF1A4921F022F3F00C010F9 /* Step3ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Step3ViewController.swift; sourceTree = "<group>"; };
 		CEF1A4941F02472700C010F9 /* Step3CustomCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Step3CustomCell.swift; sourceTree = "<group>"; };
 		DC50B92E978A56DFC5AEAE2F /* Pods-ToDo App.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ToDo App.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ToDo App/Pods-ToDo App.debug.xcconfig"; sourceTree = "<group>"; };
@@ -147,27 +157,13 @@
 				89FB676B1D5C837D002B2484 /* SignUpViewController.swift */,
 				0EEB60791ED918BB005B2813 /* Item.swift */,
 				89FB676D1D5C8411002B2484 /* ItemsTableViewController.swift */,
-				CE1CB50A1F01AD10009A8DAC /* Step1ViewController.swift */,
-				CE1CB51F1F02117F009A8DAC /* Step2ViewController.swift */,
-				CE1CB52C1F0215EA009A8DAC /* Step2CustomCell.swift */,
-				CE1CB5191F01AF48009A8DAC /* Step2PopoverViewController.swift */,
-				CEF1A4921F022F3F00C010F9 /* Step3ViewController.swift */,
-				CEF1A4941F02472700C010F9 /* Step3CustomCell.swift */,
-				CED509E11F030F560058728F /* Step4ViewController.swift */,
-				CED509E31F0310740058728F /* Step4CustomCell.swift */,
-				CE7160F81F04A2A10045AA05 /* Step4HabitViewController.swift */,
-				CE7160FA1F04A9270045AA05 /* Step4HabitCustomCell.swift */,
-				CE39D9271F05A3CE00159EC1 /* Step4ParentsVC.swift */,
-				CE39D9291F05A42C00159EC1 /* Step4ParentCustomCell.swift */,
+				CEE4D6A91F0F44AB009BAE6C /* Step1 */,
+				CEE4D6A51F0F4460009BAE6C /* Step2 */,
+				CEE4D6A61F0F446A009BAE6C /* Step3 */,
+				CEE4D6A81F0F447D009BAE6C /* Step4 */,
+				CEE4D6AA1F0F44BE009BAE6C /* Step5 */,
 				89FB67631D5C82AB002B2484 /* Info.plist */,
 				CEB2FD531EFF4DB300763862 /* GoogleService-Info.plist */,
-				CE5579661F05E15C006FE40B /* Step4ParentHabitVC.swift */,
-				CE5579681F05E44B006FE40B /* Step4ParentHabitCell.swift */,
-				CE55796C1F06134F006FE40B /* ChoreSummaryVC.swift */,
-				CE55796E1F0633B3006FE40B /* ChoreSummaryCell.swift */,
-				CE24A4371F07121D00A03FA2 /* Step5VC.swift */,
-				CE8EFD421F08D88300BF4A3C /* Step5IncomeDetail.swift */,
-				CE99F07D1F0AB53D007E01E7 /* Step5IncomeSummaryVC.swift */,
 			);
 			path = "ToDo App";
 			sourceTree = "<group>";
@@ -195,6 +191,65 @@
 				CE1CB5261F0214BB009A8DAC /* Sophie.jpg */,
 			);
 			path = "Sample Data & Images";
+			sourceTree = "<group>";
+		};
+		CEE4D6A51F0F4460009BAE6C /* Step2 */ = {
+			isa = PBXGroup;
+			children = (
+				CE1CB51F1F02117F009A8DAC /* Step2ViewController.swift */,
+				CE1CB52C1F0215EA009A8DAC /* Step2CustomCell.swift */,
+				CE1CB5191F01AF48009A8DAC /* Step2PopoverViewController.swift */,
+			);
+			name = Step2;
+			sourceTree = "<group>";
+		};
+		CEE4D6A61F0F446A009BAE6C /* Step3 */ = {
+			isa = PBXGroup;
+			children = (
+				CEF1A4921F022F3F00C010F9 /* Step3ViewController.swift */,
+				CEF1A4941F02472700C010F9 /* Step3CustomCell.swift */,
+			);
+			name = Step3;
+			sourceTree = "<group>";
+		};
+		CEE4D6A81F0F447D009BAE6C /* Step4 */ = {
+			isa = PBXGroup;
+			children = (
+				CE5579661F05E15C006FE40B /* Step4ParentHabitVC.swift */,
+				CE5579681F05E44B006FE40B /* Step4ParentHabitCell.swift */,
+				CED509E11F030F560058728F /* Step4ViewController.swift */,
+				CED509E31F0310740058728F /* Step4CustomCell.swift */,
+				CE7160F81F04A2A10045AA05 /* Step4HabitViewController.swift */,
+				CE7160FA1F04A9270045AA05 /* Step4HabitCustomCell.swift */,
+				CE39D9271F05A3CE00159EC1 /* Step4ParentsVC.swift */,
+				CE39D9291F05A42C00159EC1 /* Step4ParentCustomCell.swift */,
+				CE55796C1F06134F006FE40B /* ChoreSummaryVC.swift */,
+				CE55796E1F0633B3006FE40B /* ChoreSummaryCell.swift */,
+			);
+			name = Step4;
+			sourceTree = "<group>";
+		};
+		CEE4D6A91F0F44AB009BAE6C /* Step1 */ = {
+			isa = PBXGroup;
+			children = (
+				CE1CB50A1F01AD10009A8DAC /* Step1ViewController.swift */,
+			);
+			name = Step1;
+			sourceTree = "<group>";
+		};
+		CEE4D6AA1F0F44BE009BAE6C /* Step5 */ = {
+			isa = PBXGroup;
+			children = (
+				CE24A4371F07121D00A03FA2 /* Step5VC.swift */,
+				CE8EFD421F08D88300BF4A3C /* Step5IncomeDetail.swift */,
+				CE99F07D1F0AB53D007E01E7 /* Step5IncomeSummaryVC.swift */,
+				CE99F0A71F0B6B5D007E01E7 /* Step5ExpensesVC.swift */,
+				CEE4D6A31F0F4433009BAE6C /* Step5ExpensesInputVC.swift */,
+				CEE4D6AB1F0F70EC009BAE6C /* Step5HeaderCell.swift */,
+				CE8FF9FD1F0F7D88004A53BE /* Step5ExpensesCell.swift */,
+				CE8FF9FF1F109FC2004A53BE /* Step5ExpenseDetailVC.swift */,
+			);
+			name = Step5;
 			sourceTree = "<group>";
 		};
 		DB9D2389DB4710644994D7D8 /* Pods */ = {
@@ -344,8 +399,10 @@
 			files = (
 				CE5579671F05E15C006FE40B /* Step4ParentHabitVC.swift in Sources */,
 				CE7160F91F04A2A10045AA05 /* Step4HabitViewController.swift in Sources */,
+				CE8FF9FE1F0F7D88004A53BE /* Step5ExpensesCell.swift in Sources */,
 				CE55796D1F06134F006FE40B /* ChoreSummaryVC.swift in Sources */,
 				CEF1A4931F022F3F00C010F9 /* Step3ViewController.swift in Sources */,
+				CE8FFA001F109FC2004A53BE /* Step5ExpenseDetailVC.swift in Sources */,
 				0EEB607A1ED918BB005B2813 /* Item.swift in Sources */,
 				89FB676C1D5C837D002B2484 /* SignUpViewController.swift in Sources */,
 				CE7160FB1F04A9270045AA05 /* Step4HabitCustomCell.swift in Sources */,
@@ -356,12 +413,15 @@
 				CE5579691F05E44B006FE40B /* Step4ParentHabitCell.swift in Sources */,
 				CEF1A4951F02472700C010F9 /* Step3CustomCell.swift in Sources */,
 				CE39D92A1F05A42C00159EC1 /* Step4ParentCustomCell.swift in Sources */,
+				CEE4D6AC1F0F70EC009BAE6C /* Step5HeaderCell.swift in Sources */,
 				CE1CB5201F02117F009A8DAC /* Step2ViewController.swift in Sources */,
 				89FB676E1D5C8411002B2484 /* ItemsTableViewController.swift in Sources */,
 				CE99F07E1F0AB53D007E01E7 /* Step5IncomeSummaryVC.swift in Sources */,
 				CE8EFD431F08D88300BF4A3C /* Step5IncomeDetail.swift in Sources */,
 				CE55796F1F0633B3006FE40B /* ChoreSummaryCell.swift in Sources */,
 				CED509E41F0310740058728F /* Step4CustomCell.swift in Sources */,
+				CEE4D6A41F0F4433009BAE6C /* Step5ExpensesInputVC.swift in Sources */,
+				CE99F0A81F0B6B5D007E01E7 /* Step5ExpensesVC.swift in Sources */,
 				CE24A4381F07121D00A03FA2 /* Step5VC.swift in Sources */,
 				CE1CB50B1F01AD10009A8DAC /* Step1ViewController.swift in Sources */,
 				89FB67581D5C82AB002B2484 /* AppDelegate.swift in Sources */,
