@@ -81,7 +81,8 @@
                             <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ygT-C8-4Rw">
                                 <rect key="frame" x="0.0" y="524" width="320" height="44"/>
                                 <items>
-                                    <barButtonItem title="Item" id="U6P-ee-5hE"/>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="VUB-MU-N00"/>
+                                    <barButtonItem image="right arrow black" id="U6P-ee-5hE"/>
                                 </items>
                             </toolbar>
                         </subviews>
@@ -104,4 +105,7 @@
             <point key="canvasLocation" x="9900" y="905.28169014084506"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="right arrow black" width="30" height="30"/>
+    </resources>
 </document>
