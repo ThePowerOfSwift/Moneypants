@@ -16,6 +16,7 @@
 		89FB676A1D5C82F5002B2484 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89FB67691D5C82F5002B2484 /* LoginViewController.swift */; };
 		89FB676C1D5C837D002B2484 /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89FB676B1D5C837D002B2484 /* SignUpViewController.swift */; };
 		89FB676E1D5C8411002B2484 /* ItemsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89FB676D1D5C8411002B2484 /* ItemsTableViewController.swift */; };
+		CE0E19731F168B3900DEDBDE /* Home.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CE0E19711F168B3900DEDBDE /* Home.storyboard */; };
 		CE1CB50B1F01AD10009A8DAC /* Step1ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE1CB50A1F01AD10009A8DAC /* Step1ViewController.swift */; };
 		CE1CB5131F01AD9E009A8DAC /* Arista2.0 Alternate light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = CE1CB50D1F01AD9E009A8DAC /* Arista2.0 Alternate light.ttf */; };
 		CE1CB5141F01AD9E009A8DAC /* Arista2.0 light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = CE1CB50E1F01AD9E009A8DAC /* Arista2.0 light.ttf */; };
@@ -43,6 +44,7 @@
 		CE8EFD431F08D88300BF4A3C /* Step5IncomeDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE8EFD421F08D88300BF4A3C /* Step5IncomeDetail.swift */; };
 		CE8FF9FE1F0F7D88004A53BE /* Step5ExpensesCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE8FF9FD1F0F7D88004A53BE /* Step5ExpensesCell.swift */; };
 		CE8FFA001F109FC2004A53BE /* Step5ExpenseDetailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE8FF9FF1F109FC2004A53BE /* Step5ExpenseDetailVC.swift */; };
+		CE8FFA021F10AE92004A53BE /* ExpensesStruct.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE8FFA011F10AE92004A53BE /* ExpensesStruct.swift */; };
 		CE99F07E1F0AB53D007E01E7 /* Step5IncomeSummaryVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE99F07D1F0AB53D007E01E7 /* Step5IncomeSummaryVC.swift */; };
 		CE99F0A81F0B6B5D007E01E7 /* Step5ExpensesVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE99F0A71F0B6B5D007E01E7 /* Step5ExpensesVC.swift */; };
 		CEB2FD541EFF4DB300763862 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = CEB2FD531EFF4DB300763862 /* GoogleService-Info.plist */; };
@@ -67,6 +69,7 @@
 		89FB67691D5C82F5002B2484 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		89FB676B1D5C837D002B2484 /* SignUpViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
 		89FB676D1D5C8411002B2484 /* ItemsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ItemsTableViewController.swift; sourceTree = "<group>"; };
+		CE0E19721F168B3900DEDBDE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Home.storyboard; sourceTree = "<group>"; };
 		CE1CB50A1F01AD10009A8DAC /* Step1ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Step1ViewController.swift; sourceTree = "<group>"; };
 		CE1CB50D1F01AD9E009A8DAC /* Arista2.0 Alternate light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Arista2.0 Alternate light.ttf"; sourceTree = "<group>"; };
 		CE1CB50E1F01AD9E009A8DAC /* Arista2.0 light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Arista2.0 light.ttf"; sourceTree = "<group>"; };
@@ -94,6 +97,7 @@
 		CE8EFD421F08D88300BF4A3C /* Step5IncomeDetail.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Step5IncomeDetail.swift; sourceTree = "<group>"; };
 		CE8FF9FD1F0F7D88004A53BE /* Step5ExpensesCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Step5ExpensesCell.swift; sourceTree = "<group>"; };
 		CE8FF9FF1F109FC2004A53BE /* Step5ExpenseDetailVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Step5ExpenseDetailVC.swift; sourceTree = "<group>"; };
+		CE8FFA011F10AE92004A53BE /* ExpensesStruct.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExpensesStruct.swift; sourceTree = "<group>"; };
 		CE99F07D1F0AB53D007E01E7 /* Step5IncomeSummaryVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Step5IncomeSummaryVC.swift; sourceTree = "<group>"; };
 		CE99F0A71F0B6B5D007E01E7 /* Step5ExpensesVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Step5ExpensesVC.swift; sourceTree = "<group>"; };
 		CEB2FD531EFF4DB300763862 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
@@ -151,6 +155,7 @@
 			children = (
 				89FB67571D5C82AB002B2484 /* AppDelegate.swift */,
 				89FB675B1D5C82AB002B2484 /* Main.storyboard */,
+				CE0E19711F168B3900DEDBDE /* Home.storyboard */,
 				89FB675E1D5C82AB002B2484 /* Assets.xcassets */,
 				89FB67601D5C82AB002B2484 /* LaunchScreen.storyboard */,
 				89FB67691D5C82F5002B2484 /* LoginViewController.swift */,
@@ -164,6 +169,7 @@
 				CEE4D6AA1F0F44BE009BAE6C /* Step5 */,
 				89FB67631D5C82AB002B2484 /* Info.plist */,
 				CEB2FD531EFF4DB300763862 /* GoogleService-Info.plist */,
+				CE8FFA011F10AE92004A53BE /* ExpensesStruct.swift */,
 			);
 			path = "ToDo App";
 			sourceTree = "<group>";
@@ -339,6 +345,7 @@
 				CE1CB5181F01AD9E009A8DAC /* Arista2.0Alternate_full.ttf in Resources */,
 				89FB675D1D5C82AB002B2484 /* Main.storyboard in Resources */,
 				CE1CB5171F01AD9E009A8DAC /* Arista2.0Alternate.ttf in Resources */,
+				CE0E19731F168B3900DEDBDE /* Home.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -426,6 +433,7 @@
 				CE1CB50B1F01AD10009A8DAC /* Step1ViewController.swift in Sources */,
 				89FB67581D5C82AB002B2484 /* AppDelegate.swift in Sources */,
 				CED509E21F030F560058728F /* Step4ViewController.swift in Sources */,
+				CE8FFA021F10AE92004A53BE /* ExpensesStruct.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -446,6 +454,14 @@
 				89FB67611D5C82AB002B2484 /* Base */,
 			);
 			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+		CE0E19711F168B3900DEDBDE /* Home.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				CE0E19721F168B3900DEDBDE /* Base */,
+			);
+			name = Home.storyboard;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */

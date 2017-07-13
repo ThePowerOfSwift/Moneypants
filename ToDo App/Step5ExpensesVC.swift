@@ -4,6 +4,10 @@ class Step5ExpensesVC: UIViewController {
     
     
     @IBOutlet weak var budgetTotal: UILabel!
+    @IBOutlet weak var nextButton: UIButton!
+    @IBOutlet weak var bottomNotification: UILabel!
+    @IBOutlet weak var nextArrow: UIImageView!
+    @IBOutlet weak var budgetText: UILabel!
 
     // clothing variables
     @IBOutlet weak var clothingView: UIView!
@@ -65,8 +69,14 @@ class Step5ExpensesVC: UIViewController {
         groomingView.isHidden = true
         sportsTop.constant = -(sportsView.bounds.height)
         sportsView.isHidden = true
+        
+        nextButton.isHidden = true
+        nextArrow.isHidden = true
+        bottomNotification.text = "Please add some expenses for Savannah."
+        budgetTotal.textColor = UIColor.red
+        budgetText.textColor = UIColor.red
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
@@ -94,6 +104,7 @@ class Step5ExpensesVC: UIViewController {
         let seventhValue = Int(clothing7.text!) ?? 0
         clothingTotal.text = "\(firstValue + secondValue + thirdValue + fourthValue + fifthValue + sixthValue + seventhValue)"
         budgetTotal.text = "\(calculateBudgetTotal())"
+        calculateBottomWarning()
     }
     
     // -------------------
@@ -117,6 +128,7 @@ class Step5ExpensesVC: UIViewController {
         let fifthValue = Int(accessories5.text!) ?? 0
         accessoriesTotal.text = "\(firstValue + secondValue + thirdValue + fourthValue + fifthValue)"
         budgetTotal.text = "\(calculateBudgetTotal())"
+        calculateBottomWarning()
     }
     
     // ----------------
@@ -140,6 +152,7 @@ class Step5ExpensesVC: UIViewController {
         let sixthValue = Int(grooming6.text!) ?? 0
         groomingTotal.text = "\(firstValue + secondValue + thirdValue + fourthValue + fifthValue + sixthValue)"
         budgetTotal.text = "\(calculateBudgetTotal())"
+        calculateBottomWarning()
     }
     
     // ----------------------
@@ -164,6 +177,7 @@ class Step5ExpensesVC: UIViewController {
         let seventhValue = Int(sports7.text!) ?? 0
         sportsTotal.text = "\(firstValue + secondValue + thirdValue + fourthValue + fifthValue + sixthValue + seventhValue)"
         budgetTotal.text = "\(calculateBudgetTotal())"
+        calculateBottomWarning()
     }
     
     
@@ -206,7 +220,7 @@ class Step5ExpensesVC: UIViewController {
     // Table Calcualtion Template
     // --------------------------
     
-    func calculateBudgetTotal () -> Int {
+    func calculateBudgetTotal() -> Int {
         let firstTotal = Int(clothingTotal.text!) ?? 0
         let secondTotal = Int(accessoriesTotal.text!) ?? 0
         let thirdTotal = Int(groomingTotal.text!) ?? 0
@@ -214,6 +228,24 @@ class Step5ExpensesVC: UIViewController {
         return firstTotal + secondTotal + thirdTotal + fourthTotal
     }
     
+    
+    func calculateBottomWarning() {
+        if 2340 - calculateBudgetTotal() == 0 {
+            bottomNotification.text = "Excellent!"
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                self.nextButton.isHidden = false
+                self.nextArrow.isHidden = false
+                self.bottomNotification.isHidden = true
+                self.budgetTotal.textColor = UIColor.black
+                self.budgetText.textColor = UIColor.black
+            }
+        } else if 2340 - calculateBudgetTotal() > 0 {
+            bottomNotification.text = "You must still add more expenses. Please add $\(2340 - calculateBudgetTotal()) to one or more expense envelopes."
+        } else {
+            bottomNotification.text = "You must remove some expenses. Please remove $\(calculateBudgetTotal() - 2340) from one or more expense envelopes."
+        }
+    }
+
 
 }
 

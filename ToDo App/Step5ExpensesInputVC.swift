@@ -69,14 +69,6 @@ class Step5ExpensesInputVC: UIViewController, UITableViewDataSource, UITableView
         let cell = tableView.dequeueReusableCell(withIdentifier: "expensesCell") as! Step5ExpensesCell
         cell.expensesLabel.text = sectionData[indexPath.section]![indexPath.row]
         cell.expenseValue.text = "0.00"
-        
-        
-//        var cell = tableView.dequeueReusableCell(withIdentifier: "cell")
-//        if cell == nil {
-//            cell = UITableViewCell(style: .default, reuseIdentifier: "cell")
-//        }
-//        cell!.textLabel?.text = sectionData[indexPath.section]![indexPath.row]
-//        return cell!
         return cell
     }
     

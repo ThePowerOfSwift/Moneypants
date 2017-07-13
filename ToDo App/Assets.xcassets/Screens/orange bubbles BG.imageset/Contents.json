@@ -2,15 +2,17 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "deposit icon.png",
+      "filename" : "orange bubbles BG.png",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
+      "filename" : "orange bubbles BG@2x.png",
       "scale" : "2x"
     },
     {
       "idiom" : "universal",
+      "filename" : "orange bubbles BG@3x.png",
       "scale" : "3x"
     }
   ],
