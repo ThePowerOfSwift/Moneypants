@@ -17,6 +17,9 @@
 		89FB676C1D5C837D002B2484 /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89FB676B1D5C837D002B2484 /* SignUpViewController.swift */; };
 		89FB676E1D5C8411002B2484 /* ItemsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89FB676D1D5C8411002B2484 /* ItemsTableViewController.swift */; };
 		CE0E19731F168B3900DEDBDE /* Home.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CE0E19711F168B3900DEDBDE /* Home.storyboard */; };
+		CE1B477D1F185025007C7515 /* HomeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE1B477C1F185025007C7515 /* HomeVC.swift */; };
+		CE1B477F1F186E99007C7515 /* HomeCustomCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE1B477E1F186E99007C7515 /* HomeCustomCell.swift */; };
+		CE1B47811F1885B0007C7515 /* SettingsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE1B47801F1885B0007C7515 /* SettingsVC.swift */; };
 		CE1CB50B1F01AD10009A8DAC /* Step1ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE1CB50A1F01AD10009A8DAC /* Step1ViewController.swift */; };
 		CE1CB5131F01AD9E009A8DAC /* Arista2.0 Alternate light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = CE1CB50D1F01AD9E009A8DAC /* Arista2.0 Alternate light.ttf */; };
 		CE1CB5141F01AD9E009A8DAC /* Arista2.0 light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = CE1CB50E1F01AD9E009A8DAC /* Arista2.0 light.ttf */; };
@@ -70,6 +73,9 @@
 		89FB676B1D5C837D002B2484 /* SignUpViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
 		89FB676D1D5C8411002B2484 /* ItemsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ItemsTableViewController.swift; sourceTree = "<group>"; };
 		CE0E19721F168B3900DEDBDE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Home.storyboard; sourceTree = "<group>"; };
+		CE1B477C1F185025007C7515 /* HomeVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeVC.swift; sourceTree = "<group>"; };
+		CE1B477E1F186E99007C7515 /* HomeCustomCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeCustomCell.swift; sourceTree = "<group>"; };
+		CE1B47801F1885B0007C7515 /* SettingsVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsVC.swift; sourceTree = "<group>"; };
 		CE1CB50A1F01AD10009A8DAC /* Step1ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Step1ViewController.swift; sourceTree = "<group>"; };
 		CE1CB50D1F01AD9E009A8DAC /* Arista2.0 Alternate light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Arista2.0 Alternate light.ttf"; sourceTree = "<group>"; };
 		CE1CB50E1F01AD9E009A8DAC /* Arista2.0 light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Arista2.0 light.ttf"; sourceTree = "<group>"; };
@@ -170,6 +176,9 @@
 				89FB67631D5C82AB002B2484 /* Info.plist */,
 				CEB2FD531EFF4DB300763862 /* GoogleService-Info.plist */,
 				CE8FFA011F10AE92004A53BE /* ExpensesStruct.swift */,
+				CE1B477C1F185025007C7515 /* HomeVC.swift */,
+				CE1B477E1F186E99007C7515 /* HomeCustomCell.swift */,
+				CE1B47801F1885B0007C7515 /* SettingsVC.swift */,
 			);
 			path = "ToDo App";
 			sourceTree = "<group>";
@@ -415,13 +424,16 @@
 				CE7160FB1F04A9270045AA05 /* Step4HabitCustomCell.swift in Sources */,
 				CE39D9281F05A3CE00159EC1 /* Step4ParentsVC.swift in Sources */,
 				CE1CB52D1F0215EA009A8DAC /* Step2CustomCell.swift in Sources */,
+				CE1B47811F1885B0007C7515 /* SettingsVC.swift in Sources */,
 				89FB676A1D5C82F5002B2484 /* LoginViewController.swift in Sources */,
 				CE1CB51A1F01AF48009A8DAC /* Step2PopoverViewController.swift in Sources */,
 				CE5579691F05E44B006FE40B /* Step4ParentHabitCell.swift in Sources */,
 				CEF1A4951F02472700C010F9 /* Step3CustomCell.swift in Sources */,
+				CE1B477D1F185025007C7515 /* HomeVC.swift in Sources */,
 				CE39D92A1F05A42C00159EC1 /* Step4ParentCustomCell.swift in Sources */,
 				CEE4D6AC1F0F70EC009BAE6C /* Step5HeaderCell.swift in Sources */,
 				CE1CB5201F02117F009A8DAC /* Step2ViewController.swift in Sources */,
+				CE1B477F1F186E99007C7515 /* HomeCustomCell.swift in Sources */,
 				89FB676E1D5C8411002B2484 /* ItemsTableViewController.swift in Sources */,
 				CE99F07E1F0AB53D007E01E7 /* Step5IncomeSummaryVC.swift in Sources */,
 				CE8EFD431F08D88300BF4A3C /* Step5IncomeDetail.swift in Sources */,
