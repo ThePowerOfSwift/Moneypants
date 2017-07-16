@@ -3,9 +3,9 @@ import UIKit
 class Step5ExpensesVC: UIViewController {
     
     
+    @IBOutlet weak var topNotification: UILabel!
     @IBOutlet weak var budgetTotal: UILabel!
     @IBOutlet weak var nextButton: UIButton!
-    @IBOutlet weak var bottomNotification: UILabel!
     @IBOutlet weak var nextArrow: UIImageView!
     @IBOutlet weak var budgetText: UILabel!
 
@@ -72,7 +72,7 @@ class Step5ExpensesVC: UIViewController {
         
         nextButton.isHidden = true
         nextArrow.isHidden = true
-        bottomNotification.text = "Please add some expenses for Savannah."
+        topNotification.text = "GOAL: get 'budget' to match 'income' by adding expenses to the envelopes below."
         budgetTotal.textColor = UIColor.red
         budgetText.textColor = UIColor.red
     }
@@ -231,18 +231,18 @@ class Step5ExpensesVC: UIViewController {
     
     func calculateBottomWarning() {
         if 2340 - calculateBudgetTotal() == 0 {
-            bottomNotification.text = "Excellent!"
+            topNotification.text = "Excellent!"
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
                 self.nextButton.isHidden = false
                 self.nextArrow.isHidden = false
-                self.bottomNotification.isHidden = true
+                self.topNotification.isHidden = true
                 self.budgetTotal.textColor = UIColor.black
                 self.budgetText.textColor = UIColor.black
             }
         } else if 2340 - calculateBudgetTotal() > 0 {
-            bottomNotification.text = "You must still add more expenses. Please add $\(2340 - calculateBudgetTotal()) to one or more expense envelopes."
+            topNotification.text = "You must still add more expenses. Please add $\(2340 - calculateBudgetTotal()) to one or more expense envelopes."
         } else {
-            bottomNotification.text = "You must remove some expenses. Please remove $\(calculateBudgetTotal() - 2340) from one or more expense envelopes."
+            topNotification.text = "You must remove some expenses. Please remove $\(calculateBudgetTotal() - 2340) from one or more expense envelopes."
         }
     }
 
