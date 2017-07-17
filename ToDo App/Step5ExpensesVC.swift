@@ -231,14 +231,11 @@ class Step5ExpensesVC: UIViewController {
     
     func calculateBottomWarning() {
         if 2340 - calculateBudgetTotal() == 0 {
-            topNotification.text = "Excellent!"
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                self.nextButton.isHidden = false
-                self.nextArrow.isHidden = false
-                self.topNotification.isHidden = true
-                self.budgetTotal.textColor = UIColor.black
-                self.budgetText.textColor = UIColor.black
-            }
+            topNotification.text = "Excellent! Budget matches income. Please tap 'next' to continue."
+            self.nextButton.isHidden = false
+            self.nextArrow.isHidden = false
+            self.budgetTotal.textColor = UIColor.black
+            self.budgetText.textColor = UIColor.black
         } else if 2340 - calculateBudgetTotal() > 0 {
             topNotification.text = "You must still add more expenses. Please add $\(2340 - calculateBudgetTotal()) to one or more expense envelopes."
         } else {
