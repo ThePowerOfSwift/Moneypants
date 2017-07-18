@@ -8,6 +8,7 @@ class Step5ExpensesVC: UIViewController {
     @IBOutlet weak var nextButton: UIButton!
     @IBOutlet weak var nextArrow: UIImageView!
     @IBOutlet weak var budgetText: UILabel!
+    @IBOutlet weak var incomeText: UILabel!
 
     // clothing variables
     @IBOutlet weak var clothingView: UIView!
@@ -58,8 +59,13 @@ class Step5ExpensesVC: UIViewController {
     @IBOutlet weak var sports6: UITextField!
     @IBOutlet weak var sports7: UITextField!
     
+    let yearlyTotal = Int(Double(yearlyIncomeMPS) * 0.021) + yearlyIncomeOutside
+
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        incomeText.text = "\(yearlyTotal)"
         
         clothingTop.constant = -(clothingView.bounds.height)        // set clothing view out of range to start
         clothingView.isHidden = true
@@ -230,16 +236,16 @@ class Step5ExpensesVC: UIViewController {
     
     
     func calculateBottomWarning() {
-        if 2340 - calculateBudgetTotal() == 0 {
+        if yearlyTotal - calculateBudgetTotal() == 0 {
             topNotification.text = "Excellent! Budget matches income. Please tap 'next' to continue."
             self.nextButton.isHidden = false
             self.nextArrow.isHidden = false
             self.budgetTotal.textColor = UIColor.black
             self.budgetText.textColor = UIColor.black
-        } else if 2340 - calculateBudgetTotal() > 0 {
-            topNotification.text = "You must still add more expenses. Please add $\(2340 - calculateBudgetTotal()) to one or more expense envelopes."
+        } else if yearlyTotal - calculateBudgetTotal() > 0 {
+            topNotification.text = "You must still add more expenses. Please add $\(yearlyTotal - calculateBudgetTotal()) to one or more expense envelopes."
         } else {
-            topNotification.text = "You must remove some expenses. Please remove $\(calculateBudgetTotal() - 2340) from one or more expense envelopes."
+            topNotification.text = "You must remove some expenses. Please remove $\(calculateBudgetTotal() - yearlyTotal) from one or more expense envelopes."
         }
     }
 

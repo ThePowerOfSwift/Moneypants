@@ -1,8 +1,8 @@
 import UIKit
 import Firebase
-import AKMaskField
+//import AKMaskField
 
-class Step1ViewController: UIViewController {
+class Step1ViewController: UIViewController, UITextFieldDelegate {
     
     // ---------------
     // MARK: Variables
@@ -12,19 +12,23 @@ class Step1ViewController: UIViewController {
     var users = [Item]()
     var ref: FIRDatabaseReference!
     private var databaseHandle: FIRDatabaseHandle!
-    @IBOutlet weak var incomeField: AKMaskField!        // NEW
+    @IBOutlet weak var incomeField: UITextField!
+    @IBOutlet weak var incomeMessageLabel: UILabel!
+//    @IBOutlet weak var incomeField: AKMaskField!        // NEW
     
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.incomeField.delegate = self
+        
         // -----------      // NEW
         // AKMaskField
         // -----------
 
-        incomeField = AKMaskField()
-        incomeField.maskExpression = "{dddd}-{DDDD}-{WaWa}-{aaaa}"
-        incomeField.maskTemplate = "ABCD-EFGH-IJKL-MNOP"
+//        incomeField = AKMaskField()
+//        incomeField.maskExpression = "{dddd}-{DDDD}-{WaWa}-{aaaa}"
+//        incomeField.maskTemplate = "ABCD-EFGH-IJKL-MNOP"
         
         // --------
         // Firebase
@@ -48,17 +52,29 @@ class Step1ViewController: UIViewController {
 
     }
     
-    //text​Field(_:​should​Change​Characters​In:​replacement​String:​)
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    @IBAction func didTapNextButton(_ sender: UIButton) {
+        if incomeField.text != "" {
+            yearlyIncomeMPS = Int(incomeField.text!)!
+        } else {
+            yearlyIncomeMPS = 150000
+        }
+        print(incomeField.text ?? "no income entered")
     }
     
     
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        view.endEditing(true)
+    @IBAction func incomeFieldEditingChanged(_ sender: UITextField) {
+        let firstNumber = Int(incomeField.text!)
+        if firstNumber != nil {
+            let numberFormatter = NumberFormatter()
+            numberFormatter.numberStyle = NumberFormatter.Style.decimal
+            incomeMessageLabel.text = "You've entered $\(numberFormatter.string(from: NSNumber(value: firstNumber!))!) as your yearly income."
+        }
     }
+    
+    
+    // -----------------
+    // SIGN OUT function
+    // -----------------
     
     @IBAction func didTapSignOut(_ sender: UIButton) {
         do {

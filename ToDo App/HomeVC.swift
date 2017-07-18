@@ -2,18 +2,27 @@ import UIKit
 
 class HomeVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
 
-    let tempUsers = [
+    let yearlyTotal = Int(Double(yearlyIncomeMPS) * 0.021) + yearlyIncomeOutside
+
+    let tempUsers: [(String, UIImage, Double)] = [
         ("Dad", #imageLiteral(resourceName: "Dad"), 41.05),
         ("Mom", #imageLiteral(resourceName: "Mom"), 47.32),
-        ("Savannahlongname", #imageLiteral(resourceName: "Savannah"), 22.21),
+        ("Savannah", #imageLiteral(resourceName: "Savannah"), 22.01),
         ("Aiden", #imageLiteral(resourceName: "Aiden"), 23.98),
         ("Sophie", #imageLiteral(resourceName: "Sophie.jpg"), 14.67)
     ]
     
-    let tempUserIncome = ["41.05", "47.32", "22.20", "23.98", "14.67"]
+    
+    func formatCurrency() -> String {
+        let numberFormatter = NumberFormatter()
+        numberFormatter.numberStyle = NumberFormatter.Style.decimal
+        return numberFormatter.string(from: NSNumber(value: yearlyTotal))!
+    }
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
