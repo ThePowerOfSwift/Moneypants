@@ -1,6 +1,5 @@
 import UIKit
 import Firebase
-//import AKMaskField
 
 class Step1ViewController: UIViewController, UITextFieldDelegate {
     
@@ -12,24 +11,14 @@ class Step1ViewController: UIViewController, UITextFieldDelegate {
     var users = [Item]()
     var ref: FIRDatabaseReference!
     private var databaseHandle: FIRDatabaseHandle!
-    @IBOutlet weak var incomeField: UITextField!
-    @IBOutlet weak var incomeMessageLabel: UILabel!
-//    @IBOutlet weak var incomeField: AKMaskField!        // NEW
+    @IBOutlet weak var incomeTextField: UITextField!
+    let amount: Int = 0
     
-
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.incomeField.delegate = self
-        
-        // -----------      // NEW
-        // AKMaskField
-        // -----------
+        incomeTextField.delegate = self
 
-//        incomeField = AKMaskField()
-//        incomeField.maskExpression = "{dddd}-{DDDD}-{WaWa}-{aaaa}"
-//        incomeField.maskTemplate = "ABCD-EFGH-IJKL-MNOP"
-        
         // --------
         // Firebase
         // --------
@@ -44,7 +33,6 @@ class Step1ViewController: UIViewController, UITextFieldDelegate {
         
         UINavigationBar.appearance().barTintColor = UIColor(red: 242/255, green: 101/255, blue: 34/255, alpha: 1)
         UINavigationBar.appearance().tintColor = UIColor.white
-        // UINavigationBar.appearance().titleTextAttributes = [NSForegroundColorAttributeName: UIColor.white]
         UINavigationBar.appearance().titleTextAttributes = [
             NSForegroundColorAttributeName : UIColor.white,
             NSFontAttributeName : UIFont(name: "Arista2.0", size: 26)!
@@ -52,22 +40,16 @@ class Step1ViewController: UIViewController, UITextFieldDelegate {
 
     }
     
+
+    // -----------
+    // NEXT button
+    // -----------
+    
     @IBAction func didTapNextButton(_ sender: UIButton) {
-        if incomeField.text != "" {
-            yearlyIncomeMPS = Int(incomeField.text!)!
+        if incomeTextField.text != "" {
+            yearlyIncomeMPS = Int(incomeTextField.text!.components(separatedBy: [",", " "]).joined())       // remove commas
         } else {
             yearlyIncomeMPS = 150000
-        }
-        print(incomeField.text ?? "no income entered")
-    }
-    
-    
-    @IBAction func incomeFieldEditingChanged(_ sender: UITextField) {
-        let firstNumber = Int(incomeField.text!)
-        if firstNumber != nil {
-            let numberFormatter = NumberFormatter()
-            numberFormatter.numberStyle = NumberFormatter.Style.decimal
-            incomeMessageLabel.text = "You've entered $\(numberFormatter.string(from: NSNumber(value: firstNumber!))!) as your yearly income."
         }
     }
     
@@ -104,5 +86,46 @@ class Step1ViewController: UIViewController, UITextFieldDelegate {
         ref.child("users/\(self.user.uid)/items").removeObserver(withHandle: databaseHandle)
     }
 
+    // allows for dismissal of keyboard when user taps any white space
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        view.endEditing(true)
+    }
+    
 
+    // validate and format input, adding commas
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        if ((string == "0" || string == "") && (textField.text! as NSString).range(of: ".").location < range.location) {
+            return true
+        }
+        
+        // First check whether the replacement string's numeric...
+        let cs = NSCharacterSet(charactersIn: "0123456789").inverted
+        let filtered = string.components(separatedBy: cs)
+        let component = filtered.joined(separator: "")
+        let isNumeric = string == component
+        
+        // Then if the replacement string's numeric, or if it's
+        // a backspace, or if it's a decimal point and the text
+        // field doesn't already contain a decimal point,
+        // reformat the new complete number using
+        if isNumeric {
+            let formatter = NumberFormatter()
+            formatter.numberStyle = .decimal
+            formatter.maximumFractionDigits = 8
+            // Combine the new text with the old; then remove any
+            // commas from the textField before formatting
+            let newString = (textField.text! as NSString).replacingCharacters(in: range, with: string)
+            let numberWithOutCommas = newString.replacingOccurrences(of: ",", with: "")
+            let number = formatter.number(from: numberWithOutCommas)
+            if number != nil {
+                let formattedString = formatter.string(from: number!)
+                textField.text = formattedString
+            } else {
+                textField.text = nil
+            }
+        }
+        return false
+        
+    }
 }
+

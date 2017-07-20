@@ -1,7 +1,7 @@
 import Foundation
 
-var yearlyIncomeOutside: Int = 0
-var yearlyIncomeMPS: Int = 0
+var yearlyIncomeOutside: Int! = 0
+var yearlyIncomeMPS: Int! = 0
 
 struct Expense {
     let expenseCategory: String!

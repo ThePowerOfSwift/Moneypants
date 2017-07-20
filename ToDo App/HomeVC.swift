@@ -23,6 +23,21 @@ class HomeVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.tabBarController?.tabBar.isHidden = true
+        
+        // -----------------
+        // Customize Nav Bar
+        // -----------------
+        
+        UINavigationBar.appearance().barTintColor = UIColor(red: 242/255, green: 101/255, blue: 34/255, alpha: 1)
+        UINavigationBar.appearance().tintColor = UIColor.white
+        // UINavigationBar.appearance().titleTextAttributes = [NSForegroundColorAttributeName: UIColor.white]
+        UINavigationBar.appearance().titleTextAttributes = [
+            NSForegroundColorAttributeName : UIColor.white,
+            NSFontAttributeName : UIFont(name: "Arista2.0", size: 26)!
+        ]
+
+        
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -45,5 +60,13 @@ class HomeVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
         
         return cell
     }
-
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        performSegue(withIdentifier: "ToIndividualPageSegue", sender: self)
+//        let storyBoard: UIStoryboard = UIStoryboard(name: "Home", bundle: nil)
+//        let newViewController = storyBoard.instantiateViewController(withIdentifier: "individual") as! IndividualMainVC
+//        self.present(newViewController, animated: true, completion: nil)
+    }
 }
+
+

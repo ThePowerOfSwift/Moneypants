@@ -18,10 +18,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // hide text, only have back arrow on navigation
         // ---------------------------------------------
         
-        let backImage = UIImage(named: "BackNavigation")?.withRenderingMode(.alwaysOriginal)
-        UINavigationBar.appearance().backIndicatorImage = backImage
-        UINavigationBar.appearance().backIndicatorTransitionMaskImage = backImage
-        UIBarButtonItem.appearance().setBackButtonTitlePositionAdjustment(UIOffsetMake(0, -80.0), for: .default)
+//        let backImage = UIImage(named: "BackNavigation")?.withRenderingMode(.alwaysOriginal)
+//        UINavigationBar.appearance().backIndicatorImage = backImage
+//        UINavigationBar.appearance().backIndicatorTransitionMaskImage = backImage
+//        UIBarButtonItem.appearance().setBackButtonTitlePositionAdjustment(UIOffsetMake(0, -80.0), for: .default)
         
         
         /*
