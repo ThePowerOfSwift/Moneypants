@@ -9,10 +9,10 @@ class SetupNavController: UINavigationController {
         // hide text, only have back arrow on navigation
         // ---------------------------------------------
         
-        let backImage = UIImage(named: "BackNavigation")?.withRenderingMode(.alwaysOriginal)
+        let backImage = UIImage(named: "arrow left white")?.withRenderingMode(.alwaysOriginal)        // was "BackNavigation"
         UINavigationBar.appearance().backIndicatorImage = backImage
         UINavigationBar.appearance().backIndicatorTransitionMaskImage = backImage
-        UIBarButtonItem.appearance().setBackButtonTitlePositionAdjustment(UIOffsetMake(0, -80.0), for: .default)
+        UIBarButtonItem.appearance().setBackButtonTitlePositionAdjustment(UIOffsetMake(0, -120.0), for: .default)       // was -80
         
     }
 

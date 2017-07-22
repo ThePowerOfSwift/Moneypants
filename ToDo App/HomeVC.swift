@@ -15,11 +15,27 @@ class HomeVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        addNavBarImage()
+        
         print("HOME: yearly income MPS: \(yearlyIncomeMPS!)")
         print("HOME: yearly income outside: \(yearlyIncomeOutside!)")
         print("HOME: calculated income: \(String(format: "%.02f", (Double(yearlyIncomeMPS) * 0.021) + Double(yearlyIncomeOutside)))")
         
+        // -----------------
+        // Customize Nav Bar
+        // -----------------
+        
+        UINavigationBar.appearance().barTintColor = UIColor(red: 15/255, green: 131/255, blue: 254/255, alpha: 1)
+        UINavigationBar.appearance().tintColor = UIColor.white
+        UINavigationBar.appearance().titleTextAttributes = [
+            NSForegroundColorAttributeName : UIColor.white,
+            NSFontAttributeName : UIFont(name: "Arista2.0", size: 26)!
+        ]
 
+        tabBarItem.setTitleTextAttributes([NSForegroundColorAttributeName: UIColor.lightGray], for:.selected)
+        tabBarController?.tabBar.tintColor = UIColor.black
+        tabBarController?.tabBar.isTranslucent = false
+        
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -44,16 +60,23 @@ class HomeVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
         return cell
     }
     
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        performSegue(withIdentifier: "ToIndividualPageSegue", sender: self)
-//        let storyBoard: UIStoryboard = UIStoryboard(name: "Home", bundle: nil)
-//        let newViewController = storyBoard.instantiateViewController(withIdentifier: "individual") as! IndividualMainVC
-//        self.present(newViewController, animated: true, completion: nil)
+    func addNavBarImage() {
+        let navController = navigationController!
+        let barImage = #imageLiteral(resourceName: "MPS logo white")
+        let imageView = UIImageView(image: barImage)
+        let bannerWidth = navController.navigationBar.frame.size.width
+        let bannerHeight = navController.navigationBar.frame.size.height
+        let bannerX = bannerWidth / 2 - barImage.size.width / 2
+        let bannerY = bannerHeight / 2 - barImage.size.height / 2
+        imageView.frame = CGRect(x: bannerX, y: bannerY, width: bannerWidth * 0.75, height: bannerHeight * 0.75)
+        imageView.contentMode = .scaleAspectFit
+        navigationItem.titleView = imageView
     }
     
     
-    
-    
+//    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+//        performSegue(withIdentifier: "DetailSegue", sender: self)
+//    }
 }
 
 

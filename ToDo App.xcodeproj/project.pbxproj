@@ -10,7 +10,7 @@
 		0EEB607A1ED918BB005B2813 /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EEB60791ED918BB005B2813 /* Item.swift */; };
 		46F89D2A8F548D55488C0765 /* Pods_ToDo_App.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 17FBA854F90BAC963AFBF2FF /* Pods_ToDo_App.framework */; };
 		89FB67581D5C82AB002B2484 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89FB67571D5C82AB002B2484 /* AppDelegate.swift */; };
-		89FB675D1D5C82AB002B2484 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 89FB675B1D5C82AB002B2484 /* Main.storyboard */; };
+		89FB675D1D5C82AB002B2484 /* Setup.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 89FB675B1D5C82AB002B2484 /* Setup.storyboard */; };
 		89FB675F1D5C82AB002B2484 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 89FB675E1D5C82AB002B2484 /* Assets.xcassets */; };
 		89FB67621D5C82AB002B2484 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 89FB67601D5C82AB002B2484 /* LaunchScreen.storyboard */; };
 		89FB676A1D5C82F5002B2484 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89FB67691D5C82F5002B2484 /* LoginViewController.swift */; };
@@ -44,6 +44,10 @@
 		CE55796F1F0633B3006FE40B /* ChoreSummaryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE55796E1F0633B3006FE40B /* ChoreSummaryCell.swift */; };
 		CE7160F91F04A2A10045AA05 /* Step4HabitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE7160F81F04A2A10045AA05 /* Step4HabitViewController.swift */; };
 		CE7160FB1F04A9270045AA05 /* Step4HabitCustomCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE7160FA1F04A9270045AA05 /* Step4HabitCustomCell.swift */; };
+		CE79B88E1F2328F10032DD70 /* HomeNavController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE79B88D1F2328F10032DD70 /* HomeNavController.swift */; };
+		CE79B8901F233EAE0032DD70 /* ExpensesVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE79B88F1F233EAE0032DD70 /* ExpensesVC.swift */; };
+		CE79B8921F233EE90032DD70 /* PaydayVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE79B8911F233EE90032DD70 /* PaydayVC.swift */; };
+		CE79B8941F233F290032DD70 /* VideosVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE79B8931F233F290032DD70 /* VideosVC.swift */; };
 		CE8FF9FE1F0F7D88004A53BE /* Step5ExpensesCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE8FF9FD1F0F7D88004A53BE /* Step5ExpensesCell.swift */; };
 		CE8FFA001F109FC2004A53BE /* Step5ExpenseDetailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE8FF9FF1F109FC2004A53BE /* Step5ExpenseDetailVC.swift */; };
 		CE8FFA021F10AE92004A53BE /* ExpensesStruct.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE8FFA011F10AE92004A53BE /* ExpensesStruct.swift */; };
@@ -68,7 +72,7 @@
 		5F95373CF9BA0303AD815BBD /* Pods-ToDo App.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ToDo App.release.xcconfig"; path = "Pods/Target Support Files/Pods-ToDo App/Pods-ToDo App.release.xcconfig"; sourceTree = "<group>"; };
 		89FB67541D5C82AB002B2484 /* ToDo App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "ToDo App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		89FB67571D5C82AB002B2484 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		89FB675C1D5C82AB002B2484 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		89FB675C1D5C82AB002B2484 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Setup.storyboard; sourceTree = "<group>"; };
 		89FB675E1D5C82AB002B2484 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		89FB67611D5C82AB002B2484 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		89FB67631D5C82AB002B2484 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -103,6 +107,10 @@
 		CE55796E1F0633B3006FE40B /* ChoreSummaryCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChoreSummaryCell.swift; sourceTree = "<group>"; };
 		CE7160F81F04A2A10045AA05 /* Step4HabitViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Step4HabitViewController.swift; sourceTree = "<group>"; };
 		CE7160FA1F04A9270045AA05 /* Step4HabitCustomCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Step4HabitCustomCell.swift; sourceTree = "<group>"; };
+		CE79B88D1F2328F10032DD70 /* HomeNavController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeNavController.swift; sourceTree = "<group>"; };
+		CE79B88F1F233EAE0032DD70 /* ExpensesVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExpensesVC.swift; sourceTree = "<group>"; };
+		CE79B8911F233EE90032DD70 /* PaydayVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaydayVC.swift; sourceTree = "<group>"; };
+		CE79B8931F233F290032DD70 /* VideosVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VideosVC.swift; sourceTree = "<group>"; };
 		CE8FF9FD1F0F7D88004A53BE /* Step5ExpensesCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Step5ExpensesCell.swift; sourceTree = "<group>"; };
 		CE8FF9FF1F109FC2004A53BE /* Step5ExpenseDetailVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Step5ExpenseDetailVC.swift; sourceTree = "<group>"; };
 		CE8FFA011F10AE92004A53BE /* ExpensesStruct.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExpensesStruct.swift; sourceTree = "<group>"; };
@@ -166,7 +174,7 @@
 			isa = PBXGroup;
 			children = (
 				89FB67571D5C82AB002B2484 /* AppDelegate.swift */,
-				89FB675B1D5C82AB002B2484 /* Main.storyboard */,
+				89FB675B1D5C82AB002B2484 /* Setup.storyboard */,
 				CE0E19711F168B3900DEDBDE /* Home.storyboard */,
 				89FB67631D5C82AB002B2484 /* Info.plist */,
 				CEB2FD531EFF4DB300763862 /* GoogleService-Info.plist */,
@@ -221,6 +229,10 @@
 				CE1B47801F1885B0007C7515 /* SettingsVC.swift */,
 				CEB4CD291F1ECD9100F9733F /* IndividualMainVC.swift */,
 				CEAD053D1F2209A60097CD33 /* IndividualMainCustomCell.swift */,
+				CE79B88D1F2328F10032DD70 /* HomeNavController.swift */,
+				CE79B88F1F233EAE0032DD70 /* ExpensesVC.swift */,
+				CE79B8911F233EE90032DD70 /* PaydayVC.swift */,
+				CE79B8931F233F290032DD70 /* VideosVC.swift */,
 			);
 			name = Home;
 			sourceTree = "<group>";
@@ -369,7 +381,7 @@
 				CE1CB5131F01AD9E009A8DAC /* Arista2.0 Alternate light.ttf in Resources */,
 				89FB675F1D5C82AB002B2484 /* Assets.xcassets in Resources */,
 				CE1CB5181F01AD9E009A8DAC /* Arista2.0Alternate_full.ttf in Resources */,
-				89FB675D1D5C82AB002B2484 /* Main.storyboard in Resources */,
+				89FB675D1D5C82AB002B2484 /* Setup.storyboard in Resources */,
 				CE1CB5171F01AD9E009A8DAC /* Arista2.0Alternate.ttf in Resources */,
 				CE0E19731F168B3900DEDBDE /* Home.storyboard in Resources */,
 			);
@@ -435,6 +447,7 @@
 				CE8FF9FE1F0F7D88004A53BE /* Step5ExpensesCell.swift in Sources */,
 				CE55796D1F06134F006FE40B /* ChoreSummaryVC.swift in Sources */,
 				CEF1A4931F022F3F00C010F9 /* Step3ViewController.swift in Sources */,
+				CE79B88E1F2328F10032DD70 /* HomeNavController.swift in Sources */,
 				CE8FFA001F109FC2004A53BE /* Step5ExpenseDetailVC.swift in Sources */,
 				0EEB607A1ED918BB005B2813 /* Item.swift in Sources */,
 				89FB676C1D5C837D002B2484 /* SignUpViewController.swift in Sources */,
@@ -465,19 +478,22 @@
 				CE1CB50B1F01AD10009A8DAC /* Step1ViewController.swift in Sources */,
 				89FB67581D5C82AB002B2484 /* AppDelegate.swift in Sources */,
 				CED509E21F030F560058728F /* Step4ViewController.swift in Sources */,
+				CE79B8941F233F290032DD70 /* VideosVC.swift in Sources */,
+				CE79B8921F233EE90032DD70 /* PaydayVC.swift in Sources */,
 				CE8FFA021F10AE92004A53BE /* ExpensesStruct.swift in Sources */,
+				CE79B8901F233EAE0032DD70 /* ExpensesVC.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		89FB675B1D5C82AB002B2484 /* Main.storyboard */ = {
+		89FB675B1D5C82AB002B2484 /* Setup.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
 				89FB675C1D5C82AB002B2484 /* Base */,
 			);
-			name = Main.storyboard;
+			name = Setup.storyboard;
 			sourceTree = "<group>";
 		};
 		89FB67601D5C82AB002B2484 /* LaunchScreen.storyboard */ = {

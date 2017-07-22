@@ -3,11 +3,9 @@ import UIKit
 class IndividualMainVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     @IBOutlet weak var userImage: UIImageView!
-    @IBOutlet weak var userName: UILabel!
     @IBOutlet weak var incomeLabel: UILabel!
     @IBOutlet weak var topView: UIView!
     @IBOutlet weak var tableView: UITableView!
-    @IBOutlet weak var dateUpper: UILabel!
     @IBOutlet weak var dateLower: UILabel!
     
     
@@ -44,16 +42,27 @@ class IndividualMainVC: UIViewController, UITableViewDelegate, UITableViewDataSo
         ("babysit (per hour)", 25, false, true)
     ]
     
-
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        // -----------------
+        // Customize Nav Bar
+        // -----------------
+        
+        UINavigationBar.appearance().barTintColor = UIColor(red: 15/255, green: 131/255, blue: 254/255, alpha: 1)
+        UINavigationBar.appearance().tintColor = UIColor.white
+        UINavigationBar.appearance().titleTextAttributes = [
+            NSForegroundColorAttributeName : UIColor.white,
+            NSFontAttributeName : UIFont(name: "Arista2.0", size: 26)!
+        ]
+
         
         tableView.delegate = self
         tableView.dataSource = self
         
-        userName.text = currentUserName
+        navigationItem.title = currentUserName
         userImage.image = currentUserImage
-        incomeLabel.text = "22.01"
+        incomeLabel.text = "$22.01"
         
         userImage.layer.cornerRadius = topView.bounds.height / 6.4
         userImage.layer.masksToBounds = true
@@ -62,10 +71,10 @@ class IndividualMainVC: UIViewController, UITableViewDelegate, UITableViewDataSo
         
         let date = Date()
         let formatter = DateFormatter()
-        formatter.dateFormat = "EEE"           // day of week
-        let result2 = formatter.string(from: date)
-        dateUpper.text = result2
-        formatter.dateFormat = "d MMM yyyy"        // day of year
+//        formatter.dateFormat = "EEE"
+//        let result2 = formatter.string(from: date)
+//        dateUpper.text = result2
+        formatter.dateFormat = "EEE, d MMM yyyy"        // day of year
         let result = formatter.string(from: date)
         dateLower.text = result
 
@@ -125,7 +134,7 @@ class IndividualMainVC: UIViewController, UITableViewDelegate, UITableViewDataSo
         
         return cell
     }
-    
+        
     
     @IBAction func homeButtonTapped(_ sender: UIButton) {
         dismiss(animated: true, completion: nil)

@@ -69,7 +69,7 @@ class ChoreSummaryVC: UIViewController, UITableViewDataSource, UITableViewDelega
         }
         
         cell!.textLabel?.text = sectionData[indexPath.section]![indexPath.row]
-        
+        cell?.contentView.backgroundColor = UIColor.yellow
         return cell!
     }
 }
