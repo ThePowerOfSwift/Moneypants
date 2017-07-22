@@ -21,17 +21,10 @@ class Step3ViewController: UIViewController, UITableViewDataSource {
             }
         }
         */
-
         
     }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
-
-    
+   
     // ----------------
     // Setup Table View
     // ----------------

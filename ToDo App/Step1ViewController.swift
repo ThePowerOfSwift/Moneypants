@@ -51,7 +51,13 @@ class Step1ViewController: UIViewController, UITextFieldDelegate {
         } else {
             yearlyIncomeMPS = 150000
         }
+        print(yearlyIncomeMPS)
     }
+    
+    @IBAction func didTapSkipSetup(_ sender: UIButton) {
+        yearlyIncomeMPS = 150000
+    }
+    
     
     
     // -----------------

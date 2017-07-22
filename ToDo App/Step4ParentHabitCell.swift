@@ -7,6 +7,8 @@ class Step4ParentHabitCell: UITableViewCell {
 
     override func awakeFromNib() {
         super.awakeFromNib()
+        habitButton.isSelected = true
+        habitLabel.textColor = UIColor.lightGray
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
@@ -23,8 +25,5 @@ class Step4ParentHabitCell: UITableViewCell {
             habitLabel.textColor = UIColor.black
             print("habit deselected")
         }
-
     }
-    
-
 }

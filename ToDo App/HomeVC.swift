@@ -2,42 +2,24 @@ import UIKit
 
 class HomeVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
 
-    let yearlyTotal = Int(Double(yearlyIncomeMPS) * 0.021) + yearlyIncomeOutside
 
-    let tempUsers: [(String, UIImage, Double)] = [
-        ("Dad", #imageLiteral(resourceName: "Dad"), 41.05),
-        ("Mom", #imageLiteral(resourceName: "Mom"), 47.32),
-        ("Savannah", #imageLiteral(resourceName: "Savannah"), 22.01),
-        ("Aiden", #imageLiteral(resourceName: "Aiden"), 23.98),
-        ("Sophie", #imageLiteral(resourceName: "Sophie.jpg"), 14.67)
+    let tempUsers: [(String, UIImage, String)] = [
+        ("Dad", #imageLiteral(resourceName: "Dad"), "41.05"),
+        ("Mom", #imageLiteral(resourceName: "Mom"), "47.32"),
+        ("Savannah", #imageLiteral(resourceName: "Savannah"), "22.01"),
+        ("Aiden", #imageLiteral(resourceName: "Aiden"), "23.98"),
+        ("Sophie", #imageLiteral(resourceName: "Sophie.jpg"), "14.67")
     ]
-    
-    
-    func formatCurrency() -> String {
-        let numberFormatter = NumberFormatter()
-        numberFormatter.numberStyle = NumberFormatter.Style.decimal
-        return numberFormatter.string(from: NSNumber(value: yearlyTotal))!
-    }
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.tabBarController?.tabBar.isHidden = true
+        print("HOME: yearly income MPS: \(yearlyIncomeMPS!)")
+        print("HOME: yearly income outside: \(yearlyIncomeOutside!)")
+        print("HOME: calculated income: \(String(format: "%.02f", (Double(yearlyIncomeMPS) * 0.021) + Double(yearlyIncomeOutside)))")
         
-        // -----------------
-        // Customize Nav Bar
-        // -----------------
-        
-        UINavigationBar.appearance().barTintColor = UIColor(red: 242/255, green: 101/255, blue: 34/255, alpha: 1)
-        UINavigationBar.appearance().tintColor = UIColor.white
-        // UINavigationBar.appearance().titleTextAttributes = [NSForegroundColorAttributeName: UIColor.white]
-        UINavigationBar.appearance().titleTextAttributes = [
-            NSForegroundColorAttributeName : UIColor.white,
-            NSFontAttributeName : UIFont(name: "Arista2.0", size: 26)!
-        ]
 
-        
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -53,6 +35,7 @@ class HomeVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
         cell.userImage.image = userImage
         cell.userIncome.text = "$\(userIncome)"
         
+        // customize the image with rounded corners
         cell.userImage.layer.cornerRadius = tableView.rowHeight / 6.4
         cell.userImage.layer.masksToBounds = true
         cell.userImage.layer.borderWidth = 0.5
@@ -67,6 +50,16 @@ class HomeVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
 //        let newViewController = storyBoard.instantiateViewController(withIdentifier: "individual") as! IndividualMainVC
 //        self.present(newViewController, animated: true, completion: nil)
     }
+    
+    
+    
+    
 }
+
+
+
+
+
+
 
 

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="15G1010" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="TxU-OW-Isc">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="15G1611" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="TxU-OW-Isc">
     <device id="retina4_0" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -584,7 +584,8 @@
                                     <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
                                 </userDefinedRuntimeAttributes>
                                 <connections>
-                                    <segue destination="bHO-6V-EZe" kind="show" id="r6v-TS-dUP"/>
+                                    <action selector="didTapSkipSetup:" destination="8Kb-vd-Uj7" eventType="touchUpInside" id="SDc-Lw-uvJ"/>
+                                    <segue destination="0DX-sm-2Nt" kind="show" id="7ni-nb-vpV"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yKO-Dq-X7A">
@@ -610,7 +611,7 @@
                                     <segue destination="Vuo-XU-Ouo" kind="show" id="FVc-o3-7jM"/>
                                 </connections>
                             </button>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="MP App_Icon Arrow Right White" translatesAutoresizingMaskIntoConstraints="NO" id="GaU-Iq-EtO">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="arrow right white" translatesAutoresizingMaskIntoConstraints="NO" id="GaU-Iq-EtO">
                                 <rect key="frame" x="259" y="532" width="20" height="20"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="20" id="6YI-TR-401"/>
@@ -768,7 +769,7 @@
                                     <segue destination="bI6-Lh-0aY" kind="presentation" id="rer-OQ-COQ"/>
                                 </connections>
                             </button>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="MP App_Icon Arrow Right White" translatesAutoresizingMaskIntoConstraints="NO" id="tKN-VD-vOr">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="arrow right white" translatesAutoresizingMaskIntoConstraints="NO" id="tKN-VD-vOr">
                                 <rect key="frame" x="259" y="532" width="20" height="20"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="20" id="Z2A-OQ-bVx"/>
@@ -883,7 +884,7 @@
                                     <segue destination="vyY-s3-p9b" kind="show" id="bem-9y-sER"/>
                                 </connections>
                             </button>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="MP App_Icon Arrow Right White" translatesAutoresizingMaskIntoConstraints="NO" id="xSP-Nh-JLd">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="arrow right white" translatesAutoresizingMaskIntoConstraints="NO" id="xSP-Nh-JLd">
                                 <rect key="frame" x="259" y="532" width="20" height="20"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="20" id="N0U-cT-vyo"/>
@@ -1031,7 +1032,7 @@
                                     <segue destination="3dD-wI-leT" kind="show" id="67a-h1-FT2"/>
                                 </connections>
                             </button>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="MP App_Icon Arrow Right White" translatesAutoresizingMaskIntoConstraints="NO" id="tPz-Vf-dNc">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="arrow right white" translatesAutoresizingMaskIntoConstraints="NO" id="tPz-Vf-dNc">
                                 <rect key="frame" x="259" y="532" width="20" height="20"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="20" id="6e3-UY-MMu"/>
@@ -1176,7 +1177,7 @@
                                     <segue destination="cHc-4j-yR4" kind="show" id="BRu-bV-OBP"/>
                                 </connections>
                             </button>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="MP App_Icon Arrow Right White" translatesAutoresizingMaskIntoConstraints="NO" id="VsK-S3-Wgt">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="arrow right white" translatesAutoresizingMaskIntoConstraints="NO" id="VsK-S3-Wgt">
                                 <rect key="frame" x="259" y="532" width="20" height="20"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="20" id="Gul-zH-xqN"/>
@@ -1330,7 +1331,7 @@
                                     <segue destination="fub-kN-lyG" kind="show" id="J05-5h-stt"/>
                                 </connections>
                             </button>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="MP App_Icon Arrow Right White" translatesAutoresizingMaskIntoConstraints="NO" id="11Q-CG-hcG">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="arrow right white" translatesAutoresizingMaskIntoConstraints="NO" id="11Q-CG-hcG">
                                 <rect key="frame" x="259" y="532" width="20" height="20"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="20" id="7o3-f0-n8L"/>
@@ -1481,7 +1482,7 @@
                                     <segue destination="t7X-Fi-ZHA" kind="show" id="28P-xV-qWT"/>
                                 </connections>
                             </button>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="MP App_Icon Arrow Right White" translatesAutoresizingMaskIntoConstraints="NO" id="wG4-KT-szy">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="arrow right white" translatesAutoresizingMaskIntoConstraints="NO" id="wG4-KT-szy">
                                 <rect key="frame" x="259" y="532" width="20" height="20"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="20" id="8DK-Wp-9be"/>
@@ -1624,7 +1625,7 @@
                                     <segue destination="bHO-6V-EZe" kind="show" id="ALk-eU-ZqD"/>
                                 </connections>
                             </button>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="MP App_Icon Arrow Right White" translatesAutoresizingMaskIntoConstraints="NO" id="bWM-fU-qvj">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="arrow right white" translatesAutoresizingMaskIntoConstraints="NO" id="bWM-fU-qvj">
                                 <rect key="frame" x="259" y="532" width="20" height="20"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="20" id="PqR-9N-Jbv"/>
@@ -1674,7 +1675,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Z0p-mJ-aUF">
-                                <rect key="frame" x="0.0" y="142" width="320" height="229"/>
+                                <rect key="frame" x="0.0" y="195" width="320" height="229"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="260" text="Income from home:" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KS1-Ul-Oa9">
                                         <rect key="frame" x="16" y="16" width="180" height="21"/>
@@ -1774,13 +1775,13 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HAs-QL-92s">
-                                <rect key="frame" x="0.0" y="68" width="320" height="74"/>
+                                <rect key="frame" x="0.0" y="68" width="320" height="127"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Savannah.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="pAy-Zc-XG2">
-                                        <rect key="frame" x="16" y="8" width="58" height="58"/>
+                                        <rect key="frame" x="131" y="16" width="58" height="58"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="58" id="dth-7j-wUc"/>
-                                            <constraint firstAttribute="width" constant="58" id="iRA-aW-LiW"/>
+                                            <constraint firstAttribute="width" constant="58" id="bj3-5D-l4b"/>
+                                            <constraint firstAttribute="height" constant="58" id="d0l-oP-VJu"/>
                                         </constraints>
                                         <userDefinedRuntimeAttributes>
                                             <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
@@ -1795,26 +1796,8 @@
                                             </userDefinedRuntimeAttribute>
                                         </userDefinedRuntimeAttributes>
                                     </imageView>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="42" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qhh-YS-WkE">
-                                        <rect key="frame" x="267" y="37" width="37" height="21"/>
-                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
-                                        <nil key="textColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Yearly Income:  $" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rQZ-X7-7Fl">
-                                        <rect key="frame" x="119" y="16" width="132" height="21"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <nil key="textColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Weekly Income:  $" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="l6R-3j-TSQ">
-                                        <rect key="frame" x="110" y="37" width="141" height="21"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <nil key="textColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2340" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xee-kp-izR">
-                                        <rect key="frame" x="259" y="16" width="45" height="21"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="potential weekly income: $42" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qhh-YS-WkE">
+                                        <rect key="frame" x="39.5" y="90" width="241" height="21"/>
                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
@@ -1822,18 +1805,11 @@
                                 </subviews>
                                 <color key="backgroundColor" white="0.90000000000000002" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
-                                    <constraint firstItem="qhh-YS-WkE" firstAttribute="leading" secondItem="l6R-3j-TSQ" secondAttribute="trailing" constant="16" id="AV7-FM-uLc"/>
-                                    <constraint firstItem="xee-kp-izR" firstAttribute="top" secondItem="pAy-Zc-XG2" secondAttribute="top" constant="8" id="EL0-tA-oe5"/>
-                                    <constraint firstItem="qhh-YS-WkE" firstAttribute="bottom" secondItem="pAy-Zc-XG2" secondAttribute="bottom" constant="-8" id="EgH-n2-Rzz"/>
-                                    <constraint firstItem="xee-kp-izR" firstAttribute="centerY" secondItem="rQZ-X7-7Fl" secondAttribute="centerY" id="HeA-uu-jLt"/>
-                                    <constraint firstItem="qhh-YS-WkE" firstAttribute="centerY" secondItem="l6R-3j-TSQ" secondAttribute="centerY" id="MNj-yS-ikW"/>
-                                    <constraint firstAttribute="trailing" secondItem="qhh-YS-WkE" secondAttribute="trailing" constant="16" id="OBY-VX-87u"/>
-                                    <constraint firstItem="pAy-Zc-XG2" firstAttribute="top" secondItem="HAs-QL-92s" secondAttribute="top" constant="8" id="Ojg-0g-EDc"/>
-                                    <constraint firstAttribute="trailing" secondItem="xee-kp-izR" secondAttribute="trailing" constant="16" id="QOt-CC-pU3"/>
-                                    <constraint firstItem="rQZ-X7-7Fl" firstAttribute="trailing" secondItem="l6R-3j-TSQ" secondAttribute="trailing" id="f3Z-Tw-L7D"/>
-                                    <constraint firstItem="pAy-Zc-XG2" firstAttribute="leading" secondItem="HAs-QL-92s" secondAttribute="leading" constant="16" id="kRc-gT-6PI"/>
-                                    <constraint firstAttribute="bottom" secondItem="pAy-Zc-XG2" secondAttribute="bottom" constant="8" id="uW0-ms-lHa"/>
-                                    <constraint firstItem="xee-kp-izR" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="rQZ-X7-7Fl" secondAttribute="trailing" constant="8" id="vVh-DO-GKH"/>
+                                    <constraint firstItem="qhh-YS-WkE" firstAttribute="centerX" secondItem="HAs-QL-92s" secondAttribute="centerX" id="4Qf-sR-gOn"/>
+                                    <constraint firstItem="pAy-Zc-XG2" firstAttribute="centerX" secondItem="HAs-QL-92s" secondAttribute="centerX" id="BF8-rt-rmr"/>
+                                    <constraint firstAttribute="bottom" secondItem="qhh-YS-WkE" secondAttribute="bottom" constant="16" id="Lkk-Lp-lyE"/>
+                                    <constraint firstItem="qhh-YS-WkE" firstAttribute="top" secondItem="pAy-Zc-XG2" secondAttribute="bottom" constant="16" id="da5-bl-Drg"/>
+                                    <constraint firstItem="pAy-Zc-XG2" firstAttribute="top" secondItem="HAs-QL-92s" secondAttribute="top" constant="16" id="tEU-mY-hma"/>
                                 </constraints>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1nN-ZY-7jO">
@@ -1858,7 +1834,7 @@
                                     <segue destination="Ysj-Pt-Yvr" kind="show" id="SCg-OK-Znq"/>
                                 </connections>
                             </button>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="MP App_Icon Arrow Right White" translatesAutoresizingMaskIntoConstraints="NO" id="jlx-Nj-bev">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="arrow right white" translatesAutoresizingMaskIntoConstraints="NO" id="jlx-Nj-bev">
                                 <rect key="frame" x="259" y="532" width="20" height="20"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="20" id="Hcg-J9-9yp"/>
@@ -1887,7 +1863,7 @@
                                     <segue destination="oPT-le-h6r" kind="show" id="O3T-hJ-1Hg"/>
                                 </connections>
                             </button>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="MP App_Icon Arrow Right White" translatesAutoresizingMaskIntoConstraints="NO" id="VGK-A5-nRT">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="arrow right white" translatesAutoresizingMaskIntoConstraints="NO" id="VGK-A5-nRT">
                                 <rect key="frame" x="101" y="532" width="20" height="20"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="20" id="8fI-Lb-BhA"/>
@@ -1895,7 +1871,7 @@
                                 </constraints>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="itU-ms-Evg">
-                                <rect key="frame" x="32" y="371" width="256" height="40"/>
+                                <rect key="frame" x="32" y="424" width="256" height="40"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="40" id="dcb-yN-hbI"/>
                                 </constraints>
@@ -1939,7 +1915,6 @@
                         <outlet property="totalIncomeLabel" destination="7X9-sr-B90" id="MCL-S7-7hu"/>
                         <outlet property="viewTop" destination="ovh-Ty-2vu" id="aSg-1l-6Ie"/>
                         <outlet property="weeklyIncomeTotalLabel" destination="qhh-YS-WkE" id="bjd-yP-8Ea"/>
-                        <outlet property="yearlyIncomeTotalLabel" destination="xee-kp-izR" id="22Q-ff-jfG"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="VXM-PP-Iwn" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -2017,7 +1992,7 @@
                                                         <constraint firstAttribute="height" constant="40" id="fFl-y5-dA7"/>
                                                     </constraints>
                                                 </imageView>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="right arrow white" translatesAutoresizingMaskIntoConstraints="NO" id="ziD-4e-rMR">
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="arrow right white" translatesAutoresizingMaskIntoConstraints="NO" id="ziD-4e-rMR">
                                                     <rect key="frame" x="290" y="12" width="20" height="20"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="20" id="6fz-RD-5XR"/>
@@ -2142,7 +2117,7 @@
                                     <segue destination="0DX-sm-2Nt" kind="show" id="sZK-Vt-lQm"/>
                                 </connections>
                             </button>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="MP App_Icon Arrow Right White" translatesAutoresizingMaskIntoConstraints="NO" id="Q0f-Ss-lDR">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="arrow right white" translatesAutoresizingMaskIntoConstraints="NO" id="Q0f-Ss-lDR">
                                 <rect key="frame" x="259" y="532" width="20" height="20"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="20" id="T7Y-GP-Pdh"/>
@@ -2370,7 +2345,7 @@
                                     <segue destination="0DX-sm-2Nt" kind="show" id="f1o-EZ-hBS"/>
                                 </connections>
                             </button>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="MP App_Icon Arrow Right White" translatesAutoresizingMaskIntoConstraints="NO" id="OTS-rI-Dnt">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="arrow right white" translatesAutoresizingMaskIntoConstraints="NO" id="OTS-rI-Dnt">
                                 <rect key="frame" x="259" y="532" width="20" height="20"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="20" id="B7M-cs-STQ"/>
@@ -3388,7 +3363,7 @@
                                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="MP App_Icon Arrow Right White" translatesAutoresizingMaskIntoConstraints="NO" id="I2L-36-QHe">
+                                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="arrow right white" translatesAutoresizingMaskIntoConstraints="NO" id="I2L-36-QHe">
                                                 <rect key="frame" x="284" y="12" width="20" height="20"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="20" id="4XC-U5-IuJ"/>
@@ -3876,7 +3851,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xYF-U9-UyW" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="11467.5" y="1099.6478873239437"/>
+            <point key="canvasLocation" x="11618" y="1484"/>
         </scene>
         <!--Savannah-->
         <scene sceneID="YHp-0v-PnI">
@@ -4386,7 +4361,7 @@
                                             <segue destination="Rm3-69-fBo" kind="show" id="Wyn-lV-P4i"/>
                                         </connections>
                                     </button>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="MP App_Icon Arrow Right White" translatesAutoresizingMaskIntoConstraints="NO" id="M3n-ZF-NYV">
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="arrow right white" translatesAutoresizingMaskIntoConstraints="NO" id="M3n-ZF-NYV">
                                         <rect key="frame" x="259" y="16" width="20" height="20"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="20" id="jx7-cI-uFJ"/>
@@ -4443,6 +4418,7 @@
         <image name="MP App Setup - Step 1 ALT_102" width="1333" height="2367"/>
         <image name="MP App_Icon Arrow Right White" width="25" height="25"/>
         <image name="Savannah.jpg" width="1000" height="1250"/>
+        <image name="arrow right white" width="25" height="25"/>
         <image name="blank" width="76" height="76"/>
         <image name="button bg orange" width="75" height="75"/>
         <image name="choose photo" width="183" height="183"/>
@@ -4454,14 +4430,12 @@
         <image name="income hand" width="150" height="149"/>
         <image name="no gray" width="75" height="75"/>
         <image name="no orange" width="75" height="75"/>
-        <image name="right arrow white" width="30" height="30"/>
         <image name="table BG white" width="640" height="100"/>
         <image name="yes gray" width="75" height="75"/>
         <image name="yes orange" width="75" height="75"/>
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="37h-AF-clw"/>
-        <segue reference="r6v-TS-dUP"/>
-        <segue reference="sZK-Vt-lQm"/>
+        <segue reference="7ni-nb-vpV"/>
     </inferredMetricsTieBreakers>
 </document>

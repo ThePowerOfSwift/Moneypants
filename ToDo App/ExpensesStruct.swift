@@ -2,38 +2,7 @@ import Foundation
 
 var yearlyIncomeOutside: Int! = 0
 var yearlyIncomeMPS: Int! = 0
+//var yearlyTotal = String(format: "%.01f", (Int(Double(yearlyIncomeMPS) * 0.021) + yearlyIncomeOutside))
+var calculatedIncome: Double! = Double(yearlyIncomeMPS) * 0.021 + Double(yearlyIncomeOutside)
 
-struct Expense {
-    let expenseCategory: String!
-    let expenseName: String!
-    let expenseDueDate: NSDate?
-    let expenseAmount: Double!
-}
-
-var expenseTwo = Expense(expenseCategory: "clothing", expenseName: "socks", expenseDueDate: nil, expenseAmount: 40)
-
-// ---------------------------------------
-// global variables for example storyboard
-// ---------------------------------------
-
-var pets = ["dog", "fish", "bird"]
-var petDescription = ["likes to bark", "swims a lot", "has wings"]
-
-
-
-
-// ------
-// sample
-// ------
-
-struct Person {
-    let firstName: String
-    let lastName: String
-    
-    func fullName() -> String {
-        return firstName + " " + lastName
-    }
-}
-
-let aPerson = Person(firstName: "Beau", lastName: "Papadakis")
-let myFullName = aPerson.fullName()
+var individualMainTotalIncome: Double! = 0
