@@ -1,13 +1,73 @@
 import UIKit
 
-class VideosVC: UIViewController {
+class VideosVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
+    
+    @IBOutlet weak var tableView: UITableView!
+    
+    let trainingVideos = ["bedrooms",
+                               "bathrooms: toilets, sinks, & floors",
+                               "laundry",
+                               "vacuuming",
+                               "wiping the table",
+                               "kitchen counters",
+                               "dishes","sweeping",
+                               "car wash",
+                               "dirty diapers",
+                               "mopping",
+                               "toilet training"]
+    
+    let setupVideos = ["setup",
+                       "step 1",
+                       "step 2 (part one)",
+                       "step 2 (part two)",
+                       "step 3 (part one)",
+                       "step 3 (part two)",
+                       "step 3 (consistency bonus)",
+                       "step 4",
+                       "step 4 (doing payday)",
+                       "step 5",
+                       "step 5 (directed spending)"]
+    
+    let miscVideos = ["How The Moneypants Solution helps prevent anger",
+                      "Moneypants Boss",
+                      "Fancy Foods & Treats"]
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        tableView.delegate = self
+        tableView.dataSource = self
+        
         addNavBarImage()
 
     }
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 3
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if section == 0 {
+            return trainingVideos.count
+        } else if section == 1 {
+            return setupVideos.count
+        } else {
+            return miscVideos.count
+        }
+    }
+    
+//    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+//        <#code#>
+//    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "CustomCell", for: indexPath) as! VideosCell
+        cell.videoLabel.text = trainingVideos[indexPath.row]
+        return cell
+    }
+    
+    
+    
     
     func addNavBarImage() {
         let navController = navigationController!

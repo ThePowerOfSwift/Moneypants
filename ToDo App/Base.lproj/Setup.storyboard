@@ -19,7 +19,7 @@
         <!--Login View Controller-->
         <scene sceneID="fI6-bc-Mpv">
             <objects>
-                <viewController id="TxU-OW-Isc" customClass="LoginViewController" customModule="ToDo_App" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="Login" id="TxU-OW-Isc" customClass="LoginViewController" customModule="ToDo_App" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="3aa-ke-Wuz"/>
                         <viewControllerLayoutGuide type="bottom" id="Auu-kc-LEv"/>
@@ -655,7 +655,7 @@
         <!--users-->
         <scene sceneID="QxE-Hh-fWV">
             <objects>
-                <viewController title="users" automaticallyAdjustsScrollViewInsets="NO" id="Vuo-XU-Ouo" customClass="Step2ViewController" customModule="ToDo_App" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="Users" title="users" automaticallyAdjustsScrollViewInsets="NO" id="Vuo-XU-Ouo" customClass="Step2ViewController" customModule="ToDo_App" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="Oz6-iJ-eWu"/>
                         <viewControllerLayoutGuide type="bottom" id="xTi-xv-sLN"/>
@@ -806,7 +806,7 @@
         <!--chores-->
         <scene sceneID="XwX-ce-1A2">
             <objects>
-                <viewController title="chores" automaticallyAdjustsScrollViewInsets="NO" id="GIC-iC-fnb" customClass="Step3ViewController" customModule="ToDo_App" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="Chores" title="chores" automaticallyAdjustsScrollViewInsets="NO" id="GIC-iC-fnb" customClass="Step3ViewController" customModule="ToDo_App" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="JlP-TD-9Sf"/>
                         <viewControllerLayoutGuide type="bottom" id="dZ8-mB-G4d"/>
@@ -919,7 +919,7 @@
         <!--Savannah-->
         <scene sceneID="0mD-F9-8KA">
             <objects>
-                <viewController title="Savannah" automaticallyAdjustsScrollViewInsets="NO" id="vyY-s3-p9b" customClass="Step4ViewController" customModule="ToDo_App" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="IndividualChores" title="Savannah" automaticallyAdjustsScrollViewInsets="NO" id="vyY-s3-p9b" customClass="Step4ViewController" customModule="ToDo_App" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="dvS-xE-MFk"/>
                         <viewControllerLayoutGuide type="bottom" id="ZNS-Lg-iP3"/>
@@ -1070,7 +1070,7 @@
         <!--Savannah-->
         <scene sceneID="EqV-q6-7JF">
             <objects>
-                <viewController title="Savannah" id="3dD-wI-leT" customClass="Step4HabitViewController" customModule="ToDo_App" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="IndividualHabits" title="Savannah" id="3dD-wI-leT" customClass="Step4HabitViewController" customModule="ToDo_App" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="Nt2-9s-SAQ"/>
                         <viewControllerLayoutGuide type="bottom" id="X7N-2n-TSj"/>
@@ -1665,7 +1665,7 @@
         <!--Savannah-->
         <scene sceneID="ywD-xO-Uj4">
             <objects>
-                <viewController title="Savannah" id="Rm3-69-fBo" customClass="Step5IncomeSummaryVC" customModule="ToDo_App" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="IndividualIncomeSummary" title="Savannah" id="Rm3-69-fBo" customClass="Step5IncomeSummaryVC" customModule="ToDo_App" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="aRm-ln-XdV"/>
                         <viewControllerLayoutGuide type="bottom" id="8PF-XT-53s"/>
@@ -1797,7 +1797,7 @@
                                         </userDefinedRuntimeAttributes>
                                     </imageView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="potential weekly income: $42" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qhh-YS-WkE">
-                                        <rect key="frame" x="39.5" y="90" width="241" height="21"/>
+                                        <rect key="frame" x="40" y="90" width="241" height="21"/>
                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
@@ -4443,6 +4443,6 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="37h-AF-clw"/>
-        <segue reference="f1o-EZ-hBS"/>
+        <segue reference="7ni-nb-vpV"/>
     </inferredMetricsTieBreakers>
 </document>

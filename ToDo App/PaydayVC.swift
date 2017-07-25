@@ -1,12 +1,17 @@
 import UIKit
 
 class PaydayVC: UIViewController {
+    
+    @IBOutlet weak var collectionView: UICollectionView!
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
         addNavBarImage()
     }
+    
+    
     
     func addNavBarImage() {
         let navController = navigationController!

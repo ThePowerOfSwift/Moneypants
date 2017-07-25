@@ -1,11 +1,3 @@
-//
-//  Step2ViewController.swift
-//  ToDo App
-//
-//  Created by Phontaine Judd on 6/26/17.
-//  Copyright © 2017 Echessa. All rights reserved.
-//
-
 import UIKit
 
 class Step2ViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {

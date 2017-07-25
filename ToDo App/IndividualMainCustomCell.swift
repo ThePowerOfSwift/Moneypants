@@ -5,8 +5,9 @@ class IndividualMainCustomCell: UITableViewCell {
     @IBOutlet weak var completionButton: UIButton!
     @IBOutlet weak var choreHabitLabel: UILabel!
     @IBOutlet weak var pointsLabel: UILabel!
-    var count: Int = 0
-
+    
+//    var buttonAction: ((_ sender: AnyObject) -> Void)?
+    
     override func awakeFromNib() {
         super.awakeFromNib()
     }
@@ -16,14 +17,14 @@ class IndividualMainCustomCell: UITableViewCell {
     }
     
     @IBAction func choreHabitButtonTapped(_ sender: UIButton) {
-        count += 1
+//        self.buttonAction?(sender)
+        
         choreHabitLabel.textColor = UIColor.lightGray
         pointsLabel.textColor = UIColor.lightGray
-        completionButton.setTitle("\(count)", for: .normal)
+        completionButton.setTitle("1", for: .normal)
     }
     
     @IBAction func completionButtonTouchUpOutside(_ sender: UIButton) {
-        count = 0
         choreHabitLabel.textColor = UIColor.black
         pointsLabel.textColor = UIColor.black
         completionButton.setTitle("", for: .normal)

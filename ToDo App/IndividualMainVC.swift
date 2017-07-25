@@ -7,6 +7,7 @@ class IndividualMainVC: UIViewController, UITableViewDelegate, UITableViewDataSo
     @IBOutlet weak var topView: UIView!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var dateLower: UILabel!
+    @IBOutlet weak var expensesButton: UIButton!
     
     
     var currentUserName: String! = "Savannah"
@@ -44,7 +45,7 @@ class IndividualMainVC: UIViewController, UITableViewDelegate, UITableViewDataSo
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+                
         // -----------------
         // Customize Nav Bar
         // -----------------
@@ -64,17 +65,20 @@ class IndividualMainVC: UIViewController, UITableViewDelegate, UITableViewDataSo
         userImage.image = currentUserImage
         incomeLabel.text = "$22.01"
         
+        expensesButton.layer.cornerRadius = topView.bounds.height / 6.4
+        expensesButton.layer.masksToBounds = true
+
         userImage.layer.cornerRadius = topView.bounds.height / 6.4
         userImage.layer.masksToBounds = true
         userImage.layer.borderWidth = 0.5
-        userImage.layer.borderColor = UIColor.black.cgColor
+        userImage.layer.borderColor = UIColor.lightGray.cgColor
         
         let date = Date()
         let formatter = DateFormatter()
 //        formatter.dateFormat = "EEE"
 //        let result2 = formatter.string(from: date)
 //        dateUpper.text = result2
-        formatter.dateFormat = "EEE, d MMM yyyy"        // day of year
+        formatter.dateFormat = "EEE MMM d"        // day of year
         let result = formatter.string(from: date)
         dateLower.text = result
 
@@ -83,6 +87,7 @@ class IndividualMainVC: UIViewController, UITableViewDelegate, UITableViewDataSo
     // ----------------
     // Setup Table View
     // ----------------
+    
     
     func numberOfSections(in tableView: UITableView) -> Int {
         return 3
@@ -110,7 +115,8 @@ class IndividualMainVC: UIViewController, UITableViewDelegate, UITableViewDataSo
     
     func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
         let header = view as! UITableViewHeaderFooterView
-        header.textLabel?.font = UIFont(name: "Helvetica-Bold", size: 16.0)
+        header.textLabel?.font = UIFont(name: "Arista2.0", size: 20.0)
+//        header.textLabel?.font = UIFont.systemFont(ofSize: 16.0)
         header.textLabel?.textColor = UIColor.white
         header.textLabel?.textAlignment = .center
         header.contentView.backgroundColor = UIColor.lightGray
@@ -118,6 +124,10 @@ class IndividualMainVC: UIViewController, UITableViewDelegate, UITableViewDataSo
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "IndividualDetailCell", for: indexPath) as! IndividualMainCustomCell
+//        cell.buttonAction = { (sender) in
+//            print("lifestyles are nifty")
+//            cell.choreHabitLabel.text = "changed"
+//        }
         if indexPath.section == 0 {
             let (choreHabitName, pointsLabelValue, _, _) = dailyChores[indexPath.row]
             cell.choreHabitLabel.text = choreHabitName
@@ -131,13 +141,16 @@ class IndividualMainVC: UIViewController, UITableViewDelegate, UITableViewDataSo
             cell.choreHabitLabel.text = choreHabitName
             cell.pointsLabel.text = "\(Int(pointsLabelValue * 15))"
         }
-        
         return cell
     }
-        
     
     @IBAction func homeButtonTapped(_ sender: UIButton) {
         dismiss(animated: true, completion: nil)
     }
-    
 }
+
+
+
+
+
+

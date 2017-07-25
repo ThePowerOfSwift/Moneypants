@@ -1,17 +1,14 @@
 import UIKit
 
 class HomeVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
-
-
-    let tempUsers: [(String, UIImage, String)] = [
-        ("Dad", #imageLiteral(resourceName: "Dad"), "41.05"),
-        ("Mom", #imageLiteral(resourceName: "Mom"), "47.32"),
-        ("Savannah", #imageLiteral(resourceName: "Savannah"), "22.01"),
-        ("Aiden", #imageLiteral(resourceName: "Aiden"), "23.98"),
-        ("Sophie", #imageLiteral(resourceName: "Sophie.jpg"), "14.67")
-    ]
     
-    
+    @IBOutlet weak var tableView: UITableView!
+        
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        tableView.reloadData()
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
