@@ -62,6 +62,13 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <navigationBar contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="f5o-PQ-LPT">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                                <items>
+                                    <navigationItem title="Title" id="l8q-EH-kwR"/>
+                                </items>
+                            </navigationBar>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -74,23 +81,54 @@
             </objects>
             <point key="canvasLocation" x="18019" y="1106"/>
         </scene>
-        <!--View Controller-->
-        <scene sceneID="VwH-BN-AO9">
+        <!--videos-->
+        <scene sceneID="Pjd-QL-IXx">
             <objects>
-                <viewController id="eYo-42-IF2" sceneMemberID="viewController">
+                <viewController title="videos" id="Fub-lO-V4a" customClass="VideoPlaybackVC" customModule="ToDo_App" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="fPt-zq-zcX"/>
-                        <viewControllerLayoutGuide type="bottom" id="Uw6-pw-rkF"/>
+                        <viewControllerLayoutGuide type="top" id="4wG-62-Ipk"/>
+                        <viewControllerLayoutGuide type="bottom" id="tbY-Lt-RW5"/>
                     </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="G2L-Em-kGl">
+                    <view key="view" contentMode="scaleToFill" id="Unf-n8-9fK">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <webView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Cdo-pp-8uu">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                                <color key="backgroundColor" red="0.36078431370000003" green="0.38823529410000002" blue="0.4039215686" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            </webView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="top" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PGC-Nf-UUQ">
+                                <rect key="frame" x="237" y="8" width="75" height="40"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="40" id="0jD-HP-vm1"/>
+                                    <constraint firstAttribute="width" constant="75" id="Xtb-of-lyJ"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="Arista2.0" family="Arista 2.0" pointSize="20"/>
+                                <state key="normal" title="close x">
+                                    <color key="titleColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="closeButtonTapped:" destination="Fub-lO-V4a" eventType="touchUpInside" id="993-yT-2zM"/>
+                                </connections>
+                            </button>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="Cdo-pp-8uu" firstAttribute="top" secondItem="Unf-n8-9fK" secondAttribute="top" id="IaW-7M-haF"/>
+                            <constraint firstItem="PGC-Nf-UUQ" firstAttribute="top" secondItem="4wG-62-Ipk" secondAttribute="bottom" constant="8" id="VIJ-Ci-VI5"/>
+                            <constraint firstAttribute="trailing" secondItem="PGC-Nf-UUQ" secondAttribute="trailing" constant="8" id="dLw-4H-c5P"/>
+                            <constraint firstAttribute="bottom" secondItem="Cdo-pp-8uu" secondAttribute="bottom" id="geb-qY-n7o"/>
+                            <constraint firstItem="Cdo-pp-8uu" firstAttribute="leading" secondItem="Unf-n8-9fK" secondAttribute="leading" id="kB1-3t-pld"/>
+                            <constraint firstAttribute="trailing" secondItem="Cdo-pp-8uu" secondAttribute="trailing" id="nhO-x2-JHt"/>
+                        </constraints>
                     </view>
+                    <connections>
+                        <outlet property="webView" destination="Cdo-pp-8uu" id="eLg-aB-Jhd"/>
+                    </connections>
                 </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="oax-Xs-EOW" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="wUI-h3-4cY" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="18941" y="1106"/>
+            <point key="canvasLocation" x="18939.375" y="1105.9859154929577"/>
         </scene>
         <!--Savannah-->
         <scene sceneID="Zlt-u0-AhO">
@@ -145,8 +183,9 @@
                                             <constraint firstAttribute="width" constant="58" id="zsf-Fq-7xt"/>
                                         </constraints>
                                     </imageView>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sIF-JS-DWZ">
+                                    <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sIF-JS-DWZ">
                                         <rect key="frame" x="254" y="6" width="58" height="58"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="58" id="CXF-kU-8Zs"/>
                                             <constraint firstAttribute="width" constant="58" id="jZo-7i-fZk"/>
@@ -253,7 +292,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="S0y-qb-cz6" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="16264" y="1106"/>
+            <point key="canvasLocation" x="16256" y="1106"/>
         </scene>
         <!--Videos-->
         <scene sceneID="7Yv-zf-Rw2">
@@ -302,7 +341,7 @@
                                         </tableViewCellContentView>
                                         <connections>
                                             <outlet property="videoLabel" destination="E7k-kh-wvp" id="i9u-W2-v4B"/>
-                                            <segue destination="eYo-42-IF2" kind="show" identifier="DetailSegue" id="MWE-el-IpR"/>
+                                            <segue destination="Fub-lO-V4a" kind="presentation" id="qLJ-go-DtJ"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -353,11 +392,11 @@
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="96H-Uw-4n0"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="zCL-ti-NH5">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="75" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="zCL-ti-NH5">
                                 <rect key="frame" x="0.0" y="118" width="320" height="401"/>
                                 <color key="backgroundColor" white="0.90228361999999995" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
@@ -376,7 +415,7 @@
                                                     </constraints>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="SavannahSuperLongName" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NJh-wX-OHJ">
-                                                    <rect key="frame" x="82" y="24" width="205" height="28"/>
+                                                    <rect key="frame" x="90" y="24" width="197" height="28"/>
                                                     <fontDescription key="fontDescription" type="system" weight="black" pointSize="23"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
@@ -384,7 +423,7 @@
                                             </subviews>
                                             <constraints>
                                                 <constraint firstAttribute="trailing" secondItem="NJh-wX-OHJ" secondAttribute="trailing" id="7sB-S7-C7a"/>
-                                                <constraint firstItem="NJh-wX-OHJ" firstAttribute="leading" secondItem="NoQ-bG-sVi" secondAttribute="trailing" constant="8" id="LPQ-pl-CWu"/>
+                                                <constraint firstItem="NJh-wX-OHJ" firstAttribute="leading" secondItem="NoQ-bG-sVi" secondAttribute="trailing" constant="16" id="LPQ-pl-CWu"/>
                                                 <constraint firstItem="NJh-wX-OHJ" firstAttribute="centerY" secondItem="Aij-I3-CJH" secondAttribute="centerY" id="Mrg-ik-0NM"/>
                                                 <constraint firstItem="NoQ-bG-sVi" firstAttribute="centerY" secondItem="Aij-I3-CJH" secondAttribute="centerY" id="Zj2-L3-2Hf"/>
                                                 <constraint firstItem="NoQ-bG-sVi" firstAttribute="leading" secondItem="Aij-I3-CJH" secondAttribute="leading" constant="16" id="gql-V5-Iu1"/>
@@ -415,6 +454,9 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Payday" id="9eV-TH-YO0"/>
+                    <connections>
+                        <outlet property="tableView" destination="zCL-ti-NH5" id="NIo-eJ-AAr"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="737-fU-yT4" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -562,17 +604,14 @@
                                                         </label>
                                                     </subviews>
                                                 </stackView>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mSs-zv-PaW">
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mSs-zv-PaW">
                                                     <rect key="frame" x="237" y="7" width="75" height="75"/>
-                                                    <color key="backgroundColor" red="0.49019607840000001" green="0.74509803919999995" blue="0.18823529410000001" alpha="1" colorSpace="calibratedRGB"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="75" id="YQZ-DO-ZM4"/>
                                                         <constraint firstAttribute="height" constant="75" id="pZY-4H-Kxk"/>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="13"/>
-                                                    <inset key="contentEdgeInsets" minX="25" minY="-20" maxX="0.0" maxY="0.0"/>
-                                                    <inset key="titleEdgeInsets" minX="-50" minY="50" maxX="0.0" maxY="0.0"/>
-                                                    <state key="normal" title="expenses" image="expenses2 white">
+                                                    <state key="normal" image="arrow right black">
                                                         <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     </state>
                                                     <connections>
@@ -710,7 +749,6 @@
         <image name="arrow right black" width="25" height="25"/>
         <image name="blank" width="76" height="76"/>
         <image name="expenses button" width="75" height="75"/>
-        <image name="expenses2 white" width="25" height="24"/>
         <image name="gear" width="25" height="25"/>
         <image name="home2" width="25" height="22"/>
         <image name="payday2" width="25" height="24"/>

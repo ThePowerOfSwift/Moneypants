@@ -11,10 +11,10 @@ class HomeCustomCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         
-        expensesButton.layer.cornerRadius = expensesButton.bounds.height / 6.4
-        expensesButton.layer.masksToBounds = true
-        expensesButton.layer.borderColor = UIColor.black.cgColor
-        expensesButton.layer.borderWidth = 0.5
+//        expensesButton.layer.cornerRadius = expensesButton.bounds.height / 6.4
+//        expensesButton.layer.masksToBounds = true
+//        expensesButton.layer.borderColor = UIColor.black.cgColor
+//        expensesButton.layer.borderWidth = 0.5
 
     }
 

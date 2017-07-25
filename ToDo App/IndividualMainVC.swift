@@ -67,11 +67,13 @@ class IndividualMainVC: UIViewController, UITableViewDelegate, UITableViewDataSo
         
         expensesButton.layer.cornerRadius = topView.bounds.height / 6.4
         expensesButton.layer.masksToBounds = true
+//        expensesButton.layer.borderColor = UIColor.black.cgColor
+//        expensesButton.layer.borderWidth = 0.5
 
         userImage.layer.cornerRadius = topView.bounds.height / 6.4
         userImage.layer.masksToBounds = true
         userImage.layer.borderWidth = 0.5
-        userImage.layer.borderColor = UIColor.lightGray.cgColor
+        userImage.layer.borderColor = UIColor.black.cgColor
         
         let date = Date()
         let formatter = DateFormatter()
@@ -124,10 +126,6 @@ class IndividualMainVC: UIViewController, UITableViewDelegate, UITableViewDataSo
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "IndividualDetailCell", for: indexPath) as! IndividualMainCustomCell
-//        cell.buttonAction = { (sender) in
-//            print("lifestyles are nifty")
-//            cell.choreHabitLabel.text = "changed"
-//        }
         if indexPath.section == 0 {
             let (choreHabitName, pointsLabelValue, _, _) = dailyChores[indexPath.row]
             cell.choreHabitLabel.text = choreHabitName

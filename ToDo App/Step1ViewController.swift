@@ -17,7 +17,7 @@ class Step1ViewController: UIViewController, UITextFieldDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        incomeTextField.delegate = self
+        incomeTextField?.delegate = self
 
         // --------
         // Firebase

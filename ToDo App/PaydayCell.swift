@@ -9,10 +9,10 @@ class PaydayCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         
-//        expensesButton.layer.cornerRadius = expensesButton.bounds.height / 6.4
-//        expensesButton.layer.masksToBounds = true
-//        expensesButton.layer.borderColor = UIColor.black.cgColor
-//        expensesButton.layer.borderWidth = 0.5
+        userImage.layer.cornerRadius = userImage.bounds.height / 6.4
+        userImage.layer.masksToBounds = true
+        userImage.layer.borderColor = UIColor.black.cgColor
+        userImage.layer.borderWidth = 0.5
         
     }
     
