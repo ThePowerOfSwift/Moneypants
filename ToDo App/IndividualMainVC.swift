@@ -7,7 +7,6 @@ class IndividualMainVC: UIViewController, UITableViewDelegate, UITableViewDataSo
     @IBOutlet weak var topView: UIView!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var dateLower: UILabel!
-    @IBOutlet weak var expensesButton: UIButton!
     
     
     var currentUserName: String! = "Savannah"
@@ -65,11 +64,6 @@ class IndividualMainVC: UIViewController, UITableViewDelegate, UITableViewDataSo
         userImage.image = currentUserImage
         incomeLabel.text = "$22.01"
         
-        expensesButton.layer.cornerRadius = topView.bounds.height / 6.4
-        expensesButton.layer.masksToBounds = true
-//        expensesButton.layer.borderColor = UIColor.black.cgColor
-//        expensesButton.layer.borderWidth = 0.5
-
         userImage.layer.cornerRadius = topView.bounds.height / 6.4
         userImage.layer.masksToBounds = true
         userImage.layer.borderWidth = 0.5

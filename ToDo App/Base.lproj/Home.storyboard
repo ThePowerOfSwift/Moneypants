@@ -42,7 +42,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="OVP-Pa-PcE" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="17066" y="1106"/>
+            <point key="canvasLocation" x="17066" y="1137"/>
         </scene>
         <!--View Controller-->
         <scene sceneID="8QY-yg-Es3">
@@ -79,7 +79,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="B97-GL-sdf" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="18019" y="1106"/>
+            <point key="canvasLocation" x="18021" y="1137"/>
         </scene>
         <!--videos-->
         <scene sceneID="Pjd-QL-IXx">
@@ -128,7 +128,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="wUI-h3-4cY" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="18939.375" y="1105.9859154929577"/>
+            <point key="canvasLocation" x="18941" y="1137"/>
         </scene>
         <!--Savannah-->
         <scene sceneID="Zlt-u0-AhO">
@@ -183,24 +183,10 @@
                                             <constraint firstAttribute="width" constant="58" id="zsf-Fq-7xt"/>
                                         </constraints>
                                     </imageView>
-                                    <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sIF-JS-DWZ">
-                                        <rect key="frame" x="254" y="6" width="58" height="58"/>
-                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="58" id="CXF-kU-8Zs"/>
-                                            <constraint firstAttribute="width" constant="58" id="jZo-7i-fZk"/>
-                                        </constraints>
-                                        <state key="normal" image="expenses button"/>
-                                        <connections>
-                                            <segue destination="rat-xa-53i" kind="show" id="Xug-t1-gCC"/>
-                                        </connections>
-                                    </button>
                                 </subviews>
                                 <color key="backgroundColor" white="0.90228361999999995" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
-                                    <constraint firstAttribute="trailing" secondItem="sIF-JS-DWZ" secondAttribute="trailing" constant="8" id="G3m-U4-nx4"/>
                                     <constraint firstAttribute="height" constant="70" id="QrD-ko-rUa"/>
-                                    <constraint firstItem="sIF-JS-DWZ" firstAttribute="centerY" secondItem="UPa-Aj-CEH" secondAttribute="centerY" id="YHg-C6-pab"/>
                                     <constraint firstItem="Hsm-fj-V6x" firstAttribute="top" secondItem="6Qy-gJ-dCc" secondAttribute="top" id="bvN-SL-eXF"/>
                                     <constraint firstItem="PT0-YT-keb" firstAttribute="centerX" secondItem="UPa-Aj-CEH" secondAttribute="centerX" id="dPq-om-hIz"/>
                                     <constraint firstItem="Hsm-fj-V6x" firstAttribute="centerX" secondItem="UPa-Aj-CEH" secondAttribute="centerX" id="gE9-nP-qhe"/>
@@ -280,10 +266,15 @@
                             <constraint firstItem="xJD-V6-wsT" firstAttribute="top" secondItem="coj-ep-PbJ" secondAttribute="bottom" id="ghQ-vD-Rcd"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="Savannah" id="sAL-ZY-0rX"/>
+                    <navigationItem key="navigationItem" title="Savannah" id="sAL-ZY-0rX">
+                        <barButtonItem key="rightBarButtonItem" image="expenses2 white" id="DYV-Hs-DzZ">
+                            <connections>
+                                <segue destination="rat-xa-53i" kind="show" id="1wM-G2-O4g"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="dateLower" destination="xY3-Fg-XeI" id="5Wo-Or-aYO"/>
-                        <outlet property="expensesButton" destination="sIF-JS-DWZ" id="NMF-1Z-JfX"/>
                         <outlet property="incomeLabel" destination="Hsm-fj-V6x" id="6o6-By-bRS"/>
                         <outlet property="tableView" destination="coj-ep-PbJ" id="393-N4-Uai"/>
                         <outlet property="topView" destination="UPa-Aj-CEH" id="Le0-rL-LV8"/>
@@ -292,7 +283,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="S0y-qb-cz6" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="16256" y="1106"/>
+            <point key="canvasLocation" x="16256" y="1137"/>
         </scene>
         <!--Videos-->
         <scene sceneID="7Yv-zf-Rw2">
@@ -460,7 +451,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="737-fU-yT4" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="18018.75" y="310.56338028169017"/>
+            <point key="canvasLocation" x="18019" y="306"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="Pe2-FI-aBa">
@@ -476,6 +467,7 @@
                         <segue destination="qpC-Xy-83P" kind="relationship" relationship="viewControllers" id="614-ju-IuP"/>
                         <segue destination="bw2-UD-ezI" kind="relationship" relationship="viewControllers" id="SMU-eL-zC1"/>
                         <segue destination="byr-Xe-K9c" kind="relationship" relationship="viewControllers" id="svk-wc-tbe"/>
+                        <segue destination="6G4-xI-92Z" kind="relationship" relationship="viewControllers" id="RLC-iU-r29"/>
                         <segue destination="Rv6-Ae-rL2" kind="relationship" relationship="viewControllers" id="CgH-FE-JVj"/>
                     </connections>
                 </tabBarController>
@@ -555,12 +547,12 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3W1-xQ-Bo7" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="19875" y="308"/>
+            <point key="canvasLocation" x="20908" y="305"/>
         </scene>
         <!--Home-->
         <scene sceneID="3bm-Dp-JJw">
             <objects>
-                <viewController title="Home" id="mSA-CZ-L5J" customClass="HomeVC" customModule="ToDo_App" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController title="Home" automaticallyAdjustsScrollViewInsets="NO" id="mSA-CZ-L5J" customClass="HomeVC" customModule="ToDo_App" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="kha-uV-J7d"/>
                         <viewControllerLayoutGuide type="bottom" id="gvE-m2-Aiw"/>
@@ -570,7 +562,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="90" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="hNp-sO-mgE">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="519"/>
+                                <rect key="frame" x="0.0" y="68" width="320" height="451"/>
                                 <color key="backgroundColor" white="0.90228361999999995" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="HomeDetailCell" rowHeight="90" id="QiZ-fB-vVl" customClass="HomeCustomCell" customModule="ToDo_App" customModuleProvider="target">
@@ -611,7 +603,7 @@
                                                         <constraint firstAttribute="height" constant="75" id="pZY-4H-Kxk"/>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="13"/>
-                                                    <state key="normal" image="arrow right black">
+                                                    <state key="normal" image="arrow right gray">
                                                         <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     </state>
                                                     <connections>
@@ -643,13 +635,26 @@
                                     <outlet property="delegate" destination="mSA-CZ-L5J" id="Rf9-IE-poc"/>
                                 </connections>
                             </tableView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="family members" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="26S-oq-96m">
+                                <rect key="frame" x="0.0" y="44" width="320" height="24"/>
+                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="24" id="wOe-KN-MMV"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="Arista2.0" family="Arista 2.0" pointSize="20"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="hNp-sO-mgE" firstAttribute="top" secondItem="sbb-dc-VSW" secondAttribute="top" id="H0a-oA-bTG"/>
+                            <constraint firstItem="26S-oq-96m" firstAttribute="leading" secondItem="sbb-dc-VSW" secondAttribute="leading" id="5g7-g1-0bK"/>
+                            <constraint firstItem="26S-oq-96m" firstAttribute="top" secondItem="kha-uV-J7d" secondAttribute="bottom" id="7lm-S2-1nc"/>
+                            <constraint firstAttribute="trailing" secondItem="26S-oq-96m" secondAttribute="trailing" id="LNf-hr-xxq"/>
                             <constraint firstItem="hNp-sO-mgE" firstAttribute="leading" secondItem="sbb-dc-VSW" secondAttribute="leading" id="W5v-BB-IAs"/>
                             <constraint firstItem="gvE-m2-Aiw" firstAttribute="top" secondItem="hNp-sO-mgE" secondAttribute="bottom" id="crM-pk-G1M"/>
                             <constraint firstAttribute="trailing" secondItem="hNp-sO-mgE" secondAttribute="trailing" id="i4i-7e-MzI"/>
+                            <constraint firstItem="hNp-sO-mgE" firstAttribute="top" secondItem="26S-oq-96m" secondAttribute="bottom" id="xE1-P9-HXI"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Home" id="zUD-Rj-mYz"/>
@@ -659,7 +664,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8tE-Ec-QC8" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="16669" y="307"/>
+            <point key="canvasLocation" x="16668.75" y="305.28169014084506"/>
         </scene>
         <!--Settings-->
         <scene sceneID="nmn-Df-UGd">
@@ -679,7 +684,26 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bXP-Qh-f4y" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="19877" y="-456"/>
+            <point key="canvasLocation" x="20908" y="-460"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="ays-K3-eTx">
+            <objects>
+                <viewController id="Txi-l9-KeA" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="ei9-0X-wNu"/>
+                        <viewControllerLayoutGuide type="bottom" id="SrU-5s-b70"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="Obl-hz-fVk">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="jI9-6i-0qs"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="lS1-sj-Vl2" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="19918" y="305"/>
         </scene>
         <!--Home-->
         <scene sceneID="TVH-lg-isf">
@@ -741,21 +765,42 @@
             </objects>
             <point key="canvasLocation" x="18943" y="-456"/>
         </scene>
+        <!--reports-->
+        <scene sceneID="csw-ME-jFC">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="6G4-xI-92Z" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="reports" image="reports2" id="3k9-cZ-nI5"/>
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="Ncg-Pk-kiK">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="Txi-l9-KeA" kind="relationship" relationship="rootViewController" id="wAg-PJ-TDC"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="qJ1-Pz-5Dq" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="19918" y="-455"/>
+        </scene>
     </scenes>
     <resources>
         <image name="Mom" width="320" height="256"/>
         <image name="Savannah" width="1000" height="1250"/>
         <image name="arrow left black" width="25" height="25"/>
         <image name="arrow right black" width="25" height="25"/>
+        <image name="arrow right gray" width="20" height="20"/>
         <image name="blank" width="76" height="76"/>
-        <image name="expenses button" width="75" height="75"/>
+        <image name="expenses2 white" width="25" height="24"/>
         <image name="gear" width="25" height="25"/>
         <image name="home2" width="25" height="22"/>
         <image name="payday2" width="25" height="24"/>
+        <image name="reports2" width="18" height="25"/>
         <image name="videos" width="60" height="60"/>
         <image name="videos2" width="25" height="18"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="Xug-t1-gCC"/>
+        <segue reference="1wM-G2-O4g"/>
     </inferredMetricsTieBreakers>
 </document>
