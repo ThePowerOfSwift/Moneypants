@@ -55,6 +55,10 @@ class IndividualMainVC: UIViewController, UITableViewDelegate, UITableViewDataSo
             NSForegroundColorAttributeName : UIColor.white,
             NSFontAttributeName : UIFont(name: "Arista2.0", size: 26)!
         ]
+        
+        tabBarItem.setTitleTextAttributes([NSForegroundColorAttributeName: UIColor.lightGray], for:.selected)
+        tabBarController?.tabBar.tintColor = UIColor.black
+        tabBarController?.tabBar.isTranslucent = false
 
         
         tableView.delegate = self
@@ -76,7 +80,30 @@ class IndividualMainVC: UIViewController, UITableViewDelegate, UITableViewDataSo
 //        dateUpper.text = result2
         formatter.dateFormat = "EEE MMM d"        // day of year
         let result = formatter.string(from: date)
-        dateLower.text = result
+        
+        // ---------------
+        // Date calculator
+        // ---------------
+        
+        func dayDifference(from interval : TimeInterval) -> String
+        {
+            let calendar = NSCalendar.current
+            let date = Date(timeIntervalSince1970: interval)
+            if calendar.isDateInYesterday(date) { return "Yesterday" }
+            else if calendar.isDateInToday(date) { return "Today" }
+            else if calendar.isDateInTomorrow(date) { return "Tomorrow" }
+            else {
+                let startOfNow = calendar.startOfDay(for: Date())
+                let startOfTimeStamp = calendar.startOfDay(for: date)
+                let components = calendar.dateComponents([.day], from: startOfNow, to: startOfTimeStamp)
+                let day = components.day!
+                if day < 1 { return "\(abs(day)) days ago" }
+                else { return "In \(day) days" }
+            }
+        }
+        
+        
+//        dateLower.text = result     // to show current date below money amount
 
     }
     
@@ -136,7 +163,11 @@ class IndividualMainVC: UIViewController, UITableViewDelegate, UITableViewDataSo
         return cell
     }
     
-    @IBAction func homeButtonTapped(_ sender: UIButton) {
+    // -----------
+    // Home Button
+    // -----------
+    
+    @IBAction func homeButtonTapped(_ sender: UIBarButtonItem) {
         dismiss(animated: true, completion: nil)
     }
 }

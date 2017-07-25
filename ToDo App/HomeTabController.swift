@@ -1,6 +1,6 @@
 import UIKit
 
-class HomeNavController: UINavigationController {
+class HomeTabController: UITabBarController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -15,7 +15,5 @@ class HomeNavController: UINavigationController {
             NSForegroundColorAttributeName : UIColor.white,
             NSFontAttributeName : UIFont(name: "Arista2.0", size: 26)!
         ]
-
     }
-
 }

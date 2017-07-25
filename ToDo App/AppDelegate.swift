@@ -13,17 +13,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         FIRApp.configure()
         FIRDatabase.database().persistenceEnabled = true        // enable offline work
         IQKeyboardManager.sharedManager().enable = true
-        
-        // ---------------------------------------------
-        // hide text, only have back arrow on navigation
-        // ---------------------------------------------
-        
-//        let backImage = UIImage(named: "BackNavigation")?.withRenderingMode(.alwaysOriginal)
-//        UINavigationBar.appearance().backIndicatorImage = backImage
-//        UINavigationBar.appearance().backIndicatorTransitionMaskImage = backImage
-//        UIBarButtonItem.appearance().setBackButtonTitlePositionAdjustment(UIOffsetMake(0, -80.0), for: .default)
-        
-        
+                
         /*
         //let currentUser = FIRAuth.auth()?.currentUser
         // If user already logged in, go right to setup page 103

@@ -12,27 +12,19 @@ class HomeVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        addNavBarImage()
-        
-        print("HOME: yearly income MPS: \(yearlyIncomeMPS!)")
-        print("HOME: yearly income outside: \(yearlyIncomeOutside!)")
-        print("HOME: calculated income: \(String(format: "%.02f", (Double(yearlyIncomeMPS) * 0.021) + Double(yearlyIncomeOutside)))")
-        
         // -----------------
-        // Customize Nav Bar
+        // Customize Toolbar (NOTE: nav bar customization goes in nav bar controller, toolbar customization goes in first (main) view controller in stack
         // -----------------
-        
-        UINavigationBar.appearance().barTintColor = UIColor(red: 15/255, green: 131/255, blue: 254/255, alpha: 1)
-        UINavigationBar.appearance().tintColor = UIColor.white
-        UINavigationBar.appearance().titleTextAttributes = [
-            NSForegroundColorAttributeName : UIColor.white,
-            NSFontAttributeName : UIFont(name: "Arista2.0", size: 26)!
-        ]
 
+        addNavBarImage()
         tabBarItem.setTitleTextAttributes([NSForegroundColorAttributeName: UIColor.lightGray], for:.selected)
         tabBarController?.tabBar.tintColor = UIColor.black
         tabBarController?.tabBar.isTranslucent = false
         
+        print("HOME: yearly income MPS: \(yearlyIncomeMPS!)")
+        print("HOME: yearly income outside: \(yearlyIncomeOutside!)")
+        print("HOME: calculated income: \(String(format: "%.02f", (Double(yearlyIncomeMPS) * 0.021) + Double(yearlyIncomeOutside)))")
+                
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
