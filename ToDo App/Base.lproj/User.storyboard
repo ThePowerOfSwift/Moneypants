@@ -24,10 +24,10 @@
             </objects>
             <point key="canvasLocation" x="17078" y="2463"/>
         </scene>
-        <!--View Controller-->
+        <!--BudgetVC-->
         <scene sceneID="uny-If-0aa">
             <objects>
-                <viewController id="rat-xa-53i" sceneMemberID="viewController">
+                <viewController id="rat-xa-53i" customClass="BudgetVC" customModule="ToDo_App" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="x4c-jG-R2F"/>
                         <viewControllerLayoutGuide type="bottom" id="0kD-RW-cCH"/>
@@ -36,8 +36,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="expenses page" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eEV-9o-6Wo">
-                                <rect key="frame" x="102" y="273.5" width="116" height="21"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="budget page" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eEV-9o-6Wo">
+                                <rect key="frame" x="111.5" y="273.5" width="97.5" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -49,7 +49,13 @@
                             <constraint firstItem="eEV-9o-6Wo" firstAttribute="centerY" secondItem="oTX-1J-Jq8" secondAttribute="centerY" id="jy7-cK-GjO"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="hph-ma-Wdv"/>
+                    <navigationItem key="navigationItem" id="hph-ma-Wdv">
+                        <barButtonItem key="rightBarButtonItem" image="home black" id="jEa-cg-Rog">
+                            <connections>
+                                <action selector="homeButtonTapped:" destination="rat-xa-53i" id="9UD-CB-srv"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="OVP-Pa-PcE" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -235,10 +241,10 @@
             </objects>
             <point key="canvasLocation" x="13590" y="2749"/>
         </scene>
-        <!--View Controller-->
+        <!--TransactionsVC-->
         <scene sceneID="Df2-UV-y8M">
             <objects>
-                <viewController id="8Y7-4Q-m3X" sceneMemberID="viewController">
+                <viewController id="8Y7-4Q-m3X" customClass="TransactionsVC" customModule="ToDo_App" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="ArZ-Ez-1jz"/>
                         <viewControllerLayoutGuide type="bottom" id="GVH-vb-7XB"/>
@@ -247,8 +253,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="fee page" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dCH-Up-8ld">
-                                <rect key="frame" x="126.5" y="273.5" width="67" height="21"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="transactions page" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dCH-Up-8ld">
+                                <rect key="frame" x="91.5" y="273.5" width="137.5" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -260,7 +266,13 @@
                             <constraint firstItem="dCH-Up-8ld" firstAttribute="centerX" secondItem="ffA-UV-3Nj" secondAttribute="centerX" id="eVd-LE-spl"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="3uw-mW-1hK"/>
+                    <navigationItem key="navigationItem" id="3uw-mW-1hK">
+                        <barButtonItem key="rightBarButtonItem" image="home black" id="jj4-Pb-LRG">
+                            <connections>
+                                <action selector="homeButtonTapped:" destination="8Y7-4Q-m3X" id="zfZ-iN-6qy"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Eev-S6-zLc" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -439,7 +451,7 @@
         <!--budget-->
         <scene sceneID="Tpc-1A-AXL">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="R3d-DN-EvV" sceneMemberID="viewController">
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="R3d-DN-EvV" customClass="BudgetNavController" customModule="ToDo_App" customModuleProvider="target" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="budget" image="expenses white" selectedImage="expenses black" id="oE1-Zk-h2O"/>
                     <toolbarItems/>
                     <nil key="simulatedStatusBarMetrics"/>
@@ -476,11 +488,11 @@
             </objects>
             <point key="canvasLocation" x="17078" y="1968"/>
         </scene>
-        <!--fees-->
+        <!--transactions-->
         <scene sceneID="eNm-JE-YH8">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="Fi1-ip-zaT" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="fees" image="payday white" selectedImage="payday black" id="WuZ-I1-i4B"/>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="Fi1-ip-zaT" customClass="TransNavController" customModule="ToDo_App" customModuleProvider="target" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="transactions" image="transactions white" selectedImage="transactions black" id="WuZ-I1-i4B"/>
                     <toolbarItems/>
                     <nil key="simulatedStatusBarMetrics"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="TAg-DL-5KK">
@@ -533,10 +545,10 @@
         <image name="home black" width="28" height="25"/>
         <image name="house broom" width="150" height="150"/>
         <image name="income hand" width="150" height="149"/>
-        <image name="payday black" width="26" height="25"/>
-        <image name="payday white" width="26" height="25"/>
         <image name="reports black" width="18" height="25"/>
         <image name="reports white" width="18" height="25"/>
+        <image name="transactions black" width="28" height="25"/>
+        <image name="transactions white" width="28" height="25"/>
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="HEn-Xo-Zka"/>

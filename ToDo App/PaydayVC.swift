@@ -2,10 +2,9 @@ import UIKit
 
 class PaydayVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
-    @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var tableView: UITableView!    
     
     override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
         tableView.reloadData()
     }
     
@@ -13,9 +12,9 @@ class PaydayVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         super.viewDidLoad()
         tableView.dataSource = self
         tableView.delegate = self
-        
     }
-        
+    
+    
     // ----------
     // Table View
     // ----------
@@ -47,5 +46,4 @@ class PaydayVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         paydayIndex = indexPath.row
         performSegue(withIdentifier: "DetailSegue", sender: self)
     }
-    
 }
