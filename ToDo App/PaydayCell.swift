@@ -8,12 +8,6 @@ class PaydayCell: UITableViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        
-        userImage.layer.cornerRadius = userImage.bounds.height / 6.4
-        userImage.layer.masksToBounds = true
-        userImage.layer.borderColor = UIColor.black.cgColor
-        userImage.layer.borderWidth = 0.5
-        
     }
     
     override func setSelected(_ selected: Bool, animated: Bool) {

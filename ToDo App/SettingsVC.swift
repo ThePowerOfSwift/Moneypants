@@ -13,11 +13,22 @@ class SettingsVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                                             ("change passwords", "IndividualIncomeSummary"),
                                             ("sign out", "Login")]
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        tableView.reloadData()
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         addNavBarImage()
     }
+        
+    
+    // ----------------
+    // Setup Table View
+    // ----------------
+    
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return settingsList.count
@@ -91,10 +102,6 @@ class SettingsVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         imageView.frame = CGRect(x: bannerX, y: bannerY, width: bannerWidth * 0.75, height: bannerHeight * 0.75)
         imageView.contentMode = .scaleAspectFit
         navigationItem.titleView = imageView
-    }
-    
-    @IBAction func backButton(_ sender: UIButton) {
-        dismiss(animated: true, completion: nil)
     }
 
 }

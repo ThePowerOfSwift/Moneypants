@@ -34,19 +34,29 @@ class VideosVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
                       ("Moneypants Boss", "https://vimeo.com/153579716"),
                       ("Fancy Foods & Treats", "https://vimeo.com/153579716")]
     
+    
     // refresh table view after user taps, so cells don't stay selected
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         tableView.reloadData()
-    }
+        
+        // -----------------
+        // Customize Nav Bar
+        // -----------------
+        
+//        UINavigationBar.appearance().barTintColor = UIColor.yellow         //(red: 236/255, green: 78/255, blue: 27/255, alpha: 1)
+//        UINavigationBar.appearance().tintColor = UIColor.white
+//        UINavigationBar.appearance().titleTextAttributes = [
+//            NSForegroundColorAttributeName : UIColor.white,
+//            NSFontAttributeName : UIFont(name: "Arista2.0", size: 26)!
+//        ]
+}
+    
 
     override func viewDidLoad() {
         
         tableView.delegate = self
         tableView.dataSource = self
-        
-        addNavBarImage()
-
     }
     
     // ----------------
@@ -78,6 +88,11 @@ class VideosVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
         }
     }
     
+    
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 24
+    }
+        
     func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
         let header = view as! UITableViewHeaderFooterView
         header.textLabel?.font = UIFont(name: "Arista2.0", size: 20.0)
@@ -106,19 +121,4 @@ class VideosVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
             print(videoName)
         }
     }
-    
-    
-    func addNavBarImage() {
-        let navController = navigationController!
-        let barImage = #imageLiteral(resourceName: "MPS logo white")
-        let imageView = UIImageView(image: barImage)
-        let bannerWidth = navController.navigationBar.frame.size.width
-        let bannerHeight = navController.navigationBar.frame.size.height
-        let bannerX = bannerWidth / 2 - barImage.size.width / 2
-        let bannerY = bannerHeight / 2 - barImage.size.height / 2
-        imageView.frame = CGRect(x: bannerX, y: bannerY, width: bannerWidth * 0.75, height: bannerHeight * 0.75)
-        imageView.contentMode = .scaleAspectFit
-        navigationItem.titleView = imageView
-    }
-
 }

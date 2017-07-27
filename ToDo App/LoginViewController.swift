@@ -5,10 +5,33 @@ class LoginViewController: UIViewController {
     
     @IBOutlet weak var emailField: UITextField!
     @IBOutlet weak var passwordField: UITextField!
+    @IBOutlet weak var namePasswordView: UIView!
+    @IBOutlet weak var signinButton: UIButton!
+    @IBOutlet weak var questionMark: UILabel!
+    @IBOutlet weak var plusSign: UILabel!
+    
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        namePasswordView.layer.cornerRadius = namePasswordView.bounds.height / 6.4
+        namePasswordView.layer.masksToBounds = true
+        namePasswordView.layer.borderWidth = 0.5
+        namePasswordView.layer.borderColor = UIColor.lightGray.cgColor
+        
+        signinButton.layer.cornerRadius = signinButton.bounds.height / 6.4
+        signinButton.layer.masksToBounds = true
+        
+        questionMark.layer.cornerRadius = questionMark.bounds.height / 2
+        questionMark.layer.masksToBounds = true
+        
+        plusSign.layer.cornerRadius = plusSign.bounds.height / 2
+        plusSign.layer.masksToBounds = true
+    }
+    
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        
         if let _ = FIRAuth.auth()?.currentUser {
             self.signIn()
         }

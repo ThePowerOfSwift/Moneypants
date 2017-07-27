@@ -5,6 +5,22 @@ class SignUpViewController: UIViewController {
     
     @IBOutlet weak var emailField: UITextField!
     @IBOutlet weak var passwordField: UITextField!
+    @IBOutlet weak var newUserView: UIView!
+    @IBOutlet weak var createAccountButton: UIButton!
+    
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        newUserView.layer.cornerRadius = newUserView.bounds.height / 6.4
+        newUserView.layer.masksToBounds = true
+        newUserView.layer.borderWidth = 0.5
+        newUserView.layer.borderColor = UIColor.lightGray.cgColor
+        
+        createAccountButton.layer.cornerRadius = createAccountButton.bounds.height / 6.4
+        createAccountButton.layer.masksToBounds = true
+        
+    }
     
     @IBAction func didTapSignUp(_ sender: UIButton) {
         let email = emailField.text

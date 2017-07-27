@@ -3,29 +3,25 @@ import UIKit
 class HomeVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
     @IBOutlet weak var tableView: UITableView!
-        
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
+    
+    override func viewDidAppear(_ animated: Bool) {
         tableView.reloadData()
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        // -----------------
-        // Customize Toolbar (NOTE: nav bar customization goes in nav bar controller, toolbar customization goes in first (main) view controller in stack
-        // -----------------
-
         addNavBarImage()
-        tabBarItem.setTitleTextAttributes([NSForegroundColorAttributeName: UIColor.lightGray], for:.selected)
-        tabBarController?.tabBar.tintColor = UIColor.black
-        tabBarController?.tabBar.isTranslucent = false
-        
+        tableView.delegate = self
+        tableView.dataSource = self
         print("HOME: yearly income MPS: \(yearlyIncomeMPS!)")
         print("HOME: yearly income outside: \(yearlyIncomeOutside!)")
         print("HOME: calculated income: \(String(format: "%.02f", (Double(yearlyIncomeMPS) * 0.021) + Double(yearlyIncomeOutside)))")
-                
     }
+    
+    
+    // ----------
+    // Table View
+    // ----------
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return tempUsers.count
@@ -49,6 +45,13 @@ class HomeVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
         return cell
     }
     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        homeIndex = indexPath.row
+        tableView.reloadData()
+        performSegue(withIdentifier: "DetailSegue", sender: self)
+    }
+    
+    
     func addNavBarImage() {
         let navController = navigationController!
         let barImage = #imageLiteral(resourceName: "MPS logo white")
@@ -61,11 +64,6 @@ class HomeVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
         imageView.contentMode = .scaleAspectFit
         navigationItem.titleView = imageView
     }
-    
-    
-//    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//        performSegue(withIdentifier: "DetailSegue", sender: self)
-//    }
 }
 
 

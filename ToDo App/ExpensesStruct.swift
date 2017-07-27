@@ -16,3 +16,5 @@ let tempUsers: [(String, UIImage, String)] = [
     ("Sophie", #imageLiteral(resourceName: "Sophie.jpg"), "14.67")
 ]
 
+var homeIndex = 0       // MARK: global variable, need to change this
+var paydayIndex = 0         // MARK: global variable, need to change this

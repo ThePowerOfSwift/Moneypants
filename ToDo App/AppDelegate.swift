@@ -13,7 +13,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         FIRApp.configure()
         FIRDatabase.database().persistenceEnabled = true        // enable offline work
         IQKeyboardManager.sharedManager().enable = true
-                
+        
         /*
         //let currentUser = FIRAuth.auth()?.currentUser
         // If user already logged in, go right to setup page 103
