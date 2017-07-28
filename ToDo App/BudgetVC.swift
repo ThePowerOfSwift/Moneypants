@@ -1,9 +1,13 @@
 import UIKit
 
 class BudgetVC: UIViewController {
+    
+    let (userName, userPicture, userIncome) = tempUsers[homeIndex]
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        navigationItem.title = userName
     }
     
     // -----------

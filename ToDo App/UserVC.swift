@@ -166,6 +166,17 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     @IBAction func homeButtonTapped(_ sender: UIBarButtonItem) {
         dismiss(animated: true, completion: nil)
     }
+    
+    // -----------------
+    // Green Grid Button
+    // -----------------
+    
+    @IBAction func greenGridButtonTapped(_ sender: UIButton) {
+        let storyboard = UIStoryboard(name: "User", bundle: nil)
+        let vc = storyboard.instantiateViewController(withIdentifier: "ReportsVC") as! ReportsVC
+        navigationController?.pushViewController(vc, animated: true)
+    }
+    
 }
 
 
