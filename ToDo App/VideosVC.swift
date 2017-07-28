@@ -39,25 +39,14 @@ class VideosVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         tableView.reloadData()
-        
-        // -----------------
-        // Customize Nav Bar
-        // -----------------
-        
-//        UINavigationBar.appearance().barTintColor = UIColor.yellow         //(red: 236/255, green: 78/255, blue: 27/255, alpha: 1)
-//        UINavigationBar.appearance().tintColor = UIColor.white
-//        UINavigationBar.appearance().titleTextAttributes = [
-//            NSForegroundColorAttributeName : UIColor.white,
-//            NSFontAttributeName : UIFont(name: "Arista2.0", size: 26)!
-//        ]
-}
+    }
     
-
     override func viewDidLoad() {
-        
+        super.viewDidLoad()        
         tableView.delegate = self
         tableView.dataSource = self
     }
+
     
     // ----------------
     // Setup Table View

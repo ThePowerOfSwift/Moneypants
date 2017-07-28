@@ -76,6 +76,7 @@
 		CEB4CD2D1F1ED77400F9733F /* SetupNavController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB4CD2C1F1ED77400F9733F /* SetupNavController.swift */; };
 		CED509E21F030F560058728F /* Step4ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED509E11F030F560058728F /* Step4ViewController.swift */; };
 		CED509E41F0310740058728F /* Step4CustomCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED509E31F0310740058728F /* Step4CustomCell.swift */; };
+		CEDBFE2E1F2AE4C800829DE4 /* TransactionsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEDBFE2D1F2AE4C800829DE4 /* TransactionsCell.swift */; };
 		CEE4D6A41F0F4433009BAE6C /* Step5ExpensesInputVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEE4D6A31F0F4433009BAE6C /* Step5ExpensesInputVC.swift */; };
 		CEE4D6AC1F0F70EC009BAE6C /* Step5HeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEE4D6AB1F0F70EC009BAE6C /* Step5HeaderCell.swift */; };
 		CEEBB3401F202D900046E3FE /* SetupCompleteVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEEBB33F1F202D900046E3FE /* SetupCompleteVC.swift */; };
@@ -157,6 +158,7 @@
 		CEB4CD2C1F1ED77400F9733F /* SetupNavController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SetupNavController.swift; sourceTree = "<group>"; };
 		CED509E11F030F560058728F /* Step4ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Step4ViewController.swift; sourceTree = "<group>"; };
 		CED509E31F0310740058728F /* Step4CustomCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Step4CustomCell.swift; sourceTree = "<group>"; };
+		CEDBFE2D1F2AE4C800829DE4 /* TransactionsCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionsCell.swift; sourceTree = "<group>"; };
 		CEE4D6A31F0F4433009BAE6C /* Step5ExpensesInputVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Step5ExpensesInputVC.swift; sourceTree = "<group>"; };
 		CEE4D6AB1F0F70EC009BAE6C /* Step5HeaderCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Step5HeaderCell.swift; sourceTree = "<group>"; };
 		CEEBB33F1F202D900046E3FE /* SetupCompleteVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SetupCompleteVC.swift; sourceTree = "<group>"; };
@@ -210,10 +212,7 @@
 			isa = PBXGroup;
 			children = (
 				89FB67571D5C82AB002B2484 /* AppDelegate.swift */,
-				89FB675B1D5C82AB002B2484 /* Setup.storyboard */,
-				CE0E19711F168B3900DEDBDE /* Home.storyboard */,
-				CE4832B41F27E27B005A7A55 /* User.storyboard */,
-				89FB67601D5C82AB002B2484 /* LaunchScreen.storyboard */,
+				CEDBFE2C1F2AE41900829DE4 /* Storyboards */,
 				89FB67631D5C82AB002B2484 /* Info.plist */,
 				CEB2FD531EFF4DB300763862 /* GoogleService-Info.plist */,
 				89FB675E1D5C82AB002B2484 /* Assets.xcassets */,
@@ -267,6 +266,7 @@
 				CEAD053D1F2209A60097CD33 /* UserCell.swift */,
 				CE9443B91F29839F00ACC7D4 /* TransNavController.swift */,
 				CE9443BB1F29842000ACC7D4 /* TransactionsVC.swift */,
+				CEDBFE2D1F2AE4C800829DE4 /* TransactionsCell.swift */,
 				CE9443B71F29804200ACC7D4 /* BudgetNavController.swift */,
 				CE9443BD1F29847F00ACC7D4 /* BudgetVC.swift */,
 				CE4832CA1F286843005A7A55 /* ReportsNavController.swift */,
@@ -297,6 +297,17 @@
 				CE1B47801F1885B0007C7515 /* SettingsVC.swift */,
 			);
 			name = Home;
+			sourceTree = "<group>";
+		};
+		CEDBFE2C1F2AE41900829DE4 /* Storyboards */ = {
+			isa = PBXGroup;
+			children = (
+				89FB675B1D5C82AB002B2484 /* Setup.storyboard */,
+				CE0E19711F168B3900DEDBDE /* Home.storyboard */,
+				CE4832B41F27E27B005A7A55 /* User.storyboard */,
+				89FB67601D5C82AB002B2484 /* LaunchScreen.storyboard */,
+			);
+			name = Storyboards;
 			sourceTree = "<group>";
 		};
 		CEE4D6A51F0F4460009BAE6C /* Step2 */ = {
@@ -561,6 +572,7 @@
 				CED509E21F030F560058728F /* Step4ViewController.swift in Sources */,
 				CE79B8941F233F290032DD70 /* VideosVC.swift in Sources */,
 				CE79B8921F233EE90032DD70 /* PaydayVC.swift in Sources */,
+				CEDBFE2E1F2AE4C800829DE4 /* TransactionsCell.swift in Sources */,
 				CE8FFA021F10AE92004A53BE /* ExpensesStruct.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -7,13 +7,9 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     @IBOutlet weak var topView: UIView!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var dateLower: UILabel!
-    
-    
+    @IBOutlet weak var greenGrid: UIButton!
+        
     let (userName, userPicture, userIncome) = tempUsers[homeIndex]
-    
-    var currentUserName: String! = "Savannah"
-    var currentUserImage: UIImage! = #imageLiteral(resourceName: "Savannah.jpg")
-    var currentUserIncome: String! = String(format: "%.02f", ((Double(yearlyIncomeMPS) * 0.021) + Double(yearlyIncomeOutside)) / 52)
     
     // Table data is as follows: chore name, chore multiplier, chore Consistency Bonus, chore editable?
     
@@ -70,6 +66,11 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         userImage.layer.masksToBounds = true
         userImage.layer.borderWidth = 0.5
         userImage.layer.borderColor = UIColor.black.cgColor
+        
+        greenGrid.layer.cornerRadius = greenGrid.bounds.height / 6.4
+        greenGrid.layer.masksToBounds = true
+        greenGrid.layer.borderWidth = 0.5
+        greenGrid.layer.borderColor = UIColor.black.cgColor
         
         let date = Date()
         let formatter = DateFormatter()

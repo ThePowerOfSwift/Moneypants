@@ -4,15 +4,16 @@ class PaydayVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     @IBOutlet weak var tableView: UITableView!    
     
-    override func viewWillAppear(_ animated: Bool) {
-        tableView.reloadData()
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.dataSource = self
         tableView.delegate = self
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        tableView.reloadData()
+    }
+
     
     
     // ----------
@@ -34,6 +35,12 @@ class PaydayVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         cell.userImage.layer.masksToBounds = true
         cell.userImage.layer.borderWidth = 0.5
         cell.userImage.layer.borderColor = UIColor.black.cgColor
+        
+        cell.goView.layer.cornerRadius = cell.goView.bounds.height / 6.4
+        cell.goView.layer.masksToBounds = true
+        cell.goView.layer.borderColor = UIColor.black.cgColor
+        cell.goView.layer.borderWidth = 0.5
+        
 
         return cell
     }

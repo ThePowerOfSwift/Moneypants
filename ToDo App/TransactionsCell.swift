@@ -1,18 +1,19 @@
 import UIKit
 
-class PaydayCell: UITableViewCell {
+class TransactionsCell: UITableViewCell {
     
-    @IBOutlet weak var userImage: UIImageView!
-    @IBOutlet weak var userName: UILabel!
-    @IBOutlet weak var goView: UIView!
+    @IBOutlet weak var timeStampLabel: UILabel!
+    @IBOutlet weak var choreHabitLabel: UILabel!
+    @IBOutlet weak var choreHabitPointValueLabel: UILabel!
     
-    
+
     override func awakeFromNib() {
         super.awakeFromNib()
-    }
-    
+     }
+
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
+
     }
-    
+
 }

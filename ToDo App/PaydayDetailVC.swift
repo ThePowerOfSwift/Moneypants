@@ -4,6 +4,8 @@ class PaydayDetailVC: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     @IBOutlet weak var incomeLabel: UILabel!
     @IBOutlet weak var tableView: UITableView!
+    let (userName, _, userIncome) = tempUsers[paydayIndex]
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -11,9 +13,7 @@ class PaydayDetailVC: UIViewController, UITableViewDelegate, UITableViewDataSour
         tableView.dataSource = self
         tableView.delegate = self
         
-        let (userName, _, userIncome) = tempUsers[paydayIndex]
         incomeLabel.text = "$\(userIncome)"
-        
         self.navigationItem.title = userName
     }
     
@@ -65,39 +65,291 @@ class PaydayDetailVC: UIViewController, UITableViewDelegate, UITableViewDataSour
         cell.tallyView.layer.borderColor = UIColor.lightGray.cgColor
         cell.tallyView.layer.borderWidth = 0.5
         
+        // ------------
+        // DAILY CHORES
+        // ------------
+        
         if indexPath.section == 0 {
-            let (choreDesc, lab1, lab2, lab3, lab4, lab5, lab6, lab7, choreNum) = tempPaydayDailyChores[indexPath.row]
+            let (choreDesc, label1, label2, label3, label4, label5, label6, label7, choreNum) = tempPaydayDailyChores[indexPath.row]
             cell.choreHabitDesc.text = choreDesc
-            cell.lab1.text = lab1
-            cell.lab2.text = lab2
-            cell.lab3.text = lab3
-            cell.lab4.text = lab4
-            cell.lab5.text = lab5
-            cell.lab6.text = lab6
-            cell.lab7.text = lab7
+            
+            cell.lab1.text = label1
+            switch label1 {
+            case "X":
+                cell.lab1.backgroundColor = UIColor.red
+            case "E":
+                cell.lab1.backgroundColor = UIColor.lightGray
+            case "":
+                cell.lab1.backgroundColor = UIColor.lightGray
+            default:
+                cell.lab1.backgroundColor = UIColor(red: 141/255, green: 198/255, blue: 63/255, alpha: 1)
+            }
+            
+            cell.lab2.text = label2
+            switch label2 {
+            case "X":
+                cell.lab2.backgroundColor = UIColor.red
+            case "E":
+                cell.lab2.backgroundColor = UIColor.lightGray
+            case "":
+                cell.lab2.backgroundColor = UIColor.lightGray
+            default:
+                cell.lab2.backgroundColor = UIColor(red: 141/255, green: 198/255, blue: 63/255, alpha: 1)
+            }
+
+            cell.lab3.text = label3
+            switch label3 {
+            case "X":
+                cell.lab3.backgroundColor = UIColor.red
+            case "E":
+                cell.lab3.backgroundColor = UIColor.lightGray
+            case "":
+                cell.lab3.backgroundColor = UIColor.lightGray
+            default:
+                cell.lab3.backgroundColor = UIColor(red: 141/255, green: 198/255, blue: 63/255, alpha: 1)
+            }
+
+            cell.lab4.text = label4
+            switch label4 {
+            case "X":
+                cell.lab4.backgroundColor = UIColor.red
+            case "E":
+                cell.lab4.backgroundColor = UIColor.lightGray
+            case "":
+                cell.lab4.backgroundColor = UIColor.lightGray
+            default:
+                cell.lab4.backgroundColor = UIColor(red: 141/255, green: 198/255, blue: 63/255, alpha: 1)
+            }
+
+            cell.lab5.text = label5
+            switch label5 {
+            case "X":
+                cell.lab5.backgroundColor = UIColor.red
+            case "E":
+                cell.lab5.backgroundColor = UIColor.lightGray
+            case "":
+                cell.lab5.backgroundColor = UIColor.lightGray
+            default:
+                cell.lab5.backgroundColor = UIColor(red: 141/255, green: 198/255, blue: 63/255, alpha: 1)
+            }
+
+            cell.lab6.text = label6
+            switch label6 {
+            case "X":
+                cell.lab6.backgroundColor = UIColor.red
+            case "E":
+                cell.lab6.backgroundColor = UIColor.lightGray
+            case "":
+                cell.lab6.backgroundColor = UIColor.lightGray
+            default:
+                cell.lab6.backgroundColor = UIColor(red: 141/255, green: 198/255, blue: 63/255, alpha: 1)
+            }
+
+            cell.lab7.text = label7
+            switch label7 {
+            case "X":
+                cell.lab7.backgroundColor = UIColor.red
+            case "E":
+                cell.lab7.backgroundColor = UIColor.lightGray
+            case "":
+                cell.lab7.backgroundColor = UIColor.lightGray
+            default:
+                cell.lab7.backgroundColor = UIColor(red: 141/255, green: 198/255, blue: 63/255, alpha: 1)
+            }
+
             cell.choreHabitTotal.text = "\(choreNum)"
+            
+        // ------------
+        // DAILY HABITS
+        // ------------
+        
         } else if indexPath.section == 1 {
-            let (habitDesc, lab1, lab2, lab3, lab4, lab5, lab6, lab7, habitNum) = tempPaydayDailyHabits[indexPath.row]
+            let (habitDesc, label1, label2, label3, label4, label5, label6, label7, habitNum) = tempPaydayDailyHabits[indexPath.row]
             cell.choreHabitDesc.text = habitDesc
-            cell.lab1.text = lab1
-            cell.lab2.text = lab2
-            cell.lab3.text = lab3
-            cell.lab4.text = lab4
-            cell.lab5.text = lab5
-            cell.lab6.text = lab6
-            cell.lab7.text = lab7
+            
+            cell.lab1.text = label1
+            switch label1 {
+            case "X":
+                cell.lab1.backgroundColor = UIColor.red
+            case "E":
+                cell.lab1.backgroundColor = UIColor.lightGray
+            case "":
+                cell.lab1.backgroundColor = UIColor.lightGray
+            default:
+                cell.lab1.backgroundColor = UIColor(red: 141/255, green: 198/255, blue: 63/255, alpha: 1)
+            }
+            
+            cell.lab2.text = label2
+            switch label2 {
+            case "X":
+                cell.lab2.backgroundColor = UIColor.red
+            case "E":
+                cell.lab2.backgroundColor = UIColor.lightGray
+            case "":
+                cell.lab2.backgroundColor = UIColor.lightGray
+            default:
+                cell.lab2.backgroundColor = UIColor(red: 141/255, green: 198/255, blue: 63/255, alpha: 1)
+            }
+            
+            cell.lab3.text = label3
+            switch label3 {
+            case "X":
+                cell.lab3.backgroundColor = UIColor.red
+            case "E":
+                cell.lab3.backgroundColor = UIColor.lightGray
+            case "":
+                cell.lab3.backgroundColor = UIColor.lightGray
+            default:
+                cell.lab3.backgroundColor = UIColor(red: 141/255, green: 198/255, blue: 63/255, alpha: 1)
+            }
+            
+            cell.lab4.text = label4
+            switch label4 {
+            case "X":
+                cell.lab4.backgroundColor = UIColor.red
+            case "E":
+                cell.lab4.backgroundColor = UIColor.lightGray
+            case "":
+                cell.lab4.backgroundColor = UIColor.lightGray
+            default:
+                cell.lab4.backgroundColor = UIColor(red: 141/255, green: 198/255, blue: 63/255, alpha: 1)
+            }
+            
+            cell.lab5.text = label5
+            switch label5 {
+            case "X":
+                cell.lab5.backgroundColor = UIColor.red
+            case "E":
+                cell.lab5.backgroundColor = UIColor.lightGray
+            case "":
+                cell.lab5.backgroundColor = UIColor.lightGray
+            default:
+                cell.lab5.backgroundColor = UIColor(red: 141/255, green: 198/255, blue: 63/255, alpha: 1)
+            }
+            
+            cell.lab6.text = label6
+            switch label6 {
+            case "X":
+                cell.lab6.backgroundColor = UIColor.red
+            case "E":
+                cell.lab6.backgroundColor = UIColor.lightGray
+            case "":
+                cell.lab6.backgroundColor = UIColor.lightGray
+            default:
+                cell.lab6.backgroundColor = UIColor(red: 141/255, green: 198/255, blue: 63/255, alpha: 1)
+            }
+            
+            cell.lab7.text = label7
+            switch label7 {
+            case "X":
+                cell.lab7.backgroundColor = UIColor.red
+            case "E":
+                cell.lab7.backgroundColor = UIColor.lightGray
+            case "":
+                cell.lab7.backgroundColor = UIColor.lightGray
+            default:
+                cell.lab7.backgroundColor = UIColor(red: 141/255, green: 198/255, blue: 63/255, alpha: 1)
+            }
+            
             cell.choreHabitTotal.text = "\(habitNum)"
+            
+        // -------------
+        // WEEKLY CHORES
+        // -------------
+        
         } else if indexPath.section == 2 {
-            let (weeklyDesc, lab1, lab2, lab3, lab4, lab5, lab6, lab7, weeklyNum) = tempPaydayWeeklyChores[indexPath.row]
+            let (weeklyDesc, label1, label2, label3, label4, label5, label6, label7, weeklyNum) = tempPaydayWeeklyChores[indexPath.row]
             cell.choreHabitDesc.text = weeklyDesc
-            cell.lab1.text = lab1
-            cell.lab2.text = lab2
-            cell.lab3.text = lab3
-            cell.lab4.text = lab4
-            cell.lab5.text = lab5
-            cell.lab6.text = lab6
-            cell.lab7.text = lab7
+            
+            cell.lab1.text = label1
+            switch label1 {
+            case "X":
+                cell.lab1.backgroundColor = UIColor.red
+            case "E":
+                cell.lab1.backgroundColor = UIColor.lightGray
+            case "":
+                cell.lab1.backgroundColor = UIColor.lightGray
+            default:
+                cell.lab1.backgroundColor = UIColor(red: 141/255, green: 198/255, blue: 63/255, alpha: 1)
+            }
+            
+            cell.lab2.text = label2
+            switch label2 {
+            case "X":
+                cell.lab2.backgroundColor = UIColor.red
+            case "E":
+                cell.lab2.backgroundColor = UIColor.lightGray
+            case "":
+                cell.lab2.backgroundColor = UIColor.lightGray
+            default:
+                cell.lab2.backgroundColor = UIColor(red: 141/255, green: 198/255, blue: 63/255, alpha: 1)
+            }
+            
+            cell.lab3.text = label3
+            switch label3 {
+            case "X":
+                cell.lab3.backgroundColor = UIColor.red
+            case "E":
+                cell.lab3.backgroundColor = UIColor.lightGray
+            case "":
+                cell.lab3.backgroundColor = UIColor.lightGray
+            default:
+                cell.lab3.backgroundColor = UIColor(red: 141/255, green: 198/255, blue: 63/255, alpha: 1)
+            }
+            
+            cell.lab4.text = label4
+            switch label4 {
+            case "X":
+                cell.lab4.backgroundColor = UIColor.red
+            case "E":
+                cell.lab4.backgroundColor = UIColor.lightGray
+            case "":
+                cell.lab4.backgroundColor = UIColor.lightGray
+            default:
+                cell.lab4.backgroundColor = UIColor(red: 141/255, green: 198/255, blue: 63/255, alpha: 1)
+            }
+            
+            cell.lab5.text = label5
+            switch label5 {
+            case "X":
+                cell.lab5.backgroundColor = UIColor.red
+            case "E":
+                cell.lab5.backgroundColor = UIColor.lightGray
+            case "":
+                cell.lab5.backgroundColor = UIColor.lightGray
+            default:
+                cell.lab5.backgroundColor = UIColor(red: 141/255, green: 198/255, blue: 63/255, alpha: 1)
+            }
+            
+            cell.lab6.text = label6
+            switch label6 {
+            case "X":
+                cell.lab6.backgroundColor = UIColor.red
+            case "E":
+                cell.lab6.backgroundColor = UIColor.lightGray
+            case "":
+                cell.lab6.backgroundColor = UIColor.lightGray
+            default:
+                cell.lab6.backgroundColor = UIColor(red: 141/255, green: 198/255, blue: 63/255, alpha: 1)
+            }
+            
+            cell.lab7.text = label7
+            switch label7 {
+            case "X":
+                cell.lab7.backgroundColor = UIColor.red
+            case "E":
+                cell.lab7.backgroundColor = UIColor.lightGray
+            case "":
+                cell.lab7.backgroundColor = UIColor.lightGray
+            default:
+                cell.lab7.backgroundColor = UIColor(red: 141/255, green: 198/255, blue: 63/255, alpha: 1)
+            }
             cell.choreHabitTotal.text = "\(weeklyNum)"
+            
+        // -----------------
+        // CONSISTENCY BONUS
+        // -----------------
+        
         } else {
             cell.choreHabitDesc.text = "consistency bonus"
             cell.choreHabitTotal.text = "1000"
@@ -106,7 +358,61 @@ class PaydayDetailVC: UIViewController, UITableViewDelegate, UITableViewDataSour
         return cell
     }
     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.reloadData()
+    }
+    
+    
+    // -------------
+    // Alert Message
+    // -------------
+    
+    @IBAction func paydayButtonTapped(_ sender: UIButton) {
+        
+        // First, format the numbers to be called inside the alert dialogue box
+        let tenPercent = String(format: "%.2f", (Double(userIncome)! * 0.1))
+        let seventyPercent = String(format: "%.2f", (Double(userIncome)! * 0.7))
+        
+        // Left justify the alert bubble
+        let paragraphStyle = NSMutableParagraphStyle()
+        paragraphStyle.alignment = NSTextAlignment.left
+
+        // Lengthy alert bubble
+        let messageText = NSMutableAttributedString(
+            string: "\(userName) earned $\(userIncome) this week. \n \nBe sure to compliment progress. \n \n\(userName)'s money will be allocated like this: \n \n$\(tenPercent) (10% charity) \n$\(tenPercent) (10% personal money) \n$\(tenPercent) (10% long-term savings) \n \n$\(seventyPercent) (70% expenses) \n \nWhen you are done paying them, tap 'okay'. This will zero out their account. You can still see all their transactions on the 'reports' page.",
+            attributes: [
+                NSParagraphStyleAttributeName : paragraphStyle,
+                NSFontAttributeName : UIFont.systemFont(ofSize: 13.0),
+                NSForegroundColorAttributeName : UIColor.black
+            ]
+        )
+        
+        // Not sure what this does,  but it works
+        let alert = UIAlertController(title: "\(userName)'s payday", message: "", preferredStyle: .alert)
+        alert.setValue(messageText, forKey: "attributedMessage")
+        
+        // Button one: "okay"
+        alert.addAction(UIAlertAction(title: "Okay. Pay \(userName) $\(userIncome)", style: .default, handler: { (action) in
+            alert.dismiss(animated: true, completion: nil)
+            self.tableView.reloadData()
+        }))
+        
+        // Button two: "cancel"
+        alert.addAction(UIAlertAction(title: "cancel", style: .cancel, handler: { (action) in
+            alert.dismiss(animated: true, completion: nil)
+            self.tableView.reloadData()
+        }))
+        present(alert, animated: true, completion: nil)
+    }
+    
+    
+    
+    
+    
+    
+    
 }
+
 
 
 

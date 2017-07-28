@@ -4,10 +4,6 @@ class HomeVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
     @IBOutlet weak var tableView: UITableView!
     
-    override func viewDidAppear(_ animated: Bool) {
-        tableView.reloadData()
-    }
-
     override func viewDidLoad() {
         super.viewDidLoad()
         addNavBarImage()
@@ -18,6 +14,9 @@ class HomeVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
         print("HOME: calculated income: \(String(format: "%.02f", (Double(yearlyIncomeMPS) * 0.021) + Double(yearlyIncomeOutside)))")
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        tableView.reloadData()
+    }
     
     // ----------
     // Table View
@@ -47,7 +46,6 @@ class HomeVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         homeIndex = indexPath.row
-        tableView.reloadData()
         performSegue(withIdentifier: "DetailSegue", sender: self)
     }
     

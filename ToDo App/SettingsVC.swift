@@ -13,17 +13,19 @@ class SettingsVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                                             ("change passwords", "IndividualIncomeSummary"),
                                             ("sign out", "Login")]
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        tableView.reloadData()
-    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         addNavBarImage()
     }
-        
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        tableView.reloadData()
+    }
+
+    
     
     // ----------------
     // Setup Table View
