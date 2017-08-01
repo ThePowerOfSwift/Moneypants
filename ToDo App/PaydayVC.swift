@@ -50,7 +50,7 @@ class PaydayVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        paydayIndex = indexPath.row
+        homeIndex = indexPath.row     // was paydayIndex
         performSegue(withIdentifier: "DetailSegue", sender: self)
     }
 }

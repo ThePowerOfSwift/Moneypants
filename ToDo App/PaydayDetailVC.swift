@@ -4,7 +4,7 @@ class PaydayDetailVC: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     @IBOutlet weak var incomeLabel: UILabel!
     @IBOutlet weak var tableView: UITableView!
-    let (userName, _, userIncome) = tempUsers[paydayIndex]
+    let (userName, _, userIncome) = tempUsers[homeIndex]      // was paydayIndex
 
     
     override func viewDidLoad() {

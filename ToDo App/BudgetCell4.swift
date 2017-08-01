@@ -1,10 +1,9 @@
 import UIKit
 
-class BudgetCell: UITableViewCell {
+class BudgetCell4: UITableViewCell {
     
-    @IBOutlet weak var dollarLabel: UILabel!
     @IBOutlet weak var envelopeLabel: UILabel!
-    
+    @IBOutlet weak var dollarLabel: UILabel!
 
     override func awakeFromNib() {
         super.awakeFromNib()

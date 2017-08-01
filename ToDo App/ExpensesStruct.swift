@@ -88,39 +88,36 @@ let parentDailyHabits = [
 //=====================================
 
 let expenseEnvelopes = ["clothing",
-                         "accessories",
-                         "grooming",
+                         "personal care",
                          "sports & dance",
                          "music & art",
                          "school",
                          "electronics",
                          "summer camps",
-                         "transportation (teen car)",
+                         "transportation",
                          "other",
                          "fun money (10%)",
                          "donations (10%)",
                          "savings (10%)"]
 
-let clothingEnvelope = ["socks", "underwear", "shoes", "shirts & pants & other items", "coats", "dresses", "suits", "swimwear"]
-let accessoriesEnvelope = ["hats", "jewelry", "purses / wallets", "scarfs", "ties"]
-let groomingEnvelope = ["haircuts", "hair color", "nails", "eyebrows", "makeup", "hair tools &c"]
-let sportsEnvelope = ["registration fees", "class tuition", "uniform", "team shirt", "equipment", "competitions", "performances", "costumes"]
-let musicEnvelope = ["tuition", "supplies & tools"]
+let clothingEnvelope = ["socks & underwear", "shoes", "shirts & pants", "coats", "dresses", "suits", "swimwear", "jewelry", "purses / wallets", "other"]
+let personalCareEnvelope = ["haircuts", "hair color", "nails", "eyebrows", "makeup", "hair tools &c"]
+let sportsDanceEnvelope = ["registration fees", "tuition", "uniform", "team shirt", "equipment", "competitions", "performances", "costumes"]
+let musicArtEnvelope = ["tuition", "supplies & tools", "other"]
 let schoolEnvelope = ["field trips", "clubs", "backpack", "supplies"]
 let electronicsEnvelope = ["phone", "phone bill", "software", "games", "iPods, iPads, &c"]
 let summerCampsEnvelope = ["camp #1", "camp #2", "camp #3"]
-let transportationEnvelope = ["gasoline", "car insurance", "car maintenance"]
+let transportationEnvelope = ["bicycle maintenance", "bike gear", "gasoline (teen car)", "car insurance (teen)", "car maintenance (teen car)", "other"]
 let otherEnvelope = ["other 1", "other 2", "other 3", "other 4", "other 5"]
-let funMoneyEnvelope: [String] = []
-let donationsEnvelope: [String] = []
-let savingsEnvelope: [String] = []
+let funMoneyEnvelope = ["fun money"]
+let donationsEnvelope = ["charitable donations"]
+let savingsEnvelope = ["savings (car)"]
 
 
 
 //=====================================
 
 var homeIndex = 0       // MARK: global variable, need to change this
-var paydayIndex = 0         // MARK: global variable, need to change this
 
 //=====================================
 
@@ -173,6 +170,11 @@ var date4Data: [(String, String, Int)] = [("5:23 am", "clean teeth", 10),
                                           ("5:23 am", "brush teeth again, this time with mouthwash to get rid of the nasty taste of slugs. Ugh.", 10)]
 
 var sectionData: [Int: [(String, String, Int)]] = [:]
+
+//====================================
+
+let tempChoresCB = [11,13,1,0,0,26,0,0,0,12]
+let tempHabitsCB = [7,16,38,9,24,3,12,8,10,22]
 
 
 

@@ -5,9 +5,7 @@ class CBReportVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
     @IBOutlet weak var tableView: UITableView!
     
     let (userName, userPicture, userIncome) = tempUsers[homeIndex]
-    
-    let tempChoresCB = [11,13,1,0,0,26,0,0,0,12]
-    let tempHabitsCB = [7,16,38,9,24,3,12,8,10,22]
+    var dataList: [Int] = []
 
     override func viewDidLoad() {
         super.viewDidLoad()
