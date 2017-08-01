@@ -72,11 +72,14 @@
 		CE99F0A81F0B6B5D007E01E7 /* Step5ExpensesVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE99F0A71F0B6B5D007E01E7 /* Step5ExpensesVC.swift */; };
 		CEAD053E1F2209A60097CD33 /* UserCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEAD053D1F2209A60097CD33 /* UserCell.swift */; };
 		CEB2FD541EFF4DB300763862 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = CEB2FD531EFF4DB300763862 /* GoogleService-Info.plist */; };
+		CEB32C691F2C09DC0069D8B0 /* CBReportVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB32C681F2C09DB0069D8B0 /* CBReportVC.swift */; };
+		CEB32C6B1F2C49D10069D8B0 /* CBReportCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB32C6A1F2C49D10069D8B0 /* CBReportCell.swift */; };
 		CEB4CD2A1F1ECD9100F9733F /* UserVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB4CD291F1ECD9100F9733F /* UserVC.swift */; };
 		CEB4CD2D1F1ED77400F9733F /* SetupNavController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB4CD2C1F1ED77400F9733F /* SetupNavController.swift */; };
 		CED509E21F030F560058728F /* Step4ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED509E11F030F560058728F /* Step4ViewController.swift */; };
 		CED509E41F0310740058728F /* Step4CustomCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED509E31F0310740058728F /* Step4CustomCell.swift */; };
 		CEDBFE2E1F2AE4C800829DE4 /* TransactionsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEDBFE2D1F2AE4C800829DE4 /* TransactionsCell.swift */; };
+		CEE2631C1F2D25BA007AB77E /* BudgetCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEE2631B1F2D25BA007AB77E /* BudgetCell.swift */; };
 		CEE4D6A41F0F4433009BAE6C /* Step5ExpensesInputVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEE4D6A31F0F4433009BAE6C /* Step5ExpensesInputVC.swift */; };
 		CEE4D6AC1F0F70EC009BAE6C /* Step5HeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEE4D6AB1F0F70EC009BAE6C /* Step5HeaderCell.swift */; };
 		CEEBB3401F202D900046E3FE /* SetupCompleteVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEEBB33F1F202D900046E3FE /* SetupCompleteVC.swift */; };
@@ -154,11 +157,14 @@
 		CE99F0A71F0B6B5D007E01E7 /* Step5ExpensesVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Step5ExpensesVC.swift; sourceTree = "<group>"; };
 		CEAD053D1F2209A60097CD33 /* UserCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserCell.swift; sourceTree = "<group>"; };
 		CEB2FD531EFF4DB300763862 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		CEB32C681F2C09DB0069D8B0 /* CBReportVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CBReportVC.swift; sourceTree = "<group>"; };
+		CEB32C6A1F2C49D10069D8B0 /* CBReportCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CBReportCell.swift; sourceTree = "<group>"; };
 		CEB4CD291F1ECD9100F9733F /* UserVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserVC.swift; sourceTree = "<group>"; };
 		CEB4CD2C1F1ED77400F9733F /* SetupNavController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SetupNavController.swift; sourceTree = "<group>"; };
 		CED509E11F030F560058728F /* Step4ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Step4ViewController.swift; sourceTree = "<group>"; };
 		CED509E31F0310740058728F /* Step4CustomCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Step4CustomCell.swift; sourceTree = "<group>"; };
 		CEDBFE2D1F2AE4C800829DE4 /* TransactionsCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionsCell.swift; sourceTree = "<group>"; };
+		CEE2631B1F2D25BA007AB77E /* BudgetCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BudgetCell.swift; sourceTree = "<group>"; };
 		CEE4D6A31F0F4433009BAE6C /* Step5ExpensesInputVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Step5ExpensesInputVC.swift; sourceTree = "<group>"; };
 		CEE4D6AB1F0F70EC009BAE6C /* Step5HeaderCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Step5HeaderCell.swift; sourceTree = "<group>"; };
 		CEEBB33F1F202D900046E3FE /* SetupCompleteVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SetupCompleteVC.swift; sourceTree = "<group>"; };
@@ -269,9 +275,12 @@
 				CEDBFE2D1F2AE4C800829DE4 /* TransactionsCell.swift */,
 				CE9443B71F29804200ACC7D4 /* BudgetNavController.swift */,
 				CE9443BD1F29847F00ACC7D4 /* BudgetVC.swift */,
+				CEE2631B1F2D25BA007AB77E /* BudgetCell.swift */,
 				CE4832CA1F286843005A7A55 /* ReportsNavController.swift */,
 				CE4832C81F28611B005A7A55 /* ReportsVC.swift */,
 				CE9443B51F297F5C00ACC7D4 /* UserSettingsNavController.swift */,
+				CEB32C681F2C09DB0069D8B0 /* CBReportVC.swift */,
+				CEB32C6A1F2C49D10069D8B0 /* CBReportCell.swift */,
 			);
 			name = Users;
 			sourceTree = "<group>";
@@ -537,10 +546,12 @@
 				CEB4CD2A1F1ECD9100F9733F /* UserVC.swift in Sources */,
 				CE1CB52D1F0215EA009A8DAC /* Step2CustomCell.swift in Sources */,
 				CE9443BC1F29842000ACC7D4 /* TransactionsVC.swift in Sources */,
+				CEB32C691F2C09DC0069D8B0 /* CBReportVC.swift in Sources */,
 				CE1B47811F1885B0007C7515 /* SettingsVC.swift in Sources */,
 				CE4832C71F2826F4005A7A55 /* PaydayDetailVC.swift in Sources */,
 				89FB676A1D5C82F5002B2484 /* LoginViewController.swift in Sources */,
 				CE1CB51A1F01AF48009A8DAC /* Step2PopoverViewController.swift in Sources */,
+				CEB32C6B1F2C49D10069D8B0 /* CBReportCell.swift in Sources */,
 				CEB4CD2D1F1ED77400F9733F /* SetupNavController.swift in Sources */,
 				CE5579691F05E44B006FE40B /* Step4ParentHabitCell.swift in Sources */,
 				CEF1A4951F02472700C010F9 /* Step3CustomCell.swift in Sources */,
@@ -554,6 +565,7 @@
 				89FB676E1D5C8411002B2484 /* ItemsTableViewController.swift in Sources */,
 				CE99F07E1F0AB53D007E01E7 /* Step5IncomeSummaryVC.swift in Sources */,
 				CE55796F1F0633B3006FE40B /* ChoreSummaryCell.swift in Sources */,
+				CEE2631C1F2D25BA007AB77E /* BudgetCell.swift in Sources */,
 				CE9443BE1F29847F00ACC7D4 /* BudgetVC.swift in Sources */,
 				CED509E41F0310740058728F /* Step4CustomCell.swift in Sources */,
 				CE9443B61F297F5C00ACC7D4 /* UserSettingsNavController.swift in Sources */,

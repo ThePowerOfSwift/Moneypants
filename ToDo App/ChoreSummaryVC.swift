@@ -6,11 +6,41 @@ class ChoreSummaryVC: UIViewController, UITableViewDataSource, UITableViewDelega
     
     let sectionTitle: [String] = ["Dad", "Mom", "Savannah", "Aiden", "Sophie"]
     let sectionImages: [UIImage] = [#imageLiteral(resourceName: "Dad"), #imageLiteral(resourceName: "Mom"), #imageLiteral(resourceName: "Savannah.jpg"), #imageLiteral(resourceName: "Aiden"), #imageLiteral(resourceName: "Sophie")]
-    let s1Data: [String] = ["meal prep", "job inspections", "get self ready for day", "personal meditation", "develop talent", "1-on-1 with child", "payday"]
-    let s2Data: [String] = ["counters", "feed pet", "get self ready for day", "personal meditation", "develop talent", "1-on-1 with child", "clean fridge"]
-    let s3Data: [String] = ["bedroom", "bathrooms", "get self & buddy ready for day", "personal meditation / prayer", "daily exercise (20 min)", "wash & vacuum 1 car"]
-    let s4Data: [String] = ["bedroom", "laundry", "living room", "get self & buddy ready for day", "personal meditation / prayer", "daily exercise (20 min)", "wash & vacuum 1 car"]
-    let s5Data: [String] = ["bedroom", "sweep & vacuum", "dishes", "get self & buddy ready for day", "personal meditation / prayer", "daily exercise (20 min)", "mop floors", "mow lawn"]
+    let s1Data: [String] = ["meal prep",
+                            "job inspections",
+                            "get self ready for day",
+                            "personal meditation",
+                            "develop talent",
+                            "1-on-1 with child",
+                            "payday"]
+    let s2Data: [String] = ["counters",
+                            "feed pet",
+                            "get self ready for day",
+                            "personal meditation",
+                            "develop talent",
+                            "1-on-1 with child",
+                            "clean fridge"]
+    let s3Data: [String] = ["bedroom",
+                            "bathrooms",
+                            "get self & buddy ready for day",
+                            "personal meditation / prayer",
+                            "daily exercise (20 min)",
+                            "wash & vacuum 1 car"]
+    let s4Data: [String] = ["bedroom",
+                            "laundry",
+                            "living room",
+                            "get self & buddy ready for day",
+                            "personal meditation / prayer",
+                            "daily exercise (20 min)",
+                            "wash & vacuum 1 car"]
+    let s5Data: [String] = ["bedroom",
+                            "sweep & vacuum",
+                            "dishes",
+                            "get self & buddy ready for day",
+                            "personal meditation / prayer",
+                            "daily exercise (20 min)",
+                            "mop floors",
+                            "mow lawn"]
 
     
     var sectionData: [Int: [String]] = [:]
@@ -73,17 +103,4 @@ class ChoreSummaryVC: UIViewController, UITableViewDataSource, UITableViewDelega
         return cell!
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
 

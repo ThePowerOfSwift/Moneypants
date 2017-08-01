@@ -2,33 +2,8 @@ import UIKit
 
 class Step4HabitViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
 
-    // ---------
-    // Variables
-    // ---------
-    
-    // Table data is as follows: chore name, chore multiplier, chore Consistency Bonus, chore editable?
-    
-    //10 daily habits
-    let dailyHabits = [
-        ("get self & buddy ready for day", 1, false, true),
-        ("personal meditation (10 min)", 1, false, true),
-        ("daily exercise", 1, false, true),
-        ("develop talents (20 min)", 1, false, true),
-        ("homework done by 5:pm", 1, false, true),
-        ("good manners", 1, false, true),
-        ("peacemaking (no fighting)", 1, false, true),
-        ("helping hands / obedience", 1, false, true),
-        ("write in journal", 1, false, true),
-        ("bed by 8:pm", 1, false, true)
-    ]
-
     override func viewDidLoad() {
         super.viewDidLoad()
-
-    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
     }
     
     // ---------------
@@ -51,7 +26,7 @@ class Step4HabitViewController: UIViewController, UITableViewDataSource, UITable
     // customize title look
     func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
         let header = view as! UITableViewHeaderFooterView
-        header.textLabel?.font = UIFont(name: "Helvetica-Bold", size: 16)
+        header.textLabel?.font = UIFont.systemFont(ofSize: 16.0)
         header.textLabel?.textColor = UIColor.white
         header.contentView.backgroundColor = UIColor.lightGray
     }

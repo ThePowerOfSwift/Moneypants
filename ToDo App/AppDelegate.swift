@@ -1,5 +1,6 @@
 import UIKit
 import Firebase
+import FirebaseAuth
 import IQKeyboardManagerSwift
 
 @UIApplicationMain
@@ -7,30 +8,33 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
     
-
+    func getStoryboard() -> UIStoryboard {
+        var storyboard = UIStoryboard()
+        let currentUser = FIRAuth.auth()?.currentUser
+        if currentUser != nil {
+            print("user logged in")
+            storyboard = UIStoryboard(name: "Home", bundle: nil)
+        } else {
+            print("user logged out")
+            storyboard = UIStoryboard(name: "Setup", bundle: nil)
+        }
+        return storyboard
+    }
+    
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         
         FIRApp.configure()
         FIRDatabase.database().persistenceEnabled = true        // enable offline work
         IQKeyboardManager.sharedManager().enable = true
         
-        /*
-        //let currentUser = FIRAuth.auth()?.currentUser
-        // If user already logged in, go right to setup page 103
-        // MARK: TODO - We'll have to update this in the future
-        // First have app check to see if all setup is done. If not, then go to that part of setup. And if setup is done, then go to Home Page
-        if currentUser != nil
-        {
-            self.window?.rootViewController = self.storyboard?.instantiateViewController(withIdentifier: "setup103Page")
-        }
-        else
-        {
-            self.window?.rootViewController = self.storyboard?.instantiateViewController(withIdentifier: "loginPage")
-        }
-        */
-
+        let storyboard: UIStoryboard = self.getStoryboard()
+        
+        self.window?.rootViewController = storyboard.instantiateInitialViewController()
+        self.window?.makeKeyAndVisible()
         return true
     }
+    
+    
 
     func applicationWillResignActive(_ application: UIApplication) {
         // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.

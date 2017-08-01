@@ -359,6 +359,9 @@ class PaydayDetailVC: UIViewController, UITableViewDelegate, UITableViewDataSour
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let storyboard = UIStoryboard(name: "User", bundle: nil)
+        let vc = storyboard.instantiateViewController(withIdentifier: "TransactionsVC")
+        navigationController?.pushViewController(vc, animated: true)
         tableView.reloadData()
     }
     

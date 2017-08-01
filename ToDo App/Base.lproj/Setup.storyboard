@@ -586,7 +586,7 @@
         <!--Setup Nav Controller-->
         <scene sceneID="qiB-h4-Vd0">
             <objects>
-                <navigationController storyboardIdentifier="ItemsListTableView" automaticallyAdjustsScrollViewInsets="NO" id="cwG-Zj-FhD" customClass="SetupNavController" customModule="ToDo_App" customModuleProvider="target" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="SetupNavController" automaticallyAdjustsScrollViewInsets="NO" id="cwG-Zj-FhD" customClass="SetupNavController" customModule="ToDo_App" customModuleProvider="target" sceneMemberID="viewController">
                     <toolbarItems/>
                     <nil key="simulatedStatusBarMetrics"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="V3n-RD-uQt">
@@ -4531,7 +4531,7 @@
         <image name="button bg orange" width="75" height="75"/>
         <image name="choose photo" width="183" height="183"/>
         <image name="deposit icon" width="129" height="129"/>
-        <image name="envelope white" width="101" height="61"/>
+        <image name="envelope white" width="152" height="92"/>
         <image name="family" width="139" height="150"/>
         <image name="green check" width="75" height="75"/>
         <image name="house broom" width="150" height="150"/>
@@ -4543,7 +4543,7 @@
         <image name="yes orange" width="75" height="75"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="jJ5-VK-LZh"/>
-        <segue reference="sZK-Vt-lQm"/>
+        <segue reference="37h-AF-clw"/>
+        <segue reference="f1o-EZ-hBS"/>
     </inferredMetricsTieBreakers>
 </document>

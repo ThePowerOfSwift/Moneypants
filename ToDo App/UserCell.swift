@@ -6,7 +6,7 @@ class UserCell: UITableViewCell {
     @IBOutlet weak var choreHabitLabel: UILabel!
     @IBOutlet weak var pointsLabel: UILabel!
     
-//    var buttonAction: ((_ sender: AnyObject) -> Void)?
+    var number = 0
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -17,11 +17,10 @@ class UserCell: UITableViewCell {
     }
     
     @IBAction func choreHabitButtonTapped(_ sender: UIButton) {
-//        self.buttonAction?(sender)
-        
+        number += 1
         choreHabitLabel.textColor = UIColor.lightGray
         pointsLabel.textColor = UIColor.lightGray
-        completionButton.setTitle("1", for: .normal)
+        completionButton.setTitle("\(number)", for: .normal)
     }
     
     @IBAction func completionButtonTouchUpOutside(_ sender: UIButton) {
