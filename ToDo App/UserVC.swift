@@ -11,36 +11,6 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         
     let (userName, userPicture, userIncome) = tempUsers[homeIndex]
     
-    // Table data is as follows: chore name, chore multiplier, chore Consistency Bonus, chore editable?
-    
-    //10 daily chores
-    let dailyChores = [
-        ("bedroom", 1, false, true),
-        ("bathrooms", 1, false, true),
-    ]
-    
-    //10 daily habits
-    let dailyHabits = [
-        ("get self & buddy ready for day", 1, false, true),
-        ("personal meditation (10 min)", 1, false, true),
-        ("daily exercise", 1, false, true),
-        ("develop talents (20 min)", 1, false, true),
-        ("homework done by 5:pm", 1, false, true),
-        ("good manners", 1, false, true),
-        ("peacemaking (no fighting)", 1, false, true),
-        ("helping hands / obedience", 1, false, true),
-        ("write in journal", 1, false, true),
-        ("bed by 8:pm", 1, false, true)
-    ]
-    
-    //10 weekly chores
-    let weeklyChores = [
-        ("sweep porch",	2.5, false, true),
-        ("weed garden",	5, false, true),
-        ("babysit (per hour)", 25, false, true)
-    ]
-    
-    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         tableView.reloadData()
@@ -110,11 +80,11 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if section == 0 {
-            return dailyChores.count
+            return dailyChoresSavannah.count
         } else if section == 1 {
             return dailyHabits.count
         } else {
-            return weeklyChores.count
+            return weeklyChoresSavannah.count
         }
     }
     
@@ -139,7 +109,7 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "CustomCell", for: indexPath) as! UserCell
         if indexPath.section == 0 {
-            let (choreHabitName, pointsLabelValue, _, _) = dailyChores[indexPath.row]
+            let (choreHabitName, pointsLabelValue, _, _) = dailyChoresSavannah[indexPath.row]
             cell.choreHabitLabel.text = choreHabitName
             cell.pointsLabel.text = "\(pointsLabelValue * 15)"
         } else if indexPath.section == 1 {
@@ -147,7 +117,7 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
             cell.choreHabitLabel.text = choreHabitName
             cell.pointsLabel.text = "\(Int(pointsLabelValue * 15))"
         } else {
-            let (choreHabitName, pointsLabelValue, _, _) = weeklyChores[indexPath.row]
+            let (choreHabitName, pointsLabelValue, _, _) = weeklyChoresSavannah[indexPath.row]
             cell.choreHabitLabel.text = choreHabitName
             cell.pointsLabel.text = "\(Int(pointsLabelValue * 15))"
         }

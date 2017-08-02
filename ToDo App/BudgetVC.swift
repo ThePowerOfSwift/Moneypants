@@ -111,22 +111,30 @@ class BudgetVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     // -------------------
     
     @IBAction func clothingButtonTapped(_ sender: UIButton) {
-        tableViewRowCount = clothingEnvelope.count             // update table data and deselect other buttons
+        tableViewRowCount = clothingEnvelope.count             // update table data and deselect other buttons in row
         tableViewData = clothingEnvelope
-        tableView1.reloadData()
-        tableView1Height.constant = tableView1.contentSize.height
         personalCareButton.isSelected = false
         sportsDanceButton.isSelected = false
         
         if tableView1.isHidden && !clothingButton.isSelected {  // if table is hidden and button isn't selected
-            clothingButton.isSelected = true                    // select button and show table
+            deselectAllButtons()
+            clothingButton.isSelected = true                    // select button, hide current table, update to new table, and then show table
+            collapseAllRows()
             tableView1.isHidden = false
             tableView1Top.constant = 0
+            tableView1.reloadData()
+            tableView1Height.constant = tableView1.contentSize.height
             UIView.animate(withDuration: 0.25) {
                 self.view.layoutIfNeeded()
             }
         } else if !tableView1.isHidden && !clothingButton.isSelected {  // if table is shown and button isn't selected
-            clothingButton.isSelected = true                            // select button
+            clothingButton.isSelected = true                            // select button and update table
+            tableView1Top.constant = 0
+            tableView1.reloadData()
+            tableView1Height.constant = tableView1.contentSize.height
+            UIView.animate(withDuration: 0.25) {
+                self.view.layoutIfNeeded()
+            }
         } else {                                                        // if table is shown AND button is selected
             tableView1Top.constant = -(tableView1.bounds.height)        // hide button AND hide table
             clothingButton.isSelected = false
@@ -142,20 +150,28 @@ class BudgetVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     @IBAction func personalCareButtonTapped(_ sender: UIButton) {
         tableViewRowCount = personalCareEnvelope.count             // update table data and deselect other buttons
         tableViewData = personalCareEnvelope
-        tableView1.reloadData()
-        tableView1Height.constant = tableView1.contentSize.height
         clothingButton.isSelected = false
         sportsDanceButton.isSelected = false
         
         if tableView1.isHidden && !personalCareButton.isSelected {  // if table is hidden and button isn't selected
+            deselectAllButtons()
             personalCareButton.isSelected = true                    // select button and show table
+            collapseAllRows()
             tableView1.isHidden = false
             tableView1Top.constant = 0
+            tableView1.reloadData()
+            tableView1Height.constant = tableView1.contentSize.height
             UIView.animate(withDuration: 0.25) {
                 self.view.layoutIfNeeded()
             }
         } else if !tableView1.isHidden && !personalCareButton.isSelected {  // if table is shown and button isn't selected
             personalCareButton.isSelected = true                            // select button
+            tableView1Top.constant = 0
+            tableView1.reloadData()
+            tableView1Height.constant = tableView1.contentSize.height
+            UIView.animate(withDuration: 0.25) {
+                self.view.layoutIfNeeded()
+            }
         } else {                                                        // if table is shown AND button is selected
             tableView1Top.constant = -(tableView1.bounds.height)        // hide button AND hide table
             personalCareButton.isSelected = false
@@ -171,20 +187,28 @@ class BudgetVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     @IBAction func sportsDanceButtonTapped(_ sender: UIButton) {
         tableViewRowCount = sportsDanceEnvelope.count             // update table data and deselect other buttons
         tableViewData = sportsDanceEnvelope
-        tableView1.reloadData()
-        tableView1Height.constant = tableView1.contentSize.height
         clothingButton.isSelected = false
         personalCareButton.isSelected = false
         
         if tableView1.isHidden && !sportsDanceButton.isSelected {  // if table is hidden and button isn't selected
+            deselectAllButtons()
             sportsDanceButton.isSelected = true                    // select button and show table
+            collapseAllRows()
             tableView1.isHidden = false
             tableView1Top.constant = 0
+            tableView1.reloadData()
+            tableView1Height.constant = tableView1.contentSize.height
             UIView.animate(withDuration: 0.25) {
                 self.view.layoutIfNeeded()
             }
         } else if !tableView1.isHidden && !sportsDanceButton.isSelected {  // if table is shown and button isn't selected
             sportsDanceButton.isSelected = true                            // select button
+            tableView1Top.constant = 0
+            tableView1.reloadData()
+            tableView1Height.constant = tableView1.contentSize.height
+            UIView.animate(withDuration: 0.25) {
+                self.view.layoutIfNeeded()
+            }
         } else {                                                        // if table is shown AND button is selected
             tableView1Top.constant = -(tableView1.bounds.height)        // hide button AND hide table
             sportsDanceButton.isSelected = false
@@ -206,20 +230,28 @@ class BudgetVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     @IBAction func musicArtButtonTapped(_ sender: UIButton) {
         tableViewRowCount = musicArtEnvelope.count             // update table data and deselect other buttons
         tableViewData = musicArtEnvelope
-        tableView2.reloadData()
-        tableView2Height.constant = tableView2.contentSize.height
         schoolButton.isSelected = false
         electronicsButton.isSelected = false
         
         if tableView2.isHidden && !musicArtButton.isSelected {  // if table is hidden and button isn't selected
+            deselectAllButtons()
             musicArtButton.isSelected = true                    // select button and show table
+            collapseAllRows()
             tableView2.isHidden = false
             tableView2Top.constant = 0
+            tableView2.reloadData()
+            tableView2Height.constant = tableView2.contentSize.height
             UIView.animate(withDuration: 0.25) {
                 self.view.layoutIfNeeded()
             }
         } else if !tableView2.isHidden && !musicArtButton.isSelected {  // if table is shown and button isn't selected
             musicArtButton.isSelected = true                            // select button
+            tableView2Top.constant = 0
+            tableView2.reloadData()
+            tableView2Height.constant = tableView2.contentSize.height
+            UIView.animate(withDuration: 0.25) {
+                self.view.layoutIfNeeded()
+            }
         } else {                                                        // if table is shown AND button is selected
             tableView2Top.constant = -(tableView2.bounds.height)        // hide button AND hide table
             musicArtButton.isSelected = false
@@ -235,20 +267,28 @@ class BudgetVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     @IBAction func schoolButtonTapped(_ sender: UIButton) {
         tableViewRowCount = schoolEnvelope.count             // update table data and deselect other buttons
         tableViewData = schoolEnvelope
-        tableView2.reloadData()
-        tableView2Height.constant = tableView2.contentSize.height
         musicArtButton.isSelected = false
         electronicsButton.isSelected = false
         
         if tableView2.isHidden && !schoolButton.isSelected {  // if table is hidden and button isn't selected
+            deselectAllButtons()
             schoolButton.isSelected = true                    // select button and show table
+            collapseAllRows()
             tableView2.isHidden = false
             tableView2Top.constant = 0
+            tableView2.reloadData()
+            tableView2Height.constant = tableView2.contentSize.height
             UIView.animate(withDuration: 0.25) {
                 self.view.layoutIfNeeded()
             }
         } else if !tableView2.isHidden && !schoolButton.isSelected {  // if table is shown and button isn't selected
             schoolButton.isSelected = true                            // select button
+            tableView2Top.constant = 0
+            tableView2.reloadData()
+            tableView2Height.constant = tableView2.contentSize.height
+            UIView.animate(withDuration: 0.25) {
+                self.view.layoutIfNeeded()
+            }
         } else {                                                        // if table is shown AND button is selected
             tableView2Top.constant = -(tableView2.bounds.height)        // hide button AND hide table
             schoolButton.isSelected = false
@@ -264,20 +304,28 @@ class BudgetVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     @IBAction func electronicsButtonTapped(_ sender: UIButton) {
         tableViewRowCount = electronicsEnvelope.count             // update table data and deselect other buttons
         tableViewData = electronicsEnvelope
-        tableView2.reloadData()
-        tableView2Height.constant = tableView2.contentSize.height
         musicArtButton.isSelected = false
         schoolButton.isSelected = false
         
         if tableView2.isHidden && !electronicsButton.isSelected {  // if table is hidden and button isn't selected
+            deselectAllButtons()
             electronicsButton.isSelected = true                    // select button and show table
+            collapseAllRows()
             tableView2.isHidden = false
             tableView2Top.constant = 0
+            tableView2.reloadData()
+            tableView2Height.constant = tableView2.contentSize.height
             UIView.animate(withDuration: 0.25) {
                 self.view.layoutIfNeeded()
             }
         } else if !tableView2.isHidden && !electronicsButton.isSelected {  // if table is shown and button isn't selected
             electronicsButton.isSelected = true                            // select button
+            tableView2Top.constant = 0
+            tableView2.reloadData()
+            tableView2Height.constant = tableView2.contentSize.height
+            UIView.animate(withDuration: 0.25) {
+                self.view.layoutIfNeeded()
+            }
         } else {                                                        // if table is shown AND button is selected
             tableView2Top.constant = -(tableView2.bounds.height)        // hide button AND hide table
             electronicsButton.isSelected = false
@@ -300,20 +348,28 @@ class BudgetVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     @IBAction func summerCampButtonTapped(_ sender: UIButton) {
         tableViewRowCount = summerCampsEnvelope.count             // update table data and deselect other buttons
         tableViewData = summerCampsEnvelope
-        tableView3.reloadData()
-        tableView3Height.constant = tableView3.contentSize.height
         transportationButton.isSelected = false
         otherButton.isSelected = false
         
         if tableView3.isHidden && !summerCampsButton.isSelected {  // if table is hidden and button isn't selected
+            deselectAllButtons()
             summerCampsButton.isSelected = true                    // select button and show table
+            collapseAllRows()
             tableView3.isHidden = false
             tableView3Top.constant = 0
+            tableView3.reloadData()
+            tableView3Height.constant = tableView3.contentSize.height
             UIView.animate(withDuration: 0.25) {
                 self.view.layoutIfNeeded()
             }
         } else if !tableView3.isHidden && !summerCampsButton.isSelected {  // if table is shown and button isn't selected
             summerCampsButton.isSelected = true                            // select button
+            tableView3Top.constant = 0
+            tableView3.reloadData()
+            tableView3Height.constant = tableView3.contentSize.height
+            UIView.animate(withDuration: 0.25) {
+                self.view.layoutIfNeeded()
+            }
         } else {                                                        // if table is shown AND button is selected
             tableView3Top.constant = -(tableView3.bounds.height)        // hide button AND hide table
             summerCampsButton.isSelected = false
@@ -330,20 +386,28 @@ class BudgetVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     @IBAction func transportationButtonTapped(_ sender: UIButton) {
         tableViewRowCount = transportationEnvelope.count             // update table data and deselect other buttons
         tableViewData = transportationEnvelope
-        tableView3.reloadData()
-        tableView3Height.constant = tableView3.contentSize.height
         summerCampsButton.isSelected = false
         otherButton.isSelected = false
         
         if tableView3.isHidden && !transportationButton.isSelected {  // if table is hidden and button isn't selected
+            deselectAllButtons()
             transportationButton.isSelected = true                    // select button and show table
+            collapseAllRows()
             tableView3.isHidden = false
             tableView3Top.constant = 0
+            tableView3.reloadData()
+            tableView3Height.constant = tableView3.contentSize.height
             UIView.animate(withDuration: 0.25) {
                 self.view.layoutIfNeeded()
             }
         } else if !tableView3.isHidden && !transportationButton.isSelected {  // if table is shown and button isn't selected
             transportationButton.isSelected = true                            // select button
+            tableView3Top.constant = 0
+            tableView3.reloadData()
+            tableView3Height.constant = tableView3.contentSize.height
+            UIView.animate(withDuration: 0.25) {
+                self.view.layoutIfNeeded()
+            }
         } else {                                                        // if table is shown AND button is selected
             tableView3Top.constant = -(tableView3.bounds.height)        // hide button AND hide table
             transportationButton.isSelected = false
@@ -359,20 +423,29 @@ class BudgetVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     @IBAction func otherButtonTapper(_ sender: UIButton) {
         tableViewRowCount = otherEnvelope.count             // update table data and deselect other buttons
         tableViewData = otherEnvelope
-        tableView3.reloadData()
-        tableView3Height.constant = tableView3.contentSize.height
         summerCampsButton.isSelected = false
         transportationButton.isSelected = false
         
         if tableView3.isHidden && !otherButton.isSelected {  // if table is hidden and button isn't selected
+            deselectAllButtons()
             otherButton.isSelected = true                    // select button and show table
+            collapseAllRows()
             tableView3.isHidden = false
             tableView3Top.constant = 0
+            tableView3.reloadData()
+            tableView3Height.constant = tableView3.contentSize.height
             UIView.animate(withDuration: 0.25) {
                 self.view.layoutIfNeeded()
             }
         } else if !tableView3.isHidden && !otherButton.isSelected {  // if table is shown and button isn't selected
             otherButton.isSelected = true                            // select button
+            tableView3.isHidden = false
+            tableView3Top.constant = 0
+            tableView3.reloadData()
+            tableView3Height.constant = tableView3.contentSize.height
+            UIView.animate(withDuration: 0.25) {
+                self.view.layoutIfNeeded()
+            }
         } else {                                                        // if table is shown AND button is selected
             tableView3Top.constant = -(tableView3.bounds.height)        // hide button AND hide table
             otherButton.isSelected = false
@@ -393,20 +466,28 @@ class BudgetVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     @IBAction func funMoneyButtonTapped(_ sender: UIButton) {
         tableViewRowCount = funMoneyEnvelope.count             // update table data and deselect other buttons
         tableViewData = funMoneyEnvelope
-        tableView4.reloadData()
-        tableView4Height.constant = tableView4.contentSize.height
         savingsButton.isSelected = false
         donationsButton.isSelected = false
         
         if tableView4.isHidden && !funMoneyButton.isSelected {  // if table is hidden and button isn't selected
+            deselectAllButtons()
             funMoneyButton.isSelected = true                    // select button and show table
+            collapseAllRows()
             tableView4.isHidden = false
             tableView4Top.constant = 0
+            tableView4.reloadData()
+            tableView4Height.constant = tableView4.contentSize.height
             UIView.animate(withDuration: 0.25) {
                 self.view.layoutIfNeeded()
             }
         } else if !tableView4.isHidden && !funMoneyButton.isSelected {  // if table is shown and button isn't selected
             funMoneyButton.isSelected = true                            // select button
+            tableView4Top.constant = 0
+            tableView4.reloadData()
+            tableView4Height.constant = tableView4.contentSize.height
+            UIView.animate(withDuration: 0.25) {
+                self.view.layoutIfNeeded()
+            }
         } else {                                                        // if table is shown AND button is selected
             tableView4Top.constant = -(tableView4.bounds.height)        // hide button AND hide table
             funMoneyButton.isSelected = false
@@ -422,20 +503,29 @@ class BudgetVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     @IBAction func savingsButtonTapped(_ sender: UIButton) {
         tableViewRowCount = savingsEnvelope.count             // update table data and deselect other buttons
         tableViewData = savingsEnvelope
-        tableView4.reloadData()
-        tableView4Height.constant = tableView4.contentSize.height
         funMoneyButton.isSelected = false
         donationsButton.isSelected = false
         
         if tableView4.isHidden && !savingsButton.isSelected {  // if table is hidden and button isn't selected
+            deselectAllButtons()
             savingsButton.isSelected = true                    // select button and show table
+            collapseAllRows()
             tableView4.isHidden = false
             tableView4Top.constant = 0
+            tableView4.reloadData()
+            tableView4Height.constant = tableView4.contentSize.height
             UIView.animate(withDuration: 0.25) {
                 self.view.layoutIfNeeded()
             }
         } else if !tableView4.isHidden && !savingsButton.isSelected {  // if table is shown and button isn't selected
             savingsButton.isSelected = true                            // select button
+            tableView4.isHidden = false
+            tableView4Top.constant = 0
+            tableView4.reloadData()
+            tableView4Height.constant = tableView4.contentSize.height
+            UIView.animate(withDuration: 0.25) {
+                self.view.layoutIfNeeded()
+            }
         } else {                                                        // if table is shown AND button is selected
             tableView4Top.constant = -(tableView4.bounds.height)        // hide button AND hide table
             savingsButton.isSelected = false
@@ -451,20 +541,28 @@ class BudgetVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     @IBAction func donationsButtonTapped(_ sender: UIButton) {
         tableViewRowCount = donationsEnvelope.count             // update table data and deselect other buttons
         tableViewData = donationsEnvelope
-        tableView4.reloadData()
-        tableView4Height.constant = tableView4.contentSize.height
         funMoneyButton.isSelected = false
         savingsButton.isSelected = false
         
         if tableView4.isHidden && !donationsButton.isSelected {  // if table is hidden and button isn't selected
+            deselectAllButtons()
             donationsButton.isSelected = true                    // select button and show table
+            collapseAllRows()
             tableView4.isHidden = false
             tableView4Top.constant = 0
+            tableView4.reloadData()
+            tableView4Height.constant = tableView4.contentSize.height
             UIView.animate(withDuration: 0.25) {
                 self.view.layoutIfNeeded()
             }
         } else if !tableView4.isHidden && !donationsButton.isSelected {  // if table is shown and button isn't selected
             donationsButton.isSelected = true                            // select button
+            tableView4Top.constant = 0
+            tableView4.reloadData()
+            tableView4Height.constant = tableView4.contentSize.height
+            UIView.animate(withDuration: 0.25) {
+                self.view.layoutIfNeeded()
+            }
         } else {                                                        // if table is shown AND button is selected
             tableView4Top.constant = -(tableView4.bounds.height)        // hide button AND hide table
             donationsButton.isSelected = false
@@ -480,7 +578,32 @@ class BudgetVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     
     
+    func deselectAllButtons () {
+        clothingButton.isSelected = false
+        personalCareButton.isSelected = false
+        sportsDanceButton.isSelected = false
+        musicArtButton.isSelected = false
+        schoolButton.isSelected = false
+        electronicsButton.isSelected = false
+        summerCampsButton.isSelected = false
+        transportationButton.isSelected = false
+        otherButton.isSelected = false
+        funMoneyButton.isSelected = false
+        savingsButton.isSelected = false
+        donationsButton.isSelected = false
+    }
     
+    func collapseAllRows () {
+        tableView1.isHidden = true
+        tableView1Top.constant = -(tableView1.bounds.height)
+        tableView2.isHidden = true
+        tableView2Top.constant = -(tableView2.bounds.height)
+        tableView3.isHidden = true
+        tableView3Top.constant = -(tableView3.bounds.height)
+        tableView4.isHidden = true
+        tableView4Top.constant = -(tableView4.bounds.height)
+    }
+
     
     
     

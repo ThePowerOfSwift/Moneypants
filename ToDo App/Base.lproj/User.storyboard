@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="15G1611" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="15G1611" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="2im-zA-OR4">
     <device id="retina4_0" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -43,7 +43,7 @@
                                 <subviews>
                                     <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="50" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="I5f-Nd-MMu" userLabel="Row 4 Tableview">
                                         <rect key="frame" x="0.0" y="874" width="320" height="150"/>
-                                        <color key="backgroundColor" white="0.90228361999999995" alpha="1" colorSpace="calibratedWhite"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="150" id="P5O-sw-mqH"/>
                                         </constraints>
@@ -88,7 +88,7 @@
                                     </tableView>
                                     <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="50" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="QuW-vq-mth" userLabel="Row 3 Tableview">
                                         <rect key="frame" x="0.0" y="618" width="320" height="150"/>
-                                        <color key="backgroundColor" white="0.90228361999999995" alpha="1" colorSpace="calibratedWhite"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="150" id="jAX-UZ-7bQ"/>
                                         </constraints>
@@ -133,7 +133,7 @@
                                     </tableView>
                                     <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="50" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="lXc-a7-fzr" userLabel="Row 2 Tableview">
                                         <rect key="frame" x="0.0" y="362" width="320" height="150"/>
-                                        <color key="backgroundColor" white="0.90228361999999995" alpha="1" colorSpace="calibratedWhite"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="150" id="pGd-Ca-VTo"/>
                                         </constraints>
@@ -178,7 +178,7 @@
                                     </tableView>
                                     <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="50" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="eZx-oV-B2J" userLabel="Row 1 Tableview">
                                         <rect key="frame" x="0.0" y="106" width="320" height="150"/>
-                                        <color key="backgroundColor" white="0.90228361999999995" alpha="1" colorSpace="calibratedWhite"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="150" id="Tp4-ZZ-0Yn"/>
                                         </constraints>
@@ -868,7 +868,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="OVP-Pa-PcE" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="17990.625" y="1967.9577464788733"/>
+            <point key="canvasLocation" x="14456" y="3082"/>
         </scene>
         <!--Savannah-->
         <scene sceneID="Zlt-u0-AhO">
@@ -1170,7 +1170,45 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Eev-S6-zLc" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="15304" y="2749"/>
+            <point key="canvasLocation" x="15306" y="3557"/>
+        </scene>
+        <!--Savannah-->
+        <scene sceneID="YbO-p6-gBS">
+            <objects>
+                <viewController id="VyA-im-hFm" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="Ugp-4M-Xxc"/>
+                        <viewControllerLayoutGuide type="bottom" id="hNs-Ow-SP4"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="ZLx-He-4wZ">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="reports" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XsZ-z3-Lej">
+                                <rect key="frame" x="0.0" y="44" width="320" height="28"/>
+                                <color key="backgroundColor" cocoaTouchSystemColor="scrollViewTexturedBackgroundColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="28" id="9gK-KJ-Hgj"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="Arista2.0" family="Arista 2.0" pointSize="20"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="XsZ-z3-Lej" secondAttribute="trailing" id="J1j-vJ-m8D"/>
+                            <constraint firstItem="XsZ-z3-Lej" firstAttribute="top" secondItem="Ugp-4M-Xxc" secondAttribute="bottom" id="QlE-eg-LuV"/>
+                            <constraint firstItem="XsZ-z3-Lej" firstAttribute="leading" secondItem="ZLx-He-4wZ" secondAttribute="leading" id="lEs-7E-f2Y"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" title="Savannah" id="2aI-cG-jNw">
+                        <barButtonItem key="rightBarButtonItem" image="home black" id="gl3-2a-QJM"/>
+                    </navigationItem>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="hin-vH-m5U" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="15306" y="2748"/>
         </scene>
         <!--Reports-->
         <scene sceneID="ays-K3-eTx">
@@ -1211,6 +1249,9 @@
                                                             <constraint firstAttribute="width" constant="58" id="wi7-4k-7nm"/>
                                                         </constraints>
                                                         <state key="normal" image="income no alpha"/>
+                                                        <connections>
+                                                            <segue destination="8Y7-4Q-m3X" kind="show" id="vXj-Z7-mNN"/>
+                                                        </connections>
                                                     </button>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="income" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MvL-zv-aYH">
                                                         <rect key="frame" x="24.5" y="62" width="44.5" height="16"/>
@@ -1456,7 +1497,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qUo-RN-KfL" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="16185" y="3507.0422535211269"/>
+            <point key="canvasLocation" x="17078" y="3557"/>
         </scene>
         <!--my reports-->
         <scene sceneID="csw-ME-jFC">
@@ -1505,7 +1546,7 @@
         <scene sceneID="Tpc-1A-AXL">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="R3d-DN-EvV" customClass="BudgetNavController" customModule="ToDo_App" customModuleProvider="target" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="my spending" image="expenses white" selectedImage="expenses black" id="oE1-Zk-h2O"/>
+                    <tabBarItem key="tabBarItem" title="my spending" image="shopping cart small" id="oE1-Zk-h2O"/>
                     <toolbarItems/>
                     <nil key="simulatedStatusBarMetrics"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="Rsi-hZ-g9j">
@@ -1514,7 +1555,7 @@
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
-                        <segue destination="8Y7-4Q-m3X" kind="relationship" relationship="rootViewController" id="KBg-jw-LYb"/>
+                        <segue destination="VyA-im-hFm" kind="relationship" relationship="rootViewController" id="GaZ-GF-G4m"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="EX6-5s-HVt" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1589,8 +1630,6 @@
         <image name="blank" width="76" height="76"/>
         <image name="broom black" width="20" height="25"/>
         <image name="cb grid gray" width="501" height="21"/>
-        <image name="expenses black" width="26" height="25"/>
-        <image name="expenses white" width="26" height="25"/>
         <image name="gear black" width="25" height="25"/>
         <image name="gear white" width="25" height="25"/>
         <image name="graduation cap black" width="150" height="150"/>
@@ -1603,5 +1642,6 @@
         <image name="reports black" width="18" height="25"/>
         <image name="reports white" width="18" height="25"/>
         <image name="shopping cart black" width="150" height="150"/>
+        <image name="shopping cart small" width="31" height="25"/>
     </resources>
 </document>

@@ -49,7 +49,7 @@ let weeklyChores = [
 ]
 
 let dailyHabits = [
-    ("get self & buddy ready for day", 1, false, true),
+    ("get ready for day by 10:am", 1, false, true),
     ("personal meditation (10 min)", 1, false, true),
     ("daily exercise", 1, false, true),
     ("develop talents (20 min)", 1, false, true),
@@ -83,6 +83,23 @@ let parentDailyHabits = [
     ("family devotional", 1, false, true),
     ("write in journal", 1, false, true),
     ("bed by 10:pm", 1, false, true)
+]
+
+//=====================================
+
+// Table data is as follows: chore name, chore multiplier, chore Consistency Bonus, chore editable?
+
+//10 daily chores
+let dailyChoresSavannah = [
+    ("bedroom", 1, false, true),
+    ("bathrooms", 1, false, true),
+]
+
+//10 weekly chores
+let weeklyChoresSavannah = [
+    ("sweep porch",	2.5, false, true),
+    ("weed garden",	5, false, true),
+    ("babysit (per hour)", 25, false, true)
 ]
 
 //=====================================
