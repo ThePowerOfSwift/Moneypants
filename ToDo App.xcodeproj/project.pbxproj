@@ -64,7 +64,7 @@
 		CE8FFA021F10AE92004A53BE /* ExpensesStruct.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE8FFA011F10AE92004A53BE /* ExpensesStruct.swift */; };
 		CE9443B61F297F5C00ACC7D4 /* UserSettingsNavController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE9443B51F297F5C00ACC7D4 /* UserSettingsNavController.swift */; };
 		CE9443B81F29804200ACC7D4 /* BudgetNavController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE9443B71F29804200ACC7D4 /* BudgetNavController.swift */; };
-		CE9443BA1F29839F00ACC7D4 /* TransNavController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE9443B91F29839F00ACC7D4 /* TransNavController.swift */; };
+		CE9443BA1F29839F00ACC7D4 /* MoneyNavController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE9443B91F29839F00ACC7D4 /* MoneyNavController.swift */; };
 		CE9443BC1F29842000ACC7D4 /* TransactionsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE9443BB1F29842000ACC7D4 /* TransactionsVC.swift */; };
 		CE9443BE1F29847F00ACC7D4 /* BudgetVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE9443BD1F29847F00ACC7D4 /* BudgetVC.swift */; };
 		CE9443C01F29B58B00ACC7D4 /* PaydayDetailCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE9443BF1F29B58B00ACC7D4 /* PaydayDetailCell.swift */; };
@@ -152,7 +152,7 @@
 		CE8FFA011F10AE92004A53BE /* ExpensesStruct.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExpensesStruct.swift; sourceTree = "<group>"; };
 		CE9443B51F297F5C00ACC7D4 /* UserSettingsNavController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserSettingsNavController.swift; sourceTree = "<group>"; };
 		CE9443B71F29804200ACC7D4 /* BudgetNavController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BudgetNavController.swift; sourceTree = "<group>"; };
-		CE9443B91F29839F00ACC7D4 /* TransNavController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransNavController.swift; sourceTree = "<group>"; };
+		CE9443B91F29839F00ACC7D4 /* MoneyNavController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MoneyNavController.swift; sourceTree = "<group>"; };
 		CE9443BB1F29842000ACC7D4 /* TransactionsVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionsVC.swift; sourceTree = "<group>"; };
 		CE9443BD1F29847F00ACC7D4 /* BudgetVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BudgetVC.swift; sourceTree = "<group>"; };
 		CE9443BF1F29B58B00ACC7D4 /* PaydayDetailCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaydayDetailCell.swift; sourceTree = "<group>"; };
@@ -276,7 +276,7 @@
 				CE4832C01F280216005A7A55 /* UserNavController.swift */,
 				CEB4CD291F1ECD9100F9733F /* UserVC.swift */,
 				CEAD053D1F2209A60097CD33 /* UserCell.swift */,
-				CE9443B91F29839F00ACC7D4 /* TransNavController.swift */,
+				CE9443B91F29839F00ACC7D4 /* MoneyNavController.swift */,
 				CE9443BB1F29842000ACC7D4 /* TransactionsVC.swift */,
 				CEDBFE2D1F2AE4C800829DE4 /* TransactionsCell.swift */,
 				CE9443B71F29804200ACC7D4 /* BudgetNavController.swift */,
@@ -550,7 +550,7 @@
 				CE7160FB1F04A9270045AA05 /* Step4HabitCustomCell.swift in Sources */,
 				CE4832BB1F27FCA0005A7A55 /* PaydayNavController.swift in Sources */,
 				CE39D9281F05A3CE00159EC1 /* Step4ParentsVC.swift in Sources */,
-				CE9443BA1F29839F00ACC7D4 /* TransNavController.swift in Sources */,
+				CE9443BA1F29839F00ACC7D4 /* MoneyNavController.swift in Sources */,
 				CE9443B81F29804200ACC7D4 /* BudgetNavController.swift in Sources */,
 				CEAD053E1F2209A60097CD33 /* UserCell.swift in Sources */,
 				CEB4CD2A1F1ECD9100F9733F /* UserVC.swift in Sources */,

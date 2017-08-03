@@ -2,7 +2,7 @@ import UIKit
 
 class UserCell: UITableViewCell {
     
-    @IBOutlet weak var completionButton: UIButton!
+    @IBOutlet weak var numberLabel: UILabel!
     @IBOutlet weak var choreHabitLabel: UILabel!
     @IBOutlet weak var pointsLabel: UILabel!
     
@@ -20,13 +20,13 @@ class UserCell: UITableViewCell {
         number += 1
         choreHabitLabel.textColor = UIColor.lightGray
         pointsLabel.textColor = UIColor.lightGray
-        completionButton.setTitle("\(number)", for: .normal)
+//        numberLabel.setTitle("\(number)", for: .normal)
     }
     
     @IBAction func completionButtonTouchUpOutside(_ sender: UIButton) {
         choreHabitLabel.textColor = UIColor.black
         pointsLabel.textColor = UIColor.black
-        completionButton.setTitle("", for: .normal)
+//        numberLabel.setTitle("", for: .normal)
     }
     
     

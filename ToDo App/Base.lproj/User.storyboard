@@ -900,6 +900,9 @@
                                                     <constraint firstAttribute="width" constant="30" id="6aB-JW-eOK"/>
                                                 </constraints>
                                                 <state key="normal" image="arrow left gray small"/>
+                                                <connections>
+                                                    <segue destination="8Y7-4Q-m3X" kind="show" id="qrG-WN-B13"/>
+                                                </connections>
                                             </button>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="today" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xY3-Fg-XeI">
                                                 <rect key="frame" x="35" y="5" width="43" height="20.5"/>
@@ -973,48 +976,49 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="bAx-z4-7V1">
-                                                    <rect key="frame" x="8" y="5" width="296" height="40"/>
+                                                    <rect key="frame" x="56" y="14.5" width="256" height="20.5"/>
                                                     <subviews>
-                                                        <button opaque="NO" contentMode="scaleAspectFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ol8-SY-AM0">
-                                                            <rect key="frame" x="0.0" y="0.0" width="40" height="40"/>
-                                                            <constraints>
-                                                                <constraint firstAttribute="width" constant="40" id="2kp-kw-r2G"/>
-                                                                <constraint firstAttribute="height" constant="40" id="ezY-nt-DD5"/>
-                                                            </constraints>
-                                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                            <inset key="titleEdgeInsets" minX="-76" minY="0.0" maxX="0.0" maxY="0.0"/>
-                                                            <state key="normal" image="blank">
-                                                                <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
-                                                            </state>
-                                                            <connections>
-                                                                <action selector="choreHabitButtonTapped:" destination="9YO-5s-dW8" eventType="touchUpInside" id="g4R-6b-e6I"/>
-                                                                <action selector="completionButtonTouchUpOutside:" destination="9YO-5s-dW8" eventType="touchUpOutside" id="OEI-jD-iFz"/>
-                                                            </connections>
-                                                        </button>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" horizontalCompressionResistancePriority="749" text="get self &amp; buddy ready for day" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="20l-o9-4Kf">
-                                                            <rect key="frame" x="48" y="0.0" width="222" height="40"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="230" height="20.5"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="15" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cLI-eN-D0B">
-                                                            <rect key="frame" x="278" y="0.0" width="18" height="40"/>
+                                                            <rect key="frame" x="238" y="0.0" width="18" height="20.5"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                     </subviews>
                                                 </stackView>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="blank" translatesAutoresizingMaskIntoConstraints="NO" id="Vkg-vK-NDs">
+                                                    <rect key="frame" x="8" y="4" width="40" height="40"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="40" id="XtO-qb-vyd"/>
+                                                        <constraint firstAttribute="height" constant="40" id="tL8-ZC-xvm"/>
+                                                    </constraints>
+                                                </imageView>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UyR-tb-LoP">
+                                                    <rect key="frame" x="24" y="14.5" width="8" height="20.5"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstItem="bAx-z4-7V1" firstAttribute="centerY" secondItem="eTG-ZA-lye" secondAttribute="centerY" id="0if-ER-GM6"/>
-                                                <constraint firstItem="bAx-z4-7V1" firstAttribute="leading" secondItem="eTG-ZA-lye" secondAttribute="leading" constant="8" id="foC-qp-qxz"/>
-                                                <constraint firstAttribute="trailing" secondItem="bAx-z4-7V1" secondAttribute="trailing" constant="16" id="lm6-dE-6Mc"/>
+                                                <constraint firstAttribute="trailing" secondItem="bAx-z4-7V1" secondAttribute="trailing" constant="8" id="9zf-YZ-TEN"/>
+                                                <constraint firstItem="UyR-tb-LoP" firstAttribute="centerY" secondItem="Vkg-vK-NDs" secondAttribute="centerY" id="AgH-Lm-xVB"/>
+                                                <constraint firstItem="UyR-tb-LoP" firstAttribute="centerX" secondItem="Vkg-vK-NDs" secondAttribute="centerX" id="HG9-A5-6Gv"/>
+                                                <constraint firstItem="Vkg-vK-NDs" firstAttribute="centerY" secondItem="eTG-ZA-lye" secondAttribute="centerY" id="HKf-Kg-lpb"/>
+                                                <constraint firstItem="bAx-z4-7V1" firstAttribute="leading" secondItem="Vkg-vK-NDs" secondAttribute="trailing" constant="8" id="ZeO-WB-gQ8"/>
+                                                <constraint firstItem="bAx-z4-7V1" firstAttribute="centerY" secondItem="eTG-ZA-lye" secondAttribute="centerY" id="nfo-fH-Pvv"/>
+                                                <constraint firstItem="Vkg-vK-NDs" firstAttribute="leading" secondItem="eTG-ZA-lye" secondAttribute="leading" constant="8" id="pf6-Rv-rDP"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
                                             <outlet property="choreHabitLabel" destination="20l-o9-4Kf" id="5AB-wN-aVK"/>
-                                            <outlet property="completionButton" destination="ol8-SY-AM0" id="qcY-mN-T8K"/>
+                                            <outlet property="numberLabel" destination="UyR-tb-LoP" id="PkG-Gm-ovN"/>
                                             <outlet property="pointsLabel" destination="cLI-eN-D0B" id="rzy-Lv-egN"/>
                                         </connections>
                                     </tableViewCell>
@@ -1070,7 +1074,7 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Moneypants transactions" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Z7F-nw-1vu">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="transaction history" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Z7F-nw-1vu">
                                 <rect key="frame" x="0.0" y="44" width="320" height="28"/>
                                 <color key="backgroundColor" cocoaTouchSystemColor="scrollViewTexturedBackgroundColor"/>
                                 <constraints>
@@ -1157,13 +1161,7 @@
                             <constraint firstAttribute="trailing" secondItem="91t-x9-Cf9" secondAttribute="trailing" id="tB4-SE-AXo"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="Savannah" id="3uw-mW-1hK">
-                        <barButtonItem key="rightBarButtonItem" image="home black" id="jj4-Pb-LRG">
-                            <connections>
-                                <action selector="homeButtonTapped:" destination="8Y7-4Q-m3X" id="zfZ-iN-6qy"/>
-                            </connections>
-                        </barButtonItem>
-                    </navigationItem>
+                    <navigationItem key="navigationItem" title="Savannah" id="3uw-mW-1hK"/>
                     <connections>
                         <outlet property="tableView" destination="91t-x9-Cf9" id="Mhw-1T-bFK"/>
                     </connections>
@@ -1545,7 +1543,7 @@
         <!--my spending-->
         <scene sceneID="Tpc-1A-AXL">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="R3d-DN-EvV" customClass="BudgetNavController" customModule="ToDo_App" customModuleProvider="target" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="SpendingNavController" automaticallyAdjustsScrollViewInsets="NO" id="R3d-DN-EvV" customClass="BudgetNavController" customModule="ToDo_App" customModuleProvider="target" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="my spending" image="shopping cart small" id="oE1-Zk-h2O"/>
                     <toolbarItems/>
                     <nil key="simulatedStatusBarMetrics"/>
@@ -1585,7 +1583,7 @@
         <!--my money-->
         <scene sceneID="eNm-JE-YH8">
             <objects>
-                <navigationController storyboardIdentifier="TransNavController" automaticallyAdjustsScrollViewInsets="NO" id="Fi1-ip-zaT" customClass="TransNavController" customModule="ToDo_App" customModuleProvider="target" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="MoneyNavController" automaticallyAdjustsScrollViewInsets="NO" id="Fi1-ip-zaT" customClass="MoneyNavController" customModule="ToDo_App" customModuleProvider="target" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="my money" image="piggy small" id="WuZ-I1-i4B"/>
                     <toolbarItems/>
                     <nil key="simulatedStatusBarMetrics"/>
@@ -1602,11 +1600,11 @@
             </objects>
             <point key="canvasLocation" x="14458" y="1968"/>
         </scene>
-        <!--my jobs-->
+        <!--my day-->
         <scene sceneID="mHU-l5-b1G">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="YV1-KC-ewf" customClass="UserNavController" customModule="ToDo_App" customModuleProvider="target" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="my jobs" image="broom black" id="26G-BT-p5v"/>
+                    <tabBarItem key="tabBarItem" title="my day" image="broom black" id="26G-BT-p5v"/>
                     <toolbarItems/>
                     <nil key="simulatedStatusBarMetrics"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="F7V-yZ-rZu">
@@ -1644,4 +1642,7 @@
         <image name="shopping cart black" width="150" height="150"/>
         <image name="shopping cart small" width="31" height="25"/>
     </resources>
+    <inferredMetricsTieBreakers>
+        <segue reference="vXj-Z7-mNN"/>
+    </inferredMetricsTieBreakers>
 </document>

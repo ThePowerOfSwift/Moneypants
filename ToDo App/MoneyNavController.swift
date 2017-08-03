@@ -1,12 +1,12 @@
 import UIKit
 
-class UserSettingsNavController: UINavigationController {
+class MoneyNavController: UINavigationController {
     
     override func viewWillAppear(_ animated: Bool) {
         
-//        print("gray")
+//        print("purple")
 //        
-//        UINavigationBar.appearance().barTintColor = UIColor.gray
+//        UINavigationBar.appearance().barTintColor = UIColor(red: 102/255, green: 0/255, blue: 153/255, alpha: 1)
 //        UINavigationBar.appearance().tintColor = UIColor.white
 //        UINavigationBar.appearance().titleTextAttributes = [
 //            NSForegroundColorAttributeName : UIColor.white,
