@@ -1,6 +1,6 @@
 import UIKit
 
-class BudgetCell2: UITableViewCell {
+class MoneyCell2: UITableViewCell {
     
     @IBOutlet weak var envelopeLabel: UILabel!
     @IBOutlet weak var dollarLabel: UILabel!

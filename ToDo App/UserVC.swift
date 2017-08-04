@@ -10,6 +10,7 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     @IBOutlet weak var greenGrid: UIButton!
         
     let (userName, userPicture, userIncome) = tempUsers[homeIndex]
+    let feesDebts: [String] = ["add a fee...", "add a withdrawal..."]
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -75,7 +76,7 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     // ----------------
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 3
+        return 4
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -83,8 +84,10 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
             return dailyChoresSavannah.count
         } else if section == 1 {
             return dailyHabits.count
-        } else {
+        } else  if section == 2 {
             return weeklyChoresSavannah.count
+        } else {
+            return 2
         }
     }
     
@@ -93,8 +96,10 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
             return "daily chores"
         } else if section == 1 {
             return "daily habits"
-        } else {
+        } else if section == 2 {
             return "weekly chores"
+        } else {
+            return "fees and debts"
         }
     }
     
@@ -103,7 +108,12 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         header.textLabel?.font = UIFont(name: "Arista2.0", size: 20.0)
         header.textLabel?.textColor = UIColor.white
         header.textLabel?.textAlignment = .center
-        header.contentView.backgroundColor = UIColor.lightGray
+        if section == 0 || section == 1 || section == 2 {
+            header.contentView.backgroundColor = UIColor.lightGray
+        } else {
+            header.contentView.backgroundColor = UIColor(red: 0/255, green: 153/255, blue: 255/255, alpha: 1)
+        }
+        
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -116,19 +126,28 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
             let (choreHabitName, pointsLabelValue, _, _) = dailyHabits[indexPath.row]
             cell.choreHabitLabel.text = choreHabitName
             cell.pointsLabel.text = "\(Int(pointsLabelValue * 15))"
-        } else {
+        } else if indexPath.section == 2 {
             let (choreHabitName, pointsLabelValue, _, _) = weeklyChoresSavannah[indexPath.row]
             cell.choreHabitLabel.text = choreHabitName
             cell.pointsLabel.text = "\(Int(pointsLabelValue * 15))"
+        } else {
+            cell.choreHabitLabel.text = feesDebts[indexPath.row]
+            cell.counterLabel.isHidden = true
+            cell.pointsLabel.isHidden = true
+            cell.choreHabitButton.isHidden = true
+            cell.accessoryType = UITableViewCellAccessoryType.disclosureIndicator
         }
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//        tapCounter += 1
-//        print("button tapped at \([indexPath.section]) \([indexPath.row])")
-//        let cell = tableView.dequeueReusableCell(withIdentifier: "CustomCell", for: indexPath) as! UserCell
-//        cell.numberLabel.text = "0"
+        if indexPath.section == 3 && indexPath.row == 0 {
+            performSegue(withIdentifier: "FeesDetailSegue", sender: self)
+        } else if indexPath.section == 3 && indexPath.row == 1 {
+            performSegue(withIdentifier: "DebtsDetailSegue", sender: self)
+        } else {
+            print("button tapped at \([indexPath.section]) \([indexPath.row])")
+        }
         tableView.reloadData()
     }
     
@@ -314,6 +333,12 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         let vc = storyboard.instantiateViewController(withIdentifier: "ReportsVC") as! ReportsVC
         navigationController?.pushViewController(vc, animated: true)
     }
+    
+    // ------------
+    // Unwind Segue
+    // ------------
+    
+    @IBAction func unwindToUserVC(segue: UIStoryboardSegue) {}
     
 }
 

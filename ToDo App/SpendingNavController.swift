@@ -1,6 +1,6 @@
 import UIKit
 
-class BudgetNavController: UINavigationController {
+class SpendingNavController: UINavigationController {
     
     override func viewWillAppear(_ animated: Bool) {
         

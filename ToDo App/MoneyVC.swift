@@ -1,6 +1,6 @@
 import UIKit
 
-class BudgetVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class MoneyVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     @IBOutlet weak var tableView1: UITableView!
     @IBOutlet weak var tableView1Top: NSLayoutConstraint!
@@ -82,22 +82,22 @@ class BudgetVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if (tableView == self.tableView1) {
-            let cell = tableView1.dequeueReusableCell(withIdentifier: "CustomCell", for: indexPath) as! BudgetCell1
+            let cell = tableView1.dequeueReusableCell(withIdentifier: "CustomCell", for: indexPath) as! MoneyCell1
             cell.dollarLabel.text = "43"
             cell.envelopeLabel.text = tableViewData?[indexPath.row]
             return cell
         } else if (tableView == self.tableView2) {
-            let cell = tableView2.dequeueReusableCell(withIdentifier: "CustomCell", for: indexPath) as! BudgetCell2
+            let cell = tableView2.dequeueReusableCell(withIdentifier: "CustomCell", for: indexPath) as! MoneyCell2
             cell.dollarLabel.text = "43"
             cell.envelopeLabel.text = tableViewData?[indexPath.row]
             return cell
         } else if (tableView == tableView3) {
-            let cell = tableView3.dequeueReusableCell(withIdentifier: "CustomCell", for: indexPath) as! BudgetCell3
+            let cell = tableView3.dequeueReusableCell(withIdentifier: "CustomCell", for: indexPath) as! MoneyCell3
             cell.dollarLabel.text = "28"
             cell.envelopeLabel.text = tableViewData?[indexPath.row]
             return cell
         } else {
-            let cell = tableView4.dequeueReusableCell(withIdentifier: "CustomCell", for: indexPath) as! BudgetCell4
+            let cell = tableView4.dequeueReusableCell(withIdentifier: "CustomCell", for: indexPath) as! MoneyCell4
             cell.dollarLabel.text = "11"
             cell.envelopeLabel.text = tableViewData?[indexPath.row]
             return cell
