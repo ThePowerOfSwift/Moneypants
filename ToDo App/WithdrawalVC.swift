@@ -1,9 +1,21 @@
 import UIKit
 
 class WithdrawalVC: UIViewController {
+    
+    let (userName, _, _) = tempUsers[homeIndex]
+    @IBOutlet weak var withdrawalAmount: UITextField!
+    @IBOutlet weak var withdrawalDescription: UITextField!
+    @IBOutlet weak var budgetSelectButton: UIButton!
+    var withdrawalDesc: String?
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        navigationItem.title = userName
+        budgetSelectButton.layer.cornerRadius = 5
+        budgetSelectButton.layer.masksToBounds = true
+        budgetSelectButton.layer.borderColor = UIColor.lightGray.cgColor
+        budgetSelectButton.layer.borderWidth = 0.5
     }
     
     
@@ -14,7 +26,7 @@ class WithdrawalVC: UIViewController {
         
         // Lengthy alert bubble
         let messageText = NSMutableAttributedString(
-            string: "Withdrawals should be used for the following reasons:\n\n1. if child wishes to purchase something but their card won't allow it (e.g. Internet purchases)\n\n2. if child forgot their debit card at a store but has sufficient funds in their bank account to buy an item\n\n3. if child broke something and needs to pay for it\n\n",
+            string: "Withdrawals should be used for the following reasons:\n\n1. if child wishes to purchase something but their card won't allow it (e.g. Internet purchases)\n\n2. if child forgot their debit card at a store but has sufficient funds in their bank account to buy an item\n\n3. if child broke something and needs to pay for it",
             attributes: [
                 NSParagraphStyleAttributeName : paragraphStyle,
                 NSFontAttributeName : UIFont.systemFont(ofSize: 13.0),
@@ -34,8 +46,8 @@ class WithdrawalVC: UIViewController {
     }
     
     @IBAction func addWithdrawalButtonTapped(_ sender: UIButton) {
-        
-        let alert = UIAlertController(title: "add withdrawal", message: "Confirmation message goes here. Tap 'okay' to confirm.", preferredStyle: .alert)
+        withdrawalDesc = withdrawalDescription.text
+        let alert = UIAlertController(title: "Add Withdrawal", message: "You have chosen to add a $\(withdrawalAmount.text!) withdrawal for \"\(withdrawalDesc!)\" to \(userName)'s account. Tap okay to confirm.", preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "okay", style: .default, handler: { (action) in
             alert.dismiss(animated: true, completion: nil)
             self.performSegue(withIdentifier: "UnwindToUserVCSegue", sender: self)

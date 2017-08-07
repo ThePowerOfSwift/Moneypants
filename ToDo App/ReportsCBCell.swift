@@ -1,6 +1,6 @@
 import UIKit
 
-class CBReportCell: UITableViewCell {
+class ReportsCBCell: UITableViewCell {
     
     @IBOutlet weak var choreHabitLabel: UILabel!
     @IBOutlet weak var choreHabitCBCount: UILabel!

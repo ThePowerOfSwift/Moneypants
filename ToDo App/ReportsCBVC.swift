@@ -1,11 +1,11 @@
 import UIKit
 
-class CBReportVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
+class ReportsCBVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var navigationBar: UINavigationBar!
     
     let (userName, userPicture, userIncome) = tempUsers[homeIndex]
-    var dataList: [Int] = []
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -13,7 +13,11 @@ class CBReportVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
         tableView.delegate = self
         tableView.dataSource = self
         
-        navigationItem.title = userName
+        navigationBar.topItem?.title = userName
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        tableView.reloadData()
     }
     
     
@@ -71,7 +75,7 @@ class CBReportVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
 //    }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "CustomCell", for: indexPath) as! CBReportCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: "CustomCell", for: indexPath) as! ReportsCBCell
         if indexPath.section == 0 {
             let (choreName, _, _, _) = dailyChores[indexPath.row]
             let cbNumber = tempChoresCB[indexPath.row]
@@ -142,6 +146,12 @@ class CBReportVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
         }))
         present(alert, animated: true, completion: nil)
     }
+    
+    @IBAction func doneButtonTapped(_ sender: UIBarButtonItem) {
+        dismiss(animated: true, completion: nil)
+    }
+    
+    
 }
 
 

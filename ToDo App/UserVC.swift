@@ -99,7 +99,7 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         } else if section == 2 {
             return "weekly chores"
         } else {
-            return "fees and debts"
+            return "fees and withdrawals"
         }
     }
     
@@ -130,12 +130,14 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
             let (choreHabitName, pointsLabelValue, _, _) = weeklyChoresSavannah[indexPath.row]
             cell.choreHabitLabel.text = choreHabitName
             cell.pointsLabel.text = "\(Int(pointsLabelValue * 15))"
-        } else {
+        } else if indexPath.section == 3 {
             cell.choreHabitLabel.text = feesDebts[indexPath.row]
-            cell.counterLabel.isHidden = true
-            cell.pointsLabel.isHidden = true
-            cell.choreHabitButton.isHidden = true
-            cell.accessoryType = UITableViewCellAccessoryType.disclosureIndicator
+            cell.pointsLabel.text = "-100"
+            cell.pointsLabel.textColor = UIColor.red
+//            cell.counterLabel.isHidden = true
+//            cell.pointsLabel.isHidden = true
+//            cell.choreHabitButton.isHidden = true
+//            cell.accessoryType = UITableViewCellAccessoryType.disclosureIndicator
         }
         return cell
     }
@@ -148,7 +150,6 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         } else {
             print("button tapped at \([indexPath.section]) \([indexPath.row])")
         }
-        tableView.reloadData()
     }
     
     

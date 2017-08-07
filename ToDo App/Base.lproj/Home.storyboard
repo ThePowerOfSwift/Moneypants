@@ -6,6 +6,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
@@ -77,7 +78,7 @@
                                 </constraints>
                             </view>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="50" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="AlW-px-Y5a">
-                                <rect key="frame" x="0.0" y="72" width="320" height="444"/>
+                                <rect key="frame" x="0.0" y="48" width="320" height="468"/>
                                 <color key="backgroundColor" white="0.90228361999999995" alpha="1" colorSpace="calibratedWhite"/>
                                 <inset key="separatorInset" minX="8" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 <prototypes>
@@ -202,7 +203,7 @@
                                 </prototypes>
                             </tableView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="payday" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Q0b-Jo-C8Y">
-                                <rect key="frame" x="0.0" y="44" width="320" height="28"/>
+                                <rect key="frame" x="0.0" y="20" width="320" height="28"/>
                                 <color key="backgroundColor" cocoaTouchSystemColor="scrollViewTexturedBackgroundColor"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="28" id="9Xu-G5-NA9"/>
@@ -355,116 +356,6 @@
             </objects>
             <point key="canvasLocation" x="19916" y="304"/>
         </scene>
-        <!--Payday-->
-        <scene sceneID="qpx-JG-siG">
-            <objects>
-                <viewController storyboardIdentifier="PaydayPage" title="Payday" automaticallyAdjustsScrollViewInsets="NO" id="xV5-iN-TfG" customClass="PaydayVC" customModule="ToDo_App" customModuleProvider="target" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="RfI-eG-dqr"/>
-                        <viewControllerLayoutGuide type="bottom" id="U45-EI-Acq"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="F5W-MB-lek">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="who is getting paid?" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZPL-zT-JC7">
-                                <rect key="frame" x="0.0" y="44" width="320" height="28"/>
-                                <color key="backgroundColor" cocoaTouchSystemColor="scrollViewTexturedBackgroundColor"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="28" id="EIH-WJ-uIX"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" name="Arista2.0" family="Arista 2.0" pointSize="20"/>
-                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="90" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="zCL-ti-NH5">
-                                <rect key="frame" x="0.0" y="72" width="320" height="447"/>
-                                <color key="backgroundColor" white="0.90228361999999995" alpha="1" colorSpace="calibratedWhite"/>
-                                <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="CustomCell" rowHeight="90" id="KGS-Pg-vOP" customClass="PaydayCell" customModule="ToDo_App" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="28" width="320" height="90"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGS-Pg-vOP" id="Aij-I3-CJH">
-                                            <rect key="frame" x="0.0" y="0.0" width="320" height="89"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Savannah" translatesAutoresizingMaskIntoConstraints="NO" id="NoQ-bG-sVi">
-                                                    <rect key="frame" x="8" y="7" width="75" height="75"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="width" constant="75" id="Q9u-fC-92o"/>
-                                                        <constraint firstAttribute="height" constant="75" id="WsG-bd-bUc"/>
-                                                    </constraints>
-                                                </imageView>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="SavannahSuperLongName" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NJh-wX-OHJ">
-                                                    <rect key="frame" x="99" y="31" width="134" height="28"/>
-                                                    <fontDescription key="fontDescription" type="system" weight="black" pointSize="23"/>
-                                                    <nil key="textColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ZDQ-Q0-Zvh">
-                                                    <rect key="frame" x="237" y="7" width="75" height="75"/>
-                                                    <subviews>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="GO" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QS9-uk-yfh">
-                                                            <rect key="frame" x="0.0" y="8" width="75" height="42"/>
-                                                            <fontDescription key="fontDescription" name="Arista2.0" family="Arista 2.0" pointSize="36"/>
-                                                            <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                            <nil key="highlightedColor"/>
-                                                        </label>
-                                                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="go arrow white" translatesAutoresizingMaskIntoConstraints="NO" id="E8I-QH-2DZ">
-                                                            <rect key="frame" x="12" y="50" width="51" height="17"/>
-                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                        </imageView>
-                                                    </subviews>
-                                                    <color key="backgroundColor" red="0.49019607840000001" green="0.74509803919999995" blue="0.18823529410000001" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="width" constant="75" id="Gbp-Tw-tyt"/>
-                                                        <constraint firstAttribute="height" constant="75" id="N28-cf-hKt"/>
-                                                        <constraint firstAttribute="trailing" secondItem="QS9-uk-yfh" secondAttribute="trailing" id="R2J-qI-BcJ"/>
-                                                        <constraint firstItem="QS9-uk-yfh" firstAttribute="leading" secondItem="ZDQ-Q0-Zvh" secondAttribute="leading" id="VdR-Ww-JIS"/>
-                                                        <constraint firstItem="QS9-uk-yfh" firstAttribute="top" secondItem="ZDQ-Q0-Zvh" secondAttribute="top" constant="8" id="yXl-UT-vCE"/>
-                                                    </constraints>
-                                                </view>
-                                            </subviews>
-                                            <constraints>
-                                                <constraint firstItem="NJh-wX-OHJ" firstAttribute="leading" secondItem="NoQ-bG-sVi" secondAttribute="trailing" constant="16" id="LPQ-pl-CWu"/>
-                                                <constraint firstItem="ZDQ-Q0-Zvh" firstAttribute="leading" secondItem="NJh-wX-OHJ" secondAttribute="trailing" constant="4" id="Loz-de-UrC"/>
-                                                <constraint firstItem="NJh-wX-OHJ" firstAttribute="centerY" secondItem="Aij-I3-CJH" secondAttribute="centerY" id="Mrg-ik-0NM"/>
-                                                <constraint firstItem="NoQ-bG-sVi" firstAttribute="centerY" secondItem="Aij-I3-CJH" secondAttribute="centerY" id="Zj2-L3-2Hf"/>
-                                                <constraint firstItem="ZDQ-Q0-Zvh" firstAttribute="centerY" secondItem="Aij-I3-CJH" secondAttribute="centerY" id="b59-Cz-nA6"/>
-                                                <constraint firstItem="NoQ-bG-sVi" firstAttribute="leading" secondItem="Aij-I3-CJH" secondAttribute="leading" constant="8" id="gql-V5-Iu1"/>
-                                                <constraint firstAttribute="trailing" secondItem="ZDQ-Q0-Zvh" secondAttribute="trailing" constant="8" id="iAA-eq-Xha"/>
-                                            </constraints>
-                                        </tableViewCellContentView>
-                                        <connections>
-                                            <outlet property="goView" destination="ZDQ-Q0-Zvh" id="X1I-LV-MmP"/>
-                                            <outlet property="userImage" destination="NoQ-bG-sVi" id="Mzi-GM-eg4"/>
-                                            <outlet property="userName" destination="NJh-wX-OHJ" id="ZGJ-IG-fPe"/>
-                                        </connections>
-                                    </tableViewCell>
-                                </prototypes>
-                            </tableView>
-                        </subviews>
-                        <color key="backgroundColor" white="0.90228361999999995" alpha="1" colorSpace="calibratedWhite"/>
-                        <constraints>
-                            <constraint firstItem="zCL-ti-NH5" firstAttribute="top" secondItem="ZPL-zT-JC7" secondAttribute="bottom" id="2AJ-Ka-TGb"/>
-                            <constraint firstAttribute="trailing" secondItem="ZPL-zT-JC7" secondAttribute="trailing" id="LtU-Ti-8eN"/>
-                            <constraint firstItem="ZPL-zT-JC7" firstAttribute="leading" secondItem="F5W-MB-lek" secondAttribute="leading" id="QVo-E3-ap7"/>
-                            <constraint firstItem="U45-EI-Acq" firstAttribute="top" secondItem="zCL-ti-NH5" secondAttribute="bottom" id="kWy-rU-oES"/>
-                            <constraint firstItem="zCL-ti-NH5" firstAttribute="leading" secondItem="F5W-MB-lek" secondAttribute="leading" id="mGm-d3-FaE"/>
-                            <constraint firstAttribute="trailing" secondItem="zCL-ti-NH5" secondAttribute="trailing" id="nfV-YB-Amp"/>
-                            <constraint firstItem="ZPL-zT-JC7" firstAttribute="top" secondItem="RfI-eG-dqr" secondAttribute="bottom" id="yOS-7W-sn7"/>
-                        </constraints>
-                    </view>
-                    <navigationItem key="navigationItem" title="payday!" id="9eV-TH-YO0"/>
-                    <connections>
-                        <outlet property="tableView" destination="zCL-ti-NH5" id="NIo-eJ-AAr"/>
-                        <segue destination="S2f-01-cbX" kind="show" identifier="DetailSegue" id="zLe-WG-PtT"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="737-fU-yT4" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="18018.75" y="305.28169014084506"/>
-        </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="Pe2-FI-aBa">
             <objects>
@@ -575,7 +466,7 @@
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="90" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="hNp-sO-mgE">
                                 <rect key="frame" x="0.0" y="72" width="320" height="447"/>
                                 <color key="backgroundColor" white="0.90228361999999995" alpha="1" colorSpace="calibratedWhite"/>
-                                <inset key="separatorInset" minX="8" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                <inset key="separatorInset" minX="16" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="HomeDetailCell" rowHeight="90" id="QiZ-fB-vVl" customClass="HomeCustomCell" customModule="ToDo_App" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="320" height="90"/>
@@ -585,14 +476,14 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Mom" translatesAutoresizingMaskIntoConstraints="NO" id="ez5-Vi-xNN">
-                                                    <rect key="frame" x="8" y="7" width="75" height="75"/>
+                                                    <rect key="frame" x="16" y="7" width="75" height="75"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="75" id="eeI-cz-Vzz"/>
                                                         <constraint firstAttribute="width" constant="75" id="q7b-Cd-0GJ"/>
                                                     </constraints>
                                                 </imageView>
                                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" translatesAutoresizingMaskIntoConstraints="NO" id="n4Q-po-8pS">
-                                                    <rect key="frame" x="99" y="17.5" width="64" height="55"/>
+                                                    <rect key="frame" x="107" y="17.5" width="64" height="55"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GDP-Wx-Hyo">
                                                             <rect key="frame" x="0.0" y="0.0" width="64" height="27.5"/>
@@ -610,7 +501,7 @@
                                                 </stackView>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstItem="ez5-Vi-xNN" firstAttribute="leading" secondItem="X9c-Qo-pA9" secondAttribute="leading" constant="8" id="21q-K1-rTj"/>
+                                                <constraint firstItem="ez5-Vi-xNN" firstAttribute="leading" secondItem="X9c-Qo-pA9" secondAttribute="leading" constant="16" id="21q-K1-rTj"/>
                                                 <constraint firstItem="ez5-Vi-xNN" firstAttribute="centerY" secondItem="X9c-Qo-pA9" secondAttribute="centerY" id="KNZ-iu-W8b"/>
                                                 <constraint firstItem="n4Q-po-8pS" firstAttribute="centerY" secondItem="X9c-Qo-pA9" secondAttribute="centerY" id="X2a-YJ-J8y"/>
                                                 <constraint firstItem="n4Q-po-8pS" firstAttribute="leading" secondItem="ez5-Vi-xNN" secondAttribute="trailing" constant="16" id="mPj-qS-Tx8"/>
@@ -713,7 +604,7 @@
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
-                        <segue destination="xV5-iN-TfG" kind="relationship" relationship="rootViewController" id="0qt-m5-tot"/>
+                        <segue destination="anQ-cB-fMe" kind="relationship" relationship="rootViewController" id="hIx-6U-kS0"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="oKu-d7-Src" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -748,6 +639,106 @@
             </objects>
             <point key="canvasLocation" x="17078" y="851"/>
         </scene>
+        <!--Payday-->
+        <scene sceneID="qMq-br-hJz">
+            <objects>
+                <viewController storyboardIdentifier="PaydayPage2" title="Payday" automaticallyAdjustsScrollViewInsets="NO" id="anQ-cB-fMe" customClass="PaydayVC2" customModule="ToDo_App" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="O6F-DF-jVD"/>
+                        <viewControllerLayoutGuide type="bottom" id="crR-VB-vtw"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="xQC-Md-xxU">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="who is getting paid?" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lvv-JS-Vmn">
+                                <rect key="frame" x="0.0" y="44" width="320" height="28"/>
+                                <color key="backgroundColor" cocoaTouchSystemColor="scrollViewTexturedBackgroundColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="28" id="u5C-QY-fQo"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="Arista2.0" family="Arista 2.0" pointSize="20"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="F8f-Ss-bTr">
+                                <rect key="frame" x="0.0" y="72" width="320" height="447"/>
+                                <color key="backgroundColor" white="0.90000000000000002" alpha="1" colorSpace="calibratedWhite"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="aRk-6o-85g">
+                                    <size key="itemSize" width="100" height="100"/>
+                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                </collectionViewFlowLayout>
+                                <cells>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="CustomCell" id="TP2-PJ-pnl" customClass="PaydayCell2" customModule="ToDo_App" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="0.0" width="100" height="100"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                            <rect key="frame" x="0.0" y="0.0" width="100" height="100"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Savannah" translatesAutoresizingMaskIntoConstraints="NO" id="JGN-ZI-6Ea">
+                                                    <rect key="frame" x="13" y="8" width="75" height="75"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="75" id="WZj-as-K3V"/>
+                                                        <constraint firstAttribute="height" constant="75" id="ne1-P1-jZU"/>
+                                                    </constraints>
+                                                </imageView>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YK4-EL-e4P">
+                                                    <rect key="frame" x="0.0" y="84" width="100" height="16"/>
+                                                    <fontDescription key="fontDescription" type="system" weight="black" pointSize="13"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="green check" translatesAutoresizingMaskIntoConstraints="NO" id="In2-gs-igd">
+                                                    <rect key="frame" x="78" y="4" width="20" height="20"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" secondItem="In2-gs-igd" secondAttribute="height" multiplier="1:1" id="A3u-DO-zt5"/>
+                                                        <constraint firstAttribute="height" constant="20" id="sso-Rq-gEw"/>
+                                                    </constraints>
+                                                </imageView>
+                                            </subviews>
+                                        </view>
+                                        <constraints>
+                                            <constraint firstAttribute="trailing" secondItem="YK4-EL-e4P" secondAttribute="trailing" id="GZn-3m-tyb"/>
+                                            <constraint firstAttribute="bottom" secondItem="YK4-EL-e4P" secondAttribute="bottom" id="KAQ-sb-xYi"/>
+                                            <constraint firstItem="In2-gs-igd" firstAttribute="top" secondItem="JGN-ZI-6Ea" secondAttribute="top" constant="-4" id="LJg-Dp-pO5"/>
+                                            <constraint firstItem="In2-gs-igd" firstAttribute="trailing" secondItem="JGN-ZI-6Ea" secondAttribute="trailing" constant="10" id="XSw-Mi-nRx"/>
+                                            <constraint firstItem="JGN-ZI-6Ea" firstAttribute="top" secondItem="TP2-PJ-pnl" secondAttribute="top" constant="8" id="bsH-dA-Y4W"/>
+                                            <constraint firstItem="YK4-EL-e4P" firstAttribute="leading" secondItem="TP2-PJ-pnl" secondAttribute="leading" id="uVs-3j-qMl"/>
+                                            <constraint firstItem="JGN-ZI-6Ea" firstAttribute="centerX" secondItem="TP2-PJ-pnl" secondAttribute="centerX" id="v4b-Jj-BGw"/>
+                                        </constraints>
+                                        <connections>
+                                            <outlet property="paidBadge" destination="In2-gs-igd" id="Nwa-c3-97P"/>
+                                            <outlet property="userImage" destination="JGN-ZI-6Ea" id="ywo-wj-i4J"/>
+                                            <outlet property="userName" destination="YK4-EL-e4P" id="rLe-YY-ppB"/>
+                                        </connections>
+                                    </collectionViewCell>
+                                </cells>
+                            </collectionView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="crR-VB-vtw" firstAttribute="top" secondItem="F8f-Ss-bTr" secondAttribute="bottom" id="5xU-5E-qoD"/>
+                            <constraint firstItem="F8f-Ss-bTr" firstAttribute="leading" secondItem="xQC-Md-xxU" secondAttribute="leading" id="grw-GV-G7G"/>
+                            <constraint firstItem="lvv-JS-Vmn" firstAttribute="top" secondItem="O6F-DF-jVD" secondAttribute="bottom" id="nKy-KD-bBS"/>
+                            <constraint firstItem="lvv-JS-Vmn" firstAttribute="leading" secondItem="xQC-Md-xxU" secondAttribute="leading" id="rJ1-58-lrR"/>
+                            <constraint firstItem="F8f-Ss-bTr" firstAttribute="top" secondItem="lvv-JS-Vmn" secondAttribute="bottom" id="rZ9-Zb-q9p"/>
+                            <constraint firstAttribute="trailing" secondItem="F8f-Ss-bTr" secondAttribute="trailing" id="yDz-lJ-kDd"/>
+                            <constraint firstAttribute="trailing" secondItem="lvv-JS-Vmn" secondAttribute="trailing" id="ypX-Mf-bMp"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" title="payday!" id="owo-Ex-i20"/>
+                    <connections>
+                        <outlet property="collectionView" destination="F8f-Ss-bTr" id="2fU-qt-mUf"/>
+                        <segue destination="S2f-01-cbX" kind="show" identifier="DetailSegue" id="gHB-go-ET6"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="gAe-KU-fVj" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="18019" y="304"/>
+        </scene>
     </scenes>
     <resources>
         <image name="Mom" width="320" height="256"/>
@@ -755,7 +746,7 @@
         <image name="dollar green" width="45" height="25"/>
         <image name="gear black" width="25" height="25"/>
         <image name="gear white" width="25" height="25"/>
-        <image name="go arrow white" width="30" height="25"/>
+        <image name="green check" width="75" height="75"/>
         <image name="home black" width="28" height="25"/>
         <image name="home white" width="28" height="25"/>
         <image name="payday black" width="26" height="25"/>

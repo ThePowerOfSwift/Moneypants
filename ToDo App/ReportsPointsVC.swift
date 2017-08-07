@@ -1,8 +1,9 @@
 import UIKit
 
-class TransactionsVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class ReportsPointsVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var navigationBar: UINavigationBar!
     
     let (userName, userPicture, userIncome) = tempUsers[homeIndex]
 
@@ -13,7 +14,7 @@ class TransactionsVC: UIViewController, UITableViewDelegate, UITableViewDataSour
         tableView.dataSource = self
         tableView.delegate = self
         
-        navigationItem.title = userName
+        navigationBar.topItem?.title = userName
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -54,7 +55,7 @@ class TransactionsVC: UIViewController, UITableViewDelegate, UITableViewDataSour
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "CustomCell", for: indexPath) as! TransactionsCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: "CustomCell", for: indexPath) as! ReportsPointsCell
         if indexPath.section == 0 {
             let (time, chore, points) = date1Data[indexPath.row]
             cell.timeStampLabel.text = time
@@ -106,10 +107,10 @@ class TransactionsVC: UIViewController, UITableViewDelegate, UITableViewDataSour
 
     
     // -----------
-    // Home Button
+    // Done Button
     // -----------
     
-    @IBAction func homeButtonTapped(_ sender: UIBarButtonItem) {
+    @IBAction func doneButtonTapped(_ sender: UIBarButtonItem) {
         dismiss(animated: true, completion: nil)
     }
 }

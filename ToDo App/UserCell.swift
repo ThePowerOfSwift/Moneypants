@@ -15,8 +15,6 @@ class UserCell: UITableViewCell {
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-        
-        counterLabel.text = ""
     }
     
     @IBAction func choreHabitButtonTapped(_ sender: UIButton) {
@@ -28,10 +26,9 @@ class UserCell: UITableViewCell {
     }
     
     @IBAction func completionButtonTouchUpOutside(_ sender: UIButton) {
+        number = 0
         choreHabitLabel.textColor = UIColor.black
         pointsLabel.textColor = UIColor.black
-        counterLabel.text = ""
+        counterLabel.text = "\(number)"
     }
-    
-    
 }

@@ -1,13 +1,52 @@
 import UIKit
 
-class FeeVC: UIViewController {
+class FeeVC: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate {
 
+    @IBOutlet weak var feeTextField: UITextField!
+    let feePicker = UIPickerView()
+    let fees = ["fighting", "lying", "stealing", "disobedience", "bad language"]
+    
+    let (userName, _, _) = tempUsers[homeIndex]
+    var feeDesc: String?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        navigationItem.title = userName
+        
+        feePicker.delegate = self
+        feePicker.dataSource = self
+        feeTextField.inputView = feePicker
     }
     
+    // -----------------
+    // Setup Picker View
+    // -----------------
+    
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+        return 1
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        return fees[row]
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        return fees.count
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        feeTextField.text = fees[row]
+    }
+    
+    
+    // --------------
+    // Add Fee Button
+    // --------------
+    
     @IBAction func addFeeButtonTapped(_ sender: UIButton) {
-        let alert = UIAlertController(title: "add fee", message: "Confirmation message goes here. Tap 'okay' to confirm.", preferredStyle: .alert)
+        feeDesc = feeTextField.text
+        let alert = UIAlertController(title: "Add Fee", message: "You have chosen to add a $1.00 fee for \"\(feeDesc!)\" to \(userName)'s account. Tap okay to confirm.", preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "okay", style: .default, handler: { (action) in
             alert.dismiss(animated: true, completion: nil)
             self.performSegue(withIdentifier: "UnwindToUserVCSegue", sender: self)

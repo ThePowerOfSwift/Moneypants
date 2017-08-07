@@ -36,6 +36,12 @@ class MoneyVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        // determine which view controller is presenting...
+        print(presentationController ?? "presentation = none")
+        print(presentedViewController ?? "presented = none")
+        print(presentingViewController ?? "presenting = none")
+        print("modal presentation style = \(modalPresentationStyle)")
+        
         tableView1.delegate = self
         tableView1.dataSource = self
         tableView2.delegate = self
