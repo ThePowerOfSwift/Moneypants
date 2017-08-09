@@ -24,7 +24,7 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         // badges
         // ------
         
-        tabBarController?.tabBar.items?[2].badgeValue = "1"
+//        tabBarController?.tabBar.items?[2].badgeValue = "1"
         
         tableView.delegate = self
         tableView.dataSource = self
@@ -108,12 +108,7 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         header.textLabel?.font = UIFont(name: "Arista2.0", size: 20.0)
         header.textLabel?.textColor = UIColor.white
         header.textLabel?.textAlignment = .center
-        if section == 0 || section == 1 || section == 2 {
-            header.contentView.backgroundColor = UIColor.lightGray
-        } else {
-            header.contentView.backgroundColor = UIColor(red: 0/255, green: 153/255, blue: 255/255, alpha: 1)
-        }
-        
+        header.contentView.backgroundColor = UIColor.lightGray
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

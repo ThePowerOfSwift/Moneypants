@@ -4,45 +4,6 @@ class ChoreSummaryVC: UIViewController, UITableViewDataSource, UITableViewDelega
     
     @IBOutlet weak var tableView: UITableView!
     
-    let sectionTitle: [String] = ["Dad", "Mom", "Savannah", "Aiden", "Sophie"]
-    let sectionImages: [UIImage] = [#imageLiteral(resourceName: "Dad"), #imageLiteral(resourceName: "Mom"), #imageLiteral(resourceName: "Savannah.jpg"), #imageLiteral(resourceName: "Aiden"), #imageLiteral(resourceName: "Sophie")]
-    let s1Data: [String] = ["meal prep",
-                            "job inspections",
-                            "get self ready for day",
-                            "personal meditation",
-                            "develop talent",
-                            "1-on-1 with child",
-                            "payday"]
-    let s2Data: [String] = ["counters",
-                            "feed pet",
-                            "get self ready for day",
-                            "personal meditation",
-                            "develop talent",
-                            "1-on-1 with child",
-                            "clean fridge"]
-    let s3Data: [String] = ["bedroom",
-                            "bathrooms",
-                            "get self & buddy ready for day",
-                            "personal meditation / prayer",
-                            "daily exercise (20 min)",
-                            "wash & vacuum 1 car"]
-    let s4Data: [String] = ["bedroom",
-                            "laundry",
-                            "living room",
-                            "get self & buddy ready for day",
-                            "personal meditation / prayer",
-                            "daily exercise (20 min)",
-                            "wash & vacuum 1 car"]
-    let s5Data: [String] = ["bedroom",
-                            "sweep & vacuum",
-                            "dishes",
-                            "get self & buddy ready for day",
-                            "personal meditation / prayer",
-                            "daily exercise (20 min)",
-                            "mop floors",
-                            "mow lawn"]
-
-    
     var sectionData: [Int: [String]] = [:]
 
     
@@ -52,7 +13,11 @@ class ChoreSummaryVC: UIViewController, UITableViewDataSource, UITableViewDelega
         tableView.delegate = self
         tableView.dataSource = self
         
-        sectionData = [0 : s1Data, 1 : s2Data, 2 : s3Data, 3 : s4Data, 4 : s5Data]
+        sectionData = [0 : assignedChoresHabitsDad,
+                       1 : assignedChoresHabitsMom,
+                       2 : assignedChoresHabitsSavannah,
+                       3 : assignedChoresHabitsAiden,
+                       4 : assignedChoresHabitsSophie]
     }
     
     
@@ -62,23 +27,24 @@ class ChoreSummaryVC: UIViewController, UITableViewDataSource, UITableViewDelega
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if section == 0 {
-            return s1Data.count
+            return assignedChoresHabitsDad.count
         } else if section == 1 {
-            return s2Data.count
+            return assignedChoresHabitsMom.count
         } else if section == 2 {
-            return s3Data.count
+            return assignedChoresHabitsSavannah.count
         } else if section == 3 {
-            return s4Data.count
+            return assignedChoresHabitsAiden.count
         } else {
-            return s5Data.count
+            return assignedChoresHabitsSophie.count
         }
     }
     
     // Custom header sections
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let cell = tableView.dequeueReusableCell(withIdentifier: "headerCell") as! ChoreSummaryCell
-        cell.headerImage.image = sectionImages[section]
-        cell.headerLabel.text = sectionTitle[section]
+        let (userName, userImage, _) = tempUsers[section]
+        cell.headerImage.image = userImage
+        cell.headerLabel.text = userName
         return cell
     }
     
@@ -88,7 +54,7 @@ class ChoreSummaryVC: UIViewController, UITableViewDataSource, UITableViewDelega
     
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return sectionTitle.count
+        return tempUsers.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -99,7 +65,23 @@ class ChoreSummaryVC: UIViewController, UITableViewDataSource, UITableViewDelega
         }
         
         cell!.textLabel?.text = sectionData[indexPath.section]![indexPath.row]
-        cell?.contentView.backgroundColor = UIColor.yellow
+        
+        
+//        let cell = tableView.dequeueReusableCell(withIdentifier: "cell")
+//        if indexPath.section == 0 {
+//            cell?.textLabel?.text = assignedChoresHabitsDad[indexPath.row]
+//        } else if indexPath.section == 1 {
+//            cell?.textLabel?.text = assignedChoresHabitsMom[indexPath.row]
+//        } else if indexPath.section == 2 {
+//            cell?.textLabel?.text = assignedChoresHabitsSavannah[indexPath.row]
+//        } else if indexPath.section == 3 {
+//            cell?.textLabel?.text = assignedChoresHabitsAiden[indexPath.row]
+//        } else {
+//            cell?.textLabel?.text = assignedChoresHabitsSophie[indexPath.row]
+//        }
+//        return cell!
+        
+        
         return cell!
     }
 }

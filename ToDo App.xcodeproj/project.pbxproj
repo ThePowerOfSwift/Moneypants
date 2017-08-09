@@ -28,13 +28,13 @@
 		CE1CB5171F01AD9E009A8DAC /* Arista2.0Alternate.ttf in Resources */ = {isa = PBXBuildFile; fileRef = CE1CB5111F01AD9E009A8DAC /* Arista2.0Alternate.ttf */; };
 		CE1CB5181F01AD9E009A8DAC /* Arista2.0Alternate_full.ttf in Resources */ = {isa = PBXBuildFile; fileRef = CE1CB5121F01AD9E009A8DAC /* Arista2.0Alternate_full.ttf */; };
 		CE1CB51A1F01AF48009A8DAC /* Step2PopoverViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE1CB5191F01AF48009A8DAC /* Step2PopoverViewController.swift */; };
-		CE1CB5201F02117F009A8DAC /* Step2ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE1CB51F1F02117F009A8DAC /* Step2ViewController.swift */; };
+		CE1CB5201F02117F009A8DAC /* Step2VC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE1CB51F1F02117F009A8DAC /* Step2VC.swift */; };
 		CE1CB5271F0214BB009A8DAC /* Aiden.jpg in Resources */ = {isa = PBXBuildFile; fileRef = CE1CB5221F0214BB009A8DAC /* Aiden.jpg */; };
 		CE1CB5281F0214BB009A8DAC /* Dad.jpg in Resources */ = {isa = PBXBuildFile; fileRef = CE1CB5231F0214BB009A8DAC /* Dad.jpg */; };
 		CE1CB5291F0214BB009A8DAC /* Mom.jpg in Resources */ = {isa = PBXBuildFile; fileRef = CE1CB5241F0214BB009A8DAC /* Mom.jpg */; };
 		CE1CB52A1F0214BB009A8DAC /* Savannah.jpg in Resources */ = {isa = PBXBuildFile; fileRef = CE1CB5251F0214BB009A8DAC /* Savannah.jpg */; };
 		CE1CB52B1F0214BB009A8DAC /* Sophie.jpg in Resources */ = {isa = PBXBuildFile; fileRef = CE1CB5261F0214BB009A8DAC /* Sophie.jpg */; };
-		CE1CB52D1F0215EA009A8DAC /* Step2CustomCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE1CB52C1F0215EA009A8DAC /* Step2CustomCell.swift */; };
+		CE1CB52D1F0215EA009A8DAC /* Step2Cell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE1CB52C1F0215EA009A8DAC /* Step2Cell.swift */; };
 		CE24A4381F07121D00A03FA2 /* Step5VC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE24A4371F07121D00A03FA2 /* Step5VC.swift */; };
 		CE2CCBDB1F26DE1C00ACA17F /* VideosCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE2CCBDA1F26DE1C00ACA17F /* VideosCell.swift */; };
 		CE2CCC001F27136C00ACA17F /* VideoPlaybackVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE2CCBFF1F27136C00ACA17F /* VideoPlaybackVC.swift */; };
@@ -121,13 +121,13 @@
 		CE1CB5111F01AD9E009A8DAC /* Arista2.0Alternate.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Arista2.0Alternate.ttf; sourceTree = "<group>"; };
 		CE1CB5121F01AD9E009A8DAC /* Arista2.0Alternate_full.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Arista2.0Alternate_full.ttf; sourceTree = "<group>"; };
 		CE1CB5191F01AF48009A8DAC /* Step2PopoverViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Step2PopoverViewController.swift; sourceTree = "<group>"; };
-		CE1CB51F1F02117F009A8DAC /* Step2ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Step2ViewController.swift; sourceTree = "<group>"; };
+		CE1CB51F1F02117F009A8DAC /* Step2VC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Step2VC.swift; sourceTree = "<group>"; };
 		CE1CB5221F0214BB009A8DAC /* Aiden.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Aiden.jpg; sourceTree = "<group>"; };
 		CE1CB5231F0214BB009A8DAC /* Dad.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Dad.jpg; sourceTree = "<group>"; };
 		CE1CB5241F0214BB009A8DAC /* Mom.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Mom.jpg; sourceTree = "<group>"; };
 		CE1CB5251F0214BB009A8DAC /* Savannah.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Savannah.jpg; sourceTree = "<group>"; };
 		CE1CB5261F0214BB009A8DAC /* Sophie.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Sophie.jpg; sourceTree = "<group>"; };
-		CE1CB52C1F0215EA009A8DAC /* Step2CustomCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Step2CustomCell.swift; sourceTree = "<group>"; };
+		CE1CB52C1F0215EA009A8DAC /* Step2Cell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Step2Cell.swift; sourceTree = "<group>"; };
 		CE24A4371F07121D00A03FA2 /* Step5VC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Step5VC.swift; sourceTree = "<group>"; };
 		CE2CCBDA1F26DE1C00ACA17F /* VideosCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VideosCell.swift; sourceTree = "<group>"; };
 		CE2CCBFF1F27136C00ACA17F /* VideoPlaybackVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VideoPlaybackVC.swift; sourceTree = "<group>"; };
@@ -152,7 +152,7 @@
 		CE7160F81F04A2A10045AA05 /* Step4HabitViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Step4HabitViewController.swift; sourceTree = "<group>"; };
 		CE7160FA1F04A9270045AA05 /* Step4HabitCustomCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Step4HabitCustomCell.swift; sourceTree = "<group>"; };
 		CE79B8931F233F290032DD70 /* VideosVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VideosVC.swift; sourceTree = "<group>"; };
-		CE7FF98C1F340E6A000AD071 /* WithdrawalVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WithdrawalVC.swift; sourceTree = "<group>"; };
+		CE7FF98C1F340E6A000AD071 /* WithdrawalVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WithdrawalVC.swift; sourceTree = "<group>"; wrapsLines = 1; };
 		CE7FF98E1F34124F000AD071 /* FeeVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeeVC.swift; sourceTree = "<group>"; };
 		CE7FF9901F3448C9000AD071 /* UserSettingsVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserSettingsVC.swift; sourceTree = "<group>"; };
 		CE8FF9FD1F0F7D88004A53BE /* Step5ExpensesCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Step5ExpensesCell.swift; sourceTree = "<group>"; };
@@ -346,8 +346,8 @@
 		CEE4D6A51F0F4460009BAE6C /* Step2 */ = {
 			isa = PBXGroup;
 			children = (
-				CE1CB51F1F02117F009A8DAC /* Step2ViewController.swift */,
-				CE1CB52C1F0215EA009A8DAC /* Step2CustomCell.swift */,
+				CE1CB51F1F02117F009A8DAC /* Step2VC.swift */,
+				CE1CB52C1F0215EA009A8DAC /* Step2Cell.swift */,
 				CE1CB5191F01AF48009A8DAC /* Step2PopoverViewController.swift */,
 			);
 			name = Step2;
@@ -570,7 +570,7 @@
 				CE9443B81F29804200ACC7D4 /* SpendingNavController.swift in Sources */,
 				CEAD053E1F2209A60097CD33 /* UserCell.swift in Sources */,
 				CEB4CD2A1F1ECD9100F9733F /* UserVC.swift in Sources */,
-				CE1CB52D1F0215EA009A8DAC /* Step2CustomCell.swift in Sources */,
+				CE1CB52D1F0215EA009A8DAC /* Step2Cell.swift in Sources */,
 				CE7FF98D1F340E6A000AD071 /* WithdrawalVC.swift in Sources */,
 				CE9443BC1F29842000ACC7D4 /* ReportsPointsVC.swift in Sources */,
 				CEB32C691F2C09DC0069D8B0 /* ReportsCBVC.swift in Sources */,
@@ -587,7 +587,7 @@
 				CE39D92A1F05A42C00159EC1 /* Step4ParentCustomCell.swift in Sources */,
 				CEEBB3401F202D900046E3FE /* SetupCompleteVC.swift in Sources */,
 				CEE4D6AC1F0F70EC009BAE6C /* Step5HeaderCell.swift in Sources */,
-				CE1CB5201F02117F009A8DAC /* Step2ViewController.swift in Sources */,
+				CE1CB5201F02117F009A8DAC /* Step2VC.swift in Sources */,
 				CEAAF9DC1F356F2400846DD5 /* PaydayVC2.swift in Sources */,
 				CE2CCC001F27136C00ACA17F /* VideoPlaybackVC.swift in Sources */,
 				CE7FF98F1F34124F000AD071 /* FeeVC.swift in Sources */,

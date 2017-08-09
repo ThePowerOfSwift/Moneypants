@@ -757,7 +757,7 @@
         <!--users-->
         <scene sceneID="QxE-Hh-fWV">
             <objects>
-                <viewController storyboardIdentifier="Users" title="users" automaticallyAdjustsScrollViewInsets="NO" id="Vuo-XU-Ouo" customClass="Step2ViewController" customModule="ToDo_App" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="Users" title="users" automaticallyAdjustsScrollViewInsets="NO" id="Vuo-XU-Ouo" customClass="Step2VC" customModule="ToDo_App" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="Oz6-iJ-eWu"/>
                         <viewControllerLayoutGuide type="bottom" id="xTi-xv-sLN"/>
@@ -770,7 +770,7 @@
                                 <rect key="frame" x="0.0" y="101" width="320" height="415"/>
                                 <color key="backgroundColor" white="0.90000000000000002" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="CustomCell" rowHeight="75" id="1ZJ-tX-XEn" customClass="Step2CustomCell" customModule="ToDo_App" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="CustomCell" rowHeight="75" id="1ZJ-tX-XEn" customClass="Step2Cell" customModule="ToDo_App" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="320" height="75"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="1ZJ-tX-XEn" id="DPk-t1-aDJ">
@@ -803,6 +803,7 @@
                                         <connections>
                                             <outlet property="myImage" destination="cVG-mt-V8D" id="2e2-CI-xsL"/>
                                             <outlet property="myLabel" destination="tfd-z6-79s" id="2eA-XU-vqB"/>
+                                            <segue destination="bI6-Lh-0aY" kind="show" id="NqU-OP-JMg"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -900,6 +901,9 @@
                             <constraint firstItem="xTi-xv-sLN" firstAttribute="top" secondItem="X3e-4l-8wq" secondAttribute="bottom" constant="8" id="xc7-qI-g6K"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="tableView" destination="sbW-zy-l1c" id="bxg-xG-pdO"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cQn-G5-UG0" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -1472,7 +1476,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Oae-fa-vXv" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="6285" y="1099.6478873239437"/>
+            <point key="canvasLocation" x="6332" y="1100"/>
         </scene>
         <!--Dad-->
         <scene sceneID="OmM-6g-iRT">
@@ -1624,7 +1628,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="q2g-9s-x4j" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="7097" y="1100"/>
+            <point key="canvasLocation" x="7140" y="1099"/>
         </scene>
         <!--summary-->
         <scene sceneID="gOm-Tc-PCF">
@@ -4545,5 +4549,6 @@
     <inferredMetricsTieBreakers>
         <segue reference="37h-AF-clw"/>
         <segue reference="7ni-nb-vpV"/>
+        <segue reference="rer-OQ-COQ"/>
     </inferredMetricsTieBreakers>
 </document>

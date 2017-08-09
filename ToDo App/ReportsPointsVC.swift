@@ -3,7 +3,6 @@ import UIKit
 class ReportsPointsVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     @IBOutlet weak var tableView: UITableView!
-    @IBOutlet weak var navigationBar: UINavigationBar!
     
     let (userName, userPicture, userIncome) = tempUsers[homeIndex]
 
@@ -14,7 +13,7 @@ class ReportsPointsVC: UIViewController, UITableViewDelegate, UITableViewDataSou
         tableView.dataSource = self
         tableView.delegate = self
         
-        navigationBar.topItem?.title = userName
+        navigationItem.title = userName
     }
     
     override func viewDidAppear(_ animated: Bool) {

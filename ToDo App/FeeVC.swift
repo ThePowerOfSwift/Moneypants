@@ -16,6 +16,7 @@ class FeeVC: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate {
         
         feePicker.delegate = self
         feePicker.dataSource = self
+        feePicker.backgroundColor = UIColor.white
         feeTextField.inputView = feePicker
     }
     
@@ -46,10 +47,15 @@ class FeeVC: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate {
     
     @IBAction func addFeeButtonTapped(_ sender: UIButton) {
         feeDesc = feeTextField.text
+        if feeDesc == "" {
+            print("feeDesc is blank")
+            feeDesc = "blank"
+        }
         let alert = UIAlertController(title: "Add Fee", message: "You have chosen to add a $1.00 fee for \"\(feeDesc!)\" to \(userName)'s account. Tap okay to confirm.", preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "okay", style: .default, handler: { (action) in
-            alert.dismiss(animated: true, completion: nil)
-            self.performSegue(withIdentifier: "UnwindToUserVCSegue", sender: self)
+        alert.addAction(UIAlertAction(title: "okay", style: .default, handler: {_ in
+            CATransaction.setCompletionBlock({
+                self.performSegue(withIdentifier: "UnwindToUserVCSegue", sender: nil)
+            })
         }))
         alert.addAction(UIAlertAction(title: "cancel", style: .cancel, handler: { (action) in
             alert.dismiss(animated: true, completion: nil)

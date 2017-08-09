@@ -1,6 +1,6 @@
 import UIKit
 
-class Step2CustomCell: UITableViewCell {
+class Step2Cell: UITableViewCell {
     
     @IBOutlet weak var myImage: UIImageView!
     @IBOutlet weak var myLabel: UILabel!

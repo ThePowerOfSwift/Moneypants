@@ -89,18 +89,48 @@ let parentDailyHabits = [
 
 // Table data is as follows: chore name, chore multiplier, chore Consistency Bonus, chore editable?
 
-//10 daily chores
-let dailyChoresSavannah = [
-    ("bedroom", 1, false, true),
-    ("bathrooms", 1, false, true),
-]
+let assignedChoresHabitsDad: [String] = ["meal prep",
+                                         "job inspections",
+                                         "get self ready for day",
+                                         "personal meditation",
+                                         "develop talent",
+                                         "1-on-1 with child",
+                                         "payday"]
+let assignedChoresHabitsMom: [String] = ["counters",
+                                         "feed pet",
+                                         "get self ready for day",
+                                         "personal meditation",
+                                         "develop talent",
+                                         "1-on-1 with child",
+                                         "clean fridge"]
+let assignedChoresHabitsSavannah: [String] = ["bedroom",
+                                              "bathrooms",
+                                              "get self & buddy ready for day",
+                                              "personal meditation / prayer",
+                                              "daily exercise (20 min)",
+                                              "wash & vacuum 1 car"]
+let assignedChoresHabitsAiden: [String] = ["bedroom",
+                                           "laundry",
+                                           "living room",
+                                           "get self & buddy ready for day",
+                                           "personal meditation / prayer",
+                                           "daily exercise (20 min)",
+                                           "wash & vacuum 1 car"]
+let assignedChoresHabitsSophie: [String] = ["bedroom",
+                                            "sweep & vacuum",
+                                            "dishes",
+                                            "get self & buddy ready for day",
+                                            "personal meditation / prayer",
+                                            "daily exercise (20 min)",
+                                            "mop floors",
+                                            "mow lawn"]
 
-//10 weekly chores
-let weeklyChoresSavannah = [
-    ("sweep porch",	2.5, false, true),
-    ("weed garden",	5, false, true),
-    ("babysit (per hour)", 25, false, true)
-]
+let dailyChoresSavannah = [("bedroom", 1, false, true),
+                           ("bathrooms", 1, false, true)]
+
+let weeklyChoresSavannah = [("sweep porch",	2.5, false, true),
+                            ("weed garden",	5, false, true),
+                            ("babysit (per hour)", 25, false, true)]
 
 //=====================================
 
@@ -138,13 +168,13 @@ var homeIndex = 0       // MARK: global variable, need to change this
 
 //=====================================
 
-let tempPaydayDailyChores = [("clean bedroom", "1","1","1","1","1","E","1", 70),
-                             ("clean backyard", "1","1","1","1","1","E","1", 70),
-                             ("water garden, feed chickens", "X","1","1","X","1","1","1", 70)
+let tempPaydayDailyChores = [("clean bedroom", "1","1","1","1","1","E","1", -40),
+                             ("clean backyard", "1","1","1","1","1","E","1", -40),
+                             ("water garden, feed chickens", "X","1","1","X","1","1","1", -150)
 ]
 
-let tempPaydayDailyHabits = [("self ready by 10:am","1","1","1","1","1","E","1", 70),
-                              ("prayer & scriptures (10 min)", "X","1","1","1","1","1","X", 50),
+let tempPaydayDailyHabits = [("self ready by 10:am","1","1","1","1","1","","1", 60),
+                              ("prayer & scriptures (10 min)", "","1","1","1","1","1","", 50),
                               ("exercise (20 min)", "","1","1","1","1","","", 40),
                               ("talents (20 min)", "","1","1","1","1","1","", 50),
                               ("homework by 5:pm", "","1","1","1","1","1","", 250),
@@ -152,7 +182,7 @@ let tempPaydayDailyHabits = [("self ready by 10:am","1","1","1","1","1","E","1",
                               ("peacemaking", "2","1","2","3","1","1","2", 120),
                               ("good deed", "","1","1","1","1","","1", 50),
                               ("journal", "1","1","1","1","1","1","1", 70),
-                              ("bedtime by 9:30pm", "","1","1","1","1","E","1", 60)]
+                              ("bedtime by 9:30pm", "","1","1","1","1","","1", 50)]
 
 let tempPaydayWeeklyChores = [("wash windows inside", "","","","","","","1", 150),
                               ("babysit", "","","","2","","","", 1000)]

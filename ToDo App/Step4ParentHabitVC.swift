@@ -26,8 +26,9 @@ class Step4ParentHabitVC: UIViewController, UITableViewDataSource, UITableViewDe
     // customize title look
     func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
         let header = view as! UITableViewHeaderFooterView
-        header.textLabel?.font = UIFont.systemFont(ofSize: 16.0)
+        header.textLabel?.font = UIFont(name: "Arista2.0", size: 20.0)
         header.textLabel?.textColor = UIColor.white
+        header.textLabel?.textAlignment = .center
         header.contentView.backgroundColor = UIColor.lightGray
     }
     
