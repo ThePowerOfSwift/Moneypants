@@ -1,6 +1,6 @@
 import UIKit
 
-class PaydayVC2: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
+class PaydayVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
     
     @IBOutlet weak var collectionView: UICollectionView!
 
@@ -17,7 +17,7 @@ class PaydayVC2: UIViewController, UICollectionViewDelegate, UICollectionViewDat
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let (tempUserName, tempUserImage, _) = tempUsers[indexPath.row]
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CustomCell", for: indexPath) as! PaydayCell2
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CustomCell", for: indexPath) as! PaydayCell
         cell.userImage.image = tempUserImage
         cell.userName.text = tempUserName
         

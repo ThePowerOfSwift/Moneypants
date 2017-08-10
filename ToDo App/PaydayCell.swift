@@ -1,6 +1,6 @@
 import UIKit
 
-class PaydayCell2: UICollectionViewCell {
+class PaydayCell: UICollectionViewCell {
     
     @IBOutlet weak var userImage: UIImageView!
     @IBOutlet weak var userName: UILabel!

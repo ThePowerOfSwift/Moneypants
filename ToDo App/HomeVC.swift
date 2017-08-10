@@ -6,12 +6,11 @@ class HomeVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         addNavBarImage()
+        
         tableView.delegate = self
         tableView.dataSource = self
-        print("HOME: yearly income MPS: \(yearlyIncomeMPS!)")
-        print("HOME: yearly income outside: \(yearlyIncomeOutside!)")
-        print("HOME: calculated income: \(String(format: "%.02f", (Double(yearlyIncomeMPS) * 0.021) + Double(yearlyIncomeOutside)))")
     }
     
     override func viewDidAppear(_ animated: Bool) {

@@ -642,7 +642,7 @@
         <!--Payday-->
         <scene sceneID="qMq-br-hJz">
             <objects>
-                <viewController storyboardIdentifier="PaydayPage2" title="Payday" automaticallyAdjustsScrollViewInsets="NO" id="anQ-cB-fMe" customClass="PaydayVC2" customModule="ToDo_App" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="PaydayPage2" title="Payday" automaticallyAdjustsScrollViewInsets="NO" id="anQ-cB-fMe" customClass="PaydayVC" customModule="ToDo_App" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="O6F-DF-jVD"/>
                         <viewControllerLayoutGuide type="bottom" id="crR-VB-vtw"/>
@@ -662,17 +662,17 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="F8f-Ss-bTr">
-                                <rect key="frame" x="0.0" y="72" width="320" height="447"/>
+                                <rect key="frame" x="0.0" y="120" width="320" height="399"/>
                                 <color key="backgroundColor" white="0.90000000000000002" alpha="1" colorSpace="calibratedWhite"/>
-                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="aRk-6o-85g">
+                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="aRk-6o-85g">
                                     <size key="itemSize" width="100" height="100"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
-                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                    <inset key="sectionInset" minX="0.0" minY="8" maxX="8" maxY="0.0"/>
                                 </collectionViewFlowLayout>
                                 <cells>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="CustomCell" id="TP2-PJ-pnl" customClass="PaydayCell2" customModule="ToDo_App" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="0.0" width="100" height="100"/>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="CustomCell" id="TP2-PJ-pnl" customClass="PaydayCell" customModule="ToDo_App" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="8" width="100" height="100"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                             <rect key="frame" x="0.0" y="0.0" width="100" height="100"/>
@@ -717,14 +717,35 @@
                                     </collectionViewCell>
                                 </cells>
                             </collectionView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="PCf-Bv-PUd">
+                                <rect key="frame" x="0.0" y="72" width="320" height="48"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tap a user to review their week." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BJy-Bf-nFw">
+                                        <rect key="frame" x="16" y="16" width="288" height="16"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" white="0.80000000000000004" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="bottom" secondItem="BJy-Bf-nFw" secondAttribute="bottom" constant="16" id="94q-Kh-hib"/>
+                                    <constraint firstAttribute="trailing" secondItem="BJy-Bf-nFw" secondAttribute="trailing" constant="16" id="IRW-3E-i3f"/>
+                                    <constraint firstItem="BJy-Bf-nFw" firstAttribute="leading" secondItem="PCf-Bv-PUd" secondAttribute="leading" constant="16" id="dDR-2t-Noa"/>
+                                    <constraint firstItem="BJy-Bf-nFw" firstAttribute="top" secondItem="PCf-Bv-PUd" secondAttribute="top" constant="16" id="gke-LO-SfU"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="crR-VB-vtw" firstAttribute="top" secondItem="F8f-Ss-bTr" secondAttribute="bottom" id="5xU-5E-qoD"/>
+                            <constraint firstItem="PCf-Bv-PUd" firstAttribute="leading" secondItem="xQC-Md-xxU" secondAttribute="leading" id="6rS-Tg-0Nv"/>
+                            <constraint firstItem="F8f-Ss-bTr" firstAttribute="top" secondItem="PCf-Bv-PUd" secondAttribute="bottom" id="9Ml-KM-Hsw"/>
+                            <constraint firstAttribute="trailing" secondItem="PCf-Bv-PUd" secondAttribute="trailing" id="Tcf-pd-MQY"/>
                             <constraint firstItem="F8f-Ss-bTr" firstAttribute="leading" secondItem="xQC-Md-xxU" secondAttribute="leading" id="grw-GV-G7G"/>
+                            <constraint firstItem="PCf-Bv-PUd" firstAttribute="top" secondItem="lvv-JS-Vmn" secondAttribute="bottom" id="n7v-nt-Nuy"/>
                             <constraint firstItem="lvv-JS-Vmn" firstAttribute="top" secondItem="O6F-DF-jVD" secondAttribute="bottom" id="nKy-KD-bBS"/>
                             <constraint firstItem="lvv-JS-Vmn" firstAttribute="leading" secondItem="xQC-Md-xxU" secondAttribute="leading" id="rJ1-58-lrR"/>
-                            <constraint firstItem="F8f-Ss-bTr" firstAttribute="top" secondItem="lvv-JS-Vmn" secondAttribute="bottom" id="rZ9-Zb-q9p"/>
                             <constraint firstAttribute="trailing" secondItem="F8f-Ss-bTr" secondAttribute="trailing" id="yDz-lJ-kDd"/>
                             <constraint firstAttribute="trailing" secondItem="lvv-JS-Vmn" secondAttribute="trailing" id="ypX-Mf-bMp"/>
                         </constraints>
@@ -737,7 +758,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gAe-KU-fVj" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="18019" y="304"/>
+            <point key="canvasLocation" x="18018.75" y="303.16901408450707"/>
         </scene>
     </scenes>
     <resources>

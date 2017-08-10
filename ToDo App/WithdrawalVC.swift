@@ -5,6 +5,7 @@ class WithdrawalVC: UIViewController, UIPickerViewDataSource, UIPickerViewDelega
     @IBOutlet weak var withdrawalAmount: UITextField!
     @IBOutlet weak var withdrawalDescription: UITextField!
     @IBOutlet weak var withdrawalTextField: UITextField!
+    @IBOutlet weak var chooseCategoryButton: UIButton!
     
     var withdrawalCategory1: String?
     var withdrawalCategory2: String?
@@ -19,9 +20,14 @@ class WithdrawalVC: UIViewController, UIPickerViewDataSource, UIPickerViewDelega
         
         navigationItem.title = userName
         
-        withdrawalPicker.delegate = self
-        withdrawalPicker.dataSource = self
-        withdrawalTextField.inputView = withdrawalPicker
+        chooseCategoryButton.layer.cornerRadius = chooseCategoryButton.bounds.height / 6.4
+        chooseCategoryButton.layer.masksToBounds = true
+        chooseCategoryButton.layer.borderColor = UIColor(red: 190/255, green: 190/255, blue: 190/255, alpha: 1.0).cgColor
+        chooseCategoryButton.layer.borderWidth = 0.5
+        
+//        withdrawalPicker.delegate = self
+//        withdrawalPicker.dataSource = self
+//        withdrawalTextField.inputView = withdrawalPicker
     }
     
     // -----------------
@@ -172,8 +178,20 @@ class WithdrawalVC: UIViewController, UIPickerViewDataSource, UIPickerViewDelega
         }))
         self.present(alert, animated: true, completion: nil)
     }
-//    
-//    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-//        view.endEditing(true)
-//    }
+    
+    
+    // -----------------
+    // Navigation Segues
+    // -----------------
+    
+    @IBAction func chooseCategoryButtonTapped(_ sender: UIButton) {
+        performSegue(withIdentifier: "ShowBudgetSegue", sender: nil)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "ShowBudgetSegue" {
+            let nextController = segue.destination as! MoneyVC
+            nextController.navTop = 0
+        }
+    }
 }

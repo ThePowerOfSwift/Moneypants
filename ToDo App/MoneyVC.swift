@@ -28,6 +28,15 @@ class MoneyVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     @IBOutlet weak var savingsButton: UIButton!
     @IBOutlet weak var donationsButton: UIButton!
     
+    // For Modal Presentation (from 'withdrawal' or 'spending' VC's)
+    @IBOutlet weak var navBar: UINavigationItem!
+    @IBOutlet weak var navBarTop: NSLayoutConstraint!
+    @IBAction func cancelButtonForModalTapped(_ sender: UIBarButtonItem) {
+        dismiss(animated: true, completion: nil)
+    }
+    var navTop: Int = -44
+    
+    
     var tableViewRowCount: Int?
     var tableViewData: [String]?
     
@@ -36,11 +45,9 @@ class MoneyVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // determine which view controller is presenting...
-        print(presentationController ?? "presentation = none")
-        print(presentedViewController ?? "presented = none")
-        print(presentingViewController ?? "presenting = none")
-        print("modal presentation style = \(modalPresentationStyle)")
+        // for modal presentation only (so we can hide it when not modally presented)
+        navBarTop.constant = CGFloat(navTop)
+        navBar.title = userName
         
         tableView1.delegate = self
         tableView1.dataSource = self

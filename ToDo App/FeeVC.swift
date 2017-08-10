@@ -51,7 +51,7 @@ class FeeVC: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate {
             print("feeDesc is blank")
             feeDesc = "blank"
         }
-        let alert = UIAlertController(title: "Add Fee", message: "You have chosen to add a $1.00 fee for \"\(feeDesc!)\" to \(userName)'s account. Tap okay to confirm.", preferredStyle: .alert)
+        let alert = UIAlertController(title: "Add Fee", message: "You have chosen to add a $1.00 fee for \"\(feeDesc!)\" to \(userName)'s account. Tap okay to confirm.\n\nLet \(userName) know that if they go the remainder of the day without \(feeDesc!), the fee will be refunded.", preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "okay", style: .default, handler: {_ in
             CATransaction.setCompletionBlock({
                 self.performSegue(withIdentifier: "UnwindToUserVCSegue", sender: nil)

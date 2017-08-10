@@ -4,8 +4,6 @@ class HomeNavController: UINavigationController {
     
     override func viewWillAppear(_ animated: Bool) {
         
-        print("orange")
-        
         // -----------------
         // Customize Nav Bar
         // -----------------
@@ -20,8 +18,6 @@ class HomeNavController: UINavigationController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        print("tab bar gray")
         
         // -----------------
         // Customize Tab Bar
