@@ -24,8 +24,33 @@ class SettingsVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         super.viewWillAppear(animated)
         tableView.reloadData()
     }
-
     
+    override func viewDidAppear(_ animated: Bool) {
+        if self.tabBarController?.selectedIndex == 3 {
+            
+            let alert = UIAlertController(title: "Parental Passcode Required", message: "You must enter a parental passcode to access the settings page. Please enter your passcode:", preferredStyle: .alert)
+            alert.addTextField(configurationHandler: { (textField) in
+                textField.placeholder = "enter passcode"
+                textField.isSecureTextEntry = true
+            })
+            // Button ONE: "okay", and allow user access to page
+            alert.addAction(UIAlertAction(title: "okay", style: UIAlertActionStyle.default , handler: { (action) in
+                alert.dismiss(animated: true, completion: nil)
+                print("okay")
+            }))
+            // Button TWO: "cancel", and send user back to home page
+            alert.addAction(UIAlertAction(title: "cancel", style: .cancel, handler: {_ in
+                CATransaction.setCompletionBlock({
+                    self.tabBarController?.selectedIndex = 0
+                })
+            }))
+            
+            self.present(alert, animated: true, completion: nil)
+        } else {
+            print("other view")
+        }
+    }
+
     
     // ----------------
     // Setup Table View

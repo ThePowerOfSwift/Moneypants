@@ -1,6 +1,6 @@
 import UIKit
 
-class HomeVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
+class HomeVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UITabBarDelegate {
     
     @IBOutlet weak var tableView: UITableView!
     
@@ -13,9 +13,6 @@ class HomeVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
         tableView.dataSource = self
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        tableView.reloadData()
-    }
     
     // ----------
     // Table View
@@ -44,6 +41,7 @@ class HomeVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.reloadData()
         homeIndex = indexPath.row
         performSegue(withIdentifier: "DetailSegue", sender: self)
     }
