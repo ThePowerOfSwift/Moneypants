@@ -168,9 +168,9 @@ var homeIndex = 0       // MARK: global variable, need to change this
 
 //=====================================
 
-let tempPaydayDailyChores = [("clean bedroom", "1","1","1","1","1","E","1", -40),
-                             ("clean backyard", "1","1","1","1","1","E","1", -40),
-                             ("water garden, feed chickens", "X","1","1","X","1","1","1", -150)
+let tempPaydayDailyChores = [("clean bedroom", "1","1","1","1","1","E","1", 60),
+                             ("clean backyard", "1","1","1","1","1","E","1", 60),
+                             ("water garden, feed chickens", "X","1","1","X","1","1","1", 50)
 ]
 
 let tempPaydayDailyHabits = [("self ready by 10:am","1","1","1","1","1","","1", 60),
@@ -191,7 +191,10 @@ let consistencyBonus: Bool = true
 
 //=====================================
 
-let tempDates: [String] = ["Thurs, 27 Jul 2017", "Weds, 26 Jul 2017", "Tues, 25 Jul 2017", "Mon, 24 Jul 2017"]
+let tempDates: [String] = ["Thurs, 27 Jul 2017",
+                           "Weds, 26 Jul 2017",
+                           "Tues, 25 Jul 2017",
+                           "Mon, 24 Jul 2017"]
 var date1Data: [(String, String, Int)] = [("3:23 pm", "clean bedroom", 10),
                                           ("11:12 am", "clean bathrooms", 10),
                                           ("10:45 am", "homework done by 5:pm", 10),
@@ -199,7 +202,7 @@ var date1Data: [(String, String, Int)] = [("3:23 pm", "clean bedroom", 10),
                                           ("6:25 am", "wash dirty undewear", 10),
                                           ("5:23 am", "put on clean underwear", 10)]
 var date2Data: [(String, String, Int)] = [("5:23 am", "don't smell bad", 10),
-                                          ("5:23 am", "try to smell good even though I'm a teenager", 10),
+                                          ("7:48 am", "try to smell good even though I'm a teenager", 10),
                                           ("5:23 am", "eat good food", 10),
                                           ("5:23 am", "eat bad food", 10),
                                           ("5:23 am", "clean stuff", 10),
@@ -225,6 +228,11 @@ var sectionData: [Int: [(String, String, Int)]] = [:]
 
 let tempChoresCB = [11,13,1,0,0,26,0,0,0,12]
 let tempHabitsCB = [7,16,38,9,24,3,12,8,10,22]
+
+//====================================
+
+let fees = ["fighting", "lying", "stealing", "disobedience", "bad language"]
+
 
 
 

@@ -4,8 +4,13 @@ class PaydayDetailVC: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     @IBOutlet weak var incomeLabel: UILabel!
     @IBOutlet weak var tableView: UITableView!
-    let (userName, _, userIncome) = tempUsers[homeIndex]      // was paydayIndex
-
+    let (userName, _, userIncome) = tempUsers[homeIndex]
+    let headerData: [(String, UIImage)] = [("daily chores", #imageLiteral(resourceName: "broom white")),
+                                           ("daily habits", #imageLiteral(resourceName: "toothbrush white")),
+                                           ("weekly chores", #imageLiteral(resourceName: "lawnmower white")),
+                                           ("job bonus", #imageLiteral(resourceName: "broom plus white")),
+                                           ("habit bonus", #imageLiteral(resourceName: "toothbrush plus white")),
+                                           ("fees & withdrawals", #imageLiteral(resourceName: "dollar minus white"))]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -22,7 +27,7 @@ class PaydayDetailVC: UIViewController, UITableViewDelegate, UITableViewDataSour
     // ----------
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 4
+        return 6
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -32,33 +37,41 @@ class PaydayDetailVC: UIViewController, UITableViewDelegate, UITableViewDataSour
             return tempPaydayDailyHabits.count
         } else if section == 2 {
             return tempPaydayWeeklyChores.count
+        } else if section == 5 {
+            return fees.count
         } else {
             return 1
         }
     }
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        if section == 0 {
-            return "daily chores"
-        } else if section == 1 {
-            return "daily habits"
-        } else if section == 2 {
-            return "weekly chores"
-        } else {
-            return "consistency bonus"
-        }
+        let (headerLabel, _) = headerData[section]
+        return headerLabel
     }
     
-    func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
-        let header = view as! UITableViewHeaderFooterView
-        header.textLabel?.font = UIFont(name: "Arista2.0", size: 20.0)
-        header.textLabel?.textColor = UIColor.white
-        header.textLabel?.textAlignment = .center
-        header.contentView.backgroundColor = UIColor.lightGray
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let (headerLabel2, headerImage2) = headerData[section]
+        let cell = tableView.dequeueReusableCell(withIdentifier: "HeaderCustomCell") as! PaydayDetailHeaderCell
+        cell.headerLabel.text = headerLabel2
+        cell.headerImage.image = headerImage2
+        return cell
     }
+    
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 40
+    }
+    
+//    func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
+//        let header = view as! UITableViewHeaderFooterView
+//        header.textLabel?.font = UIFont(name: "Arista2.0", size: 20.0)
+//        header.textLabel?.textColor = UIColor.white
+//        header.textLabel?.textAlignment = .center
+//        header.contentView.backgroundColor = UIColor.lightGray
+//    }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "CustomCell", for: indexPath) as! PaydayDetailCell
+        let cell2 = tableView.dequeueReusableCell(withIdentifier: "BonusCustomCell", for: indexPath) as! PaydayDetailBonusCell
         
         cell.tallyView.layer.cornerRadius = cell.tallyView.bounds.height / 6.4
         cell.tallyView.layer.masksToBounds = true
@@ -346,13 +359,33 @@ class PaydayDetailVC: UIViewController, UITableViewDelegate, UITableViewDataSour
             }
             cell.choreHabitTotal.text = "\(weeklyNum)"
             
+            
         // -----------------
-        // CONSISTENCY BONUS
+        // JOB & HABIT BONUS
         // -----------------
+            
+        } else if indexPath.section == 3 {
+            cell.choreHabitDesc.text = "job bonus"
+            cell.choreHabitTotal.text = "500"
+            cell.tallyView.isHidden = true
+            
+
+        // -----------
+        // HABIT BONUS
+        // -----------
+            
+        } else if indexPath.section == 4 {
+            cell.choreHabitDesc.text = "habit bonus"
+            cell.choreHabitTotal.text = "500"
+            cell.tallyView.isHidden = true
+            
+        // ------------------
+        // FEES & WITHDRAWALS
+        // ------------------
         
         } else {
-            cell.choreHabitDesc.text = "consistency bonus"
-            cell.choreHabitTotal.text = "1000"
+            cell.choreHabitDesc.text = fees[indexPath.row]
+            cell.choreHabitTotal.text = "100"
             cell.tallyView.isHidden = true
         }
         return cell

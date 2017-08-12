@@ -56,6 +56,8 @@
 		CE5579691F05E44B006FE40B /* Step4ParentHabitCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE5579681F05E44B006FE40B /* Step4ParentHabitCell.swift */; };
 		CE55796D1F06134F006FE40B /* ChoreSummaryVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE55796C1F06134F006FE40B /* ChoreSummaryVC.swift */; };
 		CE55796F1F0633B3006FE40B /* ChoreSummaryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE55796E1F0633B3006FE40B /* ChoreSummaryCell.swift */; };
+		CE5596B11F3E340700EFF3F4 /* PaydayDetailHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE5596B01F3E340700EFF3F4 /* PaydayDetailHeaderCell.swift */; };
+		CE5596B31F3E776100EFF3F4 /* PaydayDetailBonusCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE5596B21F3E776100EFF3F4 /* PaydayDetailBonusCell.swift */; };
 		CE7160F91F04A2A10045AA05 /* Step4HabitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE7160F81F04A2A10045AA05 /* Step4HabitViewController.swift */; };
 		CE7160FB1F04A9270045AA05 /* Step4HabitCustomCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE7160FA1F04A9270045AA05 /* Step4HabitCustomCell.swift */; };
 		CE79B8941F233F290032DD70 /* VideosVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE79B8931F233F290032DD70 /* VideosVC.swift */; };
@@ -149,6 +151,8 @@
 		CE5579681F05E44B006FE40B /* Step4ParentHabitCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Step4ParentHabitCell.swift; sourceTree = "<group>"; };
 		CE55796C1F06134F006FE40B /* ChoreSummaryVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChoreSummaryVC.swift; sourceTree = "<group>"; };
 		CE55796E1F0633B3006FE40B /* ChoreSummaryCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChoreSummaryCell.swift; sourceTree = "<group>"; };
+		CE5596B01F3E340700EFF3F4 /* PaydayDetailHeaderCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaydayDetailHeaderCell.swift; sourceTree = "<group>"; };
+		CE5596B21F3E776100EFF3F4 /* PaydayDetailBonusCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaydayDetailBonusCell.swift; sourceTree = "<group>"; };
 		CE7160F81F04A2A10045AA05 /* Step4HabitViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Step4HabitViewController.swift; sourceTree = "<group>"; };
 		CE7160FA1F04A9270045AA05 /* Step4HabitCustomCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Step4HabitCustomCell.swift; sourceTree = "<group>"; };
 		CE79B8931F233F290032DD70 /* VideosVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VideosVC.swift; sourceTree = "<group>"; };
@@ -320,6 +324,8 @@
 				CEAAF9D91F356D3800846DD5 /* PaydayCell.swift */,
 				CE4832C61F2826F4005A7A55 /* PaydayDetailVC.swift */,
 				CE9443BF1F29B58B00ACC7D4 /* PaydayDetailCell.swift */,
+				CE5596B01F3E340700EFF3F4 /* PaydayDetailHeaderCell.swift */,
+				CE5596B21F3E776100EFF3F4 /* PaydayDetailBonusCell.swift */,
 				CE4832C21F281154005A7A55 /* JobJarNavController.swift */,
 				CE4832C41F28116B005A7A55 /* JobJarVC.swift */,
 				CE4832BC1F28005A005A7A55 /* VideosNavController.swift */,
@@ -553,6 +559,7 @@
 				CE4832BF1F2800A5005A7A55 /* SettingsNavController.swift in Sources */,
 				CE9443C01F29B58B00ACC7D4 /* PaydayDetailCell.swift in Sources */,
 				CE7160F91F04A2A10045AA05 /* Step4HabitViewController.swift in Sources */,
+				CE5596B31F3E776100EFF3F4 /* PaydayDetailBonusCell.swift in Sources */,
 				CE4832CB1F286843005A7A55 /* ReportsNavController.swift in Sources */,
 				CEF3EBBB1F302CF0008953A8 /* MoneyCell2.swift in Sources */,
 				CE8FF9FE1F0F7D88004A53BE /* Step5ExpensesCell.swift in Sources */,
@@ -578,6 +585,7 @@
 				CE4832C71F2826F4005A7A55 /* PaydayDetailVC.swift in Sources */,
 				89FB676A1D5C82F5002B2484 /* LoginViewController.swift in Sources */,
 				CE1CB51A1F01AF48009A8DAC /* Step2PopoverViewController.swift in Sources */,
+				CE5596B11F3E340700EFF3F4 /* PaydayDetailHeaderCell.swift in Sources */,
 				CEF3EBBD1F305A45008953A8 /* MoneyCell3.swift in Sources */,
 				CEB32C6B1F2C49D10069D8B0 /* ReportsCBCell.swift in Sources */,
 				CEB4CD2D1F1ED77400F9733F /* SetupNavController.swift in Sources */,

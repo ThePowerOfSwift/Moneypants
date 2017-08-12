@@ -4,7 +4,6 @@ class FeeVC: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate {
 
     @IBOutlet weak var feeTextField: UITextField!
     let feePicker = UIPickerView()
-    let fees = ["fighting", "lying", "stealing", "disobedience", "bad language"]
     
     let (userName, _, _) = tempUsers[homeIndex]
     var feeDesc: String?
