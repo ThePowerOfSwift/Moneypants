@@ -1,6 +1,6 @@
 import UIKit
 
-class PaydayDetailCell1: UITableViewCell {
+class PaydayDetailCellA1: UITableViewCell {
     
     @IBOutlet weak var choreDesc: UILabel!
     @IBOutlet weak var tallyView: UIView!

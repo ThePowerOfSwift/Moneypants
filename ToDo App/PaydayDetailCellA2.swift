@@ -1,6 +1,6 @@
 import UIKit
 
-class PaydayDetailCell2: UITableViewCell {
+class PaydayDetailCellA2: UITableViewCell {
     
     @IBOutlet weak var dailyChoresNumber: UILabel!
     @IBOutlet weak var choreConsistencyBonusNumber: UILabel!

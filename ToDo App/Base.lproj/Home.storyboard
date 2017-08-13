@@ -90,9 +90,9 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <stackView opaque="NO" contentMode="scaleToFill" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="GXG-iA-M7F">
-                                                    <rect key="frame" x="94" y="7" width="134" height="25"/>
+                                                    <rect key="frame" x="93" y="7" width="134" height="25"/>
                                                     <subviews>
-                                                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="894A3E1D-BA33-4323-8C5E-D8D9116AE9C1" translatesAutoresizingMaskIntoConstraints="NO" id="aiK-Za-azW">
+                                                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="DBB448CC-9E3E-44B0-9E2A-D30970861E51" translatesAutoresizingMaskIntoConstraints="NO" id="aiK-Za-azW">
                                                             <rect key="frame" x="0.0" y="0.0" width="20" height="25"/>
                                                         </imageView>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="daily chores" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="btJ-31-1zE">
@@ -317,7 +317,7 @@
         <!--Savannah-->
         <scene sceneID="myA-5C-yno">
             <objects>
-                <viewController title="Savannah" automaticallyAdjustsScrollViewInsets="NO" hidesBottomBarWhenPushed="YES" id="OSF-Oz-N4o" customClass="PaydayDetailVC2" customModule="ToDo_App" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController title="Savannah" automaticallyAdjustsScrollViewInsets="NO" hidesBottomBarWhenPushed="YES" id="OSF-Oz-N4o" customClass="PaydayDetailVCA" customModule="ToDo_App" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="Hve-XL-RdM"/>
                         <viewControllerLayoutGuide type="bottom" id="TJK-pm-8AQ"/>
@@ -334,7 +334,7 @@
                                 </constraints>
                                 <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="CustomCell1" rowHeight="50" id="rcW-Ru-lC2" customClass="PaydayDetailCell1" customModule="ToDo_App" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="CustomCell1" rowHeight="50" id="rcW-Ru-lC2" customClass="PaydayDetailCellA1" customModule="ToDo_App" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="320" height="50"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="rcW-Ru-lC2" id="36o-8z-xUv">
@@ -465,7 +465,7 @@
                                             <outlet property="tallyView" destination="px1-RA-uNV" id="nBc-o5-0Y2"/>
                                         </connections>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="CustomCell2" rowHeight="140" id="DvD-H0-K7C" customClass="PaydayDetailCell2" customModule="ToDo_App" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="CustomCell2" rowHeight="140" id="DvD-H0-K7C" customClass="PaydayDetailCellA2" customModule="ToDo_App" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="78" width="320" height="140"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="DvD-H0-K7C" id="sOr-ua-cc4">
@@ -1207,7 +1207,7 @@
         <!--Savannah-->
         <scene sceneID="Iei-96-LUc">
             <objects>
-                <viewController title="Savannah" automaticallyAdjustsScrollViewInsets="NO" hidesBottomBarWhenPushed="YES" id="yZL-JS-Vsz" customClass="PaydayDetailVC3" customModule="ToDo_App" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController title="Savannah" automaticallyAdjustsScrollViewInsets="NO" hidesBottomBarWhenPushed="YES" id="yZL-JS-Vsz" customClass="PaydayDetailVCB" customModule="ToDo_App" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="fAn-3c-d19"/>
                         <viewControllerLayoutGuide type="bottom" id="hcZ-MV-vB1"/>
@@ -1224,7 +1224,7 @@
                                 </constraints>
                                 <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="CustomCell1" rowHeight="50" id="azu-pQ-hUu" customClass="PaydayDetailCell1" customModule="ToDo_App" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="CustomCell1" rowHeight="50" id="azu-pQ-hUu" customClass="PaydayDetailCellB1" customModule="ToDo_App" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="320" height="50"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="azu-pQ-hUu" id="ScO-Eo-77s">
@@ -1344,7 +1344,6 @@
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
-                                            <outlet property="choreDesc" destination="ttp-xW-4Ox" id="XMI-8t-kDm"/>
                                             <outlet property="dayColor1" destination="gGS-Oq-tQD" id="ekt-18-cEa"/>
                                             <outlet property="dayColor2" destination="vXw-LO-uni" id="uhr-bM-RHV"/>
                                             <outlet property="dayColor3" destination="NPC-SE-SvM" id="11P-RS-V4P"/>
@@ -1352,10 +1351,11 @@
                                             <outlet property="dayColor5" destination="JZQ-Vm-I4k" id="fML-Rx-LvA"/>
                                             <outlet property="dayColor6" destination="feb-8q-YyI" id="sWc-i1-H0U"/>
                                             <outlet property="dayColor7" destination="oup-RL-voD" id="dl9-Ft-s3E"/>
+                                            <outlet property="habitDesc" destination="ttp-xW-4Ox" id="OJD-IL-0HD"/>
                                             <outlet property="tallyView" destination="9jf-gs-vRE" id="HOF-DJ-Nfx"/>
                                         </connections>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="CustomCell2" rowHeight="140" id="LXD-Jv-U7v" customClass="PaydayDetailCell2" customModule="ToDo_App" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="CustomCell2" rowHeight="140" id="LXD-Jv-U7v" customClass="PaydayDetailCellB2" customModule="ToDo_App" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="78" width="320" height="140"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="LXD-Jv-U7v" id="XHP-RR-SEw">
@@ -1372,14 +1372,14 @@
                                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" alignment="bottom" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="xnu-1k-AAt">
                                                     <rect key="frame" x="43" y="16" width="197" height="77.5"/>
                                                     <subviews>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="daily chores:" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LP3-Ae-zPK">
-                                                            <rect key="frame" x="100" y="0.0" width="97" height="20.5"/>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="daily habits:" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LP3-Ae-zPK">
+                                                            <rect key="frame" x="105.5" y="0.0" width="91.5" height="20.5"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                             <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="chore consistency bonus:" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XUf-Zh-wgv">
-                                                            <rect key="frame" x="1" y="28.5" width="196" height="20.5"/>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="habit consistency bonus:" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XUf-Zh-wgv">
+                                                            <rect key="frame" x="6" y="28.5" width="191" height="20.5"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                             <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                                             <nil key="highlightedColor"/>
@@ -1422,8 +1422,8 @@
                                                         <constraint firstAttribute="height" constant="0.5" id="8aS-Qj-b2P"/>
                                                     </constraints>
                                                 </imageView>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="daily chores subtotal:" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1yA-kV-7hE">
-                                                    <rect key="frame" x="63" y="110.5" width="177" height="20.5"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="daily habits subtotal:" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1yA-kV-7hE">
+                                                    <rect key="frame" x="68" y="110.5" width="172" height="20.5"/>
                                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
@@ -1453,9 +1453,9 @@
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
-                                            <outlet property="choreConsistencyBonusNumber" destination="AyF-6w-6tl" id="QCl-a2-gWt"/>
-                                            <outlet property="dailyChoresNumber" destination="NRW-Ab-GRB" id="cD8-uK-nK9"/>
-                                            <outlet property="dailyChoresSubtotalNumber" destination="BlI-ar-arU" id="RmB-ja-T8k"/>
+                                            <outlet property="dailyHabitsNumber" destination="NRW-Ab-GRB" id="78p-ij-WBY"/>
+                                            <outlet property="dailyHabitsSubtotalNumber" destination="BlI-ar-arU" id="xk8-8V-dgV"/>
+                                            <outlet property="habitConsistencyBonusNumber" destination="AyF-6w-6tl" id="1il-Wf-7QB"/>
                                             <outlet property="previousUnpaidAmountsNumber" destination="2G9-hr-Rju" id="jed-Ao-OJu"/>
                                         </connections>
                                     </tableViewCell>
@@ -1522,7 +1522,7 @@
                                     <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
                                 </userDefinedRuntimeAttributes>
                                 <connections>
-                                    <action selector="questionButtonTapped:" destination="yZL-JS-Vsz" eventType="touchUpInside" id="Bwg-Tx-YC2"/>
+                                    <action selector="questionButtonTapped:" destination="yZL-JS-Vsz" eventType="touchUpInside" id="kK4-BM-q77"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -1545,8 +1545,8 @@
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="tableView" destination="CrK-Qx-gdm" id="IKt-2X-nQc"/>
-                        <outlet property="tableViewHeight" destination="JxC-u1-kF2" id="UUp-ca-rGv"/>
+                        <outlet property="tableView" destination="CrK-Qx-gdm" id="imw-IK-J8v"/>
+                        <outlet property="tableViewHeight" destination="JxC-u1-kF2" id="Zcz-Nc-euI"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vZF-Xw-HNk" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1555,7 +1555,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="894A3E1D-BA33-4323-8C5E-D8D9116AE9C1" width="20" height="25">
+        <image name="DBB448CC-9E3E-44B0-9E2A-D30970861E51" width="20" height="25">
             <mutableData key="keyedArchiveRepresentation">
 YnBsaXN0MDDUAQIDBAUGPT5YJHZlcnNpb25YJG9iamVjdHNZJGFyY2hpdmVyVCR0b3ASAAGGoK4HCBMU
 GR4fIyQrLjE3OlUkbnVsbNUJCgsMDQ4PEBESVk5TU2l6ZVYkY2xhc3NcTlNJbWFnZUZsYWdzVk5TUmVw

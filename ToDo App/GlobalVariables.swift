@@ -171,19 +171,19 @@ var homeIndex = 0       // MARK: global variable, need to change this
 
 //=====================================
 
-let tempPaydayDailyChores = [("clean bedroom", "1","1","1","1","1","E","1", 60),
+let tempPaydayDailyChores = [("clean bedroom", "1","1","","1","1","E","1", 60),
                              ("clean backyard", "1","1","1","1","1","E","1", 60),
                              ("water garden & feed chickens", "X","3","3","X","3","3","3", 50)
 ]
 
 let tempPaydayDailyHabits = [("self ready by 10:am","1","1","1","1","1","","1", 60),
-                              ("prayer & scriptures (10 min)", "","1","1","1","1","1","", 50),
+                              ("prayer & scriptures (10 min)", "3","3","1","2","2","1","", 50),
                               ("exercise (20 min)", "","1","1","1","1","","", 40),
                               ("talents (20 min)", "","1","1","1","1","1","", 50),
                               ("homework by 5:pm", "","1","1","1","1","1","", 250),
-                              ("manners (rinse dishes)", "1","","1","1","","","1", 40),
+                              ("manners", "1","","1","1","","","1", 40),
                               ("peacemaking", "2","1","2","3","1","1","2", 120),
-                              ("good deed", "","1","1","1","1","","1", 50),
+                              ("good deed", "","5","3","3","4","1","5", 50),
                               ("journal", "1","1","1","1","1","1","1", 70),
                               ("bedtime by 9:30pm", "","1","1","1","1","","1", 50)]
 

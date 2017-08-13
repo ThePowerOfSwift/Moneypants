@@ -1,6 +1,6 @@
 import UIKit
 
-class PaydayDetailVC2: UIViewController, UITableViewDataSource, UITableViewDelegate {
+class PaydayDetailVCA: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var tableViewHeight: NSLayoutConstraint!
@@ -44,7 +44,7 @@ class PaydayDetailVC2: UIViewController, UITableViewDataSource, UITableViewDeleg
         
         if indexPath.section == 0 {
             // PART 1
-            let cell = tableView.dequeueReusableCell(withIdentifier: "CustomCell1", for: indexPath) as! PaydayDetailCell1
+            let cell = tableView.dequeueReusableCell(withIdentifier: "CustomCell1", for: indexPath) as! PaydayDetailCellA1
             let (choreDescription, day1, day2, day3, day4, day5, day6, day7, _) = tempPaydayDailyChores[indexPath.row]
             
             cell.tallyView.layer.cornerRadius = cell.tallyView.bounds.height / 6.4
@@ -163,7 +163,7 @@ class PaydayDetailVC2: UIViewController, UITableViewDataSource, UITableViewDeleg
             
         } else {
             // PART 2
-            let cell2 = tableView.dequeueReusableCell(withIdentifier: "CustomCell2", for: indexPath) as! PaydayDetailCell2
+            let cell2 = tableView.dequeueReusableCell(withIdentifier: "CustomCell2", for: indexPath) as! PaydayDetailCellA2
             let (_, pointAmount) = tempDailyChoresSummary[indexPath.row]
             
             cell2.dailyChoresNumber.text = "\(pointAmount)"
