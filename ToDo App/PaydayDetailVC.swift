@@ -7,10 +7,10 @@ class PaydayDetailVC: UIViewController, UITableViewDelegate, UITableViewDataSour
     let (userName, _, userIncome) = tempUsers[homeIndex]
     let headerData: [(String, UIImage)] = [("daily chores", #imageLiteral(resourceName: "broom white")),
                                            ("daily habits", #imageLiteral(resourceName: "toothbrush white")),
-                                           ("weekly chores", #imageLiteral(resourceName: "lawnmower white")),
-                                           ("job bonus", #imageLiteral(resourceName: "broom plus white")),
-                                           ("habit bonus", #imageLiteral(resourceName: "toothbrush plus white")),
-                                           ("fees & withdrawals", #imageLiteral(resourceName: "dollar minus white"))]
+                                           ("weekly chores", #imageLiteral(resourceName: "home white")),
+                                           ("job bonus", #imageLiteral(resourceName: "house broom no alpha")),
+                                           ("habit bonus", #imageLiteral(resourceName: "toothbrush black")),
+                                           ("fees & withdrawals", #imageLiteral(resourceName: "income hand"))]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -44,10 +44,10 @@ class PaydayDetailVC: UIViewController, UITableViewDelegate, UITableViewDataSour
         }
     }
     
-    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        let (headerLabel, _) = headerData[section]
-        return headerLabel
-    }
+//    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+//        let (headerLabel, _) = headerData[section]
+//        return headerLabel
+//    }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let (headerLabel2, headerImage2) = headerData[section]
@@ -58,7 +58,7 @@ class PaydayDetailVC: UIViewController, UITableViewDelegate, UITableViewDataSour
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 40
+        return 44
     }
     
 //    func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
@@ -71,7 +71,7 @@ class PaydayDetailVC: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "CustomCell", for: indexPath) as! PaydayDetailCell
-        let cell2 = tableView.dequeueReusableCell(withIdentifier: "BonusCustomCell", for: indexPath) as! PaydayDetailBonusCell
+//        let cell2 = tableView.dequeueReusableCell(withIdentifier: "BonusCustomCell", for: indexPath) as! PaydayDetailBonusCell
         
         cell.tallyView.layer.cornerRadius = cell.tallyView.bounds.height / 6.4
         cell.tallyView.layer.masksToBounds = true
@@ -82,6 +82,10 @@ class PaydayDetailVC: UIViewController, UITableViewDelegate, UITableViewDataSour
         // DAILY CHORES
         // ------------
         
+//        func labelColors(labelNumber: String, labelValue: UILabel) {
+//            let labelNumber.text =
+//        }
+        
         if indexPath.section == 0 {
             let (choreDesc, label1, label2, label3, label4, label5, label6, label7, choreNum) = tempPaydayDailyChores[indexPath.row]
             cell.choreHabitDesc.text = choreDesc
@@ -90,10 +94,13 @@ class PaydayDetailVC: UIViewController, UITableViewDelegate, UITableViewDataSour
             switch label1 {
             case "X":
                 cell.lab1.backgroundColor = UIColor.red
+                cell.lab1.textColor = UIColor.red
             case "E":
                 cell.lab1.backgroundColor = UIColor.lightGray
             case "":
                 cell.lab1.backgroundColor = UIColor.lightGray
+            case "1":
+                cell.lab1.textColor = UIColor(red: 141/255, green: 198/255, blue: 63/255, alpha: 1)     // green text if amt is '1'
             default:
                 cell.lab1.backgroundColor = UIColor(red: 141/255, green: 198/255, blue: 63/255, alpha: 1)
             }
@@ -102,10 +109,13 @@ class PaydayDetailVC: UIViewController, UITableViewDelegate, UITableViewDataSour
             switch label2 {
             case "X":
                 cell.lab2.backgroundColor = UIColor.red
+                cell.lab2.textColor = UIColor.red
             case "E":
                 cell.lab2.backgroundColor = UIColor.lightGray
             case "":
                 cell.lab2.backgroundColor = UIColor.lightGray
+            case "1":
+                cell.lab2.textColor = UIColor(red: 141/255, green: 198/255, blue: 63/255, alpha: 1)     // green text if amt is '1'
             default:
                 cell.lab2.backgroundColor = UIColor(red: 141/255, green: 198/255, blue: 63/255, alpha: 1)
             }
@@ -114,10 +124,13 @@ class PaydayDetailVC: UIViewController, UITableViewDelegate, UITableViewDataSour
             switch label3 {
             case "X":
                 cell.lab3.backgroundColor = UIColor.red
+                cell.lab3.textColor = UIColor.red
             case "E":
                 cell.lab3.backgroundColor = UIColor.lightGray
             case "":
                 cell.lab3.backgroundColor = UIColor.lightGray
+            case "1":
+                cell.lab3.textColor = UIColor(red: 141/255, green: 198/255, blue: 63/255, alpha: 1)     // green text if amt is '1'
             default:
                 cell.lab3.backgroundColor = UIColor(red: 141/255, green: 198/255, blue: 63/255, alpha: 1)
             }
@@ -126,10 +139,13 @@ class PaydayDetailVC: UIViewController, UITableViewDelegate, UITableViewDataSour
             switch label4 {
             case "X":
                 cell.lab4.backgroundColor = UIColor.red
+                cell.lab4.textColor = UIColor.red
             case "E":
                 cell.lab4.backgroundColor = UIColor.lightGray
             case "":
                 cell.lab4.backgroundColor = UIColor.lightGray
+            case "1":
+                cell.lab4.textColor = UIColor(red: 141/255, green: 198/255, blue: 63/255, alpha: 1)     // green text if amt is '1'
             default:
                 cell.lab4.backgroundColor = UIColor(red: 141/255, green: 198/255, blue: 63/255, alpha: 1)
             }
@@ -138,10 +154,13 @@ class PaydayDetailVC: UIViewController, UITableViewDelegate, UITableViewDataSour
             switch label5 {
             case "X":
                 cell.lab5.backgroundColor = UIColor.red
+                cell.lab5.textColor = UIColor.red
             case "E":
                 cell.lab5.backgroundColor = UIColor.lightGray
             case "":
                 cell.lab5.backgroundColor = UIColor.lightGray
+            case "1":
+                cell.lab5.textColor = UIColor(red: 141/255, green: 198/255, blue: 63/255, alpha: 1)     // green text if amt is '1'
             default:
                 cell.lab5.backgroundColor = UIColor(red: 141/255, green: 198/255, blue: 63/255, alpha: 1)
             }
@@ -150,10 +169,14 @@ class PaydayDetailVC: UIViewController, UITableViewDelegate, UITableViewDataSour
             switch label6 {
             case "X":
                 cell.lab6.backgroundColor = UIColor.red
+                cell.lab6.textColor = UIColor.red
             case "E":
                 cell.lab6.backgroundColor = UIColor.lightGray
             case "":
                 cell.lab6.backgroundColor = UIColor.lightGray
+            case "1":
+                cell.lab6.backgroundColor = UIColor(red: 141/255, green: 198/255, blue: 63/255, alpha: 1)
+                cell.lab6.textColor = UIColor(red: 141/255, green: 198/255, blue: 63/255, alpha: 1)     // green text if amt is '1'
             default:
                 cell.lab6.backgroundColor = UIColor(red: 141/255, green: 198/255, blue: 63/255, alpha: 1)
             }
@@ -162,10 +185,13 @@ class PaydayDetailVC: UIViewController, UITableViewDelegate, UITableViewDataSour
             switch label7 {
             case "X":
                 cell.lab7.backgroundColor = UIColor.red
+                cell.lab7.textColor = UIColor.red
             case "E":
                 cell.lab7.backgroundColor = UIColor.lightGray
             case "":
                 cell.lab7.backgroundColor = UIColor.lightGray
+            case "1":
+                cell.lab7.textColor = UIColor(red: 141/255, green: 198/255, blue: 63/255, alpha: 1)     // green text if amt is '1'
             default:
                 cell.lab7.backgroundColor = UIColor(red: 141/255, green: 198/255, blue: 63/255, alpha: 1)
             }
@@ -184,10 +210,13 @@ class PaydayDetailVC: UIViewController, UITableViewDelegate, UITableViewDataSour
             switch label1 {
             case "X":
                 cell.lab1.backgroundColor = UIColor.red
+                cell.lab1.textColor = UIColor.red
             case "E":
                 cell.lab1.backgroundColor = UIColor.lightGray
             case "":
                 cell.lab1.backgroundColor = UIColor.lightGray
+            case "1":
+                cell.lab1.textColor = UIColor(red: 141/255, green: 198/255, blue: 63/255, alpha: 1)     // green text if amt is '1'
             default:
                 cell.lab1.backgroundColor = UIColor(red: 141/255, green: 198/255, blue: 63/255, alpha: 1)
             }
@@ -196,10 +225,13 @@ class PaydayDetailVC: UIViewController, UITableViewDelegate, UITableViewDataSour
             switch label2 {
             case "X":
                 cell.lab2.backgroundColor = UIColor.red
+                cell.lab2.textColor = UIColor.red
             case "E":
                 cell.lab2.backgroundColor = UIColor.lightGray
             case "":
                 cell.lab2.backgroundColor = UIColor.lightGray
+            case "1":
+                cell.lab2.textColor = UIColor(red: 141/255, green: 198/255, blue: 63/255, alpha: 1)     // green text if amt is '1'
             default:
                 cell.lab2.backgroundColor = UIColor(red: 141/255, green: 198/255, blue: 63/255, alpha: 1)
             }
@@ -212,6 +244,8 @@ class PaydayDetailVC: UIViewController, UITableViewDelegate, UITableViewDataSour
                 cell.lab3.backgroundColor = UIColor.lightGray
             case "":
                 cell.lab3.backgroundColor = UIColor.lightGray
+            case "1":
+                cell.lab3.textColor = UIColor(red: 141/255, green: 198/255, blue: 63/255, alpha: 1)     // green text if amt is '1'
             default:
                 cell.lab3.backgroundColor = UIColor(red: 141/255, green: 198/255, blue: 63/255, alpha: 1)
             }
@@ -224,6 +258,8 @@ class PaydayDetailVC: UIViewController, UITableViewDelegate, UITableViewDataSour
                 cell.lab4.backgroundColor = UIColor.lightGray
             case "":
                 cell.lab4.backgroundColor = UIColor.lightGray
+            case "1":
+                cell.lab4.textColor = UIColor(red: 141/255, green: 198/255, blue: 63/255, alpha: 1)     // green text if amt is '1'
             default:
                 cell.lab4.backgroundColor = UIColor(red: 141/255, green: 198/255, blue: 63/255, alpha: 1)
             }
@@ -236,6 +272,8 @@ class PaydayDetailVC: UIViewController, UITableViewDelegate, UITableViewDataSour
                 cell.lab5.backgroundColor = UIColor.lightGray
             case "":
                 cell.lab5.backgroundColor = UIColor.lightGray
+            case "1":
+                cell.lab5.textColor = UIColor(red: 141/255, green: 198/255, blue: 63/255, alpha: 1)     // green text if amt is '1'
             default:
                 cell.lab5.backgroundColor = UIColor(red: 141/255, green: 198/255, blue: 63/255, alpha: 1)
             }
@@ -248,6 +286,8 @@ class PaydayDetailVC: UIViewController, UITableViewDelegate, UITableViewDataSour
                 cell.lab6.backgroundColor = UIColor.lightGray
             case "":
                 cell.lab6.backgroundColor = UIColor.lightGray
+            case "1":
+                cell.lab6.textColor = UIColor(red: 141/255, green: 198/255, blue: 63/255, alpha: 1)     // green text if amt is '1'
             default:
                 cell.lab6.backgroundColor = UIColor(red: 141/255, green: 198/255, blue: 63/255, alpha: 1)
             }
@@ -260,6 +300,8 @@ class PaydayDetailVC: UIViewController, UITableViewDelegate, UITableViewDataSour
                 cell.lab7.backgroundColor = UIColor.lightGray
             case "":
                 cell.lab7.backgroundColor = UIColor.lightGray
+            case "1":
+                cell.lab7.textColor = UIColor(red: 141/255, green: 198/255, blue: 63/255, alpha: 1)     // green text if amt is '1'
             default:
                 cell.lab7.backgroundColor = UIColor(red: 141/255, green: 198/255, blue: 63/255, alpha: 1)
             }

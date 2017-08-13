@@ -85,6 +85,9 @@ let parentDailyHabits = [
     ("bed by 10:pm", 1, false, true)
 ]
 
+
+
+
 //=====================================
 
 // Table data is as follows: chore name, chore multiplier, chore Consistency Bonus, chore editable?
@@ -170,7 +173,7 @@ var homeIndex = 0       // MARK: global variable, need to change this
 
 let tempPaydayDailyChores = [("clean bedroom", "1","1","1","1","1","E","1", 60),
                              ("clean backyard", "1","1","1","1","1","E","1", 60),
-                             ("water garden, feed chickens", "X","1","1","X","1","1","1", 50)
+                             ("water garden & feed chickens", "X","3","3","X","3","3","3", 50)
 ]
 
 let tempPaydayDailyHabits = [("self ready by 10:am","1","1","1","1","1","","1", 60),

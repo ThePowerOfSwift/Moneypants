@@ -1002,12 +1002,12 @@
                         <constraints>
                             <constraint firstItem="je1-2P-m1C" firstAttribute="top" relation="greaterThanOrEqual" secondItem="JlP-TD-9Sf" secondAttribute="bottom" constant="8" id="0YX-Pm-qNo"/>
                             <constraint firstItem="u1s-fW-K2f" firstAttribute="top" secondItem="wPf-eY-SaM" secondAttribute="bottom" constant="8" id="2Hc-0T-J8v"/>
-                            <constraint firstItem="u1s-fW-K2f" firstAttribute="trailing" secondItem="YGw-md-1EI" secondAttribute="trailingMargin" id="5GB-oc-5gf"/>
                             <constraint firstItem="je1-2P-m1C" firstAttribute="leading" secondItem="YGw-md-1EI" secondAttribute="leadingMargin" id="A1t-6t-RVK"/>
                             <constraint firstAttribute="trailing" secondItem="wPf-eY-SaM" secondAttribute="trailing" id="C4P-wb-hEk"/>
                             <constraint firstItem="dZ8-mB-G4d" firstAttribute="top" secondItem="u1s-fW-K2f" secondAttribute="bottom" constant="8" id="EEX-PW-wBA"/>
                             <constraint firstItem="wPf-eY-SaM" firstAttribute="leading" secondItem="YGw-md-1EI" secondAttribute="leading" id="NmP-Zy-gku"/>
                             <constraint firstItem="TcN-Um-hda" firstAttribute="leading" secondItem="je1-2P-m1C" secondAttribute="trailing" constant="16" id="Qjt-Wh-dpe"/>
+                            <constraint firstAttribute="trailing" secondItem="u1s-fW-K2f" secondAttribute="trailing" constant="16" id="VhW-XB-TeE"/>
                             <constraint firstAttribute="trailingMargin" secondItem="xSP-Nh-JLd" secondAttribute="trailing" constant="25" id="XNI-VA-7re"/>
                             <constraint firstItem="TcN-Um-hda" firstAttribute="top" secondItem="JlP-TD-9Sf" secondAttribute="bottom" constant="8" id="bT5-IJ-yyM"/>
                             <constraint firstItem="dZ8-mB-G4d" firstAttribute="top" secondItem="xSP-Nh-JLd" secondAttribute="bottom" constant="16" id="d4e-8j-ikh"/>

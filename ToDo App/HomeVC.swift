@@ -11,6 +11,7 @@ class HomeVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UITa
         
         tableView.delegate = self
         tableView.dataSource = self
+        tableView.tableFooterView = UIView()
     }
     
     
