@@ -3,9 +3,9 @@ import UIKit
 class UserCell: UITableViewCell {
     
     @IBOutlet weak var counterLabel: UILabel!
-    @IBOutlet weak var choreHabitLabel: UILabel!
+    @IBOutlet weak var jobHabitLabel: UILabel!
     @IBOutlet weak var pointsLabel: UILabel!
-    @IBOutlet weak var choreHabitButton: UIButton!
+    @IBOutlet weak var jobHabitButton: UIButton!
     
     var number = 0
     
@@ -17,9 +17,9 @@ class UserCell: UITableViewCell {
         super.setSelected(selected, animated: animated)
     }
     
-    @IBAction func choreHabitButtonTapped(_ sender: UIButton) {
+    @IBAction func jobHabitButtonTapped(_ sender: UIButton) {
         number += 1
-        choreHabitLabel.textColor = UIColor.lightGray
+        jobHabitLabel.textColor = UIColor.lightGray
         pointsLabel.textColor = UIColor.lightGray
         counterLabel.text = "\(number)"
         print(number)
@@ -27,7 +27,7 @@ class UserCell: UITableViewCell {
     
     @IBAction func completionButtonTouchUpOutside(_ sender: UIButton) {
         number = 0
-        choreHabitLabel.textColor = UIColor.black
+        jobHabitLabel.textColor = UIColor.black
         pointsLabel.textColor = UIColor.black
         counterLabel.text = "\(number)"
     }

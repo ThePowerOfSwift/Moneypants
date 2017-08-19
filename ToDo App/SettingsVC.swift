@@ -8,8 +8,8 @@ class SettingsVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     let settingsList: [(String, String)] = [("change household income", "Step1"),
                                             ("add / remove family members", "Users"),
                                             ("modify individual account details", "IndividualChores"),
-                                            ("modify chores & habits", "Chores"),
-                                            ("reassign chores & habits", "IndividualHabits"),
+                                            ("modify jobs & habits", "Chores"),
+                                            ("reassign jobs & habits", "IndividualHabits"),
                                             ("change passwords", "IndividualIncomeSummary"),
                                             ("sign out", "Login")]
     

@@ -1,11 +1,11 @@
 import UIKit
 
-class PaydayDetailCellA2: UITableViewCell {
+class PaydayDetailCellC2: UITableViewCell {
     
-    @IBOutlet weak var dailyChoresNumber: UILabel!
-    @IBOutlet weak var jobConsistencyBonusNumber: UILabel!
+    @IBOutlet weak var dailyHabitsNumber: UILabel!
+    @IBOutlet weak var habitConsistencyBonusNumber: UILabel!
     @IBOutlet weak var previousUnpaidAmountsNumber: UILabel!
-    @IBOutlet weak var dailyChoresSubtotalNumber: UILabel!
+    @IBOutlet weak var dailyHabitsSubtotalNumber: UILabel!
 
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -14,5 +14,4 @@ class PaydayDetailCellA2: UITableViewCell {
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
     }
-
 }

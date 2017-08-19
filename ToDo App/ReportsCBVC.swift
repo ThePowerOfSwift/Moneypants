@@ -39,7 +39,7 @@ class ReportsCBVC: UIViewController, UITableViewDataSource, UITableViewDelegate 
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         if section == 0 {
-            return "daily chores"
+            return "daily jobs"
         } else {
             return "daily habits"
         }
@@ -48,7 +48,7 @@ class ReportsCBVC: UIViewController, UITableViewDataSource, UITableViewDelegate 
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if section == 0 {
-            return dailyChores.count
+            return dailyJobs.count
         } else {
             return dailyHabits.count
         }
@@ -58,7 +58,7 @@ class ReportsCBVC: UIViewController, UITableViewDataSource, UITableViewDelegate 
     // Hide rows that don't have any consistency bonuses
 //    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
 //        if indexPath.section == 0 {
-//            let number = tempChoresCB[indexPath.row]
+//            let number = tempJobsCB[indexPath.row]
 //            if number == 0 {
 //                return 0
 //            } else {
@@ -77,10 +77,10 @@ class ReportsCBVC: UIViewController, UITableViewDataSource, UITableViewDelegate 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "CustomCell", for: indexPath) as! ReportsCBCell
         if indexPath.section == 0 {
-            let (choreName, _, _, _) = dailyChores[indexPath.row]
-            let cbNumber = tempChoresCB[indexPath.row]
-            cell.choreHabitLabel.text = choreName
-            cell.choreHabitCBCount.text = "\(tempChoresCB[indexPath.row])"
+            let (jobName, _, _, _) = dailyJobs[indexPath.row]
+            let cbNumber = tempJobsCB[indexPath.row]
+            cell.jobHabitLabel.text = jobName
+            cell.jobHabitCBCount.text = "\(tempJobsCB[indexPath.row])"
             cell.coloredBar.backgroundColor = UIColor(red: 0/255, green: 153/255, blue: 255/255, alpha: 1)
             if cbNumber < 26 {
                 cell.coloredBarWidthConstraint.constant = cell.grayGrid.bounds.width * CGFloat(cbNumber) / 26
@@ -91,10 +91,10 @@ class ReportsCBVC: UIViewController, UITableViewDataSource, UITableViewDelegate 
                 cell.numberOfWeeksBox.backgroundColor = UIColor(red: 0/255, green: 153/255, blue: 255/255, alpha: 1)
             }
         } else {
-            let (choreName, _, _, _) = dailyHabits[indexPath.row]
+            let (jobName, _, _, _) = dailyHabits[indexPath.row]
             let cbNumber = tempHabitsCB[indexPath.row]
-            cell.choreHabitLabel.text = choreName
-            cell.choreHabitCBCount.text = "\(tempHabitsCB[indexPath.row])"
+            cell.jobHabitLabel.text = jobName
+            cell.jobHabitCBCount.text = "\(tempHabitsCB[indexPath.row])"
             cell.coloredBar.backgroundColor = UIColor(red: 204/255, green: 0/255, blue: 102/255, alpha: 1)
             if cbNumber < 26 {
                 cell.coloredBarWidthConstraint.constant = cell.grayGrid.bounds.width * CGFloat(cbNumber) / 26
@@ -127,7 +127,7 @@ class ReportsCBVC: UIViewController, UITableViewDataSource, UITableViewDelegate 
         
         // Lengthy alert bubble
         let messageText = NSMutableAttributedString(
-            string: "The purpose of this tool is to make sure children have mastered all the skills necessary to be independent by the time they leave home.\n\nEach time an individual does their job or habit for an entire week without missing a day, they achieve one 'consistency bonus'.\n\nEach bonus is represented by a progress bar below the chore or habit and is tallied in the box on the right.\n\nOnce a user has earned 26 consistency bonuses in a particular job or habit, they have officially 'mastered' that job or habit, and they can then get a new job assignment or change what habits they are working on.\n\nIt means they have gone 26 weeks (or half a year) earning their consistency bonus, and they have mastered that particular job or skill.\n\nParents may wish to attach extra rewards for children achieving job or chore mastery within a year.",
+            string: "The purpose of this tool is to make sure children have mastered all the skills necessary to be independent by the time they leave home.\n\nEach time an individual does their job or habit for an entire week without missing a day, they achieve one 'consistency bonus'.\n\nEach bonus is represented by a progress bar below the job or habit and is tallied in the box on the right.\n\nOnce a user has earned 26 consistency bonuses in a particular job or habit, they have officially 'mastered' that job or habit, and they can then get a new job assignment or change what habits they are working on.\n\nIt means they have gone 26 weeks (or half a year) earning their consistency bonus, and they have mastered that particular job or skill.\n\nParents may wish to attach extra rewards for children achieving job or habit mastery within a year.",
             attributes: [
                 NSParagraphStyleAttributeName : paragraphStyle,
                 NSFontAttributeName : UIFont.systemFont(ofSize: 13.0),

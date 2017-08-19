@@ -20,9 +20,9 @@ let tempUsers: [(String, UIImage, String)] = [
 
 //=====================================
 
-// Table data is as follows: chore name, chore multiplier, chore Consistency Bonus, chore editable?
+// Table data is as follows: job name, job multiplier, job Consistency Bonus, job editable?
 
-let dailyChores = [
+let dailyJobs = [
     ("bedroom", 1, false, true),
     ("bathrooms", 1, false, true),
     ("laundry", 1, false, true),
@@ -35,7 +35,7 @@ let dailyChores = [
     ("feed pet / garbage", 1, false, true)
 ]
 
-let weeklyChores = [
+let weeklyJobs = [
     ("sweep porch",	2.5, false, true),
     ("weed garden",	5, false, true),
     ("wash windows", 5, false, true),
@@ -61,12 +61,12 @@ let dailyHabits = [
     ("bed by 8:pm", 1, false, true)
 ]
 
-let parentDailyChores = [
+let parentDailyJobs = [
     ("job inspections", 1, false, true)
     //("kid 1-on-1 time", 1, false, true)
 ]
 
-let parentWeeklyChores = [
+let parentWeeklyJobs = [
     //("spouse 1-on-1 time", 1, false, false),
     ("Payday", 1, false, false)
     //("planning meeting", 1, false, false)
@@ -90,36 +90,36 @@ let parentDailyHabits = [
 
 //=====================================
 
-// Table data is as follows: chore name, chore multiplier, chore Consistency Bonus, chore editable?
+// Table data is as follows: job name, job multiplier, job Consistency Bonus, job editable?
 
-let assignedChoresHabitsDad: [String] = ["meal prep",
+let assignedJobsHabitsDad: [String] = ["meal prep",
                                          "job inspections",
                                          "get self ready for day",
                                          "personal meditation",
                                          "develop talent",
                                          "1-on-1 with child",
                                          "payday"]
-let assignedChoresHabitsMom: [String] = ["counters",
+let assignedJobsHabitsMom: [String] = ["counters",
                                          "feed pet",
                                          "get self ready for day",
                                          "personal meditation",
                                          "develop talent",
                                          "1-on-1 with child",
                                          "clean fridge"]
-let assignedChoresHabitsSavannah: [String] = ["bedroom",
+let assignedJobsHabitsSavannah: [String] = ["bedroom",
                                               "bathrooms",
                                               "get self & buddy ready for day",
                                               "personal meditation / prayer",
                                               "daily exercise (20 min)",
                                               "wash & vacuum 1 car"]
-let assignedChoresHabitsAiden: [String] = ["bedroom",
+let assignedJobsHabitsAiden: [String] = ["bedroom",
                                            "laundry",
                                            "living room",
                                            "get self & buddy ready for day",
                                            "personal meditation / prayer",
                                            "daily exercise (20 min)",
                                            "wash & vacuum 1 car"]
-let assignedChoresHabitsSophie: [String] = ["bedroom",
+let assignedJobsHabitsSophie: [String] = ["bedroom",
                                             "sweep & vacuum",
                                             "dishes",
                                             "get self & buddy ready for day",
@@ -128,10 +128,10 @@ let assignedChoresHabitsSophie: [String] = ["bedroom",
                                             "mop floors",
                                             "mow lawn"]
 
-let dailyChoresSavannah = [("bedroom", 1, false, true),
+let dailyJobsSavannah = [("bedroom", 1, false, true),
                            ("bathrooms", 1, false, true)]
 
-let weeklyChoresSavannah = [("sweep porch",	2.5, false, true),
+let weeklyJobsSavannah = [("sweep porch",	2.5, false, true),
                             ("weed garden",	5, false, true),
                             ("babysit (per hour)", 25, false, true)]
 
@@ -171,7 +171,7 @@ var homeIndex = 0       // MARK: global variable, need to change this
 
 //=====================================
 
-let tempPaydayDailyChores = [("clean bedroom", "1","1","","1","1","E","1", 60),
+let tempPaydayDailyJobs = [("clean bedroom", "1","1","","1","1","E","1", 60),
                              ("clean backyard", "1","1","1","1","1","E","1", 60),
                              ("water garden & feed chickens", "X","3","3","X","3","3","3", 50)
 ]
@@ -187,7 +187,7 @@ let tempPaydayDailyHabits = [("self ready by 10:am","1","1","1","1","1","","1", 
                               ("journal", "1","1","1","1","1","1","1", 70),
                               ("bedtime by 9:30pm", "","1","1","1","1","","1", 50)]
 
-let tempPaydayWeeklyChores = [("wash windows inside", "","","","","","","1", 150),
+let tempPaydayWeeklyJobs = [("wash windows inside", "","","","","","","1", 150),
                               ("babysit", "","","","2","","","", 1000)]
 
 let consistencyBonus: Bool = true
@@ -229,7 +229,7 @@ var sectionData: [Int: [(String, String, Int)]] = [:]
 
 //====================================
 
-let tempChoresCB = [11,13,1,0,0,26,0,0,0,12]
+let tempJobsCB = [11,13,1,0,0,26,0,0,0,12]
 let tempHabitsCB = [7,16,38,9,24,3,12,8,10,22]
 
 //====================================

@@ -10,7 +10,7 @@ import UIKit
 
 class Step3CustomCell: UITableViewCell {
     
-    @IBOutlet weak var choreLabel: UILabel!
+    @IBOutlet weak var jobLabel: UILabel!
     
 
     override func awakeFromNib() {

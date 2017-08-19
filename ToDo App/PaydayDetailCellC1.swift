@@ -1,8 +1,8 @@
 import UIKit
 
-class PaydayDetailCellA1: UITableViewCell {
+class PaydayDetailCellC1: UITableViewCell {
     
-    @IBOutlet weak var jobDesc: UILabel!
+    @IBOutlet weak var habitDesc: UILabel!
     @IBOutlet weak var tallyView: UIView!
     @IBOutlet weak var dayColor1: UILabel!
     @IBOutlet weak var dayColor2: UILabel!
@@ -11,7 +11,6 @@ class PaydayDetailCellA1: UITableViewCell {
     @IBOutlet weak var dayColor5: UILabel!
     @IBOutlet weak var dayColor6: UILabel!
     @IBOutlet weak var dayColor7: UILabel!
-    
 
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -21,3 +20,5 @@ class PaydayDetailCellA1: UITableViewCell {
         super.setSelected(selected, animated: animated)
     }
 }
+
+

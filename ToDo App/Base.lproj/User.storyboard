@@ -1945,7 +1945,7 @@ The maximum daily limit is $3.00 (3 strikes).</string>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hue-hu-6ga">
                                 <rect key="frame" x="16" y="475" width="288" height="36"/>
-                                <string key="text">NOTE: when applying a fee, you may consider allowing the child to get the money back by doing a chore for free, or perform an act of service or an other good behavior.</string>
+                                <string key="text">NOTE: when applying a fee, you may consider allowing the child to get the money back by doing a job for free, or perform an act of service or an other good behavior.</string>
                                 <fontDescription key="fontDescription" type="system" pointSize="10"/>
                                 <color key="textColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>

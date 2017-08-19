@@ -5,9 +5,9 @@ class PaydayDetailVC: UIViewController, UITableViewDelegate, UITableViewDataSour
     @IBOutlet weak var incomeLabel: UILabel!
     @IBOutlet weak var tableView: UITableView!
     let (userName, _, userIncome) = tempUsers[homeIndex]
-    let headerData: [(String, UIImage)] = [("daily chores", #imageLiteral(resourceName: "broom white")),
+    let headerData: [(String, UIImage)] = [("daily jobs", #imageLiteral(resourceName: "broom white")),
                                            ("daily habits", #imageLiteral(resourceName: "toothbrush white")),
-                                           ("weekly chores", #imageLiteral(resourceName: "home white")),
+                                           ("weekly jobs", #imageLiteral(resourceName: "home white")),
                                            ("job bonus", #imageLiteral(resourceName: "house broom no alpha")),
                                            ("habit bonus", #imageLiteral(resourceName: "toothbrush black")),
                                            ("fees & withdrawals", #imageLiteral(resourceName: "income hand"))]
@@ -32,11 +32,11 @@ class PaydayDetailVC: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if section == 0 {
-            return tempPaydayDailyChores.count
+            return tempPaydayDailyJobs.count
         } else if section == 1 {
             return tempPaydayDailyHabits.count
         } else if section == 2 {
-            return tempPaydayWeeklyChores.count
+            return tempPaydayWeeklyJobs.count
         } else if section == 5 {
             return fees.count
         } else {
@@ -78,17 +78,17 @@ class PaydayDetailVC: UIViewController, UITableViewDelegate, UITableViewDataSour
         cell.tallyView.layer.borderColor = UIColor.lightGray.cgColor
         cell.tallyView.layer.borderWidth = 0.5
         
-        // ------------
-        // DAILY CHORES
-        // ------------
+        // ----------
+        // DAILY JOBS
+        // ----------
         
 //        func labelColors(labelNumber: String, labelValue: UILabel) {
 //            let labelNumber.text =
 //        }
         
         if indexPath.section == 0 {
-            let (choreDesc, label1, label2, label3, label4, label5, label6, label7, choreNum) = tempPaydayDailyChores[indexPath.row]
-            cell.choreHabitDesc.text = choreDesc
+            let (jobDesc, label1, label2, label3, label4, label5, label6, label7, jobNum) = tempPaydayDailyJobs[indexPath.row]
+            cell.jobHabitDesc.text = jobDesc
             
             cell.lab1.text = label1
             switch label1 {
@@ -196,7 +196,7 @@ class PaydayDetailVC: UIViewController, UITableViewDelegate, UITableViewDataSour
                 cell.lab7.backgroundColor = UIColor(red: 141/255, green: 198/255, blue: 63/255, alpha: 1)
             }
 
-            cell.choreHabitTotal.text = "\(choreNum)"
+            cell.jobHabitTotal.text = "\(jobNum)"
             
         // ------------
         // DAILY HABITS
@@ -204,7 +204,7 @@ class PaydayDetailVC: UIViewController, UITableViewDelegate, UITableViewDataSour
         
         } else if indexPath.section == 1 {
             let (habitDesc, label1, label2, label3, label4, label5, label6, label7, habitNum) = tempPaydayDailyHabits[indexPath.row]
-            cell.choreHabitDesc.text = habitDesc
+            cell.jobHabitDesc.text = habitDesc
             
             cell.lab1.text = label1
             switch label1 {
@@ -306,15 +306,15 @@ class PaydayDetailVC: UIViewController, UITableViewDelegate, UITableViewDataSour
                 cell.lab7.backgroundColor = UIColor(red: 141/255, green: 198/255, blue: 63/255, alpha: 1)
             }
             
-            cell.choreHabitTotal.text = "\(habitNum)"
+            cell.jobHabitTotal.text = "\(habitNum)"
             
-        // -------------
-        // WEEKLY CHORES
-        // -------------
+        // -----------
+        // WEEKLY JOBS
+        // -----------
         
         } else if indexPath.section == 2 {
-            let (weeklyDesc, label1, label2, label3, label4, label5, label6, label7, weeklyNum) = tempPaydayWeeklyChores[indexPath.row]
-            cell.choreHabitDesc.text = weeklyDesc
+            let (weeklyDesc, label1, label2, label3, label4, label5, label6, label7, weeklyNum) = tempPaydayWeeklyJobs[indexPath.row]
+            cell.jobHabitDesc.text = weeklyDesc
             
             cell.lab1.text = label1
             switch label1 {
@@ -399,7 +399,7 @@ class PaydayDetailVC: UIViewController, UITableViewDelegate, UITableViewDataSour
             default:
                 cell.lab7.backgroundColor = UIColor(red: 141/255, green: 198/255, blue: 63/255, alpha: 1)
             }
-            cell.choreHabitTotal.text = "\(weeklyNum)"
+            cell.jobHabitTotal.text = "\(weeklyNum)"
             
             
         // -----------------
@@ -407,8 +407,8 @@ class PaydayDetailVC: UIViewController, UITableViewDelegate, UITableViewDataSour
         // -----------------
             
         } else if indexPath.section == 3 {
-            cell.choreHabitDesc.text = "job bonus"
-            cell.choreHabitTotal.text = "500"
+            cell.jobHabitDesc.text = "job bonus"
+            cell.jobHabitTotal.text = "500"
             cell.tallyView.isHidden = true
             
 
@@ -417,8 +417,8 @@ class PaydayDetailVC: UIViewController, UITableViewDelegate, UITableViewDataSour
         // -----------
             
         } else if indexPath.section == 4 {
-            cell.choreHabitDesc.text = "habit bonus"
-            cell.choreHabitTotal.text = "500"
+            cell.jobHabitDesc.text = "habit bonus"
+            cell.jobHabitTotal.text = "500"
             cell.tallyView.isHidden = true
             
         // ------------------
@@ -426,8 +426,8 @@ class PaydayDetailVC: UIViewController, UITableViewDelegate, UITableViewDataSour
         // ------------------
         
         } else {
-            cell.choreHabitDesc.text = fees[indexPath.row]
-            cell.choreHabitTotal.text = "100"
+            cell.jobHabitDesc.text = fees[indexPath.row]
+            cell.jobHabitTotal.text = "100"
             cell.tallyView.isHidden = true
         }
         return cell

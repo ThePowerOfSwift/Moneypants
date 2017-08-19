@@ -26,18 +26,18 @@ class Step4ViewController: UIViewController, UITableViewDataSource, UITableViewD
     // set number of rows
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if section == 0 {
-            return dailyChores.count
+            return dailyJobs.count
         } else {
-            return weeklyChores.count
+            return weeklyJobs.count
         }
     }
     
     //Give each table section a title
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         if section == 0 {
-            return "daily chores"
+            return "daily jobs"
         } else {
-            return "weekly chores"
+            return "weekly jobs"
         }
     }
     
@@ -54,11 +54,11 @@ class Step4ViewController: UIViewController, UITableViewDataSource, UITableViewD
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "CustomCell4", for: indexPath) as! Step4CustomCell
         if indexPath.section == 0 {
-            let (dailyChoreName, _, _, _) = dailyChores[indexPath.row]
-            cell.choreLabel.text = dailyChoreName
+            let (dailyJobName, _, _, _) = dailyJobs[indexPath.row]
+            cell.jobLabel.text = dailyJobName
         } else {
-            let (weeklyChoreName, _, _, _) = weeklyChores[indexPath.row]
-            cell.choreLabel.text = weeklyChoreName
+            let (weeklyJobName, _, _, _) = weeklyJobs[indexPath.row]
+            cell.jobLabel.text = weeklyJobName
         }
         return cell
     }

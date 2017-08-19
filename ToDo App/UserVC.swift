@@ -81,11 +81,11 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if section == 0 {
-            return dailyChoresSavannah.count
+            return dailyJobsSavannah.count
         } else if section == 1 {
             return dailyHabits.count
         } else  if section == 2 {
-            return weeklyChoresSavannah.count
+            return weeklyJobsSavannah.count
         } else {
             return 2
         }
@@ -93,11 +93,11 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         if section == 0 {
-            return "daily chores"
+            return "daily jobs"
         } else if section == 1 {
             return "daily habits"
         } else if section == 2 {
-            return "weekly chores"
+            return "weekly jobs"
         } else {
             return "fees and withdrawals"
         }
@@ -114,24 +114,24 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "CustomCell", for: indexPath) as! UserCell
         if indexPath.section == 0 {
-            let (choreHabitName, pointsLabelValue, _, _) = dailyChoresSavannah[indexPath.row]
-            cell.choreHabitLabel.text = choreHabitName
+            let (jobHabitName, pointsLabelValue, _, _) = dailyJobsSavannah[indexPath.row]
+            cell.jobHabitLabel.text = jobHabitName
             cell.pointsLabel.text = "\(pointsLabelValue * 15)"
         } else if indexPath.section == 1 {
-            let (choreHabitName, pointsLabelValue, _, _) = dailyHabits[indexPath.row]
-            cell.choreHabitLabel.text = choreHabitName
+            let (jobHabitName, pointsLabelValue, _, _) = dailyHabits[indexPath.row]
+            cell.jobHabitLabel.text = jobHabitName
             cell.pointsLabel.text = "\(Int(pointsLabelValue * 15))"
         } else if indexPath.section == 2 {
-            let (choreHabitName, pointsLabelValue, _, _) = weeklyChoresSavannah[indexPath.row]
-            cell.choreHabitLabel.text = choreHabitName
+            let (jobHabitName, pointsLabelValue, _, _) = weeklyJobsSavannah[indexPath.row]
+            cell.jobHabitLabel.text = jobHabitName
             cell.pointsLabel.text = "\(Int(pointsLabelValue * 15))"
         } else if indexPath.section == 3 {
-            cell.choreHabitLabel.text = feesDebts[indexPath.row]
+            cell.jobHabitLabel.text = feesDebts[indexPath.row]
             cell.pointsLabel.text = "-100"
             cell.pointsLabel.textColor = UIColor.red
 //            cell.counterLabel.isHidden = true
 //            cell.pointsLabel.isHidden = true
-//            cell.choreHabitButton.isHidden = true
+//            cell.jobHabitButton.isHidden = true
 //            cell.accessoryType = UITableViewCellAccessoryType.disclosureIndicator
         }
         return cell

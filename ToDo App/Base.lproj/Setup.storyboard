@@ -909,10 +909,10 @@
             </objects>
             <point key="canvasLocation" x="3191.25" y="1099.6478873239437"/>
         </scene>
-        <!--chores-->
+        <!--jobs-->
         <scene sceneID="XwX-ce-1A2">
             <objects>
-                <viewController storyboardIdentifier="Chores" title="chores" automaticallyAdjustsScrollViewInsets="NO" id="GIC-iC-fnb" customClass="Step3ViewController" customModule="ToDo_App" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="Chores" title="jobs" automaticallyAdjustsScrollViewInsets="NO" id="GIC-iC-fnb" customClass="Step3ViewController" customModule="ToDo_App" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="JlP-TD-9Sf"/>
                         <viewControllerLayoutGuide type="bottom" id="dZ8-mB-G4d"/>
@@ -946,7 +946,7 @@
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
-                                            <outlet property="choreLabel" destination="6w7-nl-QWR" id="3Qg-JM-NnA"/>
+                                            <outlet property="jobLabel" destination="6w7-nl-QWR" id="3Qg-JM-NnA"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -962,7 +962,7 @@
                                     <constraint firstAttribute="width" constant="40" id="CL8-FE-nkx"/>
                                 </constraints>
                             </imageView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Review the default family chores. Tap to edit." lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TcN-Um-hda">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Review the default family jobs. Tap to edit." lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TcN-Um-hda">
                                 <rect key="frame" x="72" y="52" width="232" height="41"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
@@ -1061,7 +1061,7 @@
                                                     <state key="normal" title="Button" image="blank"/>
                                                     <state key="selected" image="green check"/>
                                                     <connections>
-                                                        <action selector="choreButtonTapped:" destination="Qas-Of-naH" eventType="touchUpInside" id="qQF-9X-JL0"/>
+                                                        <action selector="jobButtonTapped:" destination="Qas-Of-naH" eventType="touchUpInside" id="qQF-9X-JL0"/>
                                                     </connections>
                                                 </button>
                                             </subviews>
@@ -1074,8 +1074,8 @@
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
-                                            <outlet property="choreButton" destination="9TC-LH-wXx" id="9FU-Dk-sMJ"/>
-                                            <outlet property="choreLabel" destination="ojz-Uu-SSw" id="PHH-kT-2tX"/>
+                                            <outlet property="jobButton" destination="9TC-LH-wXx" id="9FU-Dk-sMJ"/>
+                                            <outlet property="jobLabel" destination="ojz-Uu-SSw" id="PHH-kT-2tX"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -1392,7 +1392,7 @@
                                                     <state key="normal" image="blank"/>
                                                     <state key="selected" image="green check"/>
                                                     <connections>
-                                                        <action selector="choreButtonTapped:" destination="hEO-4G-6FO" eventType="touchUpInside" id="lQs-oc-t5I"/>
+                                                        <action selector="jobButtonTapped:" destination="hEO-4G-6FO" eventType="touchUpInside" id="lQs-oc-t5I"/>
                                                     </connections>
                                                 </button>
                                             </subviews>
@@ -1405,8 +1405,8 @@
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
-                                            <outlet property="choreButton" destination="K4J-oW-Jkx" id="uag-RM-EV4"/>
-                                            <outlet property="choreLabel" destination="wiv-AV-QqA" id="zLI-HE-P5j"/>
+                                            <outlet property="jobButton" destination="K4J-oW-Jkx" id="uag-RM-EV4"/>
+                                            <outlet property="jobLabel" destination="wiv-AV-QqA" id="zLI-HE-P5j"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>

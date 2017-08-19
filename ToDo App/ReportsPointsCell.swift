@@ -3,8 +3,8 @@ import UIKit
 class ReportsPointsCell: UITableViewCell {
     
     @IBOutlet weak var timeStampLabel: UILabel!
-    @IBOutlet weak var choreHabitLabel: UILabel!
-    @IBOutlet weak var choreHabitPointValueLabel: UILabel!
+    @IBOutlet weak var jobHabitLabel: UILabel!
+    @IBOutlet weak var jobHabitPointValueLabel: UILabel!
     
 
     override func awakeFromNib() {

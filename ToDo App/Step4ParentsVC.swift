@@ -16,25 +16,25 @@ class Step4ParentsVC: UIViewController, UITableViewDataSource, UITableViewDelega
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if section == 0 {
-            return dailyChores.count
+            return dailyJobs.count
         } else if section == 1 {
-            return parentDailyChores.count
+            return parentDailyJobs.count
         } else if section == 2 {
-            return weeklyChores.count
+            return weeklyJobs.count
         } else {
-            return parentWeeklyChores.count
+            return parentWeeklyJobs.count
         }
     }
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         if section == 0 {
-            return "daily chores"
+            return "daily jobs"
         } else if section == 1 {
-            return "parent daily chores"
+            return "parent daily jobs"
         } else if section == 2 {
-            return "weekly chores"
+            return "weekly jobs"
         } else {
-            return "parent weekly chores"
+            return "parent weekly jobs"
         }
     }
 
@@ -50,17 +50,17 @@ class Step4ParentsVC: UIViewController, UITableViewDataSource, UITableViewDelega
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "CustomCell", for: indexPath) as! Step4ParentCustomCell
         if indexPath.section == 0 {
-            let (dailyChoreName, _, _, _) = dailyChores[indexPath.row]
-            cell.choreLabel.text = dailyChoreName
+            let (dailyChoreName, _, _, _) = dailyJobs[indexPath.row]
+            cell.jobLabel.text = dailyChoreName
         } else if indexPath.section == 1 {
-            let (parentDailyChoreName, _, _, _) = parentDailyChores[indexPath.row]
-            cell.choreLabel.text = parentDailyChoreName
+            let (parentDailyJobName, _, _, _) = parentDailyJobs[indexPath.row]
+            cell.jobLabel.text = parentDailyJobName
         } else if indexPath.section == 2 {
-            let (weeklyChoreName, _, _, _) = weeklyChores[indexPath.row]
-            cell.choreLabel.text = weeklyChoreName
+            let (weeklyJobName, _, _, _) = weeklyJobs[indexPath.row]
+            cell.jobLabel.text = weeklyJobName
         } else {
-            let (parentWeeklyChoreName, _, _, _) = parentWeeklyChores[indexPath.row]
-            cell.choreLabel.text = parentWeeklyChoreName
+            let (parentWeeklyJobName, _, _, _) = parentWeeklyJobs[indexPath.row]
+            cell.jobLabel.text = parentWeeklyJobName
         }
         return cell
     }

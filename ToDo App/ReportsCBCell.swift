@@ -2,8 +2,8 @@ import UIKit
 
 class ReportsCBCell: UITableViewCell {
     
-    @IBOutlet weak var choreHabitLabel: UILabel!
-    @IBOutlet weak var choreHabitCBCount: UILabel!
+    @IBOutlet weak var jobHabitLabel: UILabel!
+    @IBOutlet weak var jobHabitCBCount: UILabel!
     @IBOutlet weak var coloredBar: UIImageView!
     @IBOutlet weak var coloredBarWidthConstraint: NSLayoutConstraint!
     @IBOutlet weak var grayGrid: UIImageView!

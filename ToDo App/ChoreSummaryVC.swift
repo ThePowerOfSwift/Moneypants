@@ -13,11 +13,11 @@ class ChoreSummaryVC: UIViewController, UITableViewDataSource, UITableViewDelega
         tableView.delegate = self
         tableView.dataSource = self
         
-        sectionData = [0 : assignedChoresHabitsDad,
-                       1 : assignedChoresHabitsMom,
-                       2 : assignedChoresHabitsSavannah,
-                       3 : assignedChoresHabitsAiden,
-                       4 : assignedChoresHabitsSophie]
+        sectionData = [0 : assignedJobsHabitsDad,
+                       1 : assignedJobsHabitsMom,
+                       2 : assignedJobsHabitsSavannah,
+                       3 : assignedJobsHabitsAiden,
+                       4 : assignedJobsHabitsSophie]
     }
     
     
@@ -27,15 +27,15 @@ class ChoreSummaryVC: UIViewController, UITableViewDataSource, UITableViewDelega
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if section == 0 {
-            return assignedChoresHabitsDad.count
+            return assignedJobsHabitsDad.count
         } else if section == 1 {
-            return assignedChoresHabitsMom.count
+            return assignedJobsHabitsMom.count
         } else if section == 2 {
-            return assignedChoresHabitsSavannah.count
+            return assignedJobsHabitsSavannah.count
         } else if section == 3 {
-            return assignedChoresHabitsAiden.count
+            return assignedJobsHabitsAiden.count
         } else {
-            return assignedChoresHabitsSophie.count
+            return assignedJobsHabitsSophie.count
         }
     }
     
@@ -69,15 +69,15 @@ class ChoreSummaryVC: UIViewController, UITableViewDataSource, UITableViewDelega
         
 //        let cell = tableView.dequeueReusableCell(withIdentifier: "cell")
 //        if indexPath.section == 0 {
-//            cell?.textLabel?.text = assignedChoresHabitsDad[indexPath.row]
+//            cell?.textLabel?.text = assignedJobsHabitsDad[indexPath.row]
 //        } else if indexPath.section == 1 {
-//            cell?.textLabel?.text = assignedChoresHabitsMom[indexPath.row]
+//            cell?.textLabel?.text = assignedJobsHabitsMom[indexPath.row]
 //        } else if indexPath.section == 2 {
-//            cell?.textLabel?.text = assignedChoresHabitsSavannah[indexPath.row]
+//            cell?.textLabel?.text = assignedJobsHabitsSavannah[indexPath.row]
 //        } else if indexPath.section == 3 {
-//            cell?.textLabel?.text = assignedChoresHabitsAiden[indexPath.row]
+//            cell?.textLabel?.text = assignedJobsHabitsAiden[indexPath.row]
 //        } else {
-//            cell?.textLabel?.text = assignedChoresHabitsSophie[indexPath.row]
+//            cell?.textLabel?.text = assignedJobsHabitsSophie[indexPath.row]
 //        }
 //        return cell!
         

@@ -2,9 +2,9 @@ import UIKit
 
 class PaydayDetailCell: UITableViewCell {
     
-    @IBOutlet weak var choreHabitDesc: UILabel!
+    @IBOutlet weak var jobHabitDesc: UILabel!
     @IBOutlet weak var tallyView: UIView!
-    @IBOutlet weak var choreHabitTotal: UILabel!
+    @IBOutlet weak var jobHabitTotal: UILabel!
     @IBOutlet weak var lab1: UILabel!
     @IBOutlet weak var lab2: UILabel!
     @IBOutlet weak var lab3: UILabel!

@@ -2,8 +2,8 @@ import UIKit
 
 class Step4ParentCustomCell: UITableViewCell {
     
-    @IBOutlet weak var choreLabel: UILabel!
-    @IBOutlet weak var choreButton: UIButton!
+    @IBOutlet weak var jobLabel: UILabel!
+    @IBOutlet weak var jobButton: UIButton!
 
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -13,15 +13,15 @@ class Step4ParentCustomCell: UITableViewCell {
         super.setSelected(selected, animated: animated)
     }
     
-    @IBAction func choreButtonTapped(_ sender: UIButton) {
-        if !choreButton.isSelected {
-            choreButton.isSelected = true
-            choreLabel.textColor = UIColor.lightGray
-            print("chore selected")
+    @IBAction func jobButtonTapped(_ sender: UIButton) {
+        if !jobButton.isSelected {
+            jobButton.isSelected = true
+            jobLabel.textColor = UIColor.lightGray
+            print("job selected")
         } else {
-            choreButton.isSelected = false
-            choreLabel.textColor = UIColor.black
-            print("chore deselected")
+            jobButton.isSelected = false
+            jobLabel.textColor = UIColor.black
+            print("job deselected")
         }
     }
 }

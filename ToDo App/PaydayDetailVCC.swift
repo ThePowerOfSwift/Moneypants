@@ -1,17 +1,15 @@
 import UIKit
 
-class PaydayDetailVCA: UIViewController, UITableViewDataSource, UITableViewDelegate {
+class PaydayDetailVCC: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var tableViewHeight: NSLayoutConstraint!
     let (userName, _, _) = tempUsers[homeIndex]
-    let tempDailyChoresSummary = [("daily jobs:", 1500),
-                                  ("job bonus:", 1500),
+    let tempWeeklyJobsSummary = [("weekly jobs:", 1500),
                                   ("previous unpaid amounts:", 1500),
                                   ("subtotal:", 4500)]
     let standardRowHeight: CGFloat = 50
     let customRowHeight: CGFloat = 139
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -23,7 +21,6 @@ class PaydayDetailVCA: UIViewController, UITableViewDataSource, UITableViewDeleg
         resizeTable()
     }
     
-    
     // ----------
     // Table View
     // ----------
@@ -34,7 +31,7 @@ class PaydayDetailVCA: UIViewController, UITableViewDataSource, UITableViewDeleg
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if section == 0 {
-            return tempPaydayDailyJobs.count
+            return tempPaydayWeeklyJobs.count
         } else {
             return 1
         }
@@ -44,15 +41,15 @@ class PaydayDetailVCA: UIViewController, UITableViewDataSource, UITableViewDeleg
         
         if indexPath.section == 0 {
             // PART 1
-            let cell = tableView.dequeueReusableCell(withIdentifier: "CustomCell1", for: indexPath) as! PaydayDetailCellA1
-            let (jobDescription, day1, day2, day3, day4, day5, day6, day7, _) = tempPaydayDailyJobs[indexPath.row]
+            let cell = tableView.dequeueReusableCell(withIdentifier: "CustomCell1", for: indexPath) as! PaydayDetailCellC1
+            let (jobDescription, day1, day2, day3, day4, day5, day6, day7, _) = tempPaydayDailyHabits[indexPath.row]
             
             cell.tallyView.layer.cornerRadius = cell.tallyView.bounds.height / 6.4
             cell.tallyView.layer.masksToBounds = true
             cell.tallyView.layer.borderColor = UIColor.lightGray.cgColor
             cell.tallyView.layer.borderWidth = 0.5
             
-            cell.jobDesc.text = jobDescription
+            cell.habitDesc.text = jobDescription
             
             cell.dayColor1.text = day1
             switch day1 {
@@ -63,6 +60,8 @@ class PaydayDetailVCA: UIViewController, UITableViewDataSource, UITableViewDeleg
                 cell.dayColor1.text = ""
                 cell.dayColor1.backgroundColor = UIColor.red
             case "E":
+                cell.dayColor1.backgroundColor = UIColor.lightGray
+            case "":
                 cell.dayColor1.backgroundColor = UIColor.lightGray
             default:
                 cell.dayColor1.backgroundColor = UIColor(red: 141/255, green: 198/255, blue: 63/255, alpha: 1)
@@ -79,6 +78,8 @@ class PaydayDetailVCA: UIViewController, UITableViewDataSource, UITableViewDeleg
                 cell.dayColor2.backgroundColor = UIColor.red
             case "E":
                 cell.dayColor2.backgroundColor = UIColor.lightGray
+            case "":
+                cell.dayColor2.backgroundColor = UIColor.lightGray
             default:
                 cell.dayColor2.backgroundColor = UIColor(red: 141/255, green: 198/255, blue: 63/255, alpha: 1)
                 cell.dayColor2.textColor = UIColor.white
@@ -93,6 +94,8 @@ class PaydayDetailVCA: UIViewController, UITableViewDataSource, UITableViewDeleg
                 cell.dayColor3.text = ""
                 cell.dayColor3.backgroundColor = UIColor.red
             case "E":
+                cell.dayColor3.backgroundColor = UIColor.lightGray
+            case "":
                 cell.dayColor3.backgroundColor = UIColor.lightGray
             default:
                 cell.dayColor3.backgroundColor = UIColor(red: 141/255, green: 198/255, blue: 63/255, alpha: 1)
@@ -109,6 +112,8 @@ class PaydayDetailVCA: UIViewController, UITableViewDataSource, UITableViewDeleg
                 cell.dayColor4.backgroundColor = UIColor.red
             case "E":
                 cell.dayColor4.backgroundColor = UIColor.lightGray
+            case "":
+                cell.dayColor4.backgroundColor = UIColor.lightGray
             default:
                 cell.dayColor4.backgroundColor = UIColor(red: 141/255, green: 198/255, blue: 63/255, alpha: 1)
                 cell.dayColor4.textColor = UIColor.white
@@ -123,6 +128,8 @@ class PaydayDetailVCA: UIViewController, UITableViewDataSource, UITableViewDeleg
                 cell.dayColor5.text = ""
                 cell.dayColor5.backgroundColor = UIColor.red
             case "E":
+                cell.dayColor5.backgroundColor = UIColor.lightGray
+            case "":
                 cell.dayColor5.backgroundColor = UIColor.lightGray
             default:
                 cell.dayColor5.backgroundColor = UIColor(red: 141/255, green: 198/255, blue: 63/255, alpha: 1)
@@ -139,6 +146,8 @@ class PaydayDetailVCA: UIViewController, UITableViewDataSource, UITableViewDeleg
                 cell.dayColor6.backgroundColor = UIColor.red
             case "E":
                 cell.dayColor6.backgroundColor = UIColor.lightGray
+            case "":
+                cell.dayColor6.backgroundColor = UIColor.lightGray
             default:
                 cell.dayColor6.backgroundColor = UIColor(red: 141/255, green: 198/255, blue: 63/255, alpha: 1)
                 cell.dayColor6.textColor = UIColor.white
@@ -154,6 +163,8 @@ class PaydayDetailVCA: UIViewController, UITableViewDataSource, UITableViewDeleg
                 cell.dayColor7.backgroundColor = UIColor.red
             case "E":
                 cell.dayColor7.backgroundColor = UIColor.lightGray
+            case "":
+                cell.dayColor7.backgroundColor = UIColor.lightGray
             default:
                 cell.dayColor7.backgroundColor = UIColor(red: 141/255, green: 198/255, blue: 63/255, alpha: 1)
                 cell.dayColor7.textColor = UIColor.white
@@ -163,13 +174,13 @@ class PaydayDetailVCA: UIViewController, UITableViewDataSource, UITableViewDeleg
             
         } else {
             // PART 2
-            let cell2 = tableView.dequeueReusableCell(withIdentifier: "CustomCell2", for: indexPath) as! PaydayDetailCellA2
-            let (_, pointAmount) = tempDailyChoresSummary[indexPath.row]
+            let cell2 = tableView.dequeueReusableCell(withIdentifier: "CustomCell2", for: indexPath) as! PaydayDetailCellC2
+            let (_, pointAmount) = tempWeeklyJobsSummary[indexPath.row]
             
-            cell2.dailyChoresNumber.text = "\(pointAmount)"
-            cell2.jobConsistencyBonusNumber.text = "\(pointAmount)"
+            cell2.dailyHabitsNumber.text = "\(pointAmount)"
+            cell2.habitConsistencyBonusNumber.text = "\(pointAmount)"
             cell2.previousUnpaidAmountsNumber.text = "\(pointAmount)"
-            cell2.dailyChoresSubtotalNumber.text = "\(pointAmount)"
+            cell2.dailyHabitsSubtotalNumber.text = "\(pointAmount)"
             
             return cell2
         }
@@ -197,7 +208,7 @@ class PaydayDetailVCA: UIViewController, UITableViewDataSource, UITableViewDeleg
     
     func resizeTable() {
         
-        tableViewHeight.constant = (CGFloat(tempPaydayDailyJobs.count) * standardRowHeight) + customRowHeight
+        tableViewHeight.constant = (CGFloat(tempPaydayDailyHabits.count) * standardRowHeight) + customRowHeight
         
         // if table height is bigger than screen, allow scrolling. otherwise, don't scroll
         if tableViewHeight.constant > 432 {
@@ -220,7 +231,7 @@ class PaydayDetailVCA: UIViewController, UITableViewDataSource, UITableViewDeleg
         
         // Lengthy alert bubble
         let messageText = NSMutableAttributedString(
-            string: "What do the colors and numbers mean?\n\n\tGreen: completed\n\tGray: excused (or not completed)\n\tRed: unexcused\n\nJobs will have a number if they are completed more than once per day.",
+            string: "What do the colors and numbers mean?\n\n\tGreen: completed\n\tGray: not completed\n\nJobs will have a number if they are completed more than once per day.",
             attributes: [
                 NSParagraphStyleAttributeName : paragraphStyle,
                 NSFontAttributeName : UIFont.systemFont(ofSize: 13.0),
@@ -238,6 +249,5 @@ class PaydayDetailVCA: UIViewController, UITableViewDataSource, UITableViewDeleg
         }))
         present(alert, animated: true, completion: nil)
     }
-    
     
 }
