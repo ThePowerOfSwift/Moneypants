@@ -197,7 +197,7 @@ class PaydayDetailVCC: UIViewController, UITableViewDataSource, UITableViewDeleg
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let storyboard = UIStoryboard(name: "User", bundle: nil)
         let vc = storyboard.instantiateViewController(withIdentifier: "ReportsPointsVC")
-        navigationController?.pushViewController(vc, animated: true)
+        navigationController?.present(vc, animated: true)
         tableView.reloadData()
     }
     
@@ -240,7 +240,7 @@ class PaydayDetailVCC: UIViewController, UITableViewDataSource, UITableViewDeleg
         )
         
         // Not sure what this does,  but it works
-        let alert = UIAlertController(title: "What does it mean?", message: "", preferredStyle: .alert)
+        let alert = UIAlertController(title: "Color Code", message: "", preferredStyle: .alert)
         alert.setValue(messageText, forKey: "attributedMessage")
         
         // Button one: "okay"

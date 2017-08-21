@@ -9,7 +9,7 @@ class PaydayDetailVCA: UIViewController, UITableViewDataSource, UITableViewDeleg
                                   ("job bonus:", 1500),
                                   ("previous unpaid amounts:", 1500),
                                   ("subtotal:", 4500)]
-    let standardRowHeight: CGFloat = 50
+    let standardRowHeight: CGFloat = 60
     let customRowHeight: CGFloat = 139
     
     
@@ -186,7 +186,7 @@ class PaydayDetailVCA: UIViewController, UITableViewDataSource, UITableViewDeleg
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let storyboard = UIStoryboard(name: "User", bundle: nil)
         let vc = storyboard.instantiateViewController(withIdentifier: "ReportsPointsVC")
-        navigationController?.pushViewController(vc, animated: true)
+        navigationController?.present(vc, animated: true)
         tableView.reloadData()
     }
     
@@ -229,7 +229,7 @@ class PaydayDetailVCA: UIViewController, UITableViewDataSource, UITableViewDeleg
         )
         
         // Not sure what this does,  but it works
-        let alert = UIAlertController(title: "What does it mean?", message: "", preferredStyle: .alert)
+        let alert = UIAlertController(title: "Color Code", message: "", preferredStyle: .alert)
         alert.setValue(messageText, forKey: "attributedMessage")
         
         // Button one: "okay"

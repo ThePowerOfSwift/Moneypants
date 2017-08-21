@@ -5,6 +5,7 @@ class ReportsPointsVC: UIViewController, UITableViewDelegate, UITableViewDataSou
     @IBOutlet weak var tableView: UITableView!
     
     let (userName, userPicture, userIncome) = tempUsers[homeIndex]
+    @IBOutlet weak var navigationBar: UINavigationBar!
 
 
     override func viewDidLoad() {
@@ -13,7 +14,7 @@ class ReportsPointsVC: UIViewController, UITableViewDelegate, UITableViewDataSou
         tableView.dataSource = self
         tableView.delegate = self
         
-        navigationItem.title = userName
+        navigationBar.topItem?.title = userName
     }
     
     override func viewDidAppear(_ animated: Bool) {

@@ -1012,8 +1012,8 @@
                                                         <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                                     </state>
                                                     <connections>
-                                                        <action selector="choreHabitButtonTapped:" destination="9YO-5s-dW8" eventType="touchUpInside" id="Ryl-t6-wDN"/>
                                                         <action selector="completionButtonTouchUpOutside:" destination="9YO-5s-dW8" eventType="touchUpOutside" id="zM0-sU-uwQ"/>
+                                                        <action selector="jobHabitButtonTapped:" destination="9YO-5s-dW8" eventType="touchUpInside" id="Ryl-t6-wDN"/>
                                                     </connections>
                                                 </button>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="p1X-ny-mYc">
@@ -1034,9 +1034,9 @@
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
-                                            <outlet property="choreHabitButton" destination="TdF-D3-TIV" id="Ynr-19-jtO"/>
-                                            <outlet property="choreHabitLabel" destination="20l-o9-4Kf" id="5AB-wN-aVK"/>
                                             <outlet property="counterLabel" destination="p1X-ny-mYc" id="01E-Ro-HH9"/>
+                                            <outlet property="jobHabitButton" destination="TdF-D3-TIV" id="Ynr-19-jtO"/>
+                                            <outlet property="jobHabitLabel" destination="20l-o9-4Kf" id="5AB-wN-aVK"/>
                                             <outlet property="pointsLabel" destination="cLI-eN-D0B" id="rzy-Lv-egN"/>
                                         </connections>
                                     </tableViewCell>
@@ -1105,7 +1105,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="50" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="91t-x9-Cf9">
-                                <rect key="frame" x="0.0" y="44" width="320" height="524"/>
+                                <rect key="frame" x="0.0" y="72" width="320" height="496"/>
                                 <color key="backgroundColor" white="0.90228361999999995" alpha="1" colorSpace="calibratedWhite"/>
                                 <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 <prototypes>
@@ -1160,8 +1160,8 @@
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
-                                            <outlet property="choreHabitLabel" destination="Xf9-KQ-r1D" id="PFE-Lx-Jen"/>
-                                            <outlet property="choreHabitPointValueLabel" destination="abK-mf-8Wu" id="0ts-GY-LXq"/>
+                                            <outlet property="jobHabitLabel" destination="Xf9-KQ-r1D" id="qgq-gk-gEd"/>
+                                            <outlet property="jobHabitPointValueLabel" destination="abK-mf-8Wu" id="kue-S7-mOI"/>
                                             <outlet property="timeStampLabel" destination="cP6-hd-R2B" id="73h-Kb-NUW"/>
                                         </connections>
                                     </tableViewCell>
@@ -1176,26 +1176,39 @@
                                     <navigationItem title="Title" id="rLQ-37-5Kk">
                                         <barButtonItem key="rightBarButtonItem" title="done" style="done" id="Apv-nO-5Io">
                                             <connections>
-                                                <action selector="doneButtonTapped:" destination="upv-EN-bFg" id="RCf-AO-Hs7"/>
+                                                <action selector="doneButtonTapped:" destination="8Y7-4Q-m3X" id="Okr-rf-ceg"/>
                                             </connections>
                                         </barButtonItem>
                                     </navigationItem>
                                 </items>
                             </navigationBar>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="points history" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="q8g-Y4-vif">
+                                <rect key="frame" x="0.0" y="44" width="320" height="28"/>
+                                <color key="backgroundColor" cocoaTouchSystemColor="scrollViewTexturedBackgroundColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="28" id="ucE-HI-dmy"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="Arista2.0" family="Arista 2.0" pointSize="20"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="0.90228361999999995" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="GVH-vb-7XB" firstAttribute="top" secondItem="91t-x9-Cf9" secondAttribute="bottom" id="0tp-wN-bVi"/>
+                            <constraint firstItem="91t-x9-Cf9" firstAttribute="top" secondItem="q8g-Y4-vif" secondAttribute="bottom" id="85f-Y7-nVR"/>
                             <constraint firstItem="SUi-fu-Ij5" firstAttribute="top" secondItem="ArZ-Ez-1jz" secondAttribute="bottom" id="DPp-wq-BrV"/>
+                            <constraint firstItem="q8g-Y4-vif" firstAttribute="top" secondItem="SUi-fu-Ij5" secondAttribute="bottom" id="Phz-aA-NWk"/>
                             <constraint firstAttribute="trailing" secondItem="Z7F-nw-1vu" secondAttribute="trailing" id="aNI-BF-NCB"/>
                             <constraint firstItem="dCH-Up-8ld" firstAttribute="centerY" secondItem="ffA-UV-3Nj" secondAttribute="centerY" id="e0a-XZ-ISX"/>
                             <constraint firstItem="dCH-Up-8ld" firstAttribute="centerX" secondItem="ffA-UV-3Nj" secondAttribute="centerX" id="eVd-LE-spl"/>
                             <constraint firstItem="Z7F-nw-1vu" firstAttribute="leading" secondItem="ffA-UV-3Nj" secondAttribute="leading" id="eoT-C1-Xt8"/>
                             <constraint firstItem="91t-x9-Cf9" firstAttribute="leading" secondItem="ffA-UV-3Nj" secondAttribute="leading" id="fLO-uU-hWg"/>
-                            <constraint firstItem="91t-x9-Cf9" firstAttribute="top" secondItem="SUi-fu-Ij5" secondAttribute="bottom" id="fhK-4R-g89"/>
                             <constraint firstItem="Z7F-nw-1vu" firstAttribute="top" secondItem="ArZ-Ez-1jz" secondAttribute="bottom" id="hkR-MC-2V9"/>
                             <constraint firstAttribute="trailing" secondItem="SUi-fu-Ij5" secondAttribute="trailing" id="krQ-NE-nxt"/>
+                            <constraint firstItem="q8g-Y4-vif" firstAttribute="leading" secondItem="ffA-UV-3Nj" secondAttribute="leading" id="s6A-tJ-Jzq"/>
                             <constraint firstAttribute="trailing" secondItem="91t-x9-Cf9" secondAttribute="trailing" id="tB4-SE-AXo"/>
+                            <constraint firstAttribute="trailing" secondItem="q8g-Y4-vif" secondAttribute="trailing" id="tHO-jX-8hi"/>
                             <constraint firstItem="SUi-fu-Ij5" firstAttribute="leading" secondItem="ffA-UV-3Nj" secondAttribute="leading" id="taF-rO-Iyx"/>
                         </constraints>
                     </view>
@@ -1207,6 +1220,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="navigationBar" destination="SUi-fu-Ij5" id="4t8-Pk-ZkJ"/>
                         <outlet property="tableView" destination="91t-x9-Cf9" id="Mhw-1T-bFK"/>
                     </connections>
                 </viewController>
@@ -1428,7 +1442,7 @@
                                                         </constraints>
                                                         <state key="normal" image="income no alpha"/>
                                                         <connections>
-                                                            <segue destination="8Y7-4Q-m3X" kind="presentation" id="coN-hq-6C4"/>
+                                                            <segue destination="8Y7-4Q-m3X" kind="presentation" animates="NO" id="coN-hq-6C4"/>
                                                         </connections>
                                                     </button>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="points" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MvL-zv-aYH">
@@ -1451,7 +1465,7 @@
                                                         </constraints>
                                                         <state key="normal" image="shopping cart black no alpha"/>
                                                         <connections>
-                                                            <segue destination="upv-EN-bFg" kind="presentation" id="NDr-EC-D1E"/>
+                                                            <segue destination="upv-EN-bFg" kind="presentation" animates="NO" id="NDr-EC-D1E"/>
                                                         </connections>
                                                     </button>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="spending" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Sv5-Ig-HzY">
@@ -1474,7 +1488,7 @@
                                                         </constraints>
                                                         <state key="normal" title="Button" image="graduation cap black"/>
                                                         <connections>
-                                                            <segue destination="xca-w6-ClI" kind="presentation" id="IgQ-ts-bmz"/>
+                                                            <segue destination="xca-w6-ClI" kind="presentation" animates="NO" id="IgQ-ts-bmz"/>
                                                         </connections>
                                                     </button>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="mastery" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2tp-ih-8Vj">
@@ -1606,7 +1620,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="50" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="UXc-h0-hnZ">
-                                <rect key="frame" x="0.0" y="44" width="320" height="494"/>
+                                <rect key="frame" x="0.0" y="72" width="320" height="466"/>
                                 <color key="backgroundColor" white="0.90228361999999995" alpha="1" colorSpace="calibratedWhite"/>
                                 <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 <prototypes>
@@ -1690,11 +1704,11 @@
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
-                                            <outlet property="choreHabitCBCount" destination="gKF-IH-f4p" id="A65-cy-xYG"/>
-                                            <outlet property="choreHabitLabel" destination="dgs-Ya-OY4" id="2E8-kc-jdf"/>
                                             <outlet property="coloredBar" destination="q7c-zy-Hzm" id="LBa-AZ-cAn"/>
                                             <outlet property="coloredBarWidthConstraint" destination="Ztt-rl-pWo" id="t2d-eE-Pj4"/>
                                             <outlet property="grayGrid" destination="7lx-m9-S5Z" id="Y2v-rj-kek"/>
+                                            <outlet property="jobHabitCBCount" destination="gKF-IH-f4p" id="A65-cy-xYG"/>
+                                            <outlet property="jobHabitLabel" destination="dgs-Ya-OY4" id="2E8-kc-jdf"/>
                                             <outlet property="numberOfWeeksBox" destination="v8o-2q-qoM" id="4KZ-IP-U1U"/>
                                         </connections>
                                     </tableViewCell>
@@ -1722,20 +1736,33 @@
                                     </navigationItem>
                                 </items>
                             </navigationBar>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="job &amp; habit mastery" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uWG-PV-khV">
+                                <rect key="frame" x="0.0" y="44" width="320" height="28"/>
+                                <color key="backgroundColor" cocoaTouchSystemColor="scrollViewTexturedBackgroundColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="28" id="owH-eD-aTY"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="Arista2.0" family="Arista 2.0" pointSize="20"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="0.90228361999999995" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="rGr-jO-KVs" firstAttribute="top" secondItem="UXc-h0-hnZ" secondAttribute="bottom" id="83O-Rj-v5D"/>
                             <constraint firstItem="mQT-Zx-Z3C" firstAttribute="top" secondItem="rGr-jO-KVs" secondAttribute="bottom" id="AxU-Ug-CA6"/>
                             <constraint firstItem="BwH-m4-Scm" firstAttribute="top" secondItem="M6q-Hk-2px" secondAttribute="bottom" id="BdC-dB-DZi"/>
+                            <constraint firstItem="UXc-h0-hnZ" firstAttribute="top" secondItem="uWG-PV-khV" secondAttribute="bottom" id="CFr-Wi-tVy"/>
                             <constraint firstItem="rGr-jO-KVs" firstAttribute="leading" secondItem="QhV-1l-BZZ" secondAttribute="leadingMargin" id="Dze-Yy-mr3"/>
-                            <constraint firstItem="UXc-h0-hnZ" firstAttribute="top" secondItem="yyM-Ta-Kvy" secondAttribute="bottom" id="G5F-pW-Aja"/>
+                            <constraint firstItem="uWG-PV-khV" firstAttribute="leading" secondItem="QhV-1l-BZZ" secondAttribute="leading" id="Ftq-OO-Dql"/>
                             <constraint firstItem="UXc-h0-hnZ" firstAttribute="leading" secondItem="QhV-1l-BZZ" secondAttribute="leading" id="Knf-gr-3py"/>
                             <constraint firstAttribute="trailing" secondItem="BwH-m4-Scm" secondAttribute="trailing" id="NZ2-Xa-Ntd"/>
                             <constraint firstAttribute="trailingMargin" secondItem="rGr-jO-KVs" secondAttribute="trailing" id="Pof-bh-lKE"/>
                             <constraint firstItem="yyM-Ta-Kvy" firstAttribute="leading" secondItem="QhV-1l-BZZ" secondAttribute="leading" id="QYa-5X-Wmy"/>
                             <constraint firstAttribute="trailing" secondItem="UXc-h0-hnZ" secondAttribute="trailing" id="Soq-AA-Lv8"/>
                             <constraint firstItem="BwH-m4-Scm" firstAttribute="leading" secondItem="QhV-1l-BZZ" secondAttribute="leading" id="adz-x5-qcB"/>
+                            <constraint firstAttribute="trailing" secondItem="uWG-PV-khV" secondAttribute="trailing" id="jJ4-aU-rml"/>
+                            <constraint firstItem="uWG-PV-khV" firstAttribute="top" secondItem="yyM-Ta-Kvy" secondAttribute="bottom" id="na3-pm-x8Y"/>
                             <constraint firstAttribute="trailing" secondItem="yyM-Ta-Kvy" secondAttribute="trailing" id="oya-8k-L8v"/>
                             <constraint firstItem="yyM-Ta-Kvy" firstAttribute="top" secondItem="M6q-Hk-2px" secondAttribute="bottom" id="sGi-L3-Gv6"/>
                         </constraints>
@@ -1747,7 +1774,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qUo-RN-KfL" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="18079" y="3557"/>
+            <point key="canvasLocation" x="18078.75" y="3556.6901408450703"/>
         </scene>
         <!--my reports-->
         <scene sceneID="csw-ME-jFC">
@@ -2217,7 +2244,7 @@ The maximum daily limit is $3.00 (3 strikes).</string>
                                 <nil key="highlightedColor"/>
                             </label>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="50" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="ZO2-LK-y4K">
-                                <rect key="frame" x="0.0" y="44" width="320" height="524"/>
+                                <rect key="frame" x="0.0" y="72" width="320" height="496"/>
                                 <color key="backgroundColor" white="0.90228361999999995" alpha="1" colorSpace="calibratedWhite"/>
                                 <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 <prototypes>
@@ -2272,8 +2299,8 @@ The maximum daily limit is $3.00 (3 strikes).</string>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
-                                            <outlet property="choreHabitLabel" destination="nbD-1D-cQa" id="Vxd-jp-k24"/>
-                                            <outlet property="choreHabitPointValueLabel" destination="aLO-Qg-g9c" id="Wpm-P0-2VX"/>
+                                            <outlet property="jobHabitLabel" destination="nbD-1D-cQa" id="Vxd-jp-k24"/>
+                                            <outlet property="jobHabitPointValueLabel" destination="aLO-Qg-g9c" id="Wpm-P0-2VX"/>
                                             <outlet property="timeStampLabel" destination="ZiJ-Cd-2MC" id="etT-0T-tdJ"/>
                                         </connections>
                                     </tableViewCell>
@@ -2294,12 +2321,22 @@ The maximum daily limit is $3.00 (3 strikes).</string>
                                     </navigationItem>
                                 </items>
                             </navigationBar>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="spending history" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="D5H-gQ-hsw">
+                                <rect key="frame" x="0.0" y="44" width="320" height="28"/>
+                                <color key="backgroundColor" cocoaTouchSystemColor="scrollViewTexturedBackgroundColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="28" id="H4X-ex-z7o"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="Arista2.0" family="Arista 2.0" pointSize="20"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="0.90228361999999995" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="QXc-ro-ON5" firstAttribute="top" secondItem="fe6-4b-Fa7" secondAttribute="bottom" id="3JQ-Xt-bpo"/>
                             <constraint firstAttribute="trailing" secondItem="QXc-ro-ON5" secondAttribute="trailing" id="9BP-vX-bS3"/>
-                            <constraint firstItem="ZO2-LK-y4K" firstAttribute="top" secondItem="QXc-ro-ON5" secondAttribute="bottom" id="Cl8-Zo-Bo9"/>
+                            <constraint firstItem="D5H-gQ-hsw" firstAttribute="leading" secondItem="LWd-SJ-nTE" secondAttribute="leading" id="CpC-0Q-N9J"/>
                             <constraint firstAttribute="trailing" secondItem="ZO2-LK-y4K" secondAttribute="trailing" id="LhI-4m-cfl"/>
                             <constraint firstItem="Qnp-0h-Pk5" firstAttribute="top" secondItem="fe6-4b-Fa7" secondAttribute="bottom" id="QRF-aJ-QSy"/>
                             <constraint firstItem="1lp-0b-rIO" firstAttribute="centerY" secondItem="LWd-SJ-nTE" secondAttribute="centerY" id="S9Q-aB-BPM"/>
@@ -2309,6 +2346,9 @@ The maximum daily limit is $3.00 (3 strikes).</string>
                             <constraint firstItem="QXc-ro-ON5" firstAttribute="leading" secondItem="LWd-SJ-nTE" secondAttribute="leading" id="jV2-Cs-sPI"/>
                             <constraint firstItem="Qnp-0h-Pk5" firstAttribute="leading" secondItem="LWd-SJ-nTE" secondAttribute="leading" id="mHN-gT-QuD"/>
                             <constraint firstItem="1lp-0b-rIO" firstAttribute="centerX" secondItem="LWd-SJ-nTE" secondAttribute="centerX" id="mWV-mN-kfL"/>
+                            <constraint firstItem="D5H-gQ-hsw" firstAttribute="top" secondItem="QXc-ro-ON5" secondAttribute="bottom" id="o2E-0f-fLe"/>
+                            <constraint firstAttribute="trailing" secondItem="D5H-gQ-hsw" secondAttribute="trailing" id="oVe-1i-23r"/>
+                            <constraint firstItem="ZO2-LK-y4K" firstAttribute="top" secondItem="D5H-gQ-hsw" secondAttribute="bottom" id="xr4-JR-lkM"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Savannah" id="PX5-wI-3en"/>
@@ -2318,7 +2358,7 @@ The maximum daily limit is $3.00 (3 strikes).</string>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="tAm-lC-dey" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="17190" y="3557"/>
+            <point key="canvasLocation" x="17190" y="3556.6901408450703"/>
         </scene>
     </scenes>
     <resources>
