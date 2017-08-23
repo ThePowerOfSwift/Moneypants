@@ -31,11 +31,7 @@ class MoneyVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     // For Modal Presentation (from 'withdrawal' or 'spending' VC's)
     @IBOutlet weak var navBar: UINavigationItem!
     @IBOutlet weak var navBarTop: NSLayoutConstraint!
-    @IBAction func cancelButtonForModalTapped(_ sender: UIBarButtonItem) {
-        dismiss(animated: true, completion: nil)
-    }
     var navTop: Int = -44
-    
     
     var tableViewRowCount: Int?
     var tableViewData: [String]?
@@ -96,7 +92,7 @@ class MoneyVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if (tableView == self.tableView1) {
             let cell = tableView1.dequeueReusableCell(withIdentifier: "CustomCell", for: indexPath) as! MoneyCell1
-            cell.dollarLabel.text = "43"
+            cell.dollarLabel.text = "34"
             cell.envelopeLabel.text = tableViewData?[indexPath.row]
             return cell
         } else if (tableView == self.tableView2) {
@@ -618,11 +614,13 @@ class MoneyVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     }
 
     
+    // Cancel Button
     
-    
-    
-    
-    
+    @IBAction func cancelButtonForModalTapped(_ sender: UIBarButtonItem) {
+        dismiss(animated: true, completion: nil)
+    }
+
+   
     // -----------
     // Home Button
     // -----------

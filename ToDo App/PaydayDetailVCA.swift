@@ -40,6 +40,7 @@ class PaydayDetailVCA: UIViewController, UITableViewDataSource, UITableViewDeleg
         }
     }
     
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         if indexPath.section == 0 {
