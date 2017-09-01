@@ -5,6 +5,13 @@ class PaydayNewCellC1: UITableViewCell {
     @IBOutlet weak var jobDesc: UILabel!
     @IBOutlet weak var tallyView: UIView!
     @IBOutlet weak var jobSubtotal: UILabel!
+    @IBOutlet weak var tallyDay1: UILabel!
+    @IBOutlet weak var tallyDay2: UILabel!
+    @IBOutlet weak var tallyDay3: UILabel!
+    @IBOutlet weak var tallyDay4: UILabel!
+    @IBOutlet weak var tallyDay5: UILabel!
+    @IBOutlet weak var tallyDay6: UILabel!
+    @IBOutlet weak var tallyDay7: UILabel!
 
     override func awakeFromNib() {
         super.awakeFromNib()
