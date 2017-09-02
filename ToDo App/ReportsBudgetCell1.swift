@@ -1,6 +1,6 @@
 import UIKit
 
-class PaydayNewCellC2: UITableViewCell {
+class ReportsBudgetCell1: UITableViewCell {
 
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -9,4 +9,5 @@ class PaydayNewCellC2: UITableViewCell {
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
     }
+
 }

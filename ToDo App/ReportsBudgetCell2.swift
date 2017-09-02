@@ -1,6 +1,6 @@
 import UIKit
 
-class PaydayNewCellB2: UITableViewCell {
+class ReportsBudgetCell2: UITableViewCell {
 
     override func awakeFromNib() {
         super.awakeFromNib()

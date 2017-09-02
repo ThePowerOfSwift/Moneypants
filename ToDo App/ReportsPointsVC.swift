@@ -3,10 +3,9 @@ import UIKit
 class ReportsPointsVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var navigationBar: UINavigationBar!
     
     let (userName, userPicture, userIncome) = tempUsers[homeIndex]
-    @IBOutlet weak var navigationBar: UINavigationBar!
-
 
     override func viewDidLoad() {
         super.viewDidLoad()

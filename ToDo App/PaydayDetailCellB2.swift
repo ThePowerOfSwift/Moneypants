@@ -1,10 +1,6 @@
 import UIKit
 
-class PaydayNewCellA2: UITableViewCell {
-    
-    @IBOutlet weak var dailyJobsNumber: UILabel!
-    @IBOutlet weak var jobBonusNumber: UILabel!
-    @IBOutlet weak var dailyJobsSubtotal: UILabel!
+class PaydayDetailCellB2: UITableViewCell {
 
     override func awakeFromNib() {
         super.awakeFromNib()

@@ -1,7 +1,7 @@
 import UIKit
 
-class PaydayNewCellC1: UITableViewCell {
-    
+class PaydayDetailCellB1: UITableViewCell {
+
     @IBOutlet weak var jobDesc: UILabel!
     @IBOutlet weak var tallyView: UIView!
     @IBOutlet weak var jobSubtotal: UILabel!
@@ -12,7 +12,7 @@ class PaydayNewCellC1: UITableViewCell {
     @IBOutlet weak var tallyDay5: UILabel!
     @IBOutlet weak var tallyDay6: UILabel!
     @IBOutlet weak var tallyDay7: UILabel!
-
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         

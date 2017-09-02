@@ -94,7 +94,7 @@ class PaydayDetailVC: UIViewController, UITableViewDelegate, UITableViewDataSour
         if (tableView == self.dailyJobsTableView) {
             let (jobName, day1, day2, day3, day4, day5, day6, day7, jobNumber) = tempPaydayDailyJobs[indexPath.row]
             if indexPath.section == 0 {
-                let cell = dailyJobsTableView.dequeueReusableCell(withIdentifier: "CustomCell1", for: indexPath) as! PaydayNewCellA1
+                let cell = dailyJobsTableView.dequeueReusableCell(withIdentifier: "CustomCell1", for: indexPath) as! PaydayDetailCellA1
                 cell.jobDesc.text = jobName
                 cell.jobSubtotal.text = "\(jobNumber)"
                 
@@ -228,7 +228,7 @@ class PaydayDetailVC: UIViewController, UITableViewDelegate, UITableViewDataSour
                 return cell
                 
             } else {
-                let cell = dailyJobsTableView.dequeueReusableCell(withIdentifier: "CustomCell2", for: indexPath) as! PaydayNewCellA2
+                let cell = dailyJobsTableView.dequeueReusableCell(withIdentifier: "CustomCell2", for: indexPath) as! PaydayDetailCellA2
                 cell.dailyJobsNumber.text = "170"
                 cell.jobBonusNumber.text = "700"
                 cell.dailyJobsSubtotal.text = "$8.70"
@@ -244,7 +244,7 @@ class PaydayDetailVC: UIViewController, UITableViewDelegate, UITableViewDataSour
         } else if (tableView == dailyHabitsTableView) {
             let (jobName, day1, day2, day3, day4, day5, day6, day7, jobNumber) = tempPaydayDailyHabits[indexPath.row]
             if indexPath.section == 0 {
-                let cell = dailyHabitsTableView.dequeueReusableCell(withIdentifier: "CustomCell1", for: indexPath) as! PaydayNewCellB1
+                let cell = dailyHabitsTableView.dequeueReusableCell(withIdentifier: "CustomCell1", for: indexPath) as! PaydayDetailCellB1
                 cell.jobDesc.text = jobName
                 cell.jobSubtotal.text = "\(jobNumber)"
                 
@@ -361,7 +361,7 @@ class PaydayDetailVC: UIViewController, UITableViewDelegate, UITableViewDataSour
                 }
                 return cell
             } else {
-                let cell = dailyHabitsTableView.dequeueReusableCell(withIdentifier: "CustomCell2", for: indexPath) as! PaydayNewCellB2
+                let cell = dailyHabitsTableView.dequeueReusableCell(withIdentifier: "CustomCell2", for: indexPath) as! PaydayDetailCellB2
                 return cell
             }
             
@@ -374,7 +374,7 @@ class PaydayDetailVC: UIViewController, UITableViewDelegate, UITableViewDataSour
         } else {
             let (jobName, day1, day2, day3, day4, day5, day6, day7, jobNumber) = tempPaydayWeeklyJobs[indexPath.row]
             if indexPath.section == 0 {
-                let cell = weeklyJobsTableView.dequeueReusableCell(withIdentifier: "CustomCell1", for: indexPath) as! PaydayNewCellC1
+                let cell = weeklyJobsTableView.dequeueReusableCell(withIdentifier: "CustomCell1", for: indexPath) as! PaydayDetailCellC1
                 cell.jobDesc.text = jobName
                 cell.jobSubtotal.text = "\(jobNumber)"
                 
@@ -491,7 +491,7 @@ class PaydayDetailVC: UIViewController, UITableViewDelegate, UITableViewDataSour
                 
                 return cell
             } else {
-                let cell = weeklyJobsTableView.dequeueReusableCell(withIdentifier: "CustomCell2", for: indexPath) as! PaydayNewCellC2
+                let cell = weeklyJobsTableView.dequeueReusableCell(withIdentifier: "CustomCell2", for: indexPath) as! PaydayDetailCellC2
                 return cell
             }
         }
@@ -703,7 +703,7 @@ class PaydayDetailVC: UIViewController, UITableViewDelegate, UITableViewDataSour
         }
         
         // If user has reviewed the daily jobs and habits, then proceed
-        // Collapse all tableviews
+        // Collapse all tableviews and then hide them
         dailyJobsTableViewTop.constant = -(dailyJobsTableView.bounds.height)
         dailyHabitsTableViewTop.constant = -(dailyHabitsTableView.bounds.height)
         weeklyJobsTableViewTop.constant = -(weeklyJobsTableView.bounds.height)
@@ -738,12 +738,28 @@ class PaydayDetailVC: UIViewController, UITableViewDelegate, UITableViewDataSour
         )
         
         // Not sure what this does,  but it works
-        let alert = UIAlertController(title: "\(userName)'s payday", message: "", preferredStyle: .alert)
+        let alert = UIAlertController(title: "\(userName)'s Payday", message: "", preferredStyle: .alert)
         alert.setValue(messageText, forKey: "attributedMessage")
         
-        // Button one: "okay"
+        // Button one: "pay user $x.xx"
         alert.addAction(UIAlertAction(title: "pay \(userName) $\(userIncome)", style: .default, handler: { (action) in
             alert.dismiss(animated: true, completion: nil)
+            
+            // ---------------------
+            // Second Alert for Fees
+            // ---------------------
+            
+            let feesAlert = UIAlertController(title: "\(self.userName)'s Fees", message: "\(self.userName) incurred one or more fees this week, totalling $1.50:\n\n$1.00 fighting\n$0.50 broken fence\n\n\(self.userName) should pay any fees immediately with the payday money just earned.", preferredStyle: .alert)
+            feesAlert.addAction(UIAlertAction(title: "collect $1.50 from \(self.userName)", style: .default, handler: {_ in
+                CATransaction.setCompletionBlock({
+                    let _ = self.navigationController?.popViewController(animated: true)        // return to previous screen
+                })
+                feesAlert.dismiss(animated: true, completion: nil)
+            }))
+            feesAlert.addAction(UIAlertAction(title: "cancel", style: .cancel, handler: { (action) in
+                feesAlert.dismiss(animated: true, completion: nil)
+            }))
+            self.present(feesAlert, animated: true, completion: nil)
         }))
         
         // Button two: "cancel"

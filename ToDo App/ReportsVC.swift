@@ -5,6 +5,8 @@ class ReportsVC: UIViewController {
     @IBOutlet weak var buttonOne: UIButton!
     @IBOutlet weak var buttonTwo: UIButton!
     @IBOutlet weak var buttonThree: UIButton!
+    @IBOutlet weak var budgetButton: UIButton!
+    @IBOutlet weak var testingButton: UIButton!
     
     let (userName, userPicture, userIncome) = tempUsers[homeIndex]
     
@@ -27,6 +29,16 @@ class ReportsVC: UIViewController {
         buttonThree.layer.masksToBounds = true
         buttonThree.layer.borderColor = UIColor.lightGray.cgColor
         buttonThree.layer.borderWidth = 0.5
+        
+        budgetButton.layer.cornerRadius = budgetButton.bounds.height / 6.4
+        budgetButton.layer.masksToBounds = true
+        budgetButton.layer.borderColor = UIColor.lightGray.cgColor
+        budgetButton.layer.borderWidth = 0.5
+        
+        testingButton.layer.cornerRadius = testingButton.bounds.height / 6.4
+        testingButton.layer.masksToBounds = true
+        testingButton.layer.borderColor = UIColor.lightGray.cgColor
+        testingButton.layer.borderWidth = 0.5
     }
     
     @IBAction func homeButtonTapped(_ sender: UIBarButtonItem) {

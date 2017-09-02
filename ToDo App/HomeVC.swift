@@ -32,12 +32,6 @@ class HomeVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UITa
         cell.userImage.image = userImage
         cell.userIncome.text = "$\(userIncome)"
         
-        // customize the image with rounded corners
-        cell.userImage.layer.cornerRadius = tableView.rowHeight / 6.4
-        cell.userImage.layer.masksToBounds = true
-        cell.userImage.layer.borderWidth = 0.5
-        cell.userImage.layer.borderColor = UIColor.black.cgColor
-        
         return cell
     }
     
