@@ -1,9 +1,10 @@
 import UIKit
 import Firebase
 
-class Step1ViewController: UIViewController, UITextFieldDelegate {
+class Step1VC: UIViewController, UITextFieldDelegate {
     
     @IBOutlet weak var nextButton: UIButton!
+    @IBOutlet weak var questionButton: UIButton!
     
     // ---------------
     // MARK: Variables
@@ -20,6 +21,9 @@ class Step1ViewController: UIViewController, UITextFieldDelegate {
         super.viewDidLoad()
         
         incomeTextField?.delegate = self
+        
+        questionButton.layer.cornerRadius = questionButton.bounds.height / 6.4
+        questionButton.layer.masksToBounds = true
 
         // --------
         // Firebase
@@ -50,7 +54,7 @@ class Step1ViewController: UIViewController, UITextFieldDelegate {
     @IBAction func didTapNextButton(_ sender: UIButton) {
         if incomeTextField.text != "" {
             yearlyIncomeMPS = Int(incomeTextField.text!.components(separatedBy: [",", " "]).joined())       // remove commas
-            ref.child("users").child("\(user.uid)").child("income").setValue("\(yearlyIncomeMPS!)")
+            ref.child("users").child(user.uid).child("income").setValue(yearlyIncomeMPS)
         } else {
             print("yearly income error")
         }
@@ -73,7 +77,6 @@ class Step1ViewController: UIViewController, UITextFieldDelegate {
         } catch let error {
             assertionFailure("Error signing out: \(error)")
         }
-
     }
     
     

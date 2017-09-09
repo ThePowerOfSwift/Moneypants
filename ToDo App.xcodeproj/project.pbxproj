@@ -20,7 +20,7 @@
 		CE1B477D1F185025007C7515 /* HomeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE1B477C1F185025007C7515 /* HomeVC.swift */; };
 		CE1B477F1F186E99007C7515 /* HomeCustomCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE1B477E1F186E99007C7515 /* HomeCustomCell.swift */; };
 		CE1B47811F1885B0007C7515 /* SettingsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE1B47801F1885B0007C7515 /* SettingsVC.swift */; };
-		CE1CB50B1F01AD10009A8DAC /* Step1ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE1CB50A1F01AD10009A8DAC /* Step1ViewController.swift */; };
+		CE1CB50B1F01AD10009A8DAC /* Step1VC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE1CB50A1F01AD10009A8DAC /* Step1VC.swift */; };
 		CE1CB5131F01AD9E009A8DAC /* Arista2.0 Alternate light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = CE1CB50D1F01AD9E009A8DAC /* Arista2.0 Alternate light.ttf */; };
 		CE1CB5141F01AD9E009A8DAC /* Arista2.0 light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = CE1CB50E1F01AD9E009A8DAC /* Arista2.0 light.ttf */; };
 		CE1CB5151F01AD9E009A8DAC /* Arista2.0.ttf in Resources */ = {isa = PBXBuildFile; fileRef = CE1CB50F1F01AD9E009A8DAC /* Arista2.0.ttf */; };
@@ -120,8 +120,8 @@
 		CE0E19721F168B3900DEDBDE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Home.storyboard; sourceTree = "<group>"; };
 		CE1B477C1F185025007C7515 /* HomeVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeVC.swift; sourceTree = "<group>"; };
 		CE1B477E1F186E99007C7515 /* HomeCustomCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeCustomCell.swift; sourceTree = "<group>"; };
-		CE1B47801F1885B0007C7515 /* SettingsVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsVC.swift; sourceTree = "<group>"; };
-		CE1CB50A1F01AD10009A8DAC /* Step1ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Step1ViewController.swift; sourceTree = "<group>"; };
+		CE1B47801F1885B0007C7515 /* SettingsVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = SettingsVC.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		CE1CB50A1F01AD10009A8DAC /* Step1VC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = Step1VC.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		CE1CB50D1F01AD9E009A8DAC /* Arista2.0 Alternate light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Arista2.0 Alternate light.ttf"; sourceTree = "<group>"; };
 		CE1CB50E1F01AD9E009A8DAC /* Arista2.0 light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Arista2.0 light.ttf"; sourceTree = "<group>"; };
 		CE1CB50F1F01AD9E009A8DAC /* Arista2.0.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Arista2.0.ttf; sourceTree = "<group>"; };
@@ -254,12 +254,10 @@
 				89FB67631D5C82AB002B2484 /* Info.plist */,
 				CEB2FD531EFF4DB300763862 /* GoogleService-Info.plist */,
 				89FB675E1D5C82AB002B2484 /* Assets.xcassets */,
-				89FB67691D5C82F5002B2484 /* LoginViewController.swift */,
-				89FB676B1D5C837D002B2484 /* SignUpViewController.swift */,
 				0EEB60791ED918BB005B2813 /* Item.swift */,
 				CE8FFA011F10AE92004A53BE /* GlobalVariables.swift */,
 				89FB676D1D5C8411002B2484 /* ItemsTableViewController.swift */,
-				CEB4CD2C1F1ED77400F9733F /* SetupNavController.swift */,
+				CEFC21FD1F64A65800CC4FC1 /* Login */,
 				CEE4D6A91F0F44AB009BAE6C /* Step1 */,
 				CEE4D6A51F0F4460009BAE6C /* Step2 */,
 				CEE4D6A61F0F446A009BAE6C /* Step3 */,
@@ -422,7 +420,8 @@
 		CEE4D6A91F0F44AB009BAE6C /* Step1 */ = {
 			isa = PBXGroup;
 			children = (
-				CE1CB50A1F01AD10009A8DAC /* Step1ViewController.swift */,
+				CEB4CD2C1F1ED77400F9733F /* SetupNavController.swift */,
+				CE1CB50A1F01AD10009A8DAC /* Step1VC.swift */,
 			);
 			name = Step1;
 			sourceTree = "<group>";
@@ -440,6 +439,15 @@
 				CEEBB33F1F202D900046E3FE /* SetupCompleteVC.swift */,
 			);
 			name = Step5;
+			sourceTree = "<group>";
+		};
+		CEFC21FD1F64A65800CC4FC1 /* Login */ = {
+			isa = PBXGroup;
+			children = (
+				89FB67691D5C82F5002B2484 /* LoginViewController.swift */,
+				89FB676B1D5C837D002B2484 /* SignUpViewController.swift */,
+			);
+			name = Login;
 			sourceTree = "<group>";
 		};
 		DB9D2389DB4710644994D7D8 /* Pods */ = {
@@ -653,7 +661,7 @@
 				CE99F0A81F0B6B5D007E01E7 /* Step5ExpensesVC.swift in Sources */,
 				CE24A4381F07121D00A03FA2 /* Step5VC.swift in Sources */,
 				CE2CCBDB1F26DE1C00ACA17F /* VideosCell.swift in Sources */,
-				CE1CB50B1F01AD10009A8DAC /* Step1ViewController.swift in Sources */,
+				CE1CB50B1F01AD10009A8DAC /* Step1VC.swift in Sources */,
 				CE951E431F4B622D003B5EEF /* PaydayDetailCellA1.swift in Sources */,
 				89FB67581D5C82AB002B2484 /* AppDelegate.swift in Sources */,
 				CE4832C31F281154005A7A55 /* JobJarNavController.swift in Sources */,
