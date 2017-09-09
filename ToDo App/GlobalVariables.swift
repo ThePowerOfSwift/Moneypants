@@ -173,8 +173,7 @@ var homeIndex = 0       // MARK: global variable, need to change this
 
 let tempPaydayDailyJobs = [("clean bedroom", "1","1","","1","1","E","1", 60),
                              ("clean backyard", "1","1","1","1","1","E","1", 60),
-                             ("water garden & feed chickens", "X","3","3","X","3","3","3", 50)
-]
+                             ("water garden & feed chickens", "X","3","3","X","3","3","3", 50)]
 
 let tempPaydayDailyHabits = [("self ready by 10:am","1","1","1","1","1","","1", 60),
                               ("prayer & scriptures (10 min)", "3","3","1","2","2","1","", 50),
@@ -235,6 +234,37 @@ let tempHabitsCB = [7,16,38,9,24,3,12,8,10,22]
 //====================================
 
 let fees = ["fighting", "lying", "stealing", "disobedience", "bad language"]
+
+//====================================
+
+let trainingVideos = ["bedrooms",
+                      "bathrooms: toilets, sinks, & floors",
+                      "laundry",
+                      "vacuuming",
+                      "wiping the table",
+                      "kitchen counters",
+                      "dishes",
+                      "sweeping",
+                      "car wash",
+                      "dirty diapers",
+                      "mopping",
+                      "toilet training"]
+
+let setupVideos = ["setup",
+                   "step 1",
+                   "step 2 (part one)",
+                   "step 2 (part two)",
+                   "step 3 (part one)",
+                   "step 3 (part two)",
+                   "step 3 (consistency bonus)",
+                   "step 4",
+                   "step 4 (doing payday)",
+                   "step 5",
+                   "step 5 (directed spending)"]
+
+let miscVideos = [("How The Moneypants Solution helps prevent anger", "https://vimeo.com/153579716"),
+                  ("Moneypants Boss", "https://vimeo.com/153579716"),
+                  ("Fancy Foods & Treats", "https://vimeo.com/153579716")]
 
 
 

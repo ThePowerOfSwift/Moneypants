@@ -1,6 +1,8 @@
 import UIKit
 
 class ReportsBudgetCell2: UITableViewCell {
+    
+    @IBOutlet weak var itemSubcategory: UILabel!
 
     override func awakeFromNib() {
         super.awakeFromNib()

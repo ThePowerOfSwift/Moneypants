@@ -3,6 +3,8 @@ import Firebase
 
 class Step1ViewController: UIViewController, UITextFieldDelegate {
     
+    @IBOutlet weak var nextButton: UIButton!
+    
     // ---------------
     // MARK: Variables
     // ---------------
@@ -25,7 +27,7 @@ class Step1ViewController: UIViewController, UITextFieldDelegate {
         
         user = FIRAuth.auth()?.currentUser
         ref = FIRDatabase.database().reference()
-        startObservingDatabase()
+//        startObservingDatabase()
 
         // -----------------
         // Customize Nav Bar
@@ -48,10 +50,10 @@ class Step1ViewController: UIViewController, UITextFieldDelegate {
     @IBAction func didTapNextButton(_ sender: UIButton) {
         if incomeTextField.text != "" {
             yearlyIncomeMPS = Int(incomeTextField.text!.components(separatedBy: [",", " "]).joined())       // remove commas
+            ref.child("users").child("\(user.uid)").child("income").setValue("\(yearlyIncomeMPS!)")
         } else {
-            yearlyIncomeMPS = 150000
+            print("yearly income error")
         }
-        print(yearlyIncomeMPS)
     }
     
     @IBAction func didTapSkipSetup(_ sender: UIButton) {
@@ -74,23 +76,44 @@ class Step1ViewController: UIViewController, UITextFieldDelegate {
 
     }
     
-    func startObservingDatabase () {
-        databaseHandle = ref.child("users/\(self.user.uid)/items").observe(.value, with: { (snapshot) in
-            var newItems = [Item]()
-            
-            for itemSnapShot in snapshot.children {
-                let item = Item(snapshot: itemSnapShot as! FIRDataSnapshot)
-                newItems.append(item)
-            }
-            
-            self.users = newItems
-            
-        })
-    }
     
-    deinit {
-        ref.child("users/\(self.user.uid)/items").removeObserver(withHandle: databaseHandle)
-    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+//    func startObservingDatabase () {
+//        databaseHandle = ref.child("users/\(self.user.uid)/items").observe(.value, with: { (snapshot) in
+//            var newItems = [Item]()
+//            
+//            for itemSnapShot in snapshot.children {
+//                let item = Item(snapshot: itemSnapShot as! FIRDataSnapshot)
+//                newItems.append(item)
+//            }
+//            
+//            self.users = newItems
+//            
+//        })
+//    }
+//    
+//    deinit {
+//        ref.child("users/\(self.user.uid)/items").removeObserver(withHandle: databaseHandle)
+//    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
 
     // allows for dismissal of keyboard when user taps any white space
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {

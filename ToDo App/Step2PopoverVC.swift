@@ -1,6 +1,6 @@
 import UIKit
 
-class Step2PopoverViewController: UIViewController {
+class Step2PopoverVC: UIViewController {
     
     @IBAction func cancelButtonTapped(_ sender: UIBarButtonItem) {
         presentingViewController?.dismiss(animated: true, completion: nil)

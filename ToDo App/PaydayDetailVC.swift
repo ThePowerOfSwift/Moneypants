@@ -25,8 +25,8 @@ class PaydayDetailVC: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     let (userName, _, userIncome) = tempUsers[homeIndex]
     
-    let customCell1Height: CGFloat = 60
-    let customCell2Height: CGFloat = 139
+    let customCell1Height: CGFloat = 75
+    let customCell2Height: CGFloat = 160
     var tableViewRowCount: Int?
     
     var dailyJobsReviewed: Bool!
@@ -65,7 +65,7 @@ class PaydayDetailVC: UIViewController, UITableViewDelegate, UITableViewDataSour
         dailyHabitsReviewed = false
         weeklyJobsReviewed = false
         
-        tableViewData = tempPaydayDailyJobs
+        tableViewData = tempPaydayDailyJobs     // default value for table view
     }
     
     
@@ -95,10 +95,10 @@ class PaydayDetailVC: UIViewController, UITableViewDelegate, UITableViewDataSour
             let (jobName, day1, day2, day3, day4, day5, day6, day7, jobNumber) = tempPaydayDailyJobs[indexPath.row]
             if indexPath.section == 0 {
                 let cell = dailyJobsTableView.dequeueReusableCell(withIdentifier: "CustomCell1", for: indexPath) as! PaydayDetailCellA1
-                cell.jobDesc.text = jobName
-                cell.jobSubtotal.text = "\(jobNumber)"
+                cell.jobDesc.text = "\(jobName)"
+                cell.jobSubtotal.text = "\(jobNumber) points"
                 
-//                for index in 1...5 {
+//                for day in 0...index {
 //                    switch day[index] {
 //                    case "1":
 //                        cell.tallyDay[index].text = ""
@@ -229,8 +229,8 @@ class PaydayDetailVC: UIViewController, UITableViewDelegate, UITableViewDataSour
                 
             } else {
                 let cell = dailyJobsTableView.dequeueReusableCell(withIdentifier: "CustomCell2", for: indexPath) as! PaydayDetailCellA2
-                cell.dailyJobsNumber.text = "170"
-                cell.jobBonusNumber.text = "700"
+                cell.dailyJobsNumber.text = "170 points"
+                cell.jobBonusNumber.text = "500 points"
                 cell.dailyJobsSubtotal.text = "$8.70"
                 return cell
             }
@@ -245,8 +245,8 @@ class PaydayDetailVC: UIViewController, UITableViewDelegate, UITableViewDataSour
             let (jobName, day1, day2, day3, day4, day5, day6, day7, jobNumber) = tempPaydayDailyHabits[indexPath.row]
             if indexPath.section == 0 {
                 let cell = dailyHabitsTableView.dequeueReusableCell(withIdentifier: "CustomCell1", for: indexPath) as! PaydayDetailCellB1
-                cell.jobDesc.text = jobName
-                cell.jobSubtotal.text = "\(jobNumber)"
+                cell.jobDesc.text = "\(jobName)"
+                cell.jobSubtotal.text = "\(jobNumber) points"
                 
                 cell.tallyDay1.text = day1
                 switch day1 {
@@ -375,8 +375,8 @@ class PaydayDetailVC: UIViewController, UITableViewDelegate, UITableViewDataSour
             let (jobName, day1, day2, day3, day4, day5, day6, day7, jobNumber) = tempPaydayWeeklyJobs[indexPath.row]
             if indexPath.section == 0 {
                 let cell = weeklyJobsTableView.dequeueReusableCell(withIdentifier: "CustomCell1", for: indexPath) as! PaydayDetailCellC1
-                cell.jobDesc.text = jobName
-                cell.jobSubtotal.text = "\(jobNumber)"
+                cell.jobDesc.text = "\(jobName)"
+                cell.jobSubtotal.text = "\(jobNumber) points"
                 
                 switch day1 {
                 case "":

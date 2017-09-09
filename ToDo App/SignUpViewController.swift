@@ -1,5 +1,6 @@
 import UIKit
 import FirebaseAuth
+import FirebaseDatabase
 
 class SignUpViewController: UIViewController {
     
@@ -39,6 +40,8 @@ class SignUpViewController: UIViewController {
                 }
                 return
             }
+            let newUserReference = FIRDatabase.database().reference().child("users").child((user?.uid)!)
+            newUserReference.setValue(["email" : self.emailField.text])
             self.signIn()
         })
     }

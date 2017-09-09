@@ -4,37 +4,7 @@ import AVKit
 class VideosVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
     @IBOutlet weak var tableView: UITableView!
-    
-    let trainingVideos = ["bedrooms",
-                          "bathrooms: toilets, sinks, & floors",
-                          "laundry",
-                          "vacuuming",
-                          "wiping the table",
-                          "kitchen counters",
-                          "dishes",
-                          "sweeping",
-                          "car wash",
-                          "dirty diapers",
-                          "mopping",
-                          "toilet training"]
-    
-    let setupVideos = ["setup",
-                       "step 1",
-                       "step 2 (part one)",
-                       "step 2 (part two)",
-                       "step 3 (part one)",
-                       "step 3 (part two)",
-                       "step 3 (consistency bonus)",
-                       "step 4",
-                       "step 4 (doing payday)",
-                       "step 5",
-                       "step 5 (directed spending)"]
-    
-    let miscVideos = [("How The Moneypants Solution helps prevent anger", "https://vimeo.com/153579716"),
-                      ("Moneypants Boss", "https://vimeo.com/153579716"),
-                      ("Fancy Foods & Treats", "https://vimeo.com/153579716")]
-    
-    
+        
     // refresh table view after user taps, so cells don't stay selected
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
