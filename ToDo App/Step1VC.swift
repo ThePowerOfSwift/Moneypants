@@ -10,7 +10,7 @@ class Step1VC: UIViewController, UITextFieldDelegate {
     // MARK: Variables
     // ---------------
     
-    var user: FIRUser!
+    var firebaseUser: FIRUser!
     var users = [Item]()
     var ref: FIRDatabaseReference!
     private var databaseHandle: FIRDatabaseHandle!
@@ -29,7 +29,7 @@ class Step1VC: UIViewController, UITextFieldDelegate {
         // Firebase
         // --------
         
-        user = FIRAuth.auth()?.currentUser
+        firebaseUser = FIRAuth.auth()?.currentUser
         ref = FIRDatabase.database().reference()
 //        startObservingDatabase()
 
@@ -54,14 +54,13 @@ class Step1VC: UIViewController, UITextFieldDelegate {
     @IBAction func didTapNextButton(_ sender: UIButton) {
         if incomeTextField.text != "" {
             yearlyIncomeMPS = Int(incomeTextField.text!.components(separatedBy: [",", " "]).joined())       // remove commas
-            ref.child("users").child(user.uid).child("income").setValue(yearlyIncomeMPS)
+            if yearlyIncomeMPS < 30_000 || yearlyIncomeMPS > 1_000_000 {
+                print("Please enter a value between $30,000 and $1,000,000.")
+            }
+            ref.child("users").child(firebaseUser.uid).child("income").setValue(yearlyIncomeMPS)
         } else {
             print("yearly income error")
         }
-    }
-    
-    @IBAction func didTapSkipSetup(_ sender: UIButton) {
-        yearlyIncomeMPS = 150000
     }
     
     
@@ -79,43 +78,7 @@ class Step1VC: UIViewController, UITextFieldDelegate {
         }
     }
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-//    func startObservingDatabase () {
-//        databaseHandle = ref.child("users/\(self.user.uid)/items").observe(.value, with: { (snapshot) in
-//            var newItems = [Item]()
-//            
-//            for itemSnapShot in snapshot.children {
-//                let item = Item(snapshot: itemSnapShot as! FIRDataSnapshot)
-//                newItems.append(item)
-//            }
-//            
-//            self.users = newItems
-//            
-//        })
-//    }
-//    
-//    deinit {
-//        ref.child("users/\(self.user.uid)/items").removeObserver(withHandle: databaseHandle)
-//    }
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+   
     
 
     // allows for dismissal of keyboard when user taps any white space
@@ -126,6 +89,7 @@ class Step1VC: UIViewController, UITextFieldDelegate {
 
     // validate and format input, adding commas
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        
         if ((string == "0" || string == "") && (textField.text! as NSString).range(of: ".").location < range.location) {
             return true
         }

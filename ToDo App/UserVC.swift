@@ -117,14 +117,17 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
             let (jobHabitName, pointsLabelValue, _, _) = dailyJobsSavannah[indexPath.row]
             cell.jobHabitLabel.text = jobHabitName
             cell.pointsLabel.text = "\(pointsLabelValue * 15)"
+            cell.pointsLabel.textColor = .black
         } else if indexPath.section == 1 {
             let (jobHabitName, pointsLabelValue, _, _) = dailyHabits[indexPath.row]
             cell.jobHabitLabel.text = jobHabitName
             cell.pointsLabel.text = "\(Int(pointsLabelValue * 15))"
+            cell.pointsLabel.textColor = .black
         } else if indexPath.section == 2 {
             let (jobHabitName, pointsLabelValue, _, _) = weeklyJobsSavannah[indexPath.row]
             cell.jobHabitLabel.text = jobHabitName
             cell.pointsLabel.text = "\(Int(pointsLabelValue * 15))"
+            cell.pointsLabel.textColor = .black
         } else if indexPath.section == 3 {
             cell.jobHabitLabel.text = feesDebts[indexPath.row]
             cell.pointsLabel.text = "-100"

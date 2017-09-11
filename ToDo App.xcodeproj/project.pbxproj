@@ -17,6 +17,7 @@
 		89FB676C1D5C837D002B2484 /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89FB676B1D5C837D002B2484 /* SignUpViewController.swift */; };
 		89FB676E1D5C8411002B2484 /* ItemsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89FB676D1D5C8411002B2484 /* ItemsTableViewController.swift */; };
 		CE0E19731F168B3900DEDBDE /* Home.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CE0E19711F168B3900DEDBDE /* Home.storyboard */; };
+		CE18C4D21F64E14F00C748BC /* MaxLengthTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE18C4D11F64E14F00C748BC /* MaxLengthTextField.swift */; };
 		CE1B477D1F185025007C7515 /* HomeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE1B477C1F185025007C7515 /* HomeVC.swift */; };
 		CE1B477F1F186E99007C7515 /* HomeCustomCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE1B477E1F186E99007C7515 /* HomeCustomCell.swift */; };
 		CE1B47811F1885B0007C7515 /* SettingsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE1B47801F1885B0007C7515 /* SettingsVC.swift */; };
@@ -27,7 +28,7 @@
 		CE1CB5161F01AD9E009A8DAC /* Arista2.0_fat.ttf in Resources */ = {isa = PBXBuildFile; fileRef = CE1CB5101F01AD9E009A8DAC /* Arista2.0_fat.ttf */; };
 		CE1CB5171F01AD9E009A8DAC /* Arista2.0Alternate.ttf in Resources */ = {isa = PBXBuildFile; fileRef = CE1CB5111F01AD9E009A8DAC /* Arista2.0Alternate.ttf */; };
 		CE1CB5181F01AD9E009A8DAC /* Arista2.0Alternate_full.ttf in Resources */ = {isa = PBXBuildFile; fileRef = CE1CB5121F01AD9E009A8DAC /* Arista2.0Alternate_full.ttf */; };
-		CE1CB51A1F01AF48009A8DAC /* Step2PopoverVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE1CB5191F01AF48009A8DAC /* Step2PopoverVC.swift */; };
+		CE1CB51A1F01AF48009A8DAC /* Step2UsersVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE1CB5191F01AF48009A8DAC /* Step2UsersVC.swift */; };
 		CE1CB5201F02117F009A8DAC /* Step2VC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE1CB51F1F02117F009A8DAC /* Step2VC.swift */; };
 		CE1CB5271F0214BB009A8DAC /* Aiden.jpg in Resources */ = {isa = PBXBuildFile; fileRef = CE1CB5221F0214BB009A8DAC /* Aiden.jpg */; };
 		CE1CB5281F0214BB009A8DAC /* Dad.jpg in Resources */ = {isa = PBXBuildFile; fileRef = CE1CB5231F0214BB009A8DAC /* Dad.jpg */; };
@@ -102,6 +103,7 @@
 		CEF3EBBB1F302CF0008953A8 /* MoneyCell2.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEF3EBBA1F302CF0008953A8 /* MoneyCell2.swift */; };
 		CEF3EBBD1F305A45008953A8 /* MoneyCell3.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEF3EBBC1F305A45008953A8 /* MoneyCell3.swift */; };
 		CEF3EBBF1F305FE4008953A8 /* MoneyCell4.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEF3EBBE1F305FE4008953A8 /* MoneyCell4.swift */; };
+		CEFC22001F64A82900CC4FC1 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEFC21FF1F64A82900CC4FC1 /* User.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -118,6 +120,7 @@
 		89FB676B1D5C837D002B2484 /* SignUpViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
 		89FB676D1D5C8411002B2484 /* ItemsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ItemsTableViewController.swift; sourceTree = "<group>"; };
 		CE0E19721F168B3900DEDBDE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Home.storyboard; sourceTree = "<group>"; };
+		CE18C4D11F64E14F00C748BC /* MaxLengthTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MaxLengthTextField.swift; sourceTree = "<group>"; };
 		CE1B477C1F185025007C7515 /* HomeVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeVC.swift; sourceTree = "<group>"; };
 		CE1B477E1F186E99007C7515 /* HomeCustomCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeCustomCell.swift; sourceTree = "<group>"; };
 		CE1B47801F1885B0007C7515 /* SettingsVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = SettingsVC.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
@@ -128,8 +131,8 @@
 		CE1CB5101F01AD9E009A8DAC /* Arista2.0_fat.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Arista2.0_fat.ttf; sourceTree = "<group>"; };
 		CE1CB5111F01AD9E009A8DAC /* Arista2.0Alternate.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Arista2.0Alternate.ttf; sourceTree = "<group>"; };
 		CE1CB5121F01AD9E009A8DAC /* Arista2.0Alternate_full.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Arista2.0Alternate_full.ttf; sourceTree = "<group>"; };
-		CE1CB5191F01AF48009A8DAC /* Step2PopoverVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Step2PopoverVC.swift; sourceTree = "<group>"; };
-		CE1CB51F1F02117F009A8DAC /* Step2VC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Step2VC.swift; sourceTree = "<group>"; };
+		CE1CB5191F01AF48009A8DAC /* Step2UsersVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = Step2UsersVC.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		CE1CB51F1F02117F009A8DAC /* Step2VC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = Step2VC.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		CE1CB5221F0214BB009A8DAC /* Aiden.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Aiden.jpg; sourceTree = "<group>"; };
 		CE1CB5231F0214BB009A8DAC /* Dad.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Dad.jpg; sourceTree = "<group>"; };
 		CE1CB5241F0214BB009A8DAC /* Mom.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Mom.jpg; sourceTree = "<group>"; };
@@ -203,6 +206,7 @@
 		CEF3EBBA1F302CF0008953A8 /* MoneyCell2.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MoneyCell2.swift; sourceTree = "<group>"; };
 		CEF3EBBC1F305A45008953A8 /* MoneyCell3.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MoneyCell3.swift; sourceTree = "<group>"; };
 		CEF3EBBE1F305FE4008953A8 /* MoneyCell4.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MoneyCell4.swift; sourceTree = "<group>"; };
+		CEFC21FF1F64A82900CC4FC1 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		DC50B92E978A56DFC5AEAE2F /* Pods-ToDo App.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ToDo App.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ToDo App/Pods-ToDo App.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -250,13 +254,9 @@
 			isa = PBXGroup;
 			children = (
 				89FB67571D5C82AB002B2484 /* AppDelegate.swift */,
+				CE18C4D11F64E14F00C748BC /* MaxLengthTextField.swift */,
 				CEDBFE2C1F2AE41900829DE4 /* Storyboards */,
-				89FB67631D5C82AB002B2484 /* Info.plist */,
-				CEB2FD531EFF4DB300763862 /* GoogleService-Info.plist */,
-				89FB675E1D5C82AB002B2484 /* Assets.xcassets */,
-				0EEB60791ED918BB005B2813 /* Item.swift */,
 				CE8FFA011F10AE92004A53BE /* GlobalVariables.swift */,
-				89FB676D1D5C8411002B2484 /* ItemsTableViewController.swift */,
 				CEFC21FD1F64A65800CC4FC1 /* Login */,
 				CEE4D6A91F0F44AB009BAE6C /* Step1 */,
 				CEE4D6A51F0F4460009BAE6C /* Step2 */,
@@ -265,6 +265,11 @@
 				CEE4D6AA1F0F44BE009BAE6C /* Step5 */,
 				CEB4CD2B1F1ECDC700F9733F /* Home */,
 				CE4832B71F27E9A0005A7A55 /* Users */,
+				CEFC21FE1F64A79B00CC4FC1 /* OLD */,
+				89FB67631D5C82AB002B2484 /* Info.plist */,
+				CEB2FD531EFF4DB300763862 /* GoogleService-Info.plist */,
+				89FB675E1D5C82AB002B2484 /* Assets.xcassets */,
+				CEFC21FF1F64A82900CC4FC1 /* User.swift */,
 			);
 			path = "ToDo App";
 			sourceTree = "<group>";
@@ -386,7 +391,7 @@
 			children = (
 				CE1CB51F1F02117F009A8DAC /* Step2VC.swift */,
 				CE1CB52C1F0215EA009A8DAC /* Step2Cell.swift */,
-				CE1CB5191F01AF48009A8DAC /* Step2PopoverVC.swift */,
+				CE1CB5191F01AF48009A8DAC /* Step2UsersVC.swift */,
 			);
 			name = Step2;
 			sourceTree = "<group>";
@@ -448,6 +453,15 @@
 				89FB676B1D5C837D002B2484 /* SignUpViewController.swift */,
 			);
 			name = Login;
+			sourceTree = "<group>";
+		};
+		CEFC21FE1F64A79B00CC4FC1 /* OLD */ = {
+			isa = PBXGroup;
+			children = (
+				0EEB60791ED918BB005B2813 /* Item.swift */,
+				89FB676D1D5C8411002B2484 /* ItemsTableViewController.swift */,
+			);
+			name = OLD;
 			sourceTree = "<group>";
 		};
 		DB9D2389DB4710644994D7D8 /* Pods */ = {
@@ -623,10 +637,11 @@
 				CE7FF98D1F340E6A000AD071 /* WithdrawalVC.swift in Sources */,
 				CE951E4B1F4B7C57003B5EEF /* PaydayDetailCellC1.swift in Sources */,
 				CE9443BC1F29842000ACC7D4 /* ReportsPointsVC.swift in Sources */,
+				CEFC22001F64A82900CC4FC1 /* User.swift in Sources */,
 				CEB32C691F2C09DC0069D8B0 /* ReportsCBVC.swift in Sources */,
 				CE1B47811F1885B0007C7515 /* SettingsVC.swift in Sources */,
 				89FB676A1D5C82F5002B2484 /* LoginViewController.swift in Sources */,
-				CE1CB51A1F01AF48009A8DAC /* Step2PopoverVC.swift in Sources */,
+				CE1CB51A1F01AF48009A8DAC /* Step2UsersVC.swift in Sources */,
 				CEF3EBBD1F305A45008953A8 /* MoneyCell3.swift in Sources */,
 				CEB32C6B1F2C49D10069D8B0 /* ReportsCBCell.swift in Sources */,
 				CEB4CD2D1F1ED77400F9733F /* SetupNavController.swift in Sources */,
@@ -664,6 +679,7 @@
 				CE1CB50B1F01AD10009A8DAC /* Step1VC.swift in Sources */,
 				CE951E431F4B622D003B5EEF /* PaydayDetailCellA1.swift in Sources */,
 				89FB67581D5C82AB002B2484 /* AppDelegate.swift in Sources */,
+				CE18C4D21F64E14F00C748BC /* MaxLengthTextField.swift in Sources */,
 				CE4832C31F281154005A7A55 /* JobJarNavController.swift in Sources */,
 				CE4832C51F28116B005A7A55 /* JobJarVC.swift in Sources */,
 				CE4832C91F28611B005A7A55 /* ReportsVC.swift in Sources */,
