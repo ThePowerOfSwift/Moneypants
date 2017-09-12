@@ -5,17 +5,15 @@ class Step1VC: UIViewController, UITextFieldDelegate {
     
     @IBOutlet weak var nextButton: UIButton!
     @IBOutlet weak var questionButton: UIButton!
+    @IBOutlet weak var incomeTextField: UITextField!
     
-    // ---------------
-    // MARK: Variables
-    // ---------------
-    
+    let incomeMinimum = 30_000
+    let incomeMaximum = 360_000
+
     var firebaseUser: FIRUser!
     var users = [Item]()
     var ref: FIRDatabaseReference!
     private var databaseHandle: FIRDatabaseHandle!
-    @IBOutlet weak var incomeTextField: UITextField!
-    let amount: Int = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -43,7 +41,6 @@ class Step1VC: UIViewController, UITextFieldDelegate {
             NSForegroundColorAttributeName : UIColor.white,
             NSFontAttributeName : UIFont(name: "Arista2.0", size: 26)!
         ]
-
     }
     
 
@@ -52,34 +49,32 @@ class Step1VC: UIViewController, UITextFieldDelegate {
     // -----------
     
     @IBAction func didTapNextButton(_ sender: UIButton) {
-        if incomeTextField.text != "" {
+        if incomeTextField.text != "" {     // check if field is empty
             yearlyIncomeMPS = Int(incomeTextField.text!.components(separatedBy: [",", " "]).joined())       // remove commas
-            if yearlyIncomeMPS < 30_000 || yearlyIncomeMPS > 1_000_000 {
-                print("Please enter a value between $30,000 and $1,000,000.")
+            if yearlyIncomeMPS < incomeMinimum || yearlyIncomeMPS > incomeMaximum {     // check if income is within range
+                createIncomeAlert()
+            } else {        // good to go!
+                ref.child("users").child(firebaseUser.uid).child("income").setValue(yearlyIncomeMPS)
+                performSegue(withIdentifier: "showUsers", sender: self)
             }
-            ref.child("users").child(firebaseUser.uid).child("income").setValue(yearlyIncomeMPS)
         } else {
-            print("yearly income error")
+            createIncomeAlert()
         }
     }
     
     
-    
-    // -----------------
-    // SIGN OUT function
-    // -----------------
-    
-    @IBAction func didTapSignOut(_ sender: UIButton) {
-        do {
-            try FIRAuth.auth()?.signOut()
-            performSegue(withIdentifier: "SignOut", sender: nil)
-        } catch let error {
-            assertionFailure("Error signing out: \(error)")
-        }
+    func createIncomeAlert() {
+        let alert = UIAlertController(title: "Income Error", message: "Please enter a value between $\(incomeMinimum / 1000),000 and $\(incomeMaximum / 1000),000. If your income is outside this range, please contact support.", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "cancel", style: .cancel, handler: { (action) in
+            alert.dismiss(animated: true, completion: nil)
+        }))
+        alert.addAction(UIAlertAction(title: "okay", style: .default, handler: { (action) in
+            self.incomeTextField.becomeFirstResponder()
+        }))
+        self.present(alert, animated: true, completion: nil)
     }
     
    
-    
 
     // allows for dismissal of keyboard when user taps any white space
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -90,7 +85,7 @@ class Step1VC: UIViewController, UITextFieldDelegate {
     // validate and format input, adding commas
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         
-        if ((string == "0" || string == "") && (textField.text! as NSString).range(of: ".").location < range.location) {
+       if ((string == "0" || string == "") && (textField.text! as NSString).range(of: ".").location < range.location) {
             return true
         }
         

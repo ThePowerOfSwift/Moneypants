@@ -10,14 +10,26 @@ class User {
     var gender: String
     var childParent: String
     
-    init(photo: UIImage, firstName: String, birthday: String, passcode: Int, gender: String, childParent: String) {
+    init(profilePhoto: UIImage, userFirstName: String, userBirthday: String, userPasscode: Int, userGender: String, isUserChildOrParent: String) {
         
-        self.photo = photo
-        self.firstName = firstName
-        self.birthday = birthday
-        self.passcode = passcode
-        self.gender = gender
-        self.childParent = childParent
+        self.photo = profilePhoto
+        self.firstName = userFirstName
+        self.birthday = userBirthday
+        self.passcode = userPasscode
+        self.gender = userGender
+        self.childParent = isUserChildOrParent
         
+    }
+}
+
+
+class FamilyMember {
+    var name: String
+    var photo: String
+    
+    init(nameText: String, photoUrlString: String) {
+        name = nameText
+        photo = photoUrlString
+
     }
 }

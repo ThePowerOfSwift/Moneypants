@@ -12,7 +12,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         var storyboard = UIStoryboard()
         let currentUser = FIRAuth.auth()?.currentUser
         if currentUser != nil {
-            print("user logged in")
+            print("\(currentUser?.uid) logged in")
             storyboard = UIStoryboard(name: "Home", bundle: nil)
         } else {
             print("user logged out")
@@ -29,8 +29,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         let storyboard: UIStoryboard = self.getStoryboard()
         
-//        self.window?.rootViewController = storyboard.instantiateInitialViewController()
-//        self.window?.makeKeyAndVisible()
+        self.window?.rootViewController = storyboard.instantiateInitialViewController()
+        self.window?.makeKeyAndVisible()
         return true
     }
     

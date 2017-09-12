@@ -8,6 +8,7 @@ target 'ToDo App' do
   # Pods for ToDo App
   pod 'Firebase/Auth'
   pod 'Firebase/Database'
+  pod 'Firebase/Storage'
   pod 'IQKeyboardManagerSwift', '4.0.8'
   pod 'AKMaskField'
 

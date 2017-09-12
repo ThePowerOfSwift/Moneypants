@@ -255,8 +255,9 @@
 			children = (
 				89FB67571D5C82AB002B2484 /* AppDelegate.swift */,
 				CE18C4D11F64E14F00C748BC /* MaxLengthTextField.swift */,
-				CEDBFE2C1F2AE41900829DE4 /* Storyboards */,
+				CEFC21FF1F64A82900CC4FC1 /* User.swift */,
 				CE8FFA011F10AE92004A53BE /* GlobalVariables.swift */,
+				CEDBFE2C1F2AE41900829DE4 /* Storyboards */,
 				CEFC21FD1F64A65800CC4FC1 /* Login */,
 				CEE4D6A91F0F44AB009BAE6C /* Step1 */,
 				CEE4D6A51F0F4460009BAE6C /* Step2 */,
@@ -269,7 +270,6 @@
 				89FB67631D5C82AB002B2484 /* Info.plist */,
 				CEB2FD531EFF4DB300763862 /* GoogleService-Info.plist */,
 				89FB675E1D5C82AB002B2484 /* Assets.xcassets */,
-				CEFC21FF1F64A82900CC4FC1 /* User.swift */,
 			);
 			path = "ToDo App";
 			sourceTree = "<group>";

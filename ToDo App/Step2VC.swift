@@ -1,22 +1,64 @@
 import UIKit
+import FirebaseAuth
+import FirebaseDatabase
+import FirebaseStorage
 
 class Step2VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
-    var users = [User]()        // create variable called 'users' which is an array of type User
-    
     @IBOutlet weak var tableView: UITableView!
+
+    var users = [User]()        // create variable called 'users' which is an array of type User
+    var userList: [String] = []
+
+    var firebaseUser: FIRUser!
+    var firebaseStorage: FIRStorage!
+    
+    
+    // ----------
+    // ATTEMPT #2
+    // ----------
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         tableView.dataSource = self
         tableView.delegate = self
+        tableView.tableFooterView = UIView()
+        
+        firebaseUser = FIRAuth.auth()?.currentUser
+        firebaseStorage = FIRStorage.storage()
+        
+        loadUsers()
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        tableView.reloadData()
+    func loadUsers() {
+        FIRDatabase.database().reference().child("users").child(firebaseUser.uid).child("members").observe(.childAdded) { (snapshot: FIRDataSnapshot) in
+            if let dict = snapshot.value as? [String : Any] {
+                let userPhotoUrl = dict["profileImageUrl"] as! String
+                let userFirstName = dict["firstName"] as! String
+                let userBirthday = dict["birthday"] as! String
+                let userPasscode = dict["passcode"] as! Int
+                let userGender = dict["gender"] as! String
+                let isUserChildOrParent = dict["childParent"] as! String
+                
+                let storageRef = FIRStorage.storage().reference(forURL: userPhotoUrl)
+                storageRef.data(withMaxSize: 1 * 1024 * 1024, completion: { (data, error) in
+                    let pic = UIImage(data: data!)
+                    let user = User(profilePhoto: pic!, userFirstName: userFirstName, userBirthday: userBirthday, userPasscode: userPasscode, userGender: userGender, isUserChildOrParent: isUserChildOrParent)
+                    self.users.append(user)
+                    
+                    self.tableView.reloadData()
+                })
+                
+                
+            }
+        }
     }
     
+    
+    // ----------
+    // Table View
+    // ----------
     
     public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return users.count
@@ -25,22 +67,12 @@ class Step2VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "CustomCell", for: indexPath) as! Step2Cell
-        let user = users[indexPath.row]
-        cell.myImage.image = user.photo
-        cell.myLabel.text = user.firstName
-        
+        cell.myLabel.text = users[indexPath.row].firstName
+        cell.myImage.image = users[indexPath.row].photo
         return cell
     }
-    
-    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            users.remove(at: indexPath.row)
-            tableView.deleteRows(at: [indexPath], with: .automatic)
-        } else if editingStyle == .insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }
-    }
-    
+
+   
     // ------------------
     // MARK: - Navigation
     // ------------------
@@ -57,34 +89,7 @@ class Step2VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
             let selectedUser = users[(indexPath?.row)!]
             userDetailViewController?.user = selectedUser
         }
-        
-        
-//        switch(segue.identifier ?? "") {
-//        case "addUser":
-//            print("User added segue")
-//        case "ShowDetail":
-//            guard let userDetailViewController = segue.destination as? Step2UsersVC else {
-//                fatalError("Unexpected destination: \(segue.destination)")
-//            }
-//            
-//            guard let selectedUserCell = sender as? Step2Cell else {
-//                fatalError("Unexpected sender: \(sender)")
-//            }
-//            
-//            guard let indexPath = tableView.indexPath(for: selectedUserCell) else {
-//                fatalError("The selected cell is not being displayed by the table")
-//            }
-//            
-//            let selectedUser = users[indexPath.row]
-//            userDetailViewController.user = selectedUser
-//            
-//        default:
-//            fatalError("Unexpected Segue Identifier: \(segue.identifier)")
-//        }
-        
-        
     }
-    
     
     
     // MARK: Actions

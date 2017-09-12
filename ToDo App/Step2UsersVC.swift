@@ -1,12 +1,9 @@
 import UIKit
 import Firebase
 import FirebaseDatabase
+import FirebaseStorage
 
 class Step2UsersVC: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextFieldDelegate {
-    
-    // -------------
-    // MARK: Objects
-    // -------------
     
     @IBOutlet weak var photoImageView: UIImageView!
     @IBOutlet weak var nameTextField: UITextField!
@@ -20,11 +17,13 @@ class Step2UsersVC: UIViewController, UIImagePickerControllerDelegate, UINavigat
     @IBOutlet weak var childButton: UIButton!
     
     var genderValue: String = ""
-    var parentValue: String = ""
+    var childParentValue: String = ""
     
+    var selectedProfileImage: UIImage!
     var user: User?
     var firebaseUser: FIRUser!
     var ref: FIRDatabaseReference?
+    var storageRef: FIRStorageReference?
 
     let datePicker = UIDatePicker()
     
@@ -37,6 +36,7 @@ class Step2UsersVC: UIViewController, UIImagePickerControllerDelegate, UINavigat
         
         firebaseUser = FIRAuth.auth()?.currentUser
         ref = FIRDatabase.database().reference()
+        storageRef = FIRStorage.storage().reference()
         
         navigationItem.title = "new user"
         
@@ -95,7 +95,7 @@ class Step2UsersVC: UIViewController, UIImagePickerControllerDelegate, UINavigat
             birthdayTextField.text = user.birthday
             passcodeTextField.text = String(Int(user.passcode))
             genderValue = user.gender
-            parentValue = user.childParent
+            childParentValue = user.childParent
             if user.gender == "male" {
                 maleButton.isSelected = true
                 genderValue = "male"
@@ -105,10 +105,10 @@ class Step2UsersVC: UIViewController, UIImagePickerControllerDelegate, UINavigat
             }
             if user.childParent == "parent" {
                 parentButton.isSelected = true
-                parentValue = "parent"
+                childParentValue = "parent"
             } else {
                 childButton.isSelected = true
-                parentValue = "child"
+                childParentValue = "child"
             }
         }
         updateSaveButtonState()         // Enable Save button only if all fields are filled out
@@ -119,8 +119,6 @@ class Step2UsersVC: UIViewController, UIImagePickerControllerDelegate, UINavigat
     // MARK: Choose Picture
     // --------------------
     
-    // ImagePickerControllerDelegate
-    
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         // Dismiss picker if user cancels
         dismiss(animated: true, completion: nil)
@@ -128,10 +126,10 @@ class Step2UsersVC: UIViewController, UIImagePickerControllerDelegate, UINavigat
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
         // The info dictionary may have multiple versions of the image. We want to use the original
-        guard let selectedImage = info[UIImagePickerControllerOriginalImage] as? UIImage else {
-            fatalError("Expected a dictionary containing an image, but was provided the following: \(info)")
+        if let libraryImage = info[UIImagePickerControllerOriginalImage] as? UIImage {
+            selectedProfileImage = libraryImage     // assign variable for use with Firebase
+            photoImageView.image = libraryImage     // assign user-selected image to profile picture on screen
         }
-        photoImageView.image = selectedImage
         updateSaveButtonState()
         dismiss(animated: true, completion: nil)
     }
@@ -146,7 +144,6 @@ class Step2UsersVC: UIViewController, UIImagePickerControllerDelegate, UINavigat
         imagePickerController.sourceType = .photoLibrary
         imagePickerController.delegate = self
         present(imagePickerController, animated: true, completion: nil)
-        
     }
     
     
@@ -170,26 +167,7 @@ class Step2UsersVC: UIViewController, UIImagePickerControllerDelegate, UINavigat
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         super.prepare(for: segue, sender: sender)
-        
-        let photo = photoImageView.image
-        let firstName = nameTextField.text ?? ""
-        let birthday = birthdayTextField.text!
-        let passcode = Int(passcodeTextField.text!) ?? 0
-        let gender = genderValue
-        let childParent = parentValue
-        
-        // Set the user to be passed to UserTableViewController after the unwind segue:
-        user = User(photo: photo!,
-                    firstName: firstName,
-                    birthday: birthday,
-                    passcode: passcode,
-                    gender: gender,
-                    childParent: childParent)
-        
-        ref?.child("users").child(firebaseUser.uid).child("members").child(firstName).setValue(["birthday" : birthday,
-                                                                                                "passcode" : passcode,
-                                                                                                "gender" : gender,
-                                                                                                "childParent" : childParent])
+        saveUserData()
     }
     
     @IBAction func saveButtonTapped(_ sender: UIBarButtonItem) {
@@ -197,51 +175,53 @@ class Step2UsersVC: UIViewController, UIImagePickerControllerDelegate, UINavigat
         let isPresentingInAddUserMode = presentingViewController is UINavigationController
         if isPresentingInAddUserMode {
             view.endEditing(true)
-            let photo = photoImageView.image
-            let firstName = nameTextField.text ?? ""
-            let birthday = birthdayTextField.text!
-            let passcode = Int(passcodeTextField.text!) ?? 0
-            let gender = genderValue
-            let childParent = parentValue
-            
-            // Set the user to be passed to UserTableViewController after the unwind segue:
-            user = User(photo: photo!,
-                        firstName: firstName,
-                        birthday: birthday,
-                        passcode: passcode,
-                        gender: gender,
-                        childParent: childParent)
-            
-            ref?.child("users").child(firebaseUser.uid).child("members").child(firstName).setValue(["birthday" : birthday,
-                                                                                                    "passcode" : passcode,
-                                                                                                    "gender" : gender,
-                                                                                                    "childParent" : childParent])
+            saveUserData()
             dismiss(animated: true, completion: nil)
         } else if let owningNavigationController = navigationController {
             view.endEditing(true)
-            let photo = photoImageView.image
-            let firstName = nameTextField.text ?? ""
-            let birthday = birthdayTextField.text!
-            let passcode = Int(passcodeTextField.text!) ?? 0
-            let gender = genderValue
-            let childParent = parentValue
-            
-            // Set the user to be passed to UserTableViewController after the unwind segue:
-            user = User(photo: photo!,
-                        firstName: firstName,
-                        birthday: birthday,
-                        passcode: passcode,
-                        gender: gender,
-                        childParent: childParent)
-            
-            ref?.child("users").child(firebaseUser.uid).child("members").child(firstName).setValue(["birthday" : birthday,
-                                                                                                    "passcode" : passcode,
-                                                                                                    "gender" : gender,
-                                                                                                    "childParent" : childParent])
+            saveUserData()
             owningNavigationController.popViewController(animated: true)
         }
     }
     
+    
+    func saveUserData() {
+        let photo = photoImageView.image
+        let firstName = nameTextField.text ?? ""
+        let birthday = birthdayTextField.text!
+        let passcode = Int(passcodeTextField.text!) ?? 0
+        let gender = genderValue
+        let childParent = childParentValue
+        
+        // get profile image data prepped for storage on Firebase
+        let storageRef = FIRStorage.storage().reference().child("users").child(firebaseUser.uid).child("members").child(firstName)
+        if let profileImg = selectedProfileImage, let imageData = UIImageJPEGRepresentation(profileImg, 0.1) {
+            
+            // save user image to Firebase
+            storageRef.put(imageData, metadata: nil, completion: { (metadata, error) in
+                if error != nil {
+                    return
+                }
+                // get Firebase image location and return the URL as a string
+                let profileImageUrl = metadata?.downloadURL()?.absoluteString
+                
+                // Set the user to be passed to UserTableViewController after the unwind segue:
+                self.user = User(profilePhoto: photo!,
+                                 userFirstName: firstName,
+                                 userBirthday: birthday,
+                                 userPasscode: passcode,
+                                 userGender: gender,
+                                 isUserChildOrParent: childParent)
+                // save user data to Firebase
+                self.ref?.child("users").child(self.firebaseUser.uid).child("members").child(firstName).setValue(["profileImageUrl" : profileImageUrl!,
+                                                                                                                  "firstName" : firstName,
+                                                                                                                  "birthday" : birthday,
+                                                                                                                  "passcode" : passcode,
+                                                                                                                  "gender" : gender,
+                                                                                                                  "childParent" : childParent])
+            })
+        }
+    }
     
     
     
@@ -280,28 +260,28 @@ class Step2UsersVC: UIViewController, UIImagePickerControllerDelegate, UINavigat
     @IBAction func parentButtonTapped(_ sender: UIButton) {
         if !parentButton.isSelected {
             parentButton.isSelected = true
-            parentValue = "parent"
+            childParentValue = "parent"
             childButton.isSelected = false
         } else {
             parentButton.isSelected = false
             childButton.isSelected = true
-            parentValue = "child"
+            childParentValue = "child"
         }
-        print(parentValue)
+        print(childParentValue)
         updateSaveButtonState()
     }
     
     @IBAction func childButtonTapped(_ sender: UIButton) {
         if !childButton.isSelected {
             childButton.isSelected = true
-            parentValue = "child"
+            childParentValue = "child"
             parentButton.isSelected = false
         } else {
             childButton.isSelected = false
             parentButton.isSelected = true
-            parentValue = "parent"
+            childParentValue = "parent"
         }
-        print(parentValue)
+        print(childParentValue)
         updateSaveButtonState()
     }
     
@@ -326,7 +306,7 @@ class Step2UsersVC: UIViewController, UIImagePickerControllerDelegate, UINavigat
         let providedPassword = passcodeTextField.text ?? ""
         let providedBirthday = birthdayTextField.text ?? ""
         let providedGender = genderValue
-        let providedParent = parentValue
+        let providedParent = childParentValue
         
         if (photoImageView.image != placeholderImage) && (!providedName.isEmpty && !providedPassword.isEmpty && !providedBirthday.isEmpty && !providedGender.isEmpty && !providedParent.isEmpty) {
             saveButton.isEnabled = true
