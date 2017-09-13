@@ -21,15 +21,3 @@ class User {
         
     }
 }
-
-
-class FamilyMember {
-    var name: String
-    var photo: String
-    
-    init(nameText: String, photoUrlString: String) {
-        name = nameText
-        photo = photoUrlString
-
-    }
-}

@@ -8,8 +8,8 @@ class Step1VC: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var incomeTextField: UITextField!
     
     let incomeMinimum = 30_000
-    let incomeMaximum = 360_000
-
+    let incomeMaximum = 1_000_000
+    
     var firebaseUser: FIRUser!
     var users = [Item]()
     var ref: FIRDatabaseReference!
@@ -22,15 +22,15 @@ class Step1VC: UIViewController, UITextFieldDelegate {
         
         questionButton.layer.cornerRadius = questionButton.bounds.height / 6.4
         questionButton.layer.masksToBounds = true
-
+        
         // --------
         // Firebase
         // --------
         
         firebaseUser = FIRAuth.auth()?.currentUser
         ref = FIRDatabase.database().reference()
-//        startObservingDatabase()
-
+        //        startObservingDatabase()
+        
         // -----------------
         // Customize Nav Bar
         // -----------------
@@ -43,7 +43,7 @@ class Step1VC: UIViewController, UITextFieldDelegate {
         ]
     }
     
-
+    
     // -----------
     // NEXT button
     // -----------
@@ -74,18 +74,18 @@ class Step1VC: UIViewController, UITextFieldDelegate {
         self.present(alert, animated: true, completion: nil)
     }
     
-   
-
+    
+    
     // allows for dismissal of keyboard when user taps any white space
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         view.endEditing(true)
     }
     
-
+    
     // validate and format input, adding commas
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         
-       if ((string == "0" || string == "") && (textField.text! as NSString).range(of: ".").location < range.location) {
+        if ((string == "0" || string == "") && (textField.text! as NSString).range(of: ".").location < range.location) {
             return true
         }
         

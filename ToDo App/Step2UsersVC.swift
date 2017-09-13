@@ -24,7 +24,7 @@ class Step2UsersVC: UIViewController, UIImagePickerControllerDelegate, UINavigat
     var firebaseUser: FIRUser!
     var ref: FIRDatabaseReference?
     var storageRef: FIRStorageReference?
-
+    
     let datePicker = UIDatePicker()
     
     override func viewDidLoad() {
@@ -292,7 +292,7 @@ class Step2UsersVC: UIViewController, UIImagePickerControllerDelegate, UINavigat
     // ---------------------------
     
     func textFieldDidBeginEditing(_ textField: UITextField) {
-//        saveButton.isEnabled = false            // Disable save button while editing
+        saveButton.isEnabled = false            // Disable save button while editing
     }
     
     func textFieldDidEndEditing(_ textField: UITextField) {
@@ -315,7 +315,7 @@ class Step2UsersVC: UIViewController, UIImagePickerControllerDelegate, UINavigat
         }
     }
     
-
+    
     
     // ----------------------
     // MARK: DatePicker Setup
@@ -328,7 +328,7 @@ class Step2UsersVC: UIViewController, UIImagePickerControllerDelegate, UINavigat
         let age = ageComponents.year!
         if age < 2 {
             print("Too young!")
-            createAlert(title: "Age Error", message: "Individuals must be at least two years old to use The Moneypants Solution.", textField: birthdayTextField)
+            createAlert(title: "Age Error", message: "Individuals must be at least two years old to use The Moneypants Solution. Please enter a valid birthday.", textField: birthdayTextField)
             //        } else if age > 25 {
             //            createAlert(title: "Too old!", message: "Children should be younger than 25.")
         } else {
@@ -361,7 +361,7 @@ class Step2UsersVC: UIViewController, UIImagePickerControllerDelegate, UINavigat
             createAlert(title: "Passcode Error", message: "Passcodes must have exactly four numbers. Please choose a 4-digit passcode.", textField: passcodeTextField)
         }
     }
-
+    
     
     
     // --------------------
@@ -388,7 +388,7 @@ class Step2UsersVC: UIViewController, UIImagePickerControllerDelegate, UINavigat
     }
     
     
-
+    
 }
 
 

@@ -6,10 +6,10 @@ import FirebaseStorage
 class Step2VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
     @IBOutlet weak var tableView: UITableView!
-
+    
     var users = [User]()        // create variable called 'users' which is an array of type User
     var userList: [String] = []
-
+    
     var firebaseUser: FIRUser!
     var firebaseStorage: FIRStorage!
     
@@ -29,6 +29,11 @@ class Step2VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
         firebaseStorage = FIRStorage.storage()
         
         loadUsers()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+        tableView.reloadData()
     }
     
     func loadUsers() {
@@ -71,8 +76,18 @@ class Step2VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
         cell.myImage.image = users[indexPath.row].photo
         return cell
     }
-
-   
+    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            print(users[indexPath.row].firstName)
+            FIRDatabase.database().reference().child("users").child(firebaseUser.uid).child("members").child(users[indexPath.row].firstName).removeValue()
+            users.remove(at: indexPath.row)
+            tableView.deleteRows(at: [indexPath], with: .fade)
+            //            FIRDatabase.database().reference().child("users").child(firebaseUser.uid).child("members").child("HMMMM...").removeValue()
+        }
+    }
+    
+    
     // ------------------
     // MARK: - Navigation
     // ------------------
