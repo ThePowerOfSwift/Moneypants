@@ -49,7 +49,13 @@ class Step2VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
                 let storageRef = FIRStorage.storage().reference(forURL: userPhotoUrl)
                 storageRef.data(withMaxSize: 1 * 1024 * 1024, completion: { (data, error) in
                     let pic = UIImage(data: data!)
-                    let user = User(profilePhoto: pic!, userFirstName: userFirstName, userBirthday: userBirthday, userPasscode: userPasscode, userGender: userGender, isUserChildOrParent: isUserChildOrParent)
+                    let user = User(profilePhoto: pic!,
+                                    userFirstName: userFirstName,
+                                    userBirthday: userBirthday,
+                                    userPasscode: userPasscode,
+                                    userGender: userGender,
+                                    isUserChildOrParent:
+                        isUserChildOrParent)
                     self.users.append(user)
                     
                     self.tableView.reloadData()
@@ -83,7 +89,7 @@ class Step2VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
             FIRDatabase.database().reference().child("users").child(firebaseUser.uid).child("members").child(users[indexPath.row].firstName).removeValue()
             users.remove(at: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: .fade)
-            //            FIRDatabase.database().reference().child("users").child(firebaseUser.uid).child("members").child("HMMMM...").removeValue()
+            tableView.reloadData()
         }
     }
     
@@ -110,7 +116,6 @@ class Step2VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
     // MARK: Actions
     @IBAction func unwindToUserList(sender: UIStoryboardSegue) {
         if let sourceViewController = sender.source as? Step2UsersVC, let user = sourceViewController.user {
-            
             if let selectedIndexPath = tableView.indexPathForSelectedRow {
                 // Update an existing user.
                 users[selectedIndexPath.row] = user
@@ -118,7 +123,6 @@ class Step2VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
             } else {
                 // Add a new user.
                 let newIndexPath = IndexPath(row: users.count, section: 0)
-                
                 users.append(user)
                 tableView.insertRows(at: [newIndexPath], with: .automatic)
             }

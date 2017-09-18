@@ -88,22 +88,22 @@ class Step2UsersVC: UIViewController, UIImagePickerControllerDelegate, UINavigat
         // Edit Existing User
         // ------------------
         
-        if let user = user {
-            navigationItem.title = user.firstName
-            nameTextField.text = user.firstName
-            photoImageView.image = user.photo
-            birthdayTextField.text = user.birthday
-            passcodeTextField.text = String(Int(user.passcode))
-            genderValue = user.gender
-            childParentValue = user.childParent
-            if user.gender == "male" {
+        if let existingUser = user {
+            navigationItem.title = existingUser.firstName
+            nameTextField.text = existingUser.firstName
+            photoImageView.image = existingUser.photo
+            birthdayTextField.text = existingUser.birthday
+            passcodeTextField.text = String(Int(existingUser.passcode))
+            genderValue = existingUser.gender
+            childParentValue = existingUser.childParent
+            if existingUser.gender == "male" {
                 maleButton.isSelected = true
                 genderValue = "male"
             } else {
                 femaleButton.isSelected = true
                 genderValue = "female"
             }
-            if user.childParent == "parent" {
+            if existingUser.childParent == "parent" {
                 parentButton.isSelected = true
                 childParentValue = "parent"
             } else {
@@ -111,6 +111,7 @@ class Step2UsersVC: UIViewController, UIImagePickerControllerDelegate, UINavigat
                 childParentValue = "child"
             }
         }
+        
         updateSaveButtonState()         // Enable Save button only if all fields are filled out
     }
     
@@ -308,7 +309,9 @@ class Step2UsersVC: UIViewController, UIImagePickerControllerDelegate, UINavigat
         let providedGender = genderValue
         let providedParent = childParentValue
         
-        if (photoImageView.image != placeholderImage) && (!providedName.isEmpty && !providedPassword.isEmpty && !providedBirthday.isEmpty && !providedGender.isEmpty && !providedParent.isEmpty) {
+        if (photoImageView.image != placeholderImage) &&
+            (!providedName.isEmpty && !providedBirthday.isEmpty && !providedGender.isEmpty && !providedParent.isEmpty) &&
+            (providedPassword.characters.count == 4) {
             saveButton.isEnabled = true
         } else {
             saveButton.isEnabled = false

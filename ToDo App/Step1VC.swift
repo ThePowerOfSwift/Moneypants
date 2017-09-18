@@ -13,7 +13,7 @@ class Step1VC: UIViewController, UITextFieldDelegate {
     var firebaseUser: FIRUser!
     var users = [Item]()
     var ref: FIRDatabaseReference!
-    private var databaseHandle: FIRDatabaseHandle!
+    var refHandle: UInt!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,7 +29,7 @@ class Step1VC: UIViewController, UITextFieldDelegate {
         
         firebaseUser = FIRAuth.auth()?.currentUser
         ref = FIRDatabase.database().reference()
-        //        startObservingDatabase()
+        
         
         // -----------------
         // Customize Nav Bar
