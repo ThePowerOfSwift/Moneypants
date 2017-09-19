@@ -7,16 +7,10 @@ class Step2VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
     @IBOutlet weak var tableView: UITableView!
     
-    var users = [User]()        // create variable called 'users' which is an array of type User
-    var userList: [String] = []
-    
+    var users = [User]()        // create variable called 'users' which is an array of type User (which is a class we created)
     var firebaseUser: FIRUser!
     var firebaseStorage: FIRStorage!
-    
-    
-    // ----------
-    // ATTEMPT #2
-    // ----------
+    var cellStyleForEditing: UITableViewCellEditingStyle = .none
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,7 +22,9 @@ class Step2VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
         firebaseUser = FIRAuth.auth()?.currentUser
         firebaseStorage = FIRStorage.storage()
         
-        loadUsers()
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "edit", style: .plain, target: self, action: #selector(editButtonTapped))
+        
+        loadExistingUsers()     // check to see if there are existing users, and if so, load them into tableview
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -36,9 +32,10 @@ class Step2VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
         tableView.reloadData()
     }
     
-    func loadUsers() {
+    func loadExistingUsers() {
         FIRDatabase.database().reference().child("users").child(firebaseUser.uid).child("members").observe(.childAdded) { (snapshot: FIRDataSnapshot) in
             if let dict = snapshot.value as? [String : Any] {
+                print(snapshot.value!)
                 let userPhotoUrl = dict["profileImageUrl"] as! String
                 let userFirstName = dict["firstName"] as! String
                 let userBirthday = dict["birthday"] as! String
@@ -60,8 +57,6 @@ class Step2VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
                     
                     self.tableView.reloadData()
                 })
-                
-                
             }
         }
     }
@@ -71,15 +66,14 @@ class Step2VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
     // Table View
     // ----------
     
-    public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return users.count
     }
     
-    
-    public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "CustomCell", for: indexPath) as! Step2Cell
         cell.myLabel.text = users[indexPath.row].firstName
-        cell.myImage.image = users[indexPath.row].photo
+        cell.userImage.image = users[indexPath.row].photo
         return cell
     }
     
@@ -93,39 +87,35 @@ class Step2VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
         }
     }
     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.reloadData()
+    }
     
-    // ------------------
-    // MARK: - Navigation
-    // ------------------
+    func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
+        return true
+    }
     
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        super.prepare(for: segue, sender: sender)
-        
-        if segue.identifier == "addUser" {
-            print("addUserSegue")
-        } else if segue.identifier == "ShowDetail" {
-            let userDetailViewController = segue.destination as? Step2UsersVC
-            let selectedUserCell = sender as? Step2Cell
-            let indexPath = tableView.indexPath(for: selectedUserCell!)
-            let selectedUser = users[(indexPath?.row)!]
-            userDetailViewController?.user = selectedUser
-        }
+    func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
+        let item = users[sourceIndexPath.row]
+        users.remove(at: sourceIndexPath.row)
+        users.insert(item, at: destinationIndexPath.row)
     }
     
     
-    // MARK: Actions
-    @IBAction func unwindToUserList(sender: UIStoryboardSegue) {
-        if let sourceViewController = sender.source as? Step2UsersVC, let user = sourceViewController.user {
-            if let selectedIndexPath = tableView.indexPathForSelectedRow {
-                // Update an existing user.
-                users[selectedIndexPath.row] = user
-                tableView.reloadRows(at: [selectedIndexPath], with: .none)
-            } else {
-                // Add a new user.
-                let newIndexPath = IndexPath(row: users.count, section: 0)
-                users.append(user)
-                tableView.insertRows(at: [newIndexPath], with: .automatic)
-            }
+    func editButtonTapped() {
+        if cellStyleForEditing == .none {
+            cellStyleForEditing = .delete
+            navigationItem.rightBarButtonItem = UIBarButtonItem(title: "done", style: .done, target: self, action: #selector(editButtonTapped))
+        } else {
+            cellStyleForEditing = .none
+            navigationItem.rightBarButtonItem = UIBarButtonItem(title: "edit", style: .plain, target: self, action: #selector(editButtonTapped))
         }
+        tableView.setEditing(cellStyleForEditing != .none, animated: true)
     }
+
 }
+
+
+
+
+

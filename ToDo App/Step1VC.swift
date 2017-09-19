@@ -64,7 +64,7 @@ class Step1VC: UIViewController, UITextFieldDelegate {
     
     
     func createIncomeAlert() {
-        let alert = UIAlertController(title: "Income Error", message: "Please enter a value between $\(incomeMinimum / 1000),000 and $\(incomeMaximum / 1000),000. If your income is outside this range, please contact support.", preferredStyle: .alert)
+        let alert = UIAlertController(title: "Income Error", message: "Please enter a value between $\(incomeMinimum / 1000),000 and $\(incomeMaximum / 1000000),000,000. If your income is outside this range, please contact support for custom setup instructions.", preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "cancel", style: .cancel, handler: { (action) in
             alert.dismiss(animated: true, completion: nil)
         }))

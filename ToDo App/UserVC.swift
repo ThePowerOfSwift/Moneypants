@@ -337,7 +337,8 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     // Unwind Segue
     // ------------
     
-    @IBAction func unwindToUserVC(segue: UIStoryboardSegue) {}
+    @IBAction func unwindToUserVC(segue: UIStoryboardSegue) {
+    }
     
 }
 

@@ -1,27 +1,21 @@
 import UIKit
 
-class Step3ViewController: UIViewController, UITableViewDataSource {
+class Step3VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
 
+    @IBOutlet weak var jobsTableView: UITableView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addJobButtonTapped))
+        
         // Keep table view up high when nav controller loads
         self.automaticallyAdjustsScrollViewInsets = false
-        
-        /*
-        // -------------------------
-        // Check for installed fonts
-        // -------------------------
-        
-        for family: String in UIFont.familyNames {
-            print("\(family)")
-            for names: String in UIFont.fontNames(forFamilyName: family)
-            {
-                print("== \(names)")
-            }
-        }
-        */
-        
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+        jobsTableView.reloadData()
     }
 
    
@@ -29,11 +23,6 @@ class Step3ViewController: UIViewController, UITableViewDataSource {
     // Setup Table View
     // ----------------
     
-    // Create array for table data
-    // MARK: Data table for daily jobs, etc.
-    
-    
-    //set number of sections
     func numberOfSections(in tableView: UITableView) -> Int {
         return 2
     }
@@ -56,6 +45,7 @@ class Step3ViewController: UIViewController, UITableViewDataSource {
         }
     }
     
+    // Customize header view
     func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
         let header = view as! UITableViewHeaderFooterView
         header.textLabel?.font = UIFont(name: "Arista2.0", size: 20.0)
@@ -64,14 +54,8 @@ class Step3ViewController: UIViewController, UITableViewDataSource {
         header.contentView.backgroundColor = UIColor.lightGray
     }    
     
-    // what are the contents of each cell
+    // Populate cells with data
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
-        // Round corners on table view
-        //let blackColor = UIColor.black
-        //tableView.layer.borderColor = blackColor.withAlphaComponent(0.9).cgColor
-        //tableView.layer.borderWidth = 0.5;
-        //tableView.layer.cornerRadius = 10;
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "CustomCell", for: indexPath) as! Step3CustomCell
         
@@ -83,6 +67,40 @@ class Step3ViewController: UIViewController, UITableViewDataSource {
             cell.jobLabel.text = weeklyChoreName
         }
         return cell
+    }
+    
+    // When user taps cell, perform segue
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if indexPath.section == 0 {
+            let (dailyJobName, _, _, _) = dailyJobs[indexPath.row]
+            performSegue(withIdentifier: "EditJobSegue", sender: dailyJobName)
+        } else {
+            let (weeklyJobName, _, _, _) = weeklyJobs[indexPath.row]
+            performSegue(withIdentifier: "EditJobSegue", sender: weeklyJobName)
+        }
+    }
+    
+    
+    // -----------------
+    // Navigation Segues
+    // -----------------
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "AddJobSegue" {
+            let nextController = segue.destination as! Step3AddJobVC
+            nextController.navBarTitle = "new job"
+        } else if segue.identifier == "EditJobSegue" {
+            let nextController = segue.destination as! Step3AddJobVC
+            nextController.navBarTitle = "edit job"
+            nextController.jobTextField = sender as! String
+            print(sender!)
+        } else {
+            print("new view controller, coming up!")
+        }
+    }
+    
+    func addJobButtonTapped() {
+        performSegue(withIdentifier: "AddJobSegue", sender: self)
     }
 }
 

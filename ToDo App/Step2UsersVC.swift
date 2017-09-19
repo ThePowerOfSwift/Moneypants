@@ -30,6 +30,8 @@ class Step2UsersVC: UIViewController, UIImagePickerControllerDelegate, UINavigat
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        navigationItem.title = "new user"
+        
         // --------
         // Firebase
         // --------
@@ -37,8 +39,6 @@ class Step2UsersVC: UIViewController, UIImagePickerControllerDelegate, UINavigat
         firebaseUser = FIRAuth.auth()?.currentUser
         ref = FIRDatabase.database().reference()
         storageRef = FIRStorage.storage().reference()
-        
-        navigationItem.title = "new user"
         
         // -----------------
         // Date Picker Setup
@@ -53,66 +53,24 @@ class Step2UsersVC: UIViewController, UIImagePickerControllerDelegate, UINavigat
         birthdayTextField.delegate = self
         passcodeTextField.delegate = self
         
-        
         // -------------------------
         // Customize Buttons & Photo
         // -------------------------
         
-        maleButton.layer.cornerRadius = 5.0
-        maleButton.layer.borderColor = UIColor.lightGray.cgColor
-        maleButton.layer.borderWidth = 0.5
-        maleButton.layer.masksToBounds = true
-        
-        femaleButton.layer.cornerRadius = 5.0
-        femaleButton.layer.borderColor = UIColor.lightGray.cgColor
-        femaleButton.layer.borderWidth = 0.5
-        femaleButton.layer.masksToBounds = true
-        
-        parentButton.layer.cornerRadius = 5
-        parentButton.layer.borderWidth = 0.5
-        parentButton.layer.borderColor = UIColor.lightGray.cgColor
-        parentButton.layer.masksToBounds = true
-        
-        childButton.layer.cornerRadius = 5
-        childButton.layer.borderWidth = 0.5
-        childButton.layer.borderColor = UIColor.lightGray.cgColor
-        childButton.layer.masksToBounds = true
-        
-        photoImageView.layer.cornerRadius = 100 / 6.4
-        photoImageView.layer.masksToBounds = true
-        photoImageView.layer.borderWidth = 0.5
-        photoImageView.layer.borderColor = UIColor.lightGray.cgColor
-        
-        
-        // ------------------
-        // Edit Existing User
-        // ------------------
-        
-        if let existingUser = user {
-            navigationItem.title = existingUser.firstName
-            nameTextField.text = existingUser.firstName
-            photoImageView.image = existingUser.photo
-            birthdayTextField.text = existingUser.birthday
-            passcodeTextField.text = String(Int(existingUser.passcode))
-            genderValue = existingUser.gender
-            childParentValue = existingUser.childParent
-            if existingUser.gender == "male" {
-                maleButton.isSelected = true
-                genderValue = "male"
-            } else {
-                femaleButton.isSelected = true
-                genderValue = "female"
-            }
-            if existingUser.childParent == "parent" {
-                parentButton.isSelected = true
-                childParentValue = "parent"
-            } else {
-                childButton.isSelected = true
-                childParentValue = "child"
-            }
-        }
+        customizeButton(buttonName: maleButton)
+        customizeButton(buttonName: femaleButton)
+        customizeButton(buttonName: parentButton)
+        customizeButton(buttonName: childButton)
+        customizeButton(buttonName: photoImageView)
         
         updateSaveButtonState()         // Enable Save button only if all fields are filled out
+    }
+    
+    func customizeButton(buttonName: AnyObject) {
+        buttonName.layer.cornerRadius = buttonName.bounds.height / 6.4
+        buttonName.layer.masksToBounds = true
+        buttonName.layer.borderColor = UIColor.lightGray.cgColor
+        buttonName.layer.borderWidth = 0.5
     }
     
     
@@ -153,46 +111,25 @@ class Step2UsersVC: UIViewController, UIImagePickerControllerDelegate, UINavigat
     // ---------------------------
     
     @IBAction func cancel(_ sender: UIBarButtonItem) {
-        
-        // Depending on style of presentation (modal or push), this view controller needs to be dismissed in two different ways.
-        let isPresentingInAddUserMode = presentingViewController is UINavigationController
-        if isPresentingInAddUserMode {
-            view.endEditing(true)
-            dismiss(animated: true, completion: nil)
-        } else if let owningNavigationController = navigationController {
-            view.endEditing(true)
-            owningNavigationController.popViewController(animated: true)
-        }
-    }
-    
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        super.prepare(for: segue, sender: sender)
-        saveUserData()
+        view.endEditing(true)
+        dismiss(animated: true, completion: nil)
     }
     
     @IBAction func saveButtonTapped(_ sender: UIBarButtonItem) {
-        
-        let isPresentingInAddUserMode = presentingViewController is UINavigationController
-        if isPresentingInAddUserMode {
-            view.endEditing(true)
-            saveUserData()
-            dismiss(animated: true, completion: nil)
-        } else if let owningNavigationController = navigationController {
-            view.endEditing(true)
-            saveUserData()
-            owningNavigationController.popViewController(animated: true)
-        }
-    }
-    
-    
-    func saveUserData() {
-        let photo = photoImageView.image
-        let firstName = nameTextField.text ?? ""
+        let photo = photoImageView.image!
+        let firstName = nameTextField.text!
         let birthday = birthdayTextField.text!
-        let passcode = Int(passcodeTextField.text!) ?? 0
+        let passcode = Int(passcodeTextField.text!)!
         let gender = genderValue
         let childParent = childParentValue
+        
+        // Set the user to be passed to UserTableViewController after the unwind segue:
+        self.user = User(profilePhoto: photo,
+                         userFirstName: firstName,
+                         userBirthday: birthday,
+                         userPasscode: passcode,
+                         userGender: gender,
+                         isUserChildOrParent: childParent)
         
         // get profile image data prepped for storage on Firebase
         let storageRef = FIRStorage.storage().reference().child("users").child(firebaseUser.uid).child("members").child(firstName)
@@ -204,17 +141,9 @@ class Step2UsersVC: UIViewController, UIImagePickerControllerDelegate, UINavigat
                     return
                 }
                 // get Firebase image location and return the URL as a string
-                let profileImageUrl = metadata?.downloadURL()?.absoluteString
-                
-                // Set the user to be passed to UserTableViewController after the unwind segue:
-                self.user = User(profilePhoto: photo!,
-                                 userFirstName: firstName,
-                                 userBirthday: birthday,
-                                 userPasscode: passcode,
-                                 userGender: gender,
-                                 isUserChildOrParent: childParent)
+                let profileImageUrl = (metadata?.downloadURL()?.absoluteString)!
                 // save user data to Firebase
-                self.ref?.child("users").child(self.firebaseUser.uid).child("members").child(firstName).setValue(["profileImageUrl" : profileImageUrl!,
+                self.ref?.child("users").child(self.firebaseUser.uid).child("members").child(firstName).setValue(["profileImageUrl" : profileImageUrl,
                                                                                                                   "firstName" : firstName,
                                                                                                                   "birthday" : birthday,
                                                                                                                   "passcode" : passcode,
@@ -222,6 +151,7 @@ class Step2UsersVC: UIViewController, UIImagePickerControllerDelegate, UINavigat
                                                                                                                   "childParent" : childParent])
             })
         }
+        dismiss(animated: true, completion: nil)
     }
     
     
