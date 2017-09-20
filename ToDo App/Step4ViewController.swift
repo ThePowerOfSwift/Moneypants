@@ -26,9 +26,9 @@ class Step4ViewController: UIViewController, UITableViewDataSource, UITableViewD
     // set number of rows
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if section == 0 {
-            return dailyJobs.count
+            return dailyJobsTemp.count
         } else {
-            return weeklyJobs.count
+            return weeklyJobsTemp.count
         }
     }
     
@@ -54,10 +54,10 @@ class Step4ViewController: UIViewController, UITableViewDataSource, UITableViewD
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "CustomCell4", for: indexPath) as! Step4CustomCell
         if indexPath.section == 0 {
-            let (dailyJobName, _, _, _) = dailyJobs[indexPath.row]
+            let (dailyJobName, _, _, _) = dailyJobsTemp[indexPath.row]
             cell.jobLabel.text = dailyJobName
         } else {
-            let (weeklyJobName, _, _, _) = weeklyJobs[indexPath.row]
+            let (weeklyJobName, _, _, _) = weeklyJobsTemp[indexPath.row]
             cell.jobLabel.text = weeklyJobName
         }
         return cell

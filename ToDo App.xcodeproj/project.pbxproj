@@ -80,6 +80,7 @@
 		CE951E4D1F4B7C63003B5EEF /* PaydayDetailCellC2.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE951E4C1F4B7C63003B5EEF /* PaydayDetailCellC2.swift */; };
 		CE99F07E1F0AB53D007E01E7 /* Step5IncomeSummaryVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE99F07D1F0AB53D007E01E7 /* Step5IncomeSummaryVC.swift */; };
 		CE99F0A81F0B6B5D007E01E7 /* Step5ExpensesVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE99F0A71F0B6B5D007E01E7 /* Step5ExpensesVC.swift */; };
+		CEA2BC491F71C3900020D958 /* JobsAndHabits.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEA2BC481F71C3900020D958 /* JobsAndHabits.swift */; };
 		CEAAF9DA1F356D3800846DD5 /* PaydayCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEAAF9D91F356D3800846DD5 /* PaydayCell.swift */; };
 		CEAAF9DC1F356F2400846DD5 /* PaydayVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEAAF9DB1F356F2400846DD5 /* PaydayVC.swift */; };
 		CEAAF9DE1F35A41C00846DD5 /* SpendingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEAAF9DD1F35A41C00846DD5 /* SpendingVC.swift */; };
@@ -184,6 +185,7 @@
 		CE951E4C1F4B7C63003B5EEF /* PaydayDetailCellC2.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaydayDetailCellC2.swift; sourceTree = "<group>"; };
 		CE99F07D1F0AB53D007E01E7 /* Step5IncomeSummaryVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Step5IncomeSummaryVC.swift; sourceTree = "<group>"; };
 		CE99F0A71F0B6B5D007E01E7 /* Step5ExpensesVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Step5ExpensesVC.swift; sourceTree = "<group>"; };
+		CEA2BC481F71C3900020D958 /* JobsAndHabits.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JobsAndHabits.swift; sourceTree = "<group>"; };
 		CEAAF9D91F356D3800846DD5 /* PaydayCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaydayCell.swift; sourceTree = "<group>"; };
 		CEAAF9DB1F356F2400846DD5 /* PaydayVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaydayVC.swift; sourceTree = "<group>"; };
 		CEAAF9DD1F35A41C00846DD5 /* SpendingVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpendingVC.swift; sourceTree = "<group>"; };
@@ -258,6 +260,7 @@
 				89FB67571D5C82AB002B2484 /* AppDelegate.swift */,
 				CE18C4D11F64E14F00C748BC /* MaxLengthTextField.swift */,
 				CEFC21FF1F64A82900CC4FC1 /* User.swift */,
+				CEA2BC481F71C3900020D958 /* JobsAndHabits.swift */,
 				CE8FFA011F10AE92004A53BE /* GlobalVariables.swift */,
 				CEDBFE2C1F2AE41900829DE4 /* Storyboards */,
 				CEFC21FD1F64A65800CC4FC1 /* Login */,
@@ -635,6 +638,7 @@
 				CE7FF9911F3448C9000AD071 /* UserSettingsVC.swift in Sources */,
 				CE9443B81F29804200ACC7D4 /* SpendingNavController.swift in Sources */,
 				CEAD053E1F2209A60097CD33 /* UserCell.swift in Sources */,
+				CEA2BC491F71C3900020D958 /* JobsAndHabits.swift in Sources */,
 				CEB4CD2A1F1ECD9100F9733F /* UserVC.swift in Sources */,
 				CE1CB52D1F0215EA009A8DAC /* Step2Cell.swift in Sources */,
 				CE7FF98D1F340E6A000AD071 /* WithdrawalVC.swift in Sources */,

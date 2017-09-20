@@ -609,11 +609,7 @@
                                 <action selector="cancel:" destination="bI6-Lh-0aY" id="4Gc-wF-BfJ"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" title="save" id="0mi-i1-WJR">
-                            <connections>
-                                <segue destination="2Ci-hs-bip" kind="unwind" unwindAction="unwindToUserListWithSender:" id="RHR-Zs-bNX"/>
-                            </connections>
-                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" title="save" id="0mi-i1-WJR"/>
                     </navigationItem>
                     <connections>
                         <outlet property="birthdayTextField" destination="KkD-A6-7xO" id="PwP-r0-j0H"/>
@@ -628,7 +624,6 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="d0F-YR-sz6" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <exit id="2Ci-hs-bip" userLabel="Exit" sceneMemberID="exit"/>
                 <tapGestureRecognizer id="sDF-Iy-w4Y">
                     <connections>
                         <action selector="selectImageFromPhotoLibrary:" destination="bI6-Lh-0aY" id="zDz-Ie-5wO"/>
@@ -660,7 +655,7 @@
                                         </barButtonItem>
                                         <barButtonItem key="rightBarButtonItem" title="save" id="f00-t8-LWW">
                                             <connections>
-                                                <action selector="saveButtonTapped:" destination="4bZ-Xp-rY7" id="a2G-HK-0e6"/>
+                                                <segue destination="lFG-jL-dyz" kind="unwind" unwindAction="unwindToStep3VCWithSender:" id="DB9-7w-f4R"/>
                                             </connections>
                                         </barButtonItem>
                                     </navigationItem>
@@ -682,7 +677,7 @@
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="enter job name here" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="LVy-ma-IaT">
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="enter job name here" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="LVy-ma-IaT">
                                         <rect key="frame" x="0.0" y="25.5" width="250" height="30"/>
                                         <nil key="textColor"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="20"/>
@@ -700,7 +695,7 @@
                                 </constraints>
                             </stackView>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="e85-NO-xGK">
-                                <rect key="frame" x="35" y="187.5" width="250" height="1"/>
+                                <rect key="frame" x="35" y="195.5" width="250" height="1"/>
                                 <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="250" id="BV3-WS-W5V"/>
@@ -712,105 +707,45 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="•" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2Va-xE-lGx">
-                                <rect key="frame" x="35" y="267.5" width="6.5" height="16"/>
-                                <fontDescription key="fontDescription" name=".AppleSystemUIFont" family=".AppleSystemUIFont" pointSize="13"/>
+                                <rect key="frame" x="35" y="318" width="8.5" height="20.5"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="NOTE: as a rule of thumb, jobs should take between 10 and 30 minutes for an adult to complete." lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VBn-xb-Fpv">
-                                <rect key="frame" x="35" y="204.5" width="250" height="47"/>
+                                <rect key="frame" x="35" y="220.5" width="250" height="81.5"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="250" id="kW8-Kb-ri0"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" name=".AppleSystemUIFont" family=".AppleSystemUIFont" pointSize="13"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ba6-js-ZEh">
-                                <rect key="frame" x="46" y="315.5" width="239" height="31.5"/>
-                                <attributedString key="attributedText">
-                                    <fragment content="If a job takes ">
-                                        <attributes>
-                                            <font key="NSFont" metaFont="system"/>
-                                            <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
-                                        </attributes>
-                                    </fragment>
-                                    <fragment content="more">
-                                        <attributes>
-                                            <font key="NSFont" size="13" name="SFUIText-Bold"/>
-                                            <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
-                                        </attributes>
-                                    </fragment>
-                                    <fragment content=" than 30 minutes, ">
-                                        <attributes>
-                                            <font key="NSFont" metaFont="system"/>
-                                            <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
-                                        </attributes>
-                                    </fragment>
-                                    <fragment content="split">
-                                        <attributes>
-                                            <font key="NSFont" size="13" name="SFUIText-Bold"/>
-                                            <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
-                                        </attributes>
-                                    </fragment>
-                                    <fragment content=" it into multiple jobs.">
-                                        <attributes>
-                                            <font key="NSFont" metaFont="system"/>
-                                            <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
-                                        </attributes>
-                                    </fragment>
-                                </attributedString>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="•" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ACl-rU-GRO">
-                                <rect key="frame" x="35" y="315.5" width="6.5" height="16"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="6.5" id="Oz0-Df-AbM"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" name=".AppleSystemUIFont" family=".AppleSystemUIFont" pointSize="13"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="If a job takes more than 30 minutes, split it into multiple jobs." lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ba6-js-ZEh">
+                                <rect key="frame" x="49" y="395" width="236" height="61"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8yg-Nc-TS2">
-                                <rect key="frame" x="46.5" y="268" width="238.5" height="31.5"/>
-                                <attributedString key="attributedText">
-                                    <fragment content="If a job takes ">
-                                        <attributes>
-                                            <font key="NSFont" metaFont="system"/>
-                                            <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
-                                        </attributes>
-                                    </fragment>
-                                    <fragment content="less">
-                                        <attributes>
-                                            <font key="NSFont" size="13" name="SFUIText-Bold"/>
-                                            <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
-                                        </attributes>
-                                    </fragment>
-                                    <fragment content=" than 10 minutes, ">
-                                        <attributes>
-                                            <font key="NSFont" metaFont="system"/>
-                                            <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
-                                        </attributes>
-                                    </fragment>
-                                    <fragment content="combine">
-                                        <attributes>
-                                            <font key="NSFont" size="13" name="SFUIDisplay-Bold"/>
-                                            <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
-                                        </attributes>
-                                    </fragment>
-                                    <fragment content=" it with another job.">
-                                        <attributes>
-                                            <font key="NSFont" metaFont="system"/>
-                                            <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
-                                        </attributes>
-                                    </fragment>
-                                </attributedString>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="•" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ACl-rU-GRO">
+                                <rect key="frame" x="35" y="395" width="9" height="20.5"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="8.5" id="Oz0-Df-AbM"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="If a job takes less than 10 minutes, combine it with another job." lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8yg-Nc-TS2">
+                                <rect key="frame" x="48.5" y="318" width="236.5" height="61"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
                         <color key="backgroundColor" white="0.90000000000000002" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="ba6-js-ZEh" firstAttribute="top" secondItem="ACl-rU-GRO" secondAttribute="top" id="3Di-uz-Moz"/>
-                            <constraint firstItem="VBn-xb-Fpv" firstAttribute="top" secondItem="e85-NO-xGK" secondAttribute="bottom" constant="16" id="3Dy-fC-WGr"/>
+                            <constraint firstItem="VBn-xb-Fpv" firstAttribute="top" secondItem="e85-NO-xGK" secondAttribute="bottom" constant="24" id="3Dy-fC-WGr"/>
                             <constraint firstItem="8yg-Nc-TS2" firstAttribute="leading" secondItem="2Va-xE-lGx" secondAttribute="trailing" constant="5" id="6ew-P6-hZd"/>
                             <constraint firstItem="ACl-rU-GRO" firstAttribute="top" secondItem="8yg-Nc-TS2" secondAttribute="bottom" constant="16" id="8Yw-tx-mQL"/>
                             <constraint firstItem="8yg-Nc-TS2" firstAttribute="trailing" secondItem="VBn-xb-Fpv" secondAttribute="trailing" id="H1V-Zl-wc8"/>
@@ -828,19 +763,20 @@
                             <constraint firstItem="2sH-na-olQ" firstAttribute="top" secondItem="Hkx-In-Fli" secondAttribute="bottom" constant="16" id="lkh-24-WI1"/>
                             <constraint firstItem="e85-NO-xGK" firstAttribute="centerX" secondItem="Q6d-la-Fzg" secondAttribute="centerX" id="mxX-Qq-7aw"/>
                             <constraint firstItem="VBn-xb-Fpv" firstAttribute="centerX" secondItem="Q6d-la-Fzg" secondAttribute="centerX" id="r0n-f6-0Fj"/>
-                            <constraint firstItem="e85-NO-xGK" firstAttribute="top" secondItem="2sH-na-olQ" secondAttribute="bottom" constant="16" id="r2K-Gl-mLg"/>
+                            <constraint firstItem="e85-NO-xGK" firstAttribute="top" secondItem="2sH-na-olQ" secondAttribute="bottom" constant="24" id="r2K-Gl-mLg"/>
                             <constraint firstItem="2sH-na-olQ" firstAttribute="centerX" secondItem="Q6d-la-Fzg" secondAttribute="centerX" id="xUJ-fz-ikU"/>
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="jobTextField" destination="LVy-ma-IaT" id="1Y4-f8-CDd"/>
                         <outlet property="navBar" destination="NlC-vd-u1g" id="B9h-mH-YzW"/>
-                        <outlet property="newJobTextField" destination="LVy-ma-IaT" id="1Y4-f8-CDd"/>
                         <outlet property="saveButton" destination="f00-t8-LWW" id="cSW-Dh-CDe"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cvg-lY-fqc" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="lFG-jL-dyz" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="3901.875" y="1875"/>
+            <point key="canvasLocation" x="3876" y="1875"/>
         </scene>
         <!--Setup Nav Controller-->
         <scene sceneID="qiB-h4-Vd0">
@@ -921,7 +857,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="annual income" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="V3b-gS-R21">
-                                        <rect key="frame" x="15" y="312" width="235" height="30"/>
+                                        <rect key="frame" x="15" y="312.5" width="235" height="30"/>
                                         <nil key="textColor"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
@@ -1030,7 +966,7 @@
                                         <rect key="frame" x="0.0" y="28" width="320" height="75"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="1ZJ-tX-XEn" id="DPk-t1-aDJ">
-                                            <rect key="frame" x="0.0" y="0.0" width="320" height="75"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="74"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Dad" translatesAutoresizingMaskIntoConstraints="NO" id="cVG-mt-V8D">
@@ -1072,7 +1008,7 @@
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                             </navigationBar>
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="family" translatesAutoresizingMaskIntoConstraints="NO" id="XCo-rh-Nac">
-                                <rect key="frame" x="16" y="72.5" width="40" height="40"/>
+                                <rect key="frame" x="16" y="73" width="40" height="40"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="40" id="EmF-NP-DND"/>
                                     <constraint firstAttribute="height" constant="40" id="U7q-q5-c9f"/>
@@ -1180,14 +1116,14 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="50" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="wPf-eY-SaM">
-                                <rect key="frame" x="0.0" y="122.5" width="320" height="393.5"/>
+                                <rect key="frame" x="0.0" y="246.5" width="320" height="269.5"/>
                                 <color key="backgroundColor" white="0.90000000000000002" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="CustomCell" id="N5t-Yi-k4g" customClass="Step3CustomCell" customModule="ToDo_App" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="320" height="50"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="N5t-Yi-k4g" id="8ij-KO-Drg">
-                                            <rect key="frame" x="0.0" y="0.0" width="287" height="50"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="287" height="49"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6w7-nl-QWR">
@@ -1205,7 +1141,6 @@
                                         </tableViewCellContentView>
                                         <connections>
                                             <outlet property="jobLabel" destination="6w7-nl-QWR" id="3Qg-JM-NnA"/>
-                                            <segue destination="4bZ-Xp-rY7" kind="presentation" identifier="EditJobSegue" trigger="accessoryAction" id="bVh-qJ-zQw"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -1215,15 +1150,19 @@
                                 </connections>
                             </tableView>
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="house broom" translatesAutoresizingMaskIntoConstraints="NO" id="je1-2P-m1C">
-                                <rect key="frame" x="16" y="64" width="40" height="40"/>
+                                <rect key="frame" x="16" y="125.5" width="40" height="40"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="40" id="0fM-G4-g08"/>
                                     <constraint firstAttribute="width" constant="40" id="CL8-FE-nkx"/>
                                 </constraints>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TcN-Um-hda">
-                                <rect key="frame" x="72" y="52" width="232" height="62.5"/>
-                                <string key="text">These are the default daily and weekly jobs for the whole family. Customize them to meet your family's needs. Tap to edit or add.</string>
+                                <rect key="frame" x="72" y="52" width="232" height="186.5"/>
+                                <string key="text">Make a wish list of all the jobs that need to be done on a daily and weekly basis in your home. Do NOT include jobs that need to be done less frequently.
+
+Default jobs are already listed, but you can change them to fit your family's needs.
+
+List all the daily and weekly jobs for the family. Add or edit as needed.</string>
                                 <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -1250,14 +1189,24 @@
                                     <segue destination="vyY-s3-p9b" kind="show" id="bem-9y-sER"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="McF-tg-Ezm">
+                                <rect key="frame" x="16" y="524" width="36" height="36"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="36" id="Dst-fL-DU1"/>
+                                    <constraint firstAttribute="height" constant="36" id="Scb-6Q-Tk7"/>
+                                </constraints>
+                                <state key="normal" image="question mark orange"/>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="0.90000000000000002" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="je1-2P-m1C" firstAttribute="top" relation="greaterThanOrEqual" secondItem="JlP-TD-9Sf" secondAttribute="bottom" constant="8" id="0YX-Pm-qNo"/>
+                            <constraint firstItem="McF-tg-Ezm" firstAttribute="leading" secondItem="YGw-md-1EI" secondAttribute="leading" constant="16" id="1sI-Hn-dFQ"/>
                             <constraint firstItem="u1s-fW-K2f" firstAttribute="top" secondItem="wPf-eY-SaM" secondAttribute="bottom" constant="8" id="2Hc-0T-J8v"/>
                             <constraint firstItem="je1-2P-m1C" firstAttribute="leading" secondItem="YGw-md-1EI" secondAttribute="leadingMargin" id="A1t-6t-RVK"/>
                             <constraint firstAttribute="trailing" secondItem="wPf-eY-SaM" secondAttribute="trailing" id="C4P-wb-hEk"/>
                             <constraint firstItem="dZ8-mB-G4d" firstAttribute="top" secondItem="u1s-fW-K2f" secondAttribute="bottom" constant="8" id="EEX-PW-wBA"/>
+                            <constraint firstItem="dZ8-mB-G4d" firstAttribute="top" secondItem="McF-tg-Ezm" secondAttribute="bottom" constant="8" id="Gmo-Wp-LfE"/>
                             <constraint firstItem="wPf-eY-SaM" firstAttribute="leading" secondItem="YGw-md-1EI" secondAttribute="leading" id="NmP-Zy-gku"/>
                             <constraint firstItem="TcN-Um-hda" firstAttribute="leading" secondItem="je1-2P-m1C" secondAttribute="trailing" constant="16" id="Qjt-Wh-dpe"/>
                             <constraint firstAttribute="trailing" secondItem="u1s-fW-K2f" secondAttribute="trailing" constant="16" id="VhW-XB-TeE"/>
@@ -1270,12 +1219,13 @@
                     </view>
                     <connections>
                         <outlet property="jobsTableView" destination="wPf-eY-SaM" id="4BB-Hn-lOv"/>
-                        <segue destination="4bZ-Xp-rY7" kind="presentation" identifier="AddJobSegue" id="Pqi-cX-Sft"/>
+                        <segue destination="4bZ-Xp-rY7" kind="presentation" identifier="AddJob" id="Pqi-cX-Sft"/>
+                        <segue destination="4bZ-Xp-rY7" kind="presentation" identifier="EditJob" id="7Nt-Uo-akl"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="kGw-Cv-lwU" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3902" y="1099"/>
+            <point key="canvasLocation" x="3876" y="1098"/>
         </scene>
         <!--Savannah-->
         <scene sceneID="0mD-F9-8KA">
@@ -1298,7 +1248,7 @@
                                         <rect key="frame" x="0.0" y="28" width="320" height="50"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Qas-Of-naH" id="UX3-Oo-aQs">
-                                            <rect key="frame" x="0.0" y="0.0" width="320" height="50"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="49"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ojz-Uu-SSw">
@@ -1456,7 +1406,7 @@
                                         <rect key="frame" x="0.0" y="28" width="320" height="50"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Yyx-SR-bTB" id="uAV-SA-cn9">
-                                            <rect key="frame" x="0.0" y="0.0" width="287" height="50"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="287" height="49"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cRT-uS-hGD">
@@ -1629,7 +1579,7 @@
                                         <rect key="frame" x="0.0" y="28" width="320" height="50"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="hEO-4G-6FO" id="9AL-rS-6ox">
-                                            <rect key="frame" x="0.0" y="0.0" width="320" height="50"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="49"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wiv-AV-QqA">
@@ -1780,7 +1730,7 @@
                                         <rect key="frame" x="0.0" y="28" width="320" height="50"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="eg6-Hg-abk" id="SYp-G0-VtT">
-                                            <rect key="frame" x="0.0" y="0.0" width="287" height="50"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="287" height="49"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8cb-7s-Fcw">
@@ -1906,7 +1856,7 @@
                                         <rect key="frame" x="0.0" y="28" width="320" height="35"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="aKq-Q7-Ths" id="0Gw-oZ-IdQ">
-                                            <rect key="frame" x="0.0" y="0.0" width="320" height="35"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="34"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Nat-xc-Oty">
@@ -2343,7 +2293,7 @@
                                         <rect key="frame" x="0.0" y="28" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="DHR-2t-4Vw" id="KJ6-Wy-IX3">
-                                            <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="envelope white" translatesAutoresizingMaskIntoConstraints="NO" id="Geh-PX-11v">
@@ -2417,7 +2367,7 @@
                                         <rect key="frame" x="0.0" y="72" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="bVb-QZ-szp" id="xCp-PS-pwp">
-                                            <rect key="frame" x="0.0" y="0.0" width="287" height="44"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="287" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="u8R-1i-jWP">
@@ -4806,7 +4756,7 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="jJ5-VK-LZh"/>
-        <segue reference="bVh-qJ-zQw"/>
+        <segue reference="7Nt-Uo-akl"/>
         <segue reference="sZK-Vt-lQm"/>
     </inferredMetricsTieBreakers>
 </document>

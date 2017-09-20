@@ -16,11 +16,11 @@ class Step4ParentsVC: UIViewController, UITableViewDataSource, UITableViewDelega
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if section == 0 {
-            return dailyJobs.count
+            return dailyJobsTemp.count
         } else if section == 1 {
             return parentDailyJobs.count
         } else if section == 2 {
-            return weeklyJobs.count
+            return weeklyJobsTemp.count
         } else {
             return parentWeeklyJobs.count
         }
@@ -50,13 +50,13 @@ class Step4ParentsVC: UIViewController, UITableViewDataSource, UITableViewDelega
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "CustomCell", for: indexPath) as! Step4ParentCustomCell
         if indexPath.section == 0 {
-            let (dailyChoreName, _, _, _) = dailyJobs[indexPath.row]
+            let (dailyChoreName, _, _, _) = dailyJobsTemp[indexPath.row]
             cell.jobLabel.text = dailyChoreName
         } else if indexPath.section == 1 {
             let (parentDailyJobName, _, _, _) = parentDailyJobs[indexPath.row]
             cell.jobLabel.text = parentDailyJobName
         } else if indexPath.section == 2 {
-            let (weeklyJobName, _, _, _) = weeklyJobs[indexPath.row]
+            let (weeklyJobName, _, _, _) = weeklyJobsTemp[indexPath.row]
             cell.jobLabel.text = weeklyJobName
         } else {
             let (parentWeeklyJobName, _, _, _) = parentWeeklyJobs[indexPath.row]

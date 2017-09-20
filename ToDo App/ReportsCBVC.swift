@@ -48,7 +48,7 @@ class ReportsCBVC: UIViewController, UITableViewDataSource, UITableViewDelegate 
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if section == 0 {
-            return dailyJobs.count
+            return dailyJobsTemp.count
         } else {
             return dailyHabits.count
         }
@@ -77,7 +77,7 @@ class ReportsCBVC: UIViewController, UITableViewDataSource, UITableViewDelegate 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "CustomCell", for: indexPath) as! ReportsCBCell
         if indexPath.section == 0 {
-            let (jobName, _, _, _) = dailyJobs[indexPath.row]
+            let (jobName, _, _, _) = dailyJobsTemp[indexPath.row]
             let cbNumber = tempJobsCB[indexPath.row]
             cell.jobHabitLabel.text = jobName
             cell.jobHabitCBCount.text = "\(tempJobsCB[indexPath.row])"

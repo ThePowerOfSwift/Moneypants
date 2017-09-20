@@ -22,7 +22,7 @@ let tempUsers: [(String, UIImage, String)] = [
 
 // Table data is as follows: job name, job multiplier, job Consistency Bonus, job editable?
 
-let dailyJobs = [
+let dailyJobsTemp = [
     ("bedroom", 1, false, true),
     ("bathrooms", 1, false, true),
     ("laundry", 1, false, true),
@@ -35,7 +35,7 @@ let dailyJobs = [
     ("feed pet / garbage", 1, false, true)
 ]
 
-let weeklyJobs = [
+let weeklyJobsTemp = [
     ("sweep porch",	2.5, false, true),
     ("weed garden",	5, false, true),
     ("wash windows", 5, false, true),
