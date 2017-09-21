@@ -721,13 +721,13 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="If a job takes more than 30 minutes, split it into multiple jobs." lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ba6-js-ZEh">
-                                <rect key="frame" x="49" y="395" width="236" height="61"/>
+                                <rect key="frame" x="49" y="393.5" width="236" height="61"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="•" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ACl-rU-GRO">
-                                <rect key="frame" x="35" y="395" width="9" height="20.5"/>
+                                <rect key="frame" x="35" y="393.5" width="9" height="20.5"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="8.5" id="Oz0-Df-AbM"/>
                                 </constraints>
@@ -736,8 +736,8 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="If a job takes less than 10 minutes, combine it with another job." lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8yg-Nc-TS2">
-                                <rect key="frame" x="48.5" y="318" width="236.5" height="61"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <rect key="frame" x="48.5" y="318" width="236.5" height="59.5"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
@@ -1116,7 +1116,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="50" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="wPf-eY-SaM">
-                                <rect key="frame" x="0.0" y="246.5" width="320" height="269.5"/>
+                                <rect key="frame" x="0.0" y="121" width="320" height="395"/>
                                 <color key="backgroundColor" white="0.90000000000000002" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="CustomCell" id="N5t-Yi-k4g" customClass="Step3CustomCell" customModule="ToDo_App" customModuleProvider="target">
@@ -1150,20 +1150,15 @@
                                 </connections>
                             </tableView>
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="house broom" translatesAutoresizingMaskIntoConstraints="NO" id="je1-2P-m1C">
-                                <rect key="frame" x="16" y="125.5" width="40" height="40"/>
+                                <rect key="frame" x="16" y="63" width="40" height="40"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="40" id="0fM-G4-g08"/>
                                     <constraint firstAttribute="width" constant="40" id="CL8-FE-nkx"/>
                                 </constraints>
                             </imageView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TcN-Um-hda">
-                                <rect key="frame" x="72" y="52" width="232" height="186.5"/>
-                                <string key="text">Make a wish list of all the jobs that need to be done on a daily and weekly basis in your home. Do NOT include jobs that need to be done less frequently.
-
-Default jobs are already listed, but you can change them to fit your family's needs.
-
-List all the daily and weekly jobs for the family. Add or edit as needed.</string>
-                                <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="List all the daily and weekly jobs for the entire family. Add, edit, or delete as needed." lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TcN-Um-hda">
+                                <rect key="frame" x="72" y="52" width="232" height="61"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
@@ -1186,7 +1181,7 @@ List all the daily and weekly jobs for the family. Add or edit as needed.</strin
                                     <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
                                 </userDefinedRuntimeAttributes>
                                 <connections>
-                                    <segue destination="vyY-s3-p9b" kind="show" id="bem-9y-sER"/>
+                                    <action selector="nextButtonTapped:" destination="GIC-iC-fnb" eventType="touchUpInside" id="oEn-XZ-9b4"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="McF-tg-Ezm">
@@ -1196,6 +1191,9 @@ List all the daily and weekly jobs for the family. Add or edit as needed.</strin
                                     <constraint firstAttribute="height" constant="36" id="Scb-6Q-Tk7"/>
                                 </constraints>
                                 <state key="normal" image="question mark orange"/>
+                                <connections>
+                                    <action selector="questionButtonTapped:" destination="GIC-iC-fnb" eventType="touchUpInside" id="fRv-dp-WaB"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="0.90000000000000002" alpha="1" colorSpace="calibratedWhite"/>
@@ -1219,8 +1217,10 @@ List all the daily and weekly jobs for the family. Add or edit as needed.</strin
                     </view>
                     <connections>
                         <outlet property="jobsTableView" destination="wPf-eY-SaM" id="4BB-Hn-lOv"/>
+                        <outlet property="questionButton" destination="McF-tg-Ezm" id="q3A-Hb-EUA"/>
                         <segue destination="4bZ-Xp-rY7" kind="presentation" identifier="AddJob" id="Pqi-cX-Sft"/>
                         <segue destination="4bZ-Xp-rY7" kind="presentation" identifier="EditJob" id="7Nt-Uo-akl"/>
+                        <segue destination="vyY-s3-p9b" kind="show" identifier="AssignJobs" id="nur-aH-tzv"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="kGw-Cv-lwU" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1376,7 +1376,7 @@ List all the daily and weekly jobs for the family. Add or edit as needed.</strin
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="QBy-O1-jOY" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4756.875" y="1099.6478873239437"/>
+            <point key="canvasLocation" x="4753" y="1098"/>
         </scene>
         <!--Savannah-->
         <scene sceneID="EqV-q6-7JF">
@@ -1530,7 +1530,7 @@ List all the daily and weekly jobs for the family. Add or edit as needed.</strin
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="t2q-jk-0Dv" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="5542.5" y="1099.6478873239437"/>
+            <point key="canvasLocation" x="5567" y="1098"/>
         </scene>
         <!--Dad-->
         <scene sceneID="4BR-c8-nAV">
@@ -1681,7 +1681,7 @@ List all the daily and weekly jobs for the family. Add or edit as needed.</strin
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Oae-fa-vXv" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="6332" y="1100"/>
+            <point key="canvasLocation" x="6366" y="1098"/>
         </scene>
         <!--Dad-->
         <scene sceneID="OmM-6g-iRT">
@@ -1833,7 +1833,7 @@ List all the daily and weekly jobs for the family. Add or edit as needed.</strin
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="q2g-9s-x4j" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="7140" y="1099"/>
+            <point key="canvasLocation" x="7163" y="1098"/>
         </scene>
         <!--summary-->
         <scene sceneID="gOm-Tc-PCF">
@@ -1971,7 +1971,7 @@ List all the daily and weekly jobs for the family. Add or edit as needed.</strin
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="pXI-cE-Inv" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="7920" y="1098.5915492957747"/>
+            <point key="canvasLocation" x="7973" y="1098"/>
         </scene>
         <!--Savannah-->
         <scene sceneID="ywD-xO-Uj4">
@@ -2230,7 +2230,7 @@ List all the daily and weekly jobs for the family. Add or edit as needed.</strin
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="VXM-PP-Iwn" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="9678.75" y="1099.6478873239437"/>
+            <point key="canvasLocation" x="9686" y="1098"/>
         </scene>
         <!--Savannah-->
         <scene sceneID="5fc-3O-4JP">
@@ -2592,7 +2592,7 @@ List all the daily and weekly jobs for the family. Add or edit as needed.</strin
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="QZ4-cB-ILe" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="11572.5" y="1875"/>
+            <point key="canvasLocation" x="10581" y="1875"/>
         </scene>
         <!--Savannah-->
         <scene sceneID="gww-gt-muX">
@@ -4062,7 +4062,7 @@ List all the daily and weekly jobs for the family. Add or edit as needed.</strin
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="pX6-mc-eI0" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="10676.25" y="1875"/>
+            <point key="canvasLocation" x="9684" y="1875"/>
         </scene>
         <!--complete-->
         <scene sceneID="e33-8p-Bop">
@@ -4162,7 +4162,7 @@ List all the daily and weekly jobs for the family. Add or edit as needed.</strin
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xYF-U9-UyW" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="12615" y="1483.0985915492959"/>
+            <point key="canvasLocation" x="11558" y="1482"/>
         </scene>
         <!--HomePageTabController-->
         <scene sceneID="NCr-LL-Yvf">
@@ -4757,6 +4757,6 @@ List all the daily and weekly jobs for the family. Add or edit as needed.</strin
     <inferredMetricsTieBreakers>
         <segue reference="jJ5-VK-LZh"/>
         <segue reference="7Nt-Uo-akl"/>
-        <segue reference="sZK-Vt-lQm"/>
+        <segue reference="f1o-EZ-hBS"/>
     </inferredMetricsTieBreakers>
 </document>

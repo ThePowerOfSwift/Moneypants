@@ -8,8 +8,10 @@ class Step2VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
     @IBOutlet weak var tableView: UITableView!
     
     var users = [User]()        // create variable called 'users' which is an array of type User (which is a class we created)
+    
     var firebaseUser: FIRUser!
     var firebaseStorage: FIRStorage!
+    
     var cellStyleForEditing: UITableViewCellEditingStyle = .none
     
     override func viewDidLoad() {

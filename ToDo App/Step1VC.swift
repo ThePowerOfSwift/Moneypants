@@ -10,8 +10,9 @@ class Step1VC: UIViewController, UITextFieldDelegate {
     let incomeMinimum = 30_000
     let incomeMaximum = 1_000_000
     
-    var firebaseUser: FIRUser!
     var users = [Item]()
+    
+    var firebaseUser: FIRUser!
     var ref: FIRDatabaseReference!
     var refHandle: UInt!
     
