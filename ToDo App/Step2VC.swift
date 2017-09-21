@@ -37,7 +37,6 @@ class Step2VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
     func loadExistingUsers() {
         FIRDatabase.database().reference().child("users").child(firebaseUser.uid).child("members").observe(.childAdded) { (snapshot: FIRDataSnapshot) in
             if let dict = snapshot.value as? [String : Any] {
-                print(snapshot.value!)
                 let userPhotoUrl = dict["profileImageUrl"] as! String
                 let userFirstName = dict["firstName"] as! String
                 let userBirthday = dict["birthday"] as! String
@@ -81,7 +80,7 @@ class Step2VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            print(users[indexPath.row].firstName)
+//            print(users[indexPath.row].firstName)
             FIRDatabase.database().reference().child("users").child(firebaseUser.uid).child("members").child(users[indexPath.row].firstName).removeValue()
             users.remove(at: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: .fade)

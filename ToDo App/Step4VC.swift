@@ -1,18 +1,42 @@
 import UIKit
+import Firebase
 
-class Step4ViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+class Step4VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
+    
+    var firebaseUser: FIRUser!
+    var ref: FIRDatabaseReference!
+    
+    var dailyJobs = [JobsAndHabits]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        // --------
+        // Firebase
+        // --------
+        
+        firebaseUser = FIRAuth.auth()?.currentUser
+        ref = FIRDatabase.database().reference().child("users").child(firebaseUser.uid)
+        fetchJobs()
+        
         self.automaticallyAdjustsScrollViewInsets = false
-
-    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
     }
     
+    func fetchJobs() {
+        ref.observe(.childAdded, with: { (snapshot) in
+            
+            if let dictionary = snapshot.value as? [String : Any] {
+                
+            }
+            
+            
+            
+            
+            
+            print(snapshot)
+            
+        }, withCancel: nil)
+    }
     
     // ----------------
     // Setup Table View

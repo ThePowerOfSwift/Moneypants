@@ -170,7 +170,7 @@ class Step2UsersVC: UIViewController, UIImagePickerControllerDelegate, UINavigat
             femaleButton.isSelected = true
             genderValue = "female"
         }
-        print(genderValue)
+//        print(genderValue)
         updateSaveButtonState()
     }
     
@@ -184,7 +184,7 @@ class Step2UsersVC: UIViewController, UIImagePickerControllerDelegate, UINavigat
             maleButton.isSelected = true
             genderValue = "male"
         }
-        print(genderValue)
+//        print(genderValue)
         updateSaveButtonState()
     }
     
@@ -198,7 +198,7 @@ class Step2UsersVC: UIViewController, UIImagePickerControllerDelegate, UINavigat
             childButton.isSelected = true
             childParentValue = "child"
         }
-        print(childParentValue)
+//        print(childParentValue)
         updateSaveButtonState()
     }
     
@@ -212,7 +212,7 @@ class Step2UsersVC: UIViewController, UIImagePickerControllerDelegate, UINavigat
             parentButton.isSelected = true
             childParentValue = "parent"
         }
-        print(childParentValue)
+//        print(childParentValue)
         updateSaveButtonState()
     }
     
@@ -260,7 +260,6 @@ class Step2UsersVC: UIViewController, UIImagePickerControllerDelegate, UINavigat
         let ageComponents = gregorian.dateComponents([.year], from: dateOfBirth, to: Date())
         let age = ageComponents.year!
         if age < 2 {
-            print("Too young!")
             createAlert(title: "Age Error", message: "Individuals must be at least two years old to use The Moneypants Solution. Please enter a valid birthday.", textField: birthdayTextField)
             //        } else if age > 25 {
             //            createAlert(title: "Too old!", message: "Children should be younger than 25.")

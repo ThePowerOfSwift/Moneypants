@@ -93,7 +93,7 @@
 		CEB524151F5A13DC00CD8491 /* ReportsBudgetVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB524141F5A13DC00CD8491 /* ReportsBudgetVC.swift */; };
 		CEB524191F5A6F1F00CD8491 /* ReportsBudgetCell2.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB524181F5A6F1F00CD8491 /* ReportsBudgetCell2.swift */; };
 		CEB7D1681F5A86D3006D9763 /* ReportsBudgetCell1.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB7D1671F5A86D3006D9763 /* ReportsBudgetCell1.swift */; };
-		CED509E21F030F560058728F /* Step4ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED509E11F030F560058728F /* Step4ViewController.swift */; };
+		CED509E21F030F560058728F /* Step4VC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED509E11F030F560058728F /* Step4VC.swift */; };
 		CED509E41F0310740058728F /* Step4CustomCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED509E31F0310740058728F /* Step4CustomCell.swift */; };
 		CEDBFE2E1F2AE4C800829DE4 /* ReportsPointsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEDBFE2D1F2AE4C800829DE4 /* ReportsPointsCell.swift */; };
 		CEE2631C1F2D25BA007AB77E /* MoneyCell1.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEE2631B1F2D25BA007AB77E /* MoneyCell1.swift */; };
@@ -198,7 +198,7 @@
 		CEB524141F5A13DC00CD8491 /* ReportsBudgetVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReportsBudgetVC.swift; sourceTree = "<group>"; };
 		CEB524181F5A6F1F00CD8491 /* ReportsBudgetCell2.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReportsBudgetCell2.swift; sourceTree = "<group>"; };
 		CEB7D1671F5A86D3006D9763 /* ReportsBudgetCell1.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReportsBudgetCell1.swift; sourceTree = "<group>"; };
-		CED509E11F030F560058728F /* Step4ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Step4ViewController.swift; sourceTree = "<group>"; };
+		CED509E11F030F560058728F /* Step4VC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = Step4VC.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		CED509E31F0310740058728F /* Step4CustomCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Step4CustomCell.swift; sourceTree = "<group>"; };
 		CEDBFE2D1F2AE4C800829DE4 /* ReportsPointsCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = ReportsPointsCell.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		CEE2631B1F2D25BA007AB77E /* MoneyCell1.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MoneyCell1.swift; sourceTree = "<group>"; };
@@ -257,24 +257,12 @@
 		89FB67561D5C82AB002B2484 /* ToDo App */ = {
 			isa = PBXGroup;
 			children = (
-				89FB67571D5C82AB002B2484 /* AppDelegate.swift */,
-				CE18C4D11F64E14F00C748BC /* MaxLengthTextField.swift */,
-				CEFC21FF1F64A82900CC4FC1 /* User.swift */,
-				CEA2BC481F71C3900020D958 /* JobsAndHabits.swift */,
-				CE8FFA011F10AE92004A53BE /* GlobalVariables.swift */,
-				CEDBFE2C1F2AE41900829DE4 /* Storyboards */,
-				CEFC21FD1F64A65800CC4FC1 /* Login */,
-				CEE4D6A91F0F44AB009BAE6C /* Step1 */,
-				CEE4D6A51F0F4460009BAE6C /* Step2 */,
-				CEE4D6A61F0F446A009BAE6C /* Step3 */,
-				CEE4D6A81F0F447D009BAE6C /* Step4 */,
-				CEE4D6AA1F0F44BE009BAE6C /* Step5 */,
-				CEB4CD2B1F1ECDC700F9733F /* Home */,
-				CE4832B71F27E9A0005A7A55 /* Users */,
-				CEFC21FE1F64A79B00CC4FC1 /* OLD */,
+				CE69C0E91F7434A30024D09F /* Model */,
+				CEDBFE2C1F2AE41900829DE4 /* View */,
+				CE69C0EA1F7434BD0024D09F /* Controller */,
+				89FB675E1D5C82AB002B2484 /* Assets.xcassets */,
 				89FB67631D5C82AB002B2484 /* Info.plist */,
 				CEB2FD531EFF4DB300763862 /* GoogleService-Info.plist */,
-				89FB675E1D5C82AB002B2484 /* Assets.xcassets */,
 			);
 			path = "ToDo App";
 			sourceTree = "<group>";
@@ -325,6 +313,34 @@
 				CE7FF9901F3448C9000AD071 /* UserSettingsVC.swift */,
 			);
 			name = Users;
+			sourceTree = "<group>";
+		};
+		CE69C0E91F7434A30024D09F /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				89FB67571D5C82AB002B2484 /* AppDelegate.swift */,
+				CE18C4D11F64E14F00C748BC /* MaxLengthTextField.swift */,
+				CEFC21FF1F64A82900CC4FC1 /* User.swift */,
+				CEA2BC481F71C3900020D958 /* JobsAndHabits.swift */,
+				CE8FFA011F10AE92004A53BE /* GlobalVariables.swift */,
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
+		CE69C0EA1F7434BD0024D09F /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				CEFC21FD1F64A65800CC4FC1 /* Login */,
+				CEE4D6A91F0F44AB009BAE6C /* Step1 */,
+				CEE4D6A51F0F4460009BAE6C /* Step2 */,
+				CEE4D6A61F0F446A009BAE6C /* Step3 */,
+				CEE4D6A81F0F447D009BAE6C /* Step4 */,
+				CEE4D6AA1F0F44BE009BAE6C /* Step5 */,
+				CEB4CD2B1F1ECDC700F9733F /* Home */,
+				CE4832B71F27E9A0005A7A55 /* Users */,
+				CEFC21FE1F64A79B00CC4FC1 /* OLD */,
+			);
+			name = Controller;
 			sourceTree = "<group>";
 		};
 		CE951E3F1F4B5D24003B5EEF /* Payday */ = {
@@ -380,7 +396,7 @@
 			name = Reports;
 			sourceTree = "<group>";
 		};
-		CEDBFE2C1F2AE41900829DE4 /* Storyboards */ = {
+		CEDBFE2C1F2AE41900829DE4 /* View */ = {
 			isa = PBXGroup;
 			children = (
 				89FB675B1D5C82AB002B2484 /* Setup.storyboard */,
@@ -388,7 +404,7 @@
 				CE4832B41F27E27B005A7A55 /* User.storyboard */,
 				89FB67601D5C82AB002B2484 /* LaunchScreen.storyboard */,
 			);
-			name = Storyboards;
+			name = View;
 			sourceTree = "<group>";
 		};
 		CEE4D6A51F0F4460009BAE6C /* Step2 */ = {
@@ -414,7 +430,7 @@
 		CEE4D6A81F0F447D009BAE6C /* Step4 */ = {
 			isa = PBXGroup;
 			children = (
-				CED509E11F030F560058728F /* Step4ViewController.swift */,
+				CED509E11F030F560058728F /* Step4VC.swift */,
 				CED509E31F0310740058728F /* Step4CustomCell.swift */,
 				CE7160F81F04A2A10045AA05 /* Step4HabitViewController.swift */,
 				CE7160FA1F04A9270045AA05 /* Step4HabitCustomCell.swift */,
@@ -692,7 +708,7 @@
 				CE4832C51F28116B005A7A55 /* JobJarVC.swift in Sources */,
 				CE4832C91F28611B005A7A55 /* ReportsVC.swift in Sources */,
 				CE3CA84F1F32B97C0069129B /* ReportsSpendingVC.swift in Sources */,
-				CED509E21F030F560058728F /* Step4ViewController.swift in Sources */,
+				CED509E21F030F560058728F /* Step4VC.swift in Sources */,
 				CEF3EBBF1F305FE4008953A8 /* MoneyCell4.swift in Sources */,
 				CE79B8941F233F290032DD70 /* VideosVC.swift in Sources */,
 				CEDBFE2E1F2AE4C800829DE4 /* ReportsPointsCell.swift in Sources */,

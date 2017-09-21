@@ -1,6 +1,5 @@
 import UIKit
-import FirebaseAuth
-import FirebaseDatabase
+import Firebase
 
 class Step3VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
 
@@ -21,7 +20,7 @@ class Step3VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
         // --------
         
         firebaseUser = FIRAuth.auth()?.currentUser
-        ref = FIRDatabase.database().reference().child("TESTING").child(firebaseUser.uid)
+        ref = FIRDatabase.database().reference().child("users").child(firebaseUser.uid)
         
         jobsTableView.delegate = self
         jobsTableView.dataSource = self
@@ -32,8 +31,9 @@ class Step3VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
         
         // add + symbol in navbar
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addJobButtonTapped))
-                
-        loadDefaultJobsAndHabits()
+        
+        // MARK: need to load Firebase Data if it exists, then if not, load default jobs
+        loadDefaultJobs()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -112,10 +112,8 @@ class Step3VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
                     dailyJobs.remove(at: indexPath.row)
                     // MARK: Need to update Firebase here
                     jobsTableView.deleteRows(at: [indexPath], with: .fade)
+                    
                 }
-                
-            } else {
-                print("trying to delete weekly jobs, huh? No can do, senor!")
             }
         }
     }
@@ -127,16 +125,18 @@ class Step3VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
     // ------------------
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
         if segue.identifier == "EditJob" {
             let nextController = segue.destination as! Step3AddJobVC
+            nextController.dailyJobs = dailyJobs
+
             // 'sender' is retrieved from 'didSelectRow' function above
-            print("sender is: \(sender!)")
             nextController.job = sender as! JobsAndHabits?
             nextController.navBarTitle = "edit job"
         } else if segue.identifier == "AddJob" {
             let nextController = segue.destination as! Step3AddJobVC
+            nextController.dailyJobs = dailyJobs
             nextController.navBarTitle = "add job"
-            print("add job segue initiated")
         } else {
             print("another segue initiated")
         }
@@ -164,52 +164,44 @@ class Step3VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
             dailyJobs.append(updatedJob!)
             jobsTableView.insertRows(at: [newIndexPath], with: .automatic)
         }
-        
-        // MARK: save to Firebase here
-        print(dailyJobs, weeklyJobs)
-        print("time to update Firebase with ", updatedJob!.name)
     }
     
     @IBAction func nextButtonTapped(_ sender: UIButton) {
-        
+        ref.child("dailyJobs").removeValue()        // reset daily jobs
+        var dailyCounter = 0
+        var weeklyCounter = 0
         for dailyJob in dailyJobs {
-            ref.child("dailyJobs").child(dailyJob.name).setValue(["name" : dailyJob.name,
-                                                                  "multiplier" : dailyJob.multiplier,
-                                                                  "classification" : dailyJob.classification])
+            dailyCounter += 1
+            ref.child("dailyJobs").child("dailyJob\(dailyCounter)").setValue(["name" : dailyJob.name,
+                                                                              "multiplier" : dailyJob.multiplier,
+                                                                              "classification" : dailyJob.classification])
             ref.child("dailyJobs").updateChildValues(["count" : dailyJobs.count])            // return number of daily jobs
         }
         
         for weeklyJob in weeklyJobs {
-            ref.child("weeklyJobs").child(weeklyJob.name).setValue(["name" : weeklyJob.name,
-                                                                    "multiplier" : weeklyJob.multiplier,
-                                                                    "classification" : weeklyJob.classification])
+            weeklyCounter += 1
+            ref.child("weeklyJobs").child("weeklyJob\(weeklyCounter)").updateChildValues(["name" : weeklyJob.name,
+                                                                                          "multiplier" : weeklyJob.multiplier,
+                                                                                          "classification" : weeklyJob.classification])
         }
-        
-        
-        
-        
-        
         performSegue(withIdentifier: "AssignJobs", sender: self)
     }
-    
     
     
     // ---------
     // Functions
     // ---------
     
-//    func saveToFirebase(array: Array<Any>, value1: String, value2: Double, value3: String) {
-//        ref.child("TESTING").child(firebaseUser.uid).childByAutoId().setValue([array.value1,
-//                                                                                  array.value2,
-//                                                                                  array.value3)]
-//    }
-    
     func addJobButtonTapped() {
-        performSegue(withIdentifier: "AddJob", sender: self)
+        if dailyJobs.count >= 20 {
+            addTooManyJobsAlert()
+        } else {
+            performSegue(withIdentifier: "AddJob", sender: self)
+        }
     }
     
     
-    func loadDefaultJobsAndHabits() {
+    func loadDefaultJobs() {
         
         // create array of default jobs and habits
         dailyJobs = [JobsAndHabits(jobName: "bedroom", jobMultiplier: 1, jobClass: "dailyJob"),
@@ -249,6 +241,11 @@ class Step3VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
         questionButtonAlert()
     }
     
+    
+    // ------
+    // Alerts
+    // ------
+    
     func questionButtonAlert() {
         let alert = UIAlertController(title: "Daily & Weekly Jobs", message: "Make a wish list of all the jobs that need to be done on a daily and weekly basis in your home. Do NOT include jobs that need to be done less frequently (do not include monthly or yearly jobs). Also, do NOT include daily habits. Those will be reviewed in the upcoming screens.\n\nDefault jobs are already listed, but you can change them to fit your family's needs. You can have up to 20 daily jobs and 10 weekly jobs. You cannot change the number of weekly jobs.", preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "okay", style: .default, handler: { (action) in
@@ -262,6 +259,14 @@ class Step3VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
         alert.addAction(UIAlertAction(title: "okay", style: .default, handler: { (action) in
             alert.dismiss(animated: true, completion: nil)
             self.jobsTableView.reloadData()
+        }))
+        self.present(alert, animated: true, completion: nil)
+    }
+    
+    func addTooManyJobsAlert() {
+        let alert = UIAlertController(title: "Add Job", message: "You have reached your limit of 20 daily jobs. If you have more jobs to assign, try combining multiple jobs into one.", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "okay", style: .default, handler: { (action) in
+            alert.dismiss(animated: true, completion: nil)
         }))
         self.present(alert, animated: true, completion: nil)
     }

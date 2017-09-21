@@ -6,9 +6,10 @@ class Step3AddJobVC: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var jobTextField: UITextField!
     @IBOutlet weak var saveButton: UIBarButtonItem!
     
-    var navBarTitle: String = ""        // for allowing other VCs to change navbar title
+    var navBarTitle: String = ""            // for allowing other VCs to change navbar title
     
-    var job: JobsAndHabits?             // 'job' is an instance of 'JobsAndHabits' class
+    var job: JobsAndHabits?                 // 'job' is an instance of 'JobsAndHabits' class
+    var dailyJobs: [JobsAndHabits]?       // This value will get passed from Step3VC
     
     var jobDescription: String = ""
     var jobTempMultiplier: Double!
@@ -27,7 +28,6 @@ class Step3AddJobVC: UIViewController, UITextFieldDelegate {
             jobTempMultiplier = job.multiplier
             jobTempClassification = job.classification
         }
-//        print(job?.name ?? "name is blank", job?.multiplier ?? "multiplier is blank", job?.classification ?? "class is blank")
         
         updateSaveButtonState()
     }
@@ -42,12 +42,21 @@ class Step3AddJobVC: UIViewController, UITextFieldDelegate {
         dismiss(animated: true, completion: nil)
     }
     
-//    @IBAction func saveButtonTapped(_ sender: UIBarButtonItem) {
-//        print("save button tapped")
-//    }
+    // This gets executed when 'SAVE' button is tapped, before segue is performed
+    override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool {
+        for name in dailyJobs! {
+            if name.name.lowercased() == (jobTextField.text?.lowercased()) {        // check to see if lowercased text matches
+                duplicateNameAlert()
+                return false
+            }
+        }
+        return true
+    }
     
+    
+    // This is what gets executed when "SAVE" button is tapped
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        
+
         // set new job name to be passed back to Step3VC after the unwind segue
         let name = jobTextField.text
         
@@ -58,7 +67,6 @@ class Step3AddJobVC: UIViewController, UITextFieldDelegate {
         let classification = job?.classification ?? "dailyJob"
         
         job = JobsAndHabits(jobName: name!, jobMultiplier: multiplier, jobClass: classification)
-//        print("new job is: ", job!.name, job!.multiplier, job!.classification)
     }
     
     
@@ -83,6 +91,21 @@ class Step3AddJobVC: UIViewController, UITextFieldDelegate {
     }
     
     
+    // ---------
+    // Functions
+    // ---------
+    
+    func duplicateNameAlert() {
+        let alert = UIAlertController(title: "Add Job", message: "You have entered in a job with the same name as another job. Please choose a unique name for this job.", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "okay", style: .default, handler: { (action) in
+            alert.dismiss(animated: true, completion: {
+                self.jobTextField.becomeFirstResponder()          // for some reason, this causes a spellcheck error with Xcode
+            })
+        }))
+        present(alert, animated: true, completion: nil)
+    }
+    
+    
     // ----------------------------------------------------------
     // MARK: Dismiss keyboard if user taps outside of text fields
     // ----------------------------------------------------------
@@ -90,6 +113,4 @@ class Step3AddJobVC: UIViewController, UITextFieldDelegate {
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         view.endEditing(true)
     }
-
-    
 }

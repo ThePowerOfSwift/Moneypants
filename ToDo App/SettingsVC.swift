@@ -81,7 +81,7 @@ class SettingsVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         } else if indexPath.row == 3 {
             print(settingDescription)
         } else if indexPath.row == 4 {
-//            let newViewController = Step4ViewController.self()
+//            let newViewController = Step4VC.self()
 //            self.navigationController?.pushViewController(newViewController, animated: true)
             print(settingDescription)
         } else if indexPath.row == 5 {
