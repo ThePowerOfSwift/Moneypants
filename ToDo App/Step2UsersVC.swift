@@ -1,7 +1,5 @@
 import UIKit
 import Firebase
-import FirebaseDatabase
-import FirebaseStorage
 
 class Step2UsersVC: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextFieldDelegate {
     

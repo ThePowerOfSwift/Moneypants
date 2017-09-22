@@ -3,13 +3,20 @@ import Firebase
 
 class Step4VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
+    @IBOutlet weak var jobsTableView: UITableView!
+    
     var firebaseUser: FIRUser!
     var ref: FIRDatabaseReference!
     
     var dailyJobs = [JobsAndHabits]()
+    var weeklyJobs = [JobsAndHabits]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        jobsTableView.delegate = self
+        jobsTableView.dataSource = self
+        jobsTableView.tableFooterView = UIView()
         
         // --------
         // Firebase
@@ -23,19 +30,35 @@ class Step4VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
     }
     
     func fetchJobs() {
-        ref.observe(.childAdded, with: { (snapshot) in
-            
+        ref.child("dailyJobs").observe(.childAdded, with: { (snapshot) in
             if let dictionary = snapshot.value as? [String : Any] {
+                let multiplier = dictionary["multiplier"] as! Double
+                let name = dictionary["name"] as! String
+                let classification = dictionary["classification"] as! String
+                let order = dictionary["order"] as! Int
                 
+                let dailyJob = JobsAndHabits(jobName: name, jobMultiplier: multiplier, jobClass: classification, jobOrder: order)
+                self.dailyJobs.append(dailyJob)
+                self.dailyJobs.sort(by: {$0.order < $1.order})
+                
+                self.jobsTableView.reloadData()
             }
-            
-            
-            
-            
-            
-            print(snapshot)
-            
-        }, withCancel: nil)
+        })
+        
+        ref.child("weeklyJobs").observe(.childAdded, with: { (snapshot) in
+            if let dictionary = snapshot.value as? [String : Any] {
+                let multiplier = dictionary["multiplier"] as! Double
+                let name = dictionary["name"] as! String
+                let classification = dictionary["classification"] as! String
+                let order = dictionary["order"] as! Int
+                
+                let weeklyJob = JobsAndHabits(jobName: name, jobMultiplier: multiplier, jobClass: classification, jobOrder: order)
+                self.weeklyJobs.append(weeklyJob)
+                self.weeklyJobs.sort(by: {$0.order < $1.order})
+
+                self.jobsTableView.reloadData()
+            }
+        })
     }
     
     // ----------------
@@ -50,9 +73,9 @@ class Step4VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
     // set number of rows
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if section == 0 {
-            return dailyJobsTemp.count
+            return dailyJobs.count
         } else {
-            return weeklyJobsTemp.count
+            return weeklyJobs.count
         }
     }
     
@@ -78,11 +101,9 @@ class Step4VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "CustomCell4", for: indexPath) as! Step4CustomCell
         if indexPath.section == 0 {
-            let (dailyJobName, _, _, _) = dailyJobsTemp[indexPath.row]
-            cell.jobLabel.text = dailyJobName
+            cell.jobLabel.text = dailyJobs[indexPath.row].name
         } else {
-            let (weeklyJobName, _, _, _) = weeklyJobsTemp[indexPath.row]
-            cell.jobLabel.text = weeklyJobName
+            cell.jobLabel.text = weeklyJobs[indexPath.row].name
         }
         return cell
     }

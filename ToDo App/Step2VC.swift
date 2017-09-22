@@ -1,7 +1,5 @@
 import UIKit
-import FirebaseAuth
-import FirebaseDatabase
-import FirebaseStorage
+import Firebase
 
 class Step2VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
@@ -11,6 +9,7 @@ class Step2VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
     var firebaseUser: FIRUser!
     var firebaseStorage: FIRStorage!
+    var ref: FIRDatabaseReference!
     
     var cellStyleForEditing: UITableViewCellEditingStyle = .none
     
@@ -21,8 +20,13 @@ class Step2VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
         tableView.delegate = self
         tableView.tableFooterView = UIView()
         
+        // --------
+        // Firebase
+        // --------
+        
         firebaseUser = FIRAuth.auth()?.currentUser
         firebaseStorage = FIRStorage.storage()
+        ref = FIRDatabase.database().reference().child("users").child(firebaseUser.uid)
         
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "edit", style: .plain, target: self, action: #selector(editButtonTapped))
         
@@ -35,7 +39,9 @@ class Step2VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
     }
     
     func loadExistingUsers() {
-        FIRDatabase.database().reference().child("users").child(firebaseUser.uid).child("members").observe(.childAdded) { (snapshot: FIRDataSnapshot) in
+//        ref.child("members").queryOrdered(byChild: "firstName").observe(.childAdded) { (snapshot) in
+        
+        ref.child("members").observe(.childAdded) { (snapshot: FIRDataSnapshot) in
             if let dict = snapshot.value as? [String : Any] {
                 let userPhotoUrl = dict["profileImageUrl"] as! String
                 let userFirstName = dict["firstName"] as! String
@@ -52,9 +58,9 @@ class Step2VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
                                     userBirthday: userBirthday,
                                     userPasscode: userPasscode,
                                     userGender: userGender,
-                                    isUserChildOrParent:
-                        isUserChildOrParent)
+                                    isUserChildOrParent: isUserChildOrParent)
                     self.users.append(user)
+                    self.users.sort(by: {$0.birthday < $1.birthday})
                     
                     self.tableView.reloadData()
                 })
@@ -91,17 +97,6 @@ class Step2VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.reloadData()
     }
-    
-    func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-        return true
-    }
-    
-    func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
-        let item = users[sourceIndexPath.row]
-        users.remove(at: sourceIndexPath.row)
-        users.insert(item, at: destinationIndexPath.row)
-    }
-    
     
     func editButtonTapped() {
         if cellStyleForEditing == .none {

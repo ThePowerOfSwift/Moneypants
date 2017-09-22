@@ -2,15 +2,18 @@ import UIKit
 import Firebase
 
 class Step3VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
-
+    
     @IBOutlet weak var jobsTableView: UITableView!
     @IBOutlet weak var questionButton: UIButton!
+    @IBOutlet weak var editButton: UIButton!
     
     var dailyJobs = [JobsAndHabits]()       // create variable called 'daily jobs' which is an array of type JobsAndHabits
     var weeklyJobs = [JobsAndHabits]()      // create variable called 'weekly jobs' which is an array of type JobsAndHabits
     
     var firebaseUser: FIRUser!
     var ref: FIRDatabaseReference!
+    
+    var cellStyleForEditing: UITableViewCellEditingStyle = .none
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -103,6 +106,23 @@ class Step3VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
         }
     }
     
+    func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
+        return true
+    }
+    
+    func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
+        if sourceIndexPath.section == 0 {
+            let job = dailyJobs[sourceIndexPath.row]
+            dailyJobs.remove(at: sourceIndexPath.row)
+            dailyJobs.insert(job, at: destinationIndexPath.row)
+        } else {
+            let job = weeklyJobs[sourceIndexPath.row]
+            weeklyJobs.remove(at: sourceIndexPath.row)
+            weeklyJobs.insert(job, at: destinationIndexPath.row)
+        }
+    }
+    
+    
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             if indexPath.section == 0 {
@@ -117,7 +137,7 @@ class Step3VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
             }
         }
     }
-
+    
     
     
     // ------------------
@@ -125,18 +145,17 @@ class Step3VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
     // ------------------
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        
         if segue.identifier == "EditJob" {
             let nextController = segue.destination as! Step3AddJobVC
             nextController.dailyJobs = dailyJobs
-
+            
             // 'sender' is retrieved from 'didSelectRow' function above
             nextController.job = sender as! JobsAndHabits?
             nextController.navBarTitle = "edit job"
         } else if segue.identifier == "AddJob" {
             let nextController = segue.destination as! Step3AddJobVC
             nextController.dailyJobs = dailyJobs
-            nextController.navBarTitle = "add job"
+            nextController.navBarTitle = "add daily job"
         } else {
             print("another segue initiated")
         }
@@ -167,14 +186,17 @@ class Step3VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
     }
     
     @IBAction func nextButtonTapped(_ sender: UIButton) {
-        ref.child("dailyJobs").removeValue()        // reset daily jobs
+        disableTableEdit()
+        let dailyJobMultiplier = 10 / Double(dailyJobs.count)       // recalculates depending on if user adds more than 10 daily jobs
+        ref.child("dailyJobs").removeValue()                // reset daily jobs
         var dailyCounter = 0
         var weeklyCounter = 0
         for dailyJob in dailyJobs {
             dailyCounter += 1
             ref.child("dailyJobs").child("dailyJob\(dailyCounter)").setValue(["name" : dailyJob.name,
-                                                                              "multiplier" : dailyJob.multiplier,
-                                                                              "classification" : dailyJob.classification])
+                                                                              "multiplier" : dailyJobMultiplier,
+                                                                              "classification" : dailyJob.classification,
+                                                                              "order" : dailyCounter])
             ref.child("dailyJobs").updateChildValues(["count" : dailyJobs.count])            // return number of daily jobs
         }
         
@@ -182,7 +204,8 @@ class Step3VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
             weeklyCounter += 1
             ref.child("weeklyJobs").child("weeklyJob\(weeklyCounter)").updateChildValues(["name" : weeklyJob.name,
                                                                                           "multiplier" : weeklyJob.multiplier,
-                                                                                          "classification" : weeklyJob.classification])
+                                                                                          "classification" : weeklyJob.classification,
+                                                                                          "order" : weeklyCounter])
         }
         performSegue(withIdentifier: "AssignJobs", sender: self)
     }
@@ -192,38 +215,50 @@ class Step3VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
     // Functions
     // ---------
     
-    func addJobButtonTapped() {
-        if dailyJobs.count >= 20 {
-            addTooManyJobsAlert()
+    @IBAction func editButtonTapped(_ sender: UIButton) {
+        if cellStyleForEditing == .none {
+            cellStyleForEditing = .delete
+            editButton.setTitle("done", for: .normal)
         } else {
-            performSegue(withIdentifier: "AddJob", sender: self)
+            cellStyleForEditing = .none
+            editButton.setTitle("edit", for: .normal)
         }
+        jobsTableView.setEditing(cellStyleForEditing != .none, animated: true)
     }
     
+    func disableTableEdit() {
+        if cellStyleForEditing == .none {
+            print("nothing to see here...")
+        } else {
+            cellStyleForEditing = .none
+            editButton.setTitle("edit", for: .normal)
+        }
+        jobsTableView.setEditing(cellStyleForEditing != .none, animated: true)
+    }
     
     func loadDefaultJobs() {
         
         // create array of default jobs and habits
-        dailyJobs = [JobsAndHabits(jobName: "bedroom", jobMultiplier: 1, jobClass: "dailyJob"),
-                     JobsAndHabits(jobName: "bathrooms", jobMultiplier: 1, jobClass: "dailyJob"),
-                     JobsAndHabits(jobName: "laundry", jobMultiplier: 1, jobClass: "dailyJob"),
-                     JobsAndHabits(jobName: "living room", jobMultiplier: 1, jobClass: "dailyJob"),
-                     JobsAndHabits(jobName: "sweep & vacuum", jobMultiplier: 1, jobClass: "dailyJob"),
-                     JobsAndHabits(jobName: "wipe table", jobMultiplier: 1, jobClass: "dailyJob"),
-                     JobsAndHabits(jobName: "counters", jobMultiplier: 1, jobClass: "dailyJob"),
-                     JobsAndHabits(jobName: "dishes", jobMultiplier: 1, jobClass: "dailyJob"),
-                     JobsAndHabits(jobName: "meal prep", jobMultiplier: 1, jobClass: "dailyJob"),
-                     JobsAndHabits(jobName: "feed pet / garbage", jobMultiplier: 1, jobClass: "dailyJob")]
-        weeklyJobs = [JobsAndHabits(jobName: "sweep porch", jobMultiplier: 1, jobClass: "weeklyJob"),
-                      JobsAndHabits(jobName: "weed garden", jobMultiplier: 1, jobClass: "weeklyJob"),
-                      JobsAndHabits(jobName: "wash windows", jobMultiplier: 1, jobClass: "weeklyJob"),
-                      JobsAndHabits(jobName: "dusting & cobwebs", jobMultiplier: 1, jobClass: "weeklyJob"),
-                      JobsAndHabits(jobName: "mop floors", jobMultiplier: 1, jobClass: "weeklyJob"),
-                      JobsAndHabits(jobName: "clean cabinets", jobMultiplier: 1, jobClass: "weeklyJob"),
-                      JobsAndHabits(jobName: "clean fridge", jobMultiplier: 1, jobClass: "weeklyJob"),
-                      JobsAndHabits(jobName: "wash car", jobMultiplier: 1, jobClass: "weeklyJob"),
-                      JobsAndHabits(jobName: "mow lawn", jobMultiplier: 1, jobClass: "weeklyJob"),
-                      JobsAndHabits(jobName: "babysit (per hour)", jobMultiplier: 1, jobClass: "weeklyJob")]
+        dailyJobs = [JobsAndHabits(jobName: "bedroom", jobMultiplier: 1, jobClass: "dailyJob", jobOrder: 1),
+                     JobsAndHabits(jobName: "bathrooms", jobMultiplier: 1, jobClass: "dailyJob", jobOrder: 2),
+                     JobsAndHabits(jobName: "laundry", jobMultiplier: 1, jobClass: "dailyJob", jobOrder: 3),
+                     JobsAndHabits(jobName: "living room", jobMultiplier: 1, jobClass: "dailyJob", jobOrder: 4),
+                     JobsAndHabits(jobName: "sweep & vacuum", jobMultiplier: 1, jobClass: "dailyJob", jobOrder: 5),
+                     JobsAndHabits(jobName: "wipe table", jobMultiplier: 1, jobClass: "dailyJob", jobOrder: 6),
+                     JobsAndHabits(jobName: "counters", jobMultiplier: 1, jobClass: "dailyJob", jobOrder: 7),
+                     JobsAndHabits(jobName: "dishes", jobMultiplier: 1, jobClass: "dailyJob", jobOrder: 8),
+                     JobsAndHabits(jobName: "meal prep", jobMultiplier: 1, jobClass: "dailyJob",jobOrder: 9 ),
+                     JobsAndHabits(jobName: "feed pet / garbage", jobMultiplier: 1, jobClass: "dailyJob", jobOrder: 10)]
+        weeklyJobs = [JobsAndHabits(jobName: "sweep porch", jobMultiplier: 1, jobClass: "weeklyJob", jobOrder: 1),
+                      JobsAndHabits(jobName: "weed garden", jobMultiplier: 1, jobClass: "weeklyJob", jobOrder: 2),
+                      JobsAndHabits(jobName: "wash windows", jobMultiplier: 1, jobClass: "weeklyJob", jobOrder: 3),
+                      JobsAndHabits(jobName: "dusting & cobwebs", jobMultiplier: 1, jobClass: "weeklyJob", jobOrder: 4),
+                      JobsAndHabits(jobName: "mop floors", jobMultiplier: 1, jobClass: "weeklyJob", jobOrder: 5),
+                      JobsAndHabits(jobName: "clean cabinets", jobMultiplier: 1, jobClass: "weeklyJob", jobOrder: 6),
+                      JobsAndHabits(jobName: "clean fridge", jobMultiplier: 1, jobClass: "weeklyJob", jobOrder: 7),
+                      JobsAndHabits(jobName: "wash car", jobMultiplier: 1, jobClass: "weeklyJob", jobOrder: 8),
+                      JobsAndHabits(jobName: "mow lawn", jobMultiplier: 1, jobClass: "weeklyJob", jobOrder: 9),
+                      JobsAndHabits(jobName: "babysit (per hour)", jobMultiplier: 1, jobClass: "weeklyJob", jobOrder: 10)]
         //        dailyHabits = [JobsAndHabits(jobName: "get ready for day by 10:am", jobMultiplier: 5, jobClass: "dailyHabit"),      // This is bonus habit **
         //                       JobsAndHabits(jobName: "personal meditation (10 min)", jobMultiplier: 1, jobClass: "dailyHabit"),
         //                       JobsAndHabits(jobName: "daily exercise", jobMultiplier: 1, jobClass: "dailyHabit"),
@@ -234,12 +269,23 @@ class Step3VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
         //                       JobsAndHabits(jobName: "helping hands / obedience", jobMultiplier: 1, jobClass: "dailyHabit"),
         //                       JobsAndHabits(jobName: "write in journal", jobMultiplier: 1, jobClass: "dailyHabit"),
         //                       JobsAndHabits(jobName: "bed by 8:pm", jobMultiplier: 1, jobClass: "dailyHabit")]
-
+        
     }
     
     @IBAction func questionButtonTapped(_ sender: UIButton) {
+        disableTableEdit()
         questionButtonAlert()
     }
+    
+    func addJobButtonTapped() {
+        disableTableEdit()
+        if dailyJobs.count >= 20 {
+            addTooManyJobsAlert()
+        } else {
+            performSegue(withIdentifier: "AddJob", sender: self)
+        }
+    }
+    
     
     
     // ------
@@ -264,7 +310,7 @@ class Step3VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
     }
     
     func addTooManyJobsAlert() {
-        let alert = UIAlertController(title: "Add Job", message: "You have reached your limit of 20 daily jobs. If you have more jobs to assign, try combining multiple jobs into one.", preferredStyle: .alert)
+        let alert = UIAlertController(title: "Add Job", message: "You have reached your limit of 20 daily jobs. If you have more jobs to create, try combining multiple jobs into one.", preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "okay", style: .default, handler: { (action) in
             alert.dismiss(animated: true, completion: nil)
         }))

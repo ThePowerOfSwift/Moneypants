@@ -66,7 +66,9 @@ class Step3AddJobVC: UIViewController, UITextFieldDelegate {
         // NOTE: the default classification is "daily jobs" because user can only add additional daily jobs, not weekly jobs or daily habits
         let classification = job?.classification ?? "dailyJob"
         
-        job = JobsAndHabits(jobName: name!, jobMultiplier: multiplier, jobClass: classification)
+        let order = job?.order ?? 1
+        
+        job = JobsAndHabits(jobName: name!, jobMultiplier: multiplier, jobClass: classification, jobOrder: order)
     }
     
     
