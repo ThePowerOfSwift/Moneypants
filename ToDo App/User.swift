@@ -5,12 +5,12 @@ class User {
     
     var photo: UIImage
     var firstName: String
-    var birthday: String
+    var birthday: Int
     var passcode: Int
     var gender: String
     var childParent: String
     
-    init(profilePhoto: UIImage, userFirstName: String, userBirthday: String, userPasscode: Int, userGender: String, isUserChildOrParent: String) {
+    init(profilePhoto: UIImage, userFirstName: String, userBirthday: Int, userPasscode: Int, userGender: String, isUserChildOrParent: String) {
         
         self.photo = profilePhoto
         self.firstName = userFirstName

@@ -39,6 +39,7 @@
 		CE24A4381F07121D00A03FA2 /* Step5VC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE24A4371F07121D00A03FA2 /* Step5VC.swift */; };
 		CE2CCBDB1F26DE1C00ACA17F /* VideosCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE2CCBDA1F26DE1C00ACA17F /* VideosCell.swift */; };
 		CE2CCC001F27136C00ACA17F /* VideoPlaybackVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE2CCBFF1F27136C00ACA17F /* VideoPlaybackVC.swift */; };
+		CE36A7361F75B7EE006CAB40 /* Step1PopupVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE36A7351F75B7EE006CAB40 /* Step1PopupVC.swift */; };
 		CE39D9281F05A3CE00159EC1 /* Step4ParentsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE39D9271F05A3CE00159EC1 /* Step4ParentsVC.swift */; };
 		CE39D92A1F05A42C00159EC1 /* Step4ParentCustomCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE39D9291F05A42C00159EC1 /* Step4ParentCustomCell.swift */; };
 		CE3CA84F1F32B97C0069129B /* ReportsSpendingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3CA84E1F32B97C0069129B /* ReportsSpendingVC.swift */; };
@@ -144,6 +145,7 @@
 		CE24A4371F07121D00A03FA2 /* Step5VC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Step5VC.swift; sourceTree = "<group>"; };
 		CE2CCBDA1F26DE1C00ACA17F /* VideosCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VideosCell.swift; sourceTree = "<group>"; };
 		CE2CCBFF1F27136C00ACA17F /* VideoPlaybackVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VideoPlaybackVC.swift; sourceTree = "<group>"; };
+		CE36A7351F75B7EE006CAB40 /* Step1PopupVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = Step1PopupVC.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		CE39D9271F05A3CE00159EC1 /* Step4ParentsVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Step4ParentsVC.swift; sourceTree = "<group>"; };
 		CE39D9291F05A42C00159EC1 /* Step4ParentCustomCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Step4ParentCustomCell.swift; sourceTree = "<group>"; };
 		CE3CA84E1F32B97C0069129B /* ReportsSpendingVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReportsSpendingVC.swift; sourceTree = "<group>"; };
@@ -449,6 +451,7 @@
 			children = (
 				CEB4CD2C1F1ED77400F9733F /* SetupNavController.swift */,
 				CE1CB50A1F01AD10009A8DAC /* Step1VC.swift */,
+				CE36A7351F75B7EE006CAB40 /* Step1PopupVC.swift */,
 			);
 			name = Step1;
 			sourceTree = "<group>";
@@ -703,6 +706,7 @@
 				CE1CB50B1F01AD10009A8DAC /* Step1VC.swift in Sources */,
 				CE951E431F4B622D003B5EEF /* PaydayDetailCellA1.swift in Sources */,
 				89FB67581D5C82AB002B2484 /* AppDelegate.swift in Sources */,
+				CE36A7361F75B7EE006CAB40 /* Step1PopupVC.swift in Sources */,
 				CE18C4D21F64E14F00C748BC /* MaxLengthTextField.swift in Sources */,
 				CE4832C31F281154005A7A55 /* JobJarNavController.swift in Sources */,
 				CE4832C51F28116B005A7A55 /* JobJarVC.swift in Sources */,

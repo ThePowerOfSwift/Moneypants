@@ -7,30 +7,28 @@ class Step1VC: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var questionButton: UIButton!
     @IBOutlet weak var incomeTextField: UITextField!
     
-    let incomeMinimum = 30_000
-    let incomeMaximum = 1_000_000
+    let incomeMinimum = 30000
+    let incomeMaximum = 1000000
     
     var users = [Item]()
     
     var firebaseUser: FIRUser!
     var ref: FIRDatabaseReference!
-    var refHandle: UInt!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         incomeTextField?.delegate = self
         
-        questionButton.layer.cornerRadius = questionButton.bounds.height / 6.4
-        questionButton.layer.masksToBounds = true
+        customizeButton(buttonName: questionButton)
+        customizeButton(buttonName: nextButton)
         
         // --------
         // Firebase
         // --------
         
         firebaseUser = FIRAuth.auth()?.currentUser
-        ref = FIRDatabase.database().reference()
-        
+        ref = FIRDatabase.database().reference().child("users").child(firebaseUser.uid)
         
         // -----------------
         // Customize Nav Bar
@@ -42,12 +40,14 @@ class Step1VC: UIViewController, UITextFieldDelegate {
             NSForegroundColorAttributeName : UIColor.white,
             NSFontAttributeName : UIFont(name: "Arista2.0", size: 26)!
         ]
+        
+        loadExistingIncome()
     }
     
     
-    // -----------
-    // NEXT button
-    // -----------
+    // ----------
+    // Navigation
+    // ----------
     
     @IBAction func didTapNextButton(_ sender: UIButton) {
         if incomeTextField.text != "" {     // check if field is empty
@@ -55,7 +55,7 @@ class Step1VC: UIViewController, UITextFieldDelegate {
             if yearlyIncomeMPS < incomeMinimum || yearlyIncomeMPS > incomeMaximum {     // check if income is within range
                 createIncomeAlert()
             } else {        // good to go!
-                ref.child("users").child(firebaseUser.uid).child("income").setValue(yearlyIncomeMPS)
+                ref.child("income").setValue(yearlyIncomeMPS)
                 performSegue(withIdentifier: "showUsers", sender: self)
             }
         } else {
@@ -64,8 +64,19 @@ class Step1VC: UIViewController, UITextFieldDelegate {
     }
     
     
+    // ---------
+    // Functions
+    // ---------
+    
+    
     func createIncomeAlert() {
-        let alert = UIAlertController(title: "Income Error", message: "Please enter a value between $\(incomeMinimum / 1000),000 and $\(incomeMaximum / 1000000),000,000. If your income is outside this range, please contact support for custom setup instructions.", preferredStyle: .alert)
+        // format the income values
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .decimal
+        let incomeMin = formatter.string(from: NSNumber(value: incomeMinimum))
+        let incomeMax = formatter.string(from: NSNumber(value: incomeMaximum))
+        
+        let alert = UIAlertController(title: "Income Error", message: "Please enter a value between $\(incomeMin!) and $\(incomeMax!). If your income is outside this range, please contact support for custom setup instructions.", preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "cancel", style: .cancel, handler: { (action) in
             alert.dismiss(animated: true, completion: nil)
         }))
@@ -119,5 +130,29 @@ class Step1VC: UIViewController, UITextFieldDelegate {
         return false
         
     }
+    
+    
+    func customizeButton(buttonName: UIButton) {
+        buttonName.layer.cornerRadius = buttonName.bounds.height / 6.4
+        buttonName.layer.masksToBounds = true
+    }
+    
+    // Get income value from Firebase
+    func loadExistingIncome() {
+        ref.child("income").observe(.value, with: { (snapshot) in
+            if let snapVal = snapshot.value as? NSNumber {
+                
+                // Format income with thousands separators
+                let formatter = NumberFormatter()
+                formatter.groupingSeparator = ","
+                formatter.numberStyle = .decimal
+                let formattedNumber = formatter.string(from: snapVal)
+                
+                // put existing income into text field
+                self.incomeTextField.text = "\(formattedNumber!)"
+            }
+        })
+    }
+
 }
 

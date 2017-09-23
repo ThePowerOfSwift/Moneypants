@@ -99,11 +99,7 @@ class Step3VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        if indexPath.section == 0 {
-            return true
-        } else {
-            return false
-        }
+        return true
     }
     
     func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
@@ -127,12 +123,17 @@ class Step3VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
         if editingStyle == .delete {
             if indexPath.section == 0 {
                 if dailyJobs.count <= 10 {           // check to make sure user isn't deleting too many jobs
-                    deletedTooManyRowsAlert()
+                    deletedTooManyRowsAlert(alertTitle: "Daily Jobs", alertMessage: "You cannot delete this daily job. You must have at least 10 daily jobs in your list.")
                 } else {
                     dailyJobs.remove(at: indexPath.row)
-                    // MARK: Need to update Firebase here
                     jobsTableView.deleteRows(at: [indexPath], with: .fade)
-                    
+                }
+            } else {
+                if weeklyJobs.count <= 10 {
+                    deletedTooManyRowsAlert(alertTitle: "Weekly Jobs", alertMessage: "You cannot delete this weekly job. You must have at least 10 weekly jobs in your list.")
+                } else {
+                    weeklyJobs.remove(at: indexPath.row)
+                    jobsTableView.deleteRows(at: [indexPath], with: .fade)
                 }
             }
         }
@@ -287,21 +288,30 @@ class Step3VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
     }
     
     
+    // ----------------------------------------------------------
+    // MARK: Dismiss keyboard if user taps outside of text fields
+    // ----------------------------------------------------------
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        disableTableEdit()
+        view.endEditing(true)
+    }
+    
     
     // ------
     // Alerts
     // ------
     
     func questionButtonAlert() {
-        let alert = UIAlertController(title: "Daily & Weekly Jobs", message: "Make a wish list of all the jobs that need to be done on a daily and weekly basis in your home. Do NOT include jobs that need to be done less frequently (do not include monthly or yearly jobs). Also, do NOT include daily habits. Those will be reviewed in the upcoming screens.\n\nDefault jobs are already listed, but you can change them to fit your family's needs. You can have up to 20 daily jobs and 10 weekly jobs. You cannot change the number of weekly jobs.", preferredStyle: .alert)
+        let alert = UIAlertController(title: "Daily Jobs", message: "Use this page to make a wish list of all the jobs that need to be done on a daily and weekly basis in your home. Select, add, or modify the existing default list to fit your family's needs. You can add up to 20 daily jobs and 20 weekly jobs.\n\nNOTE: each daily job will pay the same, and each weekly job will pay the same; so do your best to distribute the assignments equally.\n\nDo NOT include jobs that need to be done less frequently (do not include monthly or yearly jobs). Also, do NOT include daily habits. Daily habits will be reviewed in the upcoming screens.", preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "okay", style: .default, handler: { (action) in
             alert.dismiss(animated: true, completion: nil)
         }))
         self.present(alert, animated: true, completion: nil)
     }
     
-    func deletedTooManyRowsAlert() {
-        let alert = UIAlertController(title: "Daily Jobs", message: "You cannot delete this daily job. You must have at least 10 daily jobs in your list.", preferredStyle: .alert)
+    func deletedTooManyRowsAlert(alertTitle: String, alertMessage: String) {
+        let alert = UIAlertController(title: alertTitle, message: alertMessage, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "okay", style: .default, handler: { (action) in
             alert.dismiss(animated: true, completion: nil)
             self.jobsTableView.reloadData()

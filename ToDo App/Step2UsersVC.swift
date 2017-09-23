@@ -16,6 +16,7 @@ class Step2UsersVC: UIViewController, UIImagePickerControllerDelegate, UINavigat
     
     var genderValue: String = ""
     var childParentValue: String = ""
+    var birthDate: String = ""
     
     var selectedProfileImage: UIImage!
     var user: User?
@@ -116,7 +117,7 @@ class Step2UsersVC: UIViewController, UIImagePickerControllerDelegate, UINavigat
     @IBAction func saveButtonTapped(_ sender: UIBarButtonItem) {
         let photo = photoImageView.image!
         let firstName = nameTextField.text!
-        let birthday = birthdayTextField.text!
+        let birthday = Int(birthDate)!
         let passcode = Int(passcodeTextField.text!)!
         let gender = genderValue
         let childParent = childParentValue
@@ -264,6 +265,11 @@ class Step2UsersVC: UIViewController, UIImagePickerControllerDelegate, UINavigat
         } else {
             print("\(age) is a good age")
         }
+        
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyyMMdd"
+        birthDate = dateFormatter.string(from: dateOfBirth)
+        print("BIRTH DATE:",birthDate)
     }
     
     
