@@ -94,6 +94,7 @@
 		CEB524151F5A13DC00CD8491 /* ReportsBudgetVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB524141F5A13DC00CD8491 /* ReportsBudgetVC.swift */; };
 		CEB524191F5A6F1F00CD8491 /* ReportsBudgetCell2.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB524181F5A6F1F00CD8491 /* ReportsBudgetCell2.swift */; };
 		CEB7D1681F5A86D3006D9763 /* ReportsBudgetCell1.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB7D1671F5A86D3006D9763 /* ReportsBudgetCell1.swift */; };
+		CEC5BD541F77310500B66CEC /* Step3PopupVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEC5BD531F77310500B66CEC /* Step3PopupVC.swift */; };
 		CED509E21F030F560058728F /* Step4VC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED509E11F030F560058728F /* Step4VC.swift */; };
 		CED509E41F0310740058728F /* Step4CustomCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED509E31F0310740058728F /* Step4CustomCell.swift */; };
 		CEDBFE2E1F2AE4C800829DE4 /* ReportsPointsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEDBFE2D1F2AE4C800829DE4 /* ReportsPointsCell.swift */; };
@@ -192,6 +193,8 @@
 		CEAAF9DB1F356F2400846DD5 /* PaydayVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaydayVC.swift; sourceTree = "<group>"; };
 		CEAAF9DD1F35A41C00846DD5 /* SpendingVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpendingVC.swift; sourceTree = "<group>"; };
 		CEAD053D1F2209A60097CD33 /* UserCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserCell.swift; sourceTree = "<group>"; };
+		CEAF1C101F774F7C001A4EE5 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		CEAF1C111F774F7C001A4EE5 /* AVKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVKit.framework; path = System/Library/Frameworks/AVKit.framework; sourceTree = SDKROOT; };
 		CEB2FD531EFF4DB300763862 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		CEB32C681F2C09DB0069D8B0 /* ReportsCBVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = ReportsCBVC.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		CEB32C6A1F2C49D10069D8B0 /* ReportsCBCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = ReportsCBCell.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
@@ -200,6 +203,7 @@
 		CEB524141F5A13DC00CD8491 /* ReportsBudgetVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReportsBudgetVC.swift; sourceTree = "<group>"; };
 		CEB524181F5A6F1F00CD8491 /* ReportsBudgetCell2.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReportsBudgetCell2.swift; sourceTree = "<group>"; };
 		CEB7D1671F5A86D3006D9763 /* ReportsBudgetCell1.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReportsBudgetCell1.swift; sourceTree = "<group>"; };
+		CEC5BD531F77310500B66CEC /* Step3PopupVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Step3PopupVC.swift; sourceTree = "<group>"; };
 		CED509E11F030F560058728F /* Step4VC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = Step4VC.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		CED509E31F0310740058728F /* Step4CustomCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Step4CustomCell.swift; sourceTree = "<group>"; };
 		CEDBFE2D1F2AE4C800829DE4 /* ReportsPointsCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = ReportsPointsCell.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
@@ -231,6 +235,8 @@
 		328E13F2F7272BD62CDD1B82 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				CEAF1C101F774F7C001A4EE5 /* AVFoundation.framework */,
+				CEAF1C111F774F7C001A4EE5 /* AVKit.framework */,
 				17FBA854F90BAC963AFBF2FF /* Pods_ToDo_App.framework */,
 			);
 			name = Frameworks;
@@ -425,6 +431,7 @@
 				CEF1A4921F022F3F00C010F9 /* Step3VC.swift */,
 				CEF1A4941F02472700C010F9 /* Step3CustomCell.swift */,
 				CE6996631F70C05900E8668C /* Step3AddJobVC.swift */,
+				CEC5BD531F77310500B66CEC /* Step3PopupVC.swift */,
 			);
 			name = Step3;
 			sourceTree = "<group>";
@@ -697,6 +704,7 @@
 				CED509E41F0310740058728F /* Step4CustomCell.swift in Sources */,
 				CE9443B61F297F5C00ACC7D4 /* UserSettingsNavController.swift in Sources */,
 				CE4832B91F27FB11005A7A55 /* HomeNavController.swift in Sources */,
+				CEC5BD541F77310500B66CEC /* Step3PopupVC.swift in Sources */,
 				CE4832C11F280216005A7A55 /* UserNavController.swift in Sources */,
 				CEE4D6A41F0F4433009BAE6C /* Step5ExpensesInputVC.swift in Sources */,
 				CEAAF9DE1F35A41C00846DD5 /* SpendingVC.swift in Sources */,

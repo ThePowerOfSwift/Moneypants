@@ -8,11 +8,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     var window: UIWindow?
     
-    func getStoryboard() -> UIStoryboard {
+    func getCurrentUser() -> UIStoryboard {
         var storyboard = UIStoryboard()
         let currentUser = FIRAuth.auth()?.currentUser
         if currentUser != nil {
-            print("\(currentUser?.uid) logged in")
+            print("\(currentUser?.email) logged in")
             storyboard = UIStoryboard(name: "Home", bundle: nil)
         } else {
             print("user logged out")
@@ -26,6 +26,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         FIRApp.configure()
         FIRDatabase.database().persistenceEnabled = true        // enable offline work
         IQKeyboardManager.sharedManager().enable = true
+        
+        getCurrentUser()
         
         //        let storyboard: UIStoryboard = self.getStoryboard()
         //

@@ -23,10 +23,10 @@ class Step3AddJobVC: UIViewController, UITextFieldDelegate {
         navBar.topItem?.title = navBarTitle
         
         // Set up view if editing an existing job
-        if let job = job {
-            jobTextField.text = job.name
-            jobTempMultiplier = job.multiplier
-            jobTempClassification = job.classification
+        if let existingJob = job {          // check to see if 'job' is not nil
+            jobTextField.text = existingJob.name
+            jobTempMultiplier = existingJob.multiplier
+            jobTempClassification = existingJob.classification
         }
         
         updateSaveButtonState()

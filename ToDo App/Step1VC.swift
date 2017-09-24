@@ -56,7 +56,7 @@ class Step1VC: UIViewController, UITextFieldDelegate {
                 createIncomeAlert()
             } else {        // good to go!
                 ref.child("income").setValue(yearlyIncomeMPS)
-                performSegue(withIdentifier: "showUsers", sender: self)
+                performSegue(withIdentifier: "GoToStep2", sender: self)
             }
         } else {
             createIncomeAlert()

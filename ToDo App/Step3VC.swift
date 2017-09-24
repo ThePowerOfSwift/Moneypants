@@ -158,7 +158,7 @@ class Step3VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
             nextController.dailyJobs = dailyJobs
             nextController.navBarTitle = "add daily job"
         } else {
-            print("another segue initiated")
+            print("Segue Initiated:",segue.identifier!)
         }
     }
     
@@ -275,7 +275,6 @@ class Step3VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
     @IBAction func questionButtonTapped(_ sender: UIButton) {
         disableTableEdit()
-        questionButtonAlert()
     }
     
     func addJobButtonTapped() {

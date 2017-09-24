@@ -3,16 +3,21 @@ import Firebase
 
 class Step2UsersVC: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextFieldDelegate {
     
+    @IBOutlet weak var navBar: UINavigationBar!
+    @IBOutlet weak var saveButton: UIBarButtonItem!
+    @IBOutlet weak var cancelButton: UIBarButtonItem!
+
     @IBOutlet weak var photoImageView: UIImageView!
     @IBOutlet weak var nameTextField: UITextField!
     @IBOutlet weak var birthdayTextField: UITextField!
     @IBOutlet weak var passcodeTextField: UITextField!
-    @IBOutlet weak var saveButton: UIBarButtonItem!
     
     @IBOutlet weak var maleButton: UIButton!
     @IBOutlet weak var femaleButton: UIButton!
     @IBOutlet weak var parentButton: UIButton!
     @IBOutlet weak var childButton: UIButton!
+    
+    var navBarTitle: String = ""
     
     var genderValue: String = ""
     var childParentValue: String = ""
@@ -29,14 +34,14 @@ class Step2UsersVC: UIViewController, UIImagePickerControllerDelegate, UINavigat
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        navigationItem.title = "new user"
+        navBar.topItem?.title = navBarTitle
         
         // --------
         // Firebase
         // --------
         
         firebaseUser = FIRAuth.auth()?.currentUser
-        ref = FIRDatabase.database().reference()
+        ref = FIRDatabase.database().reference().child("users").child(firebaseUser.uid)
         storageRef = FIRStorage.storage().reference()
         
         // -----------------
@@ -62,14 +67,49 @@ class Step2UsersVC: UIViewController, UIImagePickerControllerDelegate, UINavigat
         customizeButton(buttonName: childButton)
         customizeButton(buttonName: photoImageView)
         
+        // ------------------
+        // Edit Existing User
+        // ------------------
+        
+        if let existingUser = user {
+            photoImageView.image = existingUser.photo
+            nameTextField.text = existingUser.firstName
+            nameTextField.isUserInteractionEnabled = false
+            nameTextField.textColor = UIColor.lightGray
+            birthDate = "\(existingUser.birthday)"
+            
+            // update Date Picker with correct birthday
+            let dateString = "\(existingUser.birthday)"
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "yyyyMMdd"
+            let dateFromString = dateFormatter.date(from: dateString)
+            datePicker.date = dateFromString!
+            
+            // show birthday as text in birthday text field
+            dateFormatter.dateStyle = .medium
+            birthdayTextField.text = dateFormatter.string(from: dateFromString!)
+            
+            passcodeTextField.text = "\(existingUser.passcode)"
+            genderValue = existingUser.gender
+            
+            // highlight appropriate gender button
+            if genderValue == "male" {
+                maleButton.isSelected = true
+            } else {
+                femaleButton.isSelected = true
+            }
+            
+            childParentValue = existingUser.childParent
+            
+            // highlight appropriate parent / child button
+            if childParentValue == "child" {
+                childButton.isSelected = true
+            } else {
+                parentButton.isSelected = true
+            }
+        }
+        
         updateSaveButtonState()         // Enable Save button only if all fields are filled out
-    }
-    
-    func customizeButton(buttonName: AnyObject) {
-        buttonName.layer.cornerRadius = buttonName.bounds.height / 6.4
-        buttonName.layer.masksToBounds = true
-        buttonName.layer.borderColor = UIColor.lightGray.cgColor
-        buttonName.layer.borderWidth = 0.5
     }
     
     
@@ -114,45 +154,23 @@ class Step2UsersVC: UIViewController, UIImagePickerControllerDelegate, UINavigat
         dismiss(animated: true, completion: nil)
     }
     
-    @IBAction func saveButtonTapped(_ sender: UIBarButtonItem) {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        print("segue en route!")
+        
         let photo = photoImageView.image!
-        let firstName = nameTextField.text!
+        let name = nameTextField.text!
         let birthday = Int(birthDate)!
         let passcode = Int(passcodeTextField.text!)!
         let gender = genderValue
         let childParent = childParentValue
         
-        // Set the user to be passed to UserTableViewController after the unwind segue:
-        self.user = User(profilePhoto: photo,
-                         userFirstName: firstName,
-                         userBirthday: birthday,
-                         userPasscode: passcode,
-                         userGender: gender,
-                         isUserChildOrParent: childParent)
-        
-        // get profile image data prepped for storage on Firebase
-        let storageRef = FIRStorage.storage().reference().child("users").child(firebaseUser.uid).child("members").child(firstName)
-        if let profileImg = selectedProfileImage, let imageData = UIImageJPEGRepresentation(profileImg, 0.1) {
-            
-            // save user image to Firebase
-            storageRef.put(imageData, metadata: nil, completion: { (metadata, error) in
-                if error != nil {
-                    return
-                }
-                // get Firebase image location and return the URL as a string
-                let profileImageUrl = (metadata?.downloadURL()?.absoluteString)!
-                // save user data to Firebase
-                self.ref?.child("users").child(self.firebaseUser.uid).child("members").child(firstName).setValue(["profileImageUrl" : profileImageUrl,
-                                                                                                                  "firstName" : firstName,
-                                                                                                                  "birthday" : birthday,
-                                                                                                                  "passcode" : passcode,
-                                                                                                                  "gender" : gender,
-                                                                                                                  "childParent" : childParent])
-            })
-        }
-        dismiss(animated: true, completion: nil)
+        user = User(profilePhoto: photo,
+                    userFirstName: name,
+                    userBirthday: birthday,
+                    userPasscode: passcode,
+                    userGender: gender,
+                    isUserChildOrParent: childParent)
     }
-    
     
     
     // -----------------------
@@ -169,7 +187,6 @@ class Step2UsersVC: UIViewController, UIImagePickerControllerDelegate, UINavigat
             femaleButton.isSelected = true
             genderValue = "female"
         }
-//        print(genderValue)
         updateSaveButtonState()
     }
     
@@ -183,7 +200,6 @@ class Step2UsersVC: UIViewController, UIImagePickerControllerDelegate, UINavigat
             maleButton.isSelected = true
             genderValue = "male"
         }
-//        print(genderValue)
         updateSaveButtonState()
     }
     
@@ -197,7 +213,6 @@ class Step2UsersVC: UIViewController, UIImagePickerControllerDelegate, UINavigat
             childButton.isSelected = true
             childParentValue = "child"
         }
-//        print(childParentValue)
         updateSaveButtonState()
     }
     
@@ -211,7 +226,6 @@ class Step2UsersVC: UIViewController, UIImagePickerControllerDelegate, UINavigat
             parentButton.isSelected = true
             childParentValue = "parent"
         }
-//        print(childParentValue)
         updateSaveButtonState()
     }
     
@@ -223,10 +237,12 @@ class Step2UsersVC: UIViewController, UIImagePickerControllerDelegate, UINavigat
     
     func textFieldDidBeginEditing(_ textField: UITextField) {
         saveButton.isEnabled = false            // Disable save button while editing
+        cancelButton.isEnabled = false
     }
     
     func textFieldDidEndEditing(_ textField: UITextField) {
         updateSaveButtonState()                 // Run function after editing is done
+        cancelButton.isEnabled = true
     }
     
     private func updateSaveButtonState() {
@@ -248,13 +264,13 @@ class Step2UsersVC: UIViewController, UIImagePickerControllerDelegate, UINavigat
     }
     
     
-    
     // ----------------------
     // MARK: DatePicker Setup
     // ----------------------
     
     func verifyAge() {
         let dateOfBirth = datePicker.date
+        print("Datepicker.date = ",dateOfBirth)
         let gregorian = Calendar(identifier: .gregorian)
         let ageComponents = gregorian.dateComponents([.year], from: dateOfBirth, to: Date())
         let age = ageComponents.year!
@@ -266,10 +282,10 @@ class Step2UsersVC: UIViewController, UIImagePickerControllerDelegate, UINavigat
             print("\(age) is a good age")
         }
         
+        // convert datepicker text into Int for Firebase storage
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyyMMdd"
         birthDate = dateFormatter.string(from: dateOfBirth)
-        print("BIRTH DATE:",birthDate)
     }
     
     
@@ -315,6 +331,18 @@ class Step2UsersVC: UIViewController, UIImagePickerControllerDelegate, UINavigat
     }
     
     
+    // -------------------------------------
+    // Customize rounded buttons with border
+    // -------------------------------------
+
+    func customizeButton(buttonName: AnyObject) {
+        buttonName.layer.cornerRadius = buttonName.bounds.height / 6.4
+        buttonName.layer.masksToBounds = true
+        buttonName.layer.borderColor = UIColor.lightGray.cgColor
+        buttonName.layer.borderWidth = 0.5
+    }
+    
+    
     // ----------------------------------------------------------
     // MARK: Dismiss keyboard if user taps outside of text fields
     // ----------------------------------------------------------
@@ -322,9 +350,6 @@ class Step2UsersVC: UIViewController, UIImagePickerControllerDelegate, UINavigat
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         view.endEditing(true)
     }
-    
-    
-    
 }
 
 

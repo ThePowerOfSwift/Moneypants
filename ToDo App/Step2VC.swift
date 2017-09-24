@@ -3,7 +3,7 @@ import Firebase
 
 class Step2VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
-    @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var usersTableView: UITableView!
     
     var users = [User]()        // create variable called 'users' which is an array of type User (which is a class we created)
     
@@ -16,9 +16,11 @@ class Step2VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        tableView.dataSource = self
-        tableView.delegate = self
-        tableView.tableFooterView = UIView()
+        navigationItem.title = "users"
+        
+        usersTableView.dataSource = self
+        usersTableView.delegate = self
+        usersTableView.tableFooterView = UIView()
         
         // --------
         // Firebase
@@ -35,7 +37,7 @@ class Step2VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
-        tableView.reloadData()
+        usersTableView.reloadData()
     }
     
     // if users exist on Firebase, load them
@@ -61,7 +63,7 @@ class Step2VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
                     self.users.append(user)
                     self.users.sort(by: {$0.birthday < $1.birthday})
                     
-                    self.tableView.reloadData()
+                    self.usersTableView.reloadData()
                 })
             }
         }
@@ -85,16 +87,52 @@ class Step2VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-//            print(users[indexPath.row].firstName)
-            FIRDatabase.database().reference().child("users").child(firebaseUser.uid).child("members").child(users[indexPath.row].firstName).removeValue()
+            // remove user from Firebase
+            ref.child("members").child(users[indexPath.row].firstName).removeValue()
             users.remove(at: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: .fade)
-            tableView.reloadData()
         }
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        tableView.reloadData()
+        performSegue(withIdentifier: "EditUser", sender: users[indexPath.row])
+    }
+    
+    
+    // ----------
+    // Navigation
+    // ----------
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "EditUser" {
+            let nextContoller = segue.destination as! Step2UsersVC
+            
+            // 'sender' is retrieved from 'didSelectRow' function above
+            nextContoller.user = sender as? User
+            nextContoller.navBarTitle = "edit user"
+        } else if segue.identifier == "AddUser" {
+            let nextController = segue.destination as! Step2UsersVC
+            nextController.navBarTitle = "add user"
+        } else {
+            print("Segue Initiated:",segue.identifier!)
+        }
+    }
+    
+    @IBAction func unwindToStep2VC(sender: UIStoryboardSegue) {
+        let sourceVC = sender.source as! Step2UsersVC
+        let updatedUser = sourceVC.user
+        if let selectedIndexPath = usersTableView.indexPathForSelectedRow {
+            // Update an existing user
+            users[selectedIndexPath.row] = updatedUser!
+            usersTableView.reloadData()
+        } else {
+            // Add a new user
+            let newIndexPath = IndexPath(row: users.count, section: 0)
+            users.append(updatedUser!)
+            usersTableView.insertRows(at: [newIndexPath], with: .automatic)
+            users.sort(by: {$0.birthday < $1.birthday})
+            usersTableView.reloadData()
+        }
     }
     
     func editButtonTapped() {
@@ -105,9 +143,37 @@ class Step2VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
             cellStyleForEditing = .none
             navigationItem.rightBarButtonItem = UIBarButtonItem(title: "edit", style: .plain, target: self, action: #selector(editButtonTapped))
         }
-        tableView.setEditing(cellStyleForEditing != .none, animated: true)
+        usersTableView.setEditing(cellStyleForEditing != .none, animated: true)
     }
-
+    
+    
+    // --------------------------
+    // Save user data to Firebase
+    // --------------------------
+    
+    @IBAction func nextButtonTapped(_ sender: UIButton) {
+        // save user data to Firebase
+        for user in users {
+            let storageRef = FIRStorage.storage().reference().child("users").child(firebaseUser.uid).child("members").child(user.firstName)
+            let profileImg = user.photo
+            let imageData = UIImageJPEGRepresentation(profileImg, 0.1)      // compress photos
+            storageRef.put(imageData!, metadata: nil, completion: { (metadata, error) in
+                if error != nil {
+                    return
+                }
+                // get Firebase image location and return the URL as a string
+                let profileImageUrl = (metadata?.downloadURL()?.absoluteString)!
+                // save user data to Firebase
+                self.ref?.child("members").child(user.firstName).setValue(["profileImageUrl" : profileImageUrl,
+                                                                           "firstName" : user.firstName,
+                                                                           "birthday" : user.birthday,
+                                                                           "passcode" : user.passcode,
+                                                                           "gender" : user.gender,
+                                                                           "childParent" : user.childParent])
+            })
+        }
+        performSegue(withIdentifier: "GoToStep3", sender: self)
+    }
 }
 
 
