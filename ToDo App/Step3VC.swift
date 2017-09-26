@@ -9,6 +9,10 @@ class Step3VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
     var dailyJobs = [JobsAndHabits]()       // create variable called 'daily jobs' which is an array of type JobsAndHabits
     var weeklyJobs = [JobsAndHabits]()      // create variable called 'weekly jobs' which is an array of type JobsAndHabits
+    var dailyHabits = [JobsAndHabits]()
+    
+    var dailyJobsFirebaseCount: Int!
+    var weeklyJobsFirebaseCount: Int!
     
     var firebaseUser: FIRUser!
     var ref: FIRDatabaseReference!
@@ -36,15 +40,84 @@ class Step3VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addJobButtonTapped))
         
         // MARK: need to load Firebase Data if it exists, then if not, load default jobs
-        loadDefaultJobs()
+        
+        getDailyJobs { (dailyJobsFirebaseCountB) in
+            self.dailyJobsFirebaseCount = dailyJobsFirebaseCountB
+            if dailyJobsFirebaseCountB != nil {
+                self.loadFirebaseDailyJobs()
+            } else {
+                self.loadDefaultDailyJobs()
+            }
+        }
+        
+        getWeeklyJobs { (weeklyJobsFirebaseCountB) in
+            self.weeklyJobsFirebaseCount = weeklyJobsFirebaseCountB
+            if weeklyJobsFirebaseCountB != nil {
+                self.loadFirebaseWeeklyJobs()
+            } else {
+                self.loadDefaultWeeklyJobs()
+            }
+        }
     }
+    
+    func getDailyJobs(completion: @escaping (Int?) -> ()) {
+        ref.child("dailyJobs").child("count").observeSingleEvent(of: .value, with: { (snapshot) in
+            completion(snapshot.value as? Int)
+        })
+    }
+    
+    func loadFirebaseDailyJobs() {
+        ref.child("dailyJobs").observe(.childAdded, with: { (snapshot) in
+            if let dictionary = snapshot.value as? [String : Any] {
+                let multiplier = dictionary["multiplier"] as! Double
+                let name = dictionary["name"] as! String
+                let classification = dictionary["classification"] as! String
+                let order = dictionary["order"] as! Int
+                
+                let dailyJob = JobsAndHabits(jobName: name, jobMultiplier: multiplier, jobClass: classification, jobOrder: order)
+                self.dailyJobs.append(dailyJob)
+                self.dailyJobs.sort(by: {$0.order < $1.order})
+                
+                self.jobsTableView.reloadData()
+            }
+        })
+    }
+    
+    func getWeeklyJobs(completion: @escaping (Int?) -> ()) {
+        ref.child("weeklyJobs").child("count").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
+            completion(snapshot.value as? Int)
+        }
+    }
+    
+    func loadFirebaseWeeklyJobs() {
+        ref.child("weeklyJobs").observe(.childAdded, with: { (snapshot) in
+            if let dictionary = snapshot.value as? [String : Any] {
+                let multiplier = dictionary["multiplier"] as! Double
+                let name = dictionary["name"] as! String
+                let classification = dictionary["classification"] as! String
+                let order = dictionary["order"] as! Int
+                
+                let weeklyJob = JobsAndHabits(jobName: name, jobMultiplier: multiplier, jobClass: classification, jobOrder: order)
+                self.weeklyJobs.append(weeklyJob)
+                self.weeklyJobs.sort(by: {$0.order < $1.order})
+                
+                self.jobsTableView.reloadData()
+            }
+        })
+    }
+    
+  
+    
+    
+    
+    
+    
+    
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
-        //        jobsTableView.reloadData()
+        jobsTableView.reloadData()
     }
-    
-    
     
     // ----------------
     // Setup Table View
@@ -185,7 +258,7 @@ class Step3VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
             let newIndexPath = IndexPath(row: dailyJobs.count, section: 0)
             dailyJobs.append(updatedJob!)
             jobsTableView.insertRows(at: [newIndexPath], with: .fade)
-
+            
             // scroll to the newly created item
             self.jobsTableView.scrollToRow(at: newIndexPath, at: UITableViewScrollPosition.middle, animated: true)
             
@@ -199,12 +272,12 @@ class Step3VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
             
             // ====================================================================================================================
             // This code works to animate the scroll to the cell, but I couldn't get cell color to work anywhere inside this method
-//            UIView.transition(with: jobsTableView, duration: 1.0, options: .curveEaseIn, animations: {
-//                self.jobsTableView.reloadData() }, completion: { (success) in
-//                    if success {
-//                        self.jobsTableView.scrollToRow(at: newIndexPath, at: .middle, animated: true)
-//                    }
-//            })
+            //            UIView.transition(with: jobsTableView, duration: 1.0, options: .curveEaseIn, animations: {
+            //                self.jobsTableView.reloadData() }, completion: { (success) in
+            //                    if success {
+            //                        self.jobsTableView.scrollToRow(at: newIndexPath, at: .middle, animated: true)
+            //                    }
+            //            })
         }
     }
     
@@ -259,9 +332,8 @@ class Step3VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
         jobsTableView.setEditing(cellStyleForEditing != .none, animated: true)
     }
     
-    func loadDefaultJobs() {
-        
-        // create array of default jobs and habits
+    func loadDefaultDailyJobs() {
+        // create array of default daily jobs
         dailyJobs = [JobsAndHabits(jobName: "bedroom", jobMultiplier: 1, jobClass: "dailyJob", jobOrder: 1),
                      JobsAndHabits(jobName: "bathrooms", jobMultiplier: 1, jobClass: "dailyJob", jobOrder: 2),
                      JobsAndHabits(jobName: "laundry", jobMultiplier: 1, jobClass: "dailyJob", jobOrder: 3),
@@ -272,6 +344,10 @@ class Step3VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
                      JobsAndHabits(jobName: "dishes", jobMultiplier: 1, jobClass: "dailyJob", jobOrder: 8),
                      JobsAndHabits(jobName: "meal prep", jobMultiplier: 1, jobClass: "dailyJob",jobOrder: 9 ),
                      JobsAndHabits(jobName: "feed pet / garbage", jobMultiplier: 1, jobClass: "dailyJob", jobOrder: 10)]
+    }
+    
+    func loadDefaultWeeklyJobs() {
+        // create array of default weekly jobs
         weeklyJobs = [JobsAndHabits(jobName: "sweep porch", jobMultiplier: 1, jobClass: "weeklyJob", jobOrder: 1),
                       JobsAndHabits(jobName: "weed garden", jobMultiplier: 1, jobClass: "weeklyJob", jobOrder: 2),
                       JobsAndHabits(jobName: "wash windows", jobMultiplier: 1, jobClass: "weeklyJob", jobOrder: 3),
@@ -282,17 +358,20 @@ class Step3VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
                       JobsAndHabits(jobName: "wash car", jobMultiplier: 1, jobClass: "weeklyJob", jobOrder: 8),
                       JobsAndHabits(jobName: "mow lawn", jobMultiplier: 1, jobClass: "weeklyJob", jobOrder: 9),
                       JobsAndHabits(jobName: "babysit (per hour)", jobMultiplier: 1, jobClass: "weeklyJob", jobOrder: 10)]
-        //        dailyHabits = [JobsAndHabits(jobName: "get ready for day by 10:am", jobMultiplier: 5, jobClass: "dailyHabit"),      // This is bonus habit **
-        //                       JobsAndHabits(jobName: "personal meditation (10 min)", jobMultiplier: 1, jobClass: "dailyHabit"),
-        //                       JobsAndHabits(jobName: "daily exercise", jobMultiplier: 1, jobClass: "dailyHabit"),
-        //                       JobsAndHabits(jobName: "develop talents (20 min)", jobMultiplier: 1, jobClass: "dailyHabit"),
-        //                       JobsAndHabits(jobName: "homework done by 5:pm", jobMultiplier: 1, jobClass: "dailyHabit"),
-        //                       JobsAndHabits(jobName: "good manners", jobMultiplier: 1, jobClass: "dailyHabit"),
-        //                       JobsAndHabits(jobName: "peacemaking (no fighting)", jobMultiplier: 1, jobClass: "dailyHabit"),
-        //                       JobsAndHabits(jobName: "helping hands / obedience", jobMultiplier: 1, jobClass: "dailyHabit"),
-        //                       JobsAndHabits(jobName: "write in journal", jobMultiplier: 1, jobClass: "dailyHabit"),
-        //                       JobsAndHabits(jobName: "bed by 8:pm", jobMultiplier: 1, jobClass: "dailyHabit")]
-        
+    }
+    
+    func loadDefaultDailyHabits() {
+        // create array of default daily habits
+        dailyHabits = [JobsAndHabits(jobName: "get ready for day by 10:am", jobMultiplier: 5, jobClass: "dailyHabit", jobOrder: 1),      // This is bonus habit **
+            JobsAndHabits(jobName: "personal meditation (10 min)", jobMultiplier: 1, jobClass: "dailyHabit", jobOrder: 2),
+            JobsAndHabits(jobName: "daily exercise", jobMultiplier: 1, jobClass: "dailyHabit", jobOrder: 3),
+            JobsAndHabits(jobName: "develop talents (20 min)", jobMultiplier: 1, jobClass: "dailyHabit", jobOrder: 4),
+            JobsAndHabits(jobName: "homework done by 5:pm", jobMultiplier: 1, jobClass: "dailyHabit", jobOrder: 5),
+            JobsAndHabits(jobName: "good manners", jobMultiplier: 1, jobClass: "dailyHabit", jobOrder: 6),
+            JobsAndHabits(jobName: "peacemaking (no fighting)", jobMultiplier: 1, jobClass: "dailyHabit", jobOrder: 7),
+            JobsAndHabits(jobName: "helping hands / obedience", jobMultiplier: 1, jobClass: "dailyHabit", jobOrder: 8),
+            JobsAndHabits(jobName: "write in journal", jobMultiplier: 1, jobClass: "dailyHabit", jobOrder: 9),
+            JobsAndHabits(jobName: "bed by 8:pm", jobMultiplier: 1, jobClass: "dailyHabit", jobOrder: 10)]
     }
     
     @IBAction func questionButtonTapped(_ sender: UIButton) {

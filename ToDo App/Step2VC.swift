@@ -84,6 +84,8 @@ class Step2VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
             nextContoller.navBarTitle = "edit user"
         } else if segue.identifier == "AddUser" {
             let nextController = segue.destination as! Step2UsersVC
+            // send users array over to Step2UsersVC to check for name duplicates
+            nextController.users = users
             nextController.navBarTitle = "add user"
         } else {
             print("Segue Initiated:",segue.identifier!)
@@ -130,7 +132,6 @@ class Step2VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
     // ---------
     // Functions
     // ---------
-    
     
     // if users exist on Firebase, load them
     func loadExistingUsers() {

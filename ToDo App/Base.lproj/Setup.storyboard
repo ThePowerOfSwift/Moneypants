@@ -480,6 +480,9 @@
                                                         <integer key="value" value="15"/>
                                                     </userDefinedRuntimeAttribute>
                                                 </userDefinedRuntimeAttributes>
+                                                <connections>
+                                                    <action selector="usernameEditingDidEnd:" destination="bI6-Lh-0aY" eventType="editingDidEnd" id="Aig-xv-W8x"/>
+                                                </connections>
                                             </textField>
                                         </subviews>
                                         <constraints>

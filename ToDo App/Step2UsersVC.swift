@@ -25,6 +25,7 @@ class Step2UsersVC: UIViewController, UIImagePickerControllerDelegate, UINavigat
     
     var selectedProfileImage: UIImage!
     var user: User?
+    var users: [User]?
     
     let datePicker = UIDatePicker()
     
@@ -143,10 +144,6 @@ class Step2UsersVC: UIViewController, UIImagePickerControllerDelegate, UINavigat
         dismiss(animated: true, completion: nil)
     }
     
-    override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool {
-        <#code#>
-    }
-    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         let photo = photoImageView.image!
         let name = nameTextField.text!
@@ -221,7 +218,6 @@ class Step2UsersVC: UIViewController, UIImagePickerControllerDelegate, UINavigat
     }
     
     
-    
     // ---------------------------
     // MARK: Show/Hide Save Button
     // ---------------------------
@@ -256,8 +252,13 @@ class Step2UsersVC: UIViewController, UIImagePickerControllerDelegate, UINavigat
     
     
     // ----------------------
-    // MARK: DatePicker Setup
+    // MARK: Input Validation
     // ----------------------
+    
+    // Verify age
+    @IBAction func datePickerEditingDidEnd(_ sender: Any) {
+        verifyAge()
+    }
     
     func verifyAge() {
         let dateOfBirth = datePicker.date
@@ -279,15 +280,12 @@ class Step2UsersVC: UIViewController, UIImagePickerControllerDelegate, UINavigat
         birthDate = dateFormatter.string(from: dateOfBirth)
     }
     
-    
-    // ----------------------
-    // MARK: Input Validation
-    // ----------------------
-    
-    
-    // Verify age
-    @IBAction func datePickerEditingDidEnd(_ sender: Any) {
-        verifyAge()
+    @IBAction func usernameEditingDidEnd(_ sender: Any) {
+        for user in users! {
+            if user.firstName.lowercased() == nameTextField.text?.lowercased() {
+                createAlert(title: "Username Error", message: "You have entered in a username that is the same as another user. Please choose a unique name for this user.", textField: nameTextField)
+            }
+        }
     }
     
     func datePickerValueChanged(sender: UIDatePicker) {
@@ -296,7 +294,6 @@ class Step2UsersVC: UIViewController, UIImagePickerControllerDelegate, UINavigat
         formatter.timeStyle = DateFormatter.Style.none                  // No time, just date
         birthdayTextField.text = formatter.string(from: sender.date)    // show date picked in the text field
     }
-    
     
     // Verify passcode
     @IBAction func passcodeEditingDidEnd(_ sender: Any) {
