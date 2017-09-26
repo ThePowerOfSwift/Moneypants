@@ -836,7 +836,7 @@
                                 <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="NOTE: as a rule of thumb, daily jobs should take between 10 and 30 minutes for an adult to complete." lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VBn-xb-Fpv">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="NOTE: as a rule of thumb, jobs should take between 10 and 30 minutes for an adult to complete." lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VBn-xb-Fpv">
                                 <rect key="frame" x="35" y="220.5" width="250" height="81.5"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="250" id="kW8-Kb-ri0"/>
@@ -1336,11 +1336,16 @@
                                     </button>
                                 </subviews>
                             </stackView>
+                            <imageView userInteractionEnabled="NO" alpha="0.029999999999999999" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="house broom" translatesAutoresizingMaskIntoConstraints="NO" id="ifB-d7-pze">
+                                <rect key="frame" x="35" y="243.5" width="250" height="150"/>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" white="0.90000000000000002" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="ifB-d7-pze" firstAttribute="leading" secondItem="YGw-md-1EI" secondAttribute="leadingMargin" constant="19" id="0Ak-h4-I3v"/>
                             <constraint firstItem="je1-2P-m1C" firstAttribute="top" relation="greaterThanOrEqual" secondItem="JlP-TD-9Sf" secondAttribute="bottom" constant="8" id="0YX-Pm-qNo"/>
                             <constraint firstItem="dZ8-mB-G4d" firstAttribute="top" secondItem="gZr-oH-gwA" secondAttribute="bottom" constant="8" id="5yT-b0-Emd"/>
+                            <constraint firstItem="ifB-d7-pze" firstAttribute="centerY" secondItem="wPf-eY-SaM" secondAttribute="centerY" id="6yj-uF-Uzw"/>
                             <constraint firstItem="je1-2P-m1C" firstAttribute="leading" secondItem="YGw-md-1EI" secondAttribute="leadingMargin" id="A1t-6t-RVK"/>
                             <constraint firstAttribute="trailing" secondItem="wPf-eY-SaM" secondAttribute="trailing" id="C4P-wb-hEk"/>
                             <constraint firstItem="wPf-eY-SaM" firstAttribute="leading" secondItem="YGw-md-1EI" secondAttribute="leading" id="NmP-Zy-gku"/>
@@ -1351,6 +1356,7 @@
                             <constraint firstItem="wPf-eY-SaM" firstAttribute="top" relation="greaterThanOrEqual" secondItem="je1-2P-m1C" secondAttribute="bottom" constant="8" id="iZX-9n-MuX"/>
                             <constraint firstAttribute="trailing" secondItem="TcN-Um-hda" secondAttribute="trailing" constant="16" id="lfF-Fq-qDG"/>
                             <constraint firstItem="gZr-oH-gwA" firstAttribute="top" secondItem="wPf-eY-SaM" secondAttribute="bottom" constant="8" id="oXe-OW-U3T"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="ifB-d7-pze" secondAttribute="trailing" constant="19" id="rNe-Je-6Ud"/>
                             <constraint firstItem="TcN-Um-hda" firstAttribute="centerY" secondItem="je1-2P-m1C" secondAttribute="centerY" id="sOd-R8-Ali"/>
                             <constraint firstItem="wPf-eY-SaM" firstAttribute="top" secondItem="TcN-Um-hda" secondAttribute="bottom" constant="8" id="u1b-5b-1SI"/>
                         </constraints>
@@ -1362,12 +1368,13 @@
                         <outlet property="questionButton" destination="McF-tg-Ezm" id="q3A-Hb-EUA"/>
                         <segue destination="4bZ-Xp-rY7" kind="presentation" identifier="EditJob" id="7Nt-Uo-akl"/>
                         <segue destination="vyY-s3-p9b" kind="show" identifier="AssignJobs" id="nur-aH-tzv"/>
-                        <segue destination="4bZ-Xp-rY7" kind="presentation" identifier="AddJob" id="S7g-1g-OOC"/>
+                        <segue destination="4bZ-Xp-rY7" kind="presentation" identifier="AddDailyJob" id="S7g-1g-OOC"/>
+                        <segue destination="4bZ-Xp-rY7" kind="presentation" identifier="AddWeeklyJob" id="bPF-L7-Z42"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="kGw-Cv-lwU" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4369" y="1098"/>
+            <point key="canvasLocation" x="4368.75" y="1097.5352112676057"/>
         </scene>
         <!--Savannah-->
         <scene sceneID="0mD-F9-8KA">
@@ -5042,7 +5049,7 @@ You can add up to 20 daily jobs and 20 weekly jobs.</string>
     <inferredMetricsTieBreakers>
         <segue reference="37h-AF-clw"/>
         <segue reference="AC3-hQ-ggE"/>
-        <segue reference="S7g-1g-OOC"/>
+        <segue reference="bPF-L7-Z42"/>
         <segue reference="sZK-Vt-lQm"/>
     </inferredMetricsTieBreakers>
 </document>

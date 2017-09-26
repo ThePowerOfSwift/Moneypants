@@ -9,11 +9,13 @@ class Step3AddJobVC: UIViewController, UITextFieldDelegate {
     var navBarTitle: String = ""            // for allowing other VCs to change navbar title
     
     var job: JobsAndHabits?                 // 'job' is an instance of 'JobsAndHabits' class
-    var dailyJobs: [JobsAndHabits]?       // This value will get passed from Step3VC
+    var dailyJobs: [JobsAndHabits]?         // This value will get passed from Step3VC
+    var weeklyJobs: [JobsAndHabits]?        // This value will get passed from Step3VC
+    var jobSection: Int?                    // this value passed from Step3VC alert when user chose to add 'daily' or 'weekly' job
     
     var jobDescription: String = ""
-    var jobTempMultiplier: Double!
-    var jobTempClassification: String!
+    var jobMultiplier: Double!
+    var jobClassification: String!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -25,8 +27,8 @@ class Step3AddJobVC: UIViewController, UITextFieldDelegate {
         // Set up view if editing an existing job
         if let existingJob = job {          // check to see if 'job' is not nil
             jobTextField.text = existingJob.name
-            jobTempMultiplier = existingJob.multiplier
-            jobTempClassification = existingJob.classification
+            jobMultiplier = existingJob.multiplier
+            jobClassification = existingJob.classification
         }
         
         updateSaveButtonState()
@@ -44,14 +46,28 @@ class Step3AddJobVC: UIViewController, UITextFieldDelegate {
     
     // This gets executed when 'SAVE' button is tapped, before segue is performed
     override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool {
-        for job in dailyJobs! {
-            if job.name.lowercased() == (jobTextField.text?.lowercased()) {        // check to see if lowercased text matches
-                duplicateNameAlert()
-                return false
+        if jobSection == 0 {
+            for job in dailyJobs! {
+                if job.name.lowercased() == (jobTextField.text?.lowercased()) {        // check to see if lowercased text matches
+                    duplicateNameAlert()
+                    return false
+                }
             }
+            return true
+        } else if jobSection == 1 {
+            for job in weeklyJobs! {
+                if job.name.lowercased() == (jobTextField.text?.lowercased()) {
+                    duplicateNameAlert()
+                    return false
+                }
+            }
+            return true
+        } else {
+            return true
         }
-        return true
     }
+    
+    
     
     
     // This is what gets executed when "SAVE" button is tapped

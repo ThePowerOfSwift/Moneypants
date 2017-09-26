@@ -10,6 +10,7 @@ class Step3VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
     var dailyJobs = [JobsAndHabits]()       // create variable called 'daily jobs' which is an array of type JobsAndHabits
     var weeklyJobs = [JobsAndHabits]()      // create variable called 'weekly jobs' which is an array of type JobsAndHabits
     var dailyHabits = [JobsAndHabits]()
+    var jobSection: Int?                    // This value passed from daily/weekly alert dialogue box to Step3AddJobVC, and then passed back to Step3VC
     
     var dailyJobsFirebaseCount: Int!
     var weeklyJobsFirebaseCount: Int!
@@ -47,6 +48,7 @@ class Step3VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
                 self.loadFirebaseDailyJobs()
             } else {
                 self.loadDefaultDailyJobs()
+                self.jobsTableView.reloadData()
             }
         }
         
@@ -56,63 +58,10 @@ class Step3VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
                 self.loadFirebaseWeeklyJobs()
             } else {
                 self.loadDefaultWeeklyJobs()
+                self.jobsTableView.reloadData()
             }
         }
     }
-    
-    func getDailyJobs(completion: @escaping (Int?) -> ()) {
-        ref.child("dailyJobs").child("count").observeSingleEvent(of: .value, with: { (snapshot) in
-            completion(snapshot.value as? Int)
-        })
-    }
-    
-    func loadFirebaseDailyJobs() {
-        ref.child("dailyJobs").observe(.childAdded, with: { (snapshot) in
-            if let dictionary = snapshot.value as? [String : Any] {
-                let multiplier = dictionary["multiplier"] as! Double
-                let name = dictionary["name"] as! String
-                let classification = dictionary["classification"] as! String
-                let order = dictionary["order"] as! Int
-                
-                let dailyJob = JobsAndHabits(jobName: name, jobMultiplier: multiplier, jobClass: classification, jobOrder: order)
-                self.dailyJobs.append(dailyJob)
-                self.dailyJobs.sort(by: {$0.order < $1.order})
-                
-                self.jobsTableView.reloadData()
-            }
-        })
-    }
-    
-    func getWeeklyJobs(completion: @escaping (Int?) -> ()) {
-        ref.child("weeklyJobs").child("count").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
-            completion(snapshot.value as? Int)
-        }
-    }
-    
-    func loadFirebaseWeeklyJobs() {
-        ref.child("weeklyJobs").observe(.childAdded, with: { (snapshot) in
-            if let dictionary = snapshot.value as? [String : Any] {
-                let multiplier = dictionary["multiplier"] as! Double
-                let name = dictionary["name"] as! String
-                let classification = dictionary["classification"] as! String
-                let order = dictionary["order"] as! Int
-                
-                let weeklyJob = JobsAndHabits(jobName: name, jobMultiplier: multiplier, jobClass: classification, jobOrder: order)
-                self.weeklyJobs.append(weeklyJob)
-                self.weeklyJobs.sort(by: {$0.order < $1.order})
-                
-                self.jobsTableView.reloadData()
-            }
-        })
-    }
-    
-  
-    
-    
-    
-    
-    
-    
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
@@ -140,8 +89,10 @@ class Step3VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
         let cell = jobsTableView.dequeueReusableCell(withIdentifier: "CustomCell", for: indexPath) as! Step3CustomCell
         if indexPath.section == 0 {
             cell.jobLabel.text = dailyJobs[indexPath.row].name
+//            cell.backgroundColor = UIColor.white
         } else {
             cell.jobLabel.text = weeklyJobs[indexPath.row].name
+//            cell.backgroundColor = UIColor.white
         }
         return cell
     }
@@ -221,17 +172,26 @@ class Step3VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
     // ------------------
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
+        // Edit Jobs
         if segue.identifier == "EditJob" {
             let nextController = segue.destination as! Step3AddJobVC
             nextController.dailyJobs = dailyJobs
-            
             // 'sender' is retrieved from 'didSelectRow' function above
             nextController.job = sender as! JobsAndHabits?
             nextController.navBarTitle = "edit job"
-        } else if segue.identifier == "AddJob" {
+            
+        // Add Jobs
+        } else if segue.identifier == "AddDailyJob" {
             let nextController = segue.destination as! Step3AddJobVC
             nextController.dailyJobs = dailyJobs
             nextController.navBarTitle = "add daily job"
+            nextController.jobSection = 0
+        } else if segue.identifier == "AddWeeklyJob" {
+            let nextController = segue.destination as! Step3AddJobVC
+            nextController.weeklyJobs = weeklyJobs
+            nextController.navBarTitle = "add weekly job"
+            nextController.jobSection = 1
         } else {
             print("segue initiated")
         }
@@ -253,22 +213,41 @@ class Step3VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
                 jobsTableView.reloadData()
             }
         } else {
-            
-            // Add a new daily job in the daily jobs array
-            let newIndexPath = IndexPath(row: dailyJobs.count, section: 0)
-            dailyJobs.append(updatedJob!)
-            jobsTableView.insertRows(at: [newIndexPath], with: .fade)
-            
-            // scroll to the newly created item
-            self.jobsTableView.scrollToRow(at: newIndexPath, at: UITableViewScrollPosition.middle, animated: true)
-            
-            // highlight the cell orange, then fade it to white
-            self.jobsTableView.cellForRow(at: newIndexPath)?.backgroundColor = UIColor(red: 242/255, green: 101/255, blue: 34/255, alpha: 1.0)  // orange
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1, execute: {
-                UIView.animate(withDuration: 1.5, animations: {
-                    self.jobsTableView.cellForRow(at: newIndexPath)?.backgroundColor = UIColor.white
+            // somehow have to find out if I should add new job to daily jobs or weekly jobs
+            // perhaps I pass this info from the alert dialogue box when user chooses to add a daily job or weekly job?
+            if sourceVC.jobSection == 0 {
+                // Add a new daily job in the daily jobs array
+                let newIndexPath = IndexPath(row: dailyJobs.count, section: 0)
+                dailyJobs.append(updatedJob!)
+                jobsTableView.insertRows(at: [newIndexPath], with: .fade)
+                
+                // scroll to the newly created item
+                self.jobsTableView.scrollToRow(at: newIndexPath, at: UITableViewScrollPosition.middle, animated: true)
+                
+                // highlight the cell orange, then fade it to white
+                self.jobsTableView.cellForRow(at: newIndexPath)?.backgroundColor = UIColor(red: 242/255, green: 101/255, blue: 34/255, alpha: 1.0)  // orange
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.1, execute: {
+                    UIView.animate(withDuration: 1.5, animations: {
+                        self.jobsTableView.cellForRow(at: newIndexPath)?.backgroundColor = UIColor.white
+                    })
                 })
-            })
+            } else if sourceVC.jobSection == 1 {
+                // Add a new daily job in the daily jobs array
+                let newIndexPath = IndexPath(row: weeklyJobs.count, section: 1)
+                weeklyJobs.append(updatedJob!)
+                jobsTableView.insertRows(at: [newIndexPath], with: .fade)
+                
+                // scroll to the newly created item
+                self.jobsTableView.scrollToRow(at: newIndexPath, at: UITableViewScrollPosition.middle, animated: true)
+                
+                // highlight the cell orange, then fade it to white
+                self.jobsTableView.cellForRow(at: newIndexPath)?.backgroundColor = UIColor(red: 242/255, green: 101/255, blue: 34/255, alpha: 1.0)  // orange
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.1, execute: {
+                    UIView.animate(withDuration: 1.5, animations: {
+                        self.jobsTableView.cellForRow(at: newIndexPath)?.backgroundColor = UIColor.white
+                    })
+                })
+            }
             
             // ====================================================================================================================
             // This code works to animate the scroll to the cell, but I couldn't get cell color to work anywhere inside this method
@@ -284,7 +263,11 @@ class Step3VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
     @IBAction func nextButtonTapped(_ sender: UIButton) {
         disableTableEdit()
         let dailyJobMultiplier = 10 / Double(dailyJobs.count)       // recalculates depending on if user adds more than 10 daily jobs
-        ref.child("dailyJobs").removeValue()                // reset daily jobs
+        let weeklyJobMultiplier = 10 / Double(weeklyJobs.count)
+        
+        ref.child("dailyJobs").removeValue()                        // reset daily jobs
+        ref.child("weeklyJobs").removeValue()
+        
         var dailyCounter = 0
         var weeklyCounter = 0
         for dailyJob in dailyJobs {
@@ -298,18 +281,81 @@ class Step3VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
         
         for weeklyJob in weeklyJobs {
             weeklyCounter += 1
-            ref.child("weeklyJobs").child("weeklyJob\(weeklyCounter)").updateChildValues(["name" : weeklyJob.name,
-                                                                                          "multiplier" : weeklyJob.multiplier,
-                                                                                          "classification" : weeklyJob.classification,
-                                                                                          "order" : weeklyCounter])
+            ref.child("weeklyJobs").child("weeklyJob\(weeklyCounter)").setValue(["name" : weeklyJob.name,
+                                                                                 "multiplier" : weeklyJobMultiplier,
+                                                                                 "classification" : weeklyJob.classification,
+                                                                                 "order" : weeklyCounter])
+            ref.child("weeklyJobs").updateChildValues(["count" : weeklyJobs.count])            // return number of daily jobs
         }
         performSegue(withIdentifier: "AssignJobs", sender: self)
+        
+        // Remove observers from 'getDailyJobs', 'loadFirebaseDailyJobs', 'getWeeklyJobs', and 'loadFirebaseWeeklyJobs' functions
+        ref.child("dailyJobs").child("count").removeAllObservers()
+        ref.child("dailyJobs").removeAllObservers()
+        ref.child("weeklyJobs").child("count").removeAllObservers()
+        ref.child("weeklyJobs").removeAllObservers()
+    }
+    
+    @IBAction func questionButtonTapped(_ sender: UIButton) {
+        // NOTE: Action on this button tap is handled in IB
+        disableTableEdit()
+    }
+    
+    func addJobButtonTapped() {
+        disableTableEdit()
+        chooseDailyOrWeeklyJob()
     }
     
     
     // ---------
     // Functions
     // ---------
+    
+    func getDailyJobs(completion: @escaping (Int?) -> ()) {
+        ref.child("dailyJobs").child("count").observeSingleEvent(of: .value, with: { (snapshot) in
+            completion(snapshot.value as? Int)
+        })
+    }
+    
+    func loadFirebaseDailyJobs() {
+        ref.child("dailyJobs").observe(.childAdded, with: { (snapshot) in
+            if let dictionary = snapshot.value as? [String : Any] {
+                let multiplier = dictionary["multiplier"] as! Double
+                let name = dictionary["name"] as! String
+                let classification = dictionary["classification"] as! String
+                let order = dictionary["order"] as! Int
+                
+                let dailyJob = JobsAndHabits(jobName: name, jobMultiplier: multiplier, jobClass: classification, jobOrder: order)
+                self.dailyJobs.append(dailyJob)
+                self.dailyJobs.sort(by: {$0.order < $1.order})
+                
+                self.jobsTableView.reloadData()
+            }
+        })
+    }
+    
+    func getWeeklyJobs(completion: @escaping (Int?) -> ()) {
+        ref.child("weeklyJobs").child("count").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
+            completion(snapshot.value as? Int)
+        }
+    }
+    
+    func loadFirebaseWeeklyJobs() {
+        ref.child("weeklyJobs").observe(.childAdded, with: { (snapshot) in
+            if let dictionary = snapshot.value as? [String : Any] {
+                let multiplier = dictionary["multiplier"] as! Double
+                let name = dictionary["name"] as! String
+                let classification = dictionary["classification"] as! String
+                let order = dictionary["order"] as! Int
+                
+                let weeklyJob = JobsAndHabits(jobName: name, jobMultiplier: multiplier, jobClass: classification, jobOrder: order)
+                self.weeklyJobs.append(weeklyJob)
+                self.weeklyJobs.sort(by: {$0.order < $1.order})
+                
+                self.jobsTableView.reloadData()
+            }
+        })
+    }
     
     @IBAction func editButtonTapped(_ sender: UIButton) {
         if cellStyleForEditing == .none {
@@ -374,41 +420,44 @@ class Step3VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
             JobsAndHabits(jobName: "bed by 8:pm", jobMultiplier: 1, jobClass: "dailyHabit", jobOrder: 10)]
     }
     
-    @IBAction func questionButtonTapped(_ sender: UIButton) {
-        disableTableEdit()
+    
+    func chooseDailyOrWeeklyJob() {
+        let alert = UIAlertController(title: "Add Job", message: "You have selected 'add a new job'. Would you like to add a daily job or a weekly job?", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "add daily job", style: .default, handler: { (action) in
+            
+            // check to make sure user isn't adding more than 20 jobs
+            if self.dailyJobs.count >= 12 {
+                self.addTooManyJobsAlert(alertMessage: "You have reached your limit of 20 daily jobs. If you have more jobs to create, try combining multiple jobs into one.")
+            } else {
+                alert.dismiss(animated: true, completion: nil)
+                self.performSegue(withIdentifier: "AddDailyJob", sender: self)
+            }
+        }))
+        alert.addAction(UIAlertAction(title: "add weekly job", style: .default, handler: { (action) in
+            
+            // check to make sure user isn't adding more than 20 jobs
+            if self.weeklyJobs.count >= 12 {
+                self.addTooManyJobsAlert(alertMessage: "You have reached your limit of 20 weekly jobs. If you have more jobs to create, try combining multiple jobs into one.")
+            } else {
+                alert.dismiss(animated: true, completion: nil)
+                self.performSegue(withIdentifier: "AddWeeklyJob", sender: self)
+            }
+        }))
+        alert.addAction(UIAlertAction(title: "cancel", style: .cancel, handler: { (action) in
+            alert.dismiss(animated: true, completion: nil)
+        }))
+        present(alert, animated: true, completion: nil)
     }
     
-    func addJobButtonTapped() {
-        disableTableEdit()
-        if dailyJobs.count >= 20 {
-            addTooManyJobsAlert()
-        } else {
-            performSegue(withIdentifier: "AddJob", sender: self)
-        }
-    }
-    
-    
-    // ----------------------------------------------------------
-    // MARK: Dismiss keyboard if user taps outside of text fields
-    // ----------------------------------------------------------
-    
+    // Dismiss keyboard if user taps outside of text fields
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         disableTableEdit()
         view.endEditing(true)
     }
     
-    
     // ------
     // Alerts
     // ------
-    
-    func questionButtonAlert() {
-        let alert = UIAlertController(title: "Daily Jobs", message: "Use this page to make a wish list of all the jobs that need to be done on a daily and weekly basis in your home. Select, add, or modify the existing default list to fit your family's needs. You can add up to 20 daily jobs and 20 weekly jobs.\n\nNOTE: each daily job will pay the same, and each weekly job will pay the same; so do your best to distribute the assignments equally.\n\nDo NOT include jobs that need to be done less frequently (do not include monthly or yearly jobs). Also, do NOT include daily habits. Daily habits will be reviewed in the upcoming screens.", preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "okay", style: .default, handler: { (action) in
-            alert.dismiss(animated: true, completion: nil)
-        }))
-        self.present(alert, animated: true, completion: nil)
-    }
     
     func deletedTooManyRowsAlert(alertTitle: String, alertMessage: String) {
         let alert = UIAlertController(title: alertTitle, message: alertMessage, preferredStyle: .alert)
@@ -419,8 +468,8 @@ class Step3VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
         self.present(alert, animated: true, completion: nil)
     }
     
-    func addTooManyJobsAlert() {
-        let alert = UIAlertController(title: "Add Job", message: "You have reached your limit of 20 daily jobs. If you have more jobs to create, try combining multiple jobs into one.", preferredStyle: .alert)
+    func addTooManyJobsAlert(alertMessage: String) {
+        let alert = UIAlertController(title: "Add Job", message: alertMessage, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "okay", style: .default, handler: { (action) in
             alert.dismiss(animated: true, completion: nil)
         }))
