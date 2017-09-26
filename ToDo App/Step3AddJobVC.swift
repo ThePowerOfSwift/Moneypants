@@ -44,8 +44,8 @@ class Step3AddJobVC: UIViewController, UITextFieldDelegate {
     
     // This gets executed when 'SAVE' button is tapped, before segue is performed
     override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool {
-        for name in dailyJobs! {
-            if name.name.lowercased() == (jobTextField.text?.lowercased()) {        // check to see if lowercased text matches
+        for job in dailyJobs! {
+            if job.name.lowercased() == (jobTextField.text?.lowercased()) {        // check to see if lowercased text matches
                 duplicateNameAlert()
                 return false
             }

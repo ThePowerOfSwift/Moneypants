@@ -540,7 +540,7 @@
 				TargetAttributes = {
 					89FB67531D5C82AB002B2484 = {
 						CreatedOnToolsVersion = 7.3.1;
-						DevelopmentTeam = EQDNEEHN2G;
+						DevelopmentTeam = ZZ3CM896KM;
 						LastSwiftMigration = 0800;
 					};
 				};
@@ -862,13 +862,14 @@
 			baseConfigurationReference = DC50B92E978A56DFC5AEAE2F /* Pods-ToDo App.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = EQDNEEHN2G;
+				DEVELOPMENT_TEAM = ZZ3CM896KM;
 				INFOPLIST_FILE = "ToDo App/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.moneypantssolution.The-Moneypants-Solution";
+				PRODUCT_BUNDLE_IDENTIFIER = com.moneypantssolution.moneypants;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -877,13 +878,14 @@
 			baseConfigurationReference = 5F95373CF9BA0303AD815BBD /* Pods-ToDo App.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = EQDNEEHN2G;
+				DEVELOPMENT_TEAM = ZZ3CM896KM;
 				INFOPLIST_FILE = "ToDo App/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.moneypantssolution.The-Moneypants-Solution";
+				PRODUCT_BUNDLE_IDENTIFIER = com.moneypantssolution.moneypants;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};

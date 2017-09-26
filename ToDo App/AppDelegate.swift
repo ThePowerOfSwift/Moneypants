@@ -12,7 +12,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         var storyboard = UIStoryboard()
         let currentUser = FIRAuth.auth()?.currentUser
         if currentUser != nil {
-            print("\(currentUser?.email) logged in")
+            print("\(currentUser?.email!) logged in")
             storyboard = UIStoryboard(name: "Home", bundle: nil)
         } else {
             print("user logged out")

@@ -41,7 +41,7 @@ class Step3VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
-        jobsTableView.reloadData()
+        //        jobsTableView.reloadData()
     }
     
     
@@ -62,6 +62,7 @@ class Step3VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
         }
     }
     
+    // populate rows with data
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = jobsTableView.dequeueReusableCell(withIdentifier: "CustomCell", for: indexPath) as! Step3CustomCell
         if indexPath.section == 0 {
@@ -98,10 +99,12 @@ class Step3VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
         }
     }
     
+    // allow editing of rows
     func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         return true
     }
     
+    // allow rearranging of rows
     func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
         return true
     }
@@ -118,7 +121,7 @@ class Step3VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
         }
     }
     
-    
+    // allow deletion of rows
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             if indexPath.section == 0 {
@@ -140,7 +143,6 @@ class Step3VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
     }
     
     
-    
     // ------------------
     // MARK: - Navigation
     // ------------------
@@ -158,7 +160,7 @@ class Step3VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
             nextController.dailyJobs = dailyJobs
             nextController.navBarTitle = "add daily job"
         } else {
-            print("Segue Initiated:",segue.identifier!)
+            print("segue initiated")
         }
     }
     
@@ -182,7 +184,27 @@ class Step3VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
             // Add a new daily job in the daily jobs array
             let newIndexPath = IndexPath(row: dailyJobs.count, section: 0)
             dailyJobs.append(updatedJob!)
-            jobsTableView.insertRows(at: [newIndexPath], with: .automatic)
+            jobsTableView.insertRows(at: [newIndexPath], with: .fade)
+
+            // scroll to the newly created item
+            self.jobsTableView.scrollToRow(at: newIndexPath, at: UITableViewScrollPosition.middle, animated: true)
+            
+            // highlight the cell orange, then fade it to white
+            self.jobsTableView.cellForRow(at: newIndexPath)?.backgroundColor = UIColor(red: 242/255, green: 101/255, blue: 34/255, alpha: 1.0)  // orange
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1, execute: {
+                UIView.animate(withDuration: 1.5, animations: {
+                    self.jobsTableView.cellForRow(at: newIndexPath)?.backgroundColor = UIColor.white
+                })
+            })
+            
+            // ====================================================================================================================
+            // This code works to animate the scroll to the cell, but I couldn't get cell color to work anywhere inside this method
+//            UIView.transition(with: jobsTableView, duration: 1.0, options: .curveEaseIn, animations: {
+//                self.jobsTableView.reloadData() }, completion: { (success) in
+//                    if success {
+//                        self.jobsTableView.scrollToRow(at: newIndexPath, at: .middle, animated: true)
+//                    }
+//            })
         }
     }
     

@@ -25,9 +25,6 @@ class Step2UsersVC: UIViewController, UIImagePickerControllerDelegate, UINavigat
     
     var selectedProfileImage: UIImage!
     var user: User?
-    var firebaseUser: FIRUser!
-    var ref: FIRDatabaseReference?
-    var storageRef: FIRStorageReference?
     
     let datePicker = UIDatePicker()
     
@@ -35,14 +32,6 @@ class Step2UsersVC: UIViewController, UIImagePickerControllerDelegate, UINavigat
         super.viewDidLoad()
         
         navBar.topItem?.title = navBarTitle
-        
-        // --------
-        // Firebase
-        // --------
-        
-        firebaseUser = FIRAuth.auth()?.currentUser
-        ref = FIRDatabase.database().reference().child("users").child(firebaseUser.uid)
-        storageRef = FIRStorage.storage().reference()
         
         // -----------------
         // Date Picker Setup
@@ -154,9 +143,11 @@ class Step2UsersVC: UIViewController, UIImagePickerControllerDelegate, UINavigat
         dismiss(animated: true, completion: nil)
     }
     
+    override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool {
+        <#code#>
+    }
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        print("segue en route!")
-        
         let photo = photoImageView.image!
         let name = nameTextField.text!
         let birthday = Int(birthDate)!
@@ -313,7 +304,6 @@ class Step2UsersVC: UIViewController, UIImagePickerControllerDelegate, UINavigat
             createAlert(title: "Passcode Error", message: "Passcodes must have exactly four numbers. Please choose a 4-digit passcode.", textField: passcodeTextField)
         }
     }
-    
     
     
     // --------------------

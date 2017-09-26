@@ -39,7 +39,7 @@ class Step3PopupVC: UIViewController {
     }
     
     @IBAction func bottomButtonTapped(_ sender: UIButton) {
-        descriptionLabel.text = "NOTE: each daily job will pay the same, and each weekly job will pay the same; so do your best to distribute the assignments equally.\n\nDo NOT include jobs that need to be done less frequently (do not include monthly or yearly jobs). Also, do NOT include daily habits. Daily habits will be reviewed in the upcoming screens."
+        descriptionLabel.text = "NOTE: each daily job will pay the same, and each weekly job will pay the same; so do your best to distribute the assignments equally.\n\nDo NOT include jobs that need to be done less frequently (no monthly or yearly jobs). Also, do NOT include daily habits. Daily habits will be reviewed in the upcoming screens."
         bottomButton.isHidden = true
         watchVideoButton.isHidden = false
     }
