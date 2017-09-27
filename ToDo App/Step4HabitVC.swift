@@ -1,6 +1,6 @@
 import UIKit
 
-class Step4HabitViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+class Step4HabitVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
 
     override func viewDidLoad() {
         super.viewDidLoad()

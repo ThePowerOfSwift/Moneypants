@@ -3,8 +3,7 @@ import UIKit
 class Step4HabitCustomCell: UITableViewCell {
     
     @IBOutlet weak var habitLabel: UILabel!
-    @IBOutlet weak var habitButton: UIButton!
-    
+    @IBOutlet weak var habitButton: UIButton!    
 
     override func awakeFromNib() {
         super.awakeFromNib()
