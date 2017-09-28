@@ -153,14 +153,30 @@ class Step4VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
     // determine which cell is tapped
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if indexPath.section == 0 {
+            // push value to Firebase
+            ref.child("Test")
+                .child("dailyJob\(indexPath.row)")
+                .updateChildValues(["assigned" : dailyJobs[indexPath.row].name])
+        } else {
+            // push value to Firebase
+            ref.child("Test")
+                .child("weeklyJob\(indexPath.row)")
+                .updateChildValues(["assigned" : weeklyJobs[indexPath.row].name])
+        }
+        
+       
         
         if (!selectedArray.contains(indexPath)) {           // only add to array if it doesn't already exist
             selectedArray.append(indexPath)
-            ref.child("Test").updateChildValues(["assigned" : dailyJobs[indexPath.row].name])
             // print("Item Added",selectedArray)
             
             let dailyJobsCount = countJobs().dailyCount
             let weeklyJobsCount = countJobs().weeklyCount
+            
+            // ----------
+            // DAILY JOBS
+            // ----------
             
             // check if daily jobs is more than 3
             if dailyJobsCount > maxDailyNumber {
@@ -168,6 +184,13 @@ class Step4VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
                 
                 alert.addAction(UIAlertAction(title: "cancel", style: .cancel, handler: { (action) in
                     let index = self.selectedArray.index(of: indexPath)
+                    
+                    // update Firebase with 'none' in 'assigned' category...
+                    self.ref.child("Test")
+                        .child("dailyJob\(indexPath.row)")
+                        .updateChildValues(["assigned" : "none"])
+                    
+                    // ... then remove value from array
                     self.selectedArray.remove(at: index!)
                     tableView.reloadData()
                     alert.dismiss(animated: true, completion: nil)
@@ -177,9 +200,12 @@ class Step4VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
                     self.maxDailyNumber = self.maxDailyNumber + 1
                     alert.dismiss(animated: true, completion: nil)
                 }))
-                
                 present(alert, animated: true, completion: nil)
             } else {
+                
+                // -----------
+                // WEEKLY JOBS
+                // -----------
                 
                 // check if weekly jobs is more than 2
                 if weeklyJobsCount > maxWeeklyNumber {
@@ -187,6 +213,13 @@ class Step4VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
                     
                     alert.addAction(UIAlertAction(title: "cancel", style: .cancel, handler: { (action) in
                         let index = self.selectedArray.index(of: indexPath)
+                        
+                        // update Firebase with 'none' in 'assigned' category...
+                        self.ref.child("Test")
+                            .child("weeklyJob\(indexPath.row)")
+                            .updateChildValues(["assigned" : "none"])
+                        
+                        // ... then remove value from array
                         self.selectedArray.remove(at: index!)
                         tableView.reloadData()
                         alert.dismiss(animated: true, completion: nil)
@@ -202,9 +235,26 @@ class Step4VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
             
         } else {
             
+            // if user taps cell that's already been selected, remove the values
             let index = selectedArray.index(of: indexPath)
+            
+            if indexPath.section == 0 {
+                // update Firebase with 'none' in 'assigned' category...
+                self.ref.child("Test")
+                    .child("dailyJob\(indexPath.row)")
+                    .updateChildValues(["assigned" : "none"])
+            } else {
+                // update Firebase with 'none' in 'assigned' category...
+                self.ref.child("Test")
+                    .child("weeklyJob\(indexPath.row)")
+                    .updateChildValues(["assigned" : "none"])
+            }
+            
+            
+            
+            // ... then remove value from array
             selectedArray.remove(at: index!)
-            //            print("Item Removed",selectedArray)
+            // print("Item Removed",selectedArray)
         }
         
         print(countJobs().dailyCount,"daily jobs chosen")
