@@ -11,6 +11,8 @@ class Step4VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
     var dailyJobs = [JobsAndHabits]()
     var weeklyJobs = [JobsAndHabits]()
     var selectedArray = [IndexPath]()       // for storing user selected cells
+    var maxDailyNumber = 3                  // max number of daily chores allowed
+    var maxWeeklyNumber = 2
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,16 +32,68 @@ class Step4VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
         self.automaticallyAdjustsScrollViewInsets = false
     }
     
-    // get user selected rows -- WORKS!
     @IBAction func nextButtonTapped(_ sender: UIButton) {
-        print(selectedArray)
+//        ref.child("TESTING").removeValue()
         for index in selectedArray {
             if index.section == 0 {
+                ref.child("TESTING").child("dailyJob\(index.row)").updateChildValues(["assignment" : dailyJobs[index.row].name])
                 print(dailyJobs[index.row].name)
             } else {
+                ref.child("TESTING").child("weeklyJob\(index.row)").setValue(["assignment" : weeklyJobs[index.row].name])
                 print(weeklyJobs[index.row].name)
             }
         }
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        // OLD
+        
+        // ================================
+//        get user selected rows -- WORKS!
+//        print(selectedArray)
+//        for index in selectedArray {
+//            if index.section == 0 {
+//                print(dailyJobs[index.row].name)
+//            } else {
+//                print(weeklyJobs[index.row].name)
+//            }
+//        }
+//        print("Current Totals:",countJobs().dailyCount,countJobs().weeklyCount)
+
+        // ================================
+        
+        
+        
+        /*
+        for selection in selectedArray {
+            if selection.section == 0 {
+                for row in selection {
+                    print(dailyJobs[selection.row].name)
+                }
+                
+                
+//                for dailyJob in dailyJobs {
+//                    print(dailyJob)
+//                    ref.child("TESTING").child("\(selection.row)").setValue(["name" : dailyJob.name])
+//                }
+                //                print(selection.row)
+                //                print(dailyJobs[index.row].name)        // gives names of daily jobs
+            } else {
+                for weeklyJob in weeklyJobs {
+//                    ref.child("TESTING").child("\(selection.row)").setValue(["name" : weeklyJob.name])
+                }
+                //                print(selection.row)                      // gives indexes of weekly jobs
+            }
+        }
+        print(dailyJobs[section.row].name)
+        print(weeklyJobs[section.row].name)       // gives names of weekly jobs
+        */
     }
     
     
@@ -94,22 +148,68 @@ class Step4VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
         } else {
             cell.selectionBoxImageView.image = UIImage(named: "blank")
         }
-        
         return cell
     }
     
     // determine which cell is tapped
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        tableView.deselectRow(at: indexPath, animated: true)            // not sure what this does
         
         if (!selectedArray.contains(indexPath)) {           // only add to array if it doesn't already exist
             selectedArray.append(indexPath)
-            print("Item Added",selectedArray)
+            ref.child("Test").updateChildValues(["assigned" : dailyJobs[indexPath.row].name])
+            // print("Item Added",selectedArray)
+            
+            let dailyJobsCount = countJobs().dailyCount
+            let weeklyJobsCount = countJobs().weeklyCount
+            
+            // check if daily jobs is more than 3
+            if dailyJobsCount > maxDailyNumber {
+                let alert = UIAlertController(title: "Daily Jobs", message: "You have chosen \(dailyJobsCount) daily jobs. It is recommended that each individual only have three daily jobs max. Are you sure you want to assign 'USER' \(dailyJobsCount) daily jobs?", preferredStyle: .alert)
+                
+                alert.addAction(UIAlertAction(title: "cancel", style: .cancel, handler: { (action) in
+                    let index = self.selectedArray.index(of: indexPath)
+                    self.selectedArray.remove(at: index!)
+                    tableView.reloadData()
+                    alert.dismiss(animated: true, completion: nil)
+                }))
+                
+                alert.addAction(UIAlertAction(title: "okay", style: .default, handler: { (action) in
+                    self.maxDailyNumber = self.maxDailyNumber + 1
+                    alert.dismiss(animated: true, completion: nil)
+                }))
+                
+                present(alert, animated: true, completion: nil)
+            } else {
+                
+                // check if weekly jobs is more than 2
+                if weeklyJobsCount > maxWeeklyNumber {
+                    let alert = UIAlertController(title: "Weekly Jobs", message: "You have chosen \(weeklyJobsCount) daily jobs. It is recommended that each individual only have 2 weekly jobs max. Are you sure you want to assign 'USER' \(weeklyJobsCount) daily jobs?", preferredStyle: .alert)
+                    
+                    alert.addAction(UIAlertAction(title: "cancel", style: .cancel, handler: { (action) in
+                        let index = self.selectedArray.index(of: indexPath)
+                        self.selectedArray.remove(at: index!)
+                        tableView.reloadData()
+                        alert.dismiss(animated: true, completion: nil)
+                    }))
+                    
+                    alert.addAction(UIAlertAction(title: "okay", style: .default, handler: { (action) in
+                        self.maxWeeklyNumber = self.maxWeeklyNumber + 1
+                        alert.dismiss(animated: true, completion: nil)
+                    }))
+                    present(alert, animated: true, completion: nil)
+                }
+            }
+            
         } else {
+            
             let index = selectedArray.index(of: indexPath)
             selectedArray.remove(at: index!)
-            print("Item Removed",selectedArray)
+            //            print("Item Removed",selectedArray)
         }
+        
+        print(countJobs().dailyCount,"daily jobs chosen")
+        print(countJobs().weeklyCount,"weekly jobs chosen")
+        
         tableView.reloadData()      // reloads table so checkmark will show up
     }
     
@@ -117,6 +217,21 @@ class Step4VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
     // ---------
     // Functions
     // ---------
+    
+    func countJobs() -> (dailyCount: Int, weeklyCount: Int) {
+        var dailyJobsCount = 0
+        var weeklyJobsCount = 0
+        for index in selectedArray {
+            if index.section == 0 {
+                dailyJobsCount += 1                     // count number of daily jobs
+                //                print(dailyJobs[index.row].name)        // give names of daily jobs
+            } else {
+                weeklyJobsCount += 1                    // count number of weekly jobs
+                //                print(weeklyJobs[index.row].name)       // give names of weekly jobs
+            }
+        }
+        return (dailyJobsCount, weeklyJobsCount)
+    }
     
     func fetchJobs() {
         ref.child("dailyJobs").observe(.childAdded, with: { (snapshot) in
