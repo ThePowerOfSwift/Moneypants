@@ -88,7 +88,7 @@ class Step2VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
             nextController.users = users
             nextController.navBarTitle = "add user"
         } else {
-            print("Segue Initiated:",segue.identifier!)
+//            print("Segue Initiated:",segue.identifier!)
         }
     }
     

@@ -365,7 +365,7 @@
                                     <rect key="frame" x="120" y="99" width="80" height="80"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="?" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bFh-xi-zKP">
-                                            <rect key="frame" x="23" y="-7" width="35" height="94"/>
+                                            <rect key="frame" x="22.5" y="-7" width="35" height="94"/>
                                             <fontDescription key="fontDescription" name="Arista2.0" family="Arista 2.0" pointSize="80"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
@@ -1337,26 +1337,26 @@
                                 </subviews>
                             </stackView>
                             <imageView userInteractionEnabled="NO" alpha="0.040000000000000001" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="house broom" translatesAutoresizingMaskIntoConstraints="NO" id="ifB-d7-pze">
-                                <rect key="frame" x="35" y="244" width="250" height="150"/>
+                                <rect key="frame" x="36" y="244" width="248" height="150"/>
                             </imageView>
                         </subviews>
                         <color key="backgroundColor" white="0.90000000000000002" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="ifB-d7-pze" firstAttribute="leading" secondItem="YGw-md-1EI" secondAttribute="leadingMargin" constant="19" id="0Ak-h4-I3v"/>
                             <constraint firstItem="je1-2P-m1C" firstAttribute="top" relation="greaterThanOrEqual" secondItem="JlP-TD-9Sf" secondAttribute="bottom" constant="8" id="0YX-Pm-qNo"/>
                             <constraint firstItem="dZ8-mB-G4d" firstAttribute="top" secondItem="gZr-oH-gwA" secondAttribute="bottom" constant="8" id="5yT-b0-Emd"/>
                             <constraint firstItem="ifB-d7-pze" firstAttribute="centerY" secondItem="wPf-eY-SaM" secondAttribute="centerY" id="6yj-uF-Uzw"/>
                             <constraint firstItem="je1-2P-m1C" firstAttribute="leading" secondItem="YGw-md-1EI" secondAttribute="leadingMargin" id="A1t-6t-RVK"/>
                             <constraint firstAttribute="trailing" secondItem="wPf-eY-SaM" secondAttribute="trailing" id="C4P-wb-hEk"/>
                             <constraint firstItem="wPf-eY-SaM" firstAttribute="leading" secondItem="YGw-md-1EI" secondAttribute="leading" id="NmP-Zy-gku"/>
+                            <constraint firstAttribute="trailing" secondItem="ifB-d7-pze" secondAttribute="trailing" constant="36" id="QWx-ho-QlI"/>
                             <constraint firstItem="TcN-Um-hda" firstAttribute="leading" secondItem="je1-2P-m1C" secondAttribute="trailing" constant="16" id="Qjt-Wh-dpe"/>
                             <constraint firstAttribute="trailing" secondItem="gZr-oH-gwA" secondAttribute="trailing" constant="16" id="Taa-Vs-nlI"/>
                             <constraint firstItem="TcN-Um-hda" firstAttribute="top" secondItem="JlP-TD-9Sf" secondAttribute="bottom" constant="8" id="bT5-IJ-yyM"/>
                             <constraint firstItem="gZr-oH-gwA" firstAttribute="leading" secondItem="YGw-md-1EI" secondAttribute="leading" constant="16" id="caQ-rW-X55"/>
+                            <constraint firstItem="ifB-d7-pze" firstAttribute="leading" secondItem="YGw-md-1EI" secondAttribute="leading" constant="36" id="hse-BK-byr"/>
                             <constraint firstItem="wPf-eY-SaM" firstAttribute="top" relation="greaterThanOrEqual" secondItem="je1-2P-m1C" secondAttribute="bottom" constant="8" id="iZX-9n-MuX"/>
                             <constraint firstAttribute="trailing" secondItem="TcN-Um-hda" secondAttribute="trailing" constant="16" id="lfF-Fq-qDG"/>
                             <constraint firstItem="gZr-oH-gwA" firstAttribute="top" secondItem="wPf-eY-SaM" secondAttribute="bottom" constant="8" id="oXe-OW-U3T"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="ifB-d7-pze" secondAttribute="trailing" constant="19" id="rNe-Je-6Ud"/>
                             <constraint firstItem="TcN-Um-hda" firstAttribute="centerY" secondItem="je1-2P-m1C" secondAttribute="centerY" id="sOd-R8-Ali"/>
                             <constraint firstItem="wPf-eY-SaM" firstAttribute="top" secondItem="TcN-Um-hda" secondAttribute="bottom" constant="8" id="u1b-5b-1SI"/>
                         </constraints>
@@ -1485,6 +1485,9 @@
                                     <action selector="nextButtonTapped:" destination="vyY-s3-p9b" eventType="touchUpInside" id="D9Z-qw-qr1"/>
                                 </connections>
                             </button>
+                            <imageView userInteractionEnabled="NO" alpha="0.039999999105930328" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="house broom" translatesAutoresizingMaskIntoConstraints="NO" id="VV6-TI-vAN">
+                                <rect key="frame" x="36" y="255.5" width="248" height="150"/>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" white="0.90000000000000002" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -1494,6 +1497,7 @@
                             <constraint firstItem="ZNS-Lg-iP3" firstAttribute="top" secondItem="uqK-YI-Skd" secondAttribute="bottom" constant="8" id="I6s-ks-Rtx"/>
                             <constraint firstItem="g1J-P2-WfN" firstAttribute="top" secondItem="bdo-wa-HiP" secondAttribute="bottom" constant="8" id="LIa-TF-Pmw"/>
                             <constraint firstItem="pjm-zM-3F1" firstAttribute="top" relation="greaterThanOrEqual" secondItem="ZoN-PZ-FPh" secondAttribute="bottom" constant="8" id="Oke-2j-84W"/>
+                            <constraint firstItem="VV6-TI-vAN" firstAttribute="leading" secondItem="aRt-Mk-lUC" secondAttribute="leading" constant="36" id="QtA-NS-426"/>
                             <constraint firstItem="ZoN-PZ-FPh" firstAttribute="leading" secondItem="aRt-Mk-lUC" secondAttribute="leading" id="SMv-rD-jf0"/>
                             <constraint firstItem="bdo-wa-HiP" firstAttribute="top" secondItem="ZoN-PZ-FPh" secondAttribute="bottom" constant="8" id="X6M-HH-2bq"/>
                             <constraint firstItem="bdo-wa-HiP" firstAttribute="centerY" secondItem="pjm-zM-3F1" secondAttribute="centerY" id="a7I-ln-2CZ"/>
@@ -1503,16 +1507,19 @@
                             <constraint firstItem="bdo-wa-HiP" firstAttribute="leading" secondItem="pjm-zM-3F1" secondAttribute="trailing" constant="16" id="fDv-rT-FAS"/>
                             <constraint firstAttribute="trailing" secondItem="g1J-P2-WfN" secondAttribute="trailing" id="geg-mk-Poj"/>
                             <constraint firstItem="bdo-wa-HiP" firstAttribute="trailing" secondItem="aRt-Mk-lUC" secondAttribute="trailingMargin" id="kGk-CC-Vkp"/>
+                            <constraint firstItem="VV6-TI-vAN" firstAttribute="centerY" secondItem="g1J-P2-WfN" secondAttribute="centerY" id="pkQ-oN-QGf"/>
+                            <constraint firstAttribute="trailing" secondItem="VV6-TI-vAN" secondAttribute="trailing" constant="36" id="qm2-7C-76F"/>
                             <constraint firstItem="ZoN-PZ-FPh" firstAttribute="top" secondItem="dvS-xE-MFk" secondAttribute="bottom" id="tnX-a8-QNs"/>
                         </constraints>
                     </view>
                     <connections>
                         <outlet property="jobsTableView" destination="g1J-P2-WfN" id="ImU-Ae-5HG"/>
+                        <segue destination="0ig-vH-6A2" kind="presentation" identifier="ExplainerPopup" modalPresentationStyle="overCurrentContext" modalTransitionStyle="crossDissolve" id="mQT-Ow-WeD"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="QBy-O1-jOY" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="5632.5" y="1098.5915492957747"/>
+            <point key="canvasLocation" x="5646" y="1098"/>
         </scene>
         <!--Savannah-->
         <scene sceneID="EqV-q6-7JF">
@@ -1666,7 +1673,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="t2q-jk-0Dv" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="6448" y="1099"/>
+            <point key="canvasLocation" x="6459" y="1098"/>
         </scene>
         <!--Dad-->
         <scene sceneID="4BR-c8-nAV">
@@ -4970,7 +4977,7 @@ You can add up to 20 daily jobs and 20 weekly jobs.</string>
                                     <rect key="frame" x="120" y="62" width="80" height="80"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="?" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="v3K-mP-aXo">
-                                            <rect key="frame" x="23" y="-7" width="35" height="94"/>
+                                            <rect key="frame" x="22.5" y="-7" width="35" height="94"/>
                                             <fontDescription key="fontDescription" name="Arista2.0" family="Arista 2.0" pointSize="80"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
@@ -5013,6 +5020,134 @@ You can add up to 20 daily jobs and 20 weekly jobs.</string>
             </objects>
             <point key="canvasLocation" x="4806" y="1876"/>
         </scene>
+        <!--Step4 PopupVC-->
+        <scene sceneID="Hha-1K-OaA">
+            <objects>
+                <viewController id="0ig-vH-6A2" customClass="Step4PopupVC" customModule="ToDo_App" customModuleProvider="target" sceneMemberID="viewController">
+                    <visualEffectView key="view" opaque="NO" contentMode="scaleToFill" id="2hL-Vv-Hf4">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="6LY-Qn-T91">
+                            <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                            <subviews>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="onr-6y-NoB">
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                                    <connections>
+                                        <action selector="dismissPopupButtonTapped:" destination="0ig-vH-6A2" eventType="touchUpInside" id="aiY-Yx-Udd"/>
+                                    </connections>
+                                </button>
+                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aRK-VL-FRe" userLabel="Popup">
+                                    <rect key="frame" x="35" y="141" width="250" height="287.5"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Assign Jobs" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yaX-lq-Mm8">
+                                            <rect key="frame" x="16" y="58" width="218" height="21"/>
+                                            <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                            <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="jTU-b0-7EJ">
+                                            <rect key="frame" x="16" y="95" width="218" height="1"/>
+                                            <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="0.5" id="oBo-Wp-JLD"/>
+                                            </constraints>
+                                        </imageView>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="justified" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WP1-BP-YF4">
+                                            <rect key="frame" x="16" y="112" width="218" height="93.5"/>
+                                            <string key="text">You are now going to assign daily and weekly jobs to each family member, starting with the youngest child.
+
+Parents will be assigned last.</string>
+                                            <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                            <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GMd-Rp-f2N">
+                                            <rect key="frame" x="50" y="221.5" width="150" height="50"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="50" id="0sg-hw-b5q"/>
+                                            </constraints>
+                                            <fontDescription key="fontDescription" type="system" weight="black" pointSize="13"/>
+                                            <state key="normal" title="click here to watch a short video">
+                                                <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            </state>
+                                            <connections>
+                                                <action selector="watchVideoButtonTapped:" destination="0ig-vH-6A2" eventType="touchUpInside" id="pZS-l0-4O3"/>
+                                            </connections>
+                                        </button>
+                                    </subviews>
+                                    <color key="backgroundColor" red="0.94901960780000005" green="0.39607843139999999" blue="0.1333333333" alpha="1" colorSpace="calibratedRGB"/>
+                                    <constraints>
+                                        <constraint firstItem="GMd-Rp-f2N" firstAttribute="leading" secondItem="aRK-VL-FRe" secondAttribute="leading" constant="50" id="39F-lO-KpE"/>
+                                        <constraint firstItem="WP1-BP-YF4" firstAttribute="leading" secondItem="aRK-VL-FRe" secondAttribute="leading" constant="16" id="6WJ-90-YUZ"/>
+                                        <constraint firstItem="yaX-lq-Mm8" firstAttribute="leading" secondItem="aRK-VL-FRe" secondAttribute="leading" constant="16" id="BAd-I0-cJP"/>
+                                        <constraint firstItem="WP1-BP-YF4" firstAttribute="top" secondItem="jTU-b0-7EJ" secondAttribute="bottom" constant="16" id="Em7-7w-DzQ"/>
+                                        <constraint firstItem="jTU-b0-7EJ" firstAttribute="leading" secondItem="aRK-VL-FRe" secondAttribute="leading" constant="16" id="GtN-9A-2N2"/>
+                                        <constraint firstAttribute="width" constant="250" id="HJF-bx-iCm"/>
+                                        <constraint firstItem="yaX-lq-Mm8" firstAttribute="top" secondItem="aRK-VL-FRe" secondAttribute="top" constant="58" id="IbB-T8-3V1"/>
+                                        <constraint firstItem="jTU-b0-7EJ" firstAttribute="top" secondItem="yaX-lq-Mm8" secondAttribute="bottom" constant="16" id="Uv3-Io-euy"/>
+                                        <constraint firstAttribute="trailing" secondItem="WP1-BP-YF4" secondAttribute="trailing" constant="16" id="VnX-PT-cFI"/>
+                                        <constraint firstAttribute="bottom" secondItem="GMd-Rp-f2N" secondAttribute="bottom" constant="16" id="exT-WR-LUo"/>
+                                        <constraint firstAttribute="trailing" secondItem="GMd-Rp-f2N" secondAttribute="trailing" constant="50" id="fHa-8C-Erh"/>
+                                        <constraint firstAttribute="trailing" secondItem="jTU-b0-7EJ" secondAttribute="trailing" constant="16" id="fQ8-KJ-gCe"/>
+                                        <constraint firstItem="GMd-Rp-f2N" firstAttribute="top" secondItem="WP1-BP-YF4" secondAttribute="bottom" constant="16" id="oJE-De-eqi"/>
+                                        <constraint firstAttribute="trailing" secondItem="yaX-lq-Mm8" secondAttribute="trailing" constant="16" id="w6y-nA-9Ix"/>
+                                    </constraints>
+                                </view>
+                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="EM0-tk-LrD" userLabel="Popup">
+                                    <rect key="frame" x="110" y="91" width="100" height="100"/>
+                                    <color key="backgroundColor" red="0.94901960780000005" green="0.39607843139999999" blue="0.1333333333" alpha="1" colorSpace="calibratedRGB"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="100" id="Qcy-v9-u2x"/>
+                                        <constraint firstAttribute="width" constant="100" id="eiE-xb-l5w"/>
+                                    </constraints>
+                                </view>
+                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="27k-fC-Bvp" userLabel="Popup">
+                                    <rect key="frame" x="120" y="101" width="80" height="80"/>
+                                    <subviews>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="clipboard black" translatesAutoresizingMaskIntoConstraints="NO" id="5Jr-xu-xbQ">
+                                            <rect key="frame" x="15" y="15" width="50" height="50"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="50" id="IIS-CT-MHO"/>
+                                                <constraint firstAttribute="width" constant="50" id="mWU-nd-ZpK"/>
+                                            </constraints>
+                                        </imageView>
+                                    </subviews>
+                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <constraints>
+                                        <constraint firstAttribute="width" constant="80" id="65b-8n-2mO"/>
+                                        <constraint firstItem="5Jr-xu-xbQ" firstAttribute="centerX" secondItem="27k-fC-Bvp" secondAttribute="centerX" id="90G-uP-Ce0"/>
+                                        <constraint firstItem="5Jr-xu-xbQ" firstAttribute="centerY" secondItem="27k-fC-Bvp" secondAttribute="centerY" id="g9S-JI-PiF"/>
+                                        <constraint firstAttribute="height" constant="80" id="kN4-hj-2ad"/>
+                                    </constraints>
+                                </view>
+                            </subviews>
+                            <constraints>
+                                <constraint firstAttribute="trailing" secondItem="onr-6y-NoB" secondAttribute="trailing" id="12u-tC-nit"/>
+                                <constraint firstItem="aRK-VL-FRe" firstAttribute="top" secondItem="EM0-tk-LrD" secondAttribute="bottom" constant="-50" id="1Th-6g-lzF"/>
+                                <constraint firstItem="onr-6y-NoB" firstAttribute="top" secondItem="6LY-Qn-T91" secondAttribute="top" id="6n6-Hb-txS"/>
+                                <constraint firstItem="onr-6y-NoB" firstAttribute="leading" secondItem="6LY-Qn-T91" secondAttribute="leading" id="Dgf-AC-PER"/>
+                                <constraint firstItem="27k-fC-Bvp" firstAttribute="centerY" secondItem="EM0-tk-LrD" secondAttribute="centerY" id="IAi-F6-O7b"/>
+                                <constraint firstItem="EM0-tk-LrD" firstAttribute="centerX" secondItem="6LY-Qn-T91" secondAttribute="centerX" id="JJp-yd-JwO"/>
+                                <constraint firstItem="aRK-VL-FRe" firstAttribute="centerX" secondItem="6LY-Qn-T91" secondAttribute="centerX" id="TKA-nh-LFQ"/>
+                                <constraint firstItem="aRK-VL-FRe" firstAttribute="centerY" secondItem="6LY-Qn-T91" secondAttribute="centerY" id="cus-Go-bbO"/>
+                                <constraint firstAttribute="bottom" secondItem="onr-6y-NoB" secondAttribute="bottom" id="hzq-Le-W53"/>
+                                <constraint firstItem="27k-fC-Bvp" firstAttribute="centerX" secondItem="EM0-tk-LrD" secondAttribute="centerX" id="vHx-Rg-KYo"/>
+                            </constraints>
+                        </view>
+                        <blurEffect style="light"/>
+                    </visualEffectView>
+                    <connections>
+                        <outlet property="popupView" destination="aRK-VL-FRe" id="DYH-7b-gkb"/>
+                        <outlet property="popupViewTop" destination="EM0-tk-LrD" id="7DJ-6F-RhA"/>
+                        <outlet property="popupViewTopWhite" destination="27k-fC-Bvp" id="skM-H4-Ac6"/>
+                        <outlet property="watchVideoButton" destination="GMd-Rp-f2N" id="iKk-xY-Szg"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="qv0-FW-UCs" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="5646" y="1875"/>
+        </scene>
     </scenes>
     <resources>
         <image name="CM5 Cape 20160608" width="2239" height="3146"/>
@@ -5026,6 +5161,7 @@ You can add up to 20 daily jobs and 20 weekly jobs.</string>
         <image name="blank" width="75" height="75"/>
         <image name="button bg orange" width="75" height="75"/>
         <image name="choose photo" width="183" height="183"/>
+        <image name="clipboard black" width="150" height="150"/>
         <image name="deposit icon" width="129" height="129"/>
         <image name="edit orange" width="75" height="36"/>
         <image name="envelope white" width="152" height="92"/>
@@ -5044,7 +5180,7 @@ You can add up to 20 daily jobs and 20 weekly jobs.</string>
     <inferredMetricsTieBreakers>
         <segue reference="37h-AF-clw"/>
         <segue reference="AC3-hQ-ggE"/>
-        <segue reference="bPF-L7-Z42"/>
+        <segue reference="7Nt-Uo-akl"/>
         <segue reference="sZK-Vt-lQm"/>
     </inferredMetricsTieBreakers>
 </document>

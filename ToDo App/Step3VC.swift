@@ -18,6 +18,8 @@ class Step3VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
     var firebaseUser: FIRUser!
     var ref: FIRDatabaseReference!
     
+    var users: [User]?
+    
     var cellStyleForEditing: UITableViewCellEditingStyle = .none
     
     override func viewDidLoad() {
@@ -283,26 +285,23 @@ class Step3VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
         var dailyCounter = 0
         var weeklyCounter = 0
         for dailyJob in dailyJobs {
-            dailyCounter += 1
             ref.child("dailyJobs").child("dailyJob\(dailyCounter)").setValue(["name" : dailyJob.name,
                                                                               "multiplier" : dailyJobMultiplier,
-                                                                              "classification" : dailyJob.classification,
+                                                                              "assigned" : dailyJob.assigned,
                                                                               "order" : dailyCounter])
-            ref.child("dailyJobs").updateChildValues(["count" : dailyJobs.count])            // return number of daily jobs
+            dailyCounter += 1
         }
         
         for weeklyJob in weeklyJobs {
-            weeklyCounter += 1
             ref.child("weeklyJobs").child("weeklyJob\(weeklyCounter)").setValue(["name" : weeklyJob.name,
                                                                                  "multiplier" : weeklyJobMultiplier,
-                                                                                 "classification" : weeklyJob.classification,
+                                                                                 "assigned" : weeklyJob.assigned,
                                                                                  "order" : weeklyCounter])
-            ref.child("weeklyJobs").updateChildValues(["count" : weeklyJobs.count])            // return number of daily jobs
+            weeklyCounter += 1
         }
         performSegue(withIdentifier: "AssignJobs", sender: self)
         
         // Remove observers from 'getDailyJobs', 'loadFirebaseDailyJobs', 'getWeeklyJobs', and 'loadFirebaseWeeklyJobs' functions
-        ref.child("dailyJobs").child("count").removeAllObservers()
         ref.child("dailyJobs").removeAllObservers()
         ref.child("weeklyJobs").child("count").removeAllObservers()
         ref.child("weeklyJobs").removeAllObservers()
@@ -334,10 +333,10 @@ class Step3VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
             if let dictionary = snapshot.value as? [String : Any] {
                 let multiplier = dictionary["multiplier"] as! Double
                 let name = dictionary["name"] as! String
-                let classification = dictionary["classification"] as! String
+                let assigned = dictionary["assigned"] as! String
                 let order = dictionary["order"] as! Int
                 
-                let dailyJob = JobsAndHabits(jobName: name, jobMultiplier: multiplier, jobClass: classification, jobOrder: order)
+                let dailyJob = JobsAndHabits(jobName: name, jobMultiplier: multiplier, jobAssign: assigned, jobOrder: order)
                 self.dailyJobs.append(dailyJob)
                 self.dailyJobs.sort(by: {$0.order < $1.order})
                 
@@ -357,10 +356,10 @@ class Step3VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
             if let dictionary = snapshot.value as? [String : Any] {
                 let multiplier = dictionary["multiplier"] as! Double
                 let name = dictionary["name"] as! String
-                let classification = dictionary["classification"] as! String
+                let assigned = dictionary["assigned"] as! String
                 let order = dictionary["order"] as! Int
                 
-                let weeklyJob = JobsAndHabits(jobName: name, jobMultiplier: multiplier, jobClass: classification, jobOrder: order)
+                let weeklyJob = JobsAndHabits(jobName: name, jobMultiplier: multiplier, jobAssign: assigned, jobOrder: order)
                 self.weeklyJobs.append(weeklyJob)
                 self.weeklyJobs.sort(by: {$0.order < $1.order})
                 
@@ -392,44 +391,44 @@ class Step3VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
     func loadDefaultDailyJobs() {
         // create array of default daily jobs
-        dailyJobs = [JobsAndHabits(jobName: "bedroom", jobMultiplier: 1, jobClass: "dailyJob", jobOrder: 1),
-                     JobsAndHabits(jobName: "bathrooms", jobMultiplier: 1, jobClass: "dailyJob", jobOrder: 2),
-                     JobsAndHabits(jobName: "laundry", jobMultiplier: 1, jobClass: "dailyJob", jobOrder: 3),
-                     JobsAndHabits(jobName: "living room", jobMultiplier: 1, jobClass: "dailyJob", jobOrder: 4),
-                     JobsAndHabits(jobName: "sweep & vacuum", jobMultiplier: 1, jobClass: "dailyJob", jobOrder: 5),
-                     JobsAndHabits(jobName: "wipe table", jobMultiplier: 1, jobClass: "dailyJob", jobOrder: 6),
-                     JobsAndHabits(jobName: "counters", jobMultiplier: 1, jobClass: "dailyJob", jobOrder: 7),
-                     JobsAndHabits(jobName: "dishes", jobMultiplier: 1, jobClass: "dailyJob", jobOrder: 8),
-                     JobsAndHabits(jobName: "meal prep", jobMultiplier: 1, jobClass: "dailyJob",jobOrder: 9 ),
-                     JobsAndHabits(jobName: "feed pet / garbage", jobMultiplier: 1, jobClass: "dailyJob", jobOrder: 10)]
+        dailyJobs = [JobsAndHabits(jobName: "bedroom", jobMultiplier: 1, jobAssign: "none", jobOrder: 1),
+                     JobsAndHabits(jobName: "bathrooms", jobMultiplier: 1, jobAssign: "none", jobOrder: 2),
+                     JobsAndHabits(jobName: "laundry", jobMultiplier: 1, jobAssign: "none", jobOrder: 3),
+                     JobsAndHabits(jobName: "living room", jobMultiplier: 1, jobAssign: "none", jobOrder: 4),
+                     JobsAndHabits(jobName: "sweep & vacuum", jobMultiplier: 1, jobAssign: "none", jobOrder: 5),
+                     JobsAndHabits(jobName: "wipe table", jobMultiplier: 1, jobAssign: "none", jobOrder: 6),
+                     JobsAndHabits(jobName: "counters", jobMultiplier: 1, jobAssign: "none", jobOrder: 7),
+                     JobsAndHabits(jobName: "dishes", jobMultiplier: 1, jobAssign: "none", jobOrder: 8),
+                     JobsAndHabits(jobName: "meal prep", jobMultiplier: 1, jobAssign: "none",jobOrder: 9 ),
+                     JobsAndHabits(jobName: "feed pet / garbage", jobMultiplier: 1, jobAssign: "none", jobOrder: 10)]
     }
     
     func loadDefaultWeeklyJobs() {
         // create array of default weekly jobs
-        weeklyJobs = [JobsAndHabits(jobName: "sweep porch", jobMultiplier: 1, jobClass: "weeklyJob", jobOrder: 1),
-                      JobsAndHabits(jobName: "weed garden", jobMultiplier: 1, jobClass: "weeklyJob", jobOrder: 2),
-                      JobsAndHabits(jobName: "wash windows", jobMultiplier: 1, jobClass: "weeklyJob", jobOrder: 3),
-                      JobsAndHabits(jobName: "dusting & cobwebs", jobMultiplier: 1, jobClass: "weeklyJob", jobOrder: 4),
-                      JobsAndHabits(jobName: "mop floors", jobMultiplier: 1, jobClass: "weeklyJob", jobOrder: 5),
-                      JobsAndHabits(jobName: "clean cabinets", jobMultiplier: 1, jobClass: "weeklyJob", jobOrder: 6),
-                      JobsAndHabits(jobName: "clean fridge", jobMultiplier: 1, jobClass: "weeklyJob", jobOrder: 7),
-                      JobsAndHabits(jobName: "wash car", jobMultiplier: 1, jobClass: "weeklyJob", jobOrder: 8),
-                      JobsAndHabits(jobName: "mow lawn", jobMultiplier: 1, jobClass: "weeklyJob", jobOrder: 9),
-                      JobsAndHabits(jobName: "babysit (per hour)", jobMultiplier: 1, jobClass: "weeklyJob", jobOrder: 10)]
+        weeklyJobs = [JobsAndHabits(jobName: "sweep porch", jobMultiplier: 1, jobAssign: "none", jobOrder: 1),
+                      JobsAndHabits(jobName: "weed garden", jobMultiplier: 1, jobAssign: "none", jobOrder: 2),
+                      JobsAndHabits(jobName: "wash windows", jobMultiplier: 1, jobAssign: "none", jobOrder: 3),
+                      JobsAndHabits(jobName: "dusting & cobwebs", jobMultiplier: 1, jobAssign: "none", jobOrder: 4),
+                      JobsAndHabits(jobName: "mop floors", jobMultiplier: 1, jobAssign: "none", jobOrder: 5),
+                      JobsAndHabits(jobName: "clean cabinets", jobMultiplier: 1, jobAssign: "none", jobOrder: 6),
+                      JobsAndHabits(jobName: "clean fridge", jobMultiplier: 1, jobAssign: "none", jobOrder: 7),
+                      JobsAndHabits(jobName: "wash car", jobMultiplier: 1, jobAssign: "none", jobOrder: 8),
+                      JobsAndHabits(jobName: "mow lawn", jobMultiplier: 1, jobAssign: "none", jobOrder: 9),
+                      JobsAndHabits(jobName: "babysit (per hour)", jobMultiplier: 1, jobAssign: "none", jobOrder: 10)]
     }
     
     func loadDefaultDailyHabits() {
         // create array of default daily habits
-        dailyHabits = [JobsAndHabits(jobName: "get ready for day by 10:am", jobMultiplier: 5, jobClass: "dailyHabit", jobOrder: 1),      // This is bonus habit **
-            JobsAndHabits(jobName: "personal meditation (10 min)", jobMultiplier: 1, jobClass: "dailyHabit", jobOrder: 2),
-            JobsAndHabits(jobName: "daily exercise", jobMultiplier: 1, jobClass: "dailyHabit", jobOrder: 3),
-            JobsAndHabits(jobName: "develop talents (20 min)", jobMultiplier: 1, jobClass: "dailyHabit", jobOrder: 4),
-            JobsAndHabits(jobName: "homework done by 5:pm", jobMultiplier: 1, jobClass: "dailyHabit", jobOrder: 5),
-            JobsAndHabits(jobName: "good manners", jobMultiplier: 1, jobClass: "dailyHabit", jobOrder: 6),
-            JobsAndHabits(jobName: "peacemaking (no fighting)", jobMultiplier: 1, jobClass: "dailyHabit", jobOrder: 7),
-            JobsAndHabits(jobName: "helping hands / obedience", jobMultiplier: 1, jobClass: "dailyHabit", jobOrder: 8),
-            JobsAndHabits(jobName: "write in journal", jobMultiplier: 1, jobClass: "dailyHabit", jobOrder: 9),
-            JobsAndHabits(jobName: "bed by 8:pm", jobMultiplier: 1, jobClass: "dailyHabit", jobOrder: 10)]
+        dailyHabits = [JobsAndHabits(jobName: "get ready for day by 10:am", jobMultiplier: 5, jobAssign: "none", jobOrder: 1),     // This is bonus habit **
+            JobsAndHabits(jobName: "personal meditation (10 min)", jobMultiplier: 1, jobAssign: "none", jobOrder: 2),
+            JobsAndHabits(jobName: "daily exercise", jobMultiplier: 1, jobAssign: "none", jobOrder: 3),
+            JobsAndHabits(jobName: "develop talents (20 min)", jobMultiplier: 1, jobAssign: "none", jobOrder: 4),
+            JobsAndHabits(jobName: "homework done by 5:pm", jobMultiplier: 1, jobAssign: "none", jobOrder: 5),
+            JobsAndHabits(jobName: "good manners", jobMultiplier: 1, jobAssign: "none", jobOrder: 6),
+            JobsAndHabits(jobName: "peacemaking (no fighting)", jobMultiplier: 1, jobAssign: "none", jobOrder: 7),
+            JobsAndHabits(jobName: "helping hands / obedience", jobMultiplier: 1, jobAssign: "none", jobOrder: 8),
+            JobsAndHabits(jobName: "write in journal", jobMultiplier: 1, jobAssign: "none", jobOrder: 9),
+            JobsAndHabits(jobName: "bed by 8:pm", jobMultiplier: 1, jobAssign: "none", jobOrder: 10)]
     }
     
     
@@ -438,7 +437,7 @@ class Step3VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
         alert.addAction(UIAlertAction(title: "add daily job", style: .default, handler: { (action) in
             
             // check to make sure user isn't adding more than 20 jobs
-            if self.dailyJobs.count >= 12 {
+            if self.dailyJobs.count >= 20 {
                 self.addTooManyJobsAlert(alertMessage: "You have reached your limit of 20 daily jobs. If you have more jobs to create, try combining multiple jobs into one.")
             } else {
                 alert.dismiss(animated: true, completion: nil)
@@ -448,7 +447,7 @@ class Step3VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
         alert.addAction(UIAlertAction(title: "add weekly job", style: .default, handler: { (action) in
             
             // check to make sure user isn't adding more than 20 jobs
-            if self.weeklyJobs.count >= 12 {
+            if self.weeklyJobs.count >= 20 {
                 self.addTooManyJobsAlert(alertMessage: "You have reached your limit of 20 weekly jobs. If you have more jobs to create, try combining multiple jobs into one.")
             } else {
                 alert.dismiss(animated: true, completion: nil)

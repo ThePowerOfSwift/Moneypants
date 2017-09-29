@@ -28,7 +28,7 @@ class Step3AddJobVC: UIViewController, UITextFieldDelegate {
         if let existingJob = job {          // check to see if 'job' is not nil
             jobTextField.text = existingJob.name
             jobMultiplier = existingJob.multiplier
-            jobClassification = existingJob.classification
+            jobClassification = existingJob.assigned
         }
         
         updateSaveButtonState()
@@ -79,12 +79,12 @@ class Step3AddJobVC: UIViewController, UITextFieldDelegate {
         // MARK: need to update this value if user adds more than the default 10 jobs
         let multiplier = job?.multiplier ?? 1
         
-        // NOTE: the default classification is "daily jobs" because user can only add additional daily jobs, not weekly jobs or daily habits
-        let classification = job?.classification ?? "dailyJob"
+        // NOTE: the default assignment is "none"
+        let assigned = job?.assigned ?? "none"
         
         let order = job?.order ?? 1
         
-        job = JobsAndHabits(jobName: name!, jobMultiplier: multiplier, jobClass: classification, jobOrder: order)
+        job = JobsAndHabits(jobName: name!, jobMultiplier: multiplier, jobAssign: assigned, jobOrder: order)
     }
     
     

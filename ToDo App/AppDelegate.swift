@@ -24,7 +24,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         
         FIRApp.configure()
-        FIRDatabase.database().persistenceEnabled = true        // enable offline work
+//        FIRDatabase.database().persistenceEnabled = true        // enable offline work
         IQKeyboardManager.sharedManager().enable = true
         
         getCurrentUser()
