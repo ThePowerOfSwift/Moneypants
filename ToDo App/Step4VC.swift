@@ -13,14 +13,11 @@ class Step4VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
     var dailyJobs = [JobsAndHabits]()
     var weeklyJobs = [JobsAndHabits]()
     var selectedJobs = [IndexPath]()       // for storing user selected cells
-    var assignedArray = [UIColor]()       // for storing previously assigned jobs
     var maxDailyNumber = 3                  // max number of daily chores allowed
     var maxWeeklyNumber = 2
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        assignedArray = []
         
         jobsTableView.delegate = self
         jobsTableView.dataSource = self
@@ -36,16 +33,34 @@ class Step4VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
         performSegue(withIdentifier: "ExplainerPopup", sender: self)
         self.automaticallyAdjustsScrollViewInsets = false
         
-        loadExistingJobs()
+        getDailyJobs { (dictionary) in
+            for item in dictionary {
+                let name = item["name"] as! String
+                let multiplier = item["multiplier"] as! Double
+                let assigned = item["assigned"] as! String
+                let order = item["order"] as! Int
+                
+                let dailyJob = JobsAndHabits(jobName: name, jobMultiplier: multiplier, jobAssign: assigned, jobOrder: order)
+                self.dailyJobs.append(dailyJob)
+            }
+            self.jobsTableView.reloadData()
+        }
         
-        // ============================================================================
-        // BEGIN TESTING
-        
-        
+        getWeeklyJobs { (dictionary) in
+            for item in dictionary {
+                let name = item["name"] as! String
+                let multiplier = item["multiplier"] as! Double
+                let assigned = item["assigned"] as! String
+                let order = item["order"] as! Int
+                
+                let weeklyJob = JobsAndHabits(jobName: name, jobMultiplier: multiplier, jobAssign: assigned, jobOrder: order)
+                self.weeklyJobs.append(weeklyJob)
+            }
+            self.jobsTableView.reloadData()
+        }
     }
     
-    
-    // TESTING ENDED
+   
     // ============================================================================
     
     @IBAction func nextButtonTapped(_ sender: UIButton) {
@@ -142,9 +157,9 @@ class Step4VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
                 cell.jobLabel.textColor = UIColor(white: 0.0, alpha: 1.0)
             }
         }
-    return cell
+        return cell
     }
-
+    
     // determine which cell is tapped
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if indexPath.section == 0 {
@@ -249,21 +264,50 @@ class Step4VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
     // Functions
     // ---------
     
+    func getDailyJobs(completion: @escaping ([[String : Any]]) -> ()) {
+        var dictionary = [[String : Any]]()
+        ref.child("dailyJobs").observe(.value, with: { (snapshot) in
+            for child in (snapshot.children) {
+                let snap = child as! FIRDataSnapshot
+                if let value = snap.value as? [String : Any] {
+                    dictionary.append(value)
+                }
+            }
+            completion(dictionary)
+        })
+    }
+    
+    func getWeeklyJobs(completion: @escaping ([[String : Any]]) -> ()) {
+        var dictionary = [[String : Any]]()
+        ref.child("weeklyJobs").observe(.value, with: { (snapshot) in
+            for child in snapshot.children {
+                let snap = child as! FIRDataSnapshot
+                if let value = snap.value as? [String : Any] {
+                    dictionary.append(value)
+                }
+            }
+            completion(dictionary)
+        })
+    }
+    
     func countJobs() -> (dailyCount: Int, weeklyCount: Int) {
         var dailyJobsCount = 0
         var weeklyJobsCount = 0
         for index in selectedJobs {
             if index.section == 0 {
                 dailyJobsCount += 1                     // count number of daily jobs
-//                print(dailyJobs[index.row].name)        // give names of daily jobs
+                //                print(dailyJobs[index.row].name)        // give names of daily jobs
             } else {
                 weeklyJobsCount += 1                    // count number of weekly jobs
-//                print(weeklyJobs[index.row].name)       // give names of weekly jobs
+                //                print(weeklyJobs[index.row].name)       // give names of weekly jobs
             }
         }
         return (dailyJobsCount, weeklyJobsCount)
     }
     
+    /*
+    
+     // incremental loading of jobs (OLD)
     func loadExistingJobs() {
         ref.child("dailyJobs").observe(.childAdded, with: { (snapshot) in
             if let dictionary = snapshot.value as? [String : Any] {
@@ -296,39 +340,10 @@ class Step4VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
         })
     }
     
-    func loadExistingUsers() {
-        ref.child("members").observe(.childAdded) { (snapshot: FIRDataSnapshot) in
-            if let dict = snapshot.value as? [String : Any] {
-                let userPhotoUrl = dict["profileImageUrl"] as! String
-                let userFirstName = dict["firstName"] as! String
-                let userBirthday = dict["birthday"] as! Int
-                let userPasscode = dict["passcode"] as! Int
-                let userGender = dict["gender"] as! String
-                let isUserChildOrParent = dict["childParent"] as! String
-                
-                let storageRef = FIRStorage.storage().reference(forURL: userPhotoUrl)
-                storageRef.data(withMaxSize: 1 * 1024 * 1024, completion: { (data, error) in
-                    let pic = UIImage(data: data!)
-                    let user = User(profilePhoto: pic!,
-                                    userFirstName: userFirstName,
-                                    userBirthday: userBirthday,
-                                    userPasscode: userPasscode,
-                                    userGender: userGender,
-                                    isUserChildOrParent: isUserChildOrParent)
-                    self.users.append(user)
-                    self.users.sort(by: {$0.birthday < $1.birthday})
-                })
-            }
-        }
-    }
-    
-   
-    
-    
+    */
     
     
     // OLD VERSION
-    /*
     func loadExistingUsers(_ completion: @escaping () -> ()) {
         ref.child("members").observe(.childAdded) { (snapshot: FIRDataSnapshot) in
             if let dict = snapshot.value as? [String : Any] {
@@ -355,12 +370,11 @@ class Step4VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
             }
         }
     }
-    */
     
     
-    // --------------------------------------------
-    // Old function that took forever to figure out
-    // --------------------------------------------
+    // ---------------------------------------------
+    // Old function that took forever to figure out:
+    // ---------------------------------------------
     
     func getChosenJobToFirebase() {
         // This function took me forever to figure out how to get selected table cells to firebase. LOL!
