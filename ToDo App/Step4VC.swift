@@ -16,6 +16,8 @@ class Step4VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
     var maxDailyNumber = 3                  // max number of daily chores allowed
     var maxWeeklyNumber = 2
     
+    var user: String!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -58,7 +60,19 @@ class Step4VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
             }
             self.jobsTableView.reloadData()
         }
+        
+        getNextYoungestUserWithoutJobAssigned()
+        
+        user = "Sophie"
     }
+    
+    // Need to get youngest user who doesn't have any jobs assigned
+    // need to get their name, gender, and profile pict
+    func getNextYoungestUserWithoutJobAssigned() {
+        // count number of jobs with
+        
+    }
+    
     
    
     // ============================================================================
@@ -73,8 +87,8 @@ class Step4VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
         // "You have not chosen any jobs for Savannah. Are you sure you don't want to assign her a weekly job?"
         
         // Need to remove all observers before proceeding to next VC
-        //        ref.child("dailyJobs").removeAllObservers()
-        //        ref.child("weeklyJobs").removeAllObservers()
+//        ref.child("dailyJobs").removeAllObservers()
+//        ref.child("weeklyJobs").removeAllObservers()
     }
     
     
@@ -166,12 +180,12 @@ class Step4VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
             // push daily jobs value to Firebase
             ref.child("dailyJobs")
                 .child("dailyJob\(indexPath.row)")
-                .updateChildValues(["assigned" : dailyJobs[indexPath.row].name])
+                .updateChildValues(["assigned" : "current user"])
         } else {
             // push weekly jobs value to Firebase
             ref.child("weeklyJobs")
                 .child("weeklyJob\(indexPath.row)")
-                .updateChildValues(["assigned" : weeklyJobs[indexPath.row].name])
+                .updateChildValues(["assigned" : "current user"])
         }
         
         // ----------------
@@ -237,7 +251,7 @@ class Step4VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
     
     func tooManyJobsSelectedAlert(messageTitle: String, tableViewIndexPath: IndexPath, jobCount: Int, recommendedNumberOfJobs: Int, dailyOrWeekly: String, timeframe: String) {
-        let alert = UIAlertController(title: messageTitle, message: "You have chosen \(jobCount) \(dailyOrWeekly) jobs. This is not recommended because 'USERGENDER' won't be able to finish within the \(timeframe) timer. It is recommended that each individual only have \(recommendedNumberOfJobs) \(dailyOrWeekly) jobs max. Are you sure you want to assign 'USER' \(jobCount) \(dailyOrWeekly) jobs?", preferredStyle: .alert)
+        let alert = UIAlertController(title: messageTitle, message: "You have chosen more than \(jobCount) \(dailyOrWeekly) jobs for 'USER'. This is not recommended because 'USER' won't be able to finish within the \(timeframe) timer.\n\nAre you sure you want to assign 'USER' \(jobCount) \(dailyOrWeekly) jobs?", preferredStyle: .alert)
         
         alert.addAction(UIAlertAction(title: "cancel", style: .cancel, handler: { (action) in
             let index = self.selectedJobs.index(of: tableViewIndexPath)
@@ -266,20 +280,7 @@ class Step4VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
     func getDailyJobs(completion: @escaping ([[String : Any]]) -> ()) {
         var dictionary = [[String : Any]]()
-        ref.child("dailyJobs").observe(.value, with: { (snapshot) in
-            for child in (snapshot.children) {
-                let snap = child as! FIRDataSnapshot
-                if let value = snap.value as? [String : Any] {
-                    dictionary.append(value)
-                }
-            }
-            completion(dictionary)
-        })
-    }
-    
-    func getWeeklyJobs(completion: @escaping ([[String : Any]]) -> ()) {
-        var dictionary = [[String : Any]]()
-        ref.child("weeklyJobs").observe(.value, with: { (snapshot) in
+        ref.child("dailyJobs").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
             for child in snapshot.children {
                 let snap = child as! FIRDataSnapshot
                 if let value = snap.value as? [String : Any] {
@@ -287,7 +288,20 @@ class Step4VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
                 }
             }
             completion(dictionary)
-        })
+        }
+    }
+    
+    func getWeeklyJobs(completion: @escaping ([[String : Any]]) -> ()) {
+        var dictionary = [[String : Any]]()
+        ref.child("weeklyJobs").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
+            for child in snapshot.children {
+                let snap = child as! FIRDataSnapshot
+                if let value = snap.value as? [String : Any] {
+                    dictionary.append(value)
+                }
+            }
+            completion(dictionary)
+        }
     }
     
     func countJobs() -> (dailyCount: Int, weeklyCount: Int) {
@@ -305,71 +319,6 @@ class Step4VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
         return (dailyJobsCount, weeklyJobsCount)
     }
     
-    /*
-    
-     // incremental loading of jobs (OLD)
-    func loadExistingJobs() {
-        ref.child("dailyJobs").observe(.childAdded, with: { (snapshot) in
-            if let dictionary = snapshot.value as? [String : Any] {
-                let multiplier = dictionary["multiplier"] as! Double
-                let name = dictionary["name"] as! String
-                let assigned = dictionary["assigned"] as! String
-                let order = dictionary["order"] as! Int
-                
-                let dailyJob = JobsAndHabits(jobName: name, jobMultiplier: multiplier, jobAssign: assigned, jobOrder: order)
-                self.dailyJobs.append(dailyJob)
-                self.dailyJobs.sort(by: {$0.order < $1.order})
-                
-                self.jobsTableView.reloadData()
-            }
-        })
-        
-        ref.child("weeklyJobs").observe(.childAdded, with: { (snapshot) in
-            if let dictionary = snapshot.value as? [String : Any] {
-                let multiplier = dictionary["multiplier"] as! Double
-                let name = dictionary["name"] as! String
-                let assigned = dictionary["assigned"] as! String
-                let order = dictionary["order"] as! Int
-                
-                let weeklyJob = JobsAndHabits(jobName: name, jobMultiplier: multiplier, jobAssign: assigned, jobOrder: order)
-                self.weeklyJobs.append(weeklyJob)
-                self.weeklyJobs.sort(by: {$0.order < $1.order})
-                
-                self.jobsTableView.reloadData()
-            }
-        })
-    }
-    
-    */
-    
-    
-    // OLD VERSION
-    func loadExistingUsers(_ completion: @escaping () -> ()) {
-        ref.child("members").observe(.childAdded) { (snapshot: FIRDataSnapshot) in
-            if let dict = snapshot.value as? [String : Any] {
-                let userPhotoUrl = dict["profileImageUrl"] as! String
-                let userFirstName = dict["firstName"] as! String
-                let userBirthday = dict["birthday"] as! Int
-                let userPasscode = dict["passcode"] as! Int
-                let userGender = dict["gender"] as! String
-                let isUserChildOrParent = dict["childParent"] as! String
-                
-                let storageRef = FIRStorage.storage().reference(forURL: userPhotoUrl)
-                storageRef.data(withMaxSize: 1 * 1024 * 1024, completion: { (data, error) in
-                    let pic = UIImage(data: data!)
-                    let user = User(profilePhoto: pic!,
-                                    userFirstName: userFirstName,
-                                    userBirthday: userBirthday,
-                                    userPasscode: userPasscode,
-                                    userGender: userGender,
-                                    isUserChildOrParent: isUserChildOrParent)
-                    self.users.append(user)
-                    self.users.sort(by: {$0.birthday < $1.birthday})
-                    completion()
-                })
-            }
-        }
-    }
     
     
     // ---------------------------------------------

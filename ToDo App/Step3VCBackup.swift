@@ -1,7 +1,7 @@
 import UIKit
 import Firebase
 
-class Step3VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
+class Step3VCBackup: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
     @IBOutlet weak var jobsTableView: UITableView!
     @IBOutlet weak var questionButton: UIButton!
@@ -51,12 +51,7 @@ class Step3VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
-        updateFirebaseData()
         jobsTableView.reloadData()
-    }
-    
-    func updateFirebaseData() {
-        
     }
     
     // ----------------
@@ -214,10 +209,10 @@ class Step3VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
             // update daily job
             if selectedIndexPathSection == 0 {
                 let selectedIndexPathRow = jobsTableView.indexPathForSelectedRow
-                dailyJobs[selectedIndexPathRow!.row] = updatedJob!
+                dailyJobs[(selectedIndexPathRow?.row)!] = updatedJob!
                 jobsTableView.reloadData()
                 // update daily job on Firebase
-                ref.child("dailyJobs").child("dailyJob\(selectedIndexPathRow!.row)").updateChildValues(["name" : updatedJob!.name,
+                ref.child("dailyJobs").child("dailyJob\(selectedIndexPathRow?.row)").updateChildValues(["name" : updatedJob!.name,
                                                                                                        "multiplier" : 10 / Double(dailyJobs.count),
                                                                                                        "assigned" : "none",
                                                                                                        "order" : selectedIndexPathRow!.row])
@@ -227,11 +222,6 @@ class Step3VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
                 let selectedIndexPathRow = jobsTableView.indexPathForSelectedRow
                 weeklyJobs[(selectedIndexPathRow?.row)!] = updatedJob!
                 jobsTableView.reloadData()
-                // update weekly job on Firebase
-                ref.child("weeklyJobs").child("weeklyJob\(selectedIndexPathRow!.row)").updateChildValues(["name" : updatedJob!.name,
-                                                                                                          "multiplier" : 10 / Double(weeklyJobs.count),
-                                                                                                          "assigned" : "none",
-                                                                                                          "order" : selectedIndexPathRow!.row])
             }
         } else {
             
@@ -309,7 +299,6 @@ class Step3VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
         for dailyJob in dailyJobs {
             ref.child("dailyJobs").child("dailyJob\(dailyCounter)").updateChildValues(["name" : dailyJob.name,
                                                                                        "multiplier" : dailyJobMultiplier,
-                                                                                       "assigned" : dailyJob.assigned,
                                                                                        "order" : dailyCounter])
             dailyCounter += 1
         }
@@ -317,7 +306,6 @@ class Step3VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
         for weeklyJob in weeklyJobs {
             ref.child("weeklyJobs").child("weeklyJob\(weeklyCounter)").updateChildValues(["name" : weeklyJob.name,
                                                                                           "multiplier" : weeklyJobMultiplier,
-                                                                                          "assigned" : weeklyJob.assigned,
                                                                                           "order" : weeklyCounter])
             weeklyCounter += 1
         }
@@ -433,14 +421,14 @@ class Step3VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
         var weeklyCounter = 0
         for dailyJob in dailyJobs {
             ref.child("dailyJobs").child("dailyJob\(dailyCounter)").setValue(["name" : dailyJob.name,
-                                                                              "multiplier" : 1,
+                                                                              "multiplier" : 10,
                                                                               "assigned" : "none",
                                                                               "order" : dailyCounter])
             dailyCounter += 1
         }
         for weeklyJob in weeklyJobs {
             ref.child("weeklyJobs").child("weeklyJob\(weeklyCounter)").setValue(["name" : weeklyJob.name,
-                                                                                 "multiplier" : 1,
+                                                                                 "multiplier" : 10,
                                                                                  "assigned" : "none",
                                                                                  "order" : weeklyCounter])
             weeklyCounter += 1

@@ -88,8 +88,10 @@ class Step2VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
             // send users array over to Step2UsersVC to check for name duplicates
             nextController.users = users
             nextController.navBarTitle = "add user"
+        } else if segue.identifier == "GoToStep3" {
+            print("on to step 3!")
         } else {
-//            print("Segue Initiated:",segue.identifier!)
+            print("segue from Step 2 initiated")
         }
     }
     
