@@ -57,27 +57,17 @@ class Step3VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
         super.viewWillAppear(true)
         jobsTableView.reloadData()
 
-        for job in dailyJobs {
-            print("daily assigned:",job.assigned)
-        }
-        
-        for job in weeklyJobs {
-            print("weekly assigned",job.assigned)
-        }
-        
-        
-        
-//        if flag == true {
-//            dailyJobs.removeAll()           // reset daily jobs
-//            weeklyJobs.removeAll()          // reset weekly jobs
-//            loadFirebaseJobs()
-//            jobsTableView.reloadData()
-//            for job in dailyJobs {
-//                print(job.assigned)
-//            }
-//        } else {
-//            flag = true
+//        for job in dailyJobs {
+//            print("daily assigned:",job.assigned)
 //        }
+//        
+//        for job in weeklyJobs {
+//            print("weekly assigned",job.assigned)
+//        }
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        ref.removeAllObservers()
     }
     
     
@@ -201,7 +191,12 @@ class Step3VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
                 if dailyJobs.count <= 10 {           // check to make sure user isn't deleting too many jobs
                     deletedTooManyRowsAlert(alertTitle: "Daily Jobs", alertMessage: "You cannot delete this daily job. You must have at least 10 daily jobs in your list.")
                 } else {
-                    ref.child("dailyJobs").child("dailyJob\(indexPath.row)").removeValue()
+                    
+                    // need to find order of job at the index path and delete it.
+                    ref.child("dailyJobs").queryOrdered(byChild: "order").queryEqual(toValue: indexPath.row).observeSingleEvent(of: .childAdded, with: { (snapshot) in
+                        snapshot.ref.removeValue()
+                    })
+                    
                     dailyJobs.remove(at: indexPath.row)
                     jobsTableView.deleteRows(at: [indexPath], with: .fade)
                     tableView.reloadData()
@@ -219,7 +214,11 @@ class Step3VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
                 if weeklyJobs.count <= 10 {
                     deletedTooManyRowsAlert(alertTitle: "Weekly Jobs", alertMessage: "You cannot delete this weekly job. You must have at least 10 weekly jobs in your list.")
                 } else {
-                    ref.child("weeklyJobs").child("weeklyJob\(indexPath.row)").removeValue()
+                    
+                    ref.child("weeklyJobs").queryOrdered(byChild: "order").queryEqual(toValue: indexPath.row).observeSingleEvent(of: .childAdded, with: { (snapshot) in
+                        snapshot.ref.removeValue()
+                    })
+                    
                     weeklyJobs.remove(at: indexPath.row)
                     jobsTableView.deleteRows(at: [indexPath], with: .fade)
                     tableView.reloadData()
@@ -280,11 +279,10 @@ class Step3VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
                 let selectedIndexPathRow = jobsTableView.indexPathForSelectedRow
                 dailyJobs[selectedIndexPathRow!.row] = updatedJob!
                 
-                // MARK: TODO - update daily job on Firebase
-                ref.child("dailyJobs").child("dailyJob\(selectedIndexPathRow!.row)").updateChildValues(["name" : updatedJob!.name,
-                                                                                                       "multiplier" : 10 / Double(dailyJobs.count),
-                                                                                                       "assigned" : "none",
-                                                                                                       "order" : selectedIndexPathRow!.row])
+                // MARK: TODO - update daily job name on Firebase (find job with the selected index, and update the name for it)
+                ref.child("dailyJobs").queryOrdered(byChild: "order").queryEqual(toValue: selectedIndexPathRow?.row).observeSingleEvent(of: .childAdded, with: { (snapshot) in
+                    snapshot.ref.updateChildValues(["name" : updatedJob!.name])
+                })
                 jobsTableView.reloadData()
                 
             // update weekly job
@@ -292,11 +290,10 @@ class Step3VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
                 let selectedIndexPathRow = jobsTableView.indexPathForSelectedRow
                 weeklyJobs[(selectedIndexPathRow?.row)!] = updatedJob!
                 
-                // MARK: TODO - update weekly job on Firebase
-                ref.child("weeklyJobs").child("weeklyJob\(selectedIndexPathRow!.row)").updateChildValues(["name" : updatedJob!.name,
-                                                                                                          "multiplier" : 10 / Double(weeklyJobs.count),
-                                                                                                          "assigned" : "none",
-                                                                                                          "order" : selectedIndexPathRow!.row])
+                // MARK: TODO - update weekly job name on Firebase (find job with the selected index, and update the name for it)
+                ref.child("weeklyJobs").queryOrdered(byChild: "order").queryEqual(toValue: selectedIndexPathRow?.row).observeSingleEvent(of: .childAdded, with: { (snapshot) in
+                    snapshot.ref.updateChildValues(["name" : updatedJob!.name])
+                })
                 jobsTableView.reloadData()
             }
         } else {
@@ -309,10 +306,10 @@ class Step3VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
             if sourceVC.jobSection == 0 {
                 
                 // MARK: TODO - create a new daily job in Firebase
-                ref.child("dailyJobs").child("dailyJob\(dailyJobs.count)").setValue(["name" : updatedJob!.name,
-                                                                                     "multiplier" : 10 / Double(dailyJobs.count),
-                                                                                     "assigned" : "none",
-                                                                                     "order" : dailyJobs.count])
+                ref.child("dailyJobs").childByAutoId().setValue(["name" : updatedJob!.name,
+                                                                 "multiplier" : 10 / Double(dailyJobs.count),       // MARK: TODO - need to get rid of 'multiplier' variable and replace
+                                                                 "assigned" : "none",
+                                                                 "order" : dailyJobs.count])
                 // Add a new daily job in the daily jobs array
                 let newIndexPath = IndexPath(row: dailyJobs.count, section: 0)
                 dailyJobs.append(updatedJob!)
@@ -332,13 +329,10 @@ class Step3VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
             } else if sourceVC.jobSection == 1 {
                 
                 // create a new weekly job in Firebase
-                ref.child("weeklyJobs").child("weeklyJob\(weeklyJobs.count)").setValue(["name" : updatedJob!.name,
-                                                                                        "multiplier" : 10 / Double(weeklyJobs.count),
-                                                                                        "assigned" : "none",
-                                                                                        "order" : weeklyJobs.count])
-                
-                // MARK: TODO - we'll have to update the multiplier of all the jobs
-                
+                ref.child("weeklyJobs").childByAutoId().setValue(["name" : updatedJob!.name,
+                                                                  "multiplier" : 10 / Double(weeklyJobs.count),
+                                                                  "assigned" : "none",
+                                                                  "order" : weeklyJobs.count])
                 // Add a new weekly job in the weekly jobs array
                 let newIndexPath = IndexPath(row: weeklyJobs.count, section: 1)
                 weeklyJobs.append(updatedJob!)
@@ -369,32 +363,12 @@ class Step3VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
     @IBAction func nextButtonTapped(_ sender: UIButton) {
         disableTableEdit()
-        
-        // update jobs list
-        let dailyJobMultiplier = 10 / Double(dailyJobs.count)       // recalculates depending on if user adds more than 10 daily jobs
-        let weeklyJobMultiplier = 10 / Double(weeklyJobs.count)
-        var dailyCounter = 0
-        var weeklyCounter = 0
-        for dailyJob in dailyJobs {
-            ref.child("dailyJobs").child("dailyJob\(dailyCounter)").updateChildValues(["name" : dailyJob.name,
-                                                                                       "multiplier" : dailyJobMultiplier,
-                                                                                       "assigned" : dailyJob.assigned,
-                                                                                       "order" : dailyCounter])
-            dailyCounter += 1
-        }
-        
-        for weeklyJob in weeklyJobs {
-            ref.child("weeklyJobs").child("weeklyJob\(weeklyCounter)").updateChildValues(["name" : weeklyJob.name,
-                                                                                          "multiplier" : weeklyJobMultiplier,
-                                                                                          "assigned" : weeklyJob.assigned,
-                                                                                          "order" : weeklyCounter])
-            weeklyCounter += 1
-        }
         performSegue(withIdentifier: "AssignJobs", sender: self)
         
-        // Remove observers from 'getDailyJobs', 'loadFirebaseDailyJobs', 'getWeeklyJobs', and 'loadFirebaseWeeklyJobs' functions
+        // MARK: TODO - Remove observers from 'getDailyJobs', 'loadFirebaseDailyJobs', 'getWeeklyJobs', and 'loadFirebaseWeeklyJobs' functions
         ref.child("dailyJobs").removeAllObservers()
         ref.child("weeklyJobs").removeAllObservers()
+        ref.removeAllObservers()
     }
     
     @IBAction func questionButtonTapped(_ sender: UIButton) {

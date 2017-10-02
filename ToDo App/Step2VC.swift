@@ -129,6 +129,7 @@ class Step2VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
                 performSegue(withIdentifier: "GoToStep3", sender: self)
             }
         }
+        ref.removeAllObservers()
     }
     
     
