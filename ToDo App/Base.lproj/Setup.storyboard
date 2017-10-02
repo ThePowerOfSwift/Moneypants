@@ -333,6 +333,9 @@
                                             <state key="normal" title="Tap here to watch a short video.">
                                                 <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                             </state>
+                                            <connections>
+                                                <segue destination="yN8-DU-d9P" kind="presentation" id="M86-np-lRf"/>
+                                            </connections>
                                         </button>
                                     </subviews>
                                     <color key="backgroundColor" red="0.94901960780000005" green="0.39607843139999999" blue="0.1333333333" alpha="1" colorSpace="calibratedRGB"/>
@@ -365,7 +368,7 @@
                                     <rect key="frame" x="120" y="99" width="80" height="80"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="?" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bFh-xi-zKP">
-                                            <rect key="frame" x="23" y="-7" width="35" height="94"/>
+                                            <rect key="frame" x="22.5" y="-7" width="35" height="94"/>
                                             <fontDescription key="fontDescription" name="Arista2.0" family="Arista 2.0" pointSize="80"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
@@ -399,12 +402,58 @@
                         <outlet property="popupView" destination="ESa-W7-ARu" id="wih-Y6-OVj"/>
                         <outlet property="popupViewTop" destination="VFm-KJ-Ccu" id="5Sr-Vd-oGN"/>
                         <outlet property="popupViewTopWhite" destination="qnx-Ok-EOE" id="jWT-v8-Or6"/>
-                        <outlet property="watchVideoButton" destination="dfe-th-u94" id="2xD-dz-L1L"/>
+                        <outlet property="watchVideoButton" destination="dfe-th-u94" id="0fU-kK-las"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="jkY-9m-AVi" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2028.75" y="1875"/>
+            <point key="canvasLocation" x="2029" y="1875"/>
+        </scene>
+        <!--Step1 VideoVC-->
+        <scene sceneID="kEH-k9-rJy">
+            <objects>
+                <viewController id="yN8-DU-d9P" customClass="Step1VideoVC" customModule="ToDo_App" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="tkd-Yn-PwS"/>
+                        <viewControllerLayoutGuide type="bottom" id="Pc1-3T-J9M"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="fEQ-vJ-DvG">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qzN-oJ-HXT">
+                                <rect key="frame" x="252" y="20" width="52" height="32"/>
+                                <fontDescription key="fontDescription" name="Arista2.0" family="Arista 2.0" pointSize="17"/>
+                                <state key="normal" title="close X"/>
+                                <connections>
+                                    <action selector="closeButtonTapped:" destination="yN8-DU-d9P" eventType="touchUpInside" id="SO1-Dk-dDO"/>
+                                </connections>
+                            </button>
+                            <webView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yVl-Se-xba">
+                                <rect key="frame" x="0.0" y="194" width="320" height="180"/>
+                                <color key="backgroundColor" red="0.36078431372549019" green="0.38823529411764707" blue="0.40392156862745099" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="yVl-Se-xba" secondAttribute="height" multiplier="16:9" id="DWa-RX-eyI"/>
+                                </constraints>
+                            </webView>
+                        </subviews>
+                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="qzN-oJ-HXT" secondAttribute="trailing" constant="16" id="6An-8k-JQp"/>
+                            <constraint firstItem="yVl-Se-xba" firstAttribute="centerY" secondItem="fEQ-vJ-DvG" secondAttribute="centerY" id="Axp-pi-1ls"/>
+                            <constraint firstItem="qzN-oJ-HXT" firstAttribute="top" secondItem="tkd-Yn-PwS" secondAttribute="bottom" constant="20" id="CE7-LR-fsj"/>
+                            <constraint firstItem="yVl-Se-xba" firstAttribute="centerX" secondItem="fEQ-vJ-DvG" secondAttribute="centerX" id="OoE-20-Xh5"/>
+                            <constraint firstItem="yVl-Se-xba" firstAttribute="leading" secondItem="fEQ-vJ-DvG" secondAttribute="leading" id="UTI-Ya-HUy"/>
+                            <constraint firstAttribute="trailing" secondItem="yVl-Se-xba" secondAttribute="trailing" id="olD-Xy-8fA"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="webView" destination="yVl-Se-xba" id="vGc-7h-3GS"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="3ek-X4-9PI" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2029" y="2648"/>
         </scene>
         <!--Step2AddUsersPopup-->
         <scene sceneID="XZf-wq-f9Y">
@@ -754,7 +803,7 @@
                     </connections>
                 </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="2949" y="1875"/>
+            <point key="canvasLocation" x="2948" y="1875"/>
         </scene>
         <!--Step3 Add JobVC-->
         <scene sceneID="wOR-vj-bV6">
@@ -901,7 +950,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cvg-lY-fqc" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="lFG-jL-dyz" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="3876" y="1875"/>
+            <point key="canvasLocation" x="3885" y="1875"/>
         </scene>
         <!--Setup Nav Controller-->
         <scene sceneID="qiB-h4-Vd0">
@@ -4977,7 +5026,7 @@ You can add up to 20 daily jobs and 20 weekly jobs.</string>
                                     <rect key="frame" x="120" y="62" width="80" height="80"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="?" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="v3K-mP-aXo">
-                                            <rect key="frame" x="23" y="-7" width="35" height="94"/>
+                                            <rect key="frame" x="22.5" y="-7" width="35" height="94"/>
                                             <fontDescription key="fontDescription" name="Arista2.0" family="Arista 2.0" pointSize="80"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
@@ -5018,7 +5067,7 @@ You can add up to 20 daily jobs and 20 weekly jobs.</string>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="wFy-Dj-bsf" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4806" y="1876"/>
+            <point key="canvasLocation" x="4806" y="1875"/>
         </scene>
         <!--Step4 PopupVC-->
         <scene sceneID="Hha-1K-OaA">
@@ -5180,7 +5229,7 @@ Parents will be assigned last.</string>
     <inferredMetricsTieBreakers>
         <segue reference="37h-AF-clw"/>
         <segue reference="AC3-hQ-ggE"/>
-        <segue reference="7Nt-Uo-akl"/>
+        <segue reference="bPF-L7-Z42"/>
         <segue reference="sZK-Vt-lQm"/>
     </inferredMetricsTieBreakers>
 </document>

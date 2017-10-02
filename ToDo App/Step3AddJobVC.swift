@@ -15,7 +15,8 @@ class Step3AddJobVC: UIViewController, UITextFieldDelegate {
     
     var jobDescription: String = ""
     var jobMultiplier: Double!
-    var jobClassification: String!
+    var jobAssigned: String!
+    var jobOrder: Int!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,7 +29,8 @@ class Step3AddJobVC: UIViewController, UITextFieldDelegate {
         if let existingJob = job {          // check to see if 'job' is not nil
             jobTextField.text = existingJob.name
             jobMultiplier = existingJob.multiplier
-            jobClassification = existingJob.assigned
+            jobAssigned = existingJob.assigned
+            jobOrder = existingJob.order
         }
         
         updateSaveButtonState()
@@ -68,15 +70,12 @@ class Step3AddJobVC: UIViewController, UITextFieldDelegate {
     }
     
     
-    
-    
     // This is what gets executed when "SAVE" button is tapped
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
 
         // set new job name to be passed back to Step3VC after the unwind segue
         let name = jobTextField.text
         
-        // MARK: need to update this value if user adds more than the default 10 jobs
         let multiplier = job?.multiplier ?? 1
         
         // NOTE: the default assignment is "none"

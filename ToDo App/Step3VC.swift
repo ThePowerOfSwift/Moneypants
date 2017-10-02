@@ -17,6 +17,8 @@ class Step3VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
     var cellStyleForEditing: UITableViewCellEditingStyle = .none
     
+    var flag: Bool!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -47,17 +49,37 @@ class Step3VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
                 self.jobsTableView.reloadData()
             }
         }
+        
+        flag = false        // set initial value so ViewWillAppear code WON'T run on first load
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
-        updateFirebaseData()
         jobsTableView.reloadData()
+
+        for job in dailyJobs {
+            print("daily assigned:",job.assigned)
+        }
+        
+        for job in weeklyJobs {
+            print("weekly assigned",job.assigned)
+        }
+        
+        
+        
+//        if flag == true {
+//            dailyJobs.removeAll()           // reset daily jobs
+//            weeklyJobs.removeAll()          // reset weekly jobs
+//            loadFirebaseJobs()
+//            jobsTableView.reloadData()
+//            for job in dailyJobs {
+//                print(job.assigned)
+//            }
+//        } else {
+//            flag = true
+//        }
     }
     
-    func updateFirebaseData() {
-        
-    }
     
     // ----------------
     // Setup Table View
@@ -126,13 +148,37 @@ class Step3VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
         if sourceIndexPath.section == 0 {
+            
+            // ----------
+            // daily jobs
+            // ----------
+            
             let job = dailyJobs[sourceIndexPath.row]
             dailyJobs.remove(at: sourceIndexPath.row)
             dailyJobs.insert(job, at: destinationIndexPath.row)
+            
+            // MARK: TODO - need to update all jobs with new order
+            var jobOrder = 0
+            for job in dailyJobs {
+                changeJobOrderOnFirebase(dailyOrWeekly: "dailyJobs", jobName: job.name, newJobOrder: jobOrder, completion: {(snapshot) in
+                })
+                jobOrder += 1
+            }
         } else {
+            
+            // -----------
+            // weekly jobs
+            // -----------
+            
             let job = weeklyJobs[sourceIndexPath.row]
             weeklyJobs.remove(at: sourceIndexPath.row)
             weeklyJobs.insert(job, at: destinationIndexPath.row)
+            var jobOrder = 0
+            for job in weeklyJobs {
+                changeJobOrderOnFirebase(dailyOrWeekly: "weeklyJobs", jobName: job.name, newJobOrder: jobOrder, completion: {(snapshot) in
+                })
+                jobOrder += 1
+            }
         }
     }
     
@@ -158,14 +204,32 @@ class Step3VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
                     ref.child("dailyJobs").child("dailyJob\(indexPath.row)").removeValue()
                     dailyJobs.remove(at: indexPath.row)
                     jobsTableView.deleteRows(at: [indexPath], with: .fade)
+                    tableView.reloadData()
+                    
+                    // MARK: TODO - need to reassign order
+                    
+                    var jobOrder = 0        // iterate over jobs in tableview, starting with first
+                    for job in dailyJobs {
+                        changeJobOrderOnFirebase(dailyOrWeekly: "dailyJobs", jobName: job.name, newJobOrder: jobOrder, completion: {(snapshot) in
+                        })
+                        jobOrder += 1
+                    }
                 }
             } else {
                 if weeklyJobs.count <= 10 {
                     deletedTooManyRowsAlert(alertTitle: "Weekly Jobs", alertMessage: "You cannot delete this weekly job. You must have at least 10 weekly jobs in your list.")
                 } else {
-                    ref.child("weeklyJobs").child("dailyJob\(indexPath.row)").removeValue()
+                    ref.child("weeklyJobs").child("weeklyJob\(indexPath.row)").removeValue()
                     weeklyJobs.remove(at: indexPath.row)
                     jobsTableView.deleteRows(at: [indexPath], with: .fade)
+                    tableView.reloadData()
+                    
+                    var jobOrder = 0        // iterate over jobs in tableview, starting with first
+                    for job in weeklyJobs {
+                        changeJobOrderOnFirebase(dailyOrWeekly: "weeklyJobs", jobName: job.name, newJobOrder: jobOrder, completion: {(snapshot) in
+                        })
+                        jobOrder += 1
+                    }
                 }
             }
         }
@@ -215,23 +279,25 @@ class Step3VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
             if selectedIndexPathSection == 0 {
                 let selectedIndexPathRow = jobsTableView.indexPathForSelectedRow
                 dailyJobs[selectedIndexPathRow!.row] = updatedJob!
-                jobsTableView.reloadData()
-                // update daily job on Firebase
+                
+                // MARK: TODO - update daily job on Firebase
                 ref.child("dailyJobs").child("dailyJob\(selectedIndexPathRow!.row)").updateChildValues(["name" : updatedJob!.name,
                                                                                                        "multiplier" : 10 / Double(dailyJobs.count),
                                                                                                        "assigned" : "none",
                                                                                                        "order" : selectedIndexPathRow!.row])
+                jobsTableView.reloadData()
                 
             // update weekly job
             } else if selectedIndexPathSection == 1 {
                 let selectedIndexPathRow = jobsTableView.indexPathForSelectedRow
                 weeklyJobs[(selectedIndexPathRow?.row)!] = updatedJob!
-                jobsTableView.reloadData()
-                // update weekly job on Firebase
+                
+                // MARK: TODO - update weekly job on Firebase
                 ref.child("weeklyJobs").child("weeklyJob\(selectedIndexPathRow!.row)").updateChildValues(["name" : updatedJob!.name,
                                                                                                           "multiplier" : 10 / Double(weeklyJobs.count),
                                                                                                           "assigned" : "none",
                                                                                                           "order" : selectedIndexPathRow!.row])
+                jobsTableView.reloadData()
             }
         } else {
             
@@ -242,7 +308,7 @@ class Step3VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
             // new daily jobs
             if sourceVC.jobSection == 0 {
                 
-                // create a new daily job in Firebase
+                // MARK: TODO - create a new daily job in Firebase
                 ref.child("dailyJobs").child("dailyJob\(dailyJobs.count)").setValue(["name" : updatedJob!.name,
                                                                                      "multiplier" : 10 / Double(dailyJobs.count),
                                                                                      "assigned" : "none",
@@ -270,6 +336,9 @@ class Step3VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
                                                                                         "multiplier" : 10 / Double(weeklyJobs.count),
                                                                                         "assigned" : "none",
                                                                                         "order" : weeklyJobs.count])
+                
+                // MARK: TODO - we'll have to update the multiplier of all the jobs
+                
                 // Add a new weekly job in the weekly jobs array
                 let newIndexPath = IndexPath(row: weeklyJobs.count, section: 1)
                 weeklyJobs.append(updatedJob!)
@@ -342,6 +411,13 @@ class Step3VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
     // ---------
     // Functions
     // ---------
+    
+    func changeJobOrderOnFirebase(dailyOrWeekly: String, jobName: String, newJobOrder: Int, completion: @escaping (FIRDataSnapshot) -> ()) {
+        ref.child(dailyOrWeekly).queryOrdered(byChild: "name").queryEqual(toValue: jobName).observeSingleEvent(of: .childAdded, with: { (snapshot) in
+            snapshot.ref.updateChildValues(["order" : newJobOrder])
+            completion(snapshot)
+        })
+    }
     
     func checkForFirebaseJobs(completion: @escaping (Bool!) -> ()) {
         ref.child("dailyJobs").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
@@ -432,17 +508,17 @@ class Step3VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
         var dailyCounter = 0
         var weeklyCounter = 0
         for dailyJob in dailyJobs {
-            ref.child("dailyJobs").child("dailyJob\(dailyCounter)").setValue(["name" : dailyJob.name,
-                                                                              "multiplier" : 1,
-                                                                              "assigned" : "none",
-                                                                              "order" : dailyCounter])
+            ref.child("dailyJobs").childByAutoId().setValue(["name" : dailyJob.name,
+                                                             "multiplier" : 1,
+                                                             "assigned" : "none",
+                                                             "order" : dailyCounter])
             dailyCounter += 1
         }
         for weeklyJob in weeklyJobs {
-            ref.child("weeklyJobs").child("weeklyJob\(weeklyCounter)").setValue(["name" : weeklyJob.name,
-                                                                                 "multiplier" : 1,
-                                                                                 "assigned" : "none",
-                                                                                 "order" : weeklyCounter])
+            ref.child("weeklyJobs").childByAutoId().setValue(["name" : weeklyJob.name,
+                                                              "multiplier" : 1,
+                                                              "assigned" : "none",
+                                                              "order" : weeklyCounter])
             weeklyCounter += 1
         }
     }
@@ -460,6 +536,17 @@ class Step3VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
             JobsAndHabits(jobName: "write in journal", jobMultiplier: 1, jobAssign: "none", jobOrder: 9),
             JobsAndHabits(jobName: "bed by 8:pm", jobMultiplier: 1, jobAssign: "none", jobOrder: 10)]
     }
+    
+    // Dismiss keyboard if user taps outside of text fields
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        disableTableEdit()
+        view.endEditing(true)
+    }
+    
+    
+    // ------
+    // Alerts
+    // ------
     
     func chooseDailyOrWeeklyJob() {
         let alert = UIAlertController(title: "Add Job", message: "You have selected 'add a new job'. Would you like to add a daily job or a weekly job?", preferredStyle: .alert)
@@ -488,17 +575,7 @@ class Step3VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
         }))
         present(alert, animated: true, completion: nil)
     }
-    
-    // Dismiss keyboard if user taps outside of text fields
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        disableTableEdit()
-        view.endEditing(true)
-    }
-    
-    // ------
-    // Alerts
-    // ------
-    
+
     func deletedTooManyRowsAlert(alertTitle: String, alertMessage: String) {
         let alert = UIAlertController(title: alertTitle, message: alertMessage, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "okay", style: .default, handler: { (action) in

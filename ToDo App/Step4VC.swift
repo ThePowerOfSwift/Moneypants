@@ -44,6 +44,7 @@ class Step4VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
                 
                 let dailyJob = JobsAndHabits(jobName: name, jobMultiplier: multiplier, jobAssign: assigned, jobOrder: order)
                 self.dailyJobs.append(dailyJob)
+                self.dailyJobs.sort(by: {$0.order < $1.order})
             }
             self.jobsTableView.reloadData()
         }
@@ -57,6 +58,7 @@ class Step4VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
                 
                 let weeklyJob = JobsAndHabits(jobName: name, jobMultiplier: multiplier, jobAssign: assigned, jobOrder: order)
                 self.weeklyJobs.append(weeklyJob)
+                self.weeklyJobs.sort(by: {$0.order < $1.order})
             }
             self.jobsTableView.reloadData()
         }
