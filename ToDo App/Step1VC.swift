@@ -61,6 +61,7 @@ class Step1VC: UIViewController, UITextFieldDelegate {
         } else {
             createIncomeAlert()
         }
+        ref.child("income").removeAllObservers()
     }
     
     

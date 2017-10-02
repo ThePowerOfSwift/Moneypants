@@ -40,11 +40,6 @@ class Step2VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
         usersTableView.reloadData()
     }
     
-//    override func viewWillDisappear(_ animated: Bool) {
-//        ref.child("members").removeAllObservers()
-//    }
-    
-    
     
     // ----------
     // Table View
@@ -129,7 +124,6 @@ class Step2VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
                 performSegue(withIdentifier: "GoToStep3", sender: self)
             }
         }
-        ref.removeAllObservers()
     }
     
     
@@ -186,7 +180,6 @@ class Step2VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
                                                                            "childParent" : user.childParent])
             })
         }
-        ref.child("members").removeAllObservers()
     }
     
     func editButtonTapped() {
@@ -233,6 +226,13 @@ class Step2VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
             alert.dismiss(animated: true, completion: nil)
         }))
         present(alert, animated: true, completion: nil)
+    }
+    
+    deinit {
+        ref.child("members").removeAllObservers()
+        for user in users {
+            self.ref.child("members").child(user.firstName).removeAllObservers()
+        }
     }
 }
 

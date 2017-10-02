@@ -7,10 +7,9 @@ class Step3VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
     @IBOutlet weak var questionButton: UIButton!
     @IBOutlet weak var editButton: UIButton!
     
-    var dailyJobs = [JobsAndHabits]()       // create variable called 'daily jobs' which is an array of type JobsAndHabits
-    var weeklyJobs = [JobsAndHabits]()      // create variable called 'weekly jobs' which is an array of type JobsAndHabits
-    var dailyHabits = [JobsAndHabits]()
-    var jobSection: Int?                    // This value passed from daily/weekly alert dialogue box to Step3AddJobVC, and then passed back to Step3VC
+    var dailyJobs: [JobsAndHabits]!       // create variable called 'daily jobs' which is an array of type JobsAndHabits
+    var weeklyJobs: [JobsAndHabits]!      // create variable called 'weekly jobs' which is an array of type JobsAndHabits
+    var dailyHabits: [JobsAndHabits]!
     
     var firebaseUser: FIRUser!
     var ref: FIRDatabaseReference!
@@ -25,6 +24,10 @@ class Step3VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
         // --------
         // Firebase
         // --------
+        
+        dailyJobs = [JobsAndHabits]()
+        weeklyJobs = [JobsAndHabits]()
+        dailyHabits = [JobsAndHabits]()
         
         firebaseUser = FIRAuth.auth()?.currentUser
         ref = FIRDatabase.database().reference().child("users").child(firebaseUser.uid)
@@ -43,6 +46,7 @@ class Step3VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
         checkForFirebaseJobs { (answer) in
             if answer == true {
                 self.loadFirebaseJobs()
+                self.jobsTableView.reloadData()
             } else {
                 self.loadDefaultJobs()
                 self.createDefaultJobsOnFirebase()
@@ -50,13 +54,16 @@ class Step3VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
             }
         }
         
+        print("viewdidload initiated")
+        
         flag = false        // set initial value so ViewWillAppear code WON'T run on first load
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
         jobsTableView.reloadData()
-
+        print("daily jobs count",dailyJobs.count)
+        print("weekly jobs count",weeklyJobs.count)
 //        for job in dailyJobs {
 //            print("daily assigned:",job.assigned)
 //        }
@@ -66,8 +73,9 @@ class Step3VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
 //        }
     }
     
-    override func viewWillDisappear(_ animated: Bool) {
-        ref.removeAllObservers()
+    override func viewDidDisappear(_ animated: Bool) {
+        ref.child("dailyJobs").removeAllObservers()
+        ref.child("weeklyJobs").removeAllObservers()
     }
     
     
@@ -364,11 +372,6 @@ class Step3VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
     @IBAction func nextButtonTapped(_ sender: UIButton) {
         disableTableEdit()
         performSegue(withIdentifier: "AssignJobs", sender: self)
-        
-        // MARK: TODO - Remove observers from 'getDailyJobs', 'loadFirebaseDailyJobs', 'getWeeklyJobs', and 'loadFirebaseWeeklyJobs' functions
-        ref.child("dailyJobs").removeAllObservers()
-        ref.child("weeklyJobs").removeAllObservers()
-        ref.removeAllObservers()
     }
     
     @IBAction func questionButtonTapped(_ sender: UIButton) {
@@ -565,6 +568,12 @@ class Step3VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
             alert.dismiss(animated: true, completion: nil)
         }))
         self.present(alert, animated: true, completion: nil)
+    }
+    
+    deinit {
+        // MARK: TODO - Remove observers from 'getDailyJobs', 'loadFirebaseDailyJobs', 'getWeeklyJobs', and 'loadFirebaseWeeklyJobs' functions
+        ref.child("dailyJobs").removeAllObservers()
+        ref.child("weeklyJobs").removeAllObservers()
     }
 }
 
