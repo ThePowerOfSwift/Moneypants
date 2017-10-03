@@ -9,7 +9,6 @@ class Step3VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
     var dailyJobs: [JobsAndHabits]!       // create variable called 'daily jobs' which is an array of type JobsAndHabits
     var weeklyJobs: [JobsAndHabits]!      // create variable called 'weekly jobs' which is an array of type JobsAndHabits
-    var dailyHabits: [JobsAndHabits]!
     
     var firebaseUser: FIRUser!
     var ref: FIRDatabaseReference!
@@ -21,13 +20,12 @@ class Step3VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        dailyJobs = [JobsAndHabits]()
+        weeklyJobs = [JobsAndHabits]()
+
         // --------
         // Firebase
         // --------
-        
-        dailyJobs = [JobsAndHabits]()
-        weeklyJobs = [JobsAndHabits]()
-        dailyHabits = [JobsAndHabits]()
         
         firebaseUser = FIRAuth.auth()?.currentUser
         ref = FIRDatabase.database().reference().child("users").child(firebaseUser.uid)
@@ -156,6 +154,7 @@ class Step3VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
             dailyJobs.insert(job, at: destinationIndexPath.row)
             
             // MARK: TODO - need to update all jobs with new order
+            // find job name at the tableview's index path, then update its job order to match the tableview's order (using tableview's index path)
             var jobOrder = 0
             for job in dailyJobs {
                 changeJobOrderOnFirebase(dailyOrWeekly: "dailyJobs", jobName: job.name, newJobOrder: jobOrder, completion: {(snapshot) in
@@ -500,6 +499,7 @@ class Step3VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
         }
     }
     
+    /*
     func loadDefaultDailyHabits() {
         // create array of default daily habits
         dailyHabits = [JobsAndHabits(jobName: "get ready for day by 10:am", jobMultiplier: 5, jobAssign: "none", jobOrder: 1),     // This is bonus habit **
@@ -513,6 +513,7 @@ class Step3VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
             JobsAndHabits(jobName: "write in journal", jobMultiplier: 1, jobAssign: "none", jobOrder: 9),
             JobsAndHabits(jobName: "bed by 8:pm", jobMultiplier: 1, jobAssign: "none", jobOrder: 10)]
     }
+    */
     
     // Dismiss keyboard if user taps outside of text fields
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {

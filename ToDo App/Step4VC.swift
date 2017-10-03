@@ -5,13 +5,11 @@ class Step4VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
     @IBOutlet weak var jobsTableView: UITableView!
     
-    var users = [User]()        // create new instance of 'users' using Firebase to populate (not bringing it from prev VCs)
-    
     var firebaseUser: FIRUser!
     var ref: FIRDatabaseReference!
     
-    var dailyJobs = [JobsAndHabits]()
-    var weeklyJobs = [JobsAndHabits]()
+    var dailyJobs: [JobsAndHabits]!
+    var weeklyJobs: [JobsAndHabits]!
     var selectedJobs = [IndexPath]()       // for storing user selected cells
     var maxDailyNumber = 3                  // max number of daily chores allowed
     var maxWeeklyNumber = 2
@@ -20,6 +18,9 @@ class Step4VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        dailyJobs = [JobsAndHabits]()
+        weeklyJobs = [JobsAndHabits]()
         
         jobsTableView.delegate = self
         jobsTableView.dataSource = self
@@ -65,7 +66,7 @@ class Step4VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
         
         getNextYoungestUserWithoutJobAssigned()
         
-        user = "Sophie"
+        user = "Sophie"     // MARK: TODO - update this dummy value with actual value (correct user)
     }
     
     // Need to get youngest user who doesn't have any jobs assigned
@@ -141,36 +142,37 @@ class Step4VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
         if indexPath.section == 0 {
             cell.jobLabel.text = dailyJobs[indexPath.row].name
             
-            if (selectedJobs.contains(indexPath)) {
-                cell.selectionBoxImageView.image = UIImage(named: "checkmark white")
-                cell.jobLabel.textColor = UIColor(white: 0.0, alpha: 1.0)
-                // ... otherwise, check to see if job is already assigned. If so, show the light gray checkmark...
-            } else if (dailyJobs[indexPath.row].assigned != "none") {
-                cell.selectionBoxImageView.image = UIImage(named: "checkmark gray")
-                cell.jobLabel.textColor = UIColor(white: 0.8, alpha: 1.0)
-                //... otherwise, the default is the regular black blank box
+            if dailyJobs[indexPath.row].assigned != "none" {        // 1. check if array has selected job at current location...
+                if dailyJobs[indexPath.row].assigned == user {      // 2. ...and if it is current user...
+                    cell.selectionBoxImageView.image = UIImage(named: "checkmark white")        // 3. ...then show white/green checkmark and black text
+                    cell.jobLabel.textColor = UIColor.black
+                } else {
+                    cell.selectionBoxImageView.image = UIImage(named: "checkmark gray")         // 4. ...otherwise show gray checkmark and gray text
+                    cell.jobLabel.textColor = UIColor(white: 0.8, alpha: 1.0)
+                }
             } else {
-                cell.selectionBoxImageView.image = UIImage(named: "blank")
-                cell.jobLabel.textColor = UIColor(white: 0.0, alpha: 1.0)
+                cell.selectionBoxImageView.image = UIImage(named: "blank")          // 5. if job isn't selected, show blank box with black text
+                cell.jobLabel.textColor = UIColor.black
             }
-        } else {
             
-            // -----------
-            // WEEKLY JOBS
-            // -----------
+        // -----------
+        // WEEKLY JOBS
+        // -----------
             
+        } else if indexPath.section == 1 {
             cell.jobLabel.text = weeklyJobs[indexPath.row].name
             
-            if (selectedJobs.contains(indexPath)) {
-                cell.selectionBoxImageView.image = UIImage(named: "checkmark white")
-                cell.jobLabel.textColor = UIColor(white: 0.0, alpha: 1.0)
-            } else if (weeklyJobs[indexPath.row].assigned != "none") {
-                cell.selectionBoxImageView.image = UIImage(named: "checkmark gray")
-                cell.jobLabel.textColor = UIColor(white: 0.8, alpha: 1.0)
-                //... otherwise, the default is the regular black blank box
+            if weeklyJobs[indexPath.row].assigned != "none" {        // 1. check if array has selected job at current location...
+                if weeklyJobs[indexPath.row].assigned == user {      // 2. ...and if it is current user...
+                    cell.selectionBoxImageView.image = UIImage(named: "checkmark white")        // 3. ...then show white/green checkmark and black text
+                    cell.jobLabel.textColor = UIColor.black
+                } else {
+                    cell.selectionBoxImageView.image = UIImage(named: "checkmark gray")         // 4. ...otherwise show gray checkmark and gray text
+                    cell.jobLabel.textColor = UIColor(white: 0.8, alpha: 1.0)
+                }
             } else {
-                cell.selectionBoxImageView.image = UIImage(named: "blank")
-                cell.jobLabel.textColor = UIColor(white: 0.0, alpha: 1.0)
+                cell.selectionBoxImageView.image = UIImage(named: "blank")          // 5. if job isn't selected, show blank box with black text
+                cell.jobLabel.textColor = UIColor.black
             }
         }
         return cell
@@ -178,17 +180,37 @@ class Step4VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
     // determine which cell is tapped
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        // OLD VERSION
+        // ====================================================================================================
+        /*
         if indexPath.section == 0 {
-            // push daily jobs value to Firebase
-            ref.child("dailyJobs")
-                .child("dailyJob\(indexPath.row)")
-                .updateChildValues(["assigned" : "current user"])
+            // daily jobs
+            // find job's order at the tableview's index path (query), then update its assigned property to be the current user
+            ref.child("dailyJobs").queryOrdered(byChild: "order").queryEqual(toValue: indexPath.row).observeSingleEvent(of: .childAdded, with: { (snapshot) in
+                snapshot.ref.updateChildValues(["assigned" : self.user])
+            })
         } else {
             // push weekly jobs value to Firebase
-            ref.child("weeklyJobs")
-                .child("weeklyJob\(indexPath.row)")
-                .updateChildValues(["assigned" : "current user"])
+            ref.child("weeklyJobs").queryOrdered(byChild: "order").queryEqual(toValue: indexPath.row).observeSingleEvent(of: .childAdded, with: { (snapshot) in
+                snapshot.ref.updateChildValues(["assigned" : self.user])
+            })
         }
+        
+        
+        
+        
         
         // ----------------
         // INITIAL CELL TAP
@@ -222,20 +244,32 @@ class Step4VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
             
         } else {
             
+            
+            
+            
+            
+            
             // ------------------
             // SECONDARY CELL TAP
             // ------------------
             
-            // if user taps cell that's already been selected, remove the values
+            // if user taps cell that's already been selected, remove the values...
             let index = selectedJobs.index(of: indexPath)
             
             if indexPath.section == 0 {
-                // update daily jobs Firebase with 'none' in 'assigned' category...
+                
+                // find job's order at the tableview's index path (query), then update its assigned property to be the current user
+                ref.child("dailyJobs").queryOrdered(byChild: "order").queryEqual(toValue: indexPath.row).observeSingleEvent(of: .childAdded, with: { (snapshot) in
+                    snapshot.ref.updateChildValues(["assigned" : self.user])
+                })
+                
+                
+                // ...update daily jobs Firebase with 'none' in 'assigned' category...
                 self.ref.child("dailyJobs")
                     .child("dailyJob\(indexPath.row)")
                     .updateChildValues(["assigned" : "none"])
-            } else {
-                // update weekly jobs Firebase with 'none' in 'assigned' category...
+            } else if indexPath.section == 1 {
+                // ...update weekly jobs Firebase with 'none' in 'assigned' category...
                 self.ref.child("weeklyJobs")
                     .child("weeklyJob\(indexPath.row)")
                     .updateChildValues(["assigned" : "none"])
@@ -249,6 +283,13 @@ class Step4VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
         print(countJobs().dailyCount,"daily jobs chosen, and", countJobs().weeklyCount,"weekly jobs chosen")
         
         tableView.reloadData()      // reloads table so checkmark will show up
+        */
+        // ====================================================================================================
+        
+        
+        
+        
+        
     }
     
     

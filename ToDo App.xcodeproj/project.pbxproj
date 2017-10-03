@@ -447,8 +447,8 @@
 			isa = PBXGroup;
 			children = (
 				CED509E11F030F560058728F /* Step4VC.swift */,
-				CE39F51E1F7D83730053E45D /* Step4PopupVC.swift */,
 				CED509E31F0310740058728F /* Step4CustomCell.swift */,
+				CE39F51E1F7D83730053E45D /* Step4PopupVC.swift */,
 				CE7160F81F04A2A10045AA05 /* Step4HabitVC.swift */,
 				CE7160FA1F04A9270045AA05 /* Step4HabitCustomCell.swift */,
 				CE39D9271F05A3CE00159EC1 /* Step4ParentsVC.swift */,
