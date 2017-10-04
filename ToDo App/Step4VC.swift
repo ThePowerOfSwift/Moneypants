@@ -4,20 +4,27 @@ import Firebase
 class Step4VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
     @IBOutlet weak var jobsTableView: UITableView!
+    @IBOutlet weak var userImage: UIImageView!
+    @IBOutlet weak var instructionsLabel: UILabel!
     
     var firebaseUser: FIRUser!
     var ref: FIRDatabaseReference!
+    var users = [User]()
     
     var dailyJobs: [JobsAndHabits]!
     var weeklyJobs: [JobsAndHabits]!
-    var selectedJobs = [IndexPath]()       // for storing user selected cells
+    var selectedJobs = [IndexPath]()        // for storing user selected cells
     var maxDailyNumber = 3                  // max number of daily chores allowed
-    var maxWeeklyNumber = 2
+    var maxWeeklyNumber = 2                 // max number of weekly chores allowed
     
-    var user: String!
+    var currentUserName: String!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        currentUserName = "Trixie"
+        //        instructionsLabel.text = "Choose daily and weekly job assignments for \(tempUserNamePadiddle!)"
+        instructionsLabel.text = ""
         
         dailyJobs = [JobsAndHabits]()
         weeklyJobs = [JobsAndHabits]()
@@ -64,24 +71,147 @@ class Step4VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
             self.jobsTableView.reloadData()
         }
         
-        getNextYoungestUserWithoutJobAssigned()
+        // THIS WORKS!
+        // ============================================================================
+        /*
+        findYoungestMember { (dictionary) in
+            
+            print(dictionary.count)
+            
+            var youngestBirthday = 19000101
+            var currentMember = "Sophie"
+            var currentMemberProfileImage: String!
+            
+            for item in dictionary {
+                let birthday = item["birthday"] as! Int
+                let childParent = item["childParent"] as! String
+                let firstName = item["firstName"] as! String
+                let gender = item["gender"] as! String
+                let passcode = item["passcode"] as! Int
+                let profileImageUrl = item["profileImageUrl"] as! String
+                
+                if birthday > youngestBirthday {
+                    youngestBirthday = birthday
+                    currentMember = firstName
+                    currentMemberProfileImage = profileImageUrl
+                }
+                
+                let storageRef = FIRStorage.storage().reference(forURL: currentMemberProfileImage)
+                storageRef.data(withMaxSize: 1 * 1024 * 1024, completion: { (pictureData, error) in
+                    let pic = UIImage(data: pictureData!)
+                    let user = User(profilePhoto: pic!,
+                                    userFirstName: firstName,
+                                    userBirthday: birthday,
+                                    userPasscode: passcode,
+                                    userGender: gender,
+                                    isUserChildOrParent: childParent)
+                    self.users.append(user)
+                    self.users.sort(by: {$0.birthday < $1.birthday})
+//                    self.currentUserName = currentMember
+//                    self.instructionsLabel.text = "Choose daily and weekly job assignments for \(currentMember)"
+                })
+            }
+            print(currentMember,youngestBirthday)
+            self.currentUserName = currentMember
+            self.instructionsLabel.text = "Choose daily and weekly job assignments for \(currentMember)."
+        }
+        */
+        // ============================================================================
         
-        user = "Sophie"     // MARK: TODO - update this dummy value with actual value (correct user)
+        loadExistingUsers()
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        // BEGIN TESTING
+        // ====================================================
+        
+        
+        fetchData {
+            print("2. fetch data complete")
+        }
+        
     }
     
-    // Need to get youngest user who doesn't have any jobs assigned
-    // need to get their name, gender, and profile pict
-    func getNextYoungestUserWithoutJobAssigned() {
-        // count number of jobs with
-        
+    
+    var simpleArray = [""]
+    
+    func fetchData(completion: @escaping () -> ()) {
+        ref.child("members").observeSingleEvent(of: .value, with: { (snapshot) in
+            print("Feed: Checking for new users from Firebase")
+            for item in snapshot.children {
+                if let snap = item as? FIRDataSnapshot {
+                    if let value = snap.value as? [String : Any] {
+                        let birthday = value["birthday"] as! String
+                        let name = value["firstName"] as! String
+                        let childParent = value["childParent"] as! String
+                    }
+                    
+                }
+            }
+            completion()
+        })
     }
     
+    // END TESTING
+    // ====================================================
     
-   
-    // ============================================================================
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    var userCount = 0
     
     @IBAction func nextButtonTapped(_ sender: UIButton) {
+        
+        print("number of users",users.count)
         print("next button tapped")
+        currentUserName = users[userCount].firstName
+        userImage.image = users[userCount].photo
+        instructionsLabel.text = "Choose daily and weekly job assignments for \(users[userCount].firstName)."
+        
+        if userCount == (users.count - 1) {
+            userCount = 0
+        } else {
+            userCount += 1
+        }
+        
+        jobsTableView.reloadData()
+        
+        
+        
+        
+        /*
+        ref.child("members").queryOrdered(byChild: "birthday").queryLimited(toLast: 2).observe(.childAdded) { (snapshot: FIRDataSnapshot) in
+            print("Snapshot:", snapshot.childrenCount)
+            if let value = snapshot.value as? [String : Any] {
+                let birthday = value["birthday"] as! Int
+                let name = value["firstName"] as! String
+                
+                print(value.count)
+            }
+        }
+        */
+        
+        
+        
+        
+        
+        // need to reset daily and weekly max values to 3 and 2, respectively (for new user)
         
         // Need to validate if user has less than 2 daily jobs:
         // "You have not chosen enough jobs for Savannah. She should have at least one job in addition to clean bedroom. Are you sure you want to only assign Savannah one job?"
@@ -140,19 +270,21 @@ class Step4VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
         // ----------
         
         if indexPath.section == 0 {
-            cell.jobLabel.text = dailyJobs[indexPath.row].name
             
             if dailyJobs[indexPath.row].assigned != "none" {        // 1. check if array has selected job at current location...
-                if dailyJobs[indexPath.row].assigned == user {      // 2. ...and if it is current user...
-                    cell.selectionBoxImageView.image = UIImage(named: "checkmark white")        // 3. ...then show white/green checkmark and black text
+                if dailyJobs[indexPath.row].assigned == currentUserName {      // 2. ...and if it is current user...
+                    cell.selectionBoxImageView.image = UIImage(named: "checkmark white")        // 3. ...then show white/green checkmark, black text, job name
                     cell.jobLabel.textColor = UIColor.black
+                    cell.jobLabel.text = dailyJobs[indexPath.row].name
                 } else {
-                    cell.selectionBoxImageView.image = UIImage(named: "checkmark gray")         // 4. ...otherwise show gray checkmark and gray text
+                    cell.selectionBoxImageView.image = UIImage(named: "checkmark gray")         // 4. ...otherwise show gray checkmark, gray text, assigned name
                     cell.jobLabel.textColor = UIColor(white: 0.8, alpha: 1.0)
+                    cell.jobLabel.text = dailyJobs[indexPath.row].name + " (\(dailyJobs[indexPath.row].assigned))"
                 }
             } else {
-                cell.selectionBoxImageView.image = UIImage(named: "blank")          // 5. if job isn't selected, show blank box with black text
+                cell.selectionBoxImageView.image = UIImage(named: "blank")          // 5. if job isn't selected, show blank box, black text, job name
                 cell.jobLabel.textColor = UIColor.black
+                cell.jobLabel.text = dailyJobs[indexPath.row].name
             }
             
         // -----------
@@ -160,162 +292,193 @@ class Step4VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
         // -----------
             
         } else if indexPath.section == 1 {
-            cell.jobLabel.text = weeklyJobs[indexPath.row].name
             
             if weeklyJobs[indexPath.row].assigned != "none" {        // 1. check if array has selected job at current location...
-                if weeklyJobs[indexPath.row].assigned == user {      // 2. ...and if it is current user...
+                if weeklyJobs[indexPath.row].assigned == currentUserName {      // 2. ...and if it is current user...
                     cell.selectionBoxImageView.image = UIImage(named: "checkmark white")        // 3. ...then show white/green checkmark and black text
                     cell.jobLabel.textColor = UIColor.black
+                    cell.jobLabel.text = weeklyJobs[indexPath.row].name
                 } else {
                     cell.selectionBoxImageView.image = UIImage(named: "checkmark gray")         // 4. ...otherwise show gray checkmark and gray text
                     cell.jobLabel.textColor = UIColor(white: 0.8, alpha: 1.0)
+                    cell.jobLabel.text = weeklyJobs[indexPath.row].name + " (\(weeklyJobs[indexPath.row].assigned))"
                 }
             } else {
                 cell.selectionBoxImageView.image = UIImage(named: "blank")          // 5. if job isn't selected, show blank box with black text
                 cell.jobLabel.textColor = UIColor.black
+                cell.jobLabel.text = weeklyJobs[indexPath.row].name
             }
         }
         return cell
     }
     
+    
+    
+    func updateJobAssignmentsOnFirebase(dailyOrWeekly: String, selectedIndexPath: Int, assignment: String, completion: @escaping (FIRDataSnapshot) -> ()) {
+        ref.child(dailyOrWeekly).queryOrdered(byChild: "order").queryEqual(toValue: selectedIndexPath).observeSingleEvent(of: .childAdded, with: { (snapshot) in
+            snapshot.ref.updateChildValues(["assigned" : assignment])
+            completion(snapshot)
+        })
+    }
+    
+    func setJobAssignmentToNoneOnFirebase(indexPathRow: Int) {
+        ref.child("dailyJobs").queryOrdered(byChild: "order").queryEqual(toValue: indexPathRow).observeSingleEvent(of: .childAdded, with: { (snapshot) in
+            snapshot.ref.updateChildValues(["assigned" : "none"])
+            self.dailyJobs[indexPathRow].assigned = "none"     // update local array
+            self.jobsTableView.reloadData()
+        })
+    }
+    
+    
     // determine which cell is tapped
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
+        // ----------
+        // DAILY JOBS
+        // ----------
         
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        // OLD VERSION
-        // ====================================================================================================
-        /*
         if indexPath.section == 0 {
-            // daily jobs
-            // find job's order at the tableview's index path (query), then update its assigned property to be the current user
-            ref.child("dailyJobs").queryOrdered(byChild: "order").queryEqual(toValue: indexPath.row).observeSingleEvent(of: .childAdded, with: { (snapshot) in
-                snapshot.ref.updateChildValues(["assigned" : self.user])
-            })
-        } else {
-            // push weekly jobs value to Firebase
-            ref.child("weeklyJobs").queryOrdered(byChild: "order").queryEqual(toValue: indexPath.row).observeSingleEvent(of: .childAdded, with: { (snapshot) in
-                snapshot.ref.updateChildValues(["assigned" : self.user])
-            })
-        }
-        
-        
-        
-        
-        
-        // ----------------
-        // INITIAL CELL TAP
-        // ----------------
-        
-        if (!selectedJobs.contains(indexPath)) {           // only add to array if it doesn't already exist
-            selectedJobs.append(indexPath)
-            // print("Item Added",selectedArray)
             
-            let dailyJobsCount = countJobs().dailyCount
-            let weeklyJobsCount = countJobs().weeklyCount
+            // -----------------------------------------------------------------------
+            // ...First check to see if the job is already assigned to current user...
+            // -----------------------------------------------------------------------
             
-            // ----------
-            // DAILY JOBS
-            // ----------
-            
-            // check if daily jobs is more than 3
-            if dailyJobsCount > maxDailyNumber {
-                tooManyJobsSelectedAlert(messageTitle: "Daily Jobs", tableViewIndexPath: indexPath, jobCount: countJobs().dailyCount, recommendedNumberOfJobs: 3, dailyOrWeekly: "daily", timeframe: "30-minute")
-            } else {
-                
-                // -----------
-                // WEEKLY JOBS
-                // -----------
-                
-                // check if weekly jobs is more than 2
-                if weeklyJobsCount > maxWeeklyNumber {
-                    tooManyJobsSelectedAlert(messageTitle: "Weekly Jobs", tableViewIndexPath: indexPath, jobCount: countJobs().weeklyCount, recommendedNumberOfJobs: 2, dailyOrWeekly: "weekly", timeframe: "2-hour")
-                }
-            }
-            
-        } else {
-            
-            
-            
-            
-            
-            
-            // ------------------
-            // SECONDARY CELL TAP
-            // ------------------
-            
-            // if user taps cell that's already been selected, remove the values...
-            let index = selectedJobs.index(of: indexPath)
-            
-            if indexPath.section == 0 {
-                
-                // find job's order at the tableview's index path (query), then update its assigned property to be the current user
+            if dailyJobs[indexPath.row].assigned == currentUserName {
+                // find job's order at the tableview's index path (query), then update its 'assigned' property to be 'none'
                 ref.child("dailyJobs").queryOrdered(byChild: "order").queryEqual(toValue: indexPath.row).observeSingleEvent(of: .childAdded, with: { (snapshot) in
-                    snapshot.ref.updateChildValues(["assigned" : self.user])
+                    snapshot.ref.updateChildValues(["assigned" : "none"])
+                    self.dailyJobs[indexPath.row].assigned = "none"     // update local array
+                    self.jobsTableView.reloadData()
                 })
                 
+                // ----------------------------------------
+                // ...then check if the job is available...
+                // ----------------------------------------
                 
-                // ...update daily jobs Firebase with 'none' in 'assigned' category...
-                self.ref.child("dailyJobs")
-                    .child("dailyJob\(indexPath.row)")
-                    .updateChildValues(["assigned" : "none"])
-            } else if indexPath.section == 1 {
-                // ...update weekly jobs Firebase with 'none' in 'assigned' category...
-                self.ref.child("weeklyJobs")
-                    .child("weeklyJob\(indexPath.row)")
-                    .updateChildValues(["assigned" : "none"])
+            } else if dailyJobs[indexPath.row].assigned == "none" {
+                ref.child("dailyJobs").queryOrdered(byChild: "order").queryEqual(toValue: indexPath.row).observeSingleEvent(of: .childAdded, with: { (snapshot) in
+                    snapshot.ref.updateChildValues(["assigned" : self.currentUserName])
+                    self.dailyJobs[indexPath.row].assigned = self.currentUserName      // update local array
+                    var dailyJobsCount = 0
+                    for job in self.dailyJobs {
+                        if job.assigned == self.currentUserName {
+                            dailyJobsCount += 1
+                        }
+                    }
+                    
+                    // -----------------------------------------------------------------
+                    // if job is available, check to see if user already has enough jobs
+                    // -----------------------------------------------------------------
+                    
+                    if dailyJobsCount > self.maxDailyNumber {
+                        let alert = UIAlertController(title: "Daily Jobs", message: "You have chosen more than 3 daily jobs for \(self.currentUserName!). This is not recommended because \(self.currentUserName!) won't be able to finish within the 30-minute time limit.\n\nAre you sure you want to assign \(self.currentUserName!) \(dailyJobsCount) daily jobs?", preferredStyle: .alert)
+                        // if user taps cancel
+                        alert.addAction(UIAlertAction(title: "cancel", style: .cancel, handler: { (action) in
+                            // update local array
+                            self.dailyJobs[indexPath.row].assigned = "none"
+                            // remove assignment from Firebase
+                            self.ref.child("dailyJobs").queryOrdered(byChild: "order").queryEqual(toValue: indexPath.row).observeSingleEvent(of: .childAdded, with: { (snapshot) in
+                                snapshot.ref.updateChildValues(["assigned" : "none"])
+                                self.jobsTableView.reloadData()
+                            })
+                        }))
+                        // if user taps okay, dismiss alert and increase daily max
+                        alert.addAction(UIAlertAction(title: "okay", style: .default, handler: { (action) in
+                            self.maxDailyNumber = self.maxDailyNumber + 1
+                            alert.dismiss(animated: true, completion: nil)
+                        }))
+                        self.present(alert, animated: true, completion: nil)
+                    }
+                    self.jobsTableView.reloadData()
+                })
+            } else {
+                
+                // -------------------------------------------------------
+                // ...and finally check if job is assigned to another user
+                // -------------------------------------------------------
+                
+                self.jobsTableView.reloadData()
+                let alert = UIAlertController(title: "Job Selection", message: "The job you selected (\(dailyJobs[indexPath.row].name)) is already assigned to \(dailyJobs[indexPath.row].assigned).\n\nPlease choose another job.", preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "okay", style: .cancel, handler: { (action) in
+                    alert.dismiss(animated: true, completion: nil)
+                }))
+                present(alert, animated: true, completion: nil)
             }
             
-            // ... then remove value from array
-            selectedJobs.remove(at: index!)
-            // print("Item Removed",selectedArray)
+        // -----------
+        // WEEKLY JOBS
+        // -----------
+            
+        } else if indexPath.section == 1 {
+            
+            // -----------------------------------------------------------------------
+            // ...First check to see if the job is already assigned to current user...
+            // -----------------------------------------------------------------------
+            
+            if weeklyJobs[indexPath.row].assigned == currentUserName {
+                // find job's order at the tableview's index path (query), then update its 'assigned' property to be 'none'
+                ref.child("weeklyJobs").queryOrdered(byChild: "order").queryEqual(toValue: indexPath.row).observeSingleEvent(of: .childAdded, with: { (snapshot) in
+                    snapshot.ref.updateChildValues(["assigned" : "none"])
+                    self.weeklyJobs[indexPath.row].assigned = "none"     // update local array
+                    self.jobsTableView.reloadData()
+                })
+                
+                // ----------------------------------------
+                // ...then check if the job is available...
+                // ----------------------------------------
+                
+            } else if weeklyJobs[indexPath.row].assigned == "none" {
+                ref.child("weeklyJobs").queryOrdered(byChild: "order").queryEqual(toValue: indexPath.row).observeSingleEvent(of: .childAdded, with: { (snapshot) in
+                    snapshot.ref.updateChildValues(["assigned" : self.currentUserName])
+                    self.weeklyJobs[indexPath.row].assigned = self.currentUserName      // update local array
+                    var weeklyJobsCount = 0
+                    for job in self.weeklyJobs {
+                        if job.assigned == self.currentUserName {
+                            weeklyJobsCount += 1
+                        }
+                    }
+                    
+                    // -----------------------------------------------------------------
+                    // if job is available, check to see if user already has enough jobs
+                    // -----------------------------------------------------------------
+                    
+                    if weeklyJobsCount > self.maxWeeklyNumber {
+                        let alert = UIAlertController(title: "Weekly Jobs", message: "You have chosen more than 2 weekly jobs for \(self.currentUserName!). This is not recommended because \(self.currentUserName!) won't be able to finish within the 2-hour time limit.\n\nAre you sure you want to assign \(self.currentUserName!) \(weeklyJobsCount) weekly jobs?", preferredStyle: .alert)
+                        // if user taps cancel
+                        alert.addAction(UIAlertAction(title: "cancel", style: .cancel, handler: { (action) in
+                            // update local array
+                            self.weeklyJobs[indexPath.row].assigned = "none"
+                            // remove assignment from Firebase
+                            self.ref.child("weeklyJobs").queryOrdered(byChild: "order").queryEqual(toValue: indexPath.row).observeSingleEvent(of: .childAdded, with: { (snapshot) in
+                                snapshot.ref.updateChildValues(["assigned" : "none"])
+                                self.jobsTableView.reloadData()
+                            })
+                        }))
+                        // if user taps okay, dismiss alert and increase weekly max
+                        alert.addAction(UIAlertAction(title: "okay", style: .default, handler: { (action) in
+                            self.maxWeeklyNumber = self.maxWeeklyNumber + 1
+                            alert.dismiss(animated: true, completion: nil)
+                        }))
+                        self.present(alert, animated: true, completion: nil)
+                    }
+                    self.jobsTableView.reloadData()
+                })
+            } else {
+                
+                // -------------------------------------------------------
+                // ...and finally check if job is assigned to another user
+                // -------------------------------------------------------
+                
+                self.jobsTableView.reloadData()
+                let alert = UIAlertController(title: "Job Selection", message: "The job you selected (\(weeklyJobs[indexPath.row].name)) is already assigned to \(weeklyJobs[indexPath.row].assigned).\n\nPlease choose another job.", preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "okay", style: .cancel, handler: { (action) in
+                    alert.dismiss(animated: true, completion: nil)
+                }))
+                present(alert, animated: true, completion: nil)
+            }
         }
-        
-        print(countJobs().dailyCount,"daily jobs chosen, and", countJobs().weeklyCount,"weekly jobs chosen")
-        
-        tableView.reloadData()      // reloads table so checkmark will show up
-        */
-        // ====================================================================================================
-        
-        
-        
-        
-        
     }
     
-    
-    func tooManyJobsSelectedAlert(messageTitle: String, tableViewIndexPath: IndexPath, jobCount: Int, recommendedNumberOfJobs: Int, dailyOrWeekly: String, timeframe: String) {
-        let alert = UIAlertController(title: messageTitle, message: "You have chosen more than \(jobCount) \(dailyOrWeekly) jobs for 'USER'. This is not recommended because 'USER' won't be able to finish within the \(timeframe) timer.\n\nAre you sure you want to assign 'USER' \(jobCount) \(dailyOrWeekly) jobs?", preferredStyle: .alert)
-        
-        alert.addAction(UIAlertAction(title: "cancel", style: .cancel, handler: { (action) in
-            let index = self.selectedJobs.index(of: tableViewIndexPath)
-            
-            // update Firebase with 'none' in 'assigned' category...
-            self.ref.child("weeklyJobs")
-                .child("weeklyJob\(tableViewIndexPath.row)")
-                .updateChildValues(["assigned" : "none"])
-            
-            // ... then remove value from array
-            self.selectedJobs.remove(at: index!)
-            self.jobsTableView.reloadData()
-            alert.dismiss(animated: true, completion: nil)
-        }))
-        
-        alert.addAction(UIAlertAction(title: "okay", style: .default, handler: { (action) in
-            self.maxWeeklyNumber = self.maxWeeklyNumber + 1
-            alert.dismiss(animated: true, completion: nil)
-        }))
-        present(alert, animated: true, completion: nil)
-    }
     
     // ---------
     // Functions
@@ -347,19 +510,60 @@ class Step4VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
         }
     }
     
+    // cool unused function, returns two values like this: countJobs().dailyCount
     func countJobs() -> (dailyCount: Int, weeklyCount: Int) {
         var dailyJobsCount = 0
         var weeklyJobsCount = 0
-        for index in selectedJobs {
-            if index.section == 0 {
-                dailyJobsCount += 1                     // count number of daily jobs
-                //                print(dailyJobs[index.row].name)        // give names of daily jobs
-            } else {
-                weeklyJobsCount += 1                    // count number of weekly jobs
-                //                print(weeklyJobs[index.row].name)       // give names of weekly jobs
+        for job in dailyJobs {
+            if job.assigned == currentUserName {
+                dailyJobsCount += 1
+            }
+        }
+        for job in weeklyJobs {
+            if job.assigned == currentUserName {
+                weeklyJobsCount += 1
             }
         }
         return (dailyJobsCount, weeklyJobsCount)
+    }
+    
+    func findYoungestMember(completion: @escaping ([[String : Any]]) -> ()) {
+        var dictionary = [[String : Any]]()
+        ref.child("members").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
+            for child in snapshot.children {
+                let snap = child as! FIRDataSnapshot
+                if let value = snap.value as? [String : Any] {
+                    dictionary.append(value)
+                }
+            }
+            completion(dictionary)
+        }
+    }
+
+    func loadExistingUsers() {
+        ref.child("members").observe(.childAdded) { (snapshot: FIRDataSnapshot) in
+            if let dict = snapshot.value as? [String : Any] {
+                let userPhotoUrl = dict["profileImageUrl"] as! String
+                let userFirstName = dict["firstName"] as! String
+                let userBirthday = dict["birthday"] as! Int
+                let userPasscode = dict["passcode"] as! Int
+                let userGender = dict["gender"] as! String
+                let isUserChildOrParent = dict["childParent"] as! String
+                
+                let storageRef = FIRStorage.storage().reference(forURL: userPhotoUrl)
+                storageRef.data(withMaxSize: 1 * 1024 * 1024, completion: { (data, error) in
+                    let pic = UIImage(data: data!)
+                    let user = User(profilePhoto: pic!,
+                                    userFirstName: userFirstName,
+                                    userBirthday: userBirthday,
+                                    userPasscode: userPasscode,
+                                    userGender: userGender,
+                                    isUserChildOrParent: isUserChildOrParent)
+                    self.users.append(user)
+                    self.users.sort(by: {$0.birthday < $1.birthday})
+                })
+            }
+        }
     }
     
     

@@ -52,16 +52,12 @@ class Step3VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
             }
         }
         
-        print("viewdidload initiated")
-        
         flag = false        // set initial value so ViewWillAppear code WON'T run on first load
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
         jobsTableView.reloadData()
-        print("daily jobs count",dailyJobs.count)
-        print("weekly jobs count",weeklyJobs.count)
 //        for job in dailyJobs {
 //            print("daily assigned:",job.assigned)
 //        }
@@ -268,7 +264,7 @@ class Step3VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
             nextController.navBarTitle = "add weekly job"
             nextController.jobSection = 1
         } else {
-            print("segue initiated")
+//            print("segue initiated")
         }
     }
     
@@ -446,7 +442,7 @@ class Step3VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
     func disableTableEdit() {
         if cellStyleForEditing == .none {
-            print("nothing to see here...")
+//            print("nothing to see here...")
         } else {
             cellStyleForEditing = .none
             editButton.setTitle("edit", for: .normal)
@@ -477,7 +473,7 @@ class Step3VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
                       JobsAndHabits(jobName: "clean fridge", jobMultiplier: 1, jobAssign: "none", jobOrder: 7),
                       JobsAndHabits(jobName: "wash car", jobMultiplier: 1, jobAssign: "none", jobOrder: 8),
                       JobsAndHabits(jobName: "mow lawn", jobMultiplier: 1, jobAssign: "none", jobOrder: 9),
-                      JobsAndHabits(jobName: "babysit (per hour)", jobMultiplier: 1, jobAssign: "none", jobOrder: 10)]
+                      JobsAndHabits(jobName: "babysit (hour #1)", jobMultiplier: 1, jobAssign: "none", jobOrder: 10)]
     }
     
     func createDefaultJobsOnFirebase() {
