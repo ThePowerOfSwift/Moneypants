@@ -89,15 +89,14 @@ class Step4VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
 //            print(usersArray.count)
 //        }
         
-        loadMembers4 { (usersArray) in
-            self.currentUserName = usersArray[1].firstName
-            self.instructionsLabel.text = "Choose daily and weekly job assignments for \(usersArray[1].firstName)."
-            self.userImage.image = usersArray[1].photo
-            self.jobsTableView.reloadData()
-        }
+//        loadMembers4 { (usersArray) in
+//            self.currentUserName = usersArray[0].firstName
+//            self.instructionsLabel.text = "Choose daily and weekly job assignments for \(usersArray[0].firstName)."
+//            self.userImage.image = usersArray[0].photo
+//            self.jobsTableView.reloadData()
+        //        }
         
         // 5. KIND OF WORKS
-        /*
         loadMembers5 { (usersArray) in
             for user in usersArray {
                 self.loadMembersProfilePict5(userImageURL: user.imageURL, userFirstName: user.firstName, userBirthday: user.birthday, userPasscode: user.passcode, userGender: user.gender, userChildParent: user.childParent, completion: { (usersIntermediateArray) in
@@ -105,12 +104,9 @@ class Step4VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
                 })
             }
         }
-        */
-        
     }
     
     // 5. KIND OF WORKS...
-    /*
     func loadMembersProfilePict5(userImageURL: String, userFirstName: String, userBirthday: Int, userPasscode: Int, userGender: String, userChildParent: String, completion: @escaping ([User]) -> ()) {
         let storageRef = FIRStorage.storage().reference(forURL: userImageURL)
         storageRef.data(withMaxSize: 1 * 1024 * 1024, completion: { (data, error) in
@@ -126,8 +122,7 @@ class Step4VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
             completion(self.users)
         })
     }
-    
-    
+ 
     
     var userCount = 0
     
@@ -482,81 +477,6 @@ class Step4VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
     }
     
     
-    /*
-    func loadMembers(completion: @escaping ([[String : Any]]) -> ()) {
-        var dictionary = [[String : Any]]()
-        ref.child("members").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
-            for child in snapshot.children {
-                let snap = child as! FIRDataSnapshot
-                if let value = snap.value as? [String : Any] {
-                    dictionary.append(value)
-                }
-            }
-            completion(dictionary)
-        }
-    }
-    
-    func loadMembers2(completion: @escaping ([UserClass]) -> ()) {
-        var usersArray = [UserClass]()
-        ref.child("members").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
-            for child in snapshot.children {
-                let snap = child as! FIRDataSnapshot
-                if let value = snap.value as? [String : Any] {
-                    let birthday = value["birthday"] as! Int
-                    let childParent = value["childParent"] as! String
-                    let firstName = value["firstName"] as! String
-                    let gender = value["gender"] as! String
-                    let passcode = value["passcode"] as! Int
-                    let profileImageUrl = value["profileImageUrl"] as! String
-                    
-                    let user = UserClass(profilePhoto: profileImageUrl, userFirstName: firstName, userBirthday: birthday, userPasscode: passcode, userGender: gender, isUserChildOrParent: childParent)
-                    usersArray.append(user)
-                    usersArray.sort(by: {$0.birthday > $1.birthday})
-                    
-                }
-            }
-            completion(usersArray)
-        }
-    }
-    */
-    
-    // TESTING BEGIN
-    
-    /*
-    // returns user.count = 0
-    func loadMembers3(completion: @escaping ([User]) -> ()) {
-        var usersArray = [User]()
-        ref.child("members").observeSingleEvent(of: .value, with: { (snapshot) in
-            print("Feed: Checking for new users from Firebase")
-            for item in snapshot.children {
-                if let snap = item as? FIRDataSnapshot {
-                    if let value = snap.value as? [String : Any] {
-                        let birthday = value["birthday"] as! Int
-                        let childParent = value["childParent"] as! String
-                        let firstName = value["firstName"] as! String
-                        let gender = value["gender"] as! String
-                        let passcode = value["passcode"] as! Int
-                        let profileImageUrl = value["profileImageUrl"] as! String
-                        
-                        self.loadMembersProfilePict3(userProfileImageUrl: profileImageUrl, userName: firstName, userBirthday: birthday, userPasscode: passcode, userGender: gender, childParent: childParent, completion: { (user) in
-                            usersArray.append(user)
-                        })
-                    }
-                }
-            }
-            completion(usersArray)
-        })
-    }
-    
-    func loadMembersProfilePict3(userProfileImageUrl: String, userName: String, userBirthday: Int, userPasscode: Int, userGender: String, childParent: String, completion: @escaping (User) -> ()) {
-        let storageRef = FIRStorage.storage().reference(forURL: userProfileImageUrl)
-        storageRef.data(withMaxSize: 1 * 1024 * 1024, completion: { (imageData, error) in
-            let profileImage = UIImage(data: imageData!)
-            let user = User(profilePhoto: profileImage!, userFirstName: userName, userBirthday: userBirthday, userPasscode: userPasscode, userGender: userGender, isUserChildOrParent: childParent)
-            completion(user)
-        })
-    }
-    */
     
     // ========================================================================================
     
@@ -578,6 +498,7 @@ class Step4VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
                         // get image
                         
                         self.loadMemberProfilePict4(userProfileImageUrl: profileImageUrl, completion: { (userImage) in
+                            print("3. user image in 'loadMembers4': ",userImage)
                             let user = User(profilePhoto: userImage, userFirstName: firstName, userBirthday: birthday, userPasscode: passcode, userGender: gender, isUserChildOrParent: childParent)
                             usersArray.append(user)
                             usersArray.sort(by: {$0.birthday > $1.birthday})
@@ -589,18 +510,20 @@ class Step4VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
         })
     }
     
-    // 4 WORKES EXCEPT USER IMAGE DOENS'T SHOW
+    // 4 WORKS EXCEPT USER IMAGE DOENS'T SHOW
     func loadMemberProfilePict4(userProfileImageUrl: String, completion: @escaping (UIImage) -> ()) {
         var userImage = UIImage()
-        let storageRef = FIRStorage.storage().reference(forURL: userProfileImageUrl)
         
-        storageRef.data(withMaxSize: 1024 * 1024) { (imageData, error) in
-            print(imageData ?? "no data found!")
-            userImage = UIImage(data: imageData!)!
-        }
+        let storageRef = FIRStorage.storage().reference(forURL: userProfileImageUrl)
+        storageRef.data(withMaxSize: 1 * 1024 * 1024, completion: { (data, error) in
+            userImage = UIImage(data: data!)!
+            print("1. user image inside closure: ",userImage)
+        })
         completion(userImage)
+        print("2. user image after completion: ",userImage)
     }
     */
+ 
     // ========================================================================================
     
     // WORKS EXCEPT FOR IMAGE DOESN'T SHOW (ALT TO #4)
@@ -619,6 +542,7 @@ class Step4VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
     // ========================================================================================
 
     
+    // WORKS BEST, BUT IMAGES CYCLE THRU ALL USERS
     func loadMembers5(completion: @escaping ([UserClass]) -> ()) {
         var usersArray = [UserClass]()
         ref.child("members").observeSingleEvent(of: .value, with: { (snapshot) in
@@ -642,17 +566,17 @@ class Step4VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
         })
     }
     
+    // WORKS BEST, BUT IMAGES CYCLE THRU ALL USERS
     func loadMemberProfilePict5(userProfileImageUrl: String, completion: @escaping (UIImage) -> ()) {
         var userImage = UIImage()
         let storageRef = FIRStorage.storage().reference(forURL: userProfileImageUrl)
-        
         storageRef.data(withMaxSize: 1024 * 1024) { (imageData, error) in
             print(imageData ?? "no data found!")
             userImage = UIImage(data: imageData!)!
         }
         completion(userImage)
+        print("1. user image: ",userImage)
     }
-    
     
     
     // ========================================================================================
