@@ -1,7 +1,7 @@
 import UIKit
 import Firebase
 
-class Step4VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
+class Step4VCBackup: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
     @IBOutlet weak var jobsTableView: UITableView!
     @IBOutlet weak var userImage: UIImageView!
@@ -22,7 +22,7 @@ class Step4VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        currentUserName = ""
+        currentUserName = "Trixie"
         //        instructionsLabel.text = "Choose daily and weekly job assignments for \(tempUserNamePadiddle!)"
         instructionsLabel.text = ""
         
@@ -43,7 +43,7 @@ class Step4VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
         performSegue(withIdentifier: "ExplainerPopup", sender: self)
         self.automaticallyAdjustsScrollViewInsets = false
         
-        loadDailyJobs { (dictionary) in
+        getDailyJobs { (dictionary) in
             for item in dictionary {
                 let name = item["name"] as! String
                 let multiplier = item["multiplier"] as! Double
@@ -57,7 +57,7 @@ class Step4VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
             self.jobsTableView.reloadData()
         }
         
-        loadWeeklyJobs { (dictionary) in
+        getWeeklyJobs { (dictionary) in
             for item in dictionary {
                 let name = item["name"] as! String
                 let multiplier = item["multiplier"] as! Double
@@ -71,61 +71,125 @@ class Step4VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
             self.jobsTableView.reloadData()
         }
         
-//        loadMembers { (dictionary) in
-//            print(dictionary.count)
-//            self.currentUserName = usersArray[0].firstName
-//            self.instructionsLabel.text = "Choose daily and weekly job assignments for \(usersArray[0].firstName)."
-//            self.userImage.image = usersArray[0].photo
-//        }
-        
-//        loadMembers2 { (usersArray) in
-//            print(usersArray.count)
-//            for user in usersArray {
-//                print(user.firstName)
-//            }
-//        }
-        
-//        loadMembers3 { (usersArray) in
-//            print(usersArray.count)
-//        }
-        
-        loadMembers4 { (usersArray) in
-            self.currentUserName = usersArray[1].firstName
-            self.instructionsLabel.text = "Choose daily and weekly job assignments for \(usersArray[1].firstName)."
-            self.userImage.image = usersArray[1].photo
-            self.jobsTableView.reloadData()
-        }
-        
-        // 5. KIND OF WORKS
+        // THIS WORKS!
+        // ============================================================================
         /*
-        loadMembers5 { (usersArray) in
-            for user in usersArray {
-                self.loadMembersProfilePict5(userImageURL: user.imageURL, userFirstName: user.firstName, userBirthday: user.birthday, userPasscode: user.passcode, userGender: user.gender, userChildParent: user.childParent, completion: { (usersIntermediateArray) in
-                    self.users = usersIntermediateArray
+        findYoungestMember { (dictionary) in
+            
+            print(dictionary.count)
+            
+            var youngestBirthday = 19000101
+            var currentMember = "Sophie"
+            var currentMemberProfileImage: String!
+            
+            for item in dictionary {
+                let birthday = item["birthday"] as! Int
+                let childParent = item["childParent"] as! String
+                let firstName = item["firstName"] as! String
+                let gender = item["gender"] as! String
+                let passcode = item["passcode"] as! Int
+                let profileImageUrl = item["profileImageUrl"] as! String
+                
+                if birthday > youngestBirthday {
+                    youngestBirthday = birthday
+                    currentMember = firstName
+                    currentMemberProfileImage = profileImageUrl
+                }
+                
+                let storageRef = FIRStorage.storage().reference(forURL: currentMemberProfileImage)
+                storageRef.data(withMaxSize: 1 * 1024 * 1024, completion: { (pictureData, error) in
+                    let pic = UIImage(data: pictureData!)
+                    let user = User(profilePhoto: pic!,
+                                    userFirstName: firstName,
+                                    userBirthday: birthday,
+                                    userPasscode: passcode,
+                                    userGender: gender,
+                                    isUserChildOrParent: childParent)
+                    self.users.append(user)
+                    self.users.sort(by: {$0.birthday < $1.birthday})
+//                    self.currentUserName = currentMember
+//                    self.instructionsLabel.text = "Choose daily and weekly job assignments for \(currentMember)"
                 })
             }
+            print(currentMember,youngestBirthday)
+            self.currentUserName = currentMember
+            self.instructionsLabel.text = "Choose daily and weekly job assignments for \(currentMember)."
         }
         */
+        // ============================================================================
+        
+        // NOTE: Use this function with code above, and it works!
+//        loadExistingUsers()
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        // BEGIN TESTING
+        // ====================================================
+        
+        
+        fetchData {_ in 
+            print("all done!")
+            print(self.users.count)
+        }
         
     }
     
-    // 5. KIND OF WORKS...
-    /*
-    func loadMembersProfilePict5(userImageURL: String, userFirstName: String, userBirthday: Int, userPasscode: Int, userGender: String, userChildParent: String, completion: @escaping ([User]) -> ()) {
-        let storageRef = FIRStorage.storage().reference(forURL: userImageURL)
-        storageRef.data(withMaxSize: 1 * 1024 * 1024, completion: { (data, error) in
-            let pic = UIImage(data: data!)
-            let user = User(profilePhoto: pic!,
-                            userFirstName: userFirstName,
-                            userBirthday: userBirthday,
-                            userPasscode: userPasscode,
-                            userGender: userGender,
-                            isUserChildOrParent: userChildParent)
-            self.users.append(user)
-            self.users.sort(by: {$0.birthday > $1.birthday})
+    
+    var simpleArray = [""]
+    
+    func fetchData(completion: @escaping ([User]) -> ()) {
+        ref.child("members").observeSingleEvent(of: .value, with: { (snapshot) in
+            print("Feed: Checking for new users from Firebase")
+            for item in snapshot.children {
+                if let snap = item as? FIRDataSnapshot {
+                    if let value = snap.value as? [String : Any] {
+                        let birthday = value["birthday"] as! Int
+                        let childParent = value["childParent"] as! String
+                        let firstName = value["firstName"] as! String
+                        let gender = value["gender"] as! String
+                        let passcode = value["passcode"] as! Int
+                        let profileImageUrl = value["profileImageUrl"] as! String
+                        
+                        let storageRef = FIRStorage.storage().reference(forURL: profileImageUrl)
+                        storageRef.data(withMaxSize: 1 * 1024 * 1024, completion: { (imageData, error) in
+                            let profileImage = UIImage(data: imageData!)
+                            let user = User(profilePhoto: profileImage!, userFirstName: firstName, userBirthday: birthday, userPasscode: passcode, userGender: gender, isUserChildOrParent: childParent)
+                            self.users.append(user)
+                            self.users.sort(by: {$0.birthday > $1.birthday})
+                            
+                            if self.users.isEmpty {
+                                completion([])
+                            } else {
+                                completion(self.users)
+                            }
+                        })
+                    }
+                }
+            }
             completion(self.users)
+            print(self.users.count)
         })
     }
+    
+    // END TESTING
+    // ====================================================
+    
+    
+    
+    
+    
+    
+    
+    
+    
     
     
     
@@ -144,6 +208,7 @@ class Step4VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
         } else {
             userCount += 1
         }
+        
         jobsTableView.reloadData()
         
         
@@ -438,7 +503,7 @@ class Step4VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
     // Functions
     // ---------
     
-    func loadDailyJobs(completion: @escaping ([[String : Any]]) -> ()) {
+    func getDailyJobs(completion: @escaping ([[String : Any]]) -> ()) {
         var dictionary = [[String : Any]]()
         ref.child("dailyJobs").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
             for child in snapshot.children {
@@ -451,7 +516,7 @@ class Step4VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
         }
     }
     
-    func loadWeeklyJobs(completion: @escaping ([[String : Any]]) -> ()) {
+    func getWeeklyJobs(completion: @escaping ([[String : Any]]) -> ()) {
         var dictionary = [[String : Any]]()
         ref.child("weeklyJobs").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
             for child in snapshot.children {
@@ -481,9 +546,7 @@ class Step4VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
         return (dailyJobsCount, weeklyJobsCount)
     }
     
-    
-    /*
-    func loadMembers(completion: @escaping ([[String : Any]]) -> ()) {
+    func findYoungestMember(completion: @escaping ([[String : Any]]) -> ()) {
         var dictionary = [[String : Any]]()
         ref.child("members").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
             for child in snapshot.children {
@@ -495,170 +558,33 @@ class Step4VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
             completion(dictionary)
         }
     }
-    
-    func loadMembers2(completion: @escaping ([UserClass]) -> ()) {
-        var usersArray = [UserClass]()
-        ref.child("members").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
-            for child in snapshot.children {
-                let snap = child as! FIRDataSnapshot
-                if let value = snap.value as? [String : Any] {
-                    let birthday = value["birthday"] as! Int
-                    let childParent = value["childParent"] as! String
-                    let firstName = value["firstName"] as! String
-                    let gender = value["gender"] as! String
-                    let passcode = value["passcode"] as! Int
-                    let profileImageUrl = value["profileImageUrl"] as! String
-                    
-                    let user = UserClass(profilePhoto: profileImageUrl, userFirstName: firstName, userBirthday: birthday, userPasscode: passcode, userGender: gender, isUserChildOrParent: childParent)
-                    usersArray.append(user)
-                    usersArray.sort(by: {$0.birthday > $1.birthday})
-                    
-                }
-            }
-            completion(usersArray)
-        }
-    }
-    */
-    
-    // TESTING BEGIN
-    
-    /*
-    // returns user.count = 0
-    func loadMembers3(completion: @escaping ([User]) -> ()) {
-        var usersArray = [User]()
-        ref.child("members").observeSingleEvent(of: .value, with: { (snapshot) in
-            print("Feed: Checking for new users from Firebase")
-            for item in snapshot.children {
-                if let snap = item as? FIRDataSnapshot {
-                    if let value = snap.value as? [String : Any] {
-                        let birthday = value["birthday"] as! Int
-                        let childParent = value["childParent"] as! String
-                        let firstName = value["firstName"] as! String
-                        let gender = value["gender"] as! String
-                        let passcode = value["passcode"] as! Int
-                        let profileImageUrl = value["profileImageUrl"] as! String
-                        
-                        self.loadMembersProfilePict3(userProfileImageUrl: profileImageUrl, userName: firstName, userBirthday: birthday, userPasscode: passcode, userGender: gender, childParent: childParent, completion: { (user) in
-                            usersArray.append(user)
-                        })
-                    }
-                }
-            }
-            completion(usersArray)
-        })
-    }
-    
-    func loadMembersProfilePict3(userProfileImageUrl: String, userName: String, userBirthday: Int, userPasscode: Int, userGender: String, childParent: String, completion: @escaping (User) -> ()) {
-        let storageRef = FIRStorage.storage().reference(forURL: userProfileImageUrl)
-        storageRef.data(withMaxSize: 1 * 1024 * 1024, completion: { (imageData, error) in
-            let profileImage = UIImage(data: imageData!)
-            let user = User(profilePhoto: profileImage!, userFirstName: userName, userBirthday: userBirthday, userPasscode: userPasscode, userGender: userGender, isUserChildOrParent: childParent)
-            completion(user)
-        })
-    }
-    */
-    
-    // ========================================================================================
-    
-    // 4. WORKS EXCEPT USER IMAGE DOESN'T SHOW
-    /*
-    func loadMembers4(completion: @escaping ([User]) -> ()) {
-        var usersArray = [User]()
-        ref.child("members").observeSingleEvent(of: .value, with: { (snapshot) in
-            for item in snapshot.children {
-                if let snap = item as? FIRDataSnapshot {
-                    if let value = snap.value as? [String : Any] {
-                        let birthday = value["birthday"] as! Int
-                        let childParent = value["childParent"] as! String
-                        let firstName = value["firstName"] as! String
-                        let gender = value["gender"] as! String
-                        let passcode = value["passcode"] as! Int
-                        let profileImageUrl = value["profileImageUrl"] as! String
-                        
-                        // get image
-                        
-                        self.loadMemberProfilePict4(userProfileImageUrl: profileImageUrl, completion: { (userImage) in
-                            let user = User(profilePhoto: userImage, userFirstName: firstName, userBirthday: birthday, userPasscode: passcode, userGender: gender, isUserChildOrParent: childParent)
-                            usersArray.append(user)
-                            usersArray.sort(by: {$0.birthday > $1.birthday})
-                        })
-                    }
-                }
-            }
-            completion(usersArray)
-        })
-    }
-    
-    // 4 WORKES EXCEPT USER IMAGE DOENS'T SHOW
-    func loadMemberProfilePict4(userProfileImageUrl: String, completion: @escaping (UIImage) -> ()) {
-        var userImage = UIImage()
-        let storageRef = FIRStorage.storage().reference(forURL: userProfileImageUrl)
-        
-        storageRef.data(withMaxSize: 1024 * 1024) { (imageData, error) in
-            print(imageData ?? "no data found!")
-            userImage = UIImage(data: imageData!)!
-        }
-        completion(userImage)
-    }
-    */
-    // ========================================================================================
-    
-    // WORKS EXCEPT FOR IMAGE DOESN'T SHOW (ALT TO #4)
-    /*
-    func loadMemberProfilePict4(userProfileImageUrl: String, completion: @escaping (UIImage) -> ()) {
-        var userImage = UIImage()
-        let storageRef = FIRStorage.storage().reference(forURL: userProfileImageUrl)
-        storageRef.data(withMaxSize: 1 * 1024 * 1024, completion: { (imageData, error) in
-            print(imageData ?? "no data")
-            let profileImage = UIImage(data: imageData!)
-            userImage = profileImage!
-        })
-        completion(userImage)
-    }
-    */
-    // ========================================================================================
 
-    
-    func loadMembers5(completion: @escaping ([UserClass]) -> ()) {
-        var usersArray = [UserClass]()
-        ref.child("members").observeSingleEvent(of: .value, with: { (snapshot) in
-            for item in snapshot.children {
-                if let snap = item as? FIRDataSnapshot {
-                    if let value = snap.value as? [String : Any] {
-                        let birthday = value["birthday"] as! Int
-                        let childParent = value["childParent"] as! String
-                        let firstName = value["firstName"] as! String
-                        let gender = value["gender"] as! String
-                        let passcode = value["passcode"] as! Int
-                        let profileImageUrl = value["profileImageUrl"] as! String
-                        
-                        let user = UserClass(userProfileImageURL: profileImageUrl, userFirstName: firstName, userBirthday: birthday, userPasscode: passcode, userGender: gender, isUserChildOrParent: childParent)
-                        usersArray.append(user)
-                        usersArray.sort(by: {$0.birthday > $1.birthday})
-                    }
-                }
+    func loadExistingUsers() {
+        ref.child("members").observe(.childAdded) { (snapshot: FIRDataSnapshot) in
+            if let dict = snapshot.value as? [String : Any] {
+                let userPhotoUrl = dict["profileImageUrl"] as! String
+                let userFirstName = dict["firstName"] as! String
+                let userBirthday = dict["birthday"] as! Int
+                let userPasscode = dict["passcode"] as! Int
+                let userGender = dict["gender"] as! String
+                let isUserChildOrParent = dict["childParent"] as! String
+                
+                let storageRef = FIRStorage.storage().reference(forURL: userPhotoUrl)
+                storageRef.data(withMaxSize: 1 * 1024 * 1024, completion: { (data, error) in
+                    let pic = UIImage(data: data!)
+                    let user = User(profilePhoto: pic!,
+                                    userFirstName: userFirstName,
+                                    userBirthday: userBirthday,
+                                    userPasscode: userPasscode,
+                                    userGender: userGender,
+                                    isUserChildOrParent: isUserChildOrParent)
+                    self.users.append(user)
+                    self.users.sort(by: {$0.birthday < $1.birthday})
+                })
             }
-            completion(usersArray)
-        })
-    }
-    
-    func loadMemberProfilePict5(userProfileImageUrl: String, completion: @escaping (UIImage) -> ()) {
-        var userImage = UIImage()
-        let storageRef = FIRStorage.storage().reference(forURL: userProfileImageUrl)
-        
-        storageRef.data(withMaxSize: 1024 * 1024) { (imageData, error) in
-            print(imageData ?? "no data found!")
-            userImage = UIImage(data: imageData!)!
         }
-        completion(userImage)
     }
     
-    
-    
-    // ========================================================================================
-
-    
-    // TESTING END
     
     
     // ---------------------------------------------
