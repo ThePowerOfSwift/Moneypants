@@ -71,12 +71,45 @@ class Step4VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
             self.jobsTableView.reloadData()
         }
         
+        
+        
+        
+        loadMembers { (usersArray) in
+            var memberImageCount = 0
+            
+            for user in usersArray {
+                self.loadMembersProfilePict5(userImageURL: user.imageURL, userFirstName: user.firstName, userBirthday: user.birthday, userPasscode: user.passcode, userGender: user.gender, userChildParent: user.childParent, completion: { (usersIntermediateArray) in
+                    memberImageCount += 1
+                    if memberImageCount == usersArray.count {
+                        self.users = usersIntermediateArray
+                        self.userImage.image = self.users[3].photo
+                        self.currentUserName = self.users[3].firstName
+                        self.instructionsLabel.text = "Choose daily and weekly job assignments for \(self.users[3].firstName)."
+                        self.navigationItem.title = self.users[3].firstName
+                    }
+                })
+            }
+        }
     }
     
-    let userImagesURL = ["https://firebasestorage.googleapis.com/v0/b/the-moneypants-solution.appspot.com/o/users%2FK1lQ2ALPQRM9SG3pPoZafHCF4Qg1%2Fmembers%2FTrixie?alt=media&token=5a506fd3-bb09-4a41-ae37-3e97d99b8e5b",
-        "https://firebasestorage.googleapis.com/v0/b/the-moneypants-solution.appspot.com/o/users%2FK1lQ2ALPQRM9SG3pPoZafHCF4Qg1%2Fmembers%2FAiden?alt=media&token=35e87e4e-89c5-434a-bdc3-8dc92ad2750d",
-        "https://firebasestorage.googleapis.com/v0/b/the-moneypants-solution.appspot.com/o/users%2FK1lQ2ALPQRM9SG3pPoZafHCF4Qg1%2Fmembers%2FMom?alt=media&token=c9a26c83-0a59-4444-aa7f-a7867ed05550",
-        "https://firebasestorage.googleapis.com/v0/b/the-moneypants-solution.appspot.com/o/users%2FK1lQ2ALPQRM9SG3pPoZafHCF4Qg1%2Fmembers%2FDad?alt=media&token=bc7b7eed-d225-41e6-ad3d-524978b93f28"]
+    // 5. KIND OF WORKS...
+    func loadMembersProfilePict5(userImageURL: String, userFirstName: String, userBirthday: Int, userPasscode: Int, userGender: String, userChildParent: String, completion: @escaping ([User]) -> ()) {
+        let storageRef = FIRStorage.storage().reference(forURL: userImageURL)
+        storageRef.data(withMaxSize: 1 * 1024 * 1024, completion: { (data, error) in
+            let pic = UIImage(data: data!)
+            let user = User(profilePhoto: pic!,
+                            userFirstName: userFirstName,
+                            userBirthday: userBirthday,
+                            userPasscode: userPasscode,
+                            userGender: userGender,
+                            isUserChildOrParent: userChildParent)
+            self.users.append(user)
+            self.users.sort(by: {$0.birthday > $1.birthday})
+            completion(self.users)
+        })
+    }
+        
+    
     
     
     var userCount = 0
@@ -438,11 +471,9 @@ class Step4VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
         var userImage = UIImage()
         let storageRef = FIRStorage.storage().reference(forURL: userProfileImageUrl)
         storageRef.data(withMaxSize: 1024 * 1024) { (imageData, error) in
-            print(imageData ?? "no data found!")
             userImage = UIImage(data: imageData!)!
         }
         completion(userImage)
-        print("1. user image: ",userImage)
     }
 
     
