@@ -71,65 +71,15 @@ class Step4VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
             self.jobsTableView.reloadData()
         }
         
-//        loadMembers { (dictionary) in
-//            print(dictionary.count)
-//            self.currentUserName = usersArray[0].firstName
-//            self.instructionsLabel.text = "Choose daily and weekly job assignments for \(usersArray[0].firstName)."
-//            self.userImage.image = usersArray[0].photo
-//        }
-        
-//        loadMembers2 { (usersArray) in
-//            print(usersArray.count)
-//            for user in usersArray {
-//                print(user.firstName)
-//            }
-//        }
-        
-//        loadMembers3 { (usersArray) in
-//            print(usersArray.count)
-//        }
-        
-//        loadMembers4 { (usersArray) in
-//            self.currentUserName = usersArray[0].firstName
-//            self.instructionsLabel.text = "Choose daily and weekly job assignments for \(usersArray[0].firstName)."
-//            self.userImage.image = usersArray[0].photo
-//            self.jobsTableView.reloadData()
-        //        }
-        
-        // 5. KIND OF WORKS
-        loadMembers5 { (usersArray) in
-            for user in usersArray {
-                self.loadMembersProfilePict5(userImageURL: user.imageURL, userFirstName: user.firstName, userBirthday: user.birthday, userPasscode: user.passcode, userGender: user.gender, userChildParent: user.childParent, completion: { (usersIntermediateArray) in
-                    self.users = usersIntermediateArray
-                    self.currentUserName = self.users[0].firstName
-                    self.instructionsLabel.text = "Choose daily and weekly job assignments for \(self.users[0].firstName)."
-                    self.userImage.image = self.users[0].photo
-                    self.jobsTableView.reloadData()
-                })
-            }
-        }
     }
     
-    // 5. KIND OF WORKS...
-    func loadMembersProfilePict5(userImageURL: String, userFirstName: String, userBirthday: Int, userPasscode: Int, userGender: String, userChildParent: String, completion: @escaping ([User]) -> ()) {
-        let storageRef = FIRStorage.storage().reference(forURL: userImageURL)
-        storageRef.data(withMaxSize: 1 * 1024 * 1024, completion: { (data, error) in
-            let pic = UIImage(data: data!)
-            let user = User(profilePhoto: pic!,
-                            userFirstName: userFirstName,
-                            userBirthday: userBirthday,
-                            userPasscode: userPasscode,
-                            userGender: userGender,
-                            isUserChildOrParent: userChildParent)
-            self.users.append(user)
-            self.users.sort(by: {$0.birthday > $1.birthday})
-            completion(self.users)
-        })
-    }
- 
+    let userImagesURL = ["https://firebasestorage.googleapis.com/v0/b/the-moneypants-solution.appspot.com/o/users%2FK1lQ2ALPQRM9SG3pPoZafHCF4Qg1%2Fmembers%2FTrixie?alt=media&token=5a506fd3-bb09-4a41-ae37-3e97d99b8e5b",
+        "https://firebasestorage.googleapis.com/v0/b/the-moneypants-solution.appspot.com/o/users%2FK1lQ2ALPQRM9SG3pPoZafHCF4Qg1%2Fmembers%2FAiden?alt=media&token=35e87e4e-89c5-434a-bdc3-8dc92ad2750d",
+        "https://firebasestorage.googleapis.com/v0/b/the-moneypants-solution.appspot.com/o/users%2FK1lQ2ALPQRM9SG3pPoZafHCF4Qg1%2Fmembers%2FMom?alt=media&token=c9a26c83-0a59-4444-aa7f-a7867ed05550",
+        "https://firebasestorage.googleapis.com/v0/b/the-moneypants-solution.appspot.com/o/users%2FK1lQ2ALPQRM9SG3pPoZafHCF4Qg1%2Fmembers%2FDad?alt=media&token=bc7b7eed-d225-41e6-ad3d-524978b93f28"]
+    
     
     var userCount = 0
-    
     @IBAction func nextButtonTapped(_ sender: UIButton) {
         
         print("number of users",users.count)
@@ -213,7 +163,6 @@ class Step4VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
         header.contentView.backgroundColor = UIColor.lightGray
     }
     
-    
     // what are the contents of each cell
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Step4CustomCell", for: indexPath) as! Step4CustomCell
@@ -265,8 +214,6 @@ class Step4VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
         return cell
     }
     
-    
-    
     func updateJobAssignmentsOnFirebase(dailyOrWeekly: String, selectedIndexPath: Int, assignment: String, completion: @escaping (FIRDataSnapshot) -> ()) {
         ref.child(dailyOrWeekly).queryOrdered(byChild: "order").queryEqual(toValue: selectedIndexPath).observeSingleEvent(of: .childAdded, with: { (snapshot) in
             snapshot.ref.updateChildValues(["assigned" : assignment])
@@ -281,7 +228,6 @@ class Step4VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
             self.jobsTableView.reloadData()
         })
     }
-    
     
     // determine which cell is tapped
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -463,91 +409,8 @@ class Step4VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
         }
     }
     
-    // cool unused function, returns two values like this: countJobs().dailyCount
-    func countJobs() -> (dailyCount: Int, weeklyCount: Int) {
-        var dailyJobsCount = 0
-        var weeklyJobsCount = 0
-        for job in dailyJobs {
-            if job.assigned == currentUserName {
-                dailyJobsCount += 1
-            }
-        }
-        for job in weeklyJobs {
-            if job.assigned == currentUserName {
-                weeklyJobsCount += 1
-            }
-        }
-        return (dailyJobsCount, weeklyJobsCount)
-    }
-    
-    
-    
-    // ========================================================================================
-    
-    // 4. WORKS EXCEPT USER IMAGE DOESN'T SHOW
-    /*
-    func loadMembers4(completion: @escaping ([User]) -> ()) {
-        var usersArray = [User]()
-        ref.child("members").observeSingleEvent(of: .value, with: { (snapshot) in
-            for item in snapshot.children {
-                if let snap = item as? FIRDataSnapshot {
-                    if let value = snap.value as? [String : Any] {
-                        let birthday = value["birthday"] as! Int
-                        let childParent = value["childParent"] as! String
-                        let firstName = value["firstName"] as! String
-                        let gender = value["gender"] as! String
-                        let passcode = value["passcode"] as! Int
-                        let profileImageUrl = value["profileImageUrl"] as! String
-                        
-                        // get image
-                        
-                        self.loadMemberProfilePict4(userProfileImageUrl: profileImageUrl, completion: { (userImage) in
-                            print("3. user image in 'loadMembers4': ",userImage)
-                            let user = User(profilePhoto: userImage, userFirstName: firstName, userBirthday: birthday, userPasscode: passcode, userGender: gender, isUserChildOrParent: childParent)
-                            usersArray.append(user)
-                            usersArray.sort(by: {$0.birthday > $1.birthday})
-                        })
-                    }
-                }
-            }
-            completion(usersArray)
-        })
-    }
-    
-    // 4 WORKS EXCEPT USER IMAGE DOENS'T SHOW
-    func loadMemberProfilePict4(userProfileImageUrl: String, completion: @escaping (UIImage) -> ()) {
-        var userImage = UIImage()
-        
-        let storageRef = FIRStorage.storage().reference(forURL: userProfileImageUrl)
-        storageRef.data(withMaxSize: 1 * 1024 * 1024, completion: { (data, error) in
-            userImage = UIImage(data: data!)!
-            print("1. user image inside closure: ",userImage)
-        })
-        completion(userImage)
-        print("2. user image after completion: ",userImage)
-    }
-    */
- 
-    // ========================================================================================
-    
-    // WORKS EXCEPT FOR IMAGE DOESN'T SHOW (ALT TO #4)
-    /*
-    func loadMemberProfilePict4(userProfileImageUrl: String, completion: @escaping (UIImage) -> ()) {
-        var userImage = UIImage()
-        let storageRef = FIRStorage.storage().reference(forURL: userProfileImageUrl)
-        storageRef.data(withMaxSize: 1 * 1024 * 1024, completion: { (imageData, error) in
-            print(imageData ?? "no data")
-            let profileImage = UIImage(data: imageData!)
-            userImage = profileImage!
-        })
-        completion(userImage)
-    }
-    */
-    // ========================================================================================
-
-    
     // WORKS BEST, BUT IMAGES CYCLE THRU ALL USERS
-    func loadMembers5(completion: @escaping ([UserClass]) -> ()) {
+    func loadMembers(completion: @escaping ([UserClass]) -> ()) {
         var usersArray = [UserClass]()
         ref.child("members").observeSingleEvent(of: .value, with: { (snapshot) in
             for item in snapshot.children {
@@ -581,13 +444,7 @@ class Step4VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
         completion(userImage)
         print("1. user image: ",userImage)
     }
-    
-    
-    // ========================================================================================
 
-    
-    // TESTING END
-    
     
     // ---------------------------------------------
     // Old function that took forever to figure out:
@@ -606,6 +463,24 @@ class Step4VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
             }
         }
     }
+    
+    // cool unused function, returns two values like this: countJobs().dailyCount
+    func countJobs() -> (dailyCount: Int, weeklyCount: Int) {
+        var dailyJobsCount = 0
+        var weeklyJobsCount = 0
+        for job in dailyJobs {
+            if job.assigned == currentUserName {
+                dailyJobsCount += 1
+            }
+        }
+        for job in weeklyJobs {
+            if job.assigned == currentUserName {
+                weeklyJobsCount += 1
+            }
+        }
+        return (dailyJobsCount, weeklyJobsCount)
+    }
+
     
 }
 
