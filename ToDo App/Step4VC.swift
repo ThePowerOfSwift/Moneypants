@@ -101,6 +101,10 @@ class Step4VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
             for user in usersArray {
                 self.loadMembersProfilePict5(userImageURL: user.imageURL, userFirstName: user.firstName, userBirthday: user.birthday, userPasscode: user.passcode, userGender: user.gender, userChildParent: user.childParent, completion: { (usersIntermediateArray) in
                     self.users = usersIntermediateArray
+                    self.currentUserName = self.users[0].firstName
+                    self.instructionsLabel.text = "Choose daily and weekly job assignments for \(self.users[0].firstName)."
+                    self.userImage.image = self.users[0].photo
+                    self.jobsTableView.reloadData()
                 })
             }
         }
@@ -130,9 +134,6 @@ class Step4VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
         
         print("number of users",users.count)
         print("next button tapped")
-        currentUserName = users[userCount].firstName
-        userImage.image = users[userCount].photo
-        instructionsLabel.text = "Choose daily and weekly job assignments for \(users[userCount].firstName)."
         
         if userCount == (users.count - 1) {
             userCount = 0
@@ -141,7 +142,10 @@ class Step4VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
         }
         jobsTableView.reloadData()
         
-        
+        currentUserName = users[userCount].firstName
+        userImage.image = users[userCount].photo
+        instructionsLabel.text = "Choose daily and weekly job assignments for \(users[userCount].firstName)."
+
         
         
         /*

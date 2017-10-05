@@ -195,7 +195,7 @@ class Step2VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
     func deleteUserConfirmationAlert(tableViewIndexPath: IndexPath) {
         // create alert for user to confirm user deletion
-        let alert = UIAlertController(title: "Delete User", message: "Are you sure you want to delete \(users[tableViewIndexPath.row].firstName)? This cannot be undone.", preferredStyle: .alert)
+        let alert = UIAlertController(title: "Delete User", message: "Are you sure you want to delete \(users[tableViewIndexPath.row].firstName)? This will remove all their saved information and cannot be undone.", preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "okay", style: .default, handler: { (action) in
             alert.dismiss(animated: true, completion: nil)
             // remove user from Firebase
