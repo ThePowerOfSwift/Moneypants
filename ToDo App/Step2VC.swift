@@ -84,9 +84,9 @@ class Step2VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
             nextController.users = users
             nextController.navBarTitle = "add user"
         } else if segue.identifier == "GoToStep3" {
-            print("on to step 3!")
+//            print("on to step 3!")
         } else {
-            print("segue from Step 2 initiated")
+//            print("segue from Step 2 initiated")
         }
     }
     
@@ -97,6 +97,7 @@ class Step2VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
             // Update an existing user
             users[selectedIndexPath.row] = updatedUser!
             usersTableView.reloadData()
+            saveUsersToFirebase()
         } else {
             // Add a new user
             let newIndexPath = IndexPath(row: users.count, section: 0)
@@ -104,6 +105,7 @@ class Step2VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
             usersTableView.insertRows(at: [newIndexPath], with: .automatic)
             users.sort(by: {$0.birthday < $1.birthday})
             usersTableView.reloadData()
+            saveUsersToFirebase()
         }
     }
     
@@ -120,7 +122,7 @@ class Step2VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
             if numberOfParents() < 1 {
                 createAlert(alertTitle: "Users", alertMessage: "You must have at least one parent. Please enter in a parent.")
             } else {
-                saveUsersToFirebase()
+//                saveUsersToFirebase()
                 performSegue(withIdentifier: "GoToStep3", sender: self)
             }
         }
@@ -133,35 +135,46 @@ class Step2VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
     // if users exist on Firebase, load them
     func loadExistingUsers() {
-        ref.child("members").observe(.childAdded) { (snapshot: FIRDataSnapshot) in
-            if let dict = snapshot.value as? [String : Any] {
-                let userPhotoUrl = dict["profileImageUrl"] as! String
-                let userFirstName = dict["firstName"] as! String
-                let userBirthday = dict["birthday"] as! Int
-                let userPasscode = dict["passcode"] as! Int
-                let userGender = dict["gender"] as! String
-                let isUserChildOrParent = dict["childParent"] as! String
-                
-                let storageRef = FIRStorage.storage().reference(forURL: userPhotoUrl)
-                storageRef.data(withMaxSize: 1 * 1024 * 1024, completion: { (data, error) in
-                    let pic = UIImage(data: data!)
-                    let user = User(profilePhoto: pic!,
-                                    userFirstName: userFirstName,
-                                    userBirthday: userBirthday,
-                                    userPasscode: userPasscode,
-                                    userGender: userGender,
-                                    isUserChildOrParent: isUserChildOrParent)
-                    self.users.append(user)
-                    self.users.sort(by: {$0.birthday < $1.birthday})
-                    
-                    self.usersTableView.reloadData()
-                })
+        ref.child("members").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
+            for item in snapshot.children {
+                if let snap = item as? FIRDataSnapshot {
+                    if let value = snap.value as? [String : Any] {
+                        let birthday = value["birthday"] as! Int
+                        let childParent = value["childParent"] as! String
+                        let firstName = value["firstName"] as! String
+                        let gender = value["gender"] as! String
+                        let passcode = value["passcode"] as! Int
+                        let profileImageUrl = value["profileImageUrl"] as! String
+                        
+                        let storageRef = FIRStorage.storage().reference(forURL: profileImageUrl)
+                        storageRef.data(withMaxSize: 1 * 1024 * 1024, completion: { (data, error) in
+                            let pic = UIImage(data: data!)
+                            let user = User(profilePhoto: pic!,
+                                            userFirstName: firstName,
+                                            userBirthday: birthday,
+                                            userPasscode: passcode,
+                                            userGender: gender,
+                                            isUserChildOrParent: childParent)
+                            self.users.append(user)
+                            self.users.sort(by: {$0.birthday < $1.birthday})
+                            
+                            self.usersTableView.reloadData()
+                        })
+                    }
+                }
             }
         }
     }
     
     func saveUsersToFirebase() {
         for user in users {
+            self.ref?.child("members").child(user.firstName).updateChildValues(["firstName" : user.firstName,
+                                                                                "birthday" : user.birthday,
+                                                                                "passcode" : user.passcode,
+                                                                                "gender" : user.gender,
+                                                                                "childParent" : user.childParent])
+            
+            
             let storageRef = FIRStorage.storage().reference().child("users").child(firebaseUser.uid).child("members").child(user.firstName)
             let profileImg = user.photo
             let imageData = UIImageJPEGRepresentation(profileImg, 0.1)      // compress photos
@@ -172,12 +185,7 @@ class Step2VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
                 // get Firebase image location and return the URL as a string
                 let profileImageUrl = (metadata?.downloadURL()?.absoluteString)!
                 // save user data to Firebase
-                self.ref?.child("members").child(user.firstName).setValue(["profileImageUrl" : profileImageUrl,
-                                                                           "firstName" : user.firstName,
-                                                                           "birthday" : user.birthday,
-                                                                           "passcode" : user.passcode,
-                                                                           "gender" : user.gender,
-                                                                           "childParent" : user.childParent])
+                self.ref?.child("members").child(user.firstName).updateChildValues(["profileImageUrl" : profileImageUrl])
             })
         }
     }
@@ -193,13 +201,27 @@ class Step2VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
         usersTableView.setEditing(cellStyleForEditing != .none, animated: true)
     }
     
+    var gender: String!
+    
     func deleteUserConfirmationAlert(tableViewIndexPath: IndexPath) {
+        if users[tableViewIndexPath.row].gender == "male" {
+            gender = "his"
+        } else {
+            gender = "her"
+        }
         // create alert for user to confirm user deletion
-        let alert = UIAlertController(title: "Delete User", message: "Are you sure you want to delete \(users[tableViewIndexPath.row].firstName)? This will remove all their saved information and cannot be undone.", preferredStyle: .alert)
+        let alert = UIAlertController(title: "Delete User", message: "Are you sure you want to delete \(users[tableViewIndexPath.row].firstName)? This will remove all of \(gender!) saved information and cannot be undone.", preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "okay", style: .default, handler: { (action) in
             alert.dismiss(animated: true, completion: nil)
             // remove user from Firebase
             self.ref.child("members").child(self.users[tableViewIndexPath.row].firstName).removeValue()
+            self.ref.child("dailyJobs").queryOrdered(byChild: "assigned").queryEqual(toValue: self.users[tableViewIndexPath.row].firstName).observe(.childAdded, with: { (snapshot) in
+                snapshot.ref.updateChildValues(["assigned" : "none"])
+            })
+            
+            self.ref.child("weeklyJobs").queryOrdered(byChild: "assigned").queryEqual(toValue: self.users[tableViewIndexPath.row].firstName).observe(.childAdded, with: { (snapshot) in
+                snapshot.ref.updateChildValues(["assigned" : "none"])
+            })
             self.users.remove(at: tableViewIndexPath.row)
             self.usersTableView.deleteRows(at: [tableViewIndexPath], with: .fade)
         }))
@@ -229,6 +251,8 @@ class Step2VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
     }
     
     deinit {
+        ref.child("dailyJobs").removeAllObservers()
+        ref.child("weeklyJobs").removeAllObservers()
         ref.child("members").removeAllObservers()
         for user in users {
             self.ref.child("members").child(user.firstName).removeAllObservers()

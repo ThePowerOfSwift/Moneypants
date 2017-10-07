@@ -11,6 +11,7 @@ class Step1PopupVC: UIViewController {
         super.viewDidLoad()
         
         popupView.layer.cornerRadius = 15
+        popupView.layer.masksToBounds = true
         popupViewTop.layer.cornerRadius = 50
         popupViewTopWhite.layer.cornerRadius = 40
         

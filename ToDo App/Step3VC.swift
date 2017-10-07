@@ -9,6 +9,10 @@ class Step3VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
     var dailyJobs: [JobsAndHabits]!       // create variable called 'daily jobs' which is an array of type JobsAndHabits
     var weeklyJobs: [JobsAndHabits]!      // create variable called 'weekly jobs' which is an array of type JobsAndHabits
+    var dailyJobMin = 6
+    let dailyJobMax = 20
+    var weeklyJobMin = 6
+    let weeklyJobMax = 20
     
     var firebaseUser: FIRUser!
     var ref: FIRDatabaseReference!
@@ -29,6 +33,12 @@ class Step3VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
         
         firebaseUser = FIRAuth.auth()?.currentUser
         ref = FIRDatabase.database().reference().child("users").child(firebaseUser.uid)
+        getUserCountAndUpdateJobMinMax { (userCount) in
+            self.dailyJobMin = userCount + 1
+            self.weeklyJobMin = userCount + 1
+            print("dailyMin",self.dailyJobMin)
+            print("weeklyMin",self.weeklyJobMin)
+        }
         
         jobsTableView.delegate = self
         jobsTableView.dataSource = self
@@ -51,20 +61,11 @@ class Step3VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
                 self.jobsTableView.reloadData()
             }
         }
-        
-        flag = false        // set initial value so ViewWillAppear code WON'T run on first load
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
         jobsTableView.reloadData()
-//        for job in dailyJobs {
-//            print("daily assigned:",job.assigned)
-//        }
-//        
-//        for job in weeklyJobs {
-//            print("weekly assigned",job.assigned)
-//        }
     }
     
     override func viewDidDisappear(_ animated: Bool) {
@@ -191,8 +192,8 @@ class Step3VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             if indexPath.section == 0 {
-                if dailyJobs.count <= 10 {           // check to make sure user isn't deleting too many jobs
-                    deletedTooManyRowsAlert(alertTitle: "Daily Jobs", alertMessage: "You cannot delete this daily job. You must have at least 10 daily jobs in your list.")
+                if dailyJobs.count <= dailyJobMin {           // check to make sure user isn't deleting too many jobs
+                    deletedTooManyRowsAlert(alertTitle: "Daily Jobs", alertMessage: "You cannot delete this daily job. You must have at least \(dailyJobMin) daily jobs in your list.")
                 } else {
                     
                     // need to find order of job at the index path and delete it.
@@ -214,8 +215,8 @@ class Step3VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
                     }
                 }
             } else {
-                if weeklyJobs.count <= 10 {
-                    deletedTooManyRowsAlert(alertTitle: "Weekly Jobs", alertMessage: "You cannot delete this weekly job. You must have at least 10 weekly jobs in your list.")
+                if weeklyJobs.count <= weeklyJobMin {
+                    deletedTooManyRowsAlert(alertTitle: "Weekly Jobs", alertMessage: "You cannot delete this weekly job. You must have at least \(weeklyJobMin) weekly jobs in your list.")
                 } else {
                     
                     ref.child("weeklyJobs").queryOrdered(byChild: "order").queryEqual(toValue: indexPath.row).observeSingleEvent(of: .childAdded, with: { (snapshot) in
@@ -383,6 +384,12 @@ class Step3VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
     // ---------
     // Functions
     // ---------
+    
+    func getUserCountAndUpdateJobMinMax(completion: @escaping (Int) -> ()) {
+        ref.child("members").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
+            completion(Int(snapshot.childrenCount))
+        }
+    }
     
     func changeJobOrderOnFirebase(dailyOrWeekly: String, jobName: String, newJobOrder: Int, completion: @escaping (FIRDataSnapshot) -> ()) {
         ref.child(dailyOrWeekly).queryOrdered(byChild: "name").queryEqual(toValue: jobName).observeSingleEvent(of: .childAdded, with: { (snapshot) in

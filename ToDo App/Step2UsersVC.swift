@@ -297,7 +297,7 @@ class Step2UsersVC: UIViewController, UIImagePickerControllerDelegate, UINavigat
     
     // Verify passcode
     @IBAction func passcodeEditingDidEnd(_ sender: Any) {
-        if (passcodeTextField.text?.characters.count)! < 4 {
+        if Int(passcodeTextField.text!) == nil || (passcodeTextField.text?.characters.count)! < 4 {
             createAlert(title: "Passcode Error", message: "Passcodes must have exactly four numbers. Please choose a 4-digit passcode.", textField: passcodeTextField)
         }
     }
