@@ -42,7 +42,10 @@ class Step4VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
         firebaseUser = FIRAuth.auth()?.currentUser
         ref = FIRDatabase.database().reference().child("users").child(firebaseUser.uid)
         
-        performSegue(withIdentifier: "ExplainerPopup", sender: self)
+        // set progress flag for setup
+        
+        ref.updateChildValues(["setupProgressFlag" : "Step4VC"])      // setupProgressFlag = true
+        
         self.automaticallyAdjustsScrollViewInsets = false
         
         loadDailyJobs { (dictionary) in
@@ -81,6 +84,7 @@ class Step4VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
                     memberImageCount += 1
                     if memberImageCount == usersArray.count {
                         self.users = usersIntermediateArray
+                        self.performSegue(withIdentifier: "ExplainerPopup", sender: self)
                         DispatchQueue.main.asyncAfter(deadline: .now() + 1.0, execute: {
                             self.userImage.image = self.users[0].photo
                             self.currentUserName = self.users[0].firstName
@@ -94,11 +98,7 @@ class Step4VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
         }
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        print("view did appear")
-    }
-    
-    
+   
     // ----------------
     // Setup Table View
     // ----------------
@@ -354,45 +354,26 @@ class Step4VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
     // MARK: - Navigation
     // ------------------
     
-    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "ExplainerPopup" {
+            let nextViewContoller = segue.destination as! Step4PopupVC
+            // send first user data to vc, the let vc choose to use it based off first user flag
+            nextViewContoller.isFirstUser = true
+            nextViewContoller.firstUserPopupViewImage = users[0].photo
+            nextViewContoller.firstUserMainLabelText = users[0].firstName
+            let age = calculateAge(birthday: "\(users[0].birthday)")
+            nextViewContoller.firstUserBodyLabelText = "\(users[0].firstName) is \(age) years old. If you need help selecting jobs for \(determineGender().him_her.lowercased()), tap below for a list of possible age-appropriate jobs.)"
+        }
+        
         if segue.identifier == "UserIntroPopup" {
             let nextViewContoller = segue.destination as! Step4PopupVC
-            nextViewContoller.watchVideoButtonIsHidden = true
             nextViewContoller.popupImage = users[currentMember].photo
             nextViewContoller.mainLabelText = users[currentMember].firstName
             let age = calculateAge(birthday: "\(users[currentMember].birthday)")
-            nextViewContoller.bodyLabelText = "\(users[currentMember].firstName) is \(age) years old.\(determineAgeAppropriateJobs())"
-        }
-    }
-    
-    func determineGender() -> (String) {
-        if users[currentMember].gender == "male" {
-            return "He"
-        } else {
-            return "She"
-        }
-    }
-    
-    func calculateAge(birthday:String) -> Int {
-        let dateFormater = DateFormatter()
-        dateFormater.dateFormat = "yyyyMMdd"
-        let birthdayDate = dateFormater.date(from: birthday)
-        let calendar: NSCalendar! = NSCalendar(calendarIdentifier: NSCalendar.Identifier.gregorian)
-        let now: NSDate! = NSDate()
-        let calculatedAge = calendar.components(.year, from: birthdayDate!, to: now as Date, options: [])
-        let age = calculatedAge.year
-        return age!
-    }
-    
-    func determineAgeAppropriateJobs() -> String {
-        let age = calculateAge(birthday: "\(users[currentMember].birthday)")
-        if age < 4 {
-            return "Age appropriate jobs can include:\n\ndaily jobs:\n\n• straighten living room\n• clean bedroom\n\nweekly jobs:\n\n• sweep porch\n• clean backyard\n• weed garden & yard"
-        } else if age < 6 {
-            return "Age appropriate jobs can include:\n\ndaily jobs:\n\n• straighten living room\n• clean bedroom\n• clear & wipe table\n• sweep floors & vacuum rugs\n• feed pet\n• take out garbage\n\nweekly jobs:\n\n• sweep porch\n• clean backyard\n• weed garden & yard\n• wash windows"
-        } else {
-            return "\(determineGender()) is old enough that all jobs would be appropriate to assign.\n\nNOTE: For mowing the lawn, ages 8+ should be able to use a push mower, and ages 12+ should be able to use riding mowers and other power tools."
+            nextViewContoller.bodyLabelText = "\(users[currentMember].firstName) is \(age) years old. If you need help selecting jobs for \(determineGender().him_her.lowercased()), tap below for a list of possible age-appropriate jobs.)"
+
+            // old function
+//            nextViewContoller.bodyLabelText = "\(users[currentMember].firstName) is \(age) years old. \(determineAgeAppropriateJobs())"
         }
     }
     
@@ -462,78 +443,22 @@ class Step4VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
         //        ref.child("weeklyJobs").removeAllObservers()
     }
     
-    func zeroDailyJobsAssignedAlert() {
-        let alert = UIAlertController(title: "Not Enough Jobs", message: "You have not chosen any daily jobs for \(self.users[self.currentMember].firstName). Please assign \(self.users[self.currentMember].firstName) at least one daily job.", preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "okay", style: .cancel, handler: { (action) in
+    @IBAction func selectUsersButtonTapped(_ sender: UIButton) {
+        let alert = UIAlertController(title: "Select A User", message: "Please choose a family member to review their job assignments", preferredStyle: .alert)
+        for (index, user) in users.enumerated() {
+            alert.addAction(UIAlertAction(title: user.firstName, style: .default, handler: { (action) in
+                self.currentMember = index
+                self.userImage.image = self.users[self.currentMember].photo
+                self.currentUserName = self.users[self.currentMember].firstName
+                self.instructionsLabel.text = "Choose daily and weekly job assignments for \(self.users[self.currentMember].firstName)."
+                self.navigationItem.title = self.users[self.currentMember].firstName
+                self.jobsTableView.reloadData()
+            }))
+        }
+        alert.addAction(UIAlertAction(title: "cancel", style: .cancel, handler: { (action) in
             alert.dismiss(animated: true, completion: nil)
         }))
-        self.present(alert, animated: true, completion: nil)
-    }
-    
-    func reviewFamilyJobs() {
-        
-        // -------------------------------
-        // 4. are all daily jobs assigned?
-        // -------------------------------
-        
-        print("time to review the family assignments!")
-        self.ref.child("dailyJobs").queryOrdered(byChild: "assigned").queryEqual(toValue: "none").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
-            
-            // 4A. all daily jobs are NOT assigned
-            if snapshot.childrenCount != 0 {
-                let alert = UIAlertController(title: "Assign Daily Jobs", message: "There are some daily jobs that have not been assigned to any users. All daily jobs must be assigned to family members.\n\nIf a job is not going to be assigned, use the 'back' button to return to the job creation page and delete that job.", preferredStyle: .alert)
-                alert.addAction(UIAlertAction(title: "okay", style: .cancel, handler: { (action) in
-                    alert.dismiss(animated: true, completion: nil)
-                    self.selectUsersButton.isHidden = false
-                }))
-                self.present(alert, animated: true, completion: nil)
-                
-                // 4B. all daily job ARE assigned
-            } else if snapshot.childrenCount == 0 {
-                
-                // --------------------------------
-                // 5. are all weekly jobs assigned?
-                // --------------------------------
-                
-                self.ref.child("weeklyJobs").queryOrdered(byChild: "assigned").queryEqual(toValue: "none").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
-                    
-                    // 5A. all weekly jobs are NOT assigned
-                    if snapshot.childrenCount != 0 {
-                        let alert = UIAlertController(title: "Assign Weekly Jobs", message: "Some weekly jobs remain unassigned. If you leave them unassigned, you can still allow family members to earn them on Saturday (or whichever day your weekly jobs day is).\n\nDo you want to go back and assign them, or do you want to leave them unassigned?", preferredStyle: .alert)
-                        alert.addAction(UIAlertAction(title: "continue", style: .default, handler: { (action) in
-                            alert.dismiss(animated: true, completion: nil)
-                            self.performSegue(withIdentifier: "ToStep4HabitVC", sender: self)
-                        }))
-                        alert.addAction(UIAlertAction(title: "reassign", style: .cancel, handler: { (action) in
-                            alert.dismiss(animated: true, completion: nil)
-                            self.selectUsersButton.isHidden = false
-                        }))
-                        self.present(alert, animated: true, completion: nil)
-                        
-                    // 5B. all weekly jobs ARE assigned
-                    } else if snapshot.childrenCount == 0 {
-                        self.performSegue(withIdentifier: "ToStep4HabitVC", sender: self)
-                    }
-                }
-            }
-        }
-    }
-    
-    func presentNextUser() {
-        self.currentMember += 1
-        self.performSegue(withIdentifier: "UserIntroPopup", sender: self)
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
-            self.userImage.image = self.users[self.currentMember].photo
-            self.currentUserName = self.users[self.currentMember].firstName
-            self.instructionsLabel.text = "Choose daily and weekly job assignments for \(self.users[self.currentMember].firstName)."
-            self.navigationItem.title = self.users[self.currentMember].firstName
-            self.dailyJobsMax = 3
-            self.weeklyJobsMax = 2
-            self.jobsTableView.reloadData()
-        }
-    }
-    
-    @IBAction func selectUsersButtonTapped(_ sender: UIButton) {
+        present(alert, animated: true, completion: nil)
     }
     
     
@@ -607,7 +532,141 @@ class Step4VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
             completion(self.users)
         })
     }
-
+    
+    func zeroDailyJobsAssignedAlert() {
+        let alert = UIAlertController(title: "Not Enough Jobs", message: "Please assign \(self.users[self.currentMember].firstName) at least one daily job.", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "okay", style: .cancel, handler: { (action) in
+            alert.dismiss(animated: true, completion: nil)
+        }))
+        self.present(alert, animated: true, completion: nil)
+    }
+    
+    func reviewFamilyJobs() {
+        
+        // -------------------------------
+        // 4. are all daily jobs assigned?
+        // -------------------------------
+        
+        self.ref.child("dailyJobs").queryOrdered(byChild: "assigned").queryEqual(toValue: "none").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
+            
+            // 4A. all daily jobs are NOT assigned
+            if snapshot.childrenCount != 0 {
+                let alert = UIAlertController(title: "Review Family Assignments", message: "There are some daily jobs that have not been assigned to any users. All daily jobs must be assigned to family members.\n\nIf a job is not going to be assigned, use the 'back' button to return to the job creation page and delete that job.", preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "okay", style: .cancel, handler: { (action) in
+                    alert.dismiss(animated: true, completion: nil)
+                    self.selectUsersButton.isHidden = false
+                }))
+                self.present(alert, animated: true, completion: nil)
+                
+            // 4B. all daily job ARE assigned
+            } else if snapshot.childrenCount == 0 {
+                
+                // --------------------------------
+                // 5. are all weekly jobs assigned?
+                // --------------------------------
+                
+                self.ref.child("weeklyJobs").queryOrdered(byChild: "assigned").queryEqual(toValue: "none").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
+                    
+                    // 5A. all weekly jobs are NOT assigned
+                    if snapshot.childrenCount != 0 {
+                        let alert = UIAlertController(title: "Review Family Assignments", message: "Some weekly jobs remain unassigned. If you leave them unassigned, you can still allow family members to earn them on Saturday (or whichever day is your weekly jobs day).\n\nDo you want to go back and assign them, or do you want to leave them unassigned and continue with setup?", preferredStyle: .alert)
+                        alert.addAction(UIAlertAction(title: "continue", style: .default, handler: { (action) in
+                            alert.dismiss(animated: true, completion: nil)
+                            self.performSegue(withIdentifier: "ToStep4HabitVC", sender: self)
+                        }))
+                        alert.addAction(UIAlertAction(title: "reassign", style: .cancel, handler: { (action) in
+                            self.selectUsersButton.isHidden = false
+                            // change 'next' button to allow users to go to next step and not have to cycle through all users again
+                            alert.dismiss(animated: true, completion: nil)
+                        }))
+                        self.present(alert, animated: true, completion: nil)
+                        
+                    // 5B. all weekly jobs ARE assigned
+                    } else if snapshot.childrenCount == 0 {
+                        self.performSegue(withIdentifier: "ToStep4HabitVC", sender: self)
+                    }
+                }
+            }
+        }
+    }
+    
+    func presentNextUser() {
+        self.currentMember += 1
+        
+        
+        
+        
+        
+        
+        
+        // if next user already has jobs assigned, there's no need to show their popup again?
+        
+        self.ref.child("dailyJobs").queryOrdered(byChild: "assigned").queryEqual(toValue: self.users[self.currentMember].firstName).observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
+                print("user has",snapshot.childrenCount,"jobs assigned")
+        }
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        self.performSegue(withIdentifier: "UserIntroPopup", sender: self)
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+            self.userImage.image = self.users[self.currentMember].photo
+            self.currentUserName = self.users[self.currentMember].firstName
+            self.instructionsLabel.text = "Choose daily and weekly job assignments for \(self.users[self.currentMember].firstName)."
+            self.navigationItem.title = self.users[self.currentMember].firstName
+            self.dailyJobsMax = 3
+            self.weeklyJobsMax = 2
+            self.jobsTableView.reloadData()
+        }
+    }
+    
+    func determineGender() -> (he_she: String, him_her: String) {
+        var he_she: String!
+        var him_her: String
+        if users[currentMember].gender == "male" {
+            he_she = "He"
+            him_her = "Him"
+        } else {
+            he_she = "She"
+            him_her = "Her"
+        }
+        return (he_she, him_her)
+    }
+    
+    // old functions for later use
+    func calculateAge(birthday: String) -> Int {
+        let dateFormater = DateFormatter()
+        dateFormater.dateFormat = "yyyyMMdd"
+        let birthdayDate = dateFormater.date(from: birthday)
+        let calendar: NSCalendar! = NSCalendar(calendarIdentifier: NSCalendar.Identifier.gregorian)
+        let now: NSDate! = NSDate()
+        let calculatedAge = calendar.components(.year, from: birthdayDate!, to: now as Date, options: [])
+        let age = calculatedAge.year
+        return age!
+    }
+    
+    func determineAgeAppropriateJobs() -> String {
+        let age = calculateAge(birthday: "\(users[currentMember].birthday)")
+        if age < 4 {
+            return "Age appropriate jobs can include:\n\ndaily jobs:\n\n• straighten living room\n• clean bedroom\n\nweekly jobs:\n\n• sweep porch\n• clean backyard\n• weed garden & yard"
+        } else if age < 6 {
+            return "Age appropriate jobs can include:\n\ndaily jobs:\n\n• straighten living room\n• clean bedroom\n• clear & wipe table\n• sweep floors & vacuum rugs\n• feed pet\n• take out garbage\n\nweekly jobs:\n\n• sweep porch\n• clean backyard\n• weed garden & yard\n• wash windows"
+        } else if age < 18 {
+            return "\(determineGender().he_she) is old enough that all jobs would be appropriate to assign.\n\nIn addition to the regular jobs of basic cleaning and straightening up, \(determineGender().he_she.lowercased()) can also user power tools like the lawnmower or edger."
+        } else if users[currentMember].childParent == "parent" {
+            return "\(determineGender().he_she) chores not assigned to children must be assigned to parents.\n\nIn the next step, \(users[currentMember].firstName) will get the chance to assign \(determineGender().him_her.lowercased())self a couple additional duties that only parents can do."
+        } else {
+            return "nothing to see here"
+        }
+    }
     
     // ---------------------------------------------
     // Old function that took forever to figure out:

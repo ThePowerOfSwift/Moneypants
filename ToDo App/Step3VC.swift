@@ -19,8 +19,6 @@ class Step3VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
     var cellStyleForEditing: UITableViewCellEditingStyle = .none
     
-    var flag: Bool!
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         

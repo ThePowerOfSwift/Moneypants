@@ -338,7 +338,7 @@
                                                 <constraint firstAttribute="height" constant="36" id="268-PR-1b4"/>
                                             </constraints>
                                             <fontDescription key="fontDescription" type="system" weight="black" pointSize="13"/>
-                                            <state key="normal" title="dismiss">
+                                            <state key="normal" title="okay">
                                                 <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                             </state>
                                             <connections>
@@ -1508,7 +1508,7 @@
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                             </imageView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="jobs" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZoN-PZ-FPh">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="job assignments" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZoN-PZ-FPh">
                                 <rect key="frame" x="0.0" y="44" width="320" height="23.5"/>
                                 <color key="backgroundColor" red="0.60392156862745094" green="0.60392156862745094" blue="0.60392156862745094" alpha="1" colorSpace="calibratedRGB"/>
                                 <fontDescription key="fontDescription" name="Arista2.0" family="Arista 2.0" pointSize="20"/>
@@ -1522,7 +1522,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <imageView userInteractionEnabled="NO" alpha="0.039999999105930328" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="house broom" translatesAutoresizingMaskIntoConstraints="NO" id="VV6-TI-vAN">
-                                <rect key="frame" x="36" y="255.5" width="248" height="150"/>
+                                <rect key="frame" x="36" y="256" width="248" height="150"/>
                             </imageView>
                             <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" translatesAutoresizingMaskIntoConstraints="NO" id="mCd-gA-zKT">
                                 <rect key="frame" x="16" y="524" width="288" height="36"/>
@@ -1541,7 +1541,7 @@
                                             <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
                                         </userDefinedRuntimeAttributes>
                                         <connections>
-                                            <segue destination="Igf-l3-ZFf" kind="presentation" id="bTv-Rg-EGg"/>
+                                            <segue destination="Igf-l3-ZFf" kind="presentation" modalPresentationStyle="overCurrentContext" modalTransitionStyle="crossDissolve" id="bTv-Rg-EGg"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bwZ-1N-E8z">
@@ -1622,7 +1622,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="QBy-O1-jOY" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="6066" y="1098"/>
+            <point key="canvasLocation" x="6503" y="1098"/>
         </scene>
         <!--Savannah-->
         <scene sceneID="EqV-q6-7JF">
@@ -1776,7 +1776,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="t2q-jk-0Dv" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="7193" y="1098"/>
+            <point key="canvasLocation" x="8291" y="1099"/>
         </scene>
         <!--Dad-->
         <scene sceneID="4BR-c8-nAV">
@@ -1927,7 +1927,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Oae-fa-vXv" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="7984" y="1099"/>
+            <point key="canvasLocation" x="9083" y="1100"/>
         </scene>
         <!--Dad-->
         <scene sceneID="OmM-6g-iRT">
@@ -2079,7 +2079,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="q2g-9s-x4j" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="8781" y="1099"/>
+            <point key="canvasLocation" x="9879" y="1100"/>
         </scene>
         <!--summary-->
         <scene sceneID="gOm-Tc-PCF">
@@ -2217,7 +2217,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="pXI-cE-Inv" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="9591" y="1099"/>
+            <point key="canvasLocation" x="10689" y="1100"/>
         </scene>
         <!--Savannah-->
         <scene sceneID="ywD-xO-Uj4">
@@ -2476,7 +2476,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="VXM-PP-Iwn" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="11303" y="1099"/>
+            <point key="canvasLocation" x="12401" y="1100"/>
         </scene>
         <!--Savannah-->
         <scene sceneID="5fc-3O-4JP">
@@ -2710,7 +2710,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="goK-De-PHq" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="12189" y="1099"/>
+            <point key="canvasLocation" x="13286" y="1100"/>
         </scene>
         <!--Savannah-->
         <scene sceneID="b5z-oW-5Xo">
@@ -2838,7 +2838,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="QZ4-cB-ILe" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="12199" y="1875"/>
+            <point key="canvasLocation" x="13298" y="1876"/>
         </scene>
         <!--Savannah-->
         <scene sceneID="gww-gt-muX">
@@ -4308,7 +4308,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="pX6-mc-eI0" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="11301" y="1875"/>
+            <point key="canvasLocation" x="12399" y="1876"/>
         </scene>
         <!--complete-->
         <scene sceneID="e33-8p-Bop">
@@ -4408,7 +4408,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xYF-U9-UyW" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="13176" y="1481"/>
+            <point key="canvasLocation" x="14274" y="1482"/>
         </scene>
         <!--HomePageTabController-->
         <scene sceneID="NCr-LL-Yvf">
@@ -4416,7 +4416,7 @@
                 <viewControllerPlaceholder storyboardName="Home" referencedIdentifier="HomePageTabController" id="Cb3-64-p1D" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dhl-6n-ppB" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="13958" y="1482"/>
+            <point key="canvasLocation" x="15055" y="1482"/>
         </scene>
         <!--Savannah-->
         <scene sceneID="YHp-0v-PnI">
@@ -4972,7 +4972,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="B1j-iD-jnk" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="10433" y="1099"/>
+            <point key="canvasLocation" x="11531" y="1100"/>
         </scene>
         <!--Step3 PopupVC-->
         <scene sceneID="X44-k1-d00">
@@ -4986,7 +4986,7 @@
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kue-gj-IRr" userLabel="Popup">
-                                    <rect key="frame" x="35" y="83.5" width="250" height="401"/>
+                                    <rect key="frame" x="35" y="84" width="250" height="401"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="What is this page for?" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="a4F-lT-MIc">
                                             <rect key="frame" x="16" y="58" width="218" height="21"/>
@@ -5047,7 +5047,7 @@ You can add up to 20 daily jobs and 20 weekly jobs.</string>
                                                 <constraint firstAttribute="height" constant="36" id="Zjm-y4-hTI"/>
                                             </constraints>
                                             <fontDescription key="fontDescription" type="system" weight="black" pointSize="13"/>
-                                            <state key="normal" title="dismiss">
+                                            <state key="normal" title="okay">
                                                 <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                             </state>
                                             <connections>
@@ -5081,7 +5081,7 @@ You can add up to 20 daily jobs and 20 weekly jobs.</string>
                                     </constraints>
                                 </view>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HJM-tj-VmZ" userLabel="Popup">
-                                    <rect key="frame" x="110" y="33.5" width="100" height="100"/>
+                                    <rect key="frame" x="110" y="34" width="100" height="100"/>
                                     <color key="backgroundColor" red="0.94901960780000005" green="0.39607843139999999" blue="0.1333333333" alpha="1" colorSpace="calibratedRGB"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="100" id="9QR-th-biZ"/>
@@ -5089,7 +5089,7 @@ You can add up to 20 daily jobs and 20 weekly jobs.</string>
                                     </constraints>
                                 </view>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="B0L-zZ-Pvu" userLabel="Popup">
-                                    <rect key="frame" x="120" y="43.5" width="80" height="80"/>
+                                    <rect key="frame" x="120" y="44" width="80" height="80"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="?" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="v3K-mP-aXo">
                                             <rect key="frame" x="23" y="-7" width="35" height="94"/>
@@ -5178,7 +5178,6 @@ Parents will be assigned last.</string>
                                             </state>
                                             <connections>
                                                 <action selector="watchVideoButtonTapped:" destination="0ig-vH-6A2" eventType="touchUpInside" id="pZS-l0-4O3"/>
-                                                <segue destination="8gO-a8-h3n" kind="presentation" id="Hmk-jg-7G2"/>
                                             </connections>
                                         </button>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="onr-6y-NoB">
@@ -5188,7 +5187,7 @@ Parents will be assigned last.</string>
                                                 <constraint firstAttribute="height" constant="36" id="JV0-af-cx4"/>
                                             </constraints>
                                             <fontDescription key="fontDescription" type="system" weight="black" pointSize="13"/>
-                                            <state key="normal" title="dismiss">
+                                            <state key="normal" title="okay">
                                                 <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                             </state>
                                             <connections>
@@ -5218,7 +5217,7 @@ Parents will be assigned last.</string>
                                     </constraints>
                                 </view>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="EM0-tk-LrD" userLabel="Popup">
-                                    <rect key="frame" x="110" y="72" width="100" height="100"/>
+                                    <rect key="frame" x="110" y="72.5" width="100" height="100"/>
                                     <color key="backgroundColor" red="0.94901960780000005" green="0.39607843139999999" blue="0.1333333333" alpha="1" colorSpace="calibratedRGB"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="100" id="Qcy-v9-u2x"/>
@@ -5226,7 +5225,7 @@ Parents will be assigned last.</string>
                                     </constraints>
                                 </view>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="27k-fC-Bvp" userLabel="Popup">
-                                    <rect key="frame" x="120" y="82" width="80" height="80"/>
+                                    <rect key="frame" x="120" y="82.5" width="80" height="80"/>
                                     <subviews>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="clipboard black" translatesAutoresizingMaskIntoConstraints="NO" id="5Jr-xu-xbQ">
                                             <rect key="frame" x="5" y="5" width="70" height="70"/>
@@ -5264,6 +5263,9 @@ Parents will be assigned last.</string>
                         <outlet property="popupViewTop" destination="EM0-tk-LrD" id="7DJ-6F-RhA"/>
                         <outlet property="popupViewTopWhite" destination="27k-fC-Bvp" id="skM-H4-Ac6"/>
                         <outlet property="watchVideoButton" destination="GMd-Rp-f2N" id="iKk-xY-Szg"/>
+                        <outlet property="watchVideoButtonHeight" destination="0sg-hw-b5q" id="WMJ-03-t2o"/>
+                        <segue destination="ggl-5J-Mgq" kind="presentation" identifier="AgeAppropriatePopup" id="rMW-ge-VZt"/>
+                        <segue destination="8gO-a8-h3n" kind="presentation" identifier="VideoPopup" id="qfz-Gc-OiY"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qv0-FW-UCs" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -5362,10 +5364,10 @@ Parents will be assigned last.</string>
             </objects>
             <point key="canvasLocation" x="6503" y="2646"/>
         </scene>
-        <!--View Controller-->
+        <!--Step4 PopupVC2-->
         <scene sceneID="kPj-KT-53V">
             <objects>
-                <viewController id="Igf-l3-ZFf" sceneMemberID="viewController">
+                <viewController id="Igf-l3-ZFf" customClass="Step4PopupVC2" customModule="ToDo_App" customModuleProvider="target" sceneMemberID="viewController">
                     <visualEffectView key="view" opaque="NO" contentMode="scaleToFill" id="lRJ-xc-acN">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -5373,39 +5375,39 @@ Parents will be assigned last.</string>
                             <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
-                                <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="AVU-0Q-NNj" userLabel="Popup">
-                                    <rect key="frame" x="35" y="78.5" width="250" height="411"/>
+                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="AVU-0Q-NNj" userLabel="Popup">
+                                    <rect key="frame" x="35" y="71.5" width="250" height="426.5"/>
                                     <subviews>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="What is this page for?" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WeU-rw-Fpq">
-                                            <rect key="frame" x="16" y="58" width="218" height="21"/>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="What is this page for?" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WeU-rw-Fpq">
+                                            <rect key="frame" x="16" y="58" width="218" height="20.5"/>
                                             <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                                             <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="1Y9-Op-zu4">
-                                            <rect key="frame" x="16" y="95" width="218" height="1"/>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="1Y9-Op-zu4">
+                                            <rect key="frame" x="16" y="94.5" width="218" height="1"/>
                                             <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="0.5" id="TPe-nd-SUS"/>
                                             </constraints>
                                         </imageView>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="This page helps organize the daily and weekly job assignments for the family." textAlignment="justified" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IGU-GJ-ZWd">
-                                            <rect key="frame" x="16" y="112" width="218" height="47"/>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="This page helps organize the daily and weekly job assignments for the family." textAlignment="justified" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IGU-GJ-ZWd">
+                                            <rect key="frame" x="16" y="111.5" width="218" height="47"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                             <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" textAlignment="justified" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AJL-CD-qKM">
-                                            <rect key="frame" x="64" y="169" width="180" height="124"/>
-                                            <string key="text">Tap the white box next to a job to assign it to the current user and it will turn green.
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="justified" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AJL-CD-qKM">
+                                            <rect key="frame" x="64" y="168.5" width="170" height="140"/>
+                                            <string key="text">Tap the white box next to a job to assign it to the current user and it will become a green check mark.
 
 If it's already assigned to someone else, it will be grayed out.</string>
                                             <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                             <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iTz-WX-NYf">
-                                            <rect key="frame" x="50" y="309" width="150" height="50"/>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iTz-WX-NYf">
+                                            <rect key="frame" x="50" y="324.5" width="150" height="50"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="50" id="DeG-cm-g7F"/>
                                             </constraints>
@@ -5414,30 +5416,28 @@ If it's already assigned to someone else, it will be grayed out.</string>
                                                 <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                             </state>
                                             <connections>
-                                                <action selector="bottomButtonTapped:" destination="Igf-l3-ZFf" eventType="touchUpInside" id="PXl-0p-M0S"/>
                                                 <action selector="watchVideoButtonTapped:" destination="Igf-l3-ZFf" eventType="touchUpInside" id="bK4-7T-GI8"/>
                                                 <segue destination="PIR-FB-d0p" kind="presentation" id="5x2-GW-Za4"/>
                                             </connections>
                                         </button>
-                                        <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9dZ-5S-daj">
-                                            <rect key="frame" x="0.0" y="375" width="250" height="36"/>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9dZ-5S-daj">
+                                            <rect key="frame" x="0.0" y="390.5" width="250" height="36"/>
                                             <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="36" id="vbz-dQ-PfY"/>
                                             </constraints>
                                             <fontDescription key="fontDescription" type="system" weight="black" pointSize="13"/>
-                                            <state key="normal" title="dismiss">
+                                            <state key="normal" title="okay">
                                                 <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                             </state>
                                             <connections>
                                                 <action selector="dismissPopupButtonTapped:" destination="Igf-l3-ZFf" eventType="touchUpInside" id="5O5-ei-plz"/>
                                             </connections>
                                         </button>
-                                        <stackView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="Wq7-2H-lvp">
-                                            <rect key="frame" x="16" y="175" width="25" height="75"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="25" translatesAutoresizingMaskIntoConstraints="NO" id="Wq7-2H-lvp">
+                                            <rect key="frame" x="16" y="176.5" width="25" height="125"/>
                                             <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" image="blank" translatesAutoresizingMaskIntoConstraints="NO" id="4DE-TQ-DTc">
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="4DE-TQ-DTc">
                                                     <rect key="frame" x="0.0" y="0.0" width="25" height="25"/>
                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     <constraints>
@@ -5446,20 +5446,26 @@ If it's already assigned to someone else, it will be grayed out.</string>
                                                     </constraints>
                                                     <userDefinedRuntimeAttributes>
                                                         <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
-                                                            <integer key="value" value="3"/>
+                                                            <integer key="value" value="5"/>
                                                         </userDefinedRuntimeAttribute>
                                                         <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
+                                                        <userDefinedRuntimeAttribute type="color" keyPath="layer.borderColor">
+                                                            <color key="value" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                                        </userDefinedRuntimeAttribute>
+                                                        <userDefinedRuntimeAttribute type="number" keyPath="layer.borderWidth">
+                                                            <real key="value" value="0.5"/>
+                                                        </userDefinedRuntimeAttribute>
                                                     </userDefinedRuntimeAttributes>
                                                 </imageView>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" image="checkmark white" translatesAutoresizingMaskIntoConstraints="NO" id="g0z-Qx-Ska">
-                                                    <rect key="frame" x="0.0" y="25" width="25" height="25"/>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="checkmark white" translatesAutoresizingMaskIntoConstraints="NO" id="g0z-Qx-Ska">
+                                                    <rect key="frame" x="0.0" y="50" width="25" height="25"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="25" id="Dzf-ff-vE2"/>
                                                         <constraint firstAttribute="height" constant="25" id="qT2-0V-PfZ"/>
                                                     </constraints>
                                                 </imageView>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" image="checkmark gray" translatesAutoresizingMaskIntoConstraints="NO" id="9Fe-xe-Fpw">
-                                                    <rect key="frame" x="0.0" y="50" width="25" height="25"/>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="checkmark gray" translatesAutoresizingMaskIntoConstraints="NO" id="9Fe-xe-Fpw">
+                                                    <rect key="frame" x="0.0" y="100" width="25" height="25"/>
                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="25" id="TBW-fp-ELn"/>
@@ -5467,9 +5473,15 @@ If it's already assigned to someone else, it will be grayed out.</string>
                                                     </constraints>
                                                     <userDefinedRuntimeAttributes>
                                                         <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
-                                                            <integer key="value" value="3"/>
+                                                            <integer key="value" value="5"/>
                                                         </userDefinedRuntimeAttribute>
                                                         <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
+                                                        <userDefinedRuntimeAttribute type="color" keyPath="layer.borderColor">
+                                                            <color key="value" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                                        </userDefinedRuntimeAttribute>
+                                                        <userDefinedRuntimeAttribute type="number" keyPath="layer.borderWidth">
+                                                            <real key="value" value="0.5"/>
+                                                        </userDefinedRuntimeAttribute>
                                                     </userDefinedRuntimeAttributes>
                                                 </imageView>
                                             </subviews>
@@ -5479,10 +5491,12 @@ If it's already assigned to someone else, it will be grayed out.</string>
                                     <constraints>
                                         <constraint firstItem="WeU-rw-Fpq" firstAttribute="leading" secondItem="AVU-0Q-NNj" secondAttribute="leading" constant="16" id="5dE-ud-pgH"/>
                                         <constraint firstItem="9dZ-5S-daj" firstAttribute="leading" secondItem="AVU-0Q-NNj" secondAttribute="leading" id="5eA-mA-Ndu"/>
+                                        <constraint firstItem="iTz-WX-NYf" firstAttribute="top" secondItem="AJL-CD-qKM" secondAttribute="bottom" constant="16" id="CGw-Js-dxH"/>
                                         <constraint firstAttribute="trailing" secondItem="9dZ-5S-daj" secondAttribute="trailing" id="HqE-he-nSd"/>
                                         <constraint firstAttribute="trailing" secondItem="IGU-GJ-ZWd" secondAttribute="trailing" constant="16" id="IOz-By-W9z"/>
                                         <constraint firstItem="9dZ-5S-daj" firstAttribute="top" secondItem="iTz-WX-NYf" secondAttribute="bottom" constant="16" id="Is3-VE-bVj"/>
                                         <constraint firstAttribute="trailing" secondItem="1Y9-Op-zu4" secondAttribute="trailing" constant="16" id="LTW-OD-WFk"/>
+                                        <constraint firstAttribute="trailing" secondItem="AJL-CD-qKM" secondAttribute="trailing" constant="16" id="PG7-SU-roX"/>
                                         <constraint firstItem="IGU-GJ-ZWd" firstAttribute="top" secondItem="1Y9-Op-zu4" secondAttribute="bottom" constant="16" id="RmH-0s-KIU"/>
                                         <constraint firstItem="IGU-GJ-ZWd" firstAttribute="leading" secondItem="AVU-0Q-NNj" secondAttribute="leading" constant="16" id="SAZ-8r-ASi"/>
                                         <constraint firstItem="AJL-CD-qKM" firstAttribute="trailing" secondItem="IGU-GJ-ZWd" secondAttribute="trailing" id="SXe-Dx-Bj8"/>
@@ -5490,24 +5504,28 @@ If it's already assigned to someone else, it will be grayed out.</string>
                                         <constraint firstAttribute="trailing" secondItem="iTz-WX-NYf" secondAttribute="trailing" constant="50" id="TKF-Pd-P2P"/>
                                         <constraint firstAttribute="width" constant="250" id="Tfg-Xq-PiP"/>
                                         <constraint firstItem="WeU-rw-Fpq" firstAttribute="top" secondItem="AVU-0Q-NNj" secondAttribute="top" constant="58" id="XXR-CA-sTk"/>
+                                        <constraint firstItem="AJL-CD-qKM" firstAttribute="top" secondItem="IGU-GJ-ZWd" secondAttribute="bottom" constant="10" id="eJ6-b9-DBn"/>
+                                        <constraint firstItem="AJL-CD-qKM" firstAttribute="leading" secondItem="Wq7-2H-lvp" secondAttribute="trailing" constant="23" id="eKu-XT-RoH"/>
+                                        <constraint firstItem="AJL-CD-qKM" firstAttribute="centerY" secondItem="Wq7-2H-lvp" secondAttribute="centerY" id="iyN-2q-0is"/>
                                         <constraint firstItem="1Y9-Op-zu4" firstAttribute="top" secondItem="WeU-rw-Fpq" secondAttribute="bottom" constant="16" id="kzU-pB-aIH"/>
                                         <constraint firstItem="iTz-WX-NYf" firstAttribute="leading" secondItem="AVU-0Q-NNj" secondAttribute="leading" constant="50" id="n9n-bY-iUC"/>
                                         <constraint firstItem="1Y9-Op-zu4" firstAttribute="leading" secondItem="AVU-0Q-NNj" secondAttribute="leading" constant="16" id="nHy-z9-48t"/>
+                                        <constraint firstItem="Wq7-2H-lvp" firstAttribute="leading" secondItem="AVU-0Q-NNj" secondAttribute="leading" constant="16" id="qIi-NI-Akd"/>
                                         <constraint firstAttribute="trailing" secondItem="WeU-rw-Fpq" secondAttribute="trailing" constant="16" id="qMv-Mk-N2q"/>
                                     </constraints>
                                 </view>
-                                <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Zs4-If-Rdt" userLabel="Popup">
-                                    <rect key="frame" x="110" y="28.5" width="100" height="100"/>
+                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Zs4-If-Rdt" userLabel="Popup">
+                                    <rect key="frame" x="110" y="21.5" width="100" height="100"/>
                                     <color key="backgroundColor" red="0.94901960780000005" green="0.39607843139999999" blue="0.1333333333" alpha="1" colorSpace="calibratedRGB"/>
                                     <constraints>
                                         <constraint firstAttribute="width" constant="100" id="0zh-0H-rLU"/>
                                         <constraint firstAttribute="height" constant="100" id="RNv-ry-ERV"/>
                                     </constraints>
                                 </view>
-                                <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="0NU-RK-hzX" userLabel="Popup">
-                                    <rect key="frame" x="120" y="38.5" width="80" height="80"/>
+                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0NU-RK-hzX" userLabel="Popup">
+                                    <rect key="frame" x="120" y="31.5" width="80" height="80"/>
                                     <subviews>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="?" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xWr-WK-Es8">
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="?" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xWr-WK-Es8">
                                             <rect key="frame" x="23" y="-7" width="35" height="94"/>
                                             <fontDescription key="fontDescription" name="Arista2.0" family="Arista 2.0" pointSize="80"/>
                                             <nil key="textColor"/>
@@ -5535,7 +5553,6 @@ If it's already assigned to someone else, it will be grayed out.</string>
                         <blurEffect style="light"/>
                     </visualEffectView>
                     <connections>
-                        <outlet property="descriptionLabel" destination="IGU-GJ-ZWd" id="itM-Ia-bY4"/>
                         <outlet property="popupView" destination="AVU-0Q-NNj" id="NwH-0q-WZi"/>
                         <outlet property="popupViewTop" destination="Zs4-If-Rdt" id="PRn-ON-8jJ"/>
                         <outlet property="popupViewTopWhite" destination="0NU-RK-hzX" id="UaD-Nu-68X"/>
@@ -5546,10 +5563,10 @@ If it's already assigned to someone else, it will be grayed out.</string>
             </objects>
             <point key="canvasLocation" x="5647.5" y="1875"/>
         </scene>
-        <!--View Controller-->
+        <!--Step4 VideoVC2-->
         <scene sceneID="Lvy-Ru-xXL">
             <objects>
-                <viewController id="PIR-FB-d0p" sceneMemberID="viewController">
+                <viewController id="PIR-FB-d0p" customClass="Step4VideoVC2" customModule="ToDo_App" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="ieD-Wt-hPa"/>
                         <viewControllerLayoutGuide type="bottom" id="Z8f-cy-Rpk"/>
@@ -5592,8 +5609,71 @@ If it's already assigned to someone else, it will be grayed out.</string>
             </objects>
             <point key="canvasLocation" x="5648" y="2646"/>
         </scene>
+        <!--Step4 Age AppropVC-->
+        <scene sceneID="fl6-HS-2hr">
+            <objects>
+                <viewController id="ggl-5J-Mgq" customClass="Step4AgeAppropVC" customModule="ToDo_App" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="mhA-Ez-M2R"/>
+                        <viewControllerLayoutGuide type="bottom" id="RYd-dh-s3G"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="vep-6l-WWl">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fCQ-ZY-2RQ">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                                <subviews>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Age-Appropriate Jobs" translatesAutoresizingMaskIntoConstraints="NO" id="0Rr-Go-SxH">
+                                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                                    </imageView>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nOm-xV-5yq">
+                                        <rect key="frame" x="270" y="0.0" width="50" height="40"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="50" id="VXC-gL-64k"/>
+                                            <constraint firstAttribute="height" constant="40" id="crI-Mc-lVs"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" name="Arista2.0" family="Arista 2.0" pointSize="17"/>
+                                        <state key="normal" title="x">
+                                            <color key="titleColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="closeXButtonTapped:" destination="ggl-5J-Mgq" eventType="touchUpInside" id="4O3-gP-pXa"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstItem="nOm-xV-5yq" firstAttribute="top" secondItem="fCQ-ZY-2RQ" secondAttribute="top" id="GiY-By-D9V"/>
+                                    <constraint firstItem="0Rr-Go-SxH" firstAttribute="top" secondItem="fCQ-ZY-2RQ" secondAttribute="top" id="IjO-ft-jAw"/>
+                                    <constraint firstItem="0Rr-Go-SxH" firstAttribute="leading" secondItem="fCQ-ZY-2RQ" secondAttribute="leading" id="MHu-Ud-q3Q"/>
+                                    <constraint firstAttribute="trailing" secondItem="nOm-xV-5yq" secondAttribute="trailing" id="PdE-Dm-fBC"/>
+                                    <constraint firstAttribute="bottom" secondItem="0Rr-Go-SxH" secondAttribute="bottom" id="g5q-SO-9j2"/>
+                                    <constraint firstItem="0Rr-Go-SxH" firstAttribute="centerX" secondItem="fCQ-ZY-2RQ" secondAttribute="centerX" id="gFq-V7-Xve"/>
+                                    <constraint firstAttribute="trailing" secondItem="0Rr-Go-SxH" secondAttribute="trailing" id="hDP-ks-QL6"/>
+                                    <constraint firstItem="0Rr-Go-SxH" firstAttribute="centerY" secondItem="fCQ-ZY-2RQ" secondAttribute="centerY" id="tyf-cM-wYJ"/>
+                                </constraints>
+                            </scrollView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="fCQ-ZY-2RQ" firstAttribute="leading" secondItem="vep-6l-WWl" secondAttribute="leading" id="7sc-Xo-xcX"/>
+                            <constraint firstAttribute="trailing" secondItem="fCQ-ZY-2RQ" secondAttribute="trailing" id="C87-Qr-Uw7"/>
+                            <constraint firstItem="fCQ-ZY-2RQ" firstAttribute="bottom" secondItem="RYd-dh-s3G" secondAttribute="top" id="KZJ-g8-XQD"/>
+                            <constraint firstItem="fCQ-ZY-2RQ" firstAttribute="top" secondItem="mhA-Ez-M2R" secondAttribute="bottom" id="Pug-Gm-u8w"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="imageView" destination="0Rr-Go-SxH" id="vnY-4T-mCw"/>
+                        <outlet property="scrollView" destination="fCQ-ZY-2RQ" id="B8t-Mk-JaO"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="bbl-KT-cmL" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="7374.375" y="1875"/>
+        </scene>
     </scenes>
     <resources>
+        <image name="Age-Appropriate Jobs" width="640" height="1136"/>
         <image name="CM5 Cape 20160608" width="2239" height="3146"/>
         <image name="Dad" width="320" height="256"/>
         <image name="Dad.jpg" width="320" height="256"/>
@@ -5629,6 +5709,6 @@ If it's already assigned to someone else, it will be grayed out.</string>
         <segue reference="AC3-hQ-ggE"/>
         <segue reference="bPF-L7-Z42"/>
         <segue reference="3jG-9t-c1L"/>
-        <segue reference="f1o-EZ-hBS"/>
+        <segue reference="sZK-Vt-lQm"/>
     </inferredMetricsTieBreakers>
 </document>

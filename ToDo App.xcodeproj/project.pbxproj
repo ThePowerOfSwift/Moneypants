@@ -69,6 +69,8 @@
 		CE7FF98F1F34124F000AD071 /* FeeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE7FF98E1F34124F000AD071 /* FeeVC.swift */; };
 		CE7FF9911F3448C9000AD071 /* UserSettingsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE7FF9901F3448C9000AD071 /* UserSettingsVC.swift */; };
 		CE8A734F1F85A5B800E5903E /* UserClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE8A734E1F85A5B800E5903E /* UserClass.swift */; };
+		CE8F1C481F88D684000BE9F5 /* Step4PopupVC2.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE8F1C471F88D684000BE9F5 /* Step4PopupVC2.swift */; };
+		CE8F1C4A1F88D6A0000BE9F5 /* Step4VideoVC2.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE8F1C491F88D6A0000BE9F5 /* Step4VideoVC2.swift */; };
 		CE8FF9FE1F0F7D88004A53BE /* Step5ExpensesCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE8FF9FD1F0F7D88004A53BE /* Step5ExpensesCell.swift */; };
 		CE8FFA001F109FC2004A53BE /* Step5ExpenseDetailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE8FF9FF1F109FC2004A53BE /* Step5ExpenseDetailVC.swift */; };
 		CE8FFA021F10AE92004A53BE /* GlobalVariables.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE8FFA011F10AE92004A53BE /* GlobalVariables.swift */; };
@@ -106,6 +108,7 @@
 		CEE2631C1F2D25BA007AB77E /* MoneyCell1.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEE2631B1F2D25BA007AB77E /* MoneyCell1.swift */; };
 		CEE4D6A41F0F4433009BAE6C /* Step5ExpensesInputVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEE4D6A31F0F4433009BAE6C /* Step5ExpensesInputVC.swift */; };
 		CEE4D6AC1F0F70EC009BAE6C /* Step5HeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEE4D6AB1F0F70EC009BAE6C /* Step5HeaderCell.swift */; };
+		CEEA5D281F89D5D300C4D275 /* Step4AgeAppropVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEEA5D271F89D5D300C4D275 /* Step4AgeAppropVC.swift */; };
 		CEEBB3401F202D900046E3FE /* SetupCompleteVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEEBB33F1F202D900046E3FE /* SetupCompleteVC.swift */; };
 		CEF1A4931F022F3F00C010F9 /* Step3VC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEF1A4921F022F3F00C010F9 /* Step3VC.swift */; };
 		CEF1A4951F02472700C010F9 /* Step3CustomCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEF1A4941F02472700C010F9 /* Step3CustomCell.swift */; };
@@ -182,6 +185,8 @@
 		CE7FF98E1F34124F000AD071 /* FeeVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeeVC.swift; sourceTree = "<group>"; };
 		CE7FF9901F3448C9000AD071 /* UserSettingsVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserSettingsVC.swift; sourceTree = "<group>"; };
 		CE8A734E1F85A5B800E5903E /* UserClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserClass.swift; sourceTree = "<group>"; };
+		CE8F1C471F88D684000BE9F5 /* Step4PopupVC2.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Step4PopupVC2.swift; sourceTree = "<group>"; };
+		CE8F1C491F88D6A0000BE9F5 /* Step4VideoVC2.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Step4VideoVC2.swift; sourceTree = "<group>"; };
 		CE8FF9FD1F0F7D88004A53BE /* Step5ExpensesCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Step5ExpensesCell.swift; sourceTree = "<group>"; };
 		CE8FF9FF1F109FC2004A53BE /* Step5ExpenseDetailVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Step5ExpenseDetailVC.swift; sourceTree = "<group>"; };
 		CE8FFA011F10AE92004A53BE /* GlobalVariables.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GlobalVariables.swift; sourceTree = "<group>"; };
@@ -221,6 +226,7 @@
 		CEE2631B1F2D25BA007AB77E /* MoneyCell1.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MoneyCell1.swift; sourceTree = "<group>"; };
 		CEE4D6A31F0F4433009BAE6C /* Step5ExpensesInputVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Step5ExpensesInputVC.swift; sourceTree = "<group>"; };
 		CEE4D6AB1F0F70EC009BAE6C /* Step5HeaderCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Step5HeaderCell.swift; sourceTree = "<group>"; };
+		CEEA5D271F89D5D300C4D275 /* Step4AgeAppropVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Step4AgeAppropVC.swift; sourceTree = "<group>"; };
 		CEEBB33F1F202D900046E3FE /* SetupCompleteVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SetupCompleteVC.swift; sourceTree = "<group>"; };
 		CEF1A4921F022F3F00C010F9 /* Step3VC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = Step3VC.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		CEF1A4941F02472700C010F9 /* Step3CustomCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Step3CustomCell.swift; sourceTree = "<group>"; };
@@ -457,7 +463,10 @@
 				CED509E11F030F560058728F /* Step4VC.swift */,
 				CED509E31F0310740058728F /* Step4CustomCell.swift */,
 				CE39F51E1F7D83730053E45D /* Step4PopupVC.swift */,
+				CEEA5D271F89D5D300C4D275 /* Step4AgeAppropVC.swift */,
 				CE6F69451F868CCC00FE9349 /* Step4VideoVC.swift */,
+				CE8F1C471F88D684000BE9F5 /* Step4PopupVC2.swift */,
+				CE8F1C491F88D6A0000BE9F5 /* Step4VideoVC2.swift */,
 				CE7160F81F04A2A10045AA05 /* Step4HabitVC.swift */,
 				CE7160FA1F04A9270045AA05 /* Step4HabitCustomCell.swift */,
 				CE39D9271F05A3CE00159EC1 /* Step4ParentsVC.swift */,
@@ -723,6 +732,7 @@
 				CE9443BE1F29847F00ACC7D4 /* MoneyVC.swift in Sources */,
 				CED509E41F0310740058728F /* Step4CustomCell.swift in Sources */,
 				CE9443B61F297F5C00ACC7D4 /* UserSettingsNavController.swift in Sources */,
+				CE8F1C4A1F88D6A0000BE9F5 /* Step4VideoVC2.swift in Sources */,
 				CE4832B91F27FB11005A7A55 /* HomeNavController.swift in Sources */,
 				CE8A734F1F85A5B800E5903E /* UserClass.swift in Sources */,
 				CEC5BD541F77310500B66CEC /* Step3PopupVC.swift in Sources */,
@@ -745,7 +755,9 @@
 				CE3CA84F1F32B97C0069129B /* ReportsSpendingVC.swift in Sources */,
 				CED509E21F030F560058728F /* Step4VC.swift in Sources */,
 				CEF3EBBF1F305FE4008953A8 /* MoneyCell4.swift in Sources */,
+				CEEA5D281F89D5D300C4D275 /* Step4AgeAppropVC.swift in Sources */,
 				CE79B8941F233F290032DD70 /* VideosVC.swift in Sources */,
+				CE8F1C481F88D684000BE9F5 /* Step4PopupVC2.swift in Sources */,
 				CEDBFE2E1F2AE4C800829DE4 /* ReportsPointsCell.swift in Sources */,
 				CE8FFA021F10AE92004A53BE /* GlobalVariables.swift in Sources */,
 				CE6F69461F868CCC00FE9349 /* Step4VideoVC.swift in Sources */,

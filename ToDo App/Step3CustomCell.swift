@@ -4,7 +4,6 @@ class Step3CustomCell: UITableViewCell {
     
     @IBOutlet weak var jobLabel: UILabel!
     
-
     override func awakeFromNib() {
         super.awakeFromNib()
     }
