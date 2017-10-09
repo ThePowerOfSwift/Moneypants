@@ -44,7 +44,7 @@ class Step4VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
         
         // set progress flag for setup
         
-        ref.updateChildValues(["setupProgressFlag" : "Step4VC"])      // setupProgressFlag = true
+        ref.updateChildValues(["setupProgress" : "Step4VC"])      // setupProgressFlag = true
         
         self.automaticallyAdjustsScrollViewInsets = false
         
@@ -78,19 +78,30 @@ class Step4VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
         
         loadMembers { (usersArray) in
             var memberImageCount = 0
-            
             for user in usersArray {
                 self.loadMemberProfilePict(userImageURL: user.imageURL, userFirstName: user.firstName, userBirthday: user.birthday, userPasscode: user.passcode, userGender: user.gender, userChildParent: user.childParent, completion: { (usersIntermediateArray) in
                     memberImageCount += 1
                     if memberImageCount == usersArray.count {
                         self.users = usersIntermediateArray
-                        self.performSegue(withIdentifier: "ExplainerPopup", sender: self)
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0, execute: {
-                            self.userImage.image = self.users[0].photo
-                            self.currentUserName = self.users[0].firstName
-                            self.instructionsLabel.text = "Choose daily and weekly job assignments for \(self.users[0].firstName)."
-                            self.navigationItem.title = self.users[0].firstName
-                            self.jobsTableView.reloadData()
+                        
+                        // check to see if user had already assigned jobs, and if so, skip the user intro
+                        self.ref.child("dailyJobs").queryOrdered(byChild: "assigned").queryEqual(toValue: self.users[self.currentMember].firstName).observeSingleEvent(of: .value, with: { (snapshot: FIRDataSnapshot) in
+                            if snapshot.childrenCount > 0 {
+                                self.userImage.image = self.users[0].photo
+                                self.currentUserName = self.users[0].firstName
+                                self.instructionsLabel.text = "Choose daily and weekly job assignments for \(self.users[0].firstName)."
+                                self.navigationItem.title = self.users[0].firstName
+                                self.jobsTableView.reloadData()
+                            } else {
+                                self.performSegue(withIdentifier: "ExplainerPopup", sender: self)
+                                DispatchQueue.main.asyncAfter(deadline: .now() + 1.0, execute: {
+                                    self.userImage.image = self.users[0].photo
+                                    self.currentUserName = self.users[0].firstName
+                                    self.instructionsLabel.text = "Choose daily and weekly job assignments for \(self.users[0].firstName)."
+                                    self.navigationItem.title = self.users[0].firstName
+                                    self.jobsTableView.reloadData()
+                                })
+                            }
                         })
                     }
                 })
@@ -362,7 +373,7 @@ class Step4VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
             nextViewContoller.firstUserPopupViewImage = users[0].photo
             nextViewContoller.firstUserMainLabelText = users[0].firstName
             let age = calculateAge(birthday: "\(users[0].birthday)")
-            nextViewContoller.firstUserBodyLabelText = "\(users[0].firstName) is \(age) years old. If you need help selecting jobs for \(determineGender().him_her.lowercased()), tap below for a list of possible age-appropriate jobs.)"
+            nextViewContoller.firstUserBodyLabelText = "\(users[0].firstName) is \(age) years old. For ideas on which jobs to select for \(determineGender().him_her.lowercased()), tap below to see a list of possible age-appropriate jobs."
         }
         
         if segue.identifier == "UserIntroPopup" {
@@ -370,7 +381,12 @@ class Step4VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
             nextViewContoller.popupImage = users[currentMember].photo
             nextViewContoller.mainLabelText = users[currentMember].firstName
             let age = calculateAge(birthday: "\(users[currentMember].birthday)")
-            nextViewContoller.bodyLabelText = "\(users[currentMember].firstName) is \(age) years old. If you need help selecting jobs for \(determineGender().him_her.lowercased()), tap below for a list of possible age-appropriate jobs.)"
+            if users[currentMember].childParent == "parent" {
+                nextViewContoller.bodyLabelText = "\(users[currentMember].firstName) should assign \(determineGender().him_her.lowercased())self any jobs that were not assigned to the children. \(determineGender().he_she) can split the remaining jobs with a spouse.\n\nIn the next step, \(users[currentMember].firstName) will get the chance to assign \(determineGender().him_her.lowercased())self a couple additional duties that only parents can do."
+            } else {
+                nextViewContoller.bodyLabelText = "\(users[currentMember].firstName) is \(age) years old. For ideas on which jobs to select for \(determineGender().him_her.lowercased()), tap below to see a list of possible age-appropriate jobs."
+            }
+            nextViewContoller.shouldChangeWatchVideoButtonTitle = true
 
             // old function
 //            nextViewContoller.bodyLabelText = "\(users[currentMember].firstName) is \(age) years old. \(determineAgeAppropriateJobs())"
@@ -593,38 +609,37 @@ class Step4VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
     func presentNextUser() {
         self.currentMember += 1
         
-        
-        
-        
-        
-        
-        
+        // ----------------------------------------------------------------------------------
         // if next user already has jobs assigned, there's no need to show their popup again?
+        // ----------------------------------------------------------------------------------
         
         self.ref.child("dailyJobs").queryOrdered(byChild: "assigned").queryEqual(toValue: self.users[self.currentMember].firstName).observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
-                print("user has",snapshot.childrenCount,"jobs assigned")
-        }
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        self.performSegue(withIdentifier: "UserIntroPopup", sender: self)
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
-            self.userImage.image = self.users[self.currentMember].photo
-            self.currentUserName = self.users[self.currentMember].firstName
-            self.instructionsLabel.text = "Choose daily and weekly job assignments for \(self.users[self.currentMember].firstName)."
-            self.navigationItem.title = self.users[self.currentMember].firstName
-            self.dailyJobsMax = 3
-            self.weeklyJobsMax = 2
-            self.jobsTableView.reloadData()
+            print("user has",snapshot.childrenCount,"jobs assigned")
+            if snapshot.childrenCount > 0 {
+                self.userImage.image = self.users[self.currentMember].photo
+                self.currentUserName = self.users[self.currentMember].firstName
+                self.instructionsLabel.text = "Choose daily and weekly job assignments for \(self.users[self.currentMember].firstName)."
+                self.navigationItem.title = self.users[self.currentMember].firstName
+                self.dailyJobsMax = 3
+                self.weeklyJobsMax = 2
+                self.jobsTableView.reloadData()
+            } else {
+                
+                // ---------------------------------------------------------
+                // if next user has NO jobs assigned, show their intro popup
+                // ---------------------------------------------------------
+                
+                self.performSegue(withIdentifier: "UserIntroPopup", sender: self)
+                DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+                    self.userImage.image = self.users[self.currentMember].photo
+                    self.currentUserName = self.users[self.currentMember].firstName
+                    self.instructionsLabel.text = "Choose daily and weekly job assignments for \(self.users[self.currentMember].firstName)."
+                    self.navigationItem.title = self.users[self.currentMember].firstName
+                    self.dailyJobsMax = 3
+                    self.weeklyJobsMax = 2
+                    self.jobsTableView.reloadData()
+                }
+            }
         }
     }
     

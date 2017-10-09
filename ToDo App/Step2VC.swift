@@ -96,6 +96,7 @@ class Step2VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
         if let selectedIndexPath = usersTableView.indexPathForSelectedRow {
             // Update an existing user
             users[selectedIndexPath.row] = updatedUser!
+            users.sort(by: {$0.birthday < $1.birthday})
             usersTableView.reloadData()
             saveUsersToFirebase()
         } else {

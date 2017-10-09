@@ -9,10 +9,13 @@ class Step3VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
     var dailyJobs: [JobsAndHabits]!       // create variable called 'daily jobs' which is an array of type JobsAndHabits
     var weeklyJobs: [JobsAndHabits]!      // create variable called 'weekly jobs' which is an array of type JobsAndHabits
-    var dailyJobMin = 6
-    let dailyJobMax = 20
-    var weeklyJobMin = 6
-    let weeklyJobMax = 20
+    
+    var dailyJobsCount: Int!
+    var weeklyJobsCount: Int!
+    
+    var jobCountMin = 2           // this is the same as the number of users
+    let dailyJobCountMax = 20       // was 'dailyJobMax'
+    let weeklyJobCountMax = 20      // was 'weeklyJobMax'
     
     var firebaseUser: FIRUser!
     var ref: FIRDatabaseReference!
@@ -31,12 +34,6 @@ class Step3VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
         
         firebaseUser = FIRAuth.auth()?.currentUser
         ref = FIRDatabase.database().reference().child("users").child(firebaseUser.uid)
-        getUserCountAndUpdateJobMinMax { (userCount) in
-            self.dailyJobMin = userCount + 1
-            self.weeklyJobMin = userCount + 1
-            print("dailyMin",self.dailyJobMin)
-            print("weeklyMin",self.weeklyJobMin)
-        }
         
         jobsTableView.delegate = self
         jobsTableView.dataSource = self
@@ -48,18 +45,186 @@ class Step3VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
         // add + symbol in navbar
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addJobButtonTapped))
         
-        // MARK: need to load Firebase Data if it exists, then if not, load default jobs
-        checkForFirebaseJobs { (answer) in
-            if answer == true {
-                self.loadFirebaseJobs()
-                self.jobsTableView.reloadData()
-            } else {
-                self.loadDefaultJobs()
-                self.createDefaultJobsOnFirebase()
-                self.jobsTableView.reloadData()
+        loadExistingUsersAndJobsFromFirebase {
+            
+            
+            if self.dailyJobs.count == 0 {
+                self.loadDefaultDailyJobs()
+                self.createDefaultDailyJobsOnFirebase()
+            } else if self.dailyJobs.count < self.jobCountMin {
+                let jobMinimumConflict = self.jobCountMin - self.dailyJobs.count
+                
+                
+                var numberForNewJobName = 0
+                for i in 0..<jobMinimumConflict {
+                    
+                    // check for duplicate names
+                    numberForNewJobName += 1
+                    var newDailyJobName = "custom daily job \(numberForNewJobName)"
+                    for item in self.dailyJobs {
+                        if item.name == newDailyJobName {
+                            numberForNewJobName += 1
+                            newDailyJobName = "custom daily job \(numberForNewJobName)"
+                        }
+                    }
+                    
+                    let dailyJob = JobsAndHabits(jobName: newDailyJobName, jobMultiplier: 1, jobAssign: "none", jobOrder: self.dailyJobs.count + i)
+
+                    self.dailyJobs.append(dailyJob)
+                    self.jobsTableView.reloadData()
+                    // append new jobs to Firebase
+                    self.ref.child("dailyJobs").childByAutoId().setValue(["name" : newDailyJobName, "multiplier" : 1, "assigned" : "none", "order" : self.dailyJobs.count + i])
+                }
+            }
+            
+            if self.weeklyJobs.count == 0 {
+                self.loadDefaultWeeklyJobs()
+                self.createDefaultWeeklyJobsOnFirebase()
+            } else if self.weeklyJobs.count < self.jobCountMin {
+                let jobMinimumConflict = self.jobCountMin - self.weeklyJobs.count
+                
+                
+                var numberForNewJobName = 0
+                for i in 0..<jobMinimumConflict {
+                    
+                    // check for duplicate names
+                    numberForNewJobName += 1
+                    var newWeeklyJobName = "custom weekly job \(numberForNewJobName)"
+                    for item in self.weeklyJobs {
+                        if item.name == newWeeklyJobName {
+                            numberForNewJobName += 1
+                            newWeeklyJobName = "custom weekly job \(numberForNewJobName)"
+                        }
+                    }
+                    
+                    let weeklyJob = JobsAndHabits(jobName: newWeeklyJobName, jobMultiplier: 1, jobAssign: "none", jobOrder: self.weeklyJobs.count + i)
+                    
+                    self.weeklyJobs.append(weeklyJob)
+                    self.jobsTableView.reloadData()
+                    // append new jobs to Firebase
+                    self.ref.child("weeklyJobs").childByAutoId().setValue(["name" : newWeeklyJobName, "multiplier" : 1, "assigned" : "none", "order" : self.weeklyJobs.count + i])
+                }
+            }
+            
+            
+            
+                /*
+            } else if self.dailyJobsCount < self.jobCountMin {
+                let jobMinConflict = self.jobCountMin - self.dailyJobsCount
+                // 1. create current array from current Firebase jobs data -- DONE! (in 'loadExistingUsersAndJobsFromFirebase')
+                // 2. append new jobs to Firebase
+                // 3. append new jobs to 'dailyJobs' array
+                // 4. reload table data
+                
+                
+                
+                for i in 0..<jobMinConflict {
+                    self.ref.child("dailyJobs").childByAutoId().setValue(["name" : "custom daily job \(i + 1)",
+                        "multiplier" : 1,
+                        "assigned" : "none",
+                        "order" : self.dailyJobsCount + i], withCompletionBlock: { (error, reference) in
+                            print(reference.key)
+                    })
+                }
+                
+                
+               
+                // append new job to local array (oops! There IS no local array yet. I haven't retrieved it from firebase yet...)
+//                for i in 0..<jobMinConflict {
+//                    let newJob = JobsAndHabits(jobName: "custom daily job \(i + 1)", jobMultiplier: 1, jobAssign: "none", jobOrder: self.dailyJobsCount + i)
+//                    self.dailyJobs.append(newJob)
+//                }
+                
+                
+                
+                
+                
+//                if self.dailyJobs.count == self.jobCountMin {
+//                    self.loadFirebaseDailyJobs()
+//                }
+                
+//                DispatchQueue.main.asyncAfter(deadline: .now() + 1.0, execute: { 
+//                    self.loadFirebaseDailyJobs()
+//                })
+            } else if self.dailyJobsCount >= self.jobCountMin {
+                self.loadFirebaseDailyJobs()
+            }
+            */
+        }
+    }
+    
+    
+    
+    
+    
+    
+    func loadExistingUsersAndJobsFromFirebase(completion: @escaping () -> ()) {
+        
+        // ----------
+        // Daily Jobs
+        // ----------
+        
+        ref.child("dailyJobs").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
+            for item in snapshot.children {
+                if let snap = item as? FIRDataSnapshot {
+                    if let value = snap.value as? [String : Any] {
+                        let multiplier = value["multiplier"] as! Double
+                        let name = value["name"] as! String
+                        let assigned = value["assigned"] as! String
+                        let order = value["order"] as! Int
+                        
+                        let dailyJob = JobsAndHabits(jobName: name, jobMultiplier: multiplier, jobAssign: assigned, jobOrder: order)
+                        self.dailyJobs.append(dailyJob)
+                        self.dailyJobs.sort(by: {$0.order < $1.order})
+                        
+                        self.jobsTableView.reloadData()
+                    }
+                }
+            }
+            
+            self.dailyJobsCount = Int(snapshot.childrenCount)
+            
+            // -----------
+            // Weekly Jobs
+            // -----------
+            
+            self.ref.child("weeklyJobs").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
+                for item in snapshot.children {
+                    if let snap = item as? FIRDataSnapshot {
+                        if let value = snap.value as? [String : Any] {
+                            let multiplier = value["multiplier"] as! Double
+                            let name = value["name"] as! String
+                            let assigned = value["assigned"] as! String
+                            let order = value["order"] as! Int
+                            
+                            let weeklyJob = JobsAndHabits(jobName: name, jobMultiplier: multiplier, jobAssign: assigned, jobOrder: order)
+                            self.weeklyJobs.append(weeklyJob)
+                            self.weeklyJobs.sort(by: {$0.order < $1.order})
+                            
+                            self.jobsTableView.reloadData()
+                        }
+                    }
+                }
+                self.weeklyJobsCount = Int(snapshot.childrenCount)
+                
+                // --------------
+                // Family Members
+                // --------------
+                
+                self.ref.child("members").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
+                    self.jobCountMin = Int(snapshot.childrenCount)
+                    completion()
+                }
             }
         }
     }
+    
+    
+    
+    
+    
+    
+    
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
@@ -190,8 +355,8 @@ class Step3VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             if indexPath.section == 0 {
-                if dailyJobs.count <= dailyJobMin {           // check to make sure user isn't deleting too many jobs
-                    deletedTooManyRowsAlert(alertTitle: "Daily Jobs", alertMessage: "You cannot delete this daily job. You must have at least \(dailyJobMin) daily jobs in your list.")
+                if dailyJobs.count <= jobCountMin {           // check to make sure user isn't deleting too many jobs
+                    deletedTooManyRowsAlert(alertTitle: "Daily Jobs", alertMessage: "You cannot delete this daily job. You must have at least \(jobCountMin) daily jobs in your list (one for each family member.)")
                 } else {
                     
                     // need to find order of job at the index path and delete it.
@@ -213,8 +378,8 @@ class Step3VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
                     }
                 }
             } else {
-                if weeklyJobs.count <= weeklyJobMin {
-                    deletedTooManyRowsAlert(alertTitle: "Weekly Jobs", alertMessage: "You cannot delete this weekly job. You must have at least \(weeklyJobMin) weekly jobs in your list.")
+                if weeklyJobs.count <= jobCountMin {
+                    deletedTooManyRowsAlert(alertTitle: "Weekly Jobs", alertMessage: "You cannot delete this weekly job. You must have at least \(jobCountMin) weekly jobs in your list (one for each family member.)")
                 } else {
                     
                     ref.child("weeklyJobs").queryOrdered(byChild: "order").queryEqual(toValue: indexPath.row).observeSingleEvent(of: .childAdded, with: { (snapshot) in
@@ -309,7 +474,7 @@ class Step3VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
                 
                 // MARK: TODO - create a new daily job in Firebase
                 ref.child("dailyJobs").childByAutoId().setValue(["name" : updatedJob!.name,
-                                                                 "multiplier" : 10 / Double(dailyJobs.count),       // MARK: TODO - need to get rid of 'multiplier' variable and replace
+                                                                 "multiplier" : 1,       // MARK: TODO - need to get rid of 'multiplier' variable and replace
                                                                  "assigned" : "none",
                                                                  "order" : dailyJobs.count])
                 // Add a new daily job in the daily jobs array
@@ -332,7 +497,7 @@ class Step3VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
                 
                 // create a new weekly job in Firebase
                 ref.child("weeklyJobs").childByAutoId().setValue(["name" : updatedJob!.name,
-                                                                  "multiplier" : 10 / Double(weeklyJobs.count),
+                                                                  "multiplier" : 1,
                                                                   "assigned" : "none",
                                                                   "order" : weeklyJobs.count])
                 // Add a new weekly job in the weekly jobs array
@@ -383,12 +548,6 @@ class Step3VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
     // Functions
     // ---------
     
-    func getUserCountAndUpdateJobMinMax(completion: @escaping (Int) -> ()) {
-        ref.child("members").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
-            completion(Int(snapshot.childrenCount))
-        }
-    }
-    
     func changeJobOrderOnFirebase(dailyOrWeekly: String, jobName: String, newJobOrder: Int, completion: @escaping (FIRDataSnapshot) -> ()) {
         ref.child(dailyOrWeekly).queryOrdered(byChild: "name").queryEqual(toValue: jobName).observeSingleEvent(of: .childAdded, with: { (snapshot) in
             snapshot.ref.updateChildValues(["order" : newJobOrder])
@@ -396,13 +555,7 @@ class Step3VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
         })
     }
     
-    func checkForFirebaseJobs(completion: @escaping (Bool!) -> ()) {
-        ref.child("dailyJobs").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
-            completion(snapshot.hasChildren())
-        }
-    }       // NOTE: no need to check for weekly jobs (if there are daily jobs, there will be weekly jobs, and vice versa)
-    
-    func loadFirebaseJobs() {
+    func loadFirebaseDailyJobs() {
         ref.child("dailyJobs").observe(.childAdded, with: { (snapshot) in
             if let dictionary = snapshot.value as? [String : Any] {
                 let multiplier = dictionary["multiplier"] as! Double
@@ -417,7 +570,9 @@ class Step3VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
                 self.jobsTableView.reloadData()
             }
         })
-        
+    }
+    
+    func loadFirebaseWeeklyJobs() {
         ref.child("weeklyJobs").observe(.childAdded, with: { (snapshot) in
             if let dictionary = snapshot.value as? [String : Any] {
                 let multiplier = dictionary["multiplier"] as! Double
@@ -455,7 +610,7 @@ class Step3VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
         jobsTableView.setEditing(cellStyleForEditing != .none, animated: true)
     }
     
-    func loadDefaultJobs() {
+    func loadDefaultDailyJobs() {
         // create array of default daily jobs
         dailyJobs = [JobsAndHabits(jobName: "bedroom", jobMultiplier: 1, jobAssign: "none", jobOrder: 1),
                      JobsAndHabits(jobName: "bathrooms", jobMultiplier: 1, jobAssign: "none", jobOrder: 2),
@@ -467,7 +622,10 @@ class Step3VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
                      JobsAndHabits(jobName: "dishes", jobMultiplier: 1, jobAssign: "none", jobOrder: 8),
                      JobsAndHabits(jobName: "meal prep", jobMultiplier: 1, jobAssign: "none",jobOrder: 9 ),
                      JobsAndHabits(jobName: "feed pet / garbage", jobMultiplier: 1, jobAssign: "none", jobOrder: 10)]
-        
+        jobsTableView.reloadData()
+    }
+    
+    func loadDefaultWeeklyJobs() {
         // create array of default weekly jobs
         weeklyJobs = [JobsAndHabits(jobName: "sweep porch", jobMultiplier: 1, jobAssign: "none", jobOrder: 1),
                       JobsAndHabits(jobName: "weed garden", jobMultiplier: 1, jobAssign: "none", jobOrder: 2),
@@ -479,11 +637,11 @@ class Step3VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
                       JobsAndHabits(jobName: "wash car", jobMultiplier: 1, jobAssign: "none", jobOrder: 8),
                       JobsAndHabits(jobName: "mow lawn", jobMultiplier: 1, jobAssign: "none", jobOrder: 9),
                       JobsAndHabits(jobName: "babysit (hour #1)", jobMultiplier: 1, jobAssign: "none", jobOrder: 10)]
+        jobsTableView.reloadData()
     }
     
-    func createDefaultJobsOnFirebase() {
+    func createDefaultDailyJobsOnFirebase() {
         var dailyCounter = 0
-        var weeklyCounter = 0
         for dailyJob in dailyJobs {
             ref.child("dailyJobs").childByAutoId().setValue(["name" : dailyJob.name,
                                                              "multiplier" : 1,
@@ -491,6 +649,10 @@ class Step3VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
                                                              "order" : dailyCounter])
             dailyCounter += 1
         }
+    }
+    
+    func createDefaultWeeklyJobsOnFirebase() {
+        var weeklyCounter = 0
         for weeklyJob in weeklyJobs {
             ref.child("weeklyJobs").childByAutoId().setValue(["name" : weeklyJob.name,
                                                               "multiplier" : 1,
@@ -515,6 +677,18 @@ class Step3VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
             JobsAndHabits(jobName: "bed by 8:pm", jobMultiplier: 1, jobAssign: "none", jobOrder: 10)]
     }
     */
+    
+    func randomString(length: Int) -> String {
+        let letters : NSString = "abcdefghijklmnopqrstuvwxyz0123456789"
+        let len = UInt32(letters.length)
+        var randomString = ""
+        for _ in 0 ..< length {
+            let rand = arc4random_uniform(len)
+            var nextChar = letters.character(at: Int(rand))
+            randomString += NSString(characters: &nextChar, length: 1) as String
+        }
+        return randomString
+    }
     
     // Dismiss keyboard if user taps outside of text fields
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {

@@ -5627,32 +5627,30 @@ If it's already assigned to someone else, it will be grayed out.</string>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Age-Appropriate Jobs" translatesAutoresizingMaskIntoConstraints="NO" id="0Rr-Go-SxH">
                                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                                     </imageView>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nOm-xV-5yq">
-                                        <rect key="frame" x="270" y="0.0" width="50" height="40"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" constant="50" id="VXC-gL-64k"/>
-                                            <constraint firstAttribute="height" constant="40" id="crI-Mc-lVs"/>
-                                        </constraints>
-                                        <fontDescription key="fontDescription" name="Arista2.0" family="Arista 2.0" pointSize="17"/>
-                                        <state key="normal" title="x">
-                                            <color key="titleColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
-                                        </state>
-                                        <connections>
-                                            <action selector="closeXButtonTapped:" destination="ggl-5J-Mgq" eventType="touchUpInside" id="4O3-gP-pXa"/>
-                                        </connections>
-                                    </button>
                                 </subviews>
                                 <constraints>
-                                    <constraint firstItem="nOm-xV-5yq" firstAttribute="top" secondItem="fCQ-ZY-2RQ" secondAttribute="top" id="GiY-By-D9V"/>
                                     <constraint firstItem="0Rr-Go-SxH" firstAttribute="top" secondItem="fCQ-ZY-2RQ" secondAttribute="top" id="IjO-ft-jAw"/>
                                     <constraint firstItem="0Rr-Go-SxH" firstAttribute="leading" secondItem="fCQ-ZY-2RQ" secondAttribute="leading" id="MHu-Ud-q3Q"/>
-                                    <constraint firstAttribute="trailing" secondItem="nOm-xV-5yq" secondAttribute="trailing" id="PdE-Dm-fBC"/>
                                     <constraint firstAttribute="bottom" secondItem="0Rr-Go-SxH" secondAttribute="bottom" id="g5q-SO-9j2"/>
                                     <constraint firstItem="0Rr-Go-SxH" firstAttribute="centerX" secondItem="fCQ-ZY-2RQ" secondAttribute="centerX" id="gFq-V7-Xve"/>
                                     <constraint firstAttribute="trailing" secondItem="0Rr-Go-SxH" secondAttribute="trailing" id="hDP-ks-QL6"/>
                                     <constraint firstItem="0Rr-Go-SxH" firstAttribute="centerY" secondItem="fCQ-ZY-2RQ" secondAttribute="centerY" id="tyf-cM-wYJ"/>
                                 </constraints>
                             </scrollView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nOm-xV-5yq">
+                                <rect key="frame" x="270" y="0.0" width="50" height="40"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="50" id="VXC-gL-64k"/>
+                                    <constraint firstAttribute="height" constant="40" id="crI-Mc-lVs"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="Arista2.0" family="Arista 2.0" pointSize="17"/>
+                                <state key="normal" title="x">
+                                    <color key="titleColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="closeXButtonTapped:" destination="ggl-5J-Mgq" eventType="touchUpInside" id="4O3-gP-pXa"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -5660,6 +5658,8 @@ If it's already assigned to someone else, it will be grayed out.</string>
                             <constraint firstAttribute="trailing" secondItem="fCQ-ZY-2RQ" secondAttribute="trailing" id="C87-Qr-Uw7"/>
                             <constraint firstItem="fCQ-ZY-2RQ" firstAttribute="bottom" secondItem="RYd-dh-s3G" secondAttribute="top" id="KZJ-g8-XQD"/>
                             <constraint firstItem="fCQ-ZY-2RQ" firstAttribute="top" secondItem="mhA-Ez-M2R" secondAttribute="bottom" id="Pug-Gm-u8w"/>
+                            <constraint firstItem="nOm-xV-5yq" firstAttribute="top" secondItem="mhA-Ez-M2R" secondAttribute="bottom" id="r7W-Bv-xVJ"/>
+                            <constraint firstAttribute="trailing" secondItem="nOm-xV-5yq" secondAttribute="trailing" id="xyF-KG-o8x"/>
                         </constraints>
                     </view>
                     <connections>

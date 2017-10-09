@@ -21,7 +21,7 @@ class Step4PopupVC: UIViewController {
     var firstUserBodyLabelText: String!
     var firstUserPopupViewImage: UIImage!
     
-    var bottomButton: Bool!
+    var shouldChangeWatchVideoButtonTitle = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -40,10 +40,20 @@ class Step4PopupVC: UIViewController {
         watchVideoButton.titleLabel?.numberOfLines = 0
         watchVideoButton.titleLabel?.lineBreakMode = NSLineBreakMode.byWordWrapping
         watchVideoButton.titleLabel?.textAlignment = .center
+        
+        if shouldChangeWatchVideoButtonTitle {
+            watchVideoButton.setTitle("age-appropriate jobs list", for: .normal)
+        } else {
+            watchVideoButton.setTitle("click here to watch a short video", for: .normal)
+        }
     }
     
     @IBAction func watchVideoButtonTapped(_ sender: UIButton) {
-        performSegue(withIdentifier: "VideoPopup", sender: self)
+        if shouldChangeWatchVideoButtonTitle {
+            performSegue(withIdentifier: "AgeAppropriatePopup", sender: self)
+        } else {
+            performSegue(withIdentifier: "VideoPopup", sender: self)
+        }
     }
     
     @IBAction func dismissPopupButtonTapped(_ sender: UIButton) {
@@ -53,9 +63,10 @@ class Step4PopupVC: UIViewController {
             popupViewImage.image = firstUserPopupViewImage
             watchVideoButton.isHidden = false
             UIView.animate(withDuration: 0.2, animations: {
-                self.watchVideoButtonHeight.constant = 0
                 self.view.layoutIfNeeded()
             })
+            watchVideoButton.setTitle("age-appropriate jobs list", for: .normal)
+            shouldChangeWatchVideoButtonTitle = true
             isFirstUser = false
         } else {
             dismiss(animated: true, completion: nil)
