@@ -77,9 +77,7 @@ class Step4VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
         }
         
         loadMembers { (usersArray) in
-            
             var memberImageCount = 0
-            
             for user in usersArray {
                 self.loadMemberProfilePict(userImageURL: user.imageURL, userFirstName: user.firstName, userBirthday: user.birthday, userPasscode: user.passcode, userGender: user.gender, userChildParent: user.childParent, completion: { (usersIntermediateArray) in
                     memberImageCount += 1
@@ -96,43 +94,6 @@ class Step4VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
                     }
                 })
             }
-            
-            
-            
-            
-            
-            
-            
-            
-//            var memberImageCount = 0
-//            for user in usersArray {
-//                self.loadMemberProfilePict(userImageURL: user.imageURL, userFirstName: user.firstName, userBirthday: user.birthday, userPasscode: user.passcode, userGender: user.gender, userChildParent: user.childParent, completion: { (usersIntermediateArray) in
-//                    memberImageCount += 1
-//                    if memberImageCount == usersArray.count {
-//                        self.users = usersIntermediateArray
-//                        
-//                        // check to see if user had already assigned jobs, and if so, skip the user intro
-//                        self.ref.child("dailyJobs").queryOrdered(byChild: "assigned").queryEqual(toValue: self.users[self.currentMember].firstName).observeSingleEvent(of: .value, with: { (snapshot: FIRDataSnapshot) in
-//                            if snapshot.childrenCount > 0 {
-//                                self.userImage.image = self.users[0].photo
-//                                self.currentUserName = self.users[0].firstName
-//                                self.instructionsLabel.text = "Choose daily and weekly job assignments for \(self.users[0].firstName)."
-//                                self.navigationItem.title = self.users[0].firstName
-//                                self.jobsTableView.reloadData()
-//                            } else {
-//                                self.performSegue(withIdentifier: "UserIntroPopup", sender: self)
-//                                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: {
-//                                    self.userImage.image = self.users[0].photo
-//                                    self.currentUserName = self.users[0].firstName
-//                                    self.instructionsLabel.text = "Choose daily and weekly job assignments for \(self.users[0].firstName)."
-//                                    self.navigationItem.title = self.users[0].firstName
-//                                    self.jobsTableView.reloadData()
-//                                })
-//                            }
-//                        })
-//                    }
-//                })
-//            }
         }
     }
     
@@ -306,8 +267,78 @@ class Step4VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
                 // -------------------------------------------------------
                 
                 self.jobsTableView.reloadData()
-                let alert = UIAlertController(title: "Job Selection", message: "The job you selected (\(dailyJobs[indexPath.row].name)) is already assigned to \(dailyJobs[indexPath.row].assigned).\n\nPlease choose another job.", preferredStyle: .alert)
-                alert.addAction(UIAlertAction(title: "okay", style: .cancel, handler: { (action) in
+                let alert = UIAlertController(title: "Job Selection", message: "The job you selected (\(dailyJobs[indexPath.row].name)) is already assigned to \(dailyJobs[indexPath.row].assigned).\n\nDo you want to reassign it to \(users[currentMember].firstName) instead?", preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "cancel", style: .cancel, handler: { (action) in
+                    alert.dismiss(animated: true, completion: nil)
+                }))
+                alert.addAction(UIAlertAction(title: "reassign", style: .default, handler: { (action) in
+                    
+                    // check for number of currently assigned jobs for user
+                    var selectedDailyJobsCount = 1      // currently selected job counts as 1 job even tho it hasn't been assigned yet...
+                    for job in self.dailyJobs {
+                        if job.assigned == self.currentUserName {
+                            selectedDailyJobsCount += 1
+                        }
+                    }
+                    
+                    // -------------------------------------------------
+                    // check to see if user already has too many jobs...
+                    // -------------------------------------------------
+                    
+                    if selectedDailyJobsCount > self.dailyJobsMax {
+                        let alert = UIAlertController(title: "Daily Jobs", message: "You have chosen more than 3 daily jobs for \(self.currentUserName!). This is not recommended because \(self.currentUserName!) won't be able to finish within the 30-minute time limit.\n\nAre you sure you want to assign \(self.currentUserName!) \(selectedDailyJobsCount) daily jobs?", preferredStyle: .alert)
+                        // if user taps cancel, dismiss the alert and do nothing else
+                        alert.addAction(UIAlertAction(title: "cancel", style: .cancel, handler: { (action) in
+                            alert.dismiss(animated: true, completion: nil)
+                        }))
+                        // if user taps okay, dismiss alert, increase daily max, change job to new user, and reload table data
+                        alert.addAction(UIAlertAction(title: "okay", style: .default, handler: { (action) in
+                            self.dailyJobsMax = self.dailyJobsMax + 1
+                            // update local array
+                            self.dailyJobs[indexPath.row].assigned = self.users[self.currentMember].firstName
+                            self.jobsTableView.reloadData()
+                            // update firebase
+                            self.ref.child("dailyJobs").queryOrdered(byChild: "order").queryEqual(toValue: indexPath.row).observeSingleEvent(of: .childAdded, with: { (snapshot) in
+                                snapshot.ref.updateChildValues(["assigned" : self.currentUserName])
+                            })
+                            alert.dismiss(animated: true, completion: nil)
+                        }))
+                        self.present(alert, animated: true, completion: nil)
+                    } else {
+                        
+                        // ------------------------------------------------------------------
+                        // ...if user doesn't have too many jobs, then assign the job to them
+                        // ------------------------------------------------------------------
+                        
+                        self.dailyJobs[indexPath.row].assigned = self.users[self.currentMember].firstName
+                        self.jobsTableView.reloadData()
+                        // update firebase
+                        self.ref.child("dailyJobs").queryOrdered(byChild: "order").queryEqual(toValue: indexPath.row).observeSingleEvent(of: .childAdded, with: { (snapshot) in
+                            snapshot.ref.updateChildValues(["assigned" : self.currentUserName])
+                        })
+                    }
+                    self.jobsTableView.reloadData()
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
                     alert.dismiss(animated: true, completion: nil)
                 }))
                 present(alert, animated: true, completion: nil)

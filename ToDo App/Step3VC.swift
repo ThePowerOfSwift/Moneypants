@@ -68,11 +68,11 @@ class Step3VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
                         }
                     }
                     
-                    let dailyJob = JobsAndHabits(jobName: newDailyJobName, jobMultiplier: 1, jobAssign: "none", jobOrder: self.dailyJobs.count + i)
+                    let dailyJob = JobsAndHabits(jobName: newDailyJobName, jobMultiplier: 1, jobAssign: "none", jobOrder: self.dailyJobs.count + (i - 1))
                     self.dailyJobs.append(dailyJob)
                     self.jobsTableView.reloadData()
                     // append new jobs to Firebase
-                    self.ref.child("dailyJobs").childByAutoId().setValue(["name" : newDailyJobName, "multiplier" : 1, "assigned" : "none", "order" : self.dailyJobs.count + i])
+                    self.ref.child("dailyJobs").childByAutoId().setValue(["name" : newDailyJobName, "multiplier" : 1, "assigned" : "none", "order" : self.dailyJobs.count + (i - 1)])
                 }
             }
             

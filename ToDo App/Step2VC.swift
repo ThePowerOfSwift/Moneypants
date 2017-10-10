@@ -111,7 +111,11 @@ class Step2VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
     }
     
     @IBAction func addMemberButtonTapped(_ sender: UIButton) {
-        performSegue(withIdentifier: "AddUser", sender: self)
+        if users.count >= 20 {
+            createAlert(alertTitle: "Users", alertMessage: "You have reached your maximum number of users (20).")
+        } else {
+            performSegue(withIdentifier: "AddUser", sender: self)
+        }
     }
     
     @IBAction func nextButtonTapped(_ sender: UIButton) {
