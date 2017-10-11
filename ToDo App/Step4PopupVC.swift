@@ -12,16 +12,13 @@ class Step4PopupVC: UIViewController {
     @IBOutlet weak var mainLabel: UILabel!
     @IBOutlet weak var bodyLabel: UILabel!
     
-    var mainLabelText: String! = "Assign Jobs"
-    var bodyLabelText: String! = "You are now going to assign daily and weekly jobs to each family member, starting with the youngest child.\n\nParents will be assigned last."
-    var popupImage: UIImage! = UIImage(named: "clipboard black")
+    var mainLabelText: String!
+    var bodyLabelText: String!
+    var popupImage: UIImage!
     
-    var isFirstUser = false
-    var firstUserMainLabelText: String!
-    var firstUserBodyLabelText: String!
-    var firstUserPopupViewImage: UIImage!
-    
-    var shouldChangeWatchVideoButtonTitle = false
+    // these are default values unless otherwise called from Step4VC
+    var watchVideoButtonHiddenStatus = false
+    var watchVideoButtonHeightValue: CGFloat = 50
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,6 +26,8 @@ class Step4PopupVC: UIViewController {
         mainLabel.text = mainLabelText
         bodyLabel.text = bodyLabelText
         popupViewImage.image = popupImage
+        watchVideoButtonHeight.constant = watchVideoButtonHeightValue
+        watchVideoButton.isHidden = watchVideoButtonHiddenStatus
         
         popupView.layer.cornerRadius = 15
         popupView.layer.masksToBounds = true
@@ -40,36 +39,13 @@ class Step4PopupVC: UIViewController {
         watchVideoButton.titleLabel?.numberOfLines = 0
         watchVideoButton.titleLabel?.lineBreakMode = NSLineBreakMode.byWordWrapping
         watchVideoButton.titleLabel?.textAlignment = .center
-        
-        if shouldChangeWatchVideoButtonTitle {
-            watchVideoButton.setTitle("age-appropriate jobs list", for: .normal)
-        } else {
-            watchVideoButton.setTitle("click here to watch a short video", for: .normal)
-        }
     }
     
     @IBAction func watchVideoButtonTapped(_ sender: UIButton) {
-        if shouldChangeWatchVideoButtonTitle {
-            performSegue(withIdentifier: "AgeAppropriatePopup", sender: self)
-        } else {
-            performSegue(withIdentifier: "VideoPopup", sender: self)
-        }
+        performSegue(withIdentifier: "AgeAppropriatePopup", sender: self)
     }
     
     @IBAction func dismissPopupButtonTapped(_ sender: UIButton) {
-        if isFirstUser == true {
-            mainLabel.text = firstUserMainLabelText
-            bodyLabel.text = firstUserBodyLabelText
-            popupViewImage.image = firstUserPopupViewImage
-            watchVideoButton.isHidden = false
-            UIView.animate(withDuration: 0.2, animations: {
-                self.view.layoutIfNeeded()
-            })
-            watchVideoButton.setTitle("age-appropriate jobs list", for: .normal)
-            shouldChangeWatchVideoButtonTitle = true
-            isFirstUser = false
-        } else {
             dismiss(animated: true, completion: nil)
-        }
     }
 }

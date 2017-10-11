@@ -4,6 +4,8 @@ import Firebase
 class Step2VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
     @IBOutlet weak var usersTableView: UITableView!
+    @IBOutlet weak var nextButton: UIButton!
+    @IBOutlet weak var addMemberButton: UIButton!
     
     var users = [User]()        // create variable called 'users' which is an array of type User (which is a class we created)
     
@@ -12,15 +14,23 @@ class Step2VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
     var ref: FIRDatabaseReference!
     
     var cellStyleForEditing: UITableViewCellEditingStyle = .none
+    let activityIndicator = UIActivityIndicatorView()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         navigationItem.title = "users"
+        nextButton.isEnabled = false
+        addMemberButton.isEnabled = false
         
         usersTableView.dataSource = self
         usersTableView.delegate = self
         usersTableView.tableFooterView = UIView()
+        
+        activityIndicator.center = self.view.center
+        activityIndicator.hidesWhenStopped = true
+        activityIndicator.activityIndicatorViewStyle = .gray
+        view.addSubview(activityIndicator)
         
         // --------
         // Firebase
@@ -32,7 +42,15 @@ class Step2VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
         
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "edit", style: .plain, target: self, action: #selector(editButtonTapped))
         
-        loadExistingUsers()     // check to see if there are existing users, and if so, load them into tableview
+        loadExistingUsers { (usersList) in     // check to see if there are existing users, and if so, load them into tableview
+            self.ref.child("members").observeSingleEvent(of: .value, with: { (snapshot) in
+                if usersList.count == Int(snapshot.childrenCount) {
+                    self.nextButton.isEnabled = true        // don't enable button until all users are loaded
+                    self.addMemberButton.isEnabled = true
+                    self.activityIndicator.stopAnimating()
+                }
+            })
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -111,6 +129,7 @@ class Step2VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
     }
     
     @IBAction func addMemberButtonTapped(_ sender: UIButton) {
+        usersTableView.setEditing(false, animated: true)
         if users.count >= 20 {
             createAlert(alertTitle: "Users", alertMessage: "You have reached your maximum number of users (20).")
         } else {
@@ -119,6 +138,7 @@ class Step2VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
     }
     
     @IBAction func nextButtonTapped(_ sender: UIButton) {
+        usersTableView.setEditing(false, animated: true)
         // check for at least two users
         if users.count < 2 {
             createAlert(alertTitle: "Users", alertMessage: "You have not created enough users. Please enter in at least two users.")
@@ -139,7 +159,8 @@ class Step2VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
     // ---------
     
     // if users exist on Firebase, load them
-    func loadExistingUsers() {
+    func loadExistingUsers(completion: @escaping ([User]) -> ()) {
+        activityIndicator.startAnimating()
         ref.child("members").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
             for item in snapshot.children {
                 if let snap = item as? FIRDataSnapshot {
@@ -162,8 +183,9 @@ class Step2VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
                                             isUserChildOrParent: childParent)
                             self.users.append(user)
                             self.users.sort(by: {$0.birthday < $1.birthday})
-                            
                             self.usersTableView.reloadData()
+
+                            completion(self.users)
                         })
                     }
                 }
