@@ -4,6 +4,10 @@ import Firebase
 class Step4PaydayInspectVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
     
     @IBOutlet weak var scrollView: UIScrollView!
+    @IBOutlet weak var secondView: UIView!
+    @IBOutlet weak var thirdView: UIView!
+    @IBOutlet weak var fourthView: UIView!
+    
     @IBOutlet weak var paydayParentButton: UIButton!
     @IBOutlet weak var paydayDateButton: UIButton!
     @IBOutlet weak var paydayDatePicker: UIPickerView!
@@ -31,8 +35,8 @@ class Step4PaydayInspectVC: UIViewController, UIPickerViewDelegate, UIPickerView
         
         paydayParentButton.isEnabled = false
         nextButton.isEnabled = false
-        paydayDateTopConstraint.constant = -324
-        inspectionsParentTopConstraint.constant = -160
+        paydayDateTopConstraint.constant = -(thirdView.bounds.height)
+        inspectionsParentTopConstraint.constant = -(fourthView.bounds.height)
         paydayDatePicker.delegate = self
         paydayDateButton.layer.backgroundColor = UIColor.red.cgColor
         paydayDateButton.setTitle("\(selectedDay) \(selectedHour) \(selectedAMPM)?", for: .normal)
@@ -63,17 +67,13 @@ class Step4PaydayInspectVC: UIViewController, UIPickerViewDelegate, UIPickerView
         return paydayOptions[component].count
     }
     
-//    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-//        return paydayOptions[component][row]
-//    }
-    
     func pickerView(_ pickerView: UIPickerView, widthForComponent component: Int) -> CGFloat {
         if component == 0 {
             return 110
         } else if component == 1 {
-            return 30
+            return 70
         } else {
-            return 60
+            return 70
         }
     }
     
@@ -81,12 +81,11 @@ class Step4PaydayInspectVC: UIViewController, UIPickerViewDelegate, UIPickerView
         var pickerLabel: UILabel? = (view as? UILabel)
         if pickerLabel == nil {
             pickerLabel = UILabel()
-//            pickerLabel?.font = UIFont(name: "Arista", size: 48)
+            
+            pickerLabel?.font = UIFont.systemFont(ofSize: 23.0)
             pickerLabel?.textAlignment = .center
         }
         pickerLabel?.text = paydayOptions[component][row]
-//        pickerLabel?.textColor = UIColor.blue
-        
         return pickerLabel!
     }
     
@@ -103,7 +102,6 @@ class Step4PaydayInspectVC: UIViewController, UIPickerViewDelegate, UIPickerView
         paydayTimeConfirmed = false
         paydayDateButton.setTitle("\(selectedDay) \(selectedHour) \(selectedAMPM)?", for: .normal)
     }
-
     
     
     // ----------
@@ -121,9 +119,7 @@ class Step4PaydayInspectVC: UIViewController, UIPickerViewDelegate, UIPickerView
                     self.paydayDateTopConstraint.constant = 0        // reveal next button
                     self.view.layoutIfNeeded()
                 }
-                let bottomOffset = CGPoint(x: 0, y: self.scrollView.contentSize.height - self.scrollView.bounds.size.height)
-                self.scrollView.setContentOffset(bottomOffset, animated: true)
-                
+                self.scrollPageIfNeeded()
                 // send selection to Firebase
                 self.ref.child("paydayAndInspections").updateChildValues(["paydayParent" : user.firstName])
             }))
@@ -143,12 +139,10 @@ class Step4PaydayInspectVC: UIViewController, UIPickerViewDelegate, UIPickerView
         UIView.animate(withDuration: 0.25) {
             self.inspectionsParentTopConstraint.constant = 0     // reveal next button
             self.view.layoutIfNeeded()
-            let bottomOffset = CGPoint(x: 0, y: self.scrollView.contentSize.height - self.scrollView.bounds.size.height)
-            self.scrollView.setContentOffset(bottomOffset, animated: true)
+            self.scrollPageIfNeeded()
         }
+        // send selection to Firebase
         self.ref.child("paydayAndInspections").updateChildValues(["paydayTime" : "\(selectedDay) \(selectedHour) \(selectedAMPM)"])
-        
-        // set Firebase update code here
     }
     
     @IBAction func inspectionsParentButtonTapped(_ sender: UIButton) {
@@ -207,6 +201,19 @@ class Step4PaydayInspectVC: UIViewController, UIPickerViewDelegate, UIPickerView
             completion(usersArray)
         }
     }
+    
+    func scrollPageIfNeeded() {
+        let height1 = self.secondView.bounds.height
+        let height2 = self.paydayDateTopConstraint.constant + self.thirdView.bounds.height
+        let height3 = self.inspectionsParentTopConstraint.constant + self.fourthView.bounds.height
+        let heightTotal = height1 + height2 + height3
+        
+        if heightTotal > self.scrollView.bounds.height {
+            let bottomOffset = CGPoint(x: 0, y: self.scrollView.contentSize.height - self.scrollView.bounds.size.height)
+            self.scrollView.setContentOffset(bottomOffset, animated: true)
+        }
+    }
+
 }
 
 

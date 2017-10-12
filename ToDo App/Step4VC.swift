@@ -683,7 +683,7 @@ class Step4VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
             
             // 4A. all daily jobs are NOT assigned
             if snapshot.childrenCount != 0 {
-                let alert = UIAlertController(title: "Review Family Assignments", message: "There are some daily jobs that have not been assigned to any users. All daily jobs must be assigned to family members.\n\nIf a job is not going to be assigned, use the 'back' button to return to the job creation page and delete that job.", preferredStyle: .alert)
+                let alert = UIAlertController(title: "Unassigned Daily Jobs", message: "Please go back and assign all the daily jobs to family members.\n\nIf a job is not going to be assigned, use the 'back' button to return to the job creation page and delete that job.", preferredStyle: .alert)
                 alert.addAction(UIAlertAction(title: "okay", style: .cancel, handler: { (action) in
                     alert.dismiss(animated: true, completion: nil)
                     self.selectUsersButton.isHidden = false
@@ -701,7 +701,7 @@ class Step4VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
                 
                 // 5A. at least one user does NOT have at least one daily job
                 if self.checkIfAllUsersHaveDailyJobs() == false {
-                    let alert = UIAlertController(title: "Unassigned User", message: "The following user(s) do not have at least one daily job assignment: \(self.whatUsersDontHaveJobs()).", preferredStyle: .alert)
+                    let alert = UIAlertController(title: "Unassigned User", message: "Please assign at least one daily job to the following family members: \(self.whatUsersDontHaveJobs()).", preferredStyle: .alert)
                     alert.addAction(UIAlertAction(title: "okay", style: .cancel, handler: { (action) in
                         alert.dismiss(animated: true, completion: nil)
                         self.selectUsersButton.isHidden = false

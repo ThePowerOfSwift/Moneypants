@@ -5575,31 +5575,23 @@ For each family member, select one or more daily and weekly jobs. Parents will g
         <!--Payday & Inspections-->
         <scene sceneID="Piy-6Z-akj">
             <objects>
-                <viewController title="Payday &amp; Inspections" id="eva-7M-bf6" customClass="Step4PaydayInspectVC" customModule="ToDo_App" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController title="Payday &amp; Inspections" automaticallyAdjustsScrollViewInsets="NO" id="eva-7M-bf6" customClass="Step4PaydayInspectVC" customModule="ToDo_App" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="yGf-MR-Z1i"/>
                         <viewControllerLayoutGuide type="bottom" id="fCp-vm-YET"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="e2G-cp-uW4">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="750"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mEB-QJ-rcb">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="698"/>
+                                <rect key="frame" x="0.0" y="44" width="320" height="472"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="e00-vf-yxf" userLabel="Fourth View">
-                                        <rect key="frame" x="0.0" y="459" width="320" height="174"/>
+                                        <rect key="frame" x="0.0" y="551" width="320" height="205"/>
                                         <subviews>
-                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="0iN-rZ-bwr">
-                                                <rect key="frame" x="60" y="0.0" width="200" height="1"/>
-                                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="width" constant="200" id="dYk-Cg-0VH"/>
-                                                    <constraint firstAttribute="height" constant="1" id="n0S-HZ-vpn"/>
-                                                </constraints>
-                                            </imageView>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Which parent will perform daily inspections?" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hBu-od-5aq">
-                                                <rect key="frame" x="60" y="65" width="200" height="41"/>
+                                                <rect key="frame" x="60" y="96" width="200" height="41"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="200" id="VQ9-Y2-wME"/>
                                                 </constraints>
@@ -5608,14 +5600,14 @@ For each family member, select one or more daily and weekly jobs. Parents will g
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="checklist black" translatesAutoresizingMaskIntoConstraints="NO" id="fpq-XE-HhX">
-                                                <rect key="frame" x="140" y="17" width="40" height="40"/>
+                                                <rect key="frame" x="140" y="40" width="40" height="40"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="40" id="JCl-RS-MG7"/>
                                                     <constraint firstAttribute="height" constant="40" id="MAo-SL-z5m"/>
                                                 </constraints>
                                             </imageView>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WqQ-9Y-prl">
-                                                <rect key="frame" x="60" y="122" width="200" height="36"/>
+                                                <rect key="frame" x="60" y="153" width="200" height="36"/>
                                                 <color key="backgroundColor" red="0.94901960780000005" green="0.39607843139999999" blue="0.1333333333" alpha="1" colorSpace="calibratedRGB"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="200" id="Bzc-Ab-h7z"/>
@@ -5635,22 +5627,33 @@ For each family member, select one or more daily and weekly jobs. Parents will g
                                                     <action selector="inspectionsParentButtonTapped:" destination="eva-7M-bf6" eventType="touchUpInside" id="G3D-QD-czn"/>
                                                 </connections>
                                             </button>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="job inspections" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ksc-uv-e7f">
+                                                <rect key="frame" x="0.0" y="0.0" width="320" height="24"/>
+                                                <color key="backgroundColor" red="0.60392156860000001" green="0.60392156860000001" blue="0.60392156860000001" alpha="1" colorSpace="calibratedRGB"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="24" id="LcE-mf-6pg"/>
+                                                </constraints>
+                                                <fontDescription key="fontDescription" name="Arista2.0" family="Arista 2.0" pointSize="20"/>
+                                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
                                         </subviews>
                                         <color key="backgroundColor" white="0.90000000000000002" alpha="1" colorSpace="calibratedWhite"/>
                                         <constraints>
                                             <constraint firstItem="fpq-XE-HhX" firstAttribute="centerX" secondItem="e00-vf-yxf" secondAttribute="centerX" id="82g-iN-cfV"/>
+                                            <constraint firstItem="ksc-uv-e7f" firstAttribute="leading" secondItem="e00-vf-yxf" secondAttribute="leading" id="F1f-zV-FSp"/>
+                                            <constraint firstItem="fpq-XE-HhX" firstAttribute="top" secondItem="ksc-uv-e7f" secondAttribute="bottom" constant="16" id="LuY-pi-FDK"/>
                                             <constraint firstItem="WqQ-9Y-prl" firstAttribute="centerX" secondItem="e00-vf-yxf" secondAttribute="centerX" id="MVy-Oh-oOD"/>
-                                            <constraint firstItem="fpq-XE-HhX" firstAttribute="top" secondItem="0iN-rZ-bwr" secondAttribute="bottom" constant="16" id="N9T-gs-K23"/>
-                                            <constraint firstItem="0iN-rZ-bwr" firstAttribute="centerX" secondItem="e00-vf-yxf" secondAttribute="centerX" id="QsZ-77-Sbo"/>
+                                            <constraint firstAttribute="trailing" secondItem="ksc-uv-e7f" secondAttribute="trailing" id="YWT-PR-c8v"/>
                                             <constraint firstItem="hBu-od-5aq" firstAttribute="centerX" secondItem="e00-vf-yxf" secondAttribute="centerX" id="bLa-r9-6wJ"/>
-                                            <constraint firstItem="hBu-od-5aq" firstAttribute="top" secondItem="fpq-XE-HhX" secondAttribute="bottom" constant="8" id="dyb-5y-S8S"/>
+                                            <constraint firstItem="hBu-od-5aq" firstAttribute="top" secondItem="fpq-XE-HhX" secondAttribute="bottom" constant="16" id="dyb-5y-S8S"/>
                                             <constraint firstItem="WqQ-9Y-prl" firstAttribute="top" secondItem="hBu-od-5aq" secondAttribute="bottom" constant="16" id="iwD-tT-kha"/>
                                             <constraint firstAttribute="bottom" secondItem="WqQ-9Y-prl" secondAttribute="bottom" constant="16" id="jPH-Yl-u1y"/>
-                                            <constraint firstItem="0iN-rZ-bwr" firstAttribute="top" secondItem="e00-vf-yxf" secondAttribute="top" id="sHg-8Z-5Yh"/>
+                                            <constraint firstItem="ksc-uv-e7f" firstAttribute="top" secondItem="e00-vf-yxf" secondAttribute="top" id="ljc-2g-tcl"/>
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8Rg-34-zwS" userLabel="Third View">
-                                        <rect key="frame" x="0.0" y="165" width="320" height="294"/>
+                                        <rect key="frame" x="0.0" y="189" width="320" height="362"/>
                                         <subviews>
                                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="7zn-BP-ejO">
                                                 <rect key="frame" x="60" y="0.0" width="200" height="1"/>
@@ -5661,7 +5664,7 @@ For each family member, select one or more daily and weekly jobs. Parents will g
                                                 </constraints>
                                             </imageView>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="When will you hold payday?" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zrr-cD-91k">
-                                                <rect key="frame" x="60" y="65" width="200" height="41"/>
+                                                <rect key="frame" x="60" y="73" width="200" height="41"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="200" id="NQq-He-DMM"/>
                                                 </constraints>
@@ -5677,7 +5680,7 @@ For each family member, select one or more daily and weekly jobs. Parents will g
                                                 </constraints>
                                             </imageView>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="W88-px-59b">
-                                                <rect key="frame" x="60" y="242" width="200" height="36"/>
+                                                <rect key="frame" x="60" y="310" width="200" height="36"/>
                                                 <color key="backgroundColor" red="0.94901960780000005" green="0.39607843139999999" blue="0.1333333333" alpha="1" colorSpace="calibratedRGB"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="200" id="gfZ-Tj-EfE"/>
@@ -5698,10 +5701,10 @@ For each family member, select one or more daily and weekly jobs. Parents will g
                                                 </connections>
                                             </button>
                                             <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DGw-2l-1TK">
-                                                <rect key="frame" x="60" y="114" width="200" height="120"/>
+                                                <rect key="frame" x="35" y="122" width="250" height="180"/>
                                                 <constraints>
-                                                    <constraint firstAttribute="height" constant="120" id="aJH-lj-8Ly"/>
-                                                    <constraint firstAttribute="width" constant="200" id="qsc-jY-9Tg"/>
+                                                    <constraint firstAttribute="height" constant="180" id="aJH-lj-8Ly"/>
+                                                    <constraint firstAttribute="width" constant="250" id="qsc-jY-9Tg"/>
                                                 </constraints>
                                             </pickerView>
                                         </subviews>
@@ -5710,22 +5713,21 @@ For each family member, select one or more daily and weekly jobs. Parents will g
                                             <constraint firstItem="o4e-sf-Ne7" firstAttribute="centerX" secondItem="8Rg-34-zwS" secondAttribute="centerX" id="3KQ-tb-GBn"/>
                                             <constraint firstItem="DGw-2l-1TK" firstAttribute="centerX" secondItem="8Rg-34-zwS" secondAttribute="centerX" id="8UE-3j-iUt"/>
                                             <constraint firstItem="DGw-2l-1TK" firstAttribute="top" secondItem="zrr-cD-91k" secondAttribute="bottom" constant="8" id="Mls-8s-6KQ"/>
-                                            <constraint firstItem="zrr-cD-91k" firstAttribute="top" secondItem="o4e-sf-Ne7" secondAttribute="bottom" constant="8" id="X7v-FD-0e9"/>
+                                            <constraint firstItem="zrr-cD-91k" firstAttribute="top" secondItem="o4e-sf-Ne7" secondAttribute="bottom" constant="16" id="X7v-FD-0e9"/>
                                             <constraint firstItem="7zn-BP-ejO" firstAttribute="centerX" secondItem="8Rg-34-zwS" secondAttribute="centerX" id="b1P-gm-ngL"/>
                                             <constraint firstItem="zrr-cD-91k" firstAttribute="centerX" secondItem="8Rg-34-zwS" secondAttribute="centerX" id="dPG-6c-V6y"/>
                                             <constraint firstItem="W88-px-59b" firstAttribute="centerX" secondItem="8Rg-34-zwS" secondAttribute="centerX" id="guS-mk-3Yi"/>
                                             <constraint firstAttribute="bottom" secondItem="W88-px-59b" secondAttribute="bottom" constant="16" id="hTF-6R-YV3"/>
                                             <constraint firstItem="W88-px-59b" firstAttribute="top" secondItem="DGw-2l-1TK" secondAttribute="bottom" constant="8" id="iXC-6v-4hn"/>
                                             <constraint firstItem="7zn-BP-ejO" firstAttribute="top" secondItem="8Rg-34-zwS" secondAttribute="top" id="kVN-4X-Nwh"/>
-                                            <constraint firstItem="zrr-cD-91k" firstAttribute="top" secondItem="o4e-sf-Ne7" secondAttribute="bottom" constant="8" id="tVS-ZC-55k"/>
                                             <constraint firstItem="o4e-sf-Ne7" firstAttribute="top" secondItem="7zn-BP-ejO" secondAttribute="bottom" constant="16" id="xUR-O3-DQL"/>
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nYc-zm-kgQ" userLabel="Second View">
-                                        <rect key="frame" x="0.0" y="0.0" width="320" height="165"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="320" height="189"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Which parent will be responsible for payday?" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PpN-K9-tH6">
-                                                <rect key="frame" x="60" y="56" width="200" height="41"/>
+                                                <rect key="frame" x="60" y="80" width="200" height="41"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="200" id="Ikl-Fv-OB9"/>
                                                 </constraints>
@@ -5734,14 +5736,14 @@ For each family member, select one or more daily and weekly jobs. Parents will g
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="cash stack" translatesAutoresizingMaskIntoConstraints="NO" id="GEw-Ob-Nvl">
-                                                <rect key="frame" x="140" y="8" width="40" height="40"/>
+                                                <rect key="frame" x="140" y="32" width="40" height="40"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="40" id="IcC-6L-N1f"/>
                                                     <constraint firstAttribute="height" constant="40" id="ZzM-q7-blV"/>
                                                 </constraints>
                                             </imageView>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zP9-YY-cNd">
-                                                <rect key="frame" x="60" y="113" width="200" height="36"/>
+                                                <rect key="frame" x="60" y="137" width="200" height="36"/>
                                                 <color key="backgroundColor" red="0.94901960780000005" green="0.39607843139999999" blue="0.1333333333" alpha="1" colorSpace="calibratedRGB"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="200" id="1Dz-jk-tMd"/>
@@ -5761,15 +5763,28 @@ For each family member, select one or more daily and weekly jobs. Parents will g
                                                     <action selector="paydayParentButtonTapped:" destination="eva-7M-bf6" eventType="touchUpInside" id="uVO-73-8GG"/>
                                                 </connections>
                                             </button>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="payday" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CgN-ry-BMZ">
+                                                <rect key="frame" x="0.0" y="0.0" width="320" height="24"/>
+                                                <color key="backgroundColor" red="0.60392156860000001" green="0.60392156860000001" blue="0.60392156860000001" alpha="1" colorSpace="calibratedRGB"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="24" id="rG7-40-PSV"/>
+                                                </constraints>
+                                                <fontDescription key="fontDescription" name="Arista2.0" family="Arista 2.0" pointSize="20"/>
+                                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
                                         </subviews>
                                         <color key="backgroundColor" red="0.90196078430000004" green="0.90196078430000004" blue="0.90196078430000004" alpha="1" colorSpace="calibratedRGB"/>
                                         <constraints>
                                             <constraint firstItem="zP9-YY-cNd" firstAttribute="centerX" secondItem="nYc-zm-kgQ" secondAttribute="centerX" id="40H-AG-K2w"/>
-                                            <constraint firstItem="GEw-Ob-Nvl" firstAttribute="top" secondItem="nYc-zm-kgQ" secondAttribute="top" constant="8" id="6Us-3E-vbj"/>
                                             <constraint firstItem="PpN-K9-tH6" firstAttribute="top" secondItem="GEw-Ob-Nvl" secondAttribute="bottom" constant="8" id="6qR-Sj-Fmc"/>
                                             <constraint firstItem="PpN-K9-tH6" firstAttribute="centerX" secondItem="nYc-zm-kgQ" secondAttribute="centerX" id="9vc-Pr-pv3"/>
+                                            <constraint firstAttribute="trailing" secondItem="CgN-ry-BMZ" secondAttribute="trailing" id="DXs-ZD-or7"/>
+                                            <constraint firstItem="CgN-ry-BMZ" firstAttribute="leading" secondItem="nYc-zm-kgQ" secondAttribute="leading" id="JbF-jo-eC5"/>
                                             <constraint firstItem="GEw-Ob-Nvl" firstAttribute="centerX" secondItem="nYc-zm-kgQ" secondAttribute="centerX" id="L59-ug-KK5"/>
+                                            <constraint firstItem="GEw-Ob-Nvl" firstAttribute="top" secondItem="CgN-ry-BMZ" secondAttribute="bottom" constant="8" id="PoQ-sC-dCj"/>
                                             <constraint firstItem="zP9-YY-cNd" firstAttribute="top" secondItem="PpN-K9-tH6" secondAttribute="bottom" constant="16" id="aJp-Ag-bgv"/>
+                                            <constraint firstItem="CgN-ry-BMZ" firstAttribute="top" secondItem="nYc-zm-kgQ" secondAttribute="top" id="mfu-3f-2iP"/>
                                             <constraint firstAttribute="bottom" secondItem="zP9-YY-cNd" secondAttribute="bottom" constant="16" id="zEC-jT-6VK"/>
                                         </constraints>
                                     </view>
@@ -5777,11 +5792,11 @@ For each family member, select one or more daily and weekly jobs. Parents will g
                                 <color key="backgroundColor" white="0.90000000000000002" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="bottom" secondItem="e00-vf-yxf" secondAttribute="bottom" id="6CO-vY-zIk"/>
+                                    <constraint firstItem="nYc-zm-kgQ" firstAttribute="top" secondItem="mEB-QJ-rcb" secondAttribute="top" id="9hE-if-hpy"/>
                                     <constraint firstAttribute="trailing" secondItem="e00-vf-yxf" secondAttribute="trailing" id="Ofu-UX-Cll"/>
                                     <constraint firstItem="nYc-zm-kgQ" firstAttribute="width" secondItem="mEB-QJ-rcb" secondAttribute="width" id="Qc6-6x-MOZ"/>
                                     <constraint firstItem="nYc-zm-kgQ" firstAttribute="leading" secondItem="mEB-QJ-rcb" secondAttribute="leading" id="Wn4-DR-m0h"/>
                                     <constraint firstAttribute="trailing" secondItem="nYc-zm-kgQ" secondAttribute="trailing" id="dTU-eO-BY4"/>
-                                    <constraint firstItem="nYc-zm-kgQ" firstAttribute="top" secondItem="mEB-QJ-rcb" secondAttribute="top" id="dfp-0R-7ve"/>
                                     <constraint firstItem="8Rg-34-zwS" firstAttribute="leading" secondItem="mEB-QJ-rcb" secondAttribute="leading" id="hQl-cM-E1I"/>
                                     <constraint firstAttribute="trailing" secondItem="8Rg-34-zwS" secondAttribute="trailing" id="k8X-NI-5Tj"/>
                                     <constraint firstItem="8Rg-34-zwS" firstAttribute="top" secondItem="nYc-zm-kgQ" secondAttribute="bottom" id="lUo-gC-4qf"/>
@@ -5790,7 +5805,7 @@ For each family member, select one or more daily and weekly jobs. Parents will g
                                 </constraints>
                             </scrollView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="PjP-Kd-Zco">
-                                <rect key="frame" x="0.0" y="698" width="320" height="52"/>
+                                <rect key="frame" x="0.0" y="516" width="320" height="52"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="m4D-16-CdS">
                                         <rect key="frame" x="174" y="8" width="130" height="36"/>
@@ -5842,18 +5857,17 @@ For each family member, select one or more daily and weekly jobs. Parents will g
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="mEB-QJ-rcb" firstAttribute="top" secondItem="e2G-cp-uW4" secondAttribute="top" id="A8a-tr-9Xy"/>
                             <constraint firstItem="PjP-Kd-Zco" firstAttribute="top" secondItem="mEB-QJ-rcb" secondAttribute="bottom" id="Cd0-Ih-beg"/>
                             <constraint firstItem="mEB-QJ-rcb" firstAttribute="leading" secondItem="e2G-cp-uW4" secondAttribute="leading" id="Mne-41-DIN"/>
                             <constraint firstAttribute="trailing" secondItem="PjP-Kd-Zco" secondAttribute="trailing" id="Nkg-Eh-BZv"/>
                             <constraint firstItem="fCp-vm-YET" firstAttribute="top" secondItem="PjP-Kd-Zco" secondAttribute="bottom" id="Tkp-j5-Pj8"/>
+                            <constraint firstItem="mEB-QJ-rcb" firstAttribute="top" secondItem="yGf-MR-Z1i" secondAttribute="bottom" id="TwB-8q-rdq"/>
                             <constraint firstItem="PjP-Kd-Zco" firstAttribute="leading" secondItem="e2G-cp-uW4" secondAttribute="leading" id="aQb-yD-HQU"/>
                             <constraint firstAttribute="trailing" secondItem="mEB-QJ-rcb" secondAttribute="trailing" id="eDu-8R-hW1"/>
                         </constraints>
                     </view>
-                    <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
-                    <size key="freeformSize" width="320" height="750"/>
                     <connections>
+                        <outlet property="fourthView" destination="e00-vf-yxf" id="oFE-uw-2t2"/>
                         <outlet property="inspectionsParentButton" destination="WqQ-9Y-prl" id="z1x-1j-s3d"/>
                         <outlet property="inspectionsParentTopConstraint" destination="mpc-CA-gaF" id="gR6-qo-7LM"/>
                         <outlet property="nextButton" destination="m4D-16-CdS" id="A5B-AW-cNH"/>
@@ -5862,6 +5876,8 @@ For each family member, select one or more daily and weekly jobs. Parents will g
                         <outlet property="paydayDateTopConstraint" destination="lUo-gC-4qf" id="nSm-yc-Zpn"/>
                         <outlet property="paydayParentButton" destination="zP9-YY-cNd" id="SJF-4Q-s1P"/>
                         <outlet property="scrollView" destination="mEB-QJ-rcb" id="Lx8-cc-ZVc"/>
+                        <outlet property="secondView" destination="nYc-zm-kgQ" id="u67-PG-SeJ"/>
+                        <outlet property="thirdView" destination="8Rg-34-zwS" id="gv6-4h-UMZ"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="IEb-Ut-9xU" userLabel="First Responder" sceneMemberID="firstResponder"/>
