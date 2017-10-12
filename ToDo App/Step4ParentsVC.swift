@@ -50,8 +50,8 @@ class Step4ParentsVC: UIViewController, UITableViewDataSource, UITableViewDelega
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "CustomCell", for: indexPath) as! Step4ParentCustomCell
         if indexPath.section == 0 {
-            let (dailyChoreName, _, _, _) = dailyJobsTemp[indexPath.row]
-            cell.jobLabel.text = dailyChoreName
+            let (dailyJobName, _, _, _) = dailyJobsTemp[indexPath.row]
+            cell.jobLabel.text = dailyJobName
         } else if indexPath.section == 1 {
             let (parentDailyJobName, _, _, _) = parentDailyJobs[indexPath.row]
             cell.jobLabel.text = parentDailyJobName

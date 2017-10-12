@@ -19,6 +19,9 @@ class UserClass {
         self.passcode = userPasscode
         self.gender = userGender
         self.childParent = isUserChildOrParent
-        
     }
 }
+
+
+
+

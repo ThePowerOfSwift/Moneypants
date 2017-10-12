@@ -69,11 +69,11 @@ class Step4PaydayInspectVC: UIViewController, UIPickerViewDelegate, UIPickerView
     
     func pickerView(_ pickerView: UIPickerView, widthForComponent component: Int) -> CGFloat {
         if component == 0 {
-            return 110
+            return 130
         } else if component == 1 {
-            return 70
+            return 60
         } else {
-            return 70
+            return 60
         }
     }
     
@@ -87,6 +87,10 @@ class Step4PaydayInspectVC: UIViewController, UIPickerViewDelegate, UIPickerView
         }
         pickerLabel?.text = paydayOptions[component][row]
         return pickerLabel!
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, rowHeightForComponent component: Int) -> CGFloat {
+        return 40
     }
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
@@ -171,7 +175,7 @@ class Step4PaydayInspectVC: UIViewController, UIPickerViewDelegate, UIPickerView
             }))
             present(alert, animated: true, completion: nil)
         } else {
-            print("good to go!")
+            performSegue(withIdentifier: "AssignmentSummary", sender: self)
         }
     }
     

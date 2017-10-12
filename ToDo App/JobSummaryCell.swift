@@ -1,6 +1,6 @@
 import UIKit
 
-class ChoreSummaryCell: UITableViewCell {
+class JobSummaryCell: UITableViewCell {
     
     @IBOutlet weak var headerImage: UIImageView!
     @IBOutlet weak var headerLabel: UILabel!

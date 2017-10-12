@@ -41,7 +41,7 @@ class Step3VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
         // add + symbol in navbar
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addJobButtonTapped))
         
-        loadExistingUsersAndJobsFromFirebase {
+        loadExistingJobsFromFirebase {
             
             // ----------
             // daily jobs
@@ -73,16 +73,6 @@ class Step3VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
                     self.jobsTableView.reloadData()
                     // append new jobs to Firebase
                     self.ref.child("dailyJobs").childByAutoId().setValue(["name" : newDailyJobName, "multiplier" : 1, "assigned" : "none", "order" : self.dailyJobs.count - 1])
-                    
-                    
-                    
-                    
-                    
-//                    let dailyJob = JobsAndHabits(jobName: newDailyJobName, jobMultiplier: 1, jobAssign: "none", jobOrder: self.dailyJobs.count + (i - 1))
-//                    self.dailyJobs.append(dailyJob)
-//                    self.jobsTableView.reloadData()
-                    // append new jobs to Firebase
-//                    self.ref.child("dailyJobs").childByAutoId().setValue(["name" : newDailyJobName, "multiplier" : 1, "assigned" : "none", "order" : self.dailyJobs.count + (i - 1)])
                 }
             }
             
@@ -451,7 +441,7 @@ class Step3VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
     // Functions
     // ---------
     
-    func loadExistingUsersAndJobsFromFirebase(completion: @escaping () -> ()) {
+    func loadExistingJobsFromFirebase(completion: @escaping () -> ()) {
         
         // ----------
         // Daily Jobs

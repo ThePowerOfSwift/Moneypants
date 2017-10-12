@@ -4,7 +4,7 @@ class JobsAndHabits {
     
     var name: String
     var multiplier: Double
-    var assigned: String        // WAS classification
+    var assigned: String
     var order: Int
     
     init(jobName: String, jobMultiplier: Double, jobAssign: String, jobOrder: Int) {

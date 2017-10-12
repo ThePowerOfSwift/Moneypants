@@ -55,8 +55,8 @@ class Step1VC: UIViewController, UITextFieldDelegate {
             if yearlyIncomeMPS < incomeMinimum || yearlyIncomeMPS > incomeMaximum {     // check if income is within range
                 createIncomeAlert()
             } else {        // good to go!
-                ref.child("income").setValue(yearlyIncomeMPS)
                 performSegue(withIdentifier: "GoToStep2", sender: self)
+                ref.child("income").setValue(yearlyIncomeMPS)
             }
         } else {
             createIncomeAlert()
@@ -68,7 +68,6 @@ class Step1VC: UIViewController, UITextFieldDelegate {
     // ---------
     // Functions
     // ---------
-    
     
     func createIncomeAlert() {
         // format the income values
@@ -87,13 +86,10 @@ class Step1VC: UIViewController, UITextFieldDelegate {
         self.present(alert, animated: true, completion: nil)
     }
     
-    
-    
     // allows for dismissal of keyboard when user taps any white space
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         view.endEditing(true)
     }
-    
     
     // validate and format input, adding commas
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
@@ -131,7 +127,6 @@ class Step1VC: UIViewController, UITextFieldDelegate {
         return false
         
     }
-    
     
     func customizeButton(buttonName: UIButton) {
         buttonName.layer.cornerRadius = buttonName.bounds.height / 6.4

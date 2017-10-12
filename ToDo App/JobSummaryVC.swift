@@ -1,6 +1,6 @@
 import UIKit
 
-class ChoreSummaryVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
+class JobSummaryVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
     @IBOutlet weak var tableView: UITableView!
     
@@ -9,6 +9,8 @@ class ChoreSummaryVC: UIViewController, UITableViewDataSource, UITableViewDelega
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        finalUsersArray.sort(by: {$0.birthday < $1.birthday})       // sort users by birthday in descending order
         
         tableView.delegate = self
         tableView.dataSource = self
@@ -41,10 +43,9 @@ class ChoreSummaryVC: UIViewController, UITableViewDataSource, UITableViewDelega
     
     // Custom header sections
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "headerCell") as! ChoreSummaryCell
-        let (userName, userImage, _) = tempUsers[section]
-        cell.headerImage.image = userImage
-        cell.headerLabel.text = userName
+        let cell = tableView.dequeueReusableCell(withIdentifier: "headerCell") as! JobSummaryCell
+        cell.headerImage.image = finalUsersArray[section].photo
+        cell.headerLabel.text = finalUsersArray[section].firstName
         return cell
     }
     
@@ -54,7 +55,7 @@ class ChoreSummaryVC: UIViewController, UITableViewDataSource, UITableViewDelega
     
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return tempUsers.count
+        return finalUsersArray.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
