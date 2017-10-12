@@ -1,5 +1,7 @@
 import Foundation
 
+// use this class as intermediate class when loading users for when you only need user info but not photos
+
 class UserClass {
     
     var imageURL: String

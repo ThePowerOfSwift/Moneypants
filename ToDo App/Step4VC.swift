@@ -45,11 +45,6 @@ class Step4VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
         firebaseUser = FIRAuth.auth()?.currentUser
         ref = FIRDatabase.database().reference().child("users").child(firebaseUser.uid)
         
-        // set progress flag for setup
-        
-        ref.updateChildValues(["setupProgress" : 40])      // setupProgress: each step is an increment of 10, with each substep being a single digit, so step 4 would be 40
-        
-        
         loadExistingDailyAndWeeklyJobs()
         
         loadMembers { (usersArray) in
@@ -94,7 +89,8 @@ class Step4VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
         }
     }
     
-   
+    
+    
     // ----------------
     // Setup Table View
     // ----------------
@@ -466,6 +462,8 @@ class Step4VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
     }
     
     @IBAction func nextButtonTapped(_ sender: UIButton) {
+        ref.updateChildValues(["setupProgress" : 40])      // setupProgress: each step is an increment of 10, with each substep being a single digit, so step 4 would be 40
+        
         // perform Firebase query on daily jobs to see how many jobs current user has assigned (snapshot returns count)
         ref.child("dailyJobs").queryOrdered(byChild: "assigned").queryEqual(toValue: users[currentMember].firstName).observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
             
@@ -781,10 +779,6 @@ class Step4VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
         }
         return missingUser
     }
-
-
-
-
 
     func presentNextUser() {
         self.currentMember += 1
