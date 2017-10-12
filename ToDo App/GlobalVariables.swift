@@ -237,8 +237,6 @@ let fees = ["fighting", "lying", "stealing", "disobedience", "bad language"]
 
 //====================================
 
-let daysOfWeek = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
-
 let trainingVideos = ["bedrooms",
                       "bathrooms: toilets, sinks, & floors",
                       "laundry",

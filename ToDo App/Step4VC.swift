@@ -68,6 +68,10 @@ class Step4VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
                                     self.instructionsLabel.text = "Choose daily and weekly job assignments for \(self.users[0].firstName)."
                                     self.navigationItem.title = self.users[0].firstName
                                     self.jobsTableView.reloadData()
+                                    self.reviewAllButton.isHidden = false
+                                    self.nextButton.isEnabled = false
+                                    self.selectUsersButton.isHidden = false
+                                    
                                 } else {
                                     
                                     // if user hasn't done setup yet, show the overlay

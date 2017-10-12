@@ -1,15 +1,25 @@
 import UIKit
 import Firebase
 
-class Step4PaydayInspectVC: UIViewController {
+class Step4PaydayInspectVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
     
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var paydayParentButton: UIButton!
     @IBOutlet weak var paydayDateButton: UIButton!
+    @IBOutlet weak var paydayDatePicker: UIPickerView!
     @IBOutlet weak var paydayDateTopConstraint: NSLayoutConstraint!
     @IBOutlet weak var inspectionsParentButton: UIButton!
     @IBOutlet weak var inspectionsParentTopConstraint: NSLayoutConstraint!
     @IBOutlet weak var nextButton: UIButton!
+    
+    let paydayOptions = [["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+                         ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"],
+                         ["AM", "PM"]]
+    
+    var selectedDay: String = "Sunday"
+    var selectedHour: String = "1"
+    var selectedAMPM: String = "AM"
+    var paydayTimeConfirmed = false
     
     var firebaseUser: FIRUser!
     var ref: FIRDatabaseReference!
@@ -21,8 +31,9 @@ class Step4PaydayInspectVC: UIViewController {
         
         paydayParentButton.isEnabled = false
         nextButton.isEnabled = false
-        paydayDateTopConstraint.constant = -204
+        paydayDateTopConstraint.constant = -324
         inspectionsParentTopConstraint.constant = -160
+        paydayDatePicker.delegate = self
         
         // --------
         // Firebase
@@ -33,13 +44,65 @@ class Step4PaydayInspectVC: UIViewController {
         
         loadParents { (usersArray) in
             self.users = usersArray
-            print(self.users.count)
-            for user in self.users {
-                print(user.firstName)
-            }
             self.paydayParentButton.isEnabled = true     // don't enable button until parents list has finished loading
         }
     }
+    
+    
+    // -----------
+    // Date Picker
+    // -----------
+
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+        return paydayOptions.count
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        return paydayOptions[component].count
+    }
+    
+//    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+//        return paydayOptions[component][row]
+//    }
+    
+    func pickerView(_ pickerView: UIPickerView, widthForComponent component: Int) -> CGFloat {
+        if component == 0 {
+            return 110
+        } else if component == 1 {
+            return 30
+        } else {
+            return 60
+        }
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, viewForRow row: Int, forComponent component: Int, reusing view: UIView?) -> UIView {
+        var pickerLabel: UILabel? = (view as? UILabel)
+        if pickerLabel == nil {
+            pickerLabel = UILabel()
+//            pickerLabel?.font = UIFont(name: "Arista", size: 48)
+            pickerLabel?.textAlignment = .center
+        }
+        pickerLabel?.text = paydayOptions[component][row]
+//        pickerLabel?.textColor = UIColor.blue
+        
+        return pickerLabel!
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        // change button color to indicate a change has been made but not updated
+        paydayDateButton.layer.backgroundColor = UIColor.red.cgColor
+        if component == 0 {
+            selectedDay = paydayOptions[component][row]
+        } else if component == 1 {
+            selectedHour = paydayOptions[component][row]
+        } else {
+            selectedAMPM = paydayOptions[component][row]
+        }
+        paydayTimeConfirmed = false
+        paydayDateButton.setTitle("\(selectedDay) \(selectedHour) \(selectedAMPM)?", for: .normal)
+    }
+
+    
     
     // ----------
     // Navigation
@@ -47,10 +110,11 @@ class Step4PaydayInspectVC: UIViewController {
     
     @IBAction func paydayParentButtonTapped(_ sender: UIButton) {
         let alert = UIAlertController(title: "Select A Parent", message: "Please choose a parent to hold weekly payday.", preferredStyle: .alert)
+        // add list of users
         for user in users {
             alert.addAction(UIAlertAction(title: user.firstName, style: .default, handler: { (action) in
                 self.paydayParentButton.setTitle(user.firstName, for: .normal)
-                self.paydayParentButton.layer.backgroundColor = UIColor(red: 0/255, green: 153/255, blue: 255/255, alpha: 1.0).cgColor
+                self.paydayParentButton.layer.backgroundColor = UIColor(red: 141/255, green: 198/255, blue: 63/255, alpha: 1.0).cgColor     // green
                 UIView.animate(withDuration: 0.25) {
                     self.paydayDateTopConstraint.constant = 0        // reveal next button
                     self.view.layoutIfNeeded()
@@ -69,13 +133,20 @@ class Step4PaydayInspectVC: UIViewController {
     }
     
     @IBAction func paydayDateButtonTapped(_ sender: UIButton) {
-        paydayDateButton.layer.backgroundColor = UIColor(red: 0/2255, green: 153/255, blue: 255/255, alpha: 1.0).cgColor
+        paydayTimeConfirmed = true
+        // update color to green
+        paydayDateButton.layer.backgroundColor = UIColor(red: 141/255, green: 198/255, blue: 63/255, alpha: 1.0).cgColor     // green
+        // update button to show date user selected
+        paydayDateButton.setTitle("\(selectedDay) \(selectedHour) \(selectedAMPM)", for: .normal)
         UIView.animate(withDuration: 0.25) {
             self.inspectionsParentTopConstraint.constant = 0     // reveal next button
             self.view.layoutIfNeeded()
             let bottomOffset = CGPoint(x: 0, y: self.scrollView.contentSize.height - self.scrollView.bounds.size.height)
             self.scrollView.setContentOffset(bottomOffset, animated: true)
         }
+        self.ref.child("paydayAndInspections").updateChildValues(["paydayTime" : "\(selectedDay) \(selectedHour) \(selectedAMPM)"])
+        
+        // set Firebase update code here
     }
     
     @IBAction func inspectionsParentButtonTapped(_ sender: UIButton) {
@@ -83,7 +154,7 @@ class Step4PaydayInspectVC: UIViewController {
         for user in users {
             alert.addAction(UIAlertAction(title: user.firstName, style: .default, handler: { (action) in
                 self.inspectionsParentButton.setTitle(user.firstName, for: .normal)
-                self.inspectionsParentButton.layer.backgroundColor = UIColor(red: 0/255, green: 153/255, blue: 255/255, alpha: 1.0).cgColor
+                self.inspectionsParentButton.layer.backgroundColor = UIColor(red: 141/255, green: 198/255, blue: 63/255, alpha: 1.0).cgColor     // green
                 self.nextButton.isEnabled = true
                 
                 // send selection to Firebase
@@ -94,6 +165,18 @@ class Step4PaydayInspectVC: UIViewController {
             alert.dismiss(animated: true, completion: nil)
         }))
         present(alert, animated: true, completion: nil)
+    }
+    
+    @IBAction func nextButtonTapped(_ sender: UIButton) {
+        if paydayTimeConfirmed == false {
+            let alert = UIAlertController(title: "Payday Time", message: "Please choose a time to have payday by tapping the red payday button.", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "okay", style: .cancel, handler: { (action) in
+                alert.dismiss(animated: true, completion: nil)
+            }))
+            present(alert, animated: true, completion: nil)
+        } else {
+            print("good to go!")
+        }
     }
     
     
