@@ -34,6 +34,8 @@ class Step4PaydayInspectVC: UIViewController, UIPickerViewDelegate, UIPickerView
         paydayDateTopConstraint.constant = -324
         inspectionsParentTopConstraint.constant = -160
         paydayDatePicker.delegate = self
+        paydayDateButton.layer.backgroundColor = UIColor.red.cgColor
+        paydayDateButton.setTitle("\(selectedDay) \(selectedHour) \(selectedAMPM)?", for: .normal)
         
         // --------
         // Firebase
