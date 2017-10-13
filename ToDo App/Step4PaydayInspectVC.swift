@@ -46,6 +46,8 @@ class Step4PaydayInspectVC: UIViewController, UIPickerViewDelegate, UIPickerView
         
         firebaseUser = FIRAuth.auth()?.currentUser
         ref = FIRDatabase.database().reference().child("users").child(firebaseUser.uid)
+        
+        loadExistingAssignments()
     }
     
     
@@ -177,6 +179,27 @@ class Step4PaydayInspectVC: UIViewController, UIPickerViewDelegate, UIPickerView
     // ---------
     // Functions
     // ---------
+    
+    func loadExistingAssignments() {
+        if JobsAndHabits.inspectionParent != "" {
+            paydayParentButton.setTitle(JobsAndHabits.inspectionParent, for: .normal)
+            paydayParentButton.layer.backgroundColor = UIColor(red: 141/255, green: 198/255, blue: 63/255, alpha: 1.0).cgColor     // green
+            paydayDateTopConstraint.constant = 0        // reveal next button
+        }
+        
+        if JobsAndHabits.paydayTime != "" {
+            paydayDateButton.setTitle(JobsAndHabits.paydayTime, for: .normal)
+            paydayDateButton.layer.backgroundColor = UIColor(red: 141/255, green: 198/255, blue: 63/255, alpha: 1.0).cgColor     // green
+            inspectionsParentTopConstraint.constant = 0     // reveal next button
+            paydayTimeConfirmed = true
+        }
+        
+        if JobsAndHabits.paydayParent != "" {
+            inspectionsParentButton.setTitle(JobsAndHabits.paydayParent, for: .normal)
+            inspectionsParentButton.layer.backgroundColor = UIColor(red: 141/255, green: 198/255, blue: 63/255, alpha: 1.0).cgColor     // green
+            self.nextButton.isEnabled = true
+        }
+    }
     
     func scrollPageIfNeeded() {
         let height1 = self.secondView.bounds.height
