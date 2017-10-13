@@ -10,7 +10,7 @@ class JobSummaryVC: UIViewController, UITableViewDataSource, UITableViewDelegate
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        finalUsersArray.sort(by: {$0.birthday < $1.birthday})       // sort users by birthday in descending order
+        User.finalUsersArray.sort(by: {$0.birthday < $1.birthday})       // sort users by birthday in descending order
         
         tableView.delegate = self
         tableView.dataSource = self
@@ -21,8 +21,7 @@ class JobSummaryVC: UIViewController, UITableViewDataSource, UITableViewDelegate
                        3 : assignedJobsHabitsAiden,
                        4 : assignedJobsHabitsSophie]
     }
-    
-    
+        
     // --------------------
     // Customize Table View
     // --------------------
@@ -44,8 +43,8 @@ class JobSummaryVC: UIViewController, UITableViewDataSource, UITableViewDelegate
     // Custom header sections
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let cell = tableView.dequeueReusableCell(withIdentifier: "headerCell") as! JobSummaryCell
-        cell.headerImage.image = finalUsersArray[section].photo
-        cell.headerLabel.text = finalUsersArray[section].firstName
+        cell.headerImage.image = User.finalUsersArray[section].photo
+        cell.headerLabel.text = User.finalUsersArray[section].firstName
         return cell
     }
     
@@ -55,7 +54,7 @@ class JobSummaryVC: UIViewController, UITableViewDataSource, UITableViewDelegate
     
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return finalUsersArray.count
+        return User.finalUsersArray.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

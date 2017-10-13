@@ -14,7 +14,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         if currentUser != nil {
             print("\((currentUser?.email)!) logged in")
             storyboard = UIStoryboard(name: "Home", bundle: nil)
-            loadMembers()
+            
+            // MARK: TODO - need to put these functions in own view controller that has a progress indicator while loading
+            User.loadMembers()
+            JobsAndHabits.loadDailyJobsFromFirebase()
+            JobsAndHabits.loadWeeklyJobsFromFirebase()
+            FamilyData.getSetupProgressFromFirebase()
+            FamilyData.loadExistingIncome()
+            JobsAndHabits.loadPaydayAndInspectionsFromFirebase()
         } else {
             print("user logged out")
             storyboard = UIStoryboard(name: "Setup", bundle: nil)

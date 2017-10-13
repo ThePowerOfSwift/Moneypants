@@ -16,8 +16,6 @@ class Step2VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        finalUsersArray.sort(by: {$0.birthday < $1.birthday})       // sort users by birthday in descending order
-        
         navigationItem.title = "users"
         
         usersTableView.dataSource = self
@@ -42,6 +40,7 @@ class Step2VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
+        User.finalUsersArray.sort(by: {$0.birthday < $1.birthday})       // sort users by birthday in descending order
         usersTableView.reloadData()
     }
     
@@ -51,13 +50,13 @@ class Step2VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
     // ----------
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return finalUsersArray.count
+        return User.finalUsersArray.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "CustomCell", for: indexPath) as! Step2Cell
-        cell.myLabel.text = finalUsersArray[indexPath.row].firstName
-        cell.userImage.image = finalUsersArray[indexPath.row].photo
+        cell.myLabel.text = User.finalUsersArray[indexPath.row].firstName
+        cell.userImage.image = User.finalUsersArray[indexPath.row].photo
         return cell
     }
     
@@ -68,7 +67,7 @@ class Step2VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        performSegue(withIdentifier: "EditUser", sender: finalUsersArray[indexPath.row])
+        performSegue(withIdentifier: "EditUser", sender: User.finalUsersArray[indexPath.row])
     }
     
     
@@ -86,7 +85,6 @@ class Step2VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
         } else if segue.identifier == "AddUser" {
             let nextController = segue.destination as! Step2UsersVC
             // send users array over to Step2UsersVC to check for name duplicates
-            nextController.users = finalUsersArray
             nextController.navBarTitle = "add user"
         } else if segue.identifier == "GoToStep3" {
 //            print("on to step 3!")
@@ -100,16 +98,16 @@ class Step2VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
         let updatedUser = sourceVC.user
         if let selectedIndexPath = usersTableView.indexPathForSelectedRow {
             // Update an existing user
-            finalUsersArray[selectedIndexPath.row] = updatedUser!
-            finalUsersArray.sort(by: {$0.birthday < $1.birthday})
+            User.finalUsersArray[selectedIndexPath.row] = updatedUser!
+            User.finalUsersArray.sort(by: {$0.birthday < $1.birthday})
             usersTableView.reloadData()
             saveUsersToFirebase()
         } else {
             // Add a new user
-            let newIndexPath = IndexPath(row: finalUsersArray.count, section: 0)
-            finalUsersArray.append(updatedUser!)
+            let newIndexPath = IndexPath(row: User.finalUsersArray.count, section: 0)
+            User.finalUsersArray.append(updatedUser!)
             usersTableView.insertRows(at: [newIndexPath], with: .automatic)
-            finalUsersArray.sort(by: {$0.birthday < $1.birthday})
+            User.finalUsersArray.sort(by: {$0.birthday < $1.birthday})
             usersTableView.reloadData()
             saveUsersToFirebase()
         }
@@ -117,7 +115,7 @@ class Step2VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
     @IBAction func addMemberButtonTapped(_ sender: UIButton) {
         usersTableView.setEditing(false, animated: true)
-        if finalUsersArray.count >= 20 {
+        if User.finalUsersArray.count >= 20 {
             createAlert(alertTitle: "Users", alertMessage: "You have reached your maximum number of users (20).")
         } else {
             performSegue(withIdentifier: "AddUser", sender: self)
@@ -127,15 +125,18 @@ class Step2VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
     @IBAction func nextButtonTapped(_ sender: UIButton) {
         usersTableView.setEditing(false, animated: true)
         // check for at least two users
-        if finalUsersArray.count < 2 {
+        if User.finalUsersArray.count < 2 {
             createAlert(alertTitle: "Users", alertMessage: "You have not created enough users. Please enter in at least two users.")
         } else {
             // check for at least one parent
             if numberOfParents() < 1 {
                 createAlert(alertTitle: "Users", alertMessage: "You must have at least one parent. Please enter in a parent.")
             } else {
-//                saveUsersToFirebase()
                 performSegue(withIdentifier: "GoToStep3", sender: self)
+                if FamilyData.setupProgress <= 20 {
+                    FamilyData.setupProgress = 20
+                    ref.updateChildValues(["setupProgress" : 20])      // setupProgress: each step is an increment of 10, with each substep being a single digit, so step 4 would be 40
+                }
             }
         }
     }
@@ -146,7 +147,7 @@ class Step2VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
     // ---------
     
     func saveUsersToFirebase() {
-        for user in finalUsersArray {
+        for user in User.finalUsersArray {
             self.ref?.child("members").child(user.firstName).updateChildValues(["firstName" : user.firstName,
                                                                                 "birthday" : user.birthday,
                                                                                 "passcode" : user.passcode,
@@ -183,26 +184,74 @@ class Step2VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
     var gender: String!
     
     func deleteUserConfirmationAlert(tableViewIndexPath: IndexPath) {
-        if finalUsersArray[tableViewIndexPath.row].gender == "male" {
+        if User.finalUsersArray[tableViewIndexPath.row].gender == "male" {
             gender = "his"
         } else {
             gender = "her"
         }
         // create alert for user to confirm user deletion
-        let alert = UIAlertController(title: "Delete User", message: "Are you sure you want to delete \(finalUsersArray[tableViewIndexPath.row].firstName)? This will remove all of \(gender!) saved information and cannot be undone.", preferredStyle: .alert)
+        let alert = UIAlertController(title: "Delete User", message: "Are you sure you want to delete \(User.finalUsersArray[tableViewIndexPath.row].firstName)? This will remove all of \(gender!) saved information and cannot be undone.", preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "okay", style: .default, handler: { (action) in
             alert.dismiss(animated: true, completion: nil)
+            
+            
             // remove user from Firebase
-            self.ref.child("members").child(finalUsersArray[tableViewIndexPath.row].firstName).removeValue()
-            self.ref.child("dailyJobs").queryOrdered(byChild: "assigned").queryEqual(toValue: finalUsersArray[tableViewIndexPath.row].firstName).observe(.childAdded, with: { (snapshot) in
+            self.ref.child("members").child(User.finalUsersArray[tableViewIndexPath.row].firstName).removeValue()
+            // remove all users's daily job assignments from Firebase
+            self.ref.child("dailyJobs").queryOrdered(byChild: "assigned").queryEqual(toValue: User.finalUsersArray[tableViewIndexPath.row].firstName).observe(.childAdded, with: { (snapshot) in
                 snapshot.ref.updateChildValues(["assigned" : "none"])
+            })
+            // remove all user's weekly job assignments from Firebase
+            self.ref.child("weeklyJobs").queryOrdered(byChild: "assigned").queryEqual(toValue: User.finalUsersArray[tableViewIndexPath.row].firstName).observe(.childAdded, with: { (snapshot) in
+                snapshot.ref.updateChildValues(["assigned" : "none"])
+            })
+            // remove all user's daily and weekly job assignments from local array
+            let deletedUser = User.finalUsersArray[tableViewIndexPath.row].firstName
+            for (index, job) in JobsAndHabits.finalDailyJobsArray.enumerated() {
+                if job.assigned == deletedUser {
+                    JobsAndHabits.finalDailyJobsArray[index].assigned = "none"
+                }
+            }
+            for (index, job) in JobsAndHabits.finalWeeklyJobsArray.enumerated() {
+                if job.assigned == deletedUser {
+                    JobsAndHabits.finalWeeklyJobsArray[index].assigned = "none"
+                }
+            }
+            
+            
+            // MARK: TODO - need to check if user is a parent, and if so, remove their parental assignments from Firebase and from local array
+            self.ref.queryOrdered(byChild: "inspectionParent").queryEqual(toValue: User.finalUsersArray[tableViewIndexPath.row].firstName).observeSingleEvent(of: .childAdded, with: { (snapshot) in
+                snapshot.ref.updateChildValues(["inspectionParent" : "none"])
+            })
+            self.ref.queryOrdered(byChild: "paydayParent").queryEqual(toValue: User.finalUsersArray[tableViewIndexPath.row].firstName).observeSingleEvent(of: .childAdded, with: { (snapshot) in
+                snapshot.ref.updateChildValues(["paydayParent" : "none"])
             })
             
-            self.ref.child("weeklyJobs").queryOrdered(byChild: "assigned").queryEqual(toValue: finalUsersArray[tableViewIndexPath.row].firstName).observe(.childAdded, with: { (snapshot) in
-                snapshot.ref.updateChildValues(["assigned" : "none"])
-            })
-            finalUsersArray.remove(at: tableViewIndexPath.row)
-            self.usersTableView.deleteRows(at: [tableViewIndexPath], with: .fade)
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            // ...remove user from local array
+//            User.finalUsersArray.remove(at: tableViewIndexPath.row)
+//            self.usersTableView.deleteRows(at: [tableViewIndexPath], with: .fade)
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
         }))
         alert.addAction(UIAlertAction(title: "cancel", style: .cancel, handler: { (action) in
             alert.dismiss(animated: true, completion: nil)
@@ -213,7 +262,7 @@ class Step2VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
     func numberOfParents() -> Int {
         var parentCount = 0
-        for user in finalUsersArray {
+        for user in User.finalUsersArray {
             if user.childParent == "parent" {
                 parentCount += 1
             }
@@ -233,7 +282,9 @@ class Step2VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
         ref.child("dailyJobs").removeAllObservers()
         ref.child("weeklyJobs").removeAllObservers()
         ref.child("members").removeAllObservers()
-        for user in finalUsersArray {
+        ref.child("paydayAndInspections").child("inspectionParent").removeAllObservers()
+        ref.child("paydayAndInspections").child("paydayParent").removeAllObservers()
+        for user in User.finalUsersArray {
             self.ref.child("members").child(user.firstName).removeAllObservers()
         }
     }

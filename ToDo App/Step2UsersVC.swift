@@ -25,7 +25,6 @@ class Step2UsersVC: UIViewController, UIImagePickerControllerDelegate, UINavigat
     
     var selectedProfileImage: UIImage!
     var user: User?
-    var users: [User]?
     
     let datePicker = UIDatePicker()
     
@@ -152,12 +151,12 @@ class Step2UsersVC: UIViewController, UIImagePickerControllerDelegate, UINavigat
         let gender = genderValue
         let childParent = childParentValue
         
-        user = User(profilePhoto: photo,
-                    userFirstName: name,
-                    userBirthday: birthday,
-                    userPasscode: passcode,
-                    userGender: gender,
-                    isUserChildOrParent: childParent)
+        user = User(photo: photo,
+                    firstName: name,
+                    birthday: birthday,
+                    passcode: passcode,
+                    gender: gender,
+                    childParent: childParent)
     }
     
     
@@ -281,7 +280,7 @@ class Step2UsersVC: UIViewController, UIImagePickerControllerDelegate, UINavigat
     }
     
     @IBAction func usernameEditingDidEnd(_ sender: Any) {
-        for user in users! {
+        for user in User.finalUsersArray {
             if user.firstName.lowercased() == nameTextField.text?.lowercased() {
                 createAlert(title: "Username Error", message: "You have entered in a username that is the same as another user. Please choose a unique name for this user.", textField: nameTextField)
             }

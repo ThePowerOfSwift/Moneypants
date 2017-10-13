@@ -41,7 +41,7 @@ class Step1VC: UIViewController, UITextFieldDelegate {
             NSFontAttributeName : UIFont(name: "Arista2.0", size: 26)!
         ]
         
-        loadExistingIncome()
+        formatExistingIncome()
     }
     
     
@@ -56,7 +56,12 @@ class Step1VC: UIViewController, UITextFieldDelegate {
                 createIncomeAlert()
             } else {        // good to go!
                 performSegue(withIdentifier: "GoToStep2", sender: self)
-                ref.child("income").setValue(yearlyIncomeMPS)
+                ref.updateChildValues(["income" : yearlyIncomeMPS])
+                // only update setup progress if user hasn't progressed past step 1
+                if FamilyData.setupProgress <= 10 {
+                    FamilyData.setupProgress = 10
+                    ref.updateChildValues(["setupProgress" : 10])      // setupProgress: each step is an increment of 10, with each substep being a single digit, so step 4-2 would be 42
+                }
             }
         } else {
             createIncomeAlert()
@@ -133,22 +138,14 @@ class Step1VC: UIViewController, UITextFieldDelegate {
         buttonName.layer.masksToBounds = true
     }
     
-    // Get income value from Firebase
-    func loadExistingIncome() {
-        ref.child("income").observe(.value, with: { (snapshot) in
-            if let snapVal = snapshot.value as? NSNumber {
-                
-                // Format income with thousands separators
-                let formatter = NumberFormatter()
-                formatter.groupingSeparator = ","
-                formatter.numberStyle = .decimal
-                let formattedNumber = formatter.string(from: snapVal)
-                
-                // put existing income into text field
-                self.incomeTextField.text = "\(formattedNumber!)"
-            }
-        })
+    func formatExistingIncome() {
+        let formatter = NumberFormatter()
+        formatter.groupingSeparator = ","
+        formatter.numberStyle = .decimal
+        let formattedNumber = formatter.string(from: FamilyData.yearlyIncome as NSNumber)
+        
+        // put existing income into text field
+        self.incomeTextField.text = "\(formattedNumber!)"
     }
-
 }
 

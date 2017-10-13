@@ -28,12 +28,11 @@ class Step4PaydayInspectVC: UIViewController, UIPickerViewDelegate, UIPickerView
     var firebaseUser: FIRUser!
     var ref: FIRDatabaseReference!
     
-    var users = [UserClass]()
+    let parents = User.finalUsersArray.filter({ return $0.childParent == "parent" })
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        paydayParentButton.isEnabled = false
         nextButton.isEnabled = false
         paydayDateTopConstraint.constant = -(thirdView.bounds.height)
         inspectionsParentTopConstraint.constant = -(fourthView.bounds.height)
@@ -47,11 +46,6 @@ class Step4PaydayInspectVC: UIViewController, UIPickerViewDelegate, UIPickerView
         
         firebaseUser = FIRAuth.auth()?.currentUser
         ref = FIRDatabase.database().reference().child("users").child(firebaseUser.uid)
-        
-        loadParents { (usersArray) in
-            self.users = usersArray
-            self.paydayParentButton.isEnabled = true     // don't enable button until parents list has finished loading
-        }
     }
     
     
@@ -114,10 +108,10 @@ class Step4PaydayInspectVC: UIViewController, UIPickerViewDelegate, UIPickerView
     
     @IBAction func paydayParentButtonTapped(_ sender: UIButton) {
         let alert = UIAlertController(title: "Select A Parent", message: "Please choose a parent to hold weekly payday.", preferredStyle: .alert)
-        // add list of users
-        for user in users {
-            alert.addAction(UIAlertAction(title: user.firstName, style: .default, handler: { (action) in
-                self.paydayParentButton.setTitle(user.firstName, for: .normal)
+        // add list of parents
+        for parent in parents {
+            alert.addAction(UIAlertAction(title: parent.firstName, style: .default, handler: { (action) in
+                self.paydayParentButton.setTitle(parent.firstName, for: .normal)
                 self.paydayParentButton.layer.backgroundColor = UIColor(red: 141/255, green: 198/255, blue: 63/255, alpha: 1.0).cgColor     // green
                 UIView.animate(withDuration: 0.25) {
                     self.paydayDateTopConstraint.constant = 0        // reveal next button
@@ -125,7 +119,7 @@ class Step4PaydayInspectVC: UIViewController, UIPickerViewDelegate, UIPickerView
                 }
                 self.scrollPageIfNeeded()
                 // send selection to Firebase
-                self.ref.child("paydayAndInspections").updateChildValues(["paydayParent" : user.firstName])
+                self.ref.child("paydayAndInspections").updateChildValues(["paydayParent" : parent.firstName])
             }))
         }
         alert.addAction(UIAlertAction(title: "cancel", style: .cancel, handler: { (action) in
@@ -151,14 +145,14 @@ class Step4PaydayInspectVC: UIViewController, UIPickerViewDelegate, UIPickerView
     
     @IBAction func inspectionsParentButtonTapped(_ sender: UIButton) {
         let alert = UIAlertController(title: "Select A Parent", message: "Please choose which parent will be responsible for performing daily inspections.", preferredStyle: .alert)
-        for user in users {
-            alert.addAction(UIAlertAction(title: user.firstName, style: .default, handler: { (action) in
-                self.inspectionsParentButton.setTitle(user.firstName, for: .normal)
+        for parent in parents {
+            alert.addAction(UIAlertAction(title: parent.firstName, style: .default, handler: { (action) in
+                self.inspectionsParentButton.setTitle(parent.firstName, for: .normal)
                 self.inspectionsParentButton.layer.backgroundColor = UIColor(red: 141/255, green: 198/255, blue: 63/255, alpha: 1.0).cgColor     // green
                 self.nextButton.isEnabled = true
                 
                 // send selection to Firebase
-                self.ref.child("paydayAndInspections").updateChildValues(["inspectionParent" : user.firstName])
+                self.ref.child("paydayAndInspections").updateChildValues(["inspectionParent" : parent.firstName])
             }))
         }
         alert.addAction(UIAlertAction(title: "cancel", style: .cancel, handler: { (action) in
@@ -169,7 +163,7 @@ class Step4PaydayInspectVC: UIViewController, UIPickerViewDelegate, UIPickerView
     
     @IBAction func nextButtonTapped(_ sender: UIButton) {
         if paydayTimeConfirmed == false {
-            let alert = UIAlertController(title: "Payday Time", message: "Please choose a time to have payday by tapping the red payday button.", preferredStyle: .alert)
+            let alert = UIAlertController(title: "Payday Time", message: "Please confirm your payday time by tapping the red payday button.", preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: "okay", style: .cancel, handler: { (action) in
                 alert.dismiss(animated: true, completion: nil)
             }))
@@ -184,28 +178,6 @@ class Step4PaydayInspectVC: UIViewController, UIPickerViewDelegate, UIPickerView
     // Functions
     // ---------
     
-    func loadParents(completion: @escaping ([UserClass]) -> ()) {
-        var usersArray = [UserClass]()
-        ref.child("members").queryOrdered(byChild: "childParent").queryEqual(toValue: "parent").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
-            for item in snapshot.children {
-                if let snap = item as? FIRDataSnapshot {
-                    if let value = snap.value as? [String : Any] {
-                        let birthday = value["birthday"] as! Int
-                        let childParent = value["childParent"] as! String
-                        let firstName = value["firstName"] as! String
-                        let gender = value["gender"] as! String
-                        let passcode = value["passcode"] as! Int
-                        let profileImageUrl = value["profileImageUrl"] as! String
-                        
-                        let user = UserClass(userProfileImageURL: profileImageUrl, userFirstName: firstName, userBirthday: birthday, userPasscode: passcode, userGender: gender, isUserChildOrParent: childParent)
-                        usersArray.append(user)
-                    }
-                }
-            }
-            completion(usersArray)
-        }
-    }
-    
     func scrollPageIfNeeded() {
         let height1 = self.secondView.bounds.height
         let height2 = self.paydayDateTopConstraint.constant + self.thirdView.bounds.height
@@ -217,7 +189,6 @@ class Step4PaydayInspectVC: UIViewController, UIPickerViewDelegate, UIPickerView
             self.scrollView.setContentOffset(bottomOffset, animated: true)
         }
     }
-
 }
 
 

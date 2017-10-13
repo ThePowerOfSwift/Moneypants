@@ -9,8 +9,6 @@ class Step3AddJobVC: UIViewController, UITextFieldDelegate {
     var navBarTitle: String = ""            // for allowing other VCs to change navbar title
     
     var job: JobsAndHabits?                 // 'job' is an instance of 'JobsAndHabits' class
-    var dailyJobs: [JobsAndHabits]?         // This value will get passed from Step3VC
-    var weeklyJobs: [JobsAndHabits]?        // This value will get passed from Step3VC
     var jobSection: Int?                    // this value passed from Step3VC alert when user chose to add 'daily' or 'weekly' job
     
     var jobDescription: String = ""
@@ -49,7 +47,7 @@ class Step3AddJobVC: UIViewController, UITextFieldDelegate {
     // This gets executed when 'SAVE' button is tapped, before segue is performed
     override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool {
         if jobSection == 0 {
-            for job in dailyJobs! {
+            for job in JobsAndHabits.finalDailyJobsArray {
                 if job.name.lowercased() == (jobTextField.text?.lowercased()) {        // check to see if lowercased text matches
                     duplicateNameAlert()
                     return false
@@ -57,7 +55,7 @@ class Step3AddJobVC: UIViewController, UITextFieldDelegate {
             }
             return true
         } else if jobSection == 1 {
-            for job in weeklyJobs! {
+            for job in JobsAndHabits.finalWeeklyJobsArray {
                 if job.name.lowercased() == (jobTextField.text?.lowercased()) {
                     duplicateNameAlert()
                     return false
@@ -83,7 +81,7 @@ class Step3AddJobVC: UIViewController, UITextFieldDelegate {
         
         let order = job?.order ?? 1
         
-        job = JobsAndHabits(jobName: name!, jobMultiplier: multiplier, jobAssign: assigned, jobOrder: order)
+        job = JobsAndHabits(name: name!, multiplier: multiplier, assigned: assigned, order: order)
     }
     
     
