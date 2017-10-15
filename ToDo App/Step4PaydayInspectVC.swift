@@ -196,8 +196,8 @@ class Step4PaydayInspectVC: UIViewController, UIPickerViewDelegate, UIPickerView
         let inspectionParentName = JobsAndHabits.parentalDailyJobsArray[0].assigned
         let paydayParentName = JobsAndHabits.parentalWeeklyJobsArray[0].assigned
         
-        if inspectionParentName != "" {
-            paydayParentButton.setTitle(inspectionParentName, for: .normal)
+        if paydayParentName != "" {
+            paydayParentButton.setTitle(paydayParentName, for: .normal)
             paydayParentButton.layer.backgroundColor = UIColor(red: 141/255, green: 198/255, blue: 63/255, alpha: 1.0).cgColor     // green
             paydayDateTopConstraint.constant = 0        // reveal next button
         }
@@ -209,8 +209,8 @@ class Step4PaydayInspectVC: UIViewController, UIPickerViewDelegate, UIPickerView
             paydayTimeConfirmed = true
         }
         
-        if paydayParentName != "" {
-            inspectionsParentButton.setTitle(paydayParentName, for: .normal)
+        if inspectionParentName != "" {
+            inspectionsParentButton.setTitle(inspectionParentName, for: .normal)
             inspectionsParentButton.layer.backgroundColor = UIColor(red: 141/255, green: 198/255, blue: 63/255, alpha: 1.0).cgColor     // green
             self.nextButton.isEnabled = true
         }

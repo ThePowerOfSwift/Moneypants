@@ -238,8 +238,8 @@ class Step2VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
             
             
             // ...remove user from local array
-//            User.finalUsersArray.remove(at: tableViewIndexPath.row)
-//            self.usersTableView.deleteRows(at: [tableViewIndexPath], with: .fade)
+            User.finalUsersArray.remove(at: tableViewIndexPath.row)
+            self.usersTableView.deleteRows(at: [tableViewIndexPath], with: .fade)
             
             
             

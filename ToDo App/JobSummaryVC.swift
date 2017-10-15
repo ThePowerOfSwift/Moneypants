@@ -10,37 +10,50 @@ class JobSummaryVC: UIViewController, UITableViewDataSource, UITableViewDelegate
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        User.finalUsersArray.sort(by: {$0.birthday < $1.birthday})       // sort users by birthday in descending order
+        User.finalUsersArray.sort(by: {$0.birthday < $1.birthday})       // sort users by birthday with oldest first
         
         tableView.delegate = self
         tableView.dataSource = self
-        
-        sectionData = [0 : assignedJobsHabitsDad,
-                       1 : assignedJobsHabitsMom,
-                       2 : assignedJobsHabitsSavannah,
-                       3 : assignedJobsHabitsAiden,
-                       4 : assignedJobsHabitsSophie]
     }
-        
-    // --------------------
-    // Customize Table View
-    // --------------------
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return User.finalUsersArray.count
+    }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if section == 0 {
-            return assignedJobsHabitsDad.count
-        } else if section == 1 {
-            return assignedJobsHabitsMom.count
-        } else if section == 2 {
-            return assignedJobsHabitsSavannah.count
-        } else if section == 3 {
-            return assignedJobsHabitsAiden.count
-        } else {
-            return assignedJobsHabitsSophie.count
-        }
+        let dailyJobAssignments = JobsAndHabits.finalDailyJobsArray.filter({ return $0.assigned == User.finalUsersArray[section].firstName }).count
+        let weeklyJobAssignments = JobsAndHabits.finalWeeklyJobsArray.filter({ return $0.assigned == User.finalUsersArray[section].firstName }).count
+        let parentInspectionsAssignment = JobsAndHabits.parentalDailyJobsArray.filter({ return $0.assigned == User.finalUsersArray[section].firstName }).count
+        let parentPaydayAssignment = JobsAndHabits.parentalWeeklyJobsArray.filter({ return $0.assigned == User.finalUsersArray[section].firstName }).count
+        
+        return dailyJobAssignments + weeklyJobAssignments + parentInspectionsAssignment + parentPaydayAssignment
     }
     
-    // Custom header sections
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "customCell") as! JobSummaryCellB
+        
+        // get the job assignments in the 'finalDailyJobs' array that matches the current user in the tableview
+        let dailyJobAssignments = JobsAndHabits.finalDailyJobsArray.sorted(by: { $0.order < $1.order }).filter({ return $0.assigned == User.finalUsersArray[indexPath.section].firstName })      //.sorted(by: { $0.order < $1.order })
+        let weeklyJobAssignments = JobsAndHabits.finalWeeklyJobsArray.sorted(by: { $0.order < $1.order }).filter({ return $0.assigned == User.finalUsersArray[indexPath.section].firstName })
+        let parentInspectionsAssignment = JobsAndHabits.parentalDailyJobsArray.sorted(by: { $0.order < $1.order }).filter({ return $0.assigned == User.finalUsersArray[indexPath.section].firstName })
+        let parentPaydayAssignment = JobsAndHabits.parentalWeeklyJobsArray.sorted(by: { $0.order < $1.order }).filter({ $0.assigned == User.finalUsersArray[indexPath.section].firstName })
+        let jobAssignments = dailyJobAssignments + parentInspectionsAssignment + weeklyJobAssignments + parentPaydayAssignment
+        cell.userNameLabel.text = jobAssignments[indexPath.row].name
+        
+        
+        let dailyJobsArray = JobsAndHabits.finalDailyJobsArray + JobsAndHabits.parentalDailyJobsArray       // combine the two daily jobs arrays
+        
+        if dailyJobsArray.contains(where: { $0.name == jobAssignments[indexPath.row].name }) {
+            cell.dailyWeeklyLabel.text = "daily"
+            cell.dailyWeeklyLabel.backgroundColor = UIColor(red: 204/255, green: 0/255, blue: 102/255, alpha: 1.0)
+        } else {
+            cell.dailyWeeklyLabel.text = "weekly"
+            cell.dailyWeeklyLabel.backgroundColor = UIColor(red: 0/255, green: 153/255, blue: 255/255, alpha: 1.0)
+        }
+        cell.dailyWeeklyLabel.textColor = UIColor.white
+        return cell
+    }
+    
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let cell = tableView.dequeueReusableCell(withIdentifier: "headerCell") as! JobSummaryCell
         cell.headerImage.image = User.finalUsersArray[section].photo
@@ -49,40 +62,7 @@ class JobSummaryVC: UIViewController, UITableViewDataSource, UITableViewDelegate
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 50
-    }
-    
-    
-    func numberOfSections(in tableView: UITableView) -> Int {
-        return User.finalUsersArray.count
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        var cell = tableView.dequeueReusableCell(withIdentifier: "cell")
-        
-        if cell == nil {
-            cell = UITableViewCell(style: .default, reuseIdentifier: "cell");
-        }
-        
-        cell!.textLabel?.text = sectionData[indexPath.section]![indexPath.row]
-        
-        
-//        let cell = tableView.dequeueReusableCell(withIdentifier: "cell")
-//        if indexPath.section == 0 {
-//            cell?.textLabel?.text = assignedJobsHabitsDad[indexPath.row]
-//        } else if indexPath.section == 1 {
-//            cell?.textLabel?.text = assignedJobsHabitsMom[indexPath.row]
-//        } else if indexPath.section == 2 {
-//            cell?.textLabel?.text = assignedJobsHabitsSavannah[indexPath.row]
-//        } else if indexPath.section == 3 {
-//            cell?.textLabel?.text = assignedJobsHabitsAiden[indexPath.row]
-//        } else {
-//            cell?.textLabel?.text = assignedJobsHabitsSophie[indexPath.row]
-//        }
-//        return cell!
-        
-        
-        return cell!
+        return 75
     }
 }
 

@@ -2210,16 +2210,16 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8TJ-cV-jfV">
-                                                    <rect key="frame" x="32" y="27" width="42" height="21"/>
+                                                    <rect key="frame" x="32" y="27" width="200" height="21"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="daily" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SiE-E4-GMT">
-                                                    <rect key="frame" x="246" y="27" width="42" height="21"/>
+                                                    <rect key="frame" x="240" y="27" width="48" height="21"/>
                                                     <color key="backgroundColor" red="0.80000000000000004" green="0.0" blue="0.40000000000000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="21" id="JJs-Bo-Eb5"/>
-                                                        <constraint firstAttribute="width" constant="42" id="qSv-LO-L60"/>
+                                                        <constraint firstAttribute="width" constant="48" id="qSv-LO-L60"/>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" name="Arista2.0" family="Arista 2.0" pointSize="13"/>
                                                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -2236,6 +2236,7 @@
                                                 <constraint firstAttribute="trailing" secondItem="SiE-E4-GMT" secondAttribute="trailing" constant="32" id="84H-N8-dLH"/>
                                                 <constraint firstItem="SiE-E4-GMT" firstAttribute="centerY" secondItem="vPX-nW-wBX" secondAttribute="centerY" id="EME-1A-kla"/>
                                                 <constraint firstItem="8TJ-cV-jfV" firstAttribute="centerY" secondItem="vPX-nW-wBX" secondAttribute="centerY" id="OfO-la-N7R"/>
+                                                <constraint firstItem="SiE-E4-GMT" firstAttribute="leading" secondItem="8TJ-cV-jfV" secondAttribute="trailing" constant="8" id="Qsk-aX-dsy"/>
                                                 <constraint firstItem="8TJ-cV-jfV" firstAttribute="leading" secondItem="vPX-nW-wBX" secondAttribute="leading" constant="32" id="hyn-Tt-czx"/>
                                             </constraints>
                                         </tableViewCellContentView>
