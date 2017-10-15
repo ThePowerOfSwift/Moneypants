@@ -8,7 +8,6 @@ class LoadingVC: UIViewController {
         super.viewDidLoad()
         
         activityIndicator.startAnimating()
-        self.navigationController?.isNavigationBarHidden = true
         
         
         // MARK: TODO - I can put in my progress code here for setup progress, then instantiate different VCs based off of that

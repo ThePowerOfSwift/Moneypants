@@ -23,6 +23,11 @@ class Step4VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        userImage.layer.cornerRadius = userImage.bounds.height / 6.4
+        userImage.layer.masksToBounds = true
+        userImage.layer.borderWidth = 0.5
+        userImage.layer.borderColor = UIColor.black.cgColor
+        
         User.finalUsersArray.sort(by: {$0.birthday > $1.birthday})       // sort users by birthday with youngest first
         
         currentUserName = ""

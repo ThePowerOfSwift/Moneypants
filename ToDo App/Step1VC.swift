@@ -16,8 +16,6 @@ class Step1VC: UIViewController, UITextFieldDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.navigationController?.isNavigationBarHidden = false
-        
         incomeTextField?.delegate = self
         
         customizeButton(buttonName: questionButton)

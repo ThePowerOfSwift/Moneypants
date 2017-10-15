@@ -8,7 +8,7 @@ class Step2Cell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         
-        userImage.layer.cornerRadius = 75 / 6.4
+        userImage.layer.cornerRadius = userImage.bounds.height / 6.4
         userImage.layer.masksToBounds = true
         userImage.layer.borderWidth = 0.5
         userImage.layer.borderColor = UIColor.black.cgColor
