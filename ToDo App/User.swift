@@ -16,7 +16,6 @@ struct User {
         let firebaseUser = FIRAuth.auth()?.currentUser
         let ref = FIRDatabase.database().reference().child("users").child(firebaseUser!.uid)
         ref.child("members").observeSingleEvent(of: .value, with: { (snapshot) in
-            let usersCount = Int(snapshot.childrenCount)
             for item in snapshot.children {
                 if let snap = item as? FIRDataSnapshot {
                     if let value = snap.value as? [String : Any] {
@@ -37,10 +36,6 @@ struct User {
                                             gender: gender,
                                             childParent: childParent)
                             finalUsersArray.append(user)
-                            
-                            if usersCount == finalUsersArray.count {
-                                print("Nice. There are",usersCount,"users in the snapshot, and there are",finalUsersArray.count,"users in the array")
-                            }
                         })
                     }
                 }

@@ -10,13 +10,13 @@ class Step1VC: UIViewController, UITextFieldDelegate {
     let incomeMinimum = 30000
     let incomeMaximum = 1000000
     
-    var users = [Item]()
-    
     var firebaseUser: FIRUser!
     var ref: FIRDatabaseReference!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.navigationController?.isNavigationBarHidden = false
         
         incomeTextField?.delegate = self
         
@@ -38,8 +38,7 @@ class Step1VC: UIViewController, UITextFieldDelegate {
         UINavigationBar.appearance().tintColor = UIColor.white
         UINavigationBar.appearance().titleTextAttributes = [
             NSForegroundColorAttributeName : UIColor.white,
-            NSFontAttributeName : UIFont(name: "Arista2.0", size: 26)!
-        ]
+            NSFontAttributeName : UIFont(name: "Arista2.0", size: 26)!]
         
         formatExistingIncome()
     }

@@ -8,45 +8,53 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     var window: UIWindow?
     
+    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+        
+        FIRApp.configure()
+//        FIRDatabase.database().persistenceEnabled = true        // enable offline work
+        IQKeyboardManager.sharedManager().enable = true
+        
+        loadInitialVC()
+        
+        return true
+    }
+    
+    
+    
+    func loadInitialVC() {
+        let currentUser = FIRAuth.auth()?.currentUser
+        if currentUser != nil {
+            print("\((currentUser?.email)!) logged in")
+            self.window = UIWindow(frame: UIScreen.main.bounds)
+            let storyboard = UIStoryboard(name: "Setup", bundle: nil)
+            let initialViewController = storyboard.instantiateViewController(withIdentifier: "LoadingVC")
+            self.window?.rootViewController = initialViewController
+            self.window?.makeKeyAndVisible()
+        } else {
+            print("user logged out")
+            self.window = UIWindow(frame: UIScreen.main.bounds)
+            let storyboard = UIStoryboard(name: "Setup", bundle: nil)
+            let initialViewController = storyboard.instantiateViewController(withIdentifier: "LoginViewController")
+            self.window?.rootViewController = initialViewController
+            self.window?.makeKeyAndVisible()
+        }
+        
+    }
+    
+    
     func getCurrentUser() -> UIStoryboard {
         var storyboard = UIStoryboard()
         let currentUser = FIRAuth.auth()?.currentUser
         if currentUser != nil {
             print("\((currentUser?.email)!) logged in")
             storyboard = UIStoryboard(name: "Home", bundle: nil)
-            
-            // MARK: TODO - need to put these functions in own view controller that has a progress indicator while loading
-            User.loadMembers()
-            JobsAndHabits.loadDailyJobsFromFirebase()
-            JobsAndHabits.loadWeeklyJobsFromFirebase()
-            FamilyData.getSetupProgressFromFirebase()
-            FamilyData.loadExistingIncome()
-            JobsAndHabits.loadPaydayAndInspectionsFromFirebase()
         } else {
             print("user logged out")
             storyboard = UIStoryboard(name: "Setup", bundle: nil)
         }
         return storyboard
     }
-    
-    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-        
-        FIRApp.configure()
-        FIRDatabase.database().persistenceEnabled = true        // enable offline work
-        IQKeyboardManager.sharedManager().enable = true
-        
-        getCurrentUser()
-        
-        
-        
-        //        let storyboard: UIStoryboard = self.getStoryboard()
-        //
-        //        self.window?.rootViewController = storyboard.instantiateInitialViewController()
-        //        self.window?.makeKeyAndVisible()
-        return true
-    }
-    
-    
+
     
     func applicationWillResignActive(_ application: UIApplication) {
         // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.

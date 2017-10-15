@@ -121,7 +121,10 @@ class Step4PaydayInspectVC: UIViewController, UIPickerViewDelegate, UIPickerView
                 }
                 self.scrollPageIfNeeded()
                 // send selection to Firebase
-                self.ref.child("paydayAndInspections").updateChildValues(["paydayParent" : parent.firstName])
+                self.ref.child("paydayAndInspections").child("payday").updateChildValues(["name" : "weekly payday",
+                                                                                          "multiplier" : 1,
+                                                                                          "assigned" : parent.firstName,
+                                                                                          "order" : 0])
             }))
         }
         alert.addAction(UIAlertAction(title: "cancel", style: .cancel, handler: { (action) in
@@ -141,8 +144,14 @@ class Step4PaydayInspectVC: UIViewController, UIPickerViewDelegate, UIPickerView
             self.view.layoutIfNeeded()
             self.scrollPageIfNeeded()
         }
+        
+        // MARK: TODO - append / update local variable
+        
+        
+        
         // send selection to Firebase
-        self.ref.child("paydayAndInspections").updateChildValues(["paydayTime" : "\(selectedDay) \(selectedHour) \(selectedAMPM)"])
+        self.ref.updateChildValues(["paydayTime" : "\(selectedDay) \(selectedHour) \(selectedAMPM)"])
+        ref.child("paydayTime").removeAllObservers()
     }
     
     @IBAction func inspectionsParentButtonTapped(_ sender: UIButton) {
@@ -154,7 +163,10 @@ class Step4PaydayInspectVC: UIViewController, UIPickerViewDelegate, UIPickerView
                 self.nextButton.isEnabled = true
                 
                 // send selection to Firebase
-                self.ref.child("paydayAndInspections").updateChildValues(["inspectionParent" : parent.firstName])
+                self.ref.child("paydayAndInspections").child("inspections").updateChildValues(["name" : "daily inspections",
+                                                                                               "multiplier" : 1,
+                                                                                               "assigned" : parent.firstName,
+                                                                                               "order" : 0])
             }))
         }
         alert.addAction(UIAlertAction(title: "cancel", style: .cancel, handler: { (action) in
@@ -181,21 +193,24 @@ class Step4PaydayInspectVC: UIViewController, UIPickerViewDelegate, UIPickerView
     // ---------
     
     func loadExistingAssignments() {
-        if JobsAndHabits.inspectionParent != "" {
-            paydayParentButton.setTitle(JobsAndHabits.inspectionParent, for: .normal)
+        let inspectionParentName = JobsAndHabits.parentalDailyJobsArray[0].assigned
+        let paydayParentName = JobsAndHabits.parentalWeeklyJobsArray[0].assigned
+        
+        if inspectionParentName != "" {
+            paydayParentButton.setTitle(inspectionParentName, for: .normal)
             paydayParentButton.layer.backgroundColor = UIColor(red: 141/255, green: 198/255, blue: 63/255, alpha: 1.0).cgColor     // green
             paydayDateTopConstraint.constant = 0        // reveal next button
         }
         
-        if JobsAndHabits.paydayTime != "" {
-            paydayDateButton.setTitle(JobsAndHabits.paydayTime, for: .normal)
+        if FamilyData.paydayTime != "" {
+            paydayDateButton.setTitle(FamilyData.paydayTime, for: .normal)
             paydayDateButton.layer.backgroundColor = UIColor(red: 141/255, green: 198/255, blue: 63/255, alpha: 1.0).cgColor     // green
             inspectionsParentTopConstraint.constant = 0     // reveal next button
             paydayTimeConfirmed = true
         }
         
-        if JobsAndHabits.paydayParent != "" {
-            inspectionsParentButton.setTitle(JobsAndHabits.paydayParent, for: .normal)
+        if paydayParentName != "" {
+            inspectionsParentButton.setTitle(paydayParentName, for: .normal)
             inspectionsParentButton.layer.backgroundColor = UIColor(red: 141/255, green: 198/255, blue: 63/255, alpha: 1.0).cgColor     // green
             self.nextButton.isEnabled = true
         }
