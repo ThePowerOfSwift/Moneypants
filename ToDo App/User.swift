@@ -12,10 +12,11 @@ struct User {
     
     static var finalUsersArray = [User]()
     
-    static func loadMembers() {
+    static func loadMembers(completion: @escaping () -> ()) {
         let firebaseUser = FIRAuth.auth()?.currentUser
         let ref = FIRDatabase.database().reference().child("users").child(firebaseUser!.uid)
         ref.child("members").observeSingleEvent(of: .value, with: { (snapshot) in
+            let usersCount = Int(snapshot.childrenCount)
             for item in snapshot.children {
                 if let snap = item as? FIRDataSnapshot {
                     if let value = snap.value as? [String : Any] {
@@ -36,6 +37,10 @@ struct User {
                                             gender: gender,
                                             childParent: childParent)
                             finalUsersArray.append(user)
+                            
+                            if finalUsersArray.count == usersCount {
+                                completion()
+                            }
                         })
                     }
                 }

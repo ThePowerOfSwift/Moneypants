@@ -7,6 +7,8 @@ class Step3VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
     @IBOutlet weak var questionButton: UIButton!
     @IBOutlet weak var editButton: UIButton!
     
+    
+    
     var jobCountMin = User.finalUsersArray.count           // there must be at least one daily job and one weekly job per user
     let jobCountMax = 20
     
@@ -225,17 +227,34 @@ class Step3VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
             let nextController = segue.destination as! Step3AddJobVC
             // 'sender' is retrieved from 'didSelectRow' function above
             nextController.job = sender as! JobsAndHabits?
-            nextController.navBarTitle = "edit job"
-            
+            if JobsAndHabits.finalDailyJobsArray.contains(where: { $0.name == nextController.job?.name }) {
+                nextController.navBarTitle = "edit daily job"
+                nextController.jobSection = 0
+                nextController.descriptionBodyText1 = "NOTE: as a rule of thumb, daily jobs should take between 10 and 30 minutes for an adult to complete."
+                nextController.descriptionBodyText2 = "If a job takes less than 10 minutes, combine it with another job."
+                nextController.descriptionBodyText3 = "If a job takes longer than 30 minutes, split it into multiple jobs."
+            } else {
+                nextController.navBarTitle = "edit weekly job"
+                nextController.jobSection = 1
+                nextController.descriptionBodyText1 = "NOTE: as a rule of thumb, weekly jobs should take between 30 and 60 minutes for an adult to complete."
+                nextController.descriptionBodyText2 = "If a job takes less than 30 minutes, combine it with another job."
+                nextController.descriptionBodyText3 = "If a job takes longer than 60 minutes, split it into multiple jobs."
+            }
         // Add Jobs
         } else if segue.identifier == "AddDailyJob" {
             let nextController = segue.destination as! Step3AddJobVC
             nextController.navBarTitle = "add daily job"
             nextController.jobSection = 0
+            nextController.descriptionBodyText1 = "NOTE: as a rule of thumb, daily jobs should take between 10 and 30 minutes for an adult to complete."
+            nextController.descriptionBodyText2 = "If a job takes less than 10 minutes, combine it with another job."
+            nextController.descriptionBodyText3 = "If a job takes longer than 30 minutes, split it into multiple jobs."
         } else if segue.identifier == "AddWeeklyJob" {
             let nextController = segue.destination as! Step3AddJobVC
             nextController.navBarTitle = "add weekly job"
             nextController.jobSection = 1
+            nextController.descriptionBodyText1 = "NOTE: as a rule of thumb, weekly jobs should take between 30 and 60 minutes for an adult to complete."
+            nextController.descriptionBodyText2 = "If a job takes less than 30 minutes, combine it with another job."
+            nextController.descriptionBodyText3 = "If a job takes longer than 60 minutes, split it into multiple jobs."
         } else {
 //            print("segue initiated")
         }
@@ -283,7 +302,7 @@ class Step3VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
                 
                 // MARK: TODO - create a new daily job in Firebase
                 ref.child("dailyJobs").childByAutoId().setValue(["name" : updatedJob!.name,
-                                                                 "multiplier" : 1,       // MARK: TODO - need to get rid of 'multiplier' variable and replace
+                                                                 "description" : "job description",
                                                                  "assigned" : "none",
                                                                  "order" : JobsAndHabits.finalDailyJobsArray.count])
                 // Add a new daily job in the daily jobs array
@@ -306,7 +325,7 @@ class Step3VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
                 
                 // create a new weekly job in Firebase
                 ref.child("weeklyJobs").childByAutoId().setValue(["name" : updatedJob!.name,
-                                                                  "multiplier" : 1,
+                                                                  "description" : "job description",
                                                                   "assigned" : "none",
                                                                   "order" : JobsAndHabits.finalWeeklyJobsArray.count])
                 // Add a new weekly job in the weekly jobs array
@@ -398,11 +417,11 @@ class Step3VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
                     }
                 }
                 
-                let dailyJob = JobsAndHabits(name: newDailyJobName, multiplier: 1, assigned: "none", order: JobsAndHabits.finalDailyJobsArray.count)
+                let dailyJob = JobsAndHabits(name: newDailyJobName, description: "job description", assigned: "none", order: JobsAndHabits.finalDailyJobsArray.count)
                 JobsAndHabits.finalDailyJobsArray.append(dailyJob)
                 self.jobsTableView.reloadData()
                 // append new jobs to Firebase
-                self.ref.child("dailyJobs").childByAutoId().setValue(["name" : newDailyJobName, "multiplier" : 1, "assigned" : "none", "order" : JobsAndHabits.finalDailyJobsArray.count - 1])
+                self.ref.child("dailyJobs").childByAutoId().setValue(["name" : newDailyJobName, "description" : "job description", "assigned" : "none", "order" : JobsAndHabits.finalDailyJobsArray.count - 1])
             }
         }
         
@@ -428,42 +447,42 @@ class Step3VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
                     }
                 }
                 
-                let weeklyJob = JobsAndHabits(name: newWeeklyJobName, multiplier: 1, assigned: "none", order: JobsAndHabits.finalWeeklyJobsArray.count)
+                let weeklyJob = JobsAndHabits(name: newWeeklyJobName, description: "job description", assigned: "none", order: JobsAndHabits.finalWeeklyJobsArray.count)
                 JobsAndHabits.finalWeeklyJobsArray.append(weeklyJob)
                 self.jobsTableView.reloadData()
                 // append new jobs to Firebase
-                self.ref.child("weeklyJobs").childByAutoId().setValue(["name" : newWeeklyJobName, "multiplier" : 1, "assigned" : "none", "order" : JobsAndHabits.finalWeeklyJobsArray.count - 1])
+                self.ref.child("weeklyJobs").childByAutoId().setValue(["name" : newWeeklyJobName, "description" : "job description", "assigned" : "none", "order" : JobsAndHabits.finalWeeklyJobsArray.count - 1])
             }
         }
     }
     
     func loadDefaultDailyJobs() {
         // create array of default daily jobs
-        JobsAndHabits.finalDailyJobsArray = [JobsAndHabits(name: "bedroom", multiplier: 1, assigned: "none", order: 1),
-                                             JobsAndHabits(name: "bathrooms", multiplier: 1, assigned: "none", order: 2),
-                                             JobsAndHabits(name: "laundry", multiplier: 1, assigned: "none", order: 3),
-                                             JobsAndHabits(name: "living room", multiplier: 1, assigned: "none", order: 4),
-                                             JobsAndHabits(name: "sweep & vacuum", multiplier: 1, assigned: "none", order: 5),
-                                             JobsAndHabits(name: "wipe table", multiplier: 1, assigned: "none", order: 6),
-                                             JobsAndHabits(name: "counters", multiplier: 1, assigned: "none", order: 7),
-                                             JobsAndHabits(name: "dishes", multiplier: 1, assigned: "none", order: 8),
-                                             JobsAndHabits(name: "meal prep", multiplier: 1, assigned: "none",order: 9 ),
-                                             JobsAndHabits(name: "feed pet / garbage", multiplier: 1, assigned: "none", order: 10)]
+        JobsAndHabits.finalDailyJobsArray = [JobsAndHabits(name: "bedroom", description: "job description", assigned: "none", order: 1),
+                                             JobsAndHabits(name: "bathrooms", description: "job description", assigned: "none", order: 2),
+                                             JobsAndHabits(name: "laundry", description: "job description", assigned: "none", order: 3),
+                                             JobsAndHabits(name: "living room", description: "job description", assigned: "none", order: 4),
+                                             JobsAndHabits(name: "sweep & vacuum", description: "job description", assigned: "none", order: 5),
+                                             JobsAndHabits(name: "wipe table", description: "job description", assigned: "none", order: 6),
+                                             JobsAndHabits(name: "counters", description: "job description", assigned: "none", order: 7),
+                                             JobsAndHabits(name: "dishes", description: "job description", assigned: "none", order: 8),
+                                             JobsAndHabits(name: "meal prep", description: "job description", assigned: "none",order: 9 ),
+                                             JobsAndHabits(name: "feed pet / garbage", description: "job description", assigned: "none", order: 10)]
         jobsTableView.reloadData()
     }
     
     func loadDefaultWeeklyJobs() {
         // create array of default weekly jobs
-        JobsAndHabits.finalWeeklyJobsArray = [JobsAndHabits(name: "sweep porch", multiplier: 1, assigned: "none", order: 1),
-                                              JobsAndHabits(name: "weed garden", multiplier: 1, assigned: "none", order: 2),
-                                              JobsAndHabits(name: "wash windows", multiplier: 1, assigned: "none", order: 3),
-                                              JobsAndHabits(name: "dusting & cobwebs", multiplier: 1, assigned: "none", order: 4),
-                                              JobsAndHabits(name: "mop floors", multiplier: 1, assigned: "none", order: 5),
-                                              JobsAndHabits(name: "clean cabinets", multiplier: 1, assigned: "none", order: 6),
-                                              JobsAndHabits(name: "clean fridge", multiplier: 1, assigned: "none", order: 7),
-                                              JobsAndHabits(name: "wash car", multiplier: 1, assigned: "none", order: 8),
-                                              JobsAndHabits(name: "mow lawn", multiplier: 1, assigned: "none", order: 9),
-                                              JobsAndHabits(name: "babysit (hour #1)", multiplier: 1, assigned: "none", order: 10)]
+        JobsAndHabits.finalWeeklyJobsArray = [JobsAndHabits(name: "sweep porch", description: "job description", assigned: "none", order: 1),
+                                              JobsAndHabits(name: "weed garden", description: "job description", assigned: "none", order: 2),
+                                              JobsAndHabits(name: "wash windows", description: "job description", assigned: "none", order: 3),
+                                              JobsAndHabits(name: "dusting & cobwebs", description: "job description", assigned: "none", order: 4),
+                                              JobsAndHabits(name: "mop floors", description: "job description", assigned: "none", order: 5),
+                                              JobsAndHabits(name: "clean cabinets", description: "job description", assigned: "none", order: 6),
+                                              JobsAndHabits(name: "clean fridge", description: "job description", assigned: "none", order: 7),
+                                              JobsAndHabits(name: "wash car", description: "job description", assigned: "none", order: 8),
+                                              JobsAndHabits(name: "mow lawn", description: "job description", assigned: "none", order: 9),
+                                              JobsAndHabits(name: "babysit (hour #1)", description: "job description", assigned: "none", order: 10)]
         jobsTableView.reloadData()
     }
     
@@ -471,7 +490,7 @@ class Step3VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
         var dailyCounter = 0
         for dailyJob in JobsAndHabits.finalDailyJobsArray {
             ref.child("dailyJobs").childByAutoId().setValue(["name" : dailyJob.name,
-                                                             "multiplier" : 1,
+                                                             "description" : "job description",
                                                              "assigned" : "none",
                                                              "order" : dailyCounter])
             dailyCounter += 1
@@ -482,7 +501,7 @@ class Step3VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
         var weeklyCounter = 0
         for weeklyJob in JobsAndHabits.finalWeeklyJobsArray {
             ref.child("weeklyJobs").childByAutoId().setValue(["name" : weeklyJob.name,
-                                                              "multiplier" : 1,
+                                                              "description" : "job description",
                                                               "assigned" : "none",
                                                               "order" : weeklyCounter])
             weeklyCounter += 1

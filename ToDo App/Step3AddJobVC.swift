@@ -6,6 +6,10 @@ class Step3AddJobVC: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var jobTextField: UITextField!
     @IBOutlet weak var saveButton: UIBarButtonItem!
     
+    @IBOutlet weak var descriptionBody1: UILabel!
+    @IBOutlet weak var descriptionBody2: UILabel!
+    @IBOutlet weak var descriptionBody3: UILabel!
+    
     var navBarTitle: String = ""            // for allowing other VCs to change navbar title
     
     var job: JobsAndHabits?                 // 'job' is an instance of 'JobsAndHabits' class
@@ -15,9 +19,17 @@ class Step3AddJobVC: UIViewController, UITextFieldDelegate {
     var jobMultiplier: Double!
     var jobAssigned: String!
     var jobOrder: Int!
+    
+    var descriptionBodyText1: String?
+    var descriptionBodyText2: String?
+    var descriptionBodyText3: String?
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        descriptionBody1.text = descriptionBodyText1
+        descriptionBody2.text = descriptionBodyText2
+        descriptionBody3.text = descriptionBodyText3
         
         jobTextField.text = jobDescription
         jobTextField.delegate = self
@@ -26,7 +38,7 @@ class Step3AddJobVC: UIViewController, UITextFieldDelegate {
         // Set up view if editing an existing job
         if let existingJob = job {          // check to see if 'job' is not nil
             jobTextField.text = existingJob.name
-            jobMultiplier = existingJob.multiplier
+            jobDescription = existingJob.description
             jobAssigned = existingJob.assigned
             jobOrder = existingJob.order
         }
@@ -46,25 +58,13 @@ class Step3AddJobVC: UIViewController, UITextFieldDelegate {
     
     // This gets executed when 'SAVE' button is tapped, before segue is performed
     override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool {
-        if jobSection == 0 {
-            for job in JobsAndHabits.finalDailyJobsArray {
-                if job.name.lowercased() == (jobTextField.text?.lowercased()) {        // check to see if lowercased text matches
-                    duplicateNameAlert()
-                    return false
-                }
+        for job in JobsAndHabits.finalDailyJobsArray + JobsAndHabits.finalWeeklyJobsArray {
+            if job.name.lowercased() == jobTextField.text?.lowercased() {
+                duplicateNameAlert()
+                return false
             }
-            return true
-        } else if jobSection == 1 {
-            for job in JobsAndHabits.finalWeeklyJobsArray {
-                if job.name.lowercased() == (jobTextField.text?.lowercased()) {
-                    duplicateNameAlert()
-                    return false
-                }
-            }
-            return true
-        } else {
-            return true
         }
+        return true
     }
     
     
@@ -74,14 +74,14 @@ class Step3AddJobVC: UIViewController, UITextFieldDelegate {
         // set new job name to be passed back to Step3VC after the unwind segue
         let name = jobTextField.text
         
-        let multiplier = job?.multiplier ?? 1
+        let description = job?.description ?? "job description"
         
         // NOTE: the default assignment is "none"
         let assigned = job?.assigned ?? "none"
         
         let order = job?.order ?? 1
         
-        job = JobsAndHabits(name: name!, multiplier: multiplier, assigned: assigned, order: order)
+        job = JobsAndHabits(name: name!, description: description, assigned: assigned, order: order)
     }
     
     

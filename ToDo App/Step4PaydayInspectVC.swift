@@ -37,6 +37,8 @@ class Step4PaydayInspectVC: UIViewController, UIPickerViewDelegate, UIPickerView
         paydayDateTopConstraint.constant = -(thirdView.bounds.height)
         inspectionsParentTopConstraint.constant = -(fourthView.bounds.height)
         paydayDatePicker.delegate = self
+        updatePaydayPickerWithExistingData()
+        
         paydayDateButton.layer.backgroundColor = UIColor.red.cgColor
         paydayDateButton.setTitle("\(selectedDay) \(selectedHour) \(selectedAMPM)?", for: .normal)
         
@@ -49,6 +51,7 @@ class Step4PaydayInspectVC: UIViewController, UIPickerViewDelegate, UIPickerView
         
         loadExistingAssignments()
     }
+    
     
     
     // -----------
@@ -122,7 +125,7 @@ class Step4PaydayInspectVC: UIViewController, UIPickerViewDelegate, UIPickerView
                 self.scrollPageIfNeeded()
                 // send selection to Firebase
                 self.ref.child("paydayAndInspections").child("payday").updateChildValues(["name" : "weekly payday",
-                                                                                          "multiplier" : 1,
+                                                                                          "description" : "job description",
                                                                                           "assigned" : parent.firstName,
                                                                                           "order" : 0])
             }))
@@ -164,7 +167,7 @@ class Step4PaydayInspectVC: UIViewController, UIPickerViewDelegate, UIPickerView
                 
                 // send selection to Firebase
                 self.ref.child("paydayAndInspections").child("inspections").updateChildValues(["name" : "daily inspections",
-                                                                                               "multiplier" : 1,
+                                                                                               "description" : "job description",
                                                                                                "assigned" : parent.firstName,
                                                                                                "order" : 0])
             }))
@@ -213,6 +216,35 @@ class Step4PaydayInspectVC: UIViewController, UIPickerViewDelegate, UIPickerView
             inspectionsParentButton.setTitle(inspectionParentName, for: .normal)
             inspectionsParentButton.layer.backgroundColor = UIColor(red: 141/255, green: 198/255, blue: 63/255, alpha: 1.0).cgColor     // green
             self.nextButton.isEnabled = true
+        }
+    }
+    
+    func updatePaydayPickerWithExistingData() {
+        // get day of week
+        for (index, day) in paydayOptions[0].enumerated() {
+            if FamilyData.paydayTime.contains(day) {
+                paydayDatePicker.selectRow(index, inComponent: 0, animated: true)
+                selectedDay = day
+            }
+        }
+        // get hour chosen
+        let charCount = FamilyData.paydayTime.characters.count
+        let strippedForHour = String(FamilyData.paydayTime.characters.filter { "0"..."9" ~= $0 })
+        
+        for (index, hour) in paydayOptions[1].enumerated() {
+            if strippedForHour == hour {
+                paydayDatePicker.selectRow(index, inComponent: 1, animated: true)
+                selectedHour = hour
+            }
+        }
+        // get am or pm
+        let strippedForAMPM = String(FamilyData.paydayTime.characters.dropFirst(charCount - 2))
+        
+        for (index, ampm) in paydayOptions[2].enumerated() {
+            if strippedForAMPM.contains(ampm) {
+                paydayDatePicker.selectRow(index, inComponent: 2, animated: true)
+                selectedAMPM = ampm
+            }
         }
     }
     
