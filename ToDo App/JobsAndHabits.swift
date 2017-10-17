@@ -9,6 +9,7 @@ struct JobsAndHabits {
     
     static var finalDailyJobsArray = [JobsAndHabits]()
     static var finalWeeklyJobsArray = [JobsAndHabits]()
+    static var finalDailyHabitsArray = [JobsAndHabits]()
     static var parentalDailyJobsArray = [JobsAndHabits]()
     static var parentalWeeklyJobsArray = [JobsAndHabits]()
     
@@ -17,21 +18,26 @@ struct JobsAndHabits {
         let ref = FIRDatabase.database().reference().child("users").child((firebaseUser?.uid)!)
         ref.child("dailyJobs").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
             let jobsCount = Int(snapshot.childrenCount)
-            for item in snapshot.children {
-                if let snap = item as? FIRDataSnapshot {
-                    if let value = snap.value as? [String : Any] {
-                        let description = value["description"] as! String
-                        let name = value["name"] as! String
-                        let assigned = value["assigned"] as! String
-                        let order = value["order"] as! Int
-                        
-                        let dailyJob = JobsAndHabits(name: name, description: description, assigned: assigned, order: order)
-                        // MARK: TODO - do I need to change this 'sort' to 'sortby'? so it's non-destructive?
-                        finalDailyJobsArray.append(dailyJob)
-                        finalDailyJobsArray.sort(by: {$0.order < $1.order})
-                        
-                        if finalDailyJobsArray.count == jobsCount {
-                            completion()
+            // if there are no jobs on Firebase, return count 0
+            if jobsCount == 0 {
+                completion()
+            } else {
+                for item in snapshot.children {
+                    if let snap = item as? FIRDataSnapshot {
+                        if let value = snap.value as? [String : Any] {
+                            let description = value["description"] as! String
+                            let name = value["name"] as! String
+                            let assigned = value["assigned"] as! String
+                            let order = value["order"] as! Int
+                            
+                            let dailyJob = JobsAndHabits(name: name, description: description, assigned: assigned, order: order)
+                            // MARK: TODO - do I need to change this 'sort' to 'sortby'? so it's non-destructive?
+                            finalDailyJobsArray.append(dailyJob)
+                            finalDailyJobsArray.sort(by: {$0.order < $1.order})
+                            
+                            if finalDailyJobsArray.count == jobsCount {
+                                completion()
+                            }
                         }
                     }
                 }
@@ -44,23 +50,67 @@ struct JobsAndHabits {
         let ref = FIRDatabase.database().reference().child("users").child((firebaseUser?.uid)!)
         ref.child("weeklyJobs").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
             let jobsCount = Int(snapshot.childrenCount)
-            for item in snapshot.children {
-                if let snap = item as? FIRDataSnapshot {
-                    if let value = snap.value as? [String : Any] {
-                        let description = value["description"] as! String
-                        let name = value["name"] as! String
-                        let assigned = value["assigned"] as! String
-                        let order = value["order"] as! Int
-                        
-                        let weeklyJob = JobsAndHabits(name: name, description: description, assigned: assigned, order: order)
-                        finalWeeklyJobsArray.append(weeklyJob)
-                        finalWeeklyJobsArray.sort(by: {$0.order < $1.order})
-                        
-                        if finalWeeklyJobsArray.count == jobsCount {
-                            completion()
+            // if there are no jobs on Firebase, return count 0
+            if jobsCount == 0 {
+                completion()
+            } else {
+                for item in snapshot.children {
+                    if let snap = item as? FIRDataSnapshot {
+                        if let value = snap.value as? [String : Any] {
+                            let description = value["description"] as! String
+                            let name = value["name"] as! String
+                            let assigned = value["assigned"] as! String
+                            let order = value["order"] as! Int
+                            
+                            let weeklyJob = JobsAndHabits(name: name, description: description, assigned: assigned, order: order)
+                            finalWeeklyJobsArray.append(weeklyJob)
+                            finalWeeklyJobsArray.sort(by: {$0.order < $1.order})
+                            
+                            if finalWeeklyJobsArray.count == jobsCount {
+                                completion()
+                            }
                         }
                     }
                 }
+            }
+        }
+    }
+    
+    static func loadDailyHabitsFromFirebase(completion: @escaping () -> ()) {
+        // have to get users list first, then get each uers's daily habits
+        let firebaseUser = FIRAuth.auth()?.currentUser
+        let ref = FIRDatabase.database().reference().child("users").child((firebaseUser?.uid)!)
+        ref.child("members").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
+            let usersCount = Int(snapshot.childrenCount)
+            for child in snapshot.children {
+                let snap = child as! FIRDataSnapshot
+                let username = snap.key
+                ref.child("dailyHabits").child(username).observeSingleEvent(of: .value, with: { (snapshot) in
+                    let habitsCount = Int(snapshot.childrenCount)
+                    if habitsCount == 0 {
+                        print("NO HABITS AVAILABLE!!")
+                        completion()
+                    } else {
+                        for item in snapshot.children {
+                            if let snap = item as? FIRDataSnapshot {
+                                if let value = snap.value as? [String : Any] {
+                                    let assigned = value["assigned"] as! String
+                                    let description = value["description"] as! String
+                                    let name = value["name"] as! String
+                                    let order = value["order"] as! Int
+                                    
+                                    let dailyHabit = JobsAndHabits(name: name, description: description, assigned: assigned, order: order)
+                                    finalDailyHabitsArray.append(dailyHabit)
+                                    finalDailyHabitsArray.sort(by: { $0.assigned < $1.assigned })
+                                    // check to see that there are 10 jobs per user times the number of users
+                                    if finalDailyHabitsArray.count == usersCount * habitsCount {
+                                        completion()
+                                    }
+                                }
+                            }
+                        }
+                    }
+                })
             }
         }
     }
@@ -70,23 +120,28 @@ struct JobsAndHabits {
         let ref = FIRDatabase.database().reference().child("users").child((firebaseUser?.uid)!)
         ref.child("paydayAndInspections").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
             let jobsCount = Int(snapshot.childrenCount)
-            for item in snapshot.children {
-                if let snap = item as? FIRDataSnapshot {
-                    if let value = snap.value as? [String : Any] {
-                        let description = value["description"] as! String
-                        let name = value["name"] as! String
-                        let assigned = value["assigned"] as! String
-                        let order = value["order"] as! Int
-                        
-                        let paydayAndInspections = JobsAndHabits(name: name, description: description, assigned: assigned, order: order)
-                        if name == "daily inspections" {
-                            parentalDailyJobsArray.append(paydayAndInspections)
-                        } else if name == "weekly payday" {
-                            parentalWeeklyJobsArray.append(paydayAndInspections)
-                        }
-                        
-                        if parentalDailyJobsArray.count + parentalWeeklyJobsArray.count == jobsCount {
-                            completion()
+            // if there are no jobs on Firebase, return count 0
+            if jobsCount == 0 {
+                completion()
+            } else {
+                for item in snapshot.children {
+                    if let snap = item as? FIRDataSnapshot {
+                        if let value = snap.value as? [String : Any] {
+                            let description = value["description"] as! String
+                            let name = value["name"] as! String
+                            let assigned = value["assigned"] as! String
+                            let order = value["order"] as! Int
+                            
+                            let paydayAndInspections = JobsAndHabits(name: name, description: description, assigned: assigned, order: order)
+                            if name == "daily inspections" {
+                                parentalDailyJobsArray.append(paydayAndInspections)
+                            } else if name == "weekly payday" {
+                                parentalWeeklyJobsArray.append(paydayAndInspections)
+                            }
+                            
+                            if parentalDailyJobsArray.count + parentalWeeklyJobsArray.count == jobsCount {
+                                completion()
+                            }
                         }
                     }
                 }

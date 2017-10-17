@@ -64,5 +64,9 @@ class JobSummaryVC: UIViewController, UITableViewDataSource, UITableViewDelegate
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 75
     }
+    
+    @IBAction func nextButtonTapped(_ sender: UIButton) {
+        performSegue(withIdentifier: "DailyHabits", sender: self)
+    }
 }
 

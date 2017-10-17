@@ -20,10 +20,6 @@ class Step4PopupVC3: UIViewController {
         watchVideoButton.titleLabel?.textAlignment = .center
     }
     
-    @IBAction func watchVideoButtonTapped(_ sender: UIButton) {
-        print("watch video button tapped")
-    }
-    
     @IBAction func dismissPopupButtonTapped(_ sender: UIButton) {
         dismiss(animated: true, completion: nil)
     }

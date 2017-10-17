@@ -15,50 +15,57 @@ class LoadingVC: UIViewController {
 
         activityIndicator.startAnimating()
         
-        JobsAndHabits.loadPaydayAndInspectionsFromFirebase {
-            print("PAYDAY:  ",JobsAndHabits.parentalDailyJobsArray.count)
-//            self.progressView.progress += 0.1
-            self.loadingProgress += 0.1
-            self.checkProgress()
-        }
-        
-        JobsAndHabits.loadWeeklyJobsFromFirebase {
-            print("WEEKLY JOBS:  ",JobsAndHabits.finalWeeklyJobsArray.count)
-//            self.progressView.progress += 0.1
-            self.loadingProgress += 0.1
-            self.checkProgress()
-        }
-        
-        JobsAndHabits.loadDailyJobsFromFirebase {
-            print("DAILY JOBS:  ",JobsAndHabits.finalDailyJobsArray.count)
-//            self.progressView.progress += 0.1
-            self.loadingProgress += 0.1
-            self.checkProgress()
-        }
-        
-        FamilyData.loadPaydayTimeFromFirebase { (paydayTime) in
-            print("PAYDAY TIME:  ",paydayTime)
-//            self.progressView.progress += 0.1
-            self.loadingProgress += 0.1
-            self.checkProgress()
-        }
-        
         FamilyData.getSetupProgressFromFirebase { (setupProgress) in
-            print("SETUP PROGRESS:  ",setupProgress)
-//            self.progressView.progress += 0.1
-            self.loadingProgress += 0.1
+            print("1. SETUP PROGRESS:  ",setupProgress)
+            //            self.progressView.progress += 0.1
+            self.loadingProgress += 0.2
+            self.checkProgress()
+        }
+
+        
+        FamilyData.loadExistingIncome { (income) in
+            print("2. INCOME:  ",income)
+            //            self.progressView.progress += 0.1
+            self.loadingProgress += 0.2
             self.checkProgress()
         }
 
         User.loadMembers {
-            print("USERS:  ",User.finalUsersArray.count)
-//            self.progressView.progress += 0.4
-            self.loadingProgress += 0.4
+            print("3. USERS:  ",User.finalUsersArray.count)
+            //            self.progressView.progress += 0.4
+            self.loadingProgress += 0.1
+            self.checkProgress()
+        }
+
+        JobsAndHabits.loadDailyJobsFromFirebase {
+            print("4. DAILY JOBS:  ",JobsAndHabits.finalDailyJobsArray.count)
+            //            self.progressView.progress += 0.1
+            self.loadingProgress += 0.1
+            self.checkProgress()
+        }
+
+        JobsAndHabits.loadWeeklyJobsFromFirebase {
+            print("5. WEEKLY JOBS:  ",JobsAndHabits.finalWeeklyJobsArray.count)
+            //            self.progressView.progress += 0.1
+            self.loadingProgress += 0.1
             self.checkProgress()
         }
         
-        FamilyData.loadExistingIncome { (income) in
-            print("INCOME:  ",income)
+        JobsAndHabits.loadDailyHabitsFromFirebase {
+            print("6. DAILY HABITS:  ",JobsAndHabits.finalDailyHabitsArray.count)
+            self.loadingProgress += 0.1
+            self.checkProgress()
+        }
+        
+        JobsAndHabits.loadPaydayAndInspectionsFromFirebase {
+            print("7. PAYDAY:  ",JobsAndHabits.parentalDailyJobsArray.count)
+            //            self.progressView.progress += 0.1
+            self.loadingProgress += 0.1
+            self.checkProgress()
+        }
+
+        FamilyData.loadPaydayTimeFromFirebase { (paydayTime) in
+            print("8. PAYDAY TIME:  ",paydayTime)
 //            self.progressView.progress += 0.1
             self.loadingProgress += 0.1
             self.checkProgress()

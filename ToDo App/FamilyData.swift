@@ -13,6 +13,8 @@ struct FamilyData {
             if let value = snapshot.value as? Int {
                 setupProgress = value
                 completion(setupProgress)
+            } else {
+                completion(0)
             }
         })
     }
@@ -24,6 +26,8 @@ struct FamilyData {
             if let value = snapshot.value as? Int {
                 yearlyIncome = value
                 completion(yearlyIncome)
+            } else {
+                completion(0)
             }
         })
     }
@@ -35,6 +39,8 @@ struct FamilyData {
             if let value = snapshot.value as? String {
                 paydayTime = value
                 completion(paydayTime)
+            } else {
+                completion("")
             }
         })
     }

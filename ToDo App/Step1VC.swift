@@ -136,13 +136,17 @@ class Step1VC: UIViewController, UITextFieldDelegate {
     }
     
     func formatExistingIncome() {
-        let formatter = NumberFormatter()
-        formatter.groupingSeparator = ","
-        formatter.numberStyle = .decimal
-        let formattedNumber = formatter.string(from: FamilyData.yearlyIncome as NSNumber)
+        if FamilyData.yearlyIncome == 0 {
+            incomeTextField.text = ""
+        } else {
+            let formatter = NumberFormatter()
+            formatter.groupingSeparator = ","
+            formatter.numberStyle = .decimal
+            let formattedNumber = formatter.string(from: FamilyData.yearlyIncome as NSNumber)
+            
+            incomeTextField.text = "\(formattedNumber!)"
+        }
         
-        // put existing income into text field
-        self.incomeTextField.text = "\(formattedNumber!)"
     }
 }
 

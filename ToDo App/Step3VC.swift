@@ -7,8 +7,6 @@ class Step3VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
     @IBOutlet weak var questionButton: UIButton!
     @IBOutlet weak var editButton: UIButton!
     
-    
-    
     var jobCountMin = User.finalUsersArray.count           // there must be at least one daily job and one weekly job per user
     let jobCountMax = 20
     
@@ -227,6 +225,7 @@ class Step3VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
             let nextController = segue.destination as! Step3AddJobVC
             // 'sender' is retrieved from 'didSelectRow' function above
             nextController.job = sender as! JobsAndHabits?
+            // check if sender is from 'daily jobs', and if so, send 'daily job' info to next VC
             if JobsAndHabits.finalDailyJobsArray.contains(where: { $0.name == nextController.job?.name }) {
                 nextController.navBarTitle = "edit daily job"
                 nextController.jobSection = 0
@@ -398,8 +397,8 @@ class Step3VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
         
         // if there are no existing jobs on Firebase, then load the defaults
         if JobsAndHabits.finalDailyJobsArray.count == 0 {
-            self.loadDefaultDailyJobs()
-            self.createDefaultDailyJobsOnFirebase()
+            loadDefaultDailyJobs()
+            createDefaultDailyJobsOnFirebase()
             
         // if there are existing jobs on Firebase but not enough for each family member, then create a few more jobs
         } else if JobsAndHabits.finalDailyJobsArray.count < self.jobCountMin {
@@ -586,25 +585,10 @@ class Step3VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
         ref.child("weeklyJobs").removeAllObservers()
     }
     
+    
     // -----------
     // Unused Code
     // -----------
-    
-    /*
-    func loadDefaultDailyHabits() {
-        // create array of default daily habits
-        dailyHabits = [JobsAndHabits(jobName: "get ready for day by 10:am", jobMultiplier: 5, jobAssign: "none", jobOrder: 1),     // This is bonus habit **
-            JobsAndHabits(jobName: "personal meditation (10 min)", jobMultiplier: 1, jobAssign: "none", jobOrder: 2),
-            JobsAndHabits(jobName: "daily exercise", jobMultiplier: 1, jobAssign: "none", jobOrder: 3),
-            JobsAndHabits(jobName: "develop talents (20 min)", jobMultiplier: 1, jobAssign: "none", jobOrder: 4),
-            JobsAndHabits(jobName: "homework done by 5:pm", jobMultiplier: 1, jobAssign: "none", jobOrder: 5),
-            JobsAndHabits(jobName: "good manners", jobMultiplier: 1, jobAssign: "none", jobOrder: 6),
-            JobsAndHabits(jobName: "peacemaking (no fighting)", jobMultiplier: 1, jobAssign: "none", jobOrder: 7),
-            JobsAndHabits(jobName: "helping hands / obedience", jobMultiplier: 1, jobAssign: "none", jobOrder: 8),
-            JobsAndHabits(jobName: "write in journal", jobMultiplier: 1, jobAssign: "none", jobOrder: 9),
-            JobsAndHabits(jobName: "bed by 8:pm", jobMultiplier: 1, jobAssign: "none", jobOrder: 10)]
-    }
-    */
     
     // OLD BUT GOOD ESCAPING CODE
     /*
