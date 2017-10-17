@@ -16,7 +16,6 @@ class Step3AddJobVC: UIViewController, UITextFieldDelegate {
     var jobSection: Int?                    // this value passed from Step3VC alert when user chose to add 'daily' or 'weekly' job
     
     var jobDescription: String = ""
-    var jobMultiplier: Double!
     var jobAssigned: String!
     var jobOrder: Int!
     

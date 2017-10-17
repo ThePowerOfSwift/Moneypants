@@ -5885,7 +5885,7 @@ For each family member, select one or more daily and weekly jobs. Parents will g
                         <outlet property="reviewAllButton" destination="X5L-eA-VgA" id="bzF-xa-2Jl"/>
                         <outlet property="selectUsersButton" destination="1O8-c6-C2y" id="ZkT-cG-FT1"/>
                         <outlet property="userImage" destination="SPt-4m-ENd" id="0xo-In-TrF"/>
-                        <segue destination="S94-Ee-uaR" kind="presentation" identifier="EditHabits" id="mpz-v0-Po7"/>
+                        <segue destination="S94-Ee-uaR" kind="presentation" identifier="EditHabit" id="mpz-v0-Po7"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="S1O-il-jJA" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -6078,7 +6078,7 @@ The first habit is worth more than all the others and should be the main habit t
         <!--Edit Habit-->
         <scene sceneID="e91-OH-Tsv">
             <objects>
-                <viewController title="Edit Habit" id="S94-Ee-uaR" customClass="Step3AddJobVC" customModule="ToDo_App" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController title="Edit Habit" id="S94-Ee-uaR" customClass="Step4EditHabitVC" customModule="ToDo_App" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="OC5-XG-5rU"/>
                         <viewControllerLayoutGuide type="bottom" id="DXG-V7-rtr"/>
@@ -6093,18 +6093,18 @@ The first habit is worth more than all the others and should be the main habit t
                                     <navigationItem title="edit habit" id="fp5-2R-JDU">
                                         <barButtonItem key="leftBarButtonItem" title="cancel" id="b0K-2O-Tiu">
                                             <connections>
-                                                <action selector="cancelButtonTapped:" destination="S94-Ee-uaR" id="bkb-me-WXf"/>
+                                                <action selector="cancelButtonTapped:" destination="S94-Ee-uaR" id="0x0-ii-OSQ"/>
                                             </connections>
                                         </barButtonItem>
                                         <barButtonItem key="rightBarButtonItem" title="save" id="DxC-45-r5e">
                                             <connections>
-                                                <segue destination="sJ6-0i-Lgx" kind="unwind" identifier="UnwindToStep3VC" unwindAction="unwindToStep3VCWithSender:" id="b19-08-4kj"/>
+                                                <action selector="saveButtonTapped:" destination="S94-Ee-uaR" id="ApY-87-Trd"/>
                                             </connections>
                                         </barButtonItem>
                                     </navigationItem>
                                 </items>
                             </navigationBar>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="house broom" translatesAutoresizingMaskIntoConstraints="NO" id="JNm-5d-22O">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="habit workout black" translatesAutoresizingMaskIntoConstraints="NO" id="JNm-5d-22O">
                                 <rect key="frame" x="140" y="60" width="40" height="40"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="40" id="6Xq-el-4ji"/>
@@ -6114,13 +6114,13 @@ The first habit is worth more than all the others and should be the main habit t
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="aPc-PJ-we1" userLabel="Job Stack">
                                 <rect key="frame" x="35" y="116" width="250" height="55.5"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="job title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2Y3-SZ-wzo">
-                                        <rect key="frame" x="0.0" y="0.0" width="56.5" height="20.5"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="habit title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2Y3-SZ-wzo">
+                                        <rect key="frame" x="0.0" y="0.0" width="71.5" height="20.5"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="enter job name here" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="dc6-92-ZqA">
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="enter habit name here" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="dc6-92-ZqA">
                                         <rect key="frame" x="0.0" y="25.5" width="250" height="30"/>
                                         <nil key="textColor"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="20"/>
@@ -6149,81 +6149,77 @@ The first habit is worth more than all the others and should be the main habit t
                                 <rect key="frame" x="35" y="504" width="250" height="31.5"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </view>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="•" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Hcb-i6-z6m">
-                                <rect key="frame" x="35" y="318" width="8.5" height="20.5"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="NOTE: as a rule of thumb, jobs should take between 10 and 30 minutes for an adult to complete." lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bJh-pK-HOp">
-                                <rect key="frame" x="35" y="220.5" width="250" height="81.5"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bJh-pK-HOp">
+                                <rect key="frame" x="35" y="220.5" width="250" height="101.5"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="250" id="YGK-Xx-U8Q"/>
                                 </constraints>
+                                <string key="text">When choosing habits, be sure to consider the importance of maintaining balance. Be sure to have at least one goal in each of the following categories:</string>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="If a job takes more than 30 minutes, split it into multiple jobs." lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KhZ-kQ-5xl">
-                                <rect key="frame" x="49" y="393.5" width="236" height="61"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="•" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dou-F8-5Y5">
-                                <rect key="frame" x="35" y="393.5" width="9" height="20.5"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="At its core, The Moneypants Solution is simply a system of goals." lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KhZ-kQ-5xl">
+                                <rect key="frame" x="35" y="453.5" width="250" height="61"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="8.5" id="wQs-mE-poX"/>
+                                    <constraint firstAttribute="width" constant="250" id="j3l-3m-6Oc"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="If a job takes less than 10 minutes, combine it with another job." lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Wmp-hp-4jt">
-                                <rect key="frame" x="48.5" y="318" width="236.5" height="59.5"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Wmp-hp-4jt">
+                                <rect key="frame" x="50" y="338" width="220" height="99.5"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="220" id="pAh-fI-adt"/>
+                                </constraints>
+                                <string key="text">• physical
+• emotional
+• mental
+• spiritual
+• social</string>
                                 <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="17"/>
                                 <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RUY-CR-P2C">
+                                <rect key="frame" x="35" y="530.5" width="250" height="33"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="250" id="NKK-HQ-xbv"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <state key="normal" title="Tap here to learn more."/>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="0.90000000000000002" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="JNm-5d-22O" firstAttribute="top" secondItem="T1w-yz-FvW" secondAttribute="bottom" constant="16" id="0Iu-Va-IWf"/>
-                            <constraint firstItem="Wmp-hp-4jt" firstAttribute="top" secondItem="Hcb-i6-z6m" secondAttribute="top" id="0Tl-ec-bQm"/>
                             <constraint firstAttribute="trailing" secondItem="T1w-yz-FvW" secondAttribute="trailing" id="10l-jL-9vt"/>
-                            <constraint firstItem="KhZ-kQ-5xl" firstAttribute="top" secondItem="dou-F8-5Y5" secondAttribute="top" id="2QJ-Bc-2XP"/>
-                            <constraint firstItem="KhZ-kQ-5xl" firstAttribute="leading" secondItem="dou-F8-5Y5" secondAttribute="trailing" constant="5" id="4qK-Nt-o6d"/>
-                            <constraint firstItem="dou-F8-5Y5" firstAttribute="leading" secondItem="Hcb-i6-z6m" secondAttribute="leading" id="5bZ-Fk-ghP"/>
-                            <constraint firstItem="Wmp-hp-4jt" firstAttribute="leading" secondItem="Hcb-i6-z6m" secondAttribute="trailing" constant="5" id="5oA-Nv-Okn"/>
-                            <constraint firstItem="Hcb-i6-z6m" firstAttribute="leading" secondItem="bJh-pK-HOp" secondAttribute="leading" id="67w-G9-hYs"/>
                             <constraint firstItem="T1w-yz-FvW" firstAttribute="leading" secondItem="5TM-Tg-pLH" secondAttribute="leading" id="FAJ-mf-nbk"/>
-                            <constraint firstItem="Hcb-i6-z6m" firstAttribute="top" secondItem="bJh-pK-HOp" secondAttribute="bottom" constant="16" id="GDK-oC-5qZ"/>
+                            <constraint firstItem="KhZ-kQ-5xl" firstAttribute="centerX" secondItem="5TM-Tg-pLH" secondAttribute="centerX" id="FVi-j8-1Ro"/>
                             <constraint firstItem="aPc-PJ-we1" firstAttribute="top" secondItem="JNm-5d-22O" secondAttribute="bottom" constant="16" id="Isp-mX-ey9"/>
                             <constraint firstItem="s5h-4e-LJ5" firstAttribute="centerX" secondItem="5TM-Tg-pLH" secondAttribute="centerX" id="M4f-NZ-QXh"/>
-                            <constraint firstItem="Wmp-hp-4jt" firstAttribute="trailing" secondItem="bJh-pK-HOp" secondAttribute="trailing" id="XGT-Dy-VUq"/>
-                            <constraint firstItem="dou-F8-5Y5" firstAttribute="top" secondItem="Wmp-hp-4jt" secondAttribute="bottom" constant="16" id="Y6W-ST-Ny2"/>
+                            <constraint firstItem="RUY-CR-P2C" firstAttribute="top" secondItem="KhZ-kQ-5xl" secondAttribute="bottom" constant="16" id="NrY-XY-iqA"/>
+                            <constraint firstItem="RUY-CR-P2C" firstAttribute="centerX" secondItem="5TM-Tg-pLH" secondAttribute="centerX" id="RBJ-Em-WAR"/>
+                            <constraint firstItem="KhZ-kQ-5xl" firstAttribute="top" secondItem="Wmp-hp-4jt" secondAttribute="bottom" constant="16" id="SQ8-0J-MWk"/>
                             <constraint firstItem="T1w-yz-FvW" firstAttribute="top" secondItem="OC5-XG-5rU" secondAttribute="bottom" id="YAb-ZO-RUw"/>
                             <constraint firstItem="aPc-PJ-we1" firstAttribute="centerX" secondItem="5TM-Tg-pLH" secondAttribute="centerX" id="aUf-MX-lrL"/>
                             <constraint firstItem="bJh-pK-HOp" firstAttribute="centerX" secondItem="5TM-Tg-pLH" secondAttribute="centerX" id="aun-2s-c2z"/>
                             <constraint firstItem="bJh-pK-HOp" firstAttribute="top" secondItem="s5h-4e-LJ5" secondAttribute="bottom" constant="24" id="cfx-hz-2iK"/>
                             <constraint firstItem="JNm-5d-22O" firstAttribute="centerX" secondItem="5TM-Tg-pLH" secondAttribute="centerX" id="g9I-jj-yY7"/>
                             <constraint firstItem="s5h-4e-LJ5" firstAttribute="top" secondItem="aPc-PJ-we1" secondAttribute="bottom" constant="24" id="ixI-bR-lSO"/>
-                            <constraint firstItem="KhZ-kQ-5xl" firstAttribute="trailing" secondItem="bJh-pK-HOp" secondAttribute="trailing" id="l83-fy-cFL"/>
+                            <constraint firstItem="Wmp-hp-4jt" firstAttribute="top" secondItem="bJh-pK-HOp" secondAttribute="bottom" constant="16" id="odm-qH-jsv"/>
+                            <constraint firstItem="Wmp-hp-4jt" firstAttribute="centerX" secondItem="5TM-Tg-pLH" secondAttribute="centerX" id="uZE-H8-umo"/>
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="descriptionBody1" destination="bJh-pK-HOp" id="l0z-Ij-z52"/>
-                        <outlet property="descriptionBody2" destination="Wmp-hp-4jt" id="ZpS-jB-6BK"/>
-                        <outlet property="descriptionBody3" destination="KhZ-kQ-5xl" id="AxH-kj-xsw"/>
-                        <outlet property="jobTextField" destination="dc6-92-ZqA" id="w9M-ga-6bR"/>
-                        <outlet property="navBar" destination="T1w-yz-FvW" id="b4G-Ba-95b"/>
-                        <outlet property="saveButton" destination="DxC-45-r5e" id="r8W-i5-Dyq"/>
+                        <outlet property="habitTextField" destination="dc6-92-ZqA" id="qUY-yV-6xc"/>
+                        <outlet property="saveButton" destination="DxC-45-r5e" id="Ams-Am-Po6"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Zld-Yl-kNA" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <exit id="sJ6-0i-Lgx" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="9816" y="1874"/>
+            <point key="canvasLocation" x="9815.625" y="1873.943661971831"/>
         </scene>
     </scenes>
     <resources>

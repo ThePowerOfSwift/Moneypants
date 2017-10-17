@@ -14,7 +14,7 @@ class Step4HabitVC: UIViewController, UITableViewDataSource, UITableViewDelegate
     var firebaseUser: FIRUser!
     var ref: FIRDatabaseReference!
     
-    var currentMember = 0           // used for cycling through users when 'next' button is tapped
+    var currentMember: Int = 0           // used for cycling through users when 'next' button is tapped
     var currentUserName: String!
 
     override func viewDidLoad() {
@@ -41,8 +41,16 @@ class Step4HabitVC: UIViewController, UITableViewDataSource, UITableViewDelegate
         
         fetchHabits()
         
-        checkSetupNumber()
+        loadFirstUser()
+        
+        // only show habit for current user, not entire habits array of all users
     }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+        habitsTableView.reloadData()
+    }
+    
     
     // ---------------
     // Setup TableView
@@ -53,7 +61,18 @@ class Step4HabitVC: UIViewController, UITableViewDataSource, UITableViewDelegate
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return dailyHabits.count
+        // only show habit for current user, not entire habits array of all users
+        let habitsArray = JobsAndHabits.finalDailyHabitsArray.sorted(by: { $0.order < $1.order }).filter({ return $0.assigned == User.finalUsersArray[currentMember].firstName })
+        return habitsArray.count
+    }
+    
+    // what are contents of each cell
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "Step4HabitCell", for: indexPath) as! Step4HabitCell
+        // only show habit for current user, not entire habits array of all users. NOTE: Have to call this variable every time for table to reload properly (can't make it a global var)
+        let habitsArray = JobsAndHabits.finalDailyHabitsArray.sorted(by: { $0.order < $1.order }).filter({ return $0.assigned == User.finalUsersArray[currentMember].firstName })
+        cell.habitLabel.text = habitsArray[indexPath.row].name
+        return cell
     }
 
     // Give section a title
@@ -70,18 +89,23 @@ class Step4HabitVC: UIViewController, UITableViewDataSource, UITableViewDelegate
         header.contentView.backgroundColor = UIColor.lightGray
     }
     
-    // what are contents of each cell
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "Step4HabitCell", for: indexPath) as! Step4HabitCell
-        let (dailyHabitName, _, _, _) = dailyHabits[indexPath.row]
-        cell.habitLabel.text = dailyHabitName
-        return cell
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let habitsArray = JobsAndHabits.finalDailyHabitsArray.sorted(by: { $0.order < $1.order }).filter({ return $0.assigned == User.finalUsersArray[currentMember].firstName })
+        performSegue(withIdentifier: "EditHabit", sender: habitsArray[indexPath.row])
     }
     
     
     // ------------------
     // MARK: - Navigation
     // ------------------
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "EditHabit" {
+            let nextViewController = segue.destination as! Step4EditHabitVC
+            // send the habit from the tableview cell above to Step4EditHabitVC
+            nextViewController.habit = sender as! JobsAndHabits
+        }
+    }
     
     @IBAction func nextButtonTapped(_ sender: UIButton) {
         if FamilyData.setupProgress <= 43 {
@@ -111,17 +135,23 @@ class Step4HabitVC: UIViewController, UITableViewDataSource, UITableViewDelegate
     }
     
     func loadDefaultDailyHabits() {
+        // MARK: TODO - check for age of user, and create age-appropriate habits list
+        for user in User.finalUsersArray {
+            print(user.birthday)
+        }
+        
+        
         // create array of default daily habits, NOTE: First habit in list is bonus habit
-        JobsAndHabits.finalDailyHabitsArray = [JobsAndHabits(name: "get ready for day by 10:am", description: "daily habit", assigned: "true", order: 1),
-                                               JobsAndHabits(name: "personal meditation (10 min)", description: "daily habit", assigned: "true", order: 2),
-                                               JobsAndHabits(name: "daily exercise", description: "daily habit", assigned: "true", order: 3),
-                                               JobsAndHabits(name: "develop talents (20 min)", description: "daily habit", assigned: "true", order: 4),
-                                               JobsAndHabits(name: "homework done by 5:pm", description: "daily habit", assigned: "true", order: 5),
-                                               JobsAndHabits(name: "good manners", description: "daily habit", assigned: "true", order: 6),
-                                               JobsAndHabits(name: "peacemaking (no fighting)", description: "daily habit", assigned: "true", order: 7),
-                                               JobsAndHabits(name: "helping hands / obedience", description: "daily habit", assigned: "true", order: 8),
-                                               JobsAndHabits(name: "write in journal", description: "daily habit", assigned: "true", order: 9),
-                                               JobsAndHabits(name: "bed by 8:pm", description: "daily habit", assigned: "true", order: 10)]
+        JobsAndHabits.finalDailyHabitsArray = [JobsAndHabits(name: "get ready for day by 10:am", description: "daily habit", assigned: User.finalUsersArray[currentMember].firstName, order: 1),
+                                               JobsAndHabits(name: "personal meditation (10 min)", description: "daily habit", assigned: User.finalUsersArray[currentMember].firstName, order: 2),
+                                               JobsAndHabits(name: "daily exercise", description: "daily habit", assigned: User.finalUsersArray[currentMember].firstName, order: 3),
+                                               JobsAndHabits(name: "develop talents (20 min)", description: "daily habit", assigned: User.finalUsersArray[currentMember].firstName, order: 4),
+                                               JobsAndHabits(name: "homework done by 5:pm", description: "daily habit", assigned: User.finalUsersArray[currentMember].firstName, order: 5),
+                                               JobsAndHabits(name: "good manners", description: "daily habit", assigned: User.finalUsersArray[currentMember].firstName, order: 6),
+                                               JobsAndHabits(name: "peacemaking (no fighting)", description: "daily habit", assigned: User.finalUsersArray[currentMember].firstName, order: 7),
+                                               JobsAndHabits(name: "helping hands / obedience", description: "daily habit", assigned: User.finalUsersArray[currentMember].firstName, order: 8),
+                                               JobsAndHabits(name: "write in journal", description: "daily habit", assigned: User.finalUsersArray[currentMember].firstName, order: 9),
+                                               JobsAndHabits(name: "bed by 8:pm", description: "daily habit", assigned: User.finalUsersArray[currentMember].firstName, order: 10)]
         habitsTableView.reloadData()
     }
     
@@ -131,44 +161,22 @@ class Step4HabitVC: UIViewController, UITableViewDataSource, UITableViewDelegate
             for dailyHabit in JobsAndHabits.finalDailyHabitsArray {
                 ref.child("dailyHabits").child(user.firstName).childByAutoId().setValue(["name" : dailyHabit.name,
                                                                                          "description" : "habit description",
-                                                                                         "assigned" : "true",
+                                                                                         "assigned" : user.firstName,
                                                                                          "order" : dailyCounter])
                 dailyCounter += 1
             }
         }
-        
     }
     
-    func checkSetupNumber() {
-        if FamilyData.setupProgress >= 43 {
-            // first view will be of youngest family member
-            self.userImage.image = User.finalUsersArray[0].photo
-            self.currentUserName = User.finalUsersArray[0].firstName
-            self.instructionsLabel.text = "Review daily habits for \(User.finalUsersArray[0].firstName)."
-            self.navigationItem.title = User.finalUsersArray[0].firstName
-            self.habitsTableView.reloadData()
-            self.reviewAllButton.isHidden = false
-            self.nextButton.isEnabled = false
-            self.selectUsersButton.isHidden = false
-            
-        } else {
-            
-            // if user hasn't done setup yet, show the overlay
-            self.performSegue(withIdentifier: "UserIntroPopup", sender: self)
-            self.userImage.image = User.finalUsersArray[0].photo
-            self.currentUserName = User.finalUsersArray[0].firstName
-            self.instructionsLabel.text = "Review daily habits for \(User.finalUsersArray[0].firstName)."
-            self.navigationItem.title = User.finalUsersArray[0].firstName
-            self.habitsTableView.reloadData()
-        }
-    }
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "UserIntroPopup" {
-            let nextViewController = segue.destination as! Step4HabitIntroVC
-            nextViewController.popupImage = User.finalUsersArray[currentMember].photo
-            nextViewController.mainLabelText = User.finalUsersArray[currentMember].firstName
-        }
+    func loadFirstUser() {
+        self.userImage.image = User.finalUsersArray[0].photo
+        self.currentUserName = User.finalUsersArray[0].firstName
+        self.instructionsLabel.text = "Review daily habits for \(User.finalUsersArray[0].firstName)."
+        self.navigationItem.title = User.finalUsersArray[0].firstName
+        self.habitsTableView.reloadData()
+        self.reviewAllButton.isHidden = false
+        self.nextButton.isEnabled = false
+        self.selectUsersButton.isHidden = false
     }
 }
 
