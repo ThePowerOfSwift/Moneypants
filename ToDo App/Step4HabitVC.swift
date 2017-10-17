@@ -51,7 +51,6 @@ class Step4HabitVC: UIViewController, UITableViewDataSource, UITableViewDelegate
         habitsTableView.reloadData()
     }
     
-    
     // ---------------
     // Setup TableView
     // ---------------
@@ -71,6 +70,13 @@ class Step4HabitVC: UIViewController, UITableViewDataSource, UITableViewDelegate
         let cell = tableView.dequeueReusableCell(withIdentifier: "Step4HabitCell", for: indexPath) as! Step4HabitCell
         // only show habit for current user, not entire habits array of all users. NOTE: Have to call this variable every time for table to reload properly (can't make it a global var)
         let habitsArray = JobsAndHabits.finalDailyHabitsArray.sorted(by: { $0.order < $1.order }).filter({ return $0.assigned == User.finalUsersArray[currentMember].firstName })
+        
+        if indexPath.row == 0 {
+            cell.habitLabel.font = UIFont.systemFont(ofSize: 17.0, weight: UIFontWeightBold)
+        } else {
+            cell.habitLabel.font = UIFont.systemFont(ofSize: 17.0, weight: UIFontWeightRegular)
+        }
+        
         cell.habitLabel.text = habitsArray[indexPath.row].name
         return cell
     }
@@ -93,7 +99,6 @@ class Step4HabitVC: UIViewController, UITableViewDataSource, UITableViewDelegate
         let habitsArray = JobsAndHabits.finalDailyHabitsArray.sorted(by: { $0.order < $1.order }).filter({ return $0.assigned == User.finalUsersArray[currentMember].firstName })
         performSegue(withIdentifier: "EditHabit", sender: habitsArray[indexPath.row])
     }
-    
     
     // ------------------
     // MARK: - Navigation
@@ -122,12 +127,14 @@ class Step4HabitVC: UIViewController, UITableViewDataSource, UITableViewDelegate
         print("review all button tapped")
     }
     
-    
     // ---------
     // Functions
     // ---------
     
     func fetchHabits() {
+        
+        // MARK: TODO - check each user individually to make sure they have 10 habits (perhaps a new user was added and thus didn't get new habits yet?)
+        
         if JobsAndHabits.finalDailyHabitsArray.count == 0 {
             loadDefaultDailyHabits()
             createDefaultDailyHabitsOnFirebase()
@@ -138,11 +145,48 @@ class Step4HabitVC: UIViewController, UITableViewDataSource, UITableViewDelegate
         // MARK: TODO - check for age of user, and create age-appropriate habits list
         for user in User.finalUsersArray {
             print(user.birthday)
+            if user.birthday > 18 {
+                JobsAndHabits.finalDailyHabitsArray = [JobsAndHabits(name: "enter your top priority habit here", description: "daily habit", assigned: User.finalUsersArray[currentMember].firstName, order: 1),
+                                                       JobsAndHabits(name: "prayer & scripture study", description: "daily habit", assigned: User.finalUsersArray[currentMember].firstName, order: 2),
+                                                       JobsAndHabits(name: "exercise (20 min)", description: "daily habit", assigned: User.finalUsersArray[currentMember].firstName, order: 3),
+                                                       JobsAndHabits(name: "journal", description: "daily habit", assigned: User.finalUsersArray[currentMember].firstName, order: 4),
+                                                       JobsAndHabits(name: "1-on-1 time with kid", description: "daily habit", assigned: User.finalUsersArray[currentMember].firstName, order: 5),
+                                                       JobsAndHabits(name: "practice talent (30 min)", description: "daily habit", assigned: User.finalUsersArray[currentMember].firstName, order: 6),
+                                                       JobsAndHabits(name: "good deed / service", description: "daily habit", assigned: User.finalUsersArray[currentMember].firstName, order: 7),
+                                                       JobsAndHabits(name: "family prayer & scriptures", description: "daily habit", assigned: User.finalUsersArray[currentMember].firstName, order: 8),
+                                                       JobsAndHabits(name: "on time to events", description: "daily habit", assigned: User.finalUsersArray[currentMember].firstName, order: 9),
+                                                       JobsAndHabits(name: "read (20 min)", description: "daily habit", assigned: User.finalUsersArray[currentMember].firstName, order: 10)]
+            } else if user.birthday < 5 {
+                JobsAndHabits.finalDailyHabitsArray = [JobsAndHabits(name: "reading & writing lesson", description: "daily habit", assigned: User.finalUsersArray[currentMember].firstName, order: 1),
+                                                       JobsAndHabits(name: "pick up toys after play", description: "daily habit", assigned: User.finalUsersArray[currentMember].firstName, order: 2),
+                                                       JobsAndHabits(name: "please & thank you", description: "daily habit", assigned: User.finalUsersArray[currentMember].firstName, order: 3),
+                                                       JobsAndHabits(name: "kindness & peacemaking", description: "daily habit", assigned: User.finalUsersArray[currentMember].firstName, order: 4),
+                                                       JobsAndHabits(name: "nap", description: "daily habit", assigned: User.finalUsersArray[currentMember].firstName, order: 5),
+                                                       JobsAndHabits(name: "immediate obedience", description: "daily habit", assigned: User.finalUsersArray[currentMember].firstName, order: 6),
+                                                       JobsAndHabits(name: "bedtime by 7:pm", description: "daily habit", assigned: User.finalUsersArray[currentMember].firstName, order: 7),
+                                                       JobsAndHabits(name: "use toilet / dry bed", description: "daily habit", assigned: User.finalUsersArray[currentMember].firstName, order: 8),
+                                                       JobsAndHabits(name: "pray", description: "daily habit", assigned: User.finalUsersArray[currentMember].firstName, order: 9),
+                                                       JobsAndHabits(name: "exercise (10 min)", description: "daily habit", assigned: User.finalUsersArray[currentMember].firstName, order: 10)]
+                
+                
+                
+                
+            } else {
+                JobsAndHabits.finalDailyHabitsArray = [JobsAndHabits(name: "enter your top priority habit here", description: "daily habit", assigned: User.finalUsersArray[currentMember].firstName, order: 1),
+                                                       JobsAndHabits(name: "prayer & scripture study", description: "daily habit", assigned: User.finalUsersArray[currentMember].firstName, order: 2),
+                                                       JobsAndHabits(name: "exercise (20 min)", description: "daily habit", assigned: User.finalUsersArray[currentMember].firstName, order: 3),
+                                                       JobsAndHabits(name: "practice talent (20 min)", description: "daily habit", assigned: User.finalUsersArray[currentMember].firstName, order: 4),
+                                                       JobsAndHabits(name: "homework done by 5:pm", description: "daily habit", assigned: User.finalUsersArray[currentMember].firstName, order: 5),
+                                                       JobsAndHabits(name: "good deed / service", description: "daily habit", assigned: User.finalUsersArray[currentMember].firstName, order: 6),
+                                                       JobsAndHabits(name: "peacemaking (no fighting)", description: "daily habit", assigned: User.finalUsersArray[currentMember].firstName, order: 7),
+                                                       JobsAndHabits(name: "helping hands", description: "daily habit", assigned: User.finalUsersArray[currentMember].firstName, order: 8),
+                                                       JobsAndHabits(name: "write in journal", description: "daily habit", assigned: User.finalUsersArray[currentMember].firstName, order: 9),
+                                                       JobsAndHabits(name: "bed by 8:pm", description: "daily habit", assigned: User.finalUsersArray[currentMember].firstName, order: 10)]
+            }
         }
         
-        
         // create array of default daily habits, NOTE: First habit in list is bonus habit
-        JobsAndHabits.finalDailyHabitsArray = [JobsAndHabits(name: "get ready for day by 10:am", description: "daily habit", assigned: User.finalUsersArray[currentMember].firstName, order: 1),
+        JobsAndHabits.finalDailyHabitsArray = [JobsAndHabits(name: "enter your top priority habit here", description: "daily habit", assigned: User.finalUsersArray[currentMember].firstName, order: 1),
                                                JobsAndHabits(name: "personal meditation (10 min)", description: "daily habit", assigned: User.finalUsersArray[currentMember].firstName, order: 2),
                                                JobsAndHabits(name: "daily exercise", description: "daily habit", assigned: User.finalUsersArray[currentMember].firstName, order: 3),
                                                JobsAndHabits(name: "develop talents (20 min)", description: "daily habit", assigned: User.finalUsersArray[currentMember].firstName, order: 4),
@@ -152,6 +196,7 @@ class Step4HabitVC: UIViewController, UITableViewDataSource, UITableViewDelegate
                                                JobsAndHabits(name: "helping hands / obedience", description: "daily habit", assigned: User.finalUsersArray[currentMember].firstName, order: 8),
                                                JobsAndHabits(name: "write in journal", description: "daily habit", assigned: User.finalUsersArray[currentMember].firstName, order: 9),
                                                JobsAndHabits(name: "bed by 8:pm", description: "daily habit", assigned: User.finalUsersArray[currentMember].firstName, order: 10)]
+        
         habitsTableView.reloadData()
     }
     
