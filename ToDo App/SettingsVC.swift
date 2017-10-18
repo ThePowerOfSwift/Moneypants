@@ -11,7 +11,7 @@ class SettingsVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                                             ("modify jobs & habits", "Chores"),
                                             ("reassign jobs & habits", "IndividualHabits"),
                                             ("change passwords", "IndividualIncomeSummary"),
-                                            ("sign out", "Login")]
+                                            ("sign out", "LoginViewController")]
     
     
     override func viewDidLoad() {
@@ -98,7 +98,7 @@ class SettingsVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                 do {
                     try FIRAuth.auth()?.signOut()
                     let storyBoard: UIStoryboard = UIStoryboard(name: "Setup", bundle: nil)
-                    let newViewController = storyBoard.instantiateViewController(withIdentifier: "Login") // as! LoginViewController
+                    let newViewController = storyBoard.instantiateViewController(withIdentifier: "LoginViewController") // as! LoginViewController
                     self.present(newViewController, animated: true, completion: nil)
                 } catch let error {
                     assertionFailure("Error signing out: \(error)")

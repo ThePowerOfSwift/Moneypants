@@ -8,7 +8,6 @@ class Step4VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
     @IBOutlet weak var instructionsLabel: UILabel!
     @IBOutlet weak var selectUsersButton: UIButton!
     @IBOutlet weak var questionButton: UIButton!
-    @IBOutlet weak var reviewAllButton: UIButton!
     @IBOutlet weak var nextButton: UIButton!
     
     var firebaseUser: FIRUser!
@@ -33,7 +32,6 @@ class Step4VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
         currentUserName = ""
         instructionsLabel.text = ""
         selectUsersButton.isHidden = true
-        reviewAllButton.isHidden = true
         
         jobsTableView.delegate = self
         jobsTableView.dataSource = self
@@ -397,7 +395,6 @@ class Step4VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
         }
     }
     
-    
     // ------------------
     // MARK: - Navigation
     // ------------------
@@ -425,70 +422,73 @@ class Step4VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
             ref.updateChildValues(["setupProgress" : 40])
         }
         
-        // perform query on daily jobs to see how many jobs current user has assigned
-        let userJobsList = JobsAndHabits.finalDailyJobsArray.filter({ return $0.assigned == User.finalUsersArray[self.currentMember].firstName })
-        
+        if selectUsersButton.isHidden == false {
+            // user has already cycled through all users and made assignments. now still need to check for daily and weekly assignments
+            reviewFamilyJobs()
+        } else {
+            // perform query on daily jobs to see how many jobs current user has assigned
+            let userJobsList = JobsAndHabits.finalDailyJobsArray.filter({ return $0.assigned == User.finalUsersArray[self.currentMember].firstName })
+            
             // -------------------------------------------------
             // 1. does current user have at least one DAILY job?
             // -------------------------------------------------
-        
-        // 1A. user has ZERO daily jobs assigned
-        if userJobsList.count == 0 {
-            self.zeroDailyJobsAssignedAlert()
             
-        // 1B. user has at least one daily jobs assigned
-        } else if userJobsList.count != 0 {
-            
-            // --------------------------------------------------
-            // 2. does current user have at least one WEEKLY job?
-            // --------------------------------------------------
-            
-            let userJobsList2 = JobsAndHabits.finalWeeklyJobsArray.filter({ return $0.assigned == User.finalUsersArray[self.currentMember].firstName })
-            
-            // 2A. user has ZERO weekly jobs assigned
-            if userJobsList2.count == 0 {
-                let alert = UIAlertController(title: "Not Enough Jobs", message: "You have not chosen any weekly jobs for \(User.finalUsersArray[self.currentMember].firstName). Are you sure you want to continue?", preferredStyle: .alert)
-                alert.addAction(UIAlertAction(title: "cancel", style: .cancel, handler: { (action) in
-                    alert.dismiss(animated: true, completion: nil)
-                }))
-                alert.addAction(UIAlertAction(title: "okay", style: .default, handler: { (action) in
-                    alert.dismiss(animated: true, completion: nil)
+            // 1A. user has ZERO daily jobs assigned
+            if userJobsList.count == 0 {
+                self.zeroDailyJobsAssignedAlert()
+                
+                // 1B. user has at least one daily jobs assigned
+            } else if userJobsList.count != 0 {
+                
+                // --------------------------------------------------
+                // 2. does current user have at least one WEEKLY job?
+                // --------------------------------------------------
+                
+                let userJobsList2 = JobsAndHabits.finalWeeklyJobsArray.filter({ return $0.assigned == User.finalUsersArray[self.currentMember].firstName })
+                
+                // 2A. user has ZERO weekly jobs assigned
+                if userJobsList2.count == 0 {
+                    let alert = UIAlertController(title: "Not Enough Jobs", message: "You have not chosen any weekly jobs for \(User.finalUsersArray[self.currentMember].firstName). Are you sure you want to continue?", preferredStyle: .alert)
+                    alert.addAction(UIAlertAction(title: "cancel", style: .cancel, handler: { (action) in
+                        alert.dismiss(animated: true, completion: nil)
+                    }))
+                    alert.addAction(UIAlertAction(title: "okay", style: .default, handler: { (action) in
+                        alert.dismiss(animated: true, completion: nil)
+                        
+                        // -------------------------------------------
+                        // 3. is current user oldest member of family?
+                        // -------------------------------------------
+                        
+                        // 3A. user is NOT oldest member of family
+                        if self.currentMember != (User.finalUsersArray.count - 1) {
+                            // 3A-1. go to next user
+                            self.presentNextUser()
+                            
+                            // 3B. user is oldest member of family
+                        } else if self.currentMember == (User.finalUsersArray.count - 1) {
+                            self.reviewFamilyJobs()
+                        }
+                    }))
+                    self.present(alert, animated: true, completion: nil)
+                } else {
                     
                     // -------------------------------------------
                     // 3. is current user oldest member of family?
                     // -------------------------------------------
                     
-                    // 3A. user is NOT oldest member of family
-                    if self.currentMember != (User.finalUsersArray.count - 1) {
-                        // 3A-1. go to next user
-                        self.presentNextUser()
-                        
-                        // 3B. user is oldest member of family
-                    } else if self.currentMember == (User.finalUsersArray.count - 1) {
+                    // current user is oldest member of family
+                    if self.currentMember == (User.finalUsersArray.count - 1) {
                         self.reviewFamilyJobs()
+                    } else if self.currentMember != (User.finalUsersArray.count - 1) {
+                        self.presentNextUser()
                     }
-                }))
-                self.present(alert, animated: true, completion: nil)
-            } else {
-                
-                // -------------------------------------------
-                // 3. is current user oldest member of family?
-                // -------------------------------------------
-                
-                // current user is oldest member of family
-                if self.currentMember == (User.finalUsersArray.count - 1) {
-                    self.reviewFamilyJobs()
-                } else if self.currentMember != (User.finalUsersArray.count - 1) {
-                    self.presentNextUser()
                 }
             }
         }
-        //        ref.child("dailyJobs").removeAllObservers()
-        //        ref.child("weeklyJobs").removeAllObservers()
     }
 
     @IBAction func selectUsersButtonTapped(_ sender: UIButton) {
-        let alert = UIAlertController(title: "Select A User", message: "Please choose a family member to review their job assignments", preferredStyle: .alert)
+        let alert = UIAlertController(title: "Select A User", message: "Please choose a family member to review their job assignments.", preferredStyle: .alert)
         for (index, user) in User.finalUsersArray.enumerated() {
             alert.addAction(UIAlertAction(title: user.firstName, style: .default, handler: { (action) in
                 self.currentMember = index
@@ -506,11 +506,6 @@ class Step4VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
         present(alert, animated: true, completion: nil)
     }
     
-    @IBAction func reviewAllButtonTapped(_ sender: UIButton) {
-        reviewFamilyJobs()
-    }
-
-    
     // ---------
     // Functions
     // ---------
@@ -523,8 +518,8 @@ class Step4VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
             self.instructionsLabel.text = "Choose daily and weekly job assignments for \(User.finalUsersArray[0].firstName)."
             self.navigationItem.title = User.finalUsersArray[0].firstName
             self.jobsTableView.reloadData()
-            self.reviewAllButton.isHidden = false
-            self.nextButton.isEnabled = false
+            
+            // show 'select user' button so user can review other members' assignments
             self.selectUsersButton.isHidden = false
             
         } else {
@@ -562,10 +557,8 @@ class Step4VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
             alert.addAction(UIAlertAction(title: "okay", style: .cancel, handler: { (action) in
                 alert.dismiss(animated: true, completion: nil)
                 self.selectUsersButton.isHidden = false
-                self.reviewAllButton.isHidden = false
-                self.nextButton.isEnabled = false
             }))
-            self.present(alert, animated: true, completion: nil)
+            present(alert, animated: true, completion: nil)
             
         // 4B. all daily job ARE assigned
         } else if unassignedDailyJobs.count == 0 {
@@ -580,10 +573,8 @@ class Step4VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
                 alert.addAction(UIAlertAction(title: "okay", style: .cancel, handler: { (action) in
                     alert.dismiss(animated: true, completion: nil)
                     self.selectUsersButton.isHidden = false
-                    self.reviewAllButton.isHidden = false
-                    self.nextButton.isEnabled = false
                 }))
-                self.present(alert, animated: true, completion: nil)
+                present(alert, animated: true, completion: nil)
                 
             // 5B. all users have at least one daily job
             } else {
@@ -603,16 +594,24 @@ class Step4VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
                     }))
                     alert.addAction(UIAlertAction(title: "assign", style: .cancel, handler: { (action) in
                         self.selectUsersButton.isHidden = false
-                        self.reviewAllButton.isHidden = false
-                        self.nextButton.isEnabled = false
                         // change 'next' button to allow users to go to next step and not have to cycle through all users again
                         alert.dismiss(animated: true, completion: nil)
                     }))
-                    self.present(alert, animated: true, completion: nil)
+                    present(alert, animated: true, completion: nil)
                     
                     // 6B. all weekly jobs ARE assigned
                 } else if unassignedWeeklyJobs.count == 0 {
-                    self.performSegue(withIdentifier: "PaydayInspections", sender: self)
+                    let alert = UIAlertController(title: "Review Family Assignments", message: "Do you wish to review any assigned habits, or continue with setup?", preferredStyle: .alert)
+                    alert.addAction(UIAlertAction(title: "review", style: .cancel, handler: { (actions) in
+                        self.selectUsersButton.isHidden = false
+                        alert.dismiss(animated: true, completion: nil)
+                    }))
+                    alert.addAction(UIAlertAction(title: "continue", style: .default, handler: { (action) in
+                        alert.dismiss(animated: true, completion: nil)
+                        self.performSegue(withIdentifier: "PaydayInspections", sender: self)
+                        self.selectUsersButton.isHidden = false
+                    }))
+                    present(alert, animated: true, completion: nil)
                 }
             }
         }

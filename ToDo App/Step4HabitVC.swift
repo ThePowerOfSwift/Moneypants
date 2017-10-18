@@ -8,7 +8,6 @@ class Step4HabitVC: UIViewController, UITableViewDataSource, UITableViewDelegate
     @IBOutlet weak var instructionsLabel: UILabel!
     @IBOutlet weak var selectUsersButton: UIButton!
     @IBOutlet weak var questionButton: UIButton!
-    @IBOutlet weak var reviewAllButton: UIButton!
     @IBOutlet weak var nextButton: UIButton!
     
     var firebaseUser: FIRUser!
@@ -33,7 +32,6 @@ class Step4HabitVC: UIViewController, UITableViewDataSource, UITableViewDelegate
         currentUserName = ""
         instructionsLabel.text = ""
         selectUsersButton.isHidden = true
-        reviewAllButton.isHidden = true
         
         habitsTableView.delegate = self
         habitsTableView.dataSource = self
@@ -111,34 +109,61 @@ class Step4HabitVC: UIViewController, UITableViewDataSource, UITableViewDelegate
     }
     
     @IBAction func nextButtonTapped(_ sender: UIButton) {
-        // if user is NOT oldest member of family...
-        if currentMember != (User.finalUsersArray.count - 1) {
-            // ...go to next user
-            currentMember += 1
-//            let habitsArray = JobsAndHabits.finalDailyHabitsArray.sorted(by: { $0.order < $1.order }).filter({ return $0.assigned == User.finalUsersArray[currentMember].firstName })
-            userImage.image = User.finalUsersArray[currentMember].photo
-            currentUserName = User.finalUsersArray[currentMember].firstName
-            instructionsLabel.text = "Review daily habits for \(User.finalUsersArray[currentMember].firstName)."
-            navigationItem.title = User.finalUsersArray[currentMember].firstName
-            habitsTableView.reloadData()
-        } else if currentMember == (User.finalUsersArray.count - 1) {
-            // enable hidden buttons and allow user to select other users for review
-            reviewAllButton.isHidden = false
-            nextButton.isEnabled = false
-            selectUsersButton.isHidden = false
+        if selectUsersButton.isHidden == false {
+            // user has already completed this section and can move forward
+            reviewOrContinueAlert()
+        } else {
+            // if user is NOT oldest member of family...
+            if currentMember != (User.finalUsersArray.count - 1) {
+                // ...go to next user
+                currentMember += 1
+                //            let habitsArray = JobsAndHabits.finalDailyHabitsArray.sorted(by: { $0.order < $1.order }).filter({ return $0.assigned == User.finalUsersArray[currentMember].firstName })
+                userImage.image = User.finalUsersArray[currentMember].photo
+                currentUserName = User.finalUsersArray[currentMember].firstName
+                instructionsLabel.text = "Review daily habits for \(User.finalUsersArray[currentMember].firstName)."
+                navigationItem.title = User.finalUsersArray[currentMember].firstName
+                habitsTableView.reloadData()
+            } else if currentMember == (User.finalUsersArray.count - 1) {
+                if FamilyData.setupProgress <= 43 {
+                    FamilyData.setupProgress = 43
+                    ref.updateChildValues(["setupProgress" : 43])
+                }
+                reviewOrContinueAlert()
+            }
         }
+    }
+    
+    func reviewOrContinueAlert() {
+        let alert = UIAlertController(title: "Review Habits", message: "Do you wish to review any assigned habits, or continue with setup?", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "review", style: .cancel, handler: { (action) in
+            alert.dismiss(animated: true, completion: nil)
+            // enable hidden button and allow user to select other users for review
+            self.selectUsersButton.isHidden = false
+        }))
+        alert.addAction(UIAlertAction(title: "continue", style: .default, handler: { (action) in
+            alert.dismiss(animated: true, completion: nil)
+            self.performSegue(withIdentifier: "MemberIncome", sender: self)
+        }))
+        present(alert, animated: true, completion: nil)
     }
     
     @IBAction func selectUserButtonTapped(_ sender: UIButton) {
-        print("choose user button tapped")
-    }
-    
-    @IBAction func reviewAllButtonTapped(_ sender: UIButton) {
-        print("review all button tapped")
-        if FamilyData.setupProgress <= 43 {
-            FamilyData.setupProgress = 43
-            ref.updateChildValues(["setupProgress" : 43])
+        let alert = UIAlertController(title: "Select A User", message: "Please choose a family member to review their habits.", preferredStyle: .alert)
+        for (index, user) in User.finalUsersArray.enumerated() {
+            alert.addAction(UIAlertAction(title: user.firstName, style: .default, handler: { (action) in
+                self.currentMember = index
+                self.userImage.image = User.finalUsersArray[self.currentMember].photo
+                self.currentUserName = User.finalUsersArray[self.currentMember].firstName
+                self.instructionsLabel.text = "Choose daily habits for \(User.finalUsersArray[self.currentMember].firstName)"
+                self.navigationItem.title = User.finalUsersArray[self.currentMember].firstName
+                self.habitsTableView.reloadData()
+                alert.dismiss(animated: true, completion: nil)
+            }))
         }
+        alert.addAction(UIAlertAction(title: "cancel", style: .cancel, handler: { (action) in
+            alert.dismiss(animated: true, completion: nil)
+        }))
+        present(alert, animated: true, completion: nil)
     }
     
     // ---------
@@ -218,21 +243,18 @@ class Step4HabitVC: UIViewController, UITableViewDataSource, UITableViewDelegate
                 }
                 
             } else {
-                print("all users have habits assigned")
+                print("\(user.firstName) has habits assigned")
             }
         }
         habitsTableView.reloadData()
     }
     
     func checkSetupNumber() {
-        // if user has already been to this page of setup
+        // if user has already been to this page of setup...
         if FamilyData.setupProgress >= 43 {
-            reviewAllButton.isHidden = false
-            nextButton.isEnabled = false
+            // ...unhide the 'select user' button and allow user to choose other members for review
             selectUsersButton.isHidden = false
         } else {
-            reviewAllButton.isHidden = true
-            nextButton.isEnabled = true
             selectUsersButton.isHidden = true
         }
         userImage.image = User.finalUsersArray[0].photo
@@ -252,7 +274,6 @@ class Step4HabitVC: UIViewController, UITableViewDataSource, UITableViewDelegate
         let age = calculatedAge.year
         return age!
     }
-
 }
 
 

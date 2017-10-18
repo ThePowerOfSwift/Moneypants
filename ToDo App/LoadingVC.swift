@@ -16,63 +16,58 @@ class LoadingVC: UIViewController {
         activityIndicator.startAnimating()
         
         FamilyData.getSetupProgressFromFirebase { (setupProgress) in
-            print("1. SETUP PROGRESS:  ",setupProgress)
             //            self.progressView.progress += 0.1
-            self.loadingProgress += 0.2
+            self.loadingProgress += 0.1
+            print("1. SETUP PROGRESS:  ",setupProgress)
             self.checkProgress()
         }
 
         
         FamilyData.loadExistingIncome { (income) in
+            self.loadingProgress += 0.1
             print("2. INCOME:  ",income)
-            //            self.progressView.progress += 0.1
-            self.loadingProgress += 0.2
             self.checkProgress()
         }
 
         User.loadMembers {
+            self.loadingProgress += 0.3
             print("3. USERS:  ",User.finalUsersArray.count)
-            //            self.progressView.progress += 0.4
-            self.loadingProgress += 0.1
             self.checkProgress()
         }
 
         JobsAndHabits.loadDailyJobsFromFirebase {
-            print("4. DAILY JOBS:  ",JobsAndHabits.finalDailyJobsArray.count)
-            //            self.progressView.progress += 0.1
             self.loadingProgress += 0.1
+            print("4. DAILY JOBS:  ",JobsAndHabits.finalDailyJobsArray.count)
             self.checkProgress()
         }
 
         JobsAndHabits.loadWeeklyJobsFromFirebase {
-            print("5. WEEKLY JOBS:  ",JobsAndHabits.finalWeeklyJobsArray.count)
-            //            self.progressView.progress += 0.1
             self.loadingProgress += 0.1
+            print("5. WEEKLY JOBS:  ",JobsAndHabits.finalWeeklyJobsArray.count)
             self.checkProgress()
         }
         
         JobsAndHabits.loadDailyHabitsFromFirebase {
-            print("6. DAILY HABITS:  ",JobsAndHabits.finalDailyHabitsArray.count)
             self.loadingProgress += 0.1
+            print("6. DAILY HABITS:  ",JobsAndHabits.finalDailyHabitsArray.count)
             self.checkProgress()
         }
         
         JobsAndHabits.loadPaydayAndInspectionsFromFirebase {
-            print("7. PAYDAY:  ",JobsAndHabits.parentalDailyJobsArray.count)
-            //            self.progressView.progress += 0.1
             self.loadingProgress += 0.1
+            print("7. PAYDAY:  ",JobsAndHabits.parentalDailyJobsArray.count)
             self.checkProgress()
         }
 
         FamilyData.loadPaydayTimeFromFirebase { (paydayTime) in
-            print("8. PAYDAY TIME:  ",paydayTime)
-//            self.progressView.progress += 0.1
             self.loadingProgress += 0.1
+            print("8. PAYDAY TIME:  ",paydayTime)
             self.checkProgress()
         }
     }
     
     func checkProgress() {
+        print("Loading Progress: ",loadingProgress)
         if self.loadingProgress == 1.0 {
             print("all done downloading")
             self.activityIndicator.stopAnimating()
