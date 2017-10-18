@@ -45,6 +45,10 @@ class Step4VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
         checkSetupNumber()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        User.finalUsersArray.sort(by: {$0.birthday > $1.birthday})       // sort users by birthday with youngest first
+    }
+    
     // ----------------
     // Setup Table View
     // ----------------

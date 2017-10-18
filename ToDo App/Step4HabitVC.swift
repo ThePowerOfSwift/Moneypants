@@ -39,11 +39,9 @@ class Step4HabitVC: UIViewController, UITableViewDataSource, UITableViewDelegate
         habitsTableView.dataSource = self
         habitsTableView.tableFooterView = UIView()
         
-        fetchHabits()
+        loadHabits()
         
-        loadFirstUser()
-        
-        // only show habit for current user, not entire habits array of all users
+        checkSetupNumber()
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -113,9 +111,21 @@ class Step4HabitVC: UIViewController, UITableViewDataSource, UITableViewDelegate
     }
     
     @IBAction func nextButtonTapped(_ sender: UIButton) {
-        if FamilyData.setupProgress <= 43 {
-            FamilyData.setupProgress = 43
-            ref.updateChildValues(["setupProgress" : 43])
+        // if user is NOT oldest member of family...
+        if currentMember != (User.finalUsersArray.count - 1) {
+            // ...go to next user
+            currentMember += 1
+//            let habitsArray = JobsAndHabits.finalDailyHabitsArray.sorted(by: { $0.order < $1.order }).filter({ return $0.assigned == User.finalUsersArray[currentMember].firstName })
+            userImage.image = User.finalUsersArray[currentMember].photo
+            currentUserName = User.finalUsersArray[currentMember].firstName
+            instructionsLabel.text = "Review daily habits for \(User.finalUsersArray[currentMember].firstName)."
+            navigationItem.title = User.finalUsersArray[currentMember].firstName
+            habitsTableView.reloadData()
+        } else if currentMember == (User.finalUsersArray.count - 1) {
+            // enable hidden buttons and allow user to select other users for review
+            reviewAllButton.isHidden = false
+            nextButton.isEnabled = false
+            selectUsersButton.isHidden = false
         }
     }
     
@@ -125,104 +135,124 @@ class Step4HabitVC: UIViewController, UITableViewDataSource, UITableViewDelegate
     
     @IBAction func reviewAllButtonTapped(_ sender: UIButton) {
         print("review all button tapped")
+        if FamilyData.setupProgress <= 43 {
+            FamilyData.setupProgress = 43
+            ref.updateChildValues(["setupProgress" : 43])
+        }
     }
     
     // ---------
     // Functions
     // ---------
     
-    func fetchHabits() {
+    func loadHabits() {
         
-        // MARK: TODO - check each user individually to make sure they have 10 habits (perhaps a new user was added and thus didn't get new habits yet?)
-        
-        if JobsAndHabits.finalDailyHabitsArray.count == 0 {
-            loadDefaultDailyHabits()
-            createDefaultDailyHabitsOnFirebase()
-        }
-    }
-    
-    func loadDefaultDailyHabits() {
-        // MARK: TODO - check for age of user, and create age-appropriate habits list
+        // MARK: make sure every user has habits (perhaps a new user was added and thus didn't get new habits yet?)
         for user in User.finalUsersArray {
-            print(user.birthday)
-            if user.birthday > 18 {
-                JobsAndHabits.finalDailyHabitsArray = [JobsAndHabits(name: "enter your top priority habit here", description: "daily habit", assigned: User.finalUsersArray[currentMember].firstName, order: 1),
-                                                       JobsAndHabits(name: "prayer & scripture study", description: "daily habit", assigned: User.finalUsersArray[currentMember].firstName, order: 2),
-                                                       JobsAndHabits(name: "exercise (20 min)", description: "daily habit", assigned: User.finalUsersArray[currentMember].firstName, order: 3),
-                                                       JobsAndHabits(name: "journal", description: "daily habit", assigned: User.finalUsersArray[currentMember].firstName, order: 4),
-                                                       JobsAndHabits(name: "1-on-1 time with kid", description: "daily habit", assigned: User.finalUsersArray[currentMember].firstName, order: 5),
-                                                       JobsAndHabits(name: "practice talent (30 min)", description: "daily habit", assigned: User.finalUsersArray[currentMember].firstName, order: 6),
-                                                       JobsAndHabits(name: "good deed / service", description: "daily habit", assigned: User.finalUsersArray[currentMember].firstName, order: 7),
-                                                       JobsAndHabits(name: "family prayer & scriptures", description: "daily habit", assigned: User.finalUsersArray[currentMember].firstName, order: 8),
-                                                       JobsAndHabits(name: "on time to events", description: "daily habit", assigned: User.finalUsersArray[currentMember].firstName, order: 9),
-                                                       JobsAndHabits(name: "read (20 min)", description: "daily habit", assigned: User.finalUsersArray[currentMember].firstName, order: 10)]
-            } else if user.birthday < 5 {
-                JobsAndHabits.finalDailyHabitsArray = [JobsAndHabits(name: "reading & writing lesson", description: "daily habit", assigned: User.finalUsersArray[currentMember].firstName, order: 1),
-                                                       JobsAndHabits(name: "pick up toys after play", description: "daily habit", assigned: User.finalUsersArray[currentMember].firstName, order: 2),
-                                                       JobsAndHabits(name: "please & thank you", description: "daily habit", assigned: User.finalUsersArray[currentMember].firstName, order: 3),
-                                                       JobsAndHabits(name: "kindness & peacemaking", description: "daily habit", assigned: User.finalUsersArray[currentMember].firstName, order: 4),
-                                                       JobsAndHabits(name: "nap", description: "daily habit", assigned: User.finalUsersArray[currentMember].firstName, order: 5),
-                                                       JobsAndHabits(name: "immediate obedience", description: "daily habit", assigned: User.finalUsersArray[currentMember].firstName, order: 6),
-                                                       JobsAndHabits(name: "bedtime by 7:pm", description: "daily habit", assigned: User.finalUsersArray[currentMember].firstName, order: 7),
-                                                       JobsAndHabits(name: "use toilet / dry bed", description: "daily habit", assigned: User.finalUsersArray[currentMember].firstName, order: 8),
-                                                       JobsAndHabits(name: "pray", description: "daily habit", assigned: User.finalUsersArray[currentMember].firstName, order: 9),
-                                                       JobsAndHabits(name: "exercise (10 min)", description: "daily habit", assigned: User.finalUsersArray[currentMember].firstName, order: 10)]
+            if !JobsAndHabits.finalDailyHabitsArray.contains(where: { $0.assigned == user.firstName }) {
+                print(user.firstName,"does not have any habits assigned")
                 
+                let parentalHabitsArray = [JobsAndHabits(name: "enter your top priority habit here", description: "daily habit", assigned: user.firstName, order: 1),
+                                           JobsAndHabits(name: "prayer & scripture study", description: "daily habit", assigned: user.firstName, order: 2),
+                                           JobsAndHabits(name: "exercise (20 min)", description: "daily habit", assigned: user.firstName, order: 3),
+                                           JobsAndHabits(name: "journal", description: "daily habit", assigned: user.firstName, order: 4),
+                                           JobsAndHabits(name: "1-on-1 time with kid", description: "daily habit", assigned: user.firstName, order: 5),
+                                           JobsAndHabits(name: "practice talent (30 min)", description: "daily habit", assigned: user.firstName, order: 6),
+                                           JobsAndHabits(name: "good deed / service", description: "daily habit", assigned: user.firstName, order: 7),
+                                           JobsAndHabits(name: "family prayer & scriptures", description: "daily habit", assigned: user.firstName, order: 8),
+                                           JobsAndHabits(name: "on time to events", description: "daily habit", assigned: user.firstName, order: 9),
+                                           JobsAndHabits(name: "read (20 min)", description: "daily habit", assigned: user.firstName, order: 10)]
                 
+                let toddlerHabitsArray = [JobsAndHabits(name: "reading & writing lesson", description: "daily habit", assigned: user.firstName, order: 1),
+                                          JobsAndHabits(name: "pick up toys after play", description: "daily habit", assigned: user.firstName, order: 2),
+                                          JobsAndHabits(name: "please & thank you", description: "daily habit", assigned: user.firstName, order: 3),
+                                          JobsAndHabits(name: "kindness & peacemaking", description: "daily habit", assigned: user.firstName, order: 4),
+                                          JobsAndHabits(name: "nap", description: "daily habit", assigned: user.firstName, order: 5),
+                                          JobsAndHabits(name: "immediate obedience", description: "daily habit", assigned: user.firstName, order: 6),
+                                          JobsAndHabits(name: "bedtime by 7:pm", description: "daily habit", assigned: user.firstName, order: 7),
+                                          JobsAndHabits(name: "use toilet / dry bed", description: "daily habit", assigned: user.firstName, order: 8),
+                                          JobsAndHabits(name: "pray", description: "daily habit", assigned: user.firstName, order: 9),
+                                          JobsAndHabits(name: "exercise (10 min)", description: "daily habit", assigned: user.firstName, order: 10)]
                 
+                let standardHabitsArray = [JobsAndHabits(name: "enter your top priority habit here", description: "daily habit", assigned: user.firstName, order: 1),
+                                           JobsAndHabits(name: "prayer & scripture study", description: "daily habit", assigned: user.firstName, order: 2),
+                                           JobsAndHabits(name: "exercise (20 min)", description: "daily habit", assigned: user.firstName, order: 3),
+                                           JobsAndHabits(name: "practice talent (20 min)", description: "daily habit", assigned: user.firstName, order: 4),
+                                           JobsAndHabits(name: "homework done by 5:pm", description: "daily habit", assigned: user.firstName, order: 5),
+                                           JobsAndHabits(name: "good deed / service", description: "daily habit", assigned: user.firstName, order: 6),
+                                           JobsAndHabits(name: "peacemaking (no fighting)", description: "daily habit", assigned: user.firstName, order: 7),
+                                           JobsAndHabits(name: "helping hands", description: "daily habit", assigned: user.firstName, order: 8),
+                                           JobsAndHabits(name: "write in journal", description: "daily habit", assigned: user.firstName, order: 9),
+                                           JobsAndHabits(name: "bed by 8:pm", description: "daily habit", assigned: user.firstName, order: 10)]
+                
+                if user.childParent == "parent" {
+                    // append local array with parental array...
+                    JobsAndHabits.finalDailyHabitsArray += parentalHabitsArray
+                    // ...and send array to Firebase
+                    for (index, dailyHabit) in parentalHabitsArray.enumerated() {
+                        ref.child("dailyHabits").child(user.firstName).childByAutoId().setValue(["name" : dailyHabit.name,
+                                                                                                 "description" : "habit description",
+                                                                                                 "assigned" : user.firstName,
+                                                                                                 "order" : index])
+                    }
+                } else if calculateAge(birthday: "\(user.birthday)") < 5 {
+                    // append local array with toddler array...
+                    JobsAndHabits.finalDailyHabitsArray += toddlerHabitsArray
+                    // ...and send array to Firebase
+                    for (index, dailyHabit) in toddlerHabitsArray.enumerated() {
+                        ref.child("dailyHabits").child(user.firstName).childByAutoId().setValue(["name" : dailyHabit.name,
+                                                                                                 "description" : "habit description",
+                                                                                                 "assigned" : user.firstName,
+                                                                                                 "order" : index])
+                    }
+                } else {
+                    // append local array with standard array...
+                    JobsAndHabits.finalDailyHabitsArray += standardHabitsArray
+                    // ...and send array to Firebase
+                    for (index, dailyHabit) in standardHabitsArray.enumerated() {
+                        ref.child("dailyHabits").child(user.firstName).childByAutoId().setValue(["name" : dailyHabit.name,
+                                                                                                 "description" : "habit description",
+                                                                                                 "assigned" : user.firstName,
+                                                                                                 "order" : index])
+                    }
+                }
                 
             } else {
-                JobsAndHabits.finalDailyHabitsArray = [JobsAndHabits(name: "enter your top priority habit here", description: "daily habit", assigned: User.finalUsersArray[currentMember].firstName, order: 1),
-                                                       JobsAndHabits(name: "prayer & scripture study", description: "daily habit", assigned: User.finalUsersArray[currentMember].firstName, order: 2),
-                                                       JobsAndHabits(name: "exercise (20 min)", description: "daily habit", assigned: User.finalUsersArray[currentMember].firstName, order: 3),
-                                                       JobsAndHabits(name: "practice talent (20 min)", description: "daily habit", assigned: User.finalUsersArray[currentMember].firstName, order: 4),
-                                                       JobsAndHabits(name: "homework done by 5:pm", description: "daily habit", assigned: User.finalUsersArray[currentMember].firstName, order: 5),
-                                                       JobsAndHabits(name: "good deed / service", description: "daily habit", assigned: User.finalUsersArray[currentMember].firstName, order: 6),
-                                                       JobsAndHabits(name: "peacemaking (no fighting)", description: "daily habit", assigned: User.finalUsersArray[currentMember].firstName, order: 7),
-                                                       JobsAndHabits(name: "helping hands", description: "daily habit", assigned: User.finalUsersArray[currentMember].firstName, order: 8),
-                                                       JobsAndHabits(name: "write in journal", description: "daily habit", assigned: User.finalUsersArray[currentMember].firstName, order: 9),
-                                                       JobsAndHabits(name: "bed by 8:pm", description: "daily habit", assigned: User.finalUsersArray[currentMember].firstName, order: 10)]
+                print("all users have habits assigned")
             }
         }
-        
-        // create array of default daily habits, NOTE: First habit in list is bonus habit
-        JobsAndHabits.finalDailyHabitsArray = [JobsAndHabits(name: "enter your top priority habit here", description: "daily habit", assigned: User.finalUsersArray[currentMember].firstName, order: 1),
-                                               JobsAndHabits(name: "personal meditation (10 min)", description: "daily habit", assigned: User.finalUsersArray[currentMember].firstName, order: 2),
-                                               JobsAndHabits(name: "daily exercise", description: "daily habit", assigned: User.finalUsersArray[currentMember].firstName, order: 3),
-                                               JobsAndHabits(name: "develop talents (20 min)", description: "daily habit", assigned: User.finalUsersArray[currentMember].firstName, order: 4),
-                                               JobsAndHabits(name: "homework done by 5:pm", description: "daily habit", assigned: User.finalUsersArray[currentMember].firstName, order: 5),
-                                               JobsAndHabits(name: "good manners", description: "daily habit", assigned: User.finalUsersArray[currentMember].firstName, order: 6),
-                                               JobsAndHabits(name: "peacemaking (no fighting)", description: "daily habit", assigned: User.finalUsersArray[currentMember].firstName, order: 7),
-                                               JobsAndHabits(name: "helping hands / obedience", description: "daily habit", assigned: User.finalUsersArray[currentMember].firstName, order: 8),
-                                               JobsAndHabits(name: "write in journal", description: "daily habit", assigned: User.finalUsersArray[currentMember].firstName, order: 9),
-                                               JobsAndHabits(name: "bed by 8:pm", description: "daily habit", assigned: User.finalUsersArray[currentMember].firstName, order: 10)]
-        
         habitsTableView.reloadData()
     }
     
-    func createDefaultDailyHabitsOnFirebase() {
-        for user in User.finalUsersArray {
-            var dailyCounter = 0
-            for dailyHabit in JobsAndHabits.finalDailyHabitsArray {
-                ref.child("dailyHabits").child(user.firstName).childByAutoId().setValue(["name" : dailyHabit.name,
-                                                                                         "description" : "habit description",
-                                                                                         "assigned" : user.firstName,
-                                                                                         "order" : dailyCounter])
-                dailyCounter += 1
-            }
+    func checkSetupNumber() {
+        // if user has already been to this page of setup
+        if FamilyData.setupProgress >= 43 {
+            reviewAllButton.isHidden = false
+            nextButton.isEnabled = false
+            selectUsersButton.isHidden = false
+        } else {
+            reviewAllButton.isHidden = true
+            nextButton.isEnabled = true
+            selectUsersButton.isHidden = true
         }
+        userImage.image = User.finalUsersArray[0].photo
+        currentUserName = User.finalUsersArray[0].firstName
+        instructionsLabel.text = "Review daily habits for \(User.finalUsersArray[0].firstName)."
+        navigationItem.title = User.finalUsersArray[0].firstName
+        habitsTableView.reloadData()
     }
     
-    func loadFirstUser() {
-        self.userImage.image = User.finalUsersArray[0].photo
-        self.currentUserName = User.finalUsersArray[0].firstName
-        self.instructionsLabel.text = "Review daily habits for \(User.finalUsersArray[0].firstName)."
-        self.navigationItem.title = User.finalUsersArray[0].firstName
-        self.habitsTableView.reloadData()
-        self.reviewAllButton.isHidden = false
-        self.nextButton.isEnabled = false
-        self.selectUsersButton.isHidden = false
+    func calculateAge(birthday: String) -> Int {
+        let dateFormater = DateFormatter()
+        dateFormater.dateFormat = "yyyyMMdd"
+        let birthdayDate = dateFormater.date(from: birthday)
+        let calendar: NSCalendar! = NSCalendar(calendarIdentifier: NSCalendar.Identifier.gregorian)
+        let now: NSDate! = NSDate()
+        let calculatedAge = calendar.components(.year, from: birthdayDate!, to: now as Date, options: [])
+        let age = calculatedAge.year
+        return age!
     }
+
 }
 
 
