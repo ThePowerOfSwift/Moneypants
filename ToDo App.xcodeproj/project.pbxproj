@@ -13,8 +13,8 @@
 		89FB675D1D5C82AB002B2484 /* Setup.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 89FB675B1D5C82AB002B2484 /* Setup.storyboard */; };
 		89FB675F1D5C82AB002B2484 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 89FB675E1D5C82AB002B2484 /* Assets.xcassets */; };
 		89FB67621D5C82AB002B2484 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 89FB67601D5C82AB002B2484 /* LaunchScreen.storyboard */; };
-		89FB676A1D5C82F5002B2484 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89FB67691D5C82F5002B2484 /* LoginViewController.swift */; };
-		89FB676C1D5C837D002B2484 /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89FB676B1D5C837D002B2484 /* SignUpViewController.swift */; };
+		89FB676A1D5C82F5002B2484 /* LoginVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89FB67691D5C82F5002B2484 /* LoginVC.swift */; };
+		89FB676C1D5C837D002B2484 /* SignUpVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89FB676B1D5C837D002B2484 /* SignUpVC.swift */; };
 		89FB676E1D5C8411002B2484 /* ItemsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89FB676D1D5C8411002B2484 /* ItemsTableViewController.swift */; };
 		CE0E19731F168B3900DEDBDE /* Home.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CE0E19711F168B3900DEDBDE /* Home.storyboard */; };
 		CE18C4D21F64E14F00C748BC /* MaxLengthTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE18C4D11F64E14F00C748BC /* MaxLengthTextField.swift */; };
@@ -128,13 +128,13 @@
 		17FBA854F90BAC963AFBF2FF /* Pods_ToDo_App.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ToDo_App.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5F95373CF9BA0303AD815BBD /* Pods-ToDo App.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ToDo App.release.xcconfig"; path = "Pods/Target Support Files/Pods-ToDo App/Pods-ToDo App.release.xcconfig"; sourceTree = "<group>"; };
 		89FB67541D5C82AB002B2484 /* ToDo App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "ToDo App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
-		89FB67571D5C82AB002B2484 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		89FB67571D5C82AB002B2484 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = AppDelegate.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		89FB675C1D5C82AB002B2484 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Setup.storyboard; sourceTree = "<group>"; };
 		89FB675E1D5C82AB002B2484 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		89FB67611D5C82AB002B2484 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		89FB67631D5C82AB002B2484 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		89FB67691D5C82F5002B2484 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
-		89FB676B1D5C837D002B2484 /* SignUpViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
+		89FB67691D5C82F5002B2484 /* LoginVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = LoginVC.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		89FB676B1D5C837D002B2484 /* SignUpVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = SignUpVC.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		89FB676D1D5C8411002B2484 /* ItemsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ItemsTableViewController.swift; sourceTree = "<group>"; };
 		CE0E19721F168B3900DEDBDE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Home.storyboard; sourceTree = "<group>"; };
 		CE18C4D11F64E14F00C748BC /* MaxLengthTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MaxLengthTextField.swift; sourceTree = "<group>"; };
@@ -235,7 +235,7 @@
 		CEE4D6AB1F0F70EC009BAE6C /* Step5HeaderCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Step5HeaderCell.swift; sourceTree = "<group>"; };
 		CEEA5D271F89D5D300C4D275 /* Step4AgeAppropVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Step4AgeAppropVC.swift; sourceTree = "<group>"; };
 		CEEBB33F1F202D900046E3FE /* SetupCompleteVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SetupCompleteVC.swift; sourceTree = "<group>"; };
-		CEEC02DA1F9310A200254769 /* LoadingVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadingVC.swift; sourceTree = "<group>"; };
+		CEEC02DA1F9310A200254769 /* LoadingVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = LoadingVC.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		CEF1A4921F022F3F00C010F9 /* Step3VC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = Step3VC.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		CEF1A4941F02472700C010F9 /* Step3CustomCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Step3CustomCell.swift; sourceTree = "<group>"; };
 		CEF3EBBA1F302CF0008953A8 /* MoneyCell2.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MoneyCell2.swift; sourceTree = "<group>"; };
@@ -550,8 +550,8 @@
 		CEFC21FD1F64A65800CC4FC1 /* Login */ = {
 			isa = PBXGroup;
 			children = (
-				89FB67691D5C82F5002B2484 /* LoginViewController.swift */,
-				89FB676B1D5C837D002B2484 /* SignUpViewController.swift */,
+				89FB67691D5C82F5002B2484 /* LoginVC.swift */,
+				89FB676B1D5C837D002B2484 /* SignUpVC.swift */,
 				CEB4CD2C1F1ED77400F9733F /* SetupNavController.swift */,
 				CEEC02DA1F9310A200254769 /* LoadingVC.swift */,
 			);
@@ -729,7 +729,7 @@
 				CEF1A4931F022F3F00C010F9 /* Step3VC.swift in Sources */,
 				CE8FFA001F109FC2004A53BE /* Step5ExpenseDetailVC.swift in Sources */,
 				0EEB607A1ED918BB005B2813 /* Item.swift in Sources */,
-				89FB676C1D5C837D002B2484 /* SignUpViewController.swift in Sources */,
+				89FB676C1D5C837D002B2484 /* SignUpVC.swift in Sources */,
 				CE7160FB1F04A9270045AA05 /* Step4HabitCell.swift in Sources */,
 				CE4832BB1F27FCA0005A7A55 /* PaydayNavController.swift in Sources */,
 				CE6F69441F868B9E00FE9349 /* Step3VideoVC.swift in Sources */,
@@ -749,7 +749,7 @@
 				CEFC22001F64A82900CC4FC1 /* User.swift in Sources */,
 				CEB32C691F2C09DC0069D8B0 /* ReportsCBVC.swift in Sources */,
 				CE1B47811F1885B0007C7515 /* SettingsVC.swift in Sources */,
-				89FB676A1D5C82F5002B2484 /* LoginViewController.swift in Sources */,
+				89FB676A1D5C82F5002B2484 /* LoginVC.swift in Sources */,
 				CE1CB51A1F01AF48009A8DAC /* Step2UsersVC.swift in Sources */,
 				CEF3EBBD1F305A45008953A8 /* MoneyCell3.swift in Sources */,
 				CEB32C6B1F2C49D10069D8B0 /* ReportsCBCell.swift in Sources */,

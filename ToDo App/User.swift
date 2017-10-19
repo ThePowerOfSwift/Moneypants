@@ -51,6 +51,22 @@ struct User {
             }
         })
     }
+    
+    static func determineGender(currentMember: Int) -> (he_she: String, him_her: String, his_her: String) {
+        var he_she: String!
+        var him_her: String!
+        var his_her: String!
+        if User.finalUsersArray[currentMember].gender == "male" {
+            he_she = "He"
+            him_her = "Him"
+            his_her = "His"
+        } else {
+            he_she = "She"
+            him_her = "Her"
+            his_her = "Her"
+        }
+        return (he_she, him_her, his_her)
+    }
 }
 
 

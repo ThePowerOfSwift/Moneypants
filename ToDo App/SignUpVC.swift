@@ -2,7 +2,7 @@ import UIKit
 import FirebaseAuth
 import FirebaseDatabase
 
-class SignUpViewController: UIViewController {
+class SignUpVC: UIViewController {
     
     @IBOutlet weak var emailField: UITextField!
     @IBOutlet weak var passwordField: UITextField!
@@ -47,7 +47,7 @@ class SignUpViewController: UIViewController {
     }
     
     @IBAction func didTapBackToLogin(_ sender: UIButton) {
-        self.dismiss(animated: true, completion: {})
+        self.dismiss(animated: false, completion: {})
     }
     
     func showAlert(_ message: String) {

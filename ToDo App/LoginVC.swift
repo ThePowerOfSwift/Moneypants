@@ -1,7 +1,7 @@
 import UIKit
 import FirebaseAuth
 
-class LoginViewController: UIViewController {
+class LoginVC: UIViewController {
     
     @IBOutlet weak var emailField: UITextField!
     @IBOutlet weak var passwordField: UITextField!
@@ -50,7 +50,7 @@ class LoginViewController: UIViewController {
                         case .errorCodeWrongPassword:
                             self.showAlert("Incorrect username/password combination. Please try again.")
                         default:
-                            self.showAlert("Error: \(error.localizedDescription).")
+                            self.showAlert("Error: \(error.localizedDescription)")
                         }
                     }
                     return

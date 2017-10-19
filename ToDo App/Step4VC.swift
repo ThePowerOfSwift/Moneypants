@@ -569,7 +569,26 @@ class Step4VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
             
             // 5A. at least one user does NOT have at least one daily job
             if checkIfAllUsersHaveDailyJobs() == false {
-                let alert = UIAlertController(title: "Unassigned User", message: "Please assign at least one daily job to the following family members: \(whatUsersDontHaveJobs()).", preferredStyle: .alert)
+                let alert = UIAlertController(title: "Unassigned User", message: "Please assign at least one daily job to the following family members:\n\n\(whatUsersDontHaveJobs().minimalDescription)", preferredStyle: .alert)
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                let magicString = "$$1234%^56()78*9££".components(separatedBy: CharacterSet(charactersIn: "0123456789").inverted).joined(separator: "")
+                print("Magic String:  ",magicString)
+                
+                
+                
+                
+                
+                
+                
+                
                 alert.addAction(UIAlertAction(title: "okay", style: .cancel, handler: { (action) in
                     alert.dismiss(animated: true, completion: nil)
                     self.selectUsersButton.isHidden = false
@@ -692,6 +711,7 @@ class Step4VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
         }
     }
 
+    // MARK: TODO - change all calls of this method in this VC to use the new User.determineGender method
     func determineGender() -> (he_she: String, him_her: String, his_her: String) {
         var he_she: String!
         var him_her: String!
@@ -774,6 +794,11 @@ class Step4VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
 }
 
+extension Sequence {
+    var minimalDescription: String {
+        return map { "\($0)" }.joined(separator: ", ")
+    }
+}
 
 
 

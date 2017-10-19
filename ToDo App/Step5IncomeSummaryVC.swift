@@ -2,6 +2,7 @@ import UIKit
 
 class Step5IncomeSummaryVC: UIViewController {
     
+    @IBOutlet weak var userImage: UIImageView!
     @IBOutlet weak var detailsView: UIView!
     @IBOutlet weak var viewTop: NSLayoutConstraint!
     @IBOutlet weak var showDetailsButton: UIButton!
@@ -18,11 +19,11 @@ class Step5IncomeSummaryVC: UIViewController {
         
         numberFormatter.numberStyle = NumberFormatter.Style.decimal
         
-        let yearlyTotal = Int(Double(yearlyIncomeMPS) * 0.021) + yearlyIncomeOutside        // need to change this eventually
+        let yearlyTotal = Int(Double(FamilyData.yearlyIncome) * 0.021) + yearlyIncomeOutside        // need to change this eventually
         let weeklyTotal = Int(yearlyTotal / 52)
         
         weeklyIncomeTotalLabel.text = "potential weekly income: $\(numberFormatter.string(from: NSNumber(value: weeklyTotal))!)"
-        homeIncomeLabel.text = "$\(numberFormatter.string(from: NSNumber(value: Int(Double(yearlyIncomeMPS) * 0.021)))!) / year"
+        homeIncomeLabel.text = "$\(numberFormatter.string(from: NSNumber(value: Int(Double(FamilyData.yearlyIncome) * 0.021)))!) / year"
         outsideIncomeLabel.text = "$\(numberFormatter.string(from: NSNumber(value: yearlyIncomeOutside))!) / year"
         totalIncomeLabel.text = "$\(numberFormatter.string(from: NSNumber(value: yearlyTotal))!) / year"
         summaryLabel.text = "Savannah's total estimated yearly income is $\(numberFormatter.string(from: NSNumber(value: yearlyTotal))!) (about $\(numberFormatter.string(from: NSNumber(value: weeklyTotal))!) per week.)"
@@ -32,7 +33,6 @@ class Step5IncomeSummaryVC: UIViewController {
         viewTop.constant = -(detailsView.bounds.height)
         detailsView.isHidden = true
     }
-    
     
     @IBAction func showDetailsButtonTapped(_ sender: UIButton) {
         if viewTop.constant == -(detailsView.bounds.height) {

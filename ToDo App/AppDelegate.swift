@@ -34,7 +34,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             print("user logged out")
             self.window = UIWindow(frame: UIScreen.main.bounds)
             let storyboard = UIStoryboard(name: "Setup", bundle: nil)
-            let initialViewController = storyboard.instantiateViewController(withIdentifier: "LoginViewController")
+            let initialViewController = storyboard.instantiateViewController(withIdentifier: "LoginVC")
             self.window?.rootViewController = initialViewController
             self.window?.makeKeyAndVisible()
         }
