@@ -35,6 +35,8 @@ class LoadingVC: UIViewController {
 
         activityIndicator.startAnimating()
         
+        
+        
         FamilyData.getSetupProgressFromFirebase { (setupProgress) in
             //            self.progressView.progress += 0.1
             self.loadingProgress += 0.1

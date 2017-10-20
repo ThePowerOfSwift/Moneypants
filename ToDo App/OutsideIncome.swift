@@ -1,0 +1,48 @@
+import Foundation
+
+import Firebase
+
+struct OutsideIncome {
+    var userName: String
+    var allOthers: Int
+    var babysitting: Int
+    var houseCleaning: Int
+    var mowingLawns: Int
+    var summerJobs: Int
+
+    static var outsideIncomeArray: [Any] = []
+    static var total: [Int] = []
+    
+    static func loadOutsideIncomeFromFirebase(completion: @escaping () -> ()) {
+        let firebaseUser = FIRAuth.auth()?.currentUser
+        let ref = FIRDatabase.database().reference().child("users").child((firebaseUser?.uid)!)
+        ref.child("outsideIncome").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
+            let outsideIncomeCount = Int(snapshot.childrenCount)
+            if outsideIncomeCount == 0 {
+                // if there are no outside income amounts, return count 0
+                completion()
+            } else {
+                for item in snapshot.children {
+                    let snap = item as? FIRDataSnapshot
+                    let userName = snap?.key
+                    if let value = snap?.value as? [String : Any] {
+                        let allOthers = value["allOthers"] as! Int
+                        let babysitting = value["babysitting"] as! Int
+                        let houseCleaning = value["houseCleaning"] as! Int
+                        let mowingLawns = value["mowingLawns"] as! Int
+                        let summerJobs = value["summerJobs"] as! Int
+                        
+                        let outsideIncome = OutsideIncome(userName: userName!, allOthers: allOthers, babysitting: babysitting, houseCleaning: houseCleaning, mowingLawns: mowingLawns, summerJobs: summerJobs)
+                        let subtotal = allOthers + babysitting + summerJobs
+                        total.append(subtotal)
+                        outsideIncomeArray.append(outsideIncome)
+                        
+                        if outsideIncomeArray.count == outsideIncomeCount {
+                            completion()
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

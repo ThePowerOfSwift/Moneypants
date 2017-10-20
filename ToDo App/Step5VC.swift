@@ -34,6 +34,12 @@ class Step5VC: UIViewController, UITextFieldDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        OutsideIncome.loadOutsideIncomeFromFirebase {
+            print("OUTSIDE INCOME:  ",OutsideIncome.outsideIncomeArray)
+            print("TOTAL:  ",OutsideIncome.total)
+            print("USERS:  ",User.finalUsersArray)
+        }
+        
         nextButton.isEnabled = false
         
         incomeOne.delegate = self
@@ -69,9 +75,7 @@ class Step5VC: UIViewController, UITextFieldDelegate {
         UIView.animate(withDuration: 0.25) { 
             self.view.layoutIfNeeded()
         }
-        
         scrollPageIfNeeded()
-        
     }
     
     @IBAction func noButtonTapped(_ sender: UIButton) {
@@ -82,6 +86,12 @@ class Step5VC: UIViewController, UITextFieldDelegate {
         UIView.animate(withDuration: 0.25) { 
             self.view.layoutIfNeeded()
         }
+        // reset all text fields to blank
+        incomeOne.text = ""
+        incomeTwo.text = ""
+        incomeThree.text = ""
+        incomeFour.text = ""
+        incomeFive.text = ""
     }
     
     // ------------------
@@ -92,6 +102,7 @@ class Step5VC: UIViewController, UITextFieldDelegate {
         nextButton.isEnabled = false
     }
     
+    // only allow entry of numbers, nothing else
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         let allowedCharacters = CharacterSet.decimalDigits
         let characterSet = CharacterSet(charactersIn: string)

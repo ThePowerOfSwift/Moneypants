@@ -106,6 +106,7 @@
 		CEC5BD541F77310500B66CEC /* Step3PopupVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEC5BD531F77310500B66CEC /* Step3PopupVC.swift */; };
 		CED509E21F030F560058728F /* Step4VC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED509E11F030F560058728F /* Step4VC.swift */; };
 		CED509E41F0310740058728F /* Step4CustomCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED509E31F0310740058728F /* Step4CustomCell.swift */; };
+		CED7D5991F997BF800351347 /* OutsideIncome.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED7D5981F997BF800351347 /* OutsideIncome.swift */; };
 		CEDBFE2E1F2AE4C800829DE4 /* ReportsPointsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEDBFE2D1F2AE4C800829DE4 /* ReportsPointsCell.swift */; };
 		CEE2631C1F2D25BA007AB77E /* MoneyCell1.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEE2631B1F2D25BA007AB77E /* MoneyCell1.swift */; };
 		CEE4CDD91F8DA066006847E8 /* Step4PaydayInspectVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEE4CDD81F8DA066006847E8 /* Step4PaydayInspectVC.swift */; };
@@ -228,6 +229,7 @@
 		CEC5BD531F77310500B66CEC /* Step3PopupVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Step3PopupVC.swift; sourceTree = "<group>"; };
 		CED509E11F030F560058728F /* Step4VC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = Step4VC.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		CED509E31F0310740058728F /* Step4CustomCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Step4CustomCell.swift; sourceTree = "<group>"; };
+		CED7D5981F997BF800351347 /* OutsideIncome.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OutsideIncome.swift; sourceTree = "<group>"; };
 		CEDBFE2D1F2AE4C800829DE4 /* ReportsPointsCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = ReportsPointsCell.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		CEE2631B1F2D25BA007AB77E /* MoneyCell1.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MoneyCell1.swift; sourceTree = "<group>"; };
 		CEE4CDD81F8DA066006847E8 /* Step4PaydayInspectVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = Step4PaydayInspectVC.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
@@ -366,6 +368,7 @@
 				CE18C4D11F64E14F00C748BC /* MaxLengthTextField.swift */,
 				CEFC21FF1F64A82900CC4FC1 /* User.swift */,
 				CE52210F1F91136C008CE5BD /* FamilyData.swift */,
+				CED7D5981F997BF800351347 /* OutsideIncome.swift */,
 				CEA2BC481F71C3900020D958 /* JobsAndHabits.swift */,
 				CE8FFA011F10AE92004A53BE /* GlobalVariables.swift */,
 				CE4AAD1A1F801AAD00B48209 /* FirebaseCodeSnippets.swift */,
@@ -737,6 +740,7 @@
 				CE9443BA1F29839F00ACC7D4 /* MoneyNavController.swift in Sources */,
 				CE7FF9911F3448C9000AD071 /* UserSettingsVC.swift in Sources */,
 				CE9443B81F29804200ACC7D4 /* SpendingNavController.swift in Sources */,
+				CED7D5991F997BF800351347 /* OutsideIncome.swift in Sources */,
 				CEAD053E1F2209A60097CD33 /* UserCell.swift in Sources */,
 				CEA2BC491F71C3900020D958 /* JobsAndHabits.swift in Sources */,
 				CEFC56F21F81E93D00B9049B /* Step1VideoVC.swift in Sources */,
