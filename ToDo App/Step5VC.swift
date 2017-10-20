@@ -3,13 +3,17 @@ import Firebase
 
 class Step5VC: UIViewController, UITextFieldDelegate {
 
+    @IBOutlet weak var scrollView: UIScrollView!
+    @IBOutlet weak var topView: UIView!
+    @IBOutlet weak var middleView: UIView!
+    @IBOutlet weak var bottomView: UIView!
+    @IBOutlet weak var topBottomConstraint: NSLayoutConstraint!
+
     @IBOutlet weak var topQuestionLabel: UILabel!
     @IBOutlet weak var yesButton: UIButton!
     @IBOutlet weak var yesLabel: UILabel!
     @IBOutlet weak var noButton: UIButton!
     @IBOutlet weak var noLabel: UILabel!
-    @IBOutlet weak var bottomView: UIView!
-    @IBOutlet weak var topBottomConstraint: NSLayoutConstraint!
     
     @IBOutlet weak var bottomQuestionLabel: UILabel!
     @IBOutlet weak var incomeOne: UITextField!
@@ -20,12 +24,6 @@ class Step5VC: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var totalIncome: UILabel!
     
     @IBOutlet weak var nextButton: UIButton!
-    
-    var firstValue: Int = 0
-    var secondValue: Int = 0
-    var thirdValue: Int = 0
-    var fourthValue: Int = 0
-    var fifthValue: Int = 0
     
     var firebaseUser: FIRUser!
     var ref: FIRDatabaseReference!
@@ -71,6 +69,9 @@ class Step5VC: UIViewController, UITextFieldDelegate {
         UIView.animate(withDuration: 0.25) { 
             self.view.layoutIfNeeded()
         }
+        
+        scrollPageIfNeeded()
+        
     }
     
     @IBAction func noButtonTapped(_ sender: UIButton) {
@@ -83,9 +84,9 @@ class Step5VC: UIViewController, UITextFieldDelegate {
         }
     }
     
-    // ------------------------
-    // text field editingDidEnd
-    // ------------------------
+    // ------------------
+    // text field methods
+    // ------------------
     
     func textFieldDidBeginEditing(_ textField: UITextField) {
         nextButton.isEnabled = false
@@ -103,12 +104,12 @@ class Step5VC: UIViewController, UITextFieldDelegate {
         if yearlyIncomeOutside > 0 {
             nextButton.isEnabled = true
         }
+        scrollPageIfNeeded()
     }
     
-    
-    // -------------------------------------------
-    // func to calculate total of all input fields
-    // -------------------------------------------
+    // ---------
+    // functions
+    // ---------
     
     func calculateTotal() -> Int {
         let firstValue = Int(incomeOne.text!) ?? 0
@@ -130,16 +131,16 @@ class Step5VC: UIViewController, UITextFieldDelegate {
         present(alert, animated: true, completion: nil)
     }
     
-//    func scrollPageIfNeeded() {
-//        let height1 = self.secondView.bounds.height
-//        let height2 = self.paydayDateTopConstraint.constant + self.thirdView.bounds.height
-//        let height3 = self.inspectionsParentTopConstraint.constant + self.fourthView.bounds.height
-//        let heightTotal = height1 + height2 + height3
-//        
-//        if heightTotal > self.scrollView.bounds.height {
-//            let bottomOffset = CGPoint(x: 0, y: self.scrollView.contentSize.height - self.scrollView.bounds.size.height)
-//            self.scrollView.setContentOffset(bottomOffset, animated: true)
-//        }
-//    }
+    func scrollPageIfNeeded() {
+        let height1 = self.topView.bounds.height            // add height of first view...
+        let height2 = self.middleView.bounds.height         // ...and height of second view...
+        let height3 = self.topBottomConstraint.constant + self.bottomView.bounds.height         // ...and height of third view (which varies depending on whether it's hidden or not b/c constraint can be negative)
+        let heightTotal = height1 + height2 + height3
+        // if the combined heights of all three views when fully expanded is more than the height of the screen, then scroll down
+        if heightTotal > self.scrollView.bounds.height {
+            let bottomOffset = CGPoint(x: 0, y: self.scrollView.contentSize.height - self.scrollView.bounds.size.height)
+            self.scrollView.setContentOffset(bottomOffset, animated: true)
+        }
+    }
 }
 
