@@ -7,7 +7,7 @@ class Step3VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
     @IBOutlet weak var questionButton: UIButton!
     @IBOutlet weak var editButton: UIButton!
     
-    var jobCountMin = User.finalUsersArray.count           // there must be at least one daily job and one weekly job per user
+    var jobCountMin = User.usersArray.count           // there must be at least one daily job and one weekly job per user
     let jobCountMax = 20
     
     var firebaseUser: FIRUser!

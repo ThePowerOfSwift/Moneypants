@@ -10,7 +10,7 @@ struct User {
     var gender: String
     var childParent: String
     
-    static var finalUsersArray = [User]()
+    static var usersArray = [User]()
     
     static func loadMembers(completion: @escaping () -> ()) {
         let firebaseUser = FIRAuth.auth()?.currentUser
@@ -39,9 +39,9 @@ struct User {
                                                 passcode: passcode,
                                                 gender: gender,
                                                 childParent: childParent)
-                                finalUsersArray.append(user)
+                                usersArray.append(user)
                                 
-                                if finalUsersArray.count == usersCount {
+                                if usersArray.count == usersCount {
                                     completion()
                                 }
                             })
@@ -52,11 +52,11 @@ struct User {
         })
     }
     
-    static func determineGender(currentMember: Int) -> (he_she: String, him_her: String, his_her: String) {
+    static func gender(user: Int) -> (he_she: String, him_her: String, his_her: String) {
         var he_she: String!
         var him_her: String!
         var his_her: String!
-        if User.finalUsersArray[currentMember].gender == "male" {
+        if User.usersArray[user].gender == "male" {
             he_she = "He"
             him_her = "Him"
             his_her = "His"

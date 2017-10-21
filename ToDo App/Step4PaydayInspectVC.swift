@@ -28,7 +28,7 @@ class Step4PaydayInspectVC: UIViewController, UIPickerViewDelegate, UIPickerView
     var firebaseUser: FIRUser!
     var ref: FIRDatabaseReference!
     
-    let parents = User.finalUsersArray.filter({ return $0.childParent == "parent" })
+    let parents = User.usersArray.filter({ return $0.childParent == "parent" })
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -51,8 +51,6 @@ class Step4PaydayInspectVC: UIViewController, UIPickerViewDelegate, UIPickerView
         
         loadExistingAssignments()
     }
-    
-    
     
     // -----------
     // Date Picker
@@ -105,7 +103,6 @@ class Step4PaydayInspectVC: UIViewController, UIPickerViewDelegate, UIPickerView
         paydayTimeConfirmed = false
         paydayDateButton.setTitle("\(selectedDay) \(selectedHour) \(selectedAMPM)?", for: .normal)
     }
-    
     
     // ----------
     // Navigation
@@ -189,7 +186,6 @@ class Step4PaydayInspectVC: UIViewController, UIPickerViewDelegate, UIPickerView
             performSegue(withIdentifier: "AssignmentSummary", sender: self)
         }
     }
-    
     
     // ---------
     // Functions

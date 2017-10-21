@@ -3,15 +3,14 @@ import Foundation
 import Firebase
 
 struct OutsideIncome {
-    var userName: String
+    let userName: String
     var allOthers: Int
     var babysitting: Int
     var houseCleaning: Int
     var mowingLawns: Int
     var summerJobs: Int
-
-    static var outsideIncomeArray: [Any] = []
-    static var total: [Int] = []
+    
+    static var incomeArray = [OutsideIncome]()
     
     static func loadOutsideIncomeFromFirebase(completion: @escaping () -> ()) {
         let firebaseUser = FIRAuth.auth()?.currentUser
@@ -32,12 +31,15 @@ struct OutsideIncome {
                         let mowingLawns = value["mowingLawns"] as! Int
                         let summerJobs = value["summerJobs"] as! Int
                         
-                        let outsideIncome = OutsideIncome(userName: userName!, allOthers: allOthers, babysitting: babysitting, houseCleaning: houseCleaning, mowingLawns: mowingLawns, summerJobs: summerJobs)
-                        let subtotal = allOthers + babysitting + summerJobs
-                        total.append(subtotal)
-                        outsideIncomeArray.append(outsideIncome)
+                        let outsideIncome = OutsideIncome(userName: userName!,
+                                                          allOthers: allOthers,
+                                                          babysitting: babysitting,
+                                                          houseCleaning: houseCleaning,
+                                                          mowingLawns: mowingLawns,
+                                                          summerJobs: summerJobs)
+                        incomeArray.append(outsideIncome)
                         
-                        if outsideIncomeArray.count == outsideIncomeCount {
+                        if incomeArray.count == outsideIncomeCount {
                             completion()
                         }
                     }

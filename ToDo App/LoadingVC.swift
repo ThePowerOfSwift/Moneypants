@@ -35,7 +35,9 @@ class LoadingVC: UIViewController {
 
         activityIndicator.startAnimating()
         
-        
+        OutsideIncome.loadOutsideIncomeFromFirebase {
+            self.loadingProgress += 0.1
+        }
         
         FamilyData.getSetupProgressFromFirebase { (setupProgress) in
             //            self.progressView.progress += 0.1
@@ -44,7 +46,6 @@ class LoadingVC: UIViewController {
             self.checkProgress()
         }
 
-        
         FamilyData.loadExistingIncome { (income) in
             self.loadingProgress += 0.1
             print("2. INCOME:  ",income)
@@ -52,8 +53,8 @@ class LoadingVC: UIViewController {
         }
 
         User.loadMembers {
-            self.loadingProgress += 0.3
-            print("3. USERS:  ",User.finalUsersArray.count)
+            self.loadingProgress += 0.2
+            print("3. USERS:  ",User.usersArray.count)
             self.checkProgress()
         }
 

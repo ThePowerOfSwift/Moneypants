@@ -10,21 +10,21 @@ class JobSummaryVC: UIViewController, UITableViewDataSource, UITableViewDelegate
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        User.finalUsersArray.sort(by: {$0.birthday < $1.birthday})       // sort users by birthday with oldest first
+        User.usersArray.sort(by: {$0.birthday < $1.birthday})       // sort users by birthday with oldest first
         
         tableView.delegate = self
         tableView.dataSource = self
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return User.finalUsersArray.count
+        return User.usersArray.count
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        let dailyJobAssignments = JobsAndHabits.finalDailyJobsArray.filter({ return $0.assigned == User.finalUsersArray[section].firstName }).count
-        let weeklyJobAssignments = JobsAndHabits.finalWeeklyJobsArray.filter({ return $0.assigned == User.finalUsersArray[section].firstName }).count
-        let parentInspectionsAssignment = JobsAndHabits.parentalDailyJobsArray.filter({ return $0.assigned == User.finalUsersArray[section].firstName }).count
-        let parentPaydayAssignment = JobsAndHabits.parentalWeeklyJobsArray.filter({ return $0.assigned == User.finalUsersArray[section].firstName }).count
+        let dailyJobAssignments = JobsAndHabits.finalDailyJobsArray.filter({ return $0.assigned == User.usersArray[section].firstName }).count
+        let weeklyJobAssignments = JobsAndHabits.finalWeeklyJobsArray.filter({ return $0.assigned == User.usersArray[section].firstName }).count
+        let parentInspectionsAssignment = JobsAndHabits.parentalDailyJobsArray.filter({ return $0.assigned == User.usersArray[section].firstName }).count
+        let parentPaydayAssignment = JobsAndHabits.parentalWeeklyJobsArray.filter({ return $0.assigned == User.usersArray[section].firstName }).count
         
         return dailyJobAssignments + weeklyJobAssignments + parentInspectionsAssignment + parentPaydayAssignment
     }
@@ -33,10 +33,10 @@ class JobSummaryVC: UIViewController, UITableViewDataSource, UITableViewDelegate
         let cell = tableView.dequeueReusableCell(withIdentifier: "customCell") as! JobSummaryCellB
         
         // get the job assignments in the 'finalDailyJobs' array that matches the current user in the tableview
-        let dailyJobAssignments = JobsAndHabits.finalDailyJobsArray.sorted(by: { $0.order < $1.order }).filter({ return $0.assigned == User.finalUsersArray[indexPath.section].firstName })      //.sorted(by: { $0.order < $1.order })
-        let weeklyJobAssignments = JobsAndHabits.finalWeeklyJobsArray.sorted(by: { $0.order < $1.order }).filter({ return $0.assigned == User.finalUsersArray[indexPath.section].firstName })
-        let parentInspectionsAssignment = JobsAndHabits.parentalDailyJobsArray.sorted(by: { $0.order < $1.order }).filter({ return $0.assigned == User.finalUsersArray[indexPath.section].firstName })
-        let parentPaydayAssignment = JobsAndHabits.parentalWeeklyJobsArray.sorted(by: { $0.order < $1.order }).filter({ $0.assigned == User.finalUsersArray[indexPath.section].firstName })
+        let dailyJobAssignments = JobsAndHabits.finalDailyJobsArray.sorted(by: { $0.order < $1.order }).filter({ return $0.assigned == User.usersArray[indexPath.section].firstName })      //.sorted(by: { $0.order < $1.order })
+        let weeklyJobAssignments = JobsAndHabits.finalWeeklyJobsArray.sorted(by: { $0.order < $1.order }).filter({ return $0.assigned == User.usersArray[indexPath.section].firstName })
+        let parentInspectionsAssignment = JobsAndHabits.parentalDailyJobsArray.sorted(by: { $0.order < $1.order }).filter({ return $0.assigned == User.usersArray[indexPath.section].firstName })
+        let parentPaydayAssignment = JobsAndHabits.parentalWeeklyJobsArray.sorted(by: { $0.order < $1.order }).filter({ $0.assigned == User.usersArray[indexPath.section].firstName })
         let jobAssignments = dailyJobAssignments + parentInspectionsAssignment + weeklyJobAssignments + parentPaydayAssignment
         cell.userNameLabel.text = jobAssignments[indexPath.row].name
         
@@ -56,8 +56,8 @@ class JobSummaryVC: UIViewController, UITableViewDataSource, UITableViewDelegate
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let cell = tableView.dequeueReusableCell(withIdentifier: "headerCell") as! JobSummaryCell
-        cell.headerImage.image = User.finalUsersArray[section].photo
-        cell.headerLabel.text = User.finalUsersArray[section].firstName
+        cell.headerImage.image = User.usersArray[section].photo
+        cell.headerLabel.text = User.usersArray[section].firstName
         return cell
     }
     

@@ -27,7 +27,7 @@ class Step4HabitVC: UIViewController, UITableViewDataSource, UITableViewDelegate
         userImage.layer.borderWidth = 0.5
         userImage.layer.borderColor = UIColor.black.cgColor
         
-        User.finalUsersArray.sort(by: {$0.birthday > $1.birthday})       // sort users by birthday with youngest first
+        User.usersArray.sort(by: {$0.birthday > $1.birthday})       // sort users by birthday with youngest first
 
         currentUserName = ""
         instructionsLabel.text = ""
@@ -57,7 +57,7 @@ class Step4HabitVC: UIViewController, UITableViewDataSource, UITableViewDelegate
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // only show habit for current user, not entire habits array of all users
-        let habitsArray = JobsAndHabits.finalDailyHabitsArray.sorted(by: { $0.order < $1.order }).filter({ return $0.assigned == User.finalUsersArray[currentMember].firstName })
+        let habitsArray = JobsAndHabits.finalDailyHabitsArray.sorted(by: { $0.order < $1.order }).filter({ return $0.assigned == User.usersArray[currentMember].firstName })
         return habitsArray.count
     }
     
@@ -65,7 +65,7 @@ class Step4HabitVC: UIViewController, UITableViewDataSource, UITableViewDelegate
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Step4HabitCell", for: indexPath) as! Step4HabitCell
         // only show habit for current user, not entire habits array of all users. NOTE: Have to call this variable every time for table to reload properly (can't make it a global var)
-        let habitsArray = JobsAndHabits.finalDailyHabitsArray.sorted(by: { $0.order < $1.order }).filter({ return $0.assigned == User.finalUsersArray[currentMember].firstName })
+        let habitsArray = JobsAndHabits.finalDailyHabitsArray.sorted(by: { $0.order < $1.order }).filter({ return $0.assigned == User.usersArray[currentMember].firstName })
         
         if indexPath.row == 0 {
             cell.habitLabel.font = UIFont.systemFont(ofSize: 17.0, weight: UIFontWeightBold)
@@ -92,7 +92,7 @@ class Step4HabitVC: UIViewController, UITableViewDataSource, UITableViewDelegate
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let habitsArray = JobsAndHabits.finalDailyHabitsArray.sorted(by: { $0.order < $1.order }).filter({ return $0.assigned == User.finalUsersArray[currentMember].firstName })
+        let habitsArray = JobsAndHabits.finalDailyHabitsArray.sorted(by: { $0.order < $1.order }).filter({ return $0.assigned == User.usersArray[currentMember].firstName })
         performSegue(withIdentifier: "EditHabit", sender: habitsArray[indexPath.row])
     }
     
@@ -114,16 +114,16 @@ class Step4HabitVC: UIViewController, UITableViewDataSource, UITableViewDelegate
             reviewOrContinueAlert()
         } else {
             // if user is NOT oldest member of family...
-            if currentMember != (User.finalUsersArray.count - 1) {
+            if currentMember != (User.usersArray.count - 1) {
                 // ...go to next user
                 currentMember += 1
-                //            let habitsArray = JobsAndHabits.finalDailyHabitsArray.sorted(by: { $0.order < $1.order }).filter({ return $0.assigned == User.finalUsersArray[currentMember].firstName })
-                userImage.image = User.finalUsersArray[currentMember].photo
-                currentUserName = User.finalUsersArray[currentMember].firstName
-                instructionsLabel.text = "Review daily habits for \(User.finalUsersArray[currentMember].firstName)."
-                navigationItem.title = User.finalUsersArray[currentMember].firstName
+                //            let habitsArray = JobsAndHabits.finalDailyHabitsArray.sorted(by: { $0.order < $1.order }).filter({ return $0.assigned == User.usersArray[currentMember].firstName })
+                userImage.image = User.usersArray[currentMember].photo
+                currentUserName = User.usersArray[currentMember].firstName
+                instructionsLabel.text = "Review daily habits for \(User.usersArray[currentMember].firstName)."
+                navigationItem.title = User.usersArray[currentMember].firstName
                 habitsTableView.reloadData()
-            } else if currentMember == (User.finalUsersArray.count - 1) {
+            } else if currentMember == (User.usersArray.count - 1) {
                 if FamilyData.setupProgress <= 43 {
                     FamilyData.setupProgress = 43
                     ref.updateChildValues(["setupProgress" : 43])
@@ -149,13 +149,13 @@ class Step4HabitVC: UIViewController, UITableViewDataSource, UITableViewDelegate
     
     @IBAction func selectUserButtonTapped(_ sender: UIButton) {
         let alert = UIAlertController(title: "Select A User", message: "Please choose a family member to review their habits.", preferredStyle: .alert)
-        for (index, user) in User.finalUsersArray.enumerated() {
+        for (index, user) in User.usersArray.enumerated() {
             alert.addAction(UIAlertAction(title: user.firstName, style: .default, handler: { (action) in
                 self.currentMember = index
-                self.userImage.image = User.finalUsersArray[self.currentMember].photo
-                self.currentUserName = User.finalUsersArray[self.currentMember].firstName
-                self.instructionsLabel.text = "Choose daily habits for \(User.finalUsersArray[self.currentMember].firstName)"
-                self.navigationItem.title = User.finalUsersArray[self.currentMember].firstName
+                self.userImage.image = User.usersArray[self.currentMember].photo
+                self.currentUserName = User.usersArray[self.currentMember].firstName
+                self.instructionsLabel.text = "Choose daily habits for \(User.usersArray[self.currentMember].firstName)"
+                self.navigationItem.title = User.usersArray[self.currentMember].firstName
                 self.habitsTableView.reloadData()
                 alert.dismiss(animated: true, completion: nil)
             }))
@@ -173,7 +173,7 @@ class Step4HabitVC: UIViewController, UITableViewDataSource, UITableViewDelegate
     func loadHabits() {
         
         // MARK: make sure every user has habits (perhaps a new user was added and thus didn't get new habits yet?)
-        for user in User.finalUsersArray {
+        for user in User.usersArray {
             if !JobsAndHabits.finalDailyHabitsArray.contains(where: { $0.assigned == user.firstName }) {
                 print(user.firstName,"does not have any habits assigned")
                 
@@ -257,10 +257,10 @@ class Step4HabitVC: UIViewController, UITableViewDataSource, UITableViewDelegate
         } else {
             selectUsersButton.isHidden = true
         }
-        userImage.image = User.finalUsersArray[0].photo
-        currentUserName = User.finalUsersArray[0].firstName
-        instructionsLabel.text = "Review daily habits for \(User.finalUsersArray[0].firstName)."
-        navigationItem.title = User.finalUsersArray[0].firstName
+        userImage.image = User.usersArray[0].photo
+        currentUserName = User.usersArray[0].firstName
+        instructionsLabel.text = "Review daily habits for \(User.usersArray[0].firstName)."
+        navigationItem.title = User.usersArray[0].firstName
         habitsTableView.reloadData()
     }
     

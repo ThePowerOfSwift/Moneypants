@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		0EEB607A1ED918BB005B2813 /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EEB60791ED918BB005B2813 /* Item.swift */; };
 		46F89D2A8F548D55488C0765 /* Pods_ToDo_App.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 17FBA854F90BAC963AFBF2FF /* Pods_ToDo_App.framework */; };
 		89FB67581D5C82AB002B2484 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89FB67571D5C82AB002B2484 /* AppDelegate.swift */; };
 		89FB675D1D5C82AB002B2484 /* Setup.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 89FB675B1D5C82AB002B2484 /* Setup.storyboard */; };
@@ -15,7 +14,6 @@
 		89FB67621D5C82AB002B2484 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 89FB67601D5C82AB002B2484 /* LaunchScreen.storyboard */; };
 		89FB676A1D5C82F5002B2484 /* LoginVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89FB67691D5C82F5002B2484 /* LoginVC.swift */; };
 		89FB676C1D5C837D002B2484 /* SignUpVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89FB676B1D5C837D002B2484 /* SignUpVC.swift */; };
-		89FB676E1D5C8411002B2484 /* ItemsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89FB676D1D5C8411002B2484 /* ItemsTableViewController.swift */; };
 		CE0E19731F168B3900DEDBDE /* Home.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CE0E19711F168B3900DEDBDE /* Home.storyboard */; };
 		CE18C4D21F64E14F00C748BC /* MaxLengthTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE18C4D11F64E14F00C748BC /* MaxLengthTextField.swift */; };
 		CE1B477D1F185025007C7515 /* HomeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE1B477C1F185025007C7515 /* HomeVC.swift */; };
@@ -125,7 +123,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		0EEB60791ED918BB005B2813 /* Item.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Item.swift; sourceTree = "<group>"; };
 		17FBA854F90BAC963AFBF2FF /* Pods_ToDo_App.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ToDo_App.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5F95373CF9BA0303AD815BBD /* Pods-ToDo App.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ToDo App.release.xcconfig"; path = "Pods/Target Support Files/Pods-ToDo App/Pods-ToDo App.release.xcconfig"; sourceTree = "<group>"; };
 		89FB67541D5C82AB002B2484 /* ToDo App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "ToDo App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -136,7 +133,6 @@
 		89FB67631D5C82AB002B2484 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		89FB67691D5C82F5002B2484 /* LoginVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = LoginVC.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		89FB676B1D5C837D002B2484 /* SignUpVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = SignUpVC.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
-		89FB676D1D5C8411002B2484 /* ItemsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ItemsTableViewController.swift; sourceTree = "<group>"; };
 		CE0E19721F168B3900DEDBDE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Home.storyboard; sourceTree = "<group>"; };
 		CE18C4D11F64E14F00C748BC /* MaxLengthTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MaxLengthTextField.swift; sourceTree = "<group>"; };
 		CE1B477C1F185025007C7515 /* HomeVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeVC.swift; sourceTree = "<group>"; };
@@ -181,7 +177,7 @@
 		CE6996631F70C05900E8668C /* Step3AddJobVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Step3AddJobVC.swift; sourceTree = "<group>"; };
 		CE6F69431F868B9E00FE9349 /* Step3VideoVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Step3VideoVC.swift; sourceTree = "<group>"; };
 		CE6F69451F868CCC00FE9349 /* Step4VideoVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Step4VideoVC.swift; sourceTree = "<group>"; };
-		CE7160F81F04A2A10045AA05 /* Step4HabitVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Step4HabitVC.swift; sourceTree = "<group>"; };
+		CE7160F81F04A2A10045AA05 /* Step4HabitVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = Step4HabitVC.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		CE7160FA1F04A9270045AA05 /* Step4HabitCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Step4HabitCell.swift; sourceTree = "<group>"; };
 		CE79B8931F233F290032DD70 /* VideosVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VideosVC.swift; sourceTree = "<group>"; };
 		CE7FF98C1F340E6A000AD071 /* WithdrawalVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WithdrawalVC.swift; sourceTree = "<group>"; wrapsLines = 1; };
@@ -387,7 +383,6 @@
 				CEE4D6AA1F0F44BE009BAE6C /* Step5 */,
 				CEB4CD2B1F1ECDC700F9733F /* Home */,
 				CE4832B71F27E9A0005A7A55 /* Users */,
-				CEFC21FE1F64A79B00CC4FC1 /* OLD */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -561,15 +556,6 @@
 			name = Login;
 			sourceTree = "<group>";
 		};
-		CEFC21FE1F64A79B00CC4FC1 /* OLD */ = {
-			isa = PBXGroup;
-			children = (
-				0EEB60791ED918BB005B2813 /* Item.swift */,
-				89FB676D1D5C8411002B2484 /* ItemsTableViewController.swift */,
-			);
-			name = OLD;
-			sourceTree = "<group>";
-		};
 		DB9D2389DB4710644994D7D8 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -731,7 +717,6 @@
 				CEA738C11F8F30BC00C3266D /* Step4VideoVC3.swift in Sources */,
 				CEF1A4931F022F3F00C010F9 /* Step3VC.swift in Sources */,
 				CE8FFA001F109FC2004A53BE /* Step5ExpenseDetailVC.swift in Sources */,
-				0EEB607A1ED918BB005B2813 /* Item.swift in Sources */,
 				89FB676C1D5C837D002B2484 /* SignUpVC.swift in Sources */,
 				CE7160FB1F04A9270045AA05 /* Step4HabitCell.swift in Sources */,
 				CE4832BB1F27FCA0005A7A55 /* PaydayNavController.swift in Sources */,
@@ -773,7 +758,6 @@
 				CE951E4D1F4B7C63003B5EEF /* PaydayDetailCellC2.swift in Sources */,
 				CE7FF98F1F34124F000AD071 /* FeeVC.swift in Sources */,
 				CE1B477F1F186E99007C7515 /* HomeCustomCell.swift in Sources */,
-				89FB676E1D5C8411002B2484 /* ItemsTableViewController.swift in Sources */,
 				CEAAF9DA1F356D3800846DD5 /* PaydayCell.swift in Sources */,
 				CE99F07E1F0AB53D007E01E7 /* Step5IncomeSummaryVC.swift in Sources */,
 				CE55796F1F0633B3006FE40B /* JobSummaryCell.swift in Sources */,

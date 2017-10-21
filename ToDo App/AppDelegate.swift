@@ -19,12 +19,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return true
     }
     
-    
-    
     func loadInitialVC() {
-        let currentUser = FIRAuth.auth()?.currentUser
-        if currentUser != nil {
-            print("\((currentUser?.email)!) logged in")
+        let firebaseUser = FIRAuth.auth()?.currentUser
+        if firebaseUser != nil {
+            print("\((firebaseUser?.email)!) logged in")
             self.window = UIWindow(frame: UIScreen.main.bounds)
             let storyboard = UIStoryboard(name: "Setup", bundle: nil)
             let initialViewController = storyboard.instantiateViewController(withIdentifier: "LoadingVC")
@@ -38,23 +36,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             self.window?.rootViewController = initialViewController
             self.window?.makeKeyAndVisible()
         }
-        
     }
-    
-    
-    func getCurrentUser() -> UIStoryboard {
-        var storyboard = UIStoryboard()
-        let currentUser = FIRAuth.auth()?.currentUser
-        if currentUser != nil {
-            print("\((currentUser?.email)!) logged in")
-            storyboard = UIStoryboard(name: "Home", bundle: nil)
-        } else {
-            print("user logged out")
-            storyboard = UIStoryboard(name: "Setup", bundle: nil)
-        }
-        return storyboard
-    }
-
     
     func applicationWillResignActive(_ application: UIApplication) {
         // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.

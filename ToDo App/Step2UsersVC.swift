@@ -280,7 +280,7 @@ class Step2UsersVC: UIViewController, UIImagePickerControllerDelegate, UINavigat
     }
     
     @IBAction func usernameEditingDidEnd(_ sender: Any) {
-        for user in User.finalUsersArray {
+        for user in User.usersArray {
             if user.firstName.lowercased() == nameTextField.text?.lowercased() {
                 createAlert(title: "Username Error", message: "You have entered in a username that is the same as another user. Please choose a unique name for this user.", textField: nameTextField)
             }
