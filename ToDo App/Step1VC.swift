@@ -41,19 +41,18 @@ class Step1VC: UIViewController, UITextFieldDelegate {
         formatExistingIncome()
     }
     
-    
     // ----------
     // Navigation
     // ----------
     
     @IBAction func didTapNextButton(_ sender: UIButton) {
         if incomeTextField.text != "" {     // check if field is empty
-            yearlyIncomeMPS = Int(incomeTextField.text!.components(separatedBy: [",", " "]).joined())       // remove commas
-            if yearlyIncomeMPS < incomeMinimum || yearlyIncomeMPS > incomeMaximum {     // check if income is within range
+            FamilyData.yearlyIncome = Int(incomeTextField.text!.components(separatedBy: [",", " "]).joined())       // remove commas
+            if FamilyData.yearlyIncome < incomeMinimum || FamilyData.yearlyIncome > incomeMaximum {     // check if income is within range
                 createIncomeAlert()
             } else {        // good to go!
                 performSegue(withIdentifier: "GoToStep2", sender: self)
-                ref.updateChildValues(["income" : yearlyIncomeMPS])
+                ref.updateChildValues(["income" : FamilyData.yearlyIncome])
                 // only update setup progress if user hasn't progressed past step 1
                 if FamilyData.setupProgress <= 10 {
                     FamilyData.setupProgress = 10
@@ -65,7 +64,6 @@ class Step1VC: UIViewController, UITextFieldDelegate {
         }
         ref.child("income").removeAllObservers()
     }
-    
     
     // ---------
     // Functions

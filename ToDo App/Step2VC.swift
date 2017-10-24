@@ -70,7 +70,6 @@ class Step2VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
         performSegue(withIdentifier: "EditUser", sender: User.usersArray[indexPath.row])
     }
     
-    
     // ----------
     // Navigation
     // ----------
@@ -140,7 +139,6 @@ class Step2VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
             }
         }
     }
-    
     
     // ---------
     // Functions

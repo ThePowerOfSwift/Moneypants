@@ -22,7 +22,7 @@ struct FamilyData {
     static func loadExistingIncome(completion: @escaping (Int) -> ()) {
         let firebaseUser = FIRAuth.auth()?.currentUser
         let ref = FIRDatabase.database().reference().child("users").child((firebaseUser?.uid)!)
-        ref.child("income").observe(.value, with: { (snapshot) in
+        ref.child("income").observeSingleEvent(of: .value, with: { (snapshot) in
             if let value = snapshot.value as? Int {
                 yearlyIncome = value
                 completion(yearlyIncome)
@@ -35,7 +35,7 @@ struct FamilyData {
     static func loadPaydayTimeFromFirebase(completion: @escaping (String) -> ()) {
         let firebaseUser = FIRAuth.auth()?.currentUser
         let ref = FIRDatabase.database().reference().child("users").child((firebaseUser?.uid)!)
-        ref.child("paydayTime").observe(.value, with: { (snapshot) in
+        ref.child("paydayTime").observeSingleEvent(of: .value, with: { (snapshot) in
             if let value = snapshot.value as? String {
                 paydayTime = value
                 completion(paydayTime)

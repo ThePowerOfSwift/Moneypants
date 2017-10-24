@@ -82,36 +82,42 @@ struct JobsAndHabits {
         let ref = FIRDatabase.database().reference().child("users").child((firebaseUser?.uid)!)
         ref.child("members").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
             let usersCount = Int(snapshot.childrenCount)
-            for child in snapshot.children {
-                let snap = child as! FIRDataSnapshot
-                let username = snap.key
-                ref.child("dailyHabits").child(username).observeSingleEvent(of: .value, with: { (snapshot) in
-                    let habitsCount = Int(snapshot.childrenCount)
-                    if habitsCount == 0 {
-                        print("NO HABITS AVAILABLE!!")
-                        completion()
-                    } else {
-                        for item in snapshot.children {
-                            if let snap = item as? FIRDataSnapshot {
-                                if let value = snap.value as? [String : Any] {
-                                    let assigned = value["assigned"] as! String
-                                    let description = value["description"] as! String
-                                    let name = value["name"] as! String
-                                    let order = value["order"] as! Int
-                                    
-                                    let dailyHabit = JobsAndHabits(name: name, description: description, assigned: assigned, order: order)
-                                    finalDailyHabitsArray.append(dailyHabit)
-                                    finalDailyHabitsArray.sort(by: { $0.assigned < $1.assigned })
-                                    // check to see that there are 10 jobs per user times the number of users
-                                    if finalDailyHabitsArray.count == usersCount * habitsCount {
-                                        completion()
+            if usersCount == 0 {
+                print("No users created yet")
+                completion()
+            } else {
+                for child in snapshot.children {
+                    let snap = child as! FIRDataSnapshot
+                    let username = snap.key
+                    ref.child("dailyHabits").child(username).observeSingleEvent(of: .value, with: { (snapshot) in
+                        let habitsCount = Int(snapshot.childrenCount)
+                        if habitsCount == 0 {
+                            print("no habits created yet")
+                            completion()
+                        } else {
+                            for item in snapshot.children {
+                                if let snap = item as? FIRDataSnapshot {
+                                    if let value = snap.value as? [String : Any] {
+                                        let assigned = value["assigned"] as! String
+                                        let description = value["description"] as! String
+                                        let name = value["name"] as! String
+                                        let order = value["order"] as! Int
+                                        
+                                        let dailyHabit = JobsAndHabits(name: name, description: description, assigned: assigned, order: order)
+                                        finalDailyHabitsArray.append(dailyHabit)
+                                        finalDailyHabitsArray.sort(by: { $0.assigned < $1.assigned })
+                                        // check to see that there are 10 jobs per user times the number of users
+                                        if finalDailyHabitsArray.count == usersCount * habitsCount {
+                                            completion()
+                                        }
                                     }
                                 }
                             }
                         }
-                    }
-                })
+                    })
+                }
             }
+            
         }
     }
     
@@ -123,6 +129,7 @@ struct JobsAndHabits {
             // if there are no jobs on Firebase, return count 0
             if jobsCount == 0 {
                 completion()
+                return
             } else {
                 for item in snapshot.children {
                     if let snap = item as? FIRDataSnapshot {
@@ -140,6 +147,7 @@ struct JobsAndHabits {
                             }
                             
                             if parentalDailyJobsArray.count + parentalWeeklyJobsArray.count == jobsCount {
+                                print("parent daily jobs count and parent weekly jobs count = ",jobsCount)
                                 completion()
                             }
                         }

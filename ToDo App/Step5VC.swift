@@ -2,7 +2,9 @@ import UIKit
 import Firebase
 
 class Step5VC: UIViewController, UITextFieldDelegate {
-
+    
+    @IBOutlet weak var userImage: UIImageView!
+    
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var topView: UIView!
     @IBOutlet weak var middleView: UIView!
@@ -28,7 +30,7 @@ class Step5VC: UIViewController, UITextFieldDelegate {
     var firebaseUser: FIRUser!
     var ref: FIRDatabaseReference!
     
-    var currentUser: Int = 2           // used for cycling through users when 'next' button is tapped
+    var currentUser: Int = 0           // used for cycling through users when 'next' button is tapped
     var currentUserName: String!
     var income = [OutsideIncome]()
         
@@ -36,6 +38,7 @@ class Step5VC: UIViewController, UITextFieldDelegate {
         super.viewDidLoad()
         
         nextButton.isEnabled = false
+        topBottomConstraint.constant = -(bottomView.bounds.height)
         
         mowingLawnsTextField.delegate = self
         babysittingTextField.delegate = self
@@ -48,12 +51,7 @@ class Step5VC: UIViewController, UITextFieldDelegate {
         
         User.usersArray.sort(by: {$0.birthday > $1.birthday})       // sort users by birthday with youngest first
         currentUserName = User.usersArray[currentUser].firstName
-        
-        // get array with only current user's data
-        income = OutsideIncome.incomeArray.filter({ return $0.userName == currentUserName })
-        
-        topBottomConstraint.constant = -(bottomView.bounds.height)
-        
+        userImage.image = User.usersArray[currentUser].photo
         navigationItem.title = User.usersArray[currentUser].firstName
         topQuestionLabel.text = "Does \(currentUserName!) have any income \(User.gender(user: currentUser).he_she.lowercased()) earns OUTSIDE the home?"
         yesLabel.text = "Yes, \(currentUserName!) has other income."
@@ -69,12 +67,10 @@ class Step5VC: UIViewController, UITextFieldDelegate {
     
     @IBAction func nextButtonTapped(_ sender: UIButton) {
         // update setupProgress
-        
         if FamilyData.setupProgress <= 50 {
             FamilyData.setupProgress = 50
             ref.updateChildValues(["setupProgress" : 50])
         }
-        
         performSegue(withIdentifier: "IncomeSummary", sender: self)
     }
     
@@ -82,6 +78,7 @@ class Step5VC: UIViewController, UITextFieldDelegate {
         if segue.identifier == "IncomeSummary" {
             let nextVC = segue.destination as! Step5IncomeSummaryVC
             nextVC.currentUser = currentUser
+            nextVC.currentUserName = currentUserName
             nextVC.yearlyOutsideIncome = calculateTotal()
             
             if noButton.isSelected == true {
@@ -172,14 +169,14 @@ class Step5VC: UIViewController, UITextFieldDelegate {
     }
     
     func updateLocalArray() {
-        print("A:  updating local array")
+//        print("A:  updating local array")
         
         for (index, income) in OutsideIncome.incomeArray.enumerated() {
-            print("B:  ",income.userName)
-            print("C:  ",currentUserName)
+//            print("B:  ",income.userName)
+//            print("C:  ",currentUserName)
             if income.userName == currentUserName {
-                print("name match!")
-                print("INDEX:  ",index)
+//                print("name match!")
+//                print("INDEX:  ",index)
                 OutsideIncome.incomeArray[index].mowingLawns = Int(mowingLawnsTextField.text!) ?? 0
                 OutsideIncome.incomeArray[index].babysitting = Int(babysittingTextField.text!) ?? 0
                 OutsideIncome.incomeArray[index].houseCleaning = Int(houseCleaningTextField.text!) ?? 0
@@ -187,7 +184,7 @@ class Step5VC: UIViewController, UITextFieldDelegate {
                 OutsideIncome.incomeArray[index].allOthers = Int(allOthersTextField.text!) ?? 0
             }
         }
-        print("D:  ",OutsideIncome.incomeArray)
+//        print("D:  ",OutsideIncome.incomeArray)
     }
     
     func updateFirebaseOutsideIncome() {
@@ -203,6 +200,9 @@ class Step5VC: UIViewController, UITextFieldDelegate {
     // ---------
     
     func loadExistingOutsideIncome() {
+        // get array with only current user's data
+        income = OutsideIncome.incomeArray.filter({ return $0.userName == currentUserName })
+        
         if income.isEmpty {
             print("empty income array")
             // user hasn't entered in any data yet and all data is empty

@@ -17,28 +17,47 @@ class Step5IncomeSummaryVC: UIViewController {
     var currentUser: Int!               // passed from Step5VC
     var currentUserName: String!        // passed from Step5VC
     var yearlyOutsideIncome: Int!       // passed from Step5VC
+    var censusKidsMultiplier: Double!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        calculateCensusFormulas()
+        
         User.usersArray.sort(by: {$0.birthday > $1.birthday})       // sort users by birthday with youngest first
         currentUserName = User.usersArray[currentUser].firstName
         userImage.image = User.usersArray[currentUser].photo
-        
-        numberFormatter.numberStyle = NumberFormatter.Style.decimal
-        
-        let yearlyTotal = Int(Double(FamilyData.yearlyIncome) * 0.021) + yearlyOutsideIncome        // need to change this eventually
-        let weeklyTotal = Int(yearlyTotal / 52)
-        
-        weeklyIncomeTotalLabel.text = "potential weekly income: $\(numberFormatter.string(from: NSNumber(value: weeklyTotal))!)"
-        homeIncomeLabel.text = "$\(numberFormatter.string(from: NSNumber(value: Int(Double(FamilyData.yearlyIncome) * 0.021)))!) / year"
-        outsideIncomeLabel.text = "$\(numberFormatter.string(from: NSNumber(value: yearlyOutsideIncome))!) / year"
-        totalIncomeLabel.text = "$\(numberFormatter.string(from: NSNumber(value: yearlyTotal))!) / year"
-        summaryLabel.text = "\(currentUserName!)'s total estimated yearly income is $\(numberFormatter.string(from: NSNumber(value: yearlyTotal))!) (about $\(numberFormatter.string(from: NSNumber(value: weeklyTotal))!) per week.)"
+        navigationItem.title = User.usersArray[currentUser].firstName
         
         showDetailsButton.setTitle("show details", for: .normal)
         viewTop.constant = -(detailsView.bounds.height)
         detailsView.isHidden = true
+    }
+    
+    func calculateCensusFormulas() {
+        let numberOfKidsCount = User.usersArray.filter({ return $0.childParent == "child" }).count          // get # of kids
+        
+        // adjust multiplier according to census data
+        if numberOfKidsCount >= 3 {
+            censusKidsMultiplier = 0.76
+        } else if numberOfKidsCount == 2 {
+            censusKidsMultiplier = 1
+        } else if numberOfKidsCount <= 1 {
+            censusKidsMultiplier = 1.27
+        }
+        
+        // this formula calculates the custom census multiplier for calculating individual potential earnings
+        let secretFormula = ((5.23788 * pow(0.972976, Double(FamilyData.yearlyIncome) / 1000) + 1.56139) / 100) as Double
+        let yearlyHomeIncome = Int(secretFormula * Double(FamilyData.yearlyIncome) * censusKidsMultiplier)
+        let yearlyTotal = yearlyHomeIncome + yearlyOutsideIncome
+        let weeklyTotal = Int(yearlyTotal / 52)
+        
+        numberFormatter.numberStyle = NumberFormatter.Style.decimal
+        weeklyIncomeTotalLabel.text = "potential weekly income: $\(numberFormatter.string(from: NSNumber(value: weeklyTotal))!)"
+        homeIncomeLabel.text = "$\(numberFormatter.string(from: NSNumber(value: yearlyHomeIncome))!) / year"
+        outsideIncomeLabel.text = "$\(numberFormatter.string(from: NSNumber(value: yearlyOutsideIncome))!) / year"
+        totalIncomeLabel.text = "$\(numberFormatter.string(from: NSNumber(value: yearlyTotal))!) / year"
+        summaryLabel.text = "\(currentUserName!)'s total estimated yearly income is $\(numberFormatter.string(from: NSNumber(value: yearlyTotal))!) (about $\(numberFormatter.string(from: NSNumber(value: weeklyTotal))!) per week.)"
     }
     
     @IBAction func showDetailsButtonTapped(_ sender: UIButton) {
