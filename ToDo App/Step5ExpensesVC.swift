@@ -1,255 +1,98 @@
 import UIKit
 
-class Step5ExpensesVC: UIViewController {
+class Step5ExpensesVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
+    var currentUser: Int!               // passed from Step5VC
+    var currentUserName: String!        // passed from Step5VC
+    var yearlyOutsideIncome: Int!       // passed from Step5VC
     
-    @IBOutlet weak var topNotification: UILabel!
-    @IBOutlet weak var budgetTotal: UILabel!
-    @IBOutlet weak var nextButton: UIButton!
-    @IBOutlet weak var nextArrow: UIImageView!
-    @IBOutlet weak var budgetText: UILabel!
-    @IBOutlet weak var incomeText: UILabel!
-
-    // clothing variables
-    @IBOutlet weak var clothingView: UIView!
-    @IBOutlet weak var clothingArrow: UIImageView!
-    @IBOutlet weak var clothingTop: NSLayoutConstraint!
-    @IBOutlet weak var clothingTotal: UILabel!
-    @IBOutlet weak var clothing1: UITextField!
-    @IBOutlet weak var clothing2: UITextField!
-    @IBOutlet weak var clothing3: UITextField!
-    @IBOutlet weak var clothing4: UITextField!
-    @IBOutlet weak var clothing5: UITextField!
-    @IBOutlet weak var clothing6: UITextField!
-    @IBOutlet weak var clothing7: UITextField!
-    
-    // accessories variables
-    @IBOutlet weak var accessoriesView: UIView!
-    @IBOutlet weak var accessoriesArrow: UIImageView!
-    @IBOutlet weak var accessoriesTop: NSLayoutConstraint!
-    @IBOutlet weak var accessoriesTotal: UILabel!
-    @IBOutlet weak var accessories1: UITextField!
-    @IBOutlet weak var accessories2: UITextField!
-    @IBOutlet weak var accessories3: UITextField!
-    @IBOutlet weak var accessories4: UITextField!
-    @IBOutlet weak var accessories5: UITextField!
-    
-    // grooming variables
-    @IBOutlet weak var groomingView: UIView!
-    @IBOutlet weak var groomingArrow: UIImageView!
-    @IBOutlet weak var groomingTop: NSLayoutConstraint!
-    @IBOutlet weak var groomingTotal: UILabel!
-    @IBOutlet weak var grooming1: UITextField!
-    @IBOutlet weak var grooming2: UITextField!
-    @IBOutlet weak var grooming3: UITextField!
-    @IBOutlet weak var grooming4: UITextField!
-    @IBOutlet weak var grooming5: UITextField!
-    @IBOutlet weak var grooming6: UITextField!
-    
-    // sports & dance variables
-    @IBOutlet weak var sportsView: UIView!
     @IBOutlet weak var sportsArrow: UIImageView!
-    @IBOutlet weak var sportsTop: NSLayoutConstraint!
-    @IBOutlet weak var sportsTotal: UILabel!
-    @IBOutlet weak var sports1: UITextField!
-    @IBOutlet weak var sports2: UITextField!
-    @IBOutlet weak var sports3: UITextField!
-    @IBOutlet weak var sports4: UITextField!
-    @IBOutlet weak var sports5: UITextField!
-    @IBOutlet weak var sports6: UITextField!
-    @IBOutlet weak var sports7: UITextField!
+    @IBOutlet weak var sportsTableTop: NSLayoutConstraint!
+    @IBOutlet weak var sportsTableHeight: NSLayoutConstraint!
+    @IBOutlet weak var sportsTableView: UITableView!
     
-    let yearlyTotal = Int(Double(yearlyIncomeMPS) * 0.021) + yearlyIncomeOutside
-
+    @IBOutlet weak var musicArtArrow: UIImageView!
+    @IBOutlet weak var musicArtTableTop: NSLayoutConstraint!
+    @IBOutlet weak var musicArtTableHeight: NSLayoutConstraint!
+    @IBOutlet weak var musicArtTableView: UITableView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        incomeText.text = "\(yearlyTotal)"
+        sportsTableView.delegate = self
+        sportsTableView.dataSource = self
+        sportsTableTop.constant = -(sportsTableView.bounds.height)
         
-        clothingTop.constant = -(clothingView.bounds.height)        // set clothing view out of range to start
-        clothingView.isHidden = true
-        accessoriesTop.constant = -(accessoriesView.bounds.height)
-        accessoriesView.isHidden = true
-        groomingTop.constant = -(groomingView.bounds.height)
-        groomingView.isHidden = true
-        sportsTop.constant = -(sportsView.bounds.height)
-        sportsView.isHidden = true
+        musicArtTableView.delegate = self
+        musicArtTableView.dataSource = self
+        musicArtTableTop.constant = -(musicArtTableView.bounds.height)
         
-        nextButton.isHidden = true
-        nextArrow.isHidden = true
-        topNotification.text = "GOAL: get 'budget' to match 'income' by adding expenses to the envelopes below."
-        budgetTotal.textColor = UIColor.red
-        budgetText.textColor = UIColor.red
+        currentUserName = User.usersArray[currentUser].firstName
+        navigationItem.title = User.usersArray[currentUser].firstName
     }
     
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
+    // ----------
+    // Table View
+    // ----------
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 3
     }
     
-    // ----------------
-    // Clothing Actions
-    // ----------------
-    
-    @IBAction func clothingButtonTapped(_ sender: UIButton) {
-        if clothingTop.constant == -(clothingView.bounds.height) {
-            revealTable(section: clothingView, arrow: clothingArrow, topConstraint: clothingTop)
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        if tableView == sportsTableView {
+            let cell = sportsTableView.dequeueReusableCell(withIdentifier: "sportsExpensesCell", for: indexPath) as! Step5ExpensesCell
+            cell.expensesLabel.text = "item \(indexPath.row)"
+            cell.expenseValue.text = "34"
+            return cell
         } else {
-            hideTable(section: clothingView, arrow: clothingArrow, topConstraint: clothingTop)
+            let cell = musicArtTableView.dequeueReusableCell(withIdentifier: "sportsExpensesCell", for: indexPath) as! Step5ExpensesCell
+            cell.expensesLabel.text = "music item \(indexPath.row)"
+            cell.expenseValue.text = "\(indexPath.row * 10)"
+            return cell
         }
     }
     
-    // NOTE: all clothing text fields are linked to this function via CTRL-drag (see storyboard connections for detail)
-    @IBAction func clothing1EditingDidEnd(_ sender: UITextField) {
-        let firstValue = Int(clothing1.text!) ?? 0
-        let secondValue = Int(clothing2.text!) ?? 0
-        let thirdValue = Int(clothing3.text!) ?? 0
-        let fourthValue = Int(clothing4.text!) ?? 0
-        let fifthValue = Int(clothing5.text!) ?? 0
-        let sixthValue = Int(clothing6.text!) ?? 0
-        let seventhValue = Int(clothing7.text!) ?? 0
-        clothingTotal.text = "\(firstValue + secondValue + thirdValue + fourthValue + fifthValue + sixthValue + seventhValue)"
-        budgetTotal.text = "\(calculateBudgetTotal())"
-        calculateBottomWarning()
-    }
-    
-    // -------------------
-    // Accessories Actions
-    // -------------------
-    
-    @IBAction func accessoriesButtonTapped(_ sender: UIButton) {
-        if accessoriesTop.constant == -(accessoriesView.bounds.height) {
-            revealTable(section: accessoriesView, arrow: accessoriesArrow, topConstraint: accessoriesTop)
+    @IBAction func sportsDanceButtonTapped(_ sender: UIButton) {
+        if sportsTableTop.constant == -(sportsTableView.bounds.height) {
+            sportsTableHeight.constant = sportsTableView.contentSize.height
+            revealTable(table: sportsTableView, arrow: sportsArrow, topConstraint: sportsTableTop)
         } else {
-            hideTable(section: accessoriesView, arrow: accessoriesArrow, topConstraint: accessoriesTop)
+            hideTable(table: sportsTableView, arrow: sportsArrow, topConstraint: sportsTableTop)
         }
     }
     
-    // accessories subtotal
-    @IBAction func accessoriesEditingDidEnd(_ sender: UITextField) {
-        let firstValue = Int(accessories1.text!) ?? 0
-        let secondValue = Int(accessories2.text!) ?? 0
-        let thirdValue = Int(accessories3.text!) ?? 0
-        let fourthValue = Int(accessories4.text!) ?? 0
-        let fifthValue = Int(accessories5.text!) ?? 0
-        accessoriesTotal.text = "\(firstValue + secondValue + thirdValue + fourthValue + fifthValue)"
-        budgetTotal.text = "\(calculateBudgetTotal())"
-        calculateBottomWarning()
-    }
+    // ---------
+    // Functions
+    // ---------
     
-    // ----------------
-    // Grooming Actions
-    // ----------------
-    
-    @IBAction func groomingButtonTapped(_ sender: UIButton) {
-        if groomingTop.constant == -(groomingView.bounds.height) {
-            revealTable(section: groomingView, arrow: groomingArrow, topConstraint: groomingTop)
-        } else {
-            hideTable(section: groomingView, arrow: groomingArrow, topConstraint: groomingTop)
-        }
-    }
-    
-    @IBAction func groomingEditingDidEnd(_ sender: UITextField) {
-        let firstValue = Int(grooming1.text!) ?? 0
-        let secondValue = Int(grooming2.text!) ?? 0
-        let thirdValue = Int(grooming3.text!) ?? 0
-        let fourthValue = Int(grooming4.text!) ?? 0
-        let fifthValue = Int(grooming5.text!) ?? 0
-        let sixthValue = Int(grooming6.text!) ?? 0
-        groomingTotal.text = "\(firstValue + secondValue + thirdValue + fourthValue + fifthValue + sixthValue)"
-        budgetTotal.text = "\(calculateBudgetTotal())"
-        calculateBottomWarning()
-    }
-    
-    // ----------------------
-    // Sports & Dance Actions
-    // ----------------------
-    
-    @IBAction func sportsButtonTapped(_ sender: UIButton) {
-        if sportsTop.constant == -(sportsView.bounds.height) {
-            revealTable(section: sportsView, arrow: sportsArrow, topConstraint: sportsTop)
-        } else {
-            hideTable(section: sportsView, arrow: sportsArrow, topConstraint: sportsTop)
-        }
-    }
-    
-    @IBAction func sportsEditingDidEnd(_ sender: UITextField) {
-        let firstValue = Int(sports1.text!) ?? 0
-        let secondValue = Int(sports2.text!) ?? 0
-        let thirdValue = Int(sports3.text!) ?? 0
-        let fourthValue = Int(sports4.text!) ?? 0
-        let fifthValue = Int(sports5.text!) ?? 0
-        let sixthValue = Int(sports6.text!) ?? 0
-        let seventhValue = Int(sports7.text!) ?? 0
-        sportsTotal.text = "\(firstValue + secondValue + thirdValue + fourthValue + fifthValue + sixthValue + seventhValue)"
-        budgetTotal.text = "\(calculateBudgetTotal())"
-        calculateBottomWarning()
-    }
-    
-    
-   
-    
-    // -------------------------
-    // Table Animation Templates
-    // -------------------------
-
-    func revealTable(section: UIView, arrow: UIImageView, topConstraint: NSLayoutConstraint) {
-        // rotate the right arrow down
-        section.isHidden = false
+    func revealTable(table: UITableView, arrow: UIImageView, topConstraint: NSLayoutConstraint) {
+        table.isHidden = false
         // rotate the arrown down
         UIView.animate(withDuration: 0.25) {
             arrow.transform = CGAffineTransform(rotationAngle: (90.0 * .pi) / 180.0)
         }
         // show the table
-        UIView.animate(withDuration: 0.5, animations: {
+        UIView.animate(withDuration: 0.25, animations: {
             topConstraint.constant = 0
             self.view.layoutIfNeeded()
         })
     }
-
-    func hideTable(section: UIView, arrow: UIImageView, topConstraint: NSLayoutConstraint) {
+    
+    func hideTable(table: UITableView, arrow: UIImageView, topConstraint: NSLayoutConstraint) {
         // rotate the right arrow back up
         UIView.animate(withDuration: 0.25) {
             arrow.transform = CGAffineTransform(rotationAngle: (0 * .pi) / 180.0)
         }
         // hide the table from view
-        UIView.animate(withDuration: 0.5, animations: {
-            topConstraint.constant = -(section.bounds.height)
+        UIView.animate(withDuration: 0.25, animations: {
+            topConstraint.constant = -(table.bounds.height)
             self.view.layoutIfNeeded()
         })
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-            section.isHidden = true
+            table.isHidden = true
         }
     }
-    
-    // --------------------------
-    // Table Calcualtion Template
-    // --------------------------
-    
-    func calculateBudgetTotal() -> Int {
-        let firstTotal = Int(clothingTotal.text!) ?? 0
-        let secondTotal = Int(accessoriesTotal.text!) ?? 0
-        let thirdTotal = Int(groomingTotal.text!) ?? 0
-        let fourthTotal = Int(sportsTotal.text!) ?? 0
-        return firstTotal + secondTotal + thirdTotal + fourthTotal
-    }
-    
-    
-    func calculateBottomWarning() {
-        if yearlyTotal - calculateBudgetTotal() == 0 {
-            topNotification.text = "Excellent! Budget matches income. Please tap 'next' to continue."
-            self.nextButton.isHidden = false
-            self.nextArrow.isHidden = false
-            self.budgetTotal.textColor = UIColor.black
-            self.budgetText.textColor = UIColor.black
-        } else if yearlyTotal - calculateBudgetTotal() > 0 {
-            topNotification.text = "You must still add more expenses. Please add $\(yearlyTotal - calculateBudgetTotal()) to one or more expense envelopes."
-        } else {
-            topNotification.text = "You must remove some expenses. Please remove $\(calculateBudgetTotal() - yearlyTotal) from one or more expense envelopes."
-        }
-    }
-
-
 }
 
 

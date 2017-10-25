@@ -20,6 +20,4 @@ class Step5ExpenseDetailVC: UIViewController {
         formatter.timeStyle = DateFormatter.Style.none                  // No time, just date
         dueDate.text = formatter.string(from: sender.date)              // show date picked in the text field
     }
-
-
 }

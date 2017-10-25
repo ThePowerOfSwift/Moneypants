@@ -34,6 +34,28 @@ class Step5IncomeSummaryVC: UIViewController {
         detailsView.isHidden = true
     }
     
+    // ----------
+    // Navigation
+    // ----------
+    
+    @IBAction func nextButtonTapped(_ sender: UIButton) {
+        // MARK: TODO - update setupProgress
+
+        performSegue(withIdentifier: "MemberExpenses", sender: self)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "MemberExpenses" {
+            let nextVC = segue.destination as! Step5ExpensesVC
+            nextVC.currentUser = currentUser
+            nextVC.currentUserName = currentUserName
+        }
+    }
+    
+    // ---------
+    // Functions
+    // ---------
+    
     func calculateCensusFormulas() {
         let numberOfKidsCount = User.usersArray.filter({ return $0.childParent == "child" }).count          // get # of kids
         
