@@ -75,7 +75,7 @@ class Step5IncomeSummaryVC: UIViewController {
         let weeklyTotal = Int(yearlyTotal / 52)
         
         numberFormatter.numberStyle = NumberFormatter.Style.decimal
-        weeklyIncomeTotalLabel.text = "potential weekly income: $\(numberFormatter.string(from: NSNumber(value: weeklyTotal))!)"
+        weeklyIncomeTotalLabel.text = "\(currentUserName!)'s potential weekly income is $\(numberFormatter.string(from: NSNumber(value: weeklyTotal))!)."
         homeIncomeLabel.text = "$\(numberFormatter.string(from: NSNumber(value: yearlyHomeIncome))!) / year"
         outsideIncomeLabel.text = "$\(numberFormatter.string(from: NSNumber(value: yearlyOutsideIncome))!) / year"
         totalIncomeLabel.text = "$\(numberFormatter.string(from: NSNumber(value: yearlyTotal))!) / year"
