@@ -4,9 +4,6 @@ class JobSummaryVC: UIViewController, UITableViewDataSource, UITableViewDelegate
     
     @IBOutlet weak var tableView: UITableView!
     
-    var sectionData: [Int: [String]] = [:]
-
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -14,6 +11,7 @@ class JobSummaryVC: UIViewController, UITableViewDataSource, UITableViewDelegate
         
         tableView.delegate = self
         tableView.dataSource = self
+        tableView.tableFooterView = UIView()
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {

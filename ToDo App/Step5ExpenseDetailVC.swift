@@ -12,13 +12,13 @@ class Step5ExpenseDetailVC: UITableViewController, UIPickerViewDelegate, UIPicke
     @IBOutlet weak var finalPaymentDueDateLabel: UILabel!
     @IBOutlet weak var yearlyTotalLabel: UILabel!
     
-//    var firstPaymentDueCellExpanded: Bool = false
     var firstPaymentDatePickerHeight: CGFloat = 0
-//    var repeatCellExpanded: Bool = false
     var repeatPickerHeight: CGFloat = 0
     var finalPaymentDueCellHeight: CGFloat = 0
-//    var lastPaymentDueCellExpanded: Bool = false
     var finalPaymentDatePickerHeight: CGFloat = 0
+    
+    var currentUser: Int!               // passed from Step5VC
+    var currentUserName: String!        // passed from Step5VC
     
     let repeatOptions = ["never", "weekly", "monthly"]
     
@@ -28,6 +28,11 @@ class Step5ExpenseDetailVC: UITableViewController, UIPickerViewDelegate, UIPicke
         repeatingExpenseSwitch.isOn = false
         repeatsLabel.text = "never"
         repeatsPickerView.delegate = self
+        
+        saveButton.isEnabled = false
+        
+        currentUserName = User.usersArray[currentUser].firstName
+        navigationItem.title = currentUserName!
     }
     
     // -------------
@@ -69,22 +74,43 @@ class Step5ExpenseDetailVC: UITableViewController, UIPickerViewDelegate, UIPicke
             if indexPath.row == 0 {
                 if firstPaymentDatePickerHeight == 216 {
                     firstPaymentDatePickerHeight = 0
+                    firstPaymentDueDateLabel.textColor = UIColor.black
                 } else {
                     firstPaymentDatePickerHeight = 216
+                    firstPaymentDueDateLabel.textColor = UIColor.red
+                    // collapse other pickers and turn their text colors back to black
+                    repeatPickerHeight = 0
+                    repeatsLabel.textColor = UIColor.black
+                    finalPaymentDatePickerHeight = 0
+                    finalPaymentDueDateLabel.textColor = UIColor.black
                 }
             }
             if indexPath.row == 2 {
                 if repeatPickerHeight == 120 {
                     repeatPickerHeight = 0
+                    repeatsLabel.textColor = UIColor.black
                 } else {
                     repeatPickerHeight = 120
+                    repeatsLabel.textColor = UIColor.red
+                    // collapse other pickers and turn their text colors back to black
+                    firstPaymentDatePickerHeight = 0
+                    firstPaymentDueDateLabel.textColor = UIColor.black
+                    finalPaymentDatePickerHeight = 0
+                    finalPaymentDueDateLabel.textColor = UIColor.black
                 }
             }
             if indexPath.row == 4 {
                 if finalPaymentDatePickerHeight == 216 {
                     finalPaymentDatePickerHeight = 0
+                    finalPaymentDueDateLabel.textColor = UIColor.black
                 } else {
                     finalPaymentDatePickerHeight = 216
+                    finalPaymentDueDateLabel.textColor = UIColor.red
+                    // collapse other pickers and turn their text colors back to black
+                    firstPaymentDatePickerHeight = 0
+                    firstPaymentDueDateLabel.textColor = UIColor.black
+                    repeatPickerHeight = 0
+                    repeatsLabel.textColor = UIColor.black
                 }
             }
         }
@@ -117,12 +143,15 @@ class Step5ExpenseDetailVC: UITableViewController, UIPickerViewDelegate, UIPicke
         if indexPath.section == 2 {
             if repeatingExpenseSwitch.isOn == false {
                 return 0
+            } else {
+                return 66
             }
         }
         return 44
     }
     
     @IBAction func cancelButtonTapped(_ sender: UIBarButtonItem) {
+        view.endEditing(true)
         self.dismiss(animated: true, completion: nil)
     }
     
@@ -131,8 +160,25 @@ class Step5ExpenseDetailVC: UITableViewController, UIPickerViewDelegate, UIPicke
     // ---------
     
     @IBAction func repeatingExpenseSwitchTapped(_ sender: UISwitch) {
+        // check to make sure name of expense isn't blank
+        if repeatingExpenseSwitch.isOn {
+            if expenseAmountTextField.text == "" {
+                repeatingExpenseSwitch.isOn = false
+                saveButton.isEnabled = false
+                // check to make sure expense amount is valid
+            } else if Int(expenseAmountTextField.text!) == nil {
+                repeatingExpenseSwitch.isOn = false
+                saveButton.isEnabled = false
+            } else {
+                // dismiss keyboard
+                view.endEditing(true)
+                // update bottom label
+                yearlyTotalLabel.text = "yearly total for\n'\(expenseNameTextField.text!)' is $\(expenseAmountTextField.text!)"
+            }
+        } else {
+            print("switched off")
+        }
         tableView.beginUpdates()
         tableView.endUpdates()
     }
-    
 }

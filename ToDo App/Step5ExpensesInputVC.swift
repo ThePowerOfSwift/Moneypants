@@ -32,11 +32,11 @@ class Step5ExpensesInputVC: UIViewController, UITableViewDataSource, UITableView
     }
     
     // custom header view
-    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "headerCell") as! Step5HeaderCell
-        cell.headerLabel.text = expenseEnvelopes[section]
-        return cell
-    }
+//    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+//        let cell = tableView.dequeueReusableCell(withIdentifier: "headerCell") as! Step5HeaderCell
+//        cell.headerLabel.text = expenseEnvelopes[section]
+//        return cell
+//    }
     
     // header height
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {

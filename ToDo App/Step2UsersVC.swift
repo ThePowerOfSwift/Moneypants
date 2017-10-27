@@ -133,7 +133,6 @@ class Step2UsersVC: UIViewController, UIImagePickerControllerDelegate, UINavigat
         present(imagePickerController, animated: true, completion: nil)
     }
     
-    
     // ---------------------------
     // MARK: Cancel & Save Buttons
     // ---------------------------
@@ -158,7 +157,6 @@ class Step2UsersVC: UIViewController, UIImagePickerControllerDelegate, UINavigat
                     gender: gender,
                     childParent: childParent)
     }
-    
     
     // -----------------------
     // MARK: Button Selections
@@ -216,7 +214,6 @@ class Step2UsersVC: UIViewController, UIImagePickerControllerDelegate, UINavigat
         updateSaveButtonState()
     }
     
-    
     // ---------------------------
     // MARK: Show/Hide Save Button
     // ---------------------------
@@ -248,7 +245,6 @@ class Step2UsersVC: UIViewController, UIImagePickerControllerDelegate, UINavigat
             saveButton.isEnabled = false
         }
     }
-    
     
     // ----------------------
     // MARK: Input Validation
@@ -301,7 +297,6 @@ class Step2UsersVC: UIViewController, UIImagePickerControllerDelegate, UINavigat
         }
     }
     
-    
     // --------------------
     // MARK: Alert template
     // --------------------
@@ -316,7 +311,6 @@ class Step2UsersVC: UIViewController, UIImagePickerControllerDelegate, UINavigat
         present(alert, animated: true, completion: nil)
     }
     
-    
     // -------------------------------------
     // Customize rounded buttons with border
     // -------------------------------------
@@ -327,7 +321,6 @@ class Step2UsersVC: UIViewController, UIImagePickerControllerDelegate, UINavigat
         buttonName.layer.borderColor = UIColor.lightGray.cgColor
         buttonName.layer.borderWidth = 0.5
     }
-    
     
     // ----------------------------------------------------------
     // MARK: Dismiss keyboard if user taps outside of text fields

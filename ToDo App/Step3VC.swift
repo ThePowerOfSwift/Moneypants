@@ -18,6 +18,8 @@ class Step3VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        jobsTableView.tableFooterView = UIView()
+        
         // --------
         // Firebase
         // --------
