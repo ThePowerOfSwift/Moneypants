@@ -24,7 +24,6 @@ class Step5IncomeSummaryVC: UIViewController {
         
         calculateCensusFormulas()
         
-        User.usersArray.sort(by: {$0.birthday > $1.birthday})       // sort users by birthday with youngest first
         currentUserName = User.usersArray[currentUser].firstName
         userImage.image = User.usersArray[currentUser].photo
         navigationItem.title = User.usersArray[currentUser].firstName

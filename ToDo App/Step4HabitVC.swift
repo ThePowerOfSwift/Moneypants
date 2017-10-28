@@ -27,8 +27,6 @@ class Step4HabitVC: UIViewController, UITableViewDataSource, UITableViewDelegate
         userImage.layer.borderWidth = 0.5
         userImage.layer.borderColor = UIColor.black.cgColor
         
-        User.usersArray.sort(by: {$0.birthday > $1.birthday})       // sort users by birthday with youngest first
-
         currentUserName = ""
         instructionsLabel.text = ""
         selectUsersButton.isHidden = true

@@ -40,6 +40,7 @@ struct User {
                                                 gender: gender,
                                                 childParent: childParent)
                                 usersArray.append(user)
+                                usersArray.sort(by: {$0.birthday > $1.birthday})       // sort users by birthday with youngest first
                                 
                                 if usersArray.count == usersCount {
                                     completion()

@@ -4,10 +4,12 @@ class JobSummaryVC: UIViewController, UITableViewDataSource, UITableViewDelegate
     
     @IBOutlet weak var tableView: UITableView!
     
+    var oldestFirstArray: [User]!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        User.usersArray.sort(by: {$0.birthday < $1.birthday})       // sort users by birthday with oldest first
+        oldestFirstArray = User.usersArray.sorted(by: { $0.birthday < $1.birthday })        // create array with oldest members first
         
         tableView.delegate = self
         tableView.dataSource = self
@@ -15,14 +17,14 @@ class JobSummaryVC: UIViewController, UITableViewDataSource, UITableViewDelegate
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return User.usersArray.count
+        return oldestFirstArray.count
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        let dailyJobAssignments = JobsAndHabits.finalDailyJobsArray.filter({ return $0.assigned == User.usersArray[section].firstName }).count
-        let weeklyJobAssignments = JobsAndHabits.finalWeeklyJobsArray.filter({ return $0.assigned == User.usersArray[section].firstName }).count
-        let parentInspectionsAssignment = JobsAndHabits.parentalDailyJobsArray.filter({ return $0.assigned == User.usersArray[section].firstName }).count
-        let parentPaydayAssignment = JobsAndHabits.parentalWeeklyJobsArray.filter({ return $0.assigned == User.usersArray[section].firstName }).count
+        let dailyJobAssignments = JobsAndHabits.finalDailyJobsArray.filter({ return $0.assigned == oldestFirstArray[section].firstName }).count
+        let weeklyJobAssignments = JobsAndHabits.finalWeeklyJobsArray.filter({ return $0.assigned == oldestFirstArray[section].firstName }).count
+        let parentInspectionsAssignment = JobsAndHabits.parentalDailyJobsArray.filter({ return $0.assigned == oldestFirstArray[section].firstName }).count
+        let parentPaydayAssignment = JobsAndHabits.parentalWeeklyJobsArray.filter({ return $0.assigned == oldestFirstArray[section].firstName }).count
         
         return dailyJobAssignments + weeklyJobAssignments + parentInspectionsAssignment + parentPaydayAssignment
     }
@@ -31,10 +33,10 @@ class JobSummaryVC: UIViewController, UITableViewDataSource, UITableViewDelegate
         let cell = tableView.dequeueReusableCell(withIdentifier: "customCell") as! JobSummaryCellB
         
         // get the job assignments in the 'finalDailyJobs' array that matches the current user in the tableview
-        let dailyJobAssignments = JobsAndHabits.finalDailyJobsArray.sorted(by: { $0.order < $1.order }).filter({ return $0.assigned == User.usersArray[indexPath.section].firstName })      //.sorted(by: { $0.order < $1.order })
-        let weeklyJobAssignments = JobsAndHabits.finalWeeklyJobsArray.sorted(by: { $0.order < $1.order }).filter({ return $0.assigned == User.usersArray[indexPath.section].firstName })
-        let parentInspectionsAssignment = JobsAndHabits.parentalDailyJobsArray.sorted(by: { $0.order < $1.order }).filter({ return $0.assigned == User.usersArray[indexPath.section].firstName })
-        let parentPaydayAssignment = JobsAndHabits.parentalWeeklyJobsArray.sorted(by: { $0.order < $1.order }).filter({ $0.assigned == User.usersArray[indexPath.section].firstName })
+        let dailyJobAssignments = JobsAndHabits.finalDailyJobsArray.sorted(by: { $0.order < $1.order }).filter({ return $0.assigned == oldestFirstArray[indexPath.section].firstName })      //.sorted(by: { $0.order < $1.order })
+        let weeklyJobAssignments = JobsAndHabits.finalWeeklyJobsArray.sorted(by: { $0.order < $1.order }).filter({ return $0.assigned == oldestFirstArray[indexPath.section].firstName })
+        let parentInspectionsAssignment = JobsAndHabits.parentalDailyJobsArray.sorted(by: { $0.order < $1.order }).filter({ return $0.assigned == oldestFirstArray[indexPath.section].firstName })
+        let parentPaydayAssignment = JobsAndHabits.parentalWeeklyJobsArray.sorted(by: { $0.order < $1.order }).filter({ $0.assigned == oldestFirstArray[indexPath.section].firstName })
         let jobAssignments = dailyJobAssignments + parentInspectionsAssignment + weeklyJobAssignments + parentPaydayAssignment
         cell.userNameLabel.text = jobAssignments[indexPath.row].name
         
@@ -54,8 +56,8 @@ class JobSummaryVC: UIViewController, UITableViewDataSource, UITableViewDelegate
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let cell = tableView.dequeueReusableCell(withIdentifier: "headerCell") as! JobSummaryCell
-        cell.headerImage.image = User.usersArray[section].photo
-        cell.headerLabel.text = User.usersArray[section].firstName
+        cell.headerImage.image = oldestFirstArray[section].photo
+        cell.headerLabel.text = oldestFirstArray[section].firstName
         return cell
     }
     

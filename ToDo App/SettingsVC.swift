@@ -13,7 +13,6 @@ class SettingsVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                                             ("change passwords", "IndividualIncomeSummary"),
                                             ("sign out", "LoginVC")]
     
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -50,12 +49,10 @@ class SettingsVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
             print("other view")
         }
     }
-
     
     // ----------------
     // Setup Table View
     // ----------------
-    
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return settingsList.count

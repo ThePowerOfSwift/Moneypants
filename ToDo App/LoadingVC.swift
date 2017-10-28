@@ -63,7 +63,7 @@ class LoadingVC: UIViewController {
                                 print("6. DAILY HABITS:  ",JobsAndHabits.finalDailyHabitsArray.count)
                                 
                                 JobsAndHabits.loadPaydayAndInspectionsFromFirebase {
-                                    print("7. PAYDAY:  ",JobsAndHabits.parentalDailyJobsArray)
+                                    print("7. PAYDAY:  ",JobsAndHabits.parentalDailyJobsArray.count)
                                     
                                     FamilyData.loadPaydayTimeFromFirebase { (paydayTime) in
                                         print("8. PAYDAY TIME:  ",paydayTime)

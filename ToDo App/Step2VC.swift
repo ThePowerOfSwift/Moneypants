@@ -44,6 +44,11 @@ class Step2VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
         usersTableView.reloadData()
     }
     
+    override func viewDidDisappear(_ animated: Bool) {
+        // resort users array to have youngest first
+        User.usersArray.sort(by: { $0.birthday > $1.birthday })
+    }
+    
     
     // ----------
     // Table View
@@ -98,7 +103,7 @@ class Step2VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
         if let selectedIndexPath = usersTableView.indexPathForSelectedRow {
             // Update an existing user
             User.usersArray[selectedIndexPath.row] = updatedUser!
-            User.usersArray.sort(by: {$0.birthday < $1.birthday})
+//            User.usersArray.sort(by: {$0.birthday < $1.birthday})
             usersTableView.reloadData()
             saveUsersToFirebase()
         } else {

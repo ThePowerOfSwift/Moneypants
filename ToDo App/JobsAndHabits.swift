@@ -117,7 +117,6 @@ struct JobsAndHabits {
                     })
                 }
             }
-            
         }
     }
     
@@ -140,9 +139,9 @@ struct JobsAndHabits {
                             let order = value["order"] as! Int
                             
                             let paydayAndInspections = JobsAndHabits(name: name, description: description, assigned: assigned, order: order)
-                            if name == "daily inspections" {
+                            if name == "job inspections" {
                                 parentalDailyJobsArray.append(paydayAndInspections)
-                            } else if name == "weekly payday" {
+                            } else if name == "payday" {
                                 parentalWeeklyJobsArray.append(paydayAndInspections)
                             }
                             

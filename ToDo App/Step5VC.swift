@@ -49,7 +49,6 @@ class Step5VC: UIViewController, UITextFieldDelegate {
         firebaseUser = FIRAuth.auth()?.currentUser
         ref = FIRDatabase.database().reference().child("users").child(firebaseUser.uid)
         
-        User.usersArray.sort(by: {$0.birthday > $1.birthday})       // sort users by birthday with youngest first
         currentUserName = User.usersArray[currentUser].firstName
         userImage.image = User.usersArray[currentUser].photo
         navigationItem.title = User.usersArray[currentUser].firstName

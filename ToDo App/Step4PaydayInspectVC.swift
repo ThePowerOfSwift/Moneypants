@@ -33,9 +33,6 @@ class Step4PaydayInspectVC: UIViewController, UIPickerViewDelegate, UIPickerView
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        nextButton.isEnabled = false
-        paydayDateTopConstraint.constant = -(thirdView.bounds.height)
-        inspectionsParentTopConstraint.constant = -(fourthView.bounds.height)
         paydayDatePicker.delegate = self
         
         // --------
@@ -46,6 +43,10 @@ class Step4PaydayInspectVC: UIViewController, UIPickerViewDelegate, UIPickerView
         ref = FIRDatabase.database().reference().child("users").child(firebaseUser.uid)
         
         loadExistingAssignments()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        scrollPageIfNeeded()
     }
     
     // -----------
@@ -116,13 +117,24 @@ class Step4PaydayInspectVC: UIViewController, UIPickerViewDelegate, UIPickerView
                     self.view.layoutIfNeeded()
                 }
                 self.scrollPageIfNeeded()
+                // update local array
+                JobsAndHabits.parentalWeeklyJobsArray[0].assigned = parent.firstName
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
                 // send selection to Firebase
-                self.ref.child("paydayAndInspections").child("payday").updateChildValues(["name" : "weekly payday",
+                self.ref.child("paydayAndInspections").child("payday").updateChildValues(["name" : "payday",
                                                                                           "description" : "job description",
                                                                                           "assigned" : parent.firstName,
                                                                                           "order" : 0])
-                // update local array
-                JobsAndHabits.finalWeeklyJobsArray[0].assigned = parent.firstName
             }))
         }
         alert.addAction(UIAlertAction(title: "cancel", style: .cancel, handler: { (action) in
@@ -142,13 +154,19 @@ class Step4PaydayInspectVC: UIViewController, UIPickerViewDelegate, UIPickerView
             self.view.layoutIfNeeded()
             self.scrollPageIfNeeded()
         }
-        
         // update local variable
         FamilyData.paydayTime = "\(selectedDay) \(selectedHour) \(selectedAMPM)"
         
+        
+        
+        
+        
+        
+        
+        
+        
         // send selection to Firebase
         self.ref.updateChildValues(["paydayTime" : "\(selectedDay) \(selectedHour) \(selectedAMPM)"])
-        ref.child("paydayTime").removeAllObservers()
     }
     
     @IBAction func inspectionsParentButtonTapped(_ sender: UIButton) {
@@ -158,14 +176,25 @@ class Step4PaydayInspectVC: UIViewController, UIPickerViewDelegate, UIPickerView
                 self.inspectionsParentButton.setTitle(parent.firstName, for: .normal)
                 self.inspectionsParentButton.layer.backgroundColor = UIColor(red: 141/255, green: 198/255, blue: 63/255, alpha: 1.0).cgColor     // green
                 self.nextButton.isEnabled = true
+                // update local array
+                JobsAndHabits.parentalDailyJobsArray[0].assigned = parent.firstName
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
                 
                 // send selection to Firebase
-                self.ref.child("paydayAndInspections").child("inspections").updateChildValues(["name" : "daily inspections",
+                self.ref.child("paydayAndInspections").child("inspections").updateChildValues(["name" : "job inspections",
                                                                                                "description" : "job description",
                                                                                                "assigned" : parent.firstName,
                                                                                                "order" : 0])
-                // update local array
-                JobsAndHabits.finalDailyHabitsArray[0].assigned = parent.firstName
             }))
         }
         alert.addAction(UIAlertAction(title: "cancel", style: .cancel, handler: { (action) in
@@ -175,6 +204,7 @@ class Step4PaydayInspectVC: UIViewController, UIPickerViewDelegate, UIPickerView
     }
     
     @IBAction func nextButtonTapped(_ sender: UIButton) {
+        print(JobsAndHabits.parentalDailyJobsArray)
         if paydayTimeConfirmed == false {
             let alert = UIAlertController(title: "Payday Time", message: "Please confirm your payday time by tapping the red payday button.", preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: "okay", style: .cancel, handler: { (action) in
@@ -191,44 +221,99 @@ class Step4PaydayInspectVC: UIViewController, UIPickerViewDelegate, UIPickerView
     // ---------
     
     func loadExistingAssignments() {
-        if JobsAndHabits.parentalDailyJobsArray.isEmpty {
-            print("creating default parental assignments")
-            
-            // default button info
+        
+        // -------------------------
+        // payday assignment missing
+        // -------------------------
+        
+        if JobsAndHabits.parentalWeeklyJobsArray.isEmpty || JobsAndHabits.parentalWeeklyJobsArray[0].assigned == "choose a parent" {
+            // create default payday and inspections arrays
+            JobsAndHabits.parentalWeeklyJobsArray = [JobsAndHabits(name: "payday", description: "job description", assigned: "choose a parent", order: 0)]
+            JobsAndHabits.parentalDailyJobsArray = [JobsAndHabits(name: "job inspections", description: "job description", assigned: "choose a parent", order: 0)]
+            // create default payday button
             paydayParentButton.setTitle("choose a parent", for: .normal)
             paydayParentButton.layer.backgroundColor = UIColor(red: 242/255, green: 101/255, blue: 34/255, alpha: 1.0).cgColor      // orange
-            // set default time
-            paydayDateButton.layer.backgroundColor = UIColor.red.cgColor
-            paydayDateButton.setTitle("\(selectedDay) \(selectedHour) \(selectedAMPM)?", for: .normal)
-            FamilyData.paydayTime = selectedDay + selectedHour + selectedAMPM
-            // default button info
+            // hide other two sections
+            paydayDateTopConstraint.constant = -(thirdView.bounds.height)
+            inspectionsParentTopConstraint.constant = -(fourthView.bounds.height)
+            // disable next button
+            nextButton.isEnabled = false
+            
+        // -------------------
+        // payday time missing
+        // -------------------
+            
+        } else if FamilyData.paydayTime == "" {
+            print("time is blank")
+            
+            // create default inspections array
+            JobsAndHabits.parentalDailyJobsArray = [JobsAndHabits(name: "job inspections", description: "job description", assigned: "choose a parent", order: 0)]
+            
+            // load existing data into button title
+            paydayParentButton.setTitle(JobsAndHabits.parentalWeeklyJobsArray[0].assigned, for: .normal)
+            paydayParentButton.layer.backgroundColor = UIColor(red: 141/255, green: 198/255, blue: 63/255, alpha: 1.0).cgColor     // green
+            // ...and reveal the next button
+            paydayDateTopConstraint.constant = 0
+            inspectionsParentTopConstraint.constant = -(fourthView.bounds.height)
+            scrollPageIfNeeded()
+            
+            nextButton.isEnabled = false
+            
+        // ------------------------------
+        // inspections assignment missing
+        // ------------------------------
+            
+        } else if JobsAndHabits.parentalDailyJobsArray.isEmpty || JobsAndHabits.parentalDailyJobsArray[0].assigned == "choose a parent" {
+            
+            // load existing data into button title
+            paydayParentButton.setTitle(JobsAndHabits.parentalWeeklyJobsArray[0].assigned, for: .normal)
+            paydayParentButton.layer.backgroundColor = UIColor(red: 141/255, green: 198/255, blue: 63/255, alpha: 1.0).cgColor     // green
+            // ...and reveal the next button
+            paydayDateTopConstraint.constant = 0
+            inspectionsParentTopConstraint.constant = -(fourthView.bounds.height)
+            
+            paydayTimeConfirmed = true
+            // update color to green
+            paydayDateButton.layer.backgroundColor = UIColor(red: 141/255, green: 198/255, blue: 63/255, alpha: 1.0).cgColor     // green
+            // update button to show date user selected
+            updatePaydayPickerWithExistingData()
+            paydayDateButton.setTitle("\(selectedDay) \(selectedHour) \(selectedAMPM)", for: .normal)
+            
+            // create a default payday array
+            JobsAndHabits.parentalDailyJobsArray = [JobsAndHabits(name: "job inspections", description: "job description", assigned: "choose a parent", order: 0)]
+            // create default payday button
             inspectionsParentButton.setTitle("choose a parent", for: .normal)
             inspectionsParentButton.layer.backgroundColor = UIColor(red: 242/255, green: 101/255, blue: 34/255, alpha: 1.0).cgColor      // orange
             
+            self.inspectionsParentTopConstraint.constant = 0     // reveal inspections button
+            scrollPageIfNeeded()
+            nextButton.isEnabled = false
+            
+            // -----------------
+            // all info complete
+            // -----------------
+            
         } else {
-            print("loading existing parental assignments...")
-            print("A:  ",JobsAndHabits.parentalDailyJobsArray)
-            print("B:  ",JobsAndHabits.parentalWeeklyJobsArray)
             
-            let inspectionParentName = JobsAndHabits.parentalDailyJobsArray[0].assigned
-            let paydayParentName = JobsAndHabits.parentalWeeklyJobsArray[0].assigned
-            
-            // payday parent
-            paydayParentButton.setTitle(paydayParentName, for: .normal)
+            // load existing data into button title
+            paydayParentButton.setTitle(JobsAndHabits.parentalWeeklyJobsArray[0].assigned, for: .normal)
             paydayParentButton.layer.backgroundColor = UIColor(red: 141/255, green: 198/255, blue: 63/255, alpha: 1.0).cgColor     // green
-            paydayDateTopConstraint.constant = 0        // reveal next button
-            
-            // payday date
-            paydayDateButton.setTitle(FamilyData.paydayTime, for: .normal)
-            paydayDateButton.layer.backgroundColor = UIColor(red: 141/255, green: 198/255, blue: 63/255, alpha: 1.0).cgColor     // green
-            inspectionsParentTopConstraint.constant = 0     // reveal next button
+            // ...and reveal the payday button
+            paydayDateTopConstraint.constant = 0
             paydayTimeConfirmed = true
+            // update color to green
+            paydayDateButton.layer.backgroundColor = UIColor(red: 141/255, green: 198/255, blue: 63/255, alpha: 1.0).cgColor     // green
+            // update button to show date user selected
             updatePaydayPickerWithExistingData()
+            paydayDateButton.setTitle("\(selectedDay) \(selectedHour) \(selectedAMPM)", for: .normal)
             
-            // inspection parent
-            inspectionsParentButton.setTitle(inspectionParentName, for: .normal)
+            // create default payday button
+            inspectionsParentButton.setTitle(JobsAndHabits.parentalDailyJobsArray[0].assigned, for: .normal)
             inspectionsParentButton.layer.backgroundColor = UIColor(red: 141/255, green: 198/255, blue: 63/255, alpha: 1.0).cgColor     // green
-            self.nextButton.isEnabled = true
+            
+            self.inspectionsParentTopConstraint.constant = 0     // reveal inspections button
+            nextButton.isEnabled = true
+            
         }
     }
     
