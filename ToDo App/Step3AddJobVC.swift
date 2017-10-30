@@ -119,7 +119,6 @@ class Step3AddJobVC: UIViewController, UITextFieldDelegate {
         present(alert, animated: true, completion: nil)
     }
     
-    
     // ----------------------------------------------------------
     // MARK: Dismiss keyboard if user taps outside of text fields
     // ----------------------------------------------------------

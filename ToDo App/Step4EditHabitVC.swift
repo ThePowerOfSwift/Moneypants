@@ -49,8 +49,6 @@ class Step4EditHabitVC: UIViewController, UITextFieldDelegate {
         } else {
             duplicateNameAlert()
         }
-        
-        
     }
     
     // ---------
@@ -92,9 +90,5 @@ class Step4EditHabitVC: UIViewController, UITextFieldDelegate {
             })
         }))
         present(alert, animated: true, completion: nil)
-    }
-    
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        view.endEditing(true)
     }
 }

@@ -379,7 +379,7 @@
                                     <rect key="frame" x="120" y="81" width="80" height="80"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="?" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bFh-xi-zKP">
-                                            <rect key="frame" x="23" y="-7" width="35" height="94"/>
+                                            <rect key="frame" x="23.5" y="-7" width="35" height="94"/>
                                             <fontDescription key="fontDescription" name="Arista2.0" family="Arista 2.0" pointSize="80"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
@@ -1208,7 +1208,7 @@
                                         <rect key="frame" x="0.0" y="28" width="320" height="75"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="1ZJ-tX-XEn" id="DPk-t1-aDJ">
-                                            <rect key="frame" x="0.0" y="0.0" width="287" height="74"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="287" height="75"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Dad" translatesAutoresizingMaskIntoConstraints="NO" id="cVG-mt-V8D">
@@ -1365,7 +1365,7 @@
                                         <rect key="frame" x="0.0" y="28" width="320" height="50"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="N5t-Yi-k4g" id="8ij-KO-Drg">
-                                            <rect key="frame" x="0.0" y="0.0" width="287" height="49"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="287" height="50"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6w7-nl-QWR">
@@ -1528,7 +1528,7 @@
                                         <rect key="frame" x="0.0" y="28" width="320" height="50"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Qas-Of-naH" id="UX3-Oo-aQs">
-                                            <rect key="frame" x="0.0" y="0.0" width="320" height="49"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="50"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="This is an incredibly long label so I hope it doesn't cause problems" textAlignment="natural" lineBreakMode="middleTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ojz-Uu-SSw">
@@ -1711,7 +1711,7 @@
                                         <rect key="frame" x="0.0" y="28" width="320" height="75"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="aKq-Q7-Ths" id="0Gw-oZ-IdQ">
-                                            <rect key="frame" x="0.0" y="0.0" width="320" height="74"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="75"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Nat-xc-Oty">
@@ -1766,7 +1766,7 @@
                                         <rect key="frame" x="0.0" y="103" width="320" height="75"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="I61-hF-GNi" id="vPX-nW-wBX">
-                                            <rect key="frame" x="0.0" y="0.0" width="320" height="74"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="75"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8TJ-cV-jfV">
@@ -1997,7 +1997,7 @@
                                             </userDefinedRuntimeAttribute>
                                         </userDefinedRuntimeAttributes>
                                     </imageView>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Mahonri's potential weekly income is $42." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qhh-YS-WkE">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Savannah's potential weekly income is $42." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qhh-YS-WkE">
                                         <rect key="frame" x="35" y="90" width="250" height="41"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="250" id="o0w-U5-wZP"/>
@@ -2106,7 +2106,7 @@
                                         <rect key="frame" x="0.0" y="35" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="kx5-Di-IVP" id="7uL-Og-ngv">
-                                            <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="name of expense" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="6Ap-Ej-azc">
@@ -2133,7 +2133,7 @@
                                         <rect key="frame" x="0.0" y="79" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="uB9-jc-vPG" id="w7C-VO-wbA">
-                                            <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="expense amount" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="21R-9k-GfV">
@@ -2141,6 +2141,11 @@
                                                     <nil key="textColor"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
+                                                    <userDefinedRuntimeAttributes>
+                                                        <userDefinedRuntimeAttribute type="number" keyPath="maxLength">
+                                                            <integer key="value" value="5"/>
+                                                        </userDefinedRuntimeAttribute>
+                                                    </userDefinedRuntimeAttributes>
                                                 </textField>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="$" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9P1-E7-C7J">
                                                     <rect key="frame" x="16" y="0.0" width="11" height="43"/>
@@ -2164,7 +2169,7 @@
                                         <rect key="frame" x="0.0" y="123" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="7k2-H7-O2Y" id="TTo-Xg-9un">
-                                            <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="item has due date" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0g1-OK-VGq">
@@ -2176,7 +2181,7 @@
                                                 <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Jjg-qn-XZ8">
                                                     <rect key="frame" x="255" y="6" width="51" height="31"/>
                                                     <connections>
-                                                        <action selector="repeatingExpenseSwitchTapped:" destination="BPI-jh-F85" eventType="valueChanged" id="Ba9-DM-rza"/>
+                                                        <action selector="hasDueDateSwitchTapped:" destination="BPI-jh-F85" eventType="valueChanged" id="mQI-av-QsY"/>
                                                     </connections>
                                                 </switch>
                                             </subviews>
@@ -2197,7 +2202,7 @@
                                         <rect key="frame" x="0.0" y="203" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="aDv-1n-Jmi" id="8ws-Ar-HbL">
-                                            <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="first payment due" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ghf-Ew-G70">
@@ -2229,7 +2234,7 @@
                                         <rect key="frame" x="0.0" y="247" width="320" height="216"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="4Rx-cO-apF" id="Xmd-fo-tU4">
-                                            <rect key="frame" x="0.0" y="0.0" width="320" height="215"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="216"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="date" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="TQw-AV-dwV">
@@ -2250,7 +2255,7 @@
                                         <rect key="frame" x="0.0" y="463" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="WnV-wd-ne1" id="aP9-aT-3WV">
-                                            <rect key="frame" x="0.0" y="0.0" width="287" height="43"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="287" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="repeats" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZCe-OO-cD7">
@@ -2280,7 +2285,7 @@
                                         <rect key="frame" x="0.0" y="507" width="320" height="119"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="2UT-vR-vRU" id="Cr6-Gn-lWd">
-                                            <rect key="frame" x="0.0" y="0.0" width="320" height="118"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="119"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qdz-om-m3j">
@@ -2301,7 +2306,7 @@
                                         <rect key="frame" x="0.0" y="626" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="TfA-hW-OLx" id="aDg-g4-qwp">
-                                            <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="final payment due" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cVU-wV-UuN">
@@ -2333,7 +2338,7 @@
                                         <rect key="frame" x="0.0" y="670" width="320" height="216"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="LTw-vZ-n92" id="7Ev-Iw-SSM">
-                                            <rect key="frame" x="0.0" y="0.0" width="320" height="215"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="216"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="date" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="qMc-bC-nM9">
@@ -2358,24 +2363,30 @@
                                         <rect key="frame" x="0.0" y="922" width="320" height="66"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="WSS-3q-laE" id="IJ8-xe-DBD">
-                                            <rect key="frame" x="0.0" y="0.0" width="320" height="65"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="66"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="W0V-iO-kPM">
-                                                    <rect key="frame" x="16" y="12" width="288" height="41"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="width" constant="288" id="tlT-gw-eC2"/>
-                                                    </constraints>
-                                                    <string key="text">yearly total for 
-'basketball shoes': $0.00</string>
-                                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
-                                                    <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
+                                                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="b2l-Tp-pbx">
+                                                    <rect key="frame" x="56" y="12" width="207" height="41"/>
+                                                    <subviews>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="yearly total for" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vW6-95-DRx">
+                                                            <rect key="frame" x="60" y="0.0" width="88" height="16"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                                            <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="basketball shoes = $0.00" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="W0V-iO-kPM">
+                                                            <rect key="frame" x="0.0" y="20" width="207" height="21"/>
+                                                            <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                                            <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                    </subviews>
+                                                </stackView>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstItem="W0V-iO-kPM" firstAttribute="centerY" secondItem="IJ8-xe-DBD" secondAttribute="centerY" id="dyh-vK-NBC"/>
-                                                <constraint firstItem="W0V-iO-kPM" firstAttribute="centerX" secondItem="IJ8-xe-DBD" secondAttribute="centerX" id="fhY-RG-12f"/>
+                                                <constraint firstItem="b2l-Tp-pbx" firstAttribute="centerX" secondItem="IJ8-xe-DBD" secondAttribute="centerX" id="9Xh-cu-n4h"/>
+                                                <constraint firstItem="b2l-Tp-pbx" firstAttribute="centerY" secondItem="IJ8-xe-DBD" secondAttribute="centerY" id="YwR-T0-t2j"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" red="0.49019607840000001" green="0.74509803919999995" blue="0.18823529410000001" alpha="1" colorSpace="calibratedRGB"/>
@@ -2394,14 +2405,23 @@
                                 <action selector="cancelButtonTapped:" destination="BPI-jh-F85" id="rOh-vW-ZLZ"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" title="save" id="3L3-tw-sqG"/>
+                        <barButtonItem key="rightBarButtonItem" title="save" id="3L3-tw-sqG">
+                            <connections>
+                                <action selector="saveButtonTapped:" destination="BPI-jh-F85" id="bfb-2V-bs4"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
+                    <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+                    <size key="freeformSize" width="320" height="568"/>
                     <connections>
+                        <outlet property="cancelButton" destination="kM6-VW-7Iz" id="LAO-2L-oi9"/>
                         <outlet property="expenseAmountTextField" destination="21R-9k-GfV" id="0LK-0Q-nBr"/>
                         <outlet property="expenseNameTextField" destination="6Ap-Ej-azc" id="nlN-sb-OpE"/>
+                        <outlet property="finalPaymentDatePickerView" destination="qMc-bC-nM9" id="0QU-4D-5cQ"/>
                         <outlet property="finalPaymentDueDateLabel" destination="Bpw-4S-Tke" id="JpB-iB-pki"/>
+                        <outlet property="firstPaymentDatePickerView" destination="TQw-AV-dwV" id="Xhu-Dh-L3q"/>
                         <outlet property="firstPaymentDueDateLabel" destination="EyP-iA-Yge" id="j2m-XK-DON"/>
-                        <outlet property="repeatingExpenseSwitch" destination="Jjg-qn-XZ8" id="Anq-s1-w8B"/>
+                        <outlet property="hasDueDateSwitch" destination="Jjg-qn-XZ8" id="dsJ-ue-fjR"/>
                         <outlet property="repeatsLabel" destination="FU7-Fw-nUk" id="PGN-7v-yxa"/>
                         <outlet property="repeatsPickerView" destination="qdz-om-m3j" id="hWf-rM-JB6"/>
                         <outlet property="saveButton" destination="3L3-tw-sqG" id="Lck-uC-ND8"/>
@@ -2421,7 +2441,7 @@
                         <viewControllerLayoutGuide type="bottom" id="KWz-hz-MSm"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="1qJ-E3-FWS">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="1000"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="751" text="Congratulations!" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cyE-CW-vcR">
@@ -2431,26 +2451,26 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="751" text="You're all setup and ready to go." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BbT-y0-qB0">
-                                <rect key="frame" x="16" y="91" width="288" height="21"/>
+                                <rect key="frame" x="16" y="91" width="288" height="20.5"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="ZgH-Ja-xzJ">
-                                <rect key="frame" x="16" y="120" width="288" height="1"/>
+                                <rect key="frame" x="16" y="119.5" width="288" height="1"/>
                                 <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="1" id="qYK-x0-3OB"/>
                                 </constraints>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="751" text="Be sure to visit the 'videos' page for more information on how to get the most out of The Moneypants Solution." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="D7B-8z-6Yz">
-                                <rect key="frame" x="16" y="129" width="288" height="47"/>
+                                <rect key="frame" x="16" y="128.5" width="288" height="47"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oaV-gH-Udb">
-                                <rect key="frame" x="95" y="524" width="130" height="36"/>
+                                <rect key="frame" x="95" y="956" width="130" height="36"/>
                                 <color key="backgroundColor" red="0.92549019607843142" green="0.30588235294117649" blue="0.10588235294117647" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="130" id="Tbl-By-aoi"/>
@@ -2471,10 +2491,10 @@
                                 </connections>
                             </button>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="y7c-1u-0zt">
-                                <rect key="frame" x="0.0" y="184" width="320" height="332"/>
+                                <rect key="frame" x="0.0" y="183.5" width="320" height="764.5"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="CM5 Cape 20160608" translatesAutoresizingMaskIntoConstraints="NO" id="l1J-gh-Gr0">
-                                        <rect key="frame" x="-959.5" y="66" width="2239" height="199"/>
+                                        <rect key="frame" x="-959.5" y="66" width="2239" height="632.5"/>
                                     </imageView>
                                 </subviews>
                                 <color key="backgroundColor" white="0.90228361999999995" alpha="1" colorSpace="calibratedWhite"/>
@@ -3214,7 +3234,7 @@ You can add up to 20 daily jobs and 20 weekly jobs.</string>
                                     <rect key="frame" x="120" y="44" width="80" height="80"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="?" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="v3K-mP-aXo">
-                                            <rect key="frame" x="23" y="-7" width="35" height="94"/>
+                                            <rect key="frame" x="18.5" y="-7" width="44.5" height="94"/>
                                             <fontDescription key="fontDescription" name="Arista2.0" family="Arista 2.0" pointSize="80"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
@@ -4196,7 +4216,7 @@ For each family member, select one or more daily and weekly jobs. Parents will g
                                         <rect key="frame" x="0.0" y="28" width="320" height="50"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="N27-bv-cK8" id="aMy-Gy-fsN">
-                                            <rect key="frame" x="0.0" y="0.0" width="287" height="49"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="287" height="50"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="This is an incredibly long label so it may get truncated" textAlignment="natural" lineBreakMode="middleTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.75" translatesAutoresizingMaskIntoConstraints="NO" id="n1o-4L-BXQ">
@@ -4702,7 +4722,7 @@ The first habit is worth more than all the others and should be the main habit t
                         <viewControllerLayoutGuide type="bottom" id="SYu-3A-jnH"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="LID-Ha-R3P">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="1000"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="expenses" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bqc-Ft-3L5">
@@ -4727,26 +4747,14 @@ The first habit is worth more than all the others and should be the main habit t
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2340" textAlignment="right" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iln-Eu-Eu4">
-                                <rect key="frame" x="101" y="119.5" width="45" height="21"/>
-                                <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="budget:  $" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QH3-E0-7RX">
-                                <rect key="frame" x="208" y="119.5" width="84" height="21"/>
-                                <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="0" textAlignment="right" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KiX-uB-hTZ">
-                                <rect key="frame" x="292" y="119.5" width="12" height="21"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="budget: $0" textAlignment="right" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KiX-uB-hTZ">
+                                <rect key="frame" x="213" y="119.5" width="91" height="21"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Rri-C7-E2F">
-                                <rect key="frame" x="0.0" y="148.5" width="320" height="367.5"/>
+                                <rect key="frame" x="0.0" y="148.5" width="320" height="799.5"/>
                                 <subviews>
                                     <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="RiT-er-PWy">
                                         <rect key="frame" x="0.0" y="476" width="320" height="100"/>
@@ -4760,16 +4768,11 @@ The first habit is worth more than all the others and should be the main habit t
                                                 <rect key="frame" x="0.0" y="28" width="320" height="44"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="ZAe-t5-Kg8" id="P9U-pp-paV">
-                                                    <rect key="frame" x="0.0" y="0.0" width="287" height="43"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="287" height="44"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8GX-0e-ugn">
                                                             <rect key="frame" x="64" y="11" width="42" height="21"/>
-                                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                            <nil key="highlightedColor"/>
-                                                        </label>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="1000" text="$" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="isy-jS-sP5">
-                                                            <rect key="frame" x="255" y="11" width="11" height="21"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
@@ -4780,11 +4783,8 @@ The first habit is worth more than all the others and should be the main habit t
                                                         </label>
                                                     </subviews>
                                                     <constraints>
-                                                        <constraint firstItem="isy-jS-sP5" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="8GX-0e-ugn" secondAttribute="trailing" constant="5" id="2qI-Yr-bpE"/>
-                                                        <constraint firstItem="isy-jS-sP5" firstAttribute="centerY" secondItem="P9U-pp-paV" secondAttribute="centerY" id="fQY-J0-FSb"/>
                                                         <constraint firstAttribute="trailing" secondItem="8ga-jV-XzD" secondAttribute="trailing" constant="5" id="ii2-RZ-WwI"/>
                                                         <constraint firstItem="8GX-0e-ugn" firstAttribute="centerY" secondItem="P9U-pp-paV" secondAttribute="centerY" id="k96-Tc-OXN"/>
-                                                        <constraint firstItem="8ga-jV-XzD" firstAttribute="leading" secondItem="isy-jS-sP5" secondAttribute="trailing" constant="8" id="lgo-D4-fmu"/>
                                                         <constraint firstItem="8ga-jV-XzD" firstAttribute="centerY" secondItem="P9U-pp-paV" secondAttribute="centerY" id="lse-kf-aJe"/>
                                                         <constraint firstItem="8GX-0e-ugn" firstAttribute="leading" secondItem="P9U-pp-paV" secondAttribute="leading" constant="64" id="u3G-bV-Tla"/>
                                                     </constraints>
@@ -4808,16 +4808,11 @@ The first habit is worth more than all the others and should be the main habit t
                                                 <rect key="frame" x="0.0" y="28" width="320" height="44"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="D74-SX-uVH" id="aUx-Z1-D6s">
-                                                    <rect key="frame" x="0.0" y="0.0" width="287" height="43"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="287" height="44"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="c6O-WM-xwg">
                                                             <rect key="frame" x="64" y="11" width="42" height="21"/>
-                                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                            <nil key="highlightedColor"/>
-                                                        </label>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="1000" text="$" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XnQ-nH-oHw">
-                                                            <rect key="frame" x="255" y="11" width="11" height="21"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
@@ -4828,12 +4823,9 @@ The first habit is worth more than all the others and should be the main habit t
                                                         </label>
                                                     </subviews>
                                                     <constraints>
-                                                        <constraint firstItem="XnQ-nH-oHw" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="c6O-WM-xwg" secondAttribute="trailing" constant="5" id="5Ae-fh-09X"/>
                                                         <constraint firstItem="c6O-WM-xwg" firstAttribute="centerY" secondItem="aUx-Z1-D6s" secondAttribute="centerY" id="7O8-zo-FER"/>
-                                                        <constraint firstItem="1Sf-h9-wpA" firstAttribute="leading" secondItem="XnQ-nH-oHw" secondAttribute="trailing" constant="8" id="NL6-pg-frT"/>
                                                         <constraint firstItem="c6O-WM-xwg" firstAttribute="leading" secondItem="aUx-Z1-D6s" secondAttribute="leading" constant="64" id="PY2-1r-zjJ"/>
                                                         <constraint firstItem="1Sf-h9-wpA" firstAttribute="centerY" secondItem="aUx-Z1-D6s" secondAttribute="centerY" id="UGL-qf-UGg"/>
-                                                        <constraint firstItem="XnQ-nH-oHw" firstAttribute="centerY" secondItem="aUx-Z1-D6s" secondAttribute="centerY" id="XjX-uF-ym6"/>
                                                         <constraint firstAttribute="trailing" secondItem="1Sf-h9-wpA" secondAttribute="trailing" constant="5" id="nA5-mw-Zx6"/>
                                                     </constraints>
                                                 </tableViewCellContentView>
@@ -4856,7 +4848,7 @@ The first habit is worth more than all the others and should be the main habit t
                                                 <rect key="frame" x="0.0" y="28" width="320" height="44"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="lG9-PX-Zh8" id="k7P-hT-3EU">
-                                                    <rect key="frame" x="0.0" y="0.0" width="287" height="43"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="287" height="44"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PDb-OA-a8h">
@@ -4896,7 +4888,7 @@ The first habit is worth more than all the others and should be the main habit t
                                                 <rect key="frame" x="0.0" y="28" width="320" height="44"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="ePI-Lb-4Uw" id="wmt-T2-qWf">
-                                                    <rect key="frame" x="0.0" y="0.0" width="287" height="43"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="287" height="44"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fMq-8d-NhN">
@@ -5258,7 +5250,7 @@ The first habit is worth more than all the others and should be the main habit t
                                 </constraints>
                             </scrollView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CIH-MA-j9q">
-                                <rect key="frame" x="174" y="524" width="130" height="36"/>
+                                <rect key="frame" x="174" y="956" width="130" height="36"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="36" id="EhM-FM-LiD"/>
                                     <constraint firstAttribute="width" constant="130" id="cu3-tB-Smi"/>
@@ -5282,7 +5274,6 @@ The first habit is worth more than all the others and should be the main habit t
                         <color key="backgroundColor" white="0.90000000000000002" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="NHw-Jl-3j0" firstAttribute="leading" secondItem="LID-Ha-R3P" secondAttribute="leading" constant="16" id="5dP-Rh-Fs8"/>
-                            <constraint firstItem="iln-Eu-Eu4" firstAttribute="leading" secondItem="91G-Ey-HPi" secondAttribute="trailing" id="5df-oG-XUz"/>
                             <constraint firstItem="Rri-C7-E2F" firstAttribute="top" secondItem="KiX-uB-hTZ" secondAttribute="bottom" constant="8" id="6gC-UO-lMI"/>
                             <constraint firstAttribute="trailing" secondItem="Rri-C7-E2F" secondAttribute="trailing" id="8r9-jl-rzP"/>
                             <constraint firstAttribute="trailing" secondItem="CIH-MA-j9q" secondAttribute="trailing" constant="16" id="8x7-WH-2MD"/>
@@ -5293,37 +5284,40 @@ The first habit is worth more than all the others and should be the main habit t
                             <constraint firstAttribute="trailing" secondItem="KiX-uB-hTZ" secondAttribute="trailing" constant="16" id="KnQ-Bv-qBx"/>
                             <constraint firstItem="91G-Ey-HPi" firstAttribute="top" secondItem="NHw-Jl-3j0" secondAttribute="bottom" constant="8" id="M6Q-38-o7h"/>
                             <constraint firstItem="bqc-Ft-3L5" firstAttribute="leading" secondItem="LID-Ha-R3P" secondAttribute="leading" id="NBz-LL-3Y7"/>
-                            <constraint firstItem="KiX-uB-hTZ" firstAttribute="top" secondItem="NHw-Jl-3j0" secondAttribute="bottom" constant="8" id="QTW-XN-eF0"/>
-                            <constraint firstItem="KiX-uB-hTZ" firstAttribute="leading" secondItem="QH3-E0-7RX" secondAttribute="trailing" id="Unh-5m-j7m"/>
                             <constraint firstAttribute="trailing" secondItem="NHw-Jl-3j0" secondAttribute="trailing" constant="16" id="XXt-88-YeS"/>
                             <constraint firstItem="91G-Ey-HPi" firstAttribute="leading" secondItem="LID-Ha-R3P" secondAttribute="leading" constant="16" id="bwx-TB-Z5Q"/>
                             <constraint firstItem="bqc-Ft-3L5" firstAttribute="top" secondItem="fwl-9n-XTA" secondAttribute="bottom" id="d3K-x7-cmf"/>
-                            <constraint firstItem="iln-Eu-Eu4" firstAttribute="centerY" secondItem="91G-Ey-HPi" secondAttribute="centerY" id="f9X-RF-nuD"/>
                             <constraint firstItem="NHw-Jl-3j0" firstAttribute="centerX" secondItem="LID-Ha-R3P" secondAttribute="centerX" id="fTZ-Gr-QNh"/>
                             <constraint firstItem="NHw-Jl-3j0" firstAttribute="top" secondItem="bqc-Ft-3L5" secondAttribute="bottom" constant="8" id="jIg-vk-ZHC"/>
                             <constraint firstItem="KiX-uB-hTZ" firstAttribute="top" secondItem="NHw-Jl-3j0" secondAttribute="bottom" constant="8" id="oGg-vh-BQb"/>
-                            <constraint firstItem="KiX-uB-hTZ" firstAttribute="centerY" secondItem="QH3-E0-7RX" secondAttribute="centerY" id="zSm-Yp-zHT"/>
                         </constraints>
                     </view>
+                    <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+                    <size key="freeformSize" width="320" height="1000"/>
                     <connections>
+                        <outlet property="budgetLabel" destination="KiX-uB-hTZ" id="gcn-MQ-wVt"/>
+                        <outlet property="incomeLabel" destination="91G-Ey-HPi" id="3MD-2b-YPU"/>
                         <outlet property="musicArtArrow" destination="are-tF-mPe" id="wbF-Vf-OHe"/>
                         <outlet property="musicArtEnvelope" destination="Rfu-90-8he" id="4yb-Uo-pQj"/>
+                        <outlet property="musicArtSubtotalLabel" destination="EtJ-8m-piC" id="YaE-sb-YD0"/>
                         <outlet property="musicArtTableHeight" destination="aX8-5r-jkk" id="bIM-Je-Jr3"/>
                         <outlet property="musicArtTableTop" destination="nKg-5o-2jy" id="I3e-mP-jMF"/>
                         <outlet property="musicArtTableView" destination="Tpd-oq-URN" id="p5y-Vh-bzu"/>
                         <outlet property="schoolArrow" destination="4eD-Q4-bUG" id="vEe-Bx-Yqi"/>
                         <outlet property="schoolEnvelope" destination="M6g-Yn-J1Q" id="Hqn-y4-WH5"/>
+                        <outlet property="schoolSubtotalLabel" destination="pjF-wF-ULe" id="cjh-Od-QL9"/>
                         <outlet property="schoolTableHeight" destination="CXo-gr-4vC" id="dwV-Re-3Vl"/>
                         <outlet property="schoolTableTop" destination="xSH-8R-urc" id="Tkd-rY-lXd"/>
                         <outlet property="schoolTableView" destination="Wqn-K0-8Rh" id="0wV-FI-LnT"/>
                         <outlet property="sportsArrow" destination="ETD-Io-nIL" id="ahf-1t-3CS"/>
                         <outlet property="sportsEnvelope" destination="k3I-qE-axO" id="dxg-ov-XLi"/>
-                        <outlet property="sportsSubtotal" destination="Mu9-cC-scl" id="IPn-hM-RDr"/>
+                        <outlet property="sportsSubtotalLabel" destination="Mu9-cC-scl" id="IPn-hM-RDr"/>
                         <outlet property="sportsTableHeight" destination="BXZ-7w-Qlb" id="OOG-It-TH7"/>
                         <outlet property="sportsTableTop" destination="8pP-uu-sPO" id="yfT-VV-xGD"/>
                         <outlet property="sportsTableView" destination="pWF-Kw-rOg" id="8WO-ku-ZvW"/>
                         <outlet property="summerCampArrow" destination="GPL-P7-IF7" id="LiD-9B-EFU"/>
                         <outlet property="summerCampEnvelope" destination="M3V-OA-NwJ" id="Ufw-0h-iXP"/>
+                        <outlet property="summerCampSubtotalLabel" destination="bLM-U8-rCy" id="Dya-i0-Nff"/>
                         <outlet property="summerCampTableHeight" destination="uvU-8E-K6v" id="Vul-vw-InN"/>
                         <outlet property="summerCampTableTop" destination="2ft-Qv-n08" id="MKA-W7-IZZ"/>
                         <outlet property="summerCampTableView" destination="RiT-er-PWy" id="6ET-mc-eAV"/>
@@ -5332,12 +5326,11 @@ The first habit is worth more than all the others and should be the main habit t
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0jk-do-cRI" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="12397.5" y="1097.5352112676057"/>
+            <point key="canvasLocation" x="12210" y="1097.5352112676057"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="HUT-ub-oDW">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Huf-yE-CYR" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="5VK-WS-ipe" sceneMemberID="viewController">
                     <toolbarItems/>
                     <nil key="simulatedStatusBarMetrics"/>
@@ -5350,8 +5343,9 @@ The first habit is worth more than all the others and should be the main habit t
                         <segue destination="BPI-jh-F85" kind="relationship" relationship="rootViewController" id="1oJ-T3-dpV"/>
                     </connections>
                 </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Huf-yE-CYR" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="12398" y="1875"/>
+            <point key="canvasLocation" x="12641" y="1875"/>
         </scene>
     </scenes>
     <resources>

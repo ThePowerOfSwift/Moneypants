@@ -77,7 +77,6 @@ class Step5VC: UIViewController, UITextFieldDelegate {
         if segue.identifier == "IncomeSummary" {
             let nextVC = segue.destination as! Step5IncomeSummaryVC
             nextVC.currentUser = currentUser
-            nextVC.currentUserName = currentUserName
             nextVC.yearlyOutsideIncome = calculateTotal()
             
             if noButton.isSelected == true {

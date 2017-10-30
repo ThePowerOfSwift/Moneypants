@@ -2,34 +2,41 @@ import UIKit
 
 class Step5ExpensesVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
+    @IBOutlet weak var incomeLabel: UILabel!
+    @IBOutlet weak var budgetLabel: UILabel!
+    
     @IBOutlet weak var sportsEnvelope: UIImageView!
-    @IBOutlet weak var sportsSubtotal: UILabel!
+    @IBOutlet weak var sportsSubtotalLabel: UILabel!
     @IBOutlet weak var sportsArrow: UIImageView!
     @IBOutlet weak var sportsTableTop: NSLayoutConstraint!
     @IBOutlet weak var sportsTableHeight: NSLayoutConstraint!
     @IBOutlet weak var sportsTableView: UITableView!
     
     @IBOutlet weak var musicArtEnvelope: UIImageView!
+    @IBOutlet weak var musicArtSubtotalLabel: UILabel!
     @IBOutlet weak var musicArtArrow: UIImageView!
     @IBOutlet weak var musicArtTableTop: NSLayoutConstraint!
     @IBOutlet weak var musicArtTableHeight: NSLayoutConstraint!
     @IBOutlet weak var musicArtTableView: UITableView!
     
     @IBOutlet weak var schoolEnvelope: UIImageView!
+    @IBOutlet weak var schoolSubtotalLabel: UILabel!
     @IBOutlet weak var schoolArrow: UIImageView!
     @IBOutlet weak var schoolTableTop: NSLayoutConstraint!
     @IBOutlet weak var schoolTableHeight: NSLayoutConstraint!
     @IBOutlet weak var schoolTableView: UITableView!
     
     @IBOutlet weak var summerCampEnvelope: UIImageView!
+    @IBOutlet weak var summerCampSubtotalLabel: UILabel!
     @IBOutlet weak var summerCampArrow: UIImageView!
     @IBOutlet weak var summerCampTableTop: NSLayoutConstraint!
     @IBOutlet weak var summerCampTableHeight: NSLayoutConstraint!
     @IBOutlet weak var summerCampTableView: UITableView!
     
     var currentUser: Int!               // passed from Step5VC
-    var currentUserName: String!        // passed from Step5VC
     var yearlyOutsideIncome: Int!       // passed from Step5VC
+
+    var currentUserName: String!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -43,27 +50,59 @@ class Step5ExpensesVC: UIViewController, UITableViewDelegate, UITableViewDataSou
         updateSubtotals()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+        sportsTableView.reloadData()
+        updateSubtotals()
+    }
+    
     func updateSubtotals() {
         // can probably automate this by iterating over the expensesTitles array to get each category
-        for category in Expense.expenseEnvelopeTitles {
-            let filteredArray = Expense.expensesArray.filter({ return $0.category == category })
-            var sum: Int = 0
-            for expense in filteredArray {
-                sum += expense.amount
-            }
-            if category == "sports & dance" {
-                
-            }
+//        for category in Expense.expenseEnvelopeTitles {
+//            let filteredArray = Expense.expensesArray.filter({ return $0.category == category })
+//            var sum: Int = 0
+//            for expense in filteredArray {
+//                sum += expense.amount
+//            }
+//            if category == "sports & dance" {
+//                print("sports & dance selected")
+//            }
+//        }
+        let budgetArray = Expense.expensesArray.filter({ return $0.ownerName == currentUserName })
+        var totalSum: Int = 0
+        for budgetItem in budgetArray {
+            totalSum += budgetItem.amount
         }
+        budgetLabel.text = "budget: \(totalSum)"
         
-        
-        
-        let sportsArray = Expense.expensesArray.filter({ return $0.category == "sports & dance" })
+        let sportsArray = Expense.expensesArray.filter({ return $0.ownerName == currentUserName }).filter({ return $0.category == "sports & dance" })
         var sportsSum: Int = 0
         for expense in sportsArray {
             sportsSum += expense.amount
         }
-        sportsSubtotal.text = "\(sportsSum)"
+        sportsSubtotalLabel.text = "\(sportsSum)"
+        
+        let musicArtArray = Expense.expensesArray.filter({ return $0.ownerName == currentUserName }).filter({ return $0.category == "music & art" })
+        var musicArtSum: Int = 0
+        for expense in musicArtArray {
+            musicArtSum += expense.amount
+        }
+        musicArtSubtotalLabel.text = "\(musicArtSum)"
+        
+        let schoolArray = Expense.expensesArray.filter({ return $0.ownerName == currentUserName }).filter({ return $0.category == "school" })
+        var schoolSum: Int = 0
+        for expense in schoolArray {
+            schoolSum += expense.amount
+        }
+        schoolSubtotalLabel.text = "\(schoolSum)"
+        
+        let summerCampArray = Expense.expensesArray.filter({ return $0.ownerName == currentUserName }).filter({ return $0.category == "summer camps" })
+        var summerCampSum: Int = 0
+        for expense in summerCampArray {
+            summerCampSum += expense.amount
+        }
+        summerCampSubtotalLabel.text = "\(summerCampSum)"
+        
         
         
     }
@@ -154,7 +193,8 @@ class Step5ExpensesVC: UIViewController, UITableViewDelegate, UITableViewDataSou
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if tableView == sportsTableView {
-            performSegue(withIdentifier: "EditExpense", sender: self)       // MARK: TODO - change this sender to be an array point
+            let sportsArray = Expense.expensesArray.filter({ return $0.category == "sports & dance" })
+            performSegue(withIdentifier: "EditExpense", sender: sportsArray[indexPath.row])       // MARK: TODO - change this sender to be an array point
         }
     }
     
@@ -167,7 +207,7 @@ class Step5ExpensesVC: UIViewController, UITableViewDelegate, UITableViewDataSou
             let navigationVC = segue.destination as! UINavigationController
             let nextVC = navigationVC.topViewController as! Step5ExpenseDetailVC
             nextVC.currentUser = currentUser
-            nextVC.currentUserName = currentUserName
+            nextVC.expense = sender as? Expense
         }
     }
     
@@ -281,8 +321,8 @@ class Step5ExpensesVC: UIViewController, UITableViewDelegate, UITableViewDataSou
     
     func loadDefaultExpenses() {
         // create array of default expenses
-        Expense.expensesArray = [Expense(ownerName: currentUserName, expenseName: "registration fees", category: "sports & dance", amount: 12, hasDueDate: false, firstPayment: "none", repeats: "never", finalPayment: "none", order: 0),
-                                 Expense(ownerName: currentUserName, expenseName: "tuition", category: "sports & dance", amount: 220, hasDueDate: false, firstPayment: "none", repeats: "never", finalPayment: "none", order: 1),
+        Expense.expensesArray = [Expense(ownerName: currentUserName, expenseName: "registration fees", category: "sports & dance", amount: 12, hasDueDate: true, firstPayment: "20180412", repeats: "monthly", finalPayment: "20181010", order: 0),
+                                 Expense(ownerName: currentUserName, expenseName: "tuition", category: "sports & dance", amount: 220, hasDueDate: true, firstPayment: "20171101", repeats: "weekly", finalPayment: "20171201", order: 1),
                                  Expense(ownerName: currentUserName, expenseName: "uniform", category: "sports & dance", amount: 15, hasDueDate: false, firstPayment: "none", repeats: "never", finalPayment: "none", order: 2),
                                  Expense(ownerName: currentUserName, expenseName: "team shirt", category: "sports & dance", amount: 0, hasDueDate: false, firstPayment: "none", repeats: "never", finalPayment: "none", order: 3),
                                  Expense(ownerName: currentUserName, expenseName: "equipment", category: "sports & dance", amount: 80, hasDueDate: false, firstPayment: "none", repeats: "never", finalPayment: "none", order: 4),

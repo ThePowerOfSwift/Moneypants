@@ -15,14 +15,13 @@ class Step5IncomeSummaryVC: UIViewController {
     let numberFormatter = NumberFormatter()
     
     var currentUser: Int!               // passed from Step5VC
-    var currentUserName: String!        // passed from Step5VC
     var yearlyOutsideIncome: Int!       // passed from Step5VC
+    
+    var currentUserName: String!
     var censusKidsMultiplier: Double!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        calculateCensusFormulas()
         
         currentUserName = User.usersArray[currentUser].firstName
         userImage.image = User.usersArray[currentUser].photo
@@ -31,6 +30,8 @@ class Step5IncomeSummaryVC: UIViewController {
         showDetailsButton.setTitle("show details", for: .normal)
         viewTop.constant = -(detailsView.bounds.height)
         detailsView.isHidden = true
+        
+        calculateCensusFormulas()
     }
     
     // ----------
@@ -47,7 +48,6 @@ class Step5IncomeSummaryVC: UIViewController {
         if segue.identifier == "MemberExpenses" {
             let nextVC = segue.destination as! Step5ExpensesVC
             nextVC.currentUser = currentUser
-            nextVC.currentUserName = currentUserName
         }
     }
     
@@ -56,26 +56,38 @@ class Step5IncomeSummaryVC: UIViewController {
     // ---------
     
     func calculateCensusFormulas() {
-        let numberOfKidsCount = User.usersArray.filter({ return $0.childParent == "child" }).count          // get # of kids
-        
+        let secretFormula = ((5.23788 * pow(0.972976, Double(FamilyData.yearlyIncome) / 1000) + 1.56139) / 100) as Double
+        let householdIncome = FamilyData.yearlyIncome
+        let natlAvgYearlySpendingPerKid = Double(householdIncome!) * secretFormula
+        let numberOfKids = User.usersArray.filter({ return $0.childParent == "child" }).count
         // adjust multiplier according to census data
-        if numberOfKidsCount >= 3 {
+        if numberOfKids >= 3 {
             censusKidsMultiplier = 0.76
-        } else if numberOfKidsCount == 2 {
+        } else if numberOfKids == 2 {
             censusKidsMultiplier = 1
-        } else if numberOfKidsCount <= 1 {
+        } else if numberOfKids <= 1 {
             censusKidsMultiplier = 1.27
         }
+        let adjustedNatlAvgYrlySpendingEntireFam = natlAvgYearlySpendingPerKid * censusKidsMultiplier * Double(User.usersArray.count)
+        let adjustedNatlAvgYrlySpendingPerKid = natlAvgYearlySpendingPerKid * censusKidsMultiplier
+        let numberOfDailyJobs = JobsAndHabits.finalDailyJobsArray.count
+        let numberOfAssignedDailyJobs = JobsAndHabits.finalDailyJobsArray.filter({ $0.assigned == currentUserName }).count
+        let numberOfWeeklyJobs = JobsAndHabits.finalWeeklyJobsArray.count
+        let numberOfAssignedWeeklyJobs = JobsAndHabits.finalWeeklyJobsArray.filter({ $0.assigned == currentUserName }).count
         
-        // this formula calculates the custom census multiplier for calculating individual potential earnings
-        let secretFormula = ((5.23788 * pow(0.972976, Double(FamilyData.yearlyIncome) / 1000) + 1.56139) / 100) as Double
-        let yearlyHomeIncome = Int(secretFormula * Double(FamilyData.yearlyIncome) * censusKidsMultiplier)
-        let yearlyTotal = yearlyHomeIncome + yearlyOutsideIncome
+        // need to find the yearly adjusted family income, take 20% of it for each section (in this case, daily jobs), then find the yearly amount, then multiply that by how many jobs user has
+        let homeIncomePerWeekForDailyJobs = (0.20 * adjustedNatlAvgYrlySpendingEntireFam / 52) / Double(numberOfDailyJobs) * Double(numberOfAssignedDailyJobs)
+        let homeIncomePerWeekForWeeklyJobs = (0.20 * adjustedNatlAvgYrlySpendingEntireFam / 52) / Double(numberOfWeeklyJobs) * Double(numberOfAssignedWeeklyJobs)
+        let homeIncomePerWeekForHabitsAndBonuses = (0.60 * adjustedNatlAvgYrlySpendingPerKid / 52)
+        
+        let homeIncomePerWeekTotal = Int(homeIncomePerWeekForDailyJobs + homeIncomePerWeekForWeeklyJobs + homeIncomePerWeekForHabitsAndBonuses)
+        let yearlyTotal = (homeIncomePerWeekTotal * 52) + yearlyOutsideIncome
         let weeklyTotal = Int(yearlyTotal / 52)
+        
         
         numberFormatter.numberStyle = NumberFormatter.Style.decimal
         weeklyIncomeTotalLabel.text = "\(currentUserName!)'s potential weekly income is $\(numberFormatter.string(from: NSNumber(value: weeklyTotal))!)."
-        homeIncomeLabel.text = "$\(numberFormatter.string(from: NSNumber(value: yearlyHomeIncome))!) / year"
+        homeIncomeLabel.text = "$\(numberFormatter.string(from: NSNumber(value: homeIncomePerWeekTotal * 52))!) / year"
         outsideIncomeLabel.text = "$\(numberFormatter.string(from: NSNumber(value: yearlyOutsideIncome))!) / year"
         totalIncomeLabel.text = "$\(numberFormatter.string(from: NSNumber(value: yearlyTotal))!) / year"
         summaryLabel.text = "\(currentUserName!)'s total estimated yearly income is $\(numberFormatter.string(from: NSNumber(value: yearlyTotal))!) (about $\(numberFormatter.string(from: NSNumber(value: weeklyTotal))!) per week.)"

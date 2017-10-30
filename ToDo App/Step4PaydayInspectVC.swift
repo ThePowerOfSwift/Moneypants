@@ -45,9 +45,9 @@ class Step4PaydayInspectVC: UIViewController, UIPickerViewDelegate, UIPickerView
         loadExistingAssignments()
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        scrollPageIfNeeded()
-    }
+//    override func viewDidAppear(_ animated: Bool) {
+//        scrollPageIfNeeded()
+//    }
     
     // -----------
     // Date Picker
@@ -119,17 +119,6 @@ class Step4PaydayInspectVC: UIViewController, UIPickerViewDelegate, UIPickerView
                 self.scrollPageIfNeeded()
                 // update local array
                 JobsAndHabits.parentalWeeklyJobsArray[0].assigned = parent.firstName
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
                 // send selection to Firebase
                 self.ref.child("paydayAndInspections").child("payday").updateChildValues(["name" : "payday",
                                                                                           "description" : "job description",
@@ -156,15 +145,6 @@ class Step4PaydayInspectVC: UIViewController, UIPickerViewDelegate, UIPickerView
         }
         // update local variable
         FamilyData.paydayTime = "\(selectedDay) \(selectedHour) \(selectedAMPM)"
-        
-        
-        
-        
-        
-        
-        
-        
-        
         // send selection to Firebase
         self.ref.updateChildValues(["paydayTime" : "\(selectedDay) \(selectedHour) \(selectedAMPM)"])
     }
@@ -178,18 +158,6 @@ class Step4PaydayInspectVC: UIViewController, UIPickerViewDelegate, UIPickerView
                 self.nextButton.isEnabled = true
                 // update local array
                 JobsAndHabits.parentalDailyJobsArray[0].assigned = parent.firstName
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
                 // send selection to Firebase
                 self.ref.child("paydayAndInspections").child("inspections").updateChildValues(["name" : "job inspections",
                                                                                                "description" : "job description",

@@ -203,7 +203,7 @@
 		CE951E4A1F4B7C57003B5EEF /* PaydayDetailCellC1.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaydayDetailCellC1.swift; sourceTree = "<group>"; };
 		CE951E4C1F4B7C63003B5EEF /* PaydayDetailCellC2.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaydayDetailCellC2.swift; sourceTree = "<group>"; };
 		CE99F07D1F0AB53D007E01E7 /* Step5IncomeSummaryVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Step5IncomeSummaryVC.swift; sourceTree = "<group>"; };
-		CE99F0A71F0B6B5D007E01E7 /* Step5ExpensesVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Step5ExpensesVC.swift; sourceTree = "<group>"; };
+		CE99F0A71F0B6B5D007E01E7 /* Step5ExpensesVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = Step5ExpensesVC.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		CEA133D01F9566EE00B3625E /* Step4HabitPopupVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Step4HabitPopupVC.swift; sourceTree = "<group>"; };
 		CEA133D21F95684400B3625E /* Step4HabitVideoVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Step4HabitVideoVC.swift; sourceTree = "<group>"; };
 		CEA133D51F95C74700B3625E /* Step4EditHabitVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Step4EditHabitVC.swift; sourceTree = "<group>"; };
