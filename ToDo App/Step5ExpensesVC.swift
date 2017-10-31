@@ -63,6 +63,33 @@ class Step5ExpensesVC: UIViewController, UITableViewDelegate, UITableViewDataSou
     @IBOutlet weak var personalCareTableHeight: NSLayoutConstraint!
     @IBOutlet weak var personalCareTableView: UITableView!
     
+    @IBOutlet weak var otherEnvelope: UIImageView!
+    @IBOutlet weak var otherSubtotalLabel: UILabel!
+    @IBOutlet weak var otherArrow: UIImageView!
+    @IBOutlet weak var otherTableTop: NSLayoutConstraint!
+    @IBOutlet weak var otherTableHeight: NSLayoutConstraint!
+    @IBOutlet weak var otherTableView: UITableView!
+    
+    @IBOutlet weak var funMoneyEnvelope: UIImageView!
+    @IBOutlet weak var funMoneySubtotalLabel: UILabel!
+    @IBOutlet weak var funMoneyArrow: UIImageView!
+    @IBOutlet weak var funMoneyTableTop: NSLayoutConstraint!
+    @IBOutlet weak var funMoneyTableHeight: NSLayoutConstraint!
+    @IBOutlet weak var funMoneyTableView: UITableView!
+    
+    @IBOutlet weak var donationsEnvelope: UIImageView!
+    @IBOutlet weak var donationsSubtotalLabel: UILabel!
+    @IBOutlet weak var donationsArrow: UIImageView!
+    @IBOutlet weak var donationsTableTop: NSLayoutConstraint!
+    @IBOutlet weak var donationsTableHeight: NSLayoutConstraint!
+    @IBOutlet weak var donationsTableView: UITableView!
+    
+    @IBOutlet weak var savingsEnvelope: UIImageView!
+    @IBOutlet weak var savingsSubtotalLabel: UILabel!
+    @IBOutlet weak var savingsArrow: UIImageView!
+    @IBOutlet weak var savingsTableTop: NSLayoutConstraint!
+    @IBOutlet weak var savingsTableHeight: NSLayoutConstraint!
+    @IBOutlet weak var savingsTableView: UITableView!
     
     var currentUser: Int!               // passed from Step5VC
     var userTotalIncome: Int!           // passed from Step5VC
@@ -94,22 +121,14 @@ class Step5ExpensesVC: UIViewController, UITableViewDelegate, UITableViewDataSou
         electronicsTableView.reloadData()
         transportationTableView.reloadData()
         personalCareTableView.reloadData()
+        otherTableView.reloadData()
+        funMoneyTableView.reloadData()
+        donationsTableView.reloadData()
+        savingsTableView.reloadData()
         updateSubtotals()
     }
     
     func updateSubtotals() {
-        let budgetArray = Expense.expensesArray.filter({ return $0.ownerName == currentUserName })
-        var totalSum: Int = 0
-        for budgetItem in budgetArray {
-            totalSum += budgetItem.amount
-        }
-        if totalSum == 0 {
-            budgetLabel.text = "budget: $0"
-        } else {
-            budgetLabel.text = "budget: $\(totalSum)"
-        }
-        
-        
         let sportsArray = Expense.expensesArray.filter({ return $0.ownerName == currentUserName }).filter({ return $0.category == "sports & dance" })
         var sportsSum: Int = 0
         for expense in sportsArray {
@@ -201,10 +220,72 @@ class Step5ExpensesVC: UIViewController, UITableViewDelegate, UITableViewDataSou
         }
         if personalCareSum == 0 {
             personalCareSubtotalLabel.text = "-"
+            personalCareSubtotalLabel.textColor = .lightGray
         } else {
             personalCareSubtotalLabel.text = "\(personalCareSum)"
         }
         
+        
+        let otherArray = Expense.expensesArray.filter({ $0.ownerName == currentUserName && $0.category == "other" })
+        var otherSum: Int = 0
+        for expense in otherArray {
+            otherSum += expense.amount
+        }
+        if otherSum == 0 {
+            otherSubtotalLabel.text = "-"
+            otherSubtotalLabel.textColor = .lightGray
+        } else {
+            otherSubtotalLabel.text = "\(otherSum)"
+        }
+        
+        
+        let funMoneyArray = Expense.expensesArray.filter({ $0.ownerName == currentUserName && $0.category == "fun money" })
+        var funMoneySum: Int = 0
+        for expense in funMoneyArray {
+            funMoneySum += expense.amount
+        }
+        if funMoneySum == 0 {
+            funMoneySubtotalLabel.text = "-"
+            funMoneySubtotalLabel.textColor = .lightGray
+        } else {
+            funMoneySubtotalLabel.text = "\(funMoneySum)"
+        }
+        
+        
+        let donationsArray = Expense.expensesArray.filter({ $0.ownerName == currentUserName && $0.category == "donations" })
+        var donationsSum: Int = 0
+        for expense in donationsArray {
+            donationsSum += expense.amount
+        }
+        if donationsSum == 0 {
+            donationsSubtotalLabel.text = "-"
+            donationsSubtotalLabel.textColor = .lightGray
+        } else {
+            donationsSubtotalLabel.text = "\(donationsSum)"
+        }
+        
+        
+        let savingsArray = Expense.expensesArray.filter({ $0.ownerName == currentUserName && $0.category == "savings" })
+        var savingsSum: Int = 0
+        for expense in savingsArray {
+            savingsSum += expense.amount
+        }
+        if savingsSum == 0 {
+            savingsSubtotalLabel.text = "-"
+            savingsSubtotalLabel.textColor = .lightGray
+        } else {
+            savingsSubtotalLabel.text = "\(savingsSum)"
+        }
+        
+        // ---------
+        // total sum
+        // ---------
+        
+        let budgetArray = Expense.expensesArray.filter({ return $0.ownerName == currentUserName })
+        var totalSum: Int = 0
+        for budgetItem in budgetArray {
+            totalSum += budgetItem.amount
+        }
         
         if totalSum == 0 {
             topLabel.text = "GOAL: get 'budget' to match 'income' by adding expenses to the envelopes below."
@@ -223,6 +304,7 @@ class Step5ExpensesVC: UIViewController, UITableViewDelegate, UITableViewDataSou
             budgetLabel.textColor = UIColor.red
             nextButton.isEnabled = false
         }
+        budgetLabel.text = "budget: $\(totalSum)"
     }
     
     func tableViewDelegatesAndDataSources() {
@@ -257,6 +339,22 @@ class Step5ExpensesVC: UIViewController, UITableViewDelegate, UITableViewDataSou
         personalCareTableView.delegate = self
         personalCareTableView.dataSource = self
         personalCareTableTop.constant = -(personalCareTableView.bounds.height)
+        
+        otherTableView.delegate = self
+        otherTableView.dataSource = self
+        otherTableTop.constant = -(otherTableView.bounds.height)
+        
+        funMoneyTableView.delegate = self
+        funMoneyTableView.dataSource = self
+        funMoneyTableTop.constant = -(funMoneyTableView.bounds.height)
+        
+        donationsTableView.delegate = self
+        donationsTableView.dataSource = self
+        donationsTableTop.constant = -(donationsTableView.bounds.height)
+        
+        savingsTableView.delegate = self
+        savingsTableView.dataSource = self
+        savingsTableTop.constant = -(savingsTableView.bounds.height)
     }
     
     // ----------
@@ -281,6 +379,14 @@ class Step5ExpensesVC: UIViewController, UITableViewDelegate, UITableViewDataSou
             return Expense.expensesArray.filter({ return $0.category == "transportation" }).count
         case personalCareTableView:
             return Expense.expensesArray.filter({ return $0.category == "personal care" }).count
+        case otherTableView:
+            return Expense.expensesArray.filter({ return $0.category == "other" }).count
+        case funMoneyTableView:
+            return Expense.expensesArray.filter({ return $0.category == "fun money" }).count
+        case donationsTableView:
+            return Expense.expensesArray.filter({ return $0.category == "donations" }).count
+        case savingsTableView:
+            return Expense.expensesArray.filter({ return $0.category == "savings" }).count
         default:
             return 3
         }
@@ -364,9 +470,49 @@ class Step5ExpensesVC: UIViewController, UITableViewDelegate, UITableViewDataSou
             }
             return cell
             
-        } else { // if tableView == personalCareTableView {
+        } else if tableView == personalCareTableView {
             let cell = personalCareTableView.dequeueReusableCell(withIdentifier: "expensesCell", for: indexPath) as! Step5ExpensesCell
             let array = Expense.expensesArray.filter({ return $0.category == "personal care" }).sorted(by: { $0.order < $1.order })
+            cell.expensesLabel.text = "\(array[indexPath.row].expenseName)"
+            if array[indexPath.row].amount == 0 {
+                cell.expenseValue.text = "-"
+            } else {
+                cell.expenseValue.text = "\(array[indexPath.row].amount)"
+            }
+            return cell
+        } else if tableView == otherTableView {
+            let cell = otherTableView.dequeueReusableCell(withIdentifier: "expensesCell", for: indexPath) as! Step5ExpensesCell
+            let array = Expense.expensesArray.filter({ return $0.category == "other" }).sorted(by: { $0.order < $1.order })
+            cell.expensesLabel.text = "\(array[indexPath.row].expenseName)"
+            if array[indexPath.row].amount == 0 {
+                cell.expenseValue.text = "-"
+            } else {
+                cell.expenseValue.text = "\(array[indexPath.row].amount)"
+            }
+            return cell
+        } else if tableView == funMoneyTableView {
+            let cell = funMoneyTableView.dequeueReusableCell(withIdentifier: "expensesCell", for: indexPath) as! Step5ExpensesCell
+            let array = Expense.expensesArray.filter({ return $0.category == "fun money" }).sorted(by: { $0.order < $1.order })
+            cell.expensesLabel.text = "\(array[indexPath.row].expenseName)"
+            if array[indexPath.row].amount == 0 {
+                cell.expenseValue.text = "-"
+            } else {
+                cell.expenseValue.text = "\(array[indexPath.row].amount)"
+            }
+            return cell
+        } else if tableView == donationsTableView {
+            let cell = donationsTableView.dequeueReusableCell(withIdentifier: "expensesCell", for: indexPath) as! Step5ExpensesCell
+            let array = Expense.expensesArray.filter({ return $0.category == "donations" }).sorted(by: { $0.order < $1.order })
+            cell.expensesLabel.text = "\(array[indexPath.row].expenseName)"
+            if array[indexPath.row].amount == 0 {
+                cell.expenseValue.text = "-"
+            } else {
+                cell.expenseValue.text = "\(array[indexPath.row].amount)"
+            }
+            return cell
+        } else {    // if tableView == savingsTableView {
+            let cell = savingsTableView.dequeueReusableCell(withIdentifier: "expensesCell", for: indexPath) as! Step5ExpensesCell
+            let array = Expense.expensesArray.filter({ return $0.category == "savings" }).sorted(by: { $0.order < $1.order })
             cell.expensesLabel.text = "\(array[indexPath.row].expenseName)"
             if array[indexPath.row].amount == 0 {
                 cell.expenseValue.text = "-"
@@ -403,11 +549,21 @@ class Step5ExpensesVC: UIViewController, UITableViewDelegate, UITableViewDataSou
         case personalCareTableView:
             let summerCampArray = Expense.expensesArray.filter({ $0.category == "personal care" })
             performSegue(withIdentifier: "EditExpense", sender: summerCampArray[indexPath.row])
+        case otherTableView:
+            let summerCampArray = Expense.expensesArray.filter({ $0.category == "other" })
+            performSegue(withIdentifier: "EditExpense", sender: summerCampArray[indexPath.row])
+        case funMoneyTableView:
+            let summerCampArray = Expense.expensesArray.filter({ $0.category == "fun money" })
+            performSegue(withIdentifier: "EditExpense", sender: summerCampArray[indexPath.row])
+        case donationsTableView:
+            let summerCampArray = Expense.expensesArray.filter({ $0.category == "donations" })
+            performSegue(withIdentifier: "EditExpense", sender: summerCampArray[indexPath.row])
+        case savingsTableView:
+            let summerCampArray = Expense.expensesArray.filter({ $0.category == "savings" })
+            performSegue(withIdentifier: "EditExpense", sender: summerCampArray[indexPath.row])
         default:
-            print("other tableview selected")
+            print("unknown tableview selected")
         }
-        
-        
         
 //        if tableView == sportsTableView {
 //            let sportsArray = Expense.expensesArray.filter({ return $0.category == "sports & dance" })
@@ -445,6 +601,10 @@ class Step5ExpensesVC: UIViewController, UITableViewDelegate, UITableViewDataSou
             hideTable(table: electronicsTableView, topConstraint: electronicsTableTop, arrow: electronicsArrow, envelope: electronicsEnvelope)
             hideTable(table: transportationTableView, topConstraint: transportationTableTop, arrow: transportationArrow, envelope: transportationEnvelope)
             hideTable(table: personalCareTableView, topConstraint: personalCareTableTop, arrow: personalCareArrow, envelope: personalCareEnvelope)
+            hideTable(table: otherTableView, topConstraint: otherTableTop, arrow: otherArrow, envelope: otherEnvelope)
+            hideTable(table: funMoneyTableView, topConstraint: funMoneyTableTop, arrow: funMoneyArrow, envelope: funMoneyEnvelope)
+            hideTable(table: donationsTableView, topConstraint: donationsTableTop, arrow: donationsArrow, envelope: donationsEnvelope)
+            hideTable(table: savingsTableView, topConstraint: savingsTableTop, arrow: savingsArrow, envelope: savingsEnvelope)
         } else {
             hideTable(table: sportsTableView, topConstraint: sportsTableTop, arrow: sportsArrow, envelope: sportsEnvelope)
         }
@@ -462,6 +622,10 @@ class Step5ExpensesVC: UIViewController, UITableViewDelegate, UITableViewDataSou
             hideTable(table: electronicsTableView, topConstraint: electronicsTableTop, arrow: electronicsArrow, envelope: electronicsEnvelope)
             hideTable(table: transportationTableView, topConstraint: transportationTableTop, arrow: transportationArrow, envelope: transportationEnvelope)
             hideTable(table: personalCareTableView, topConstraint: personalCareTableTop, arrow: personalCareArrow, envelope: personalCareEnvelope)
+            hideTable(table: otherTableView, topConstraint: otherTableTop, arrow: otherArrow, envelope: otherEnvelope)
+            hideTable(table: funMoneyTableView, topConstraint: funMoneyTableTop, arrow: funMoneyArrow, envelope: funMoneyEnvelope)
+            hideTable(table: donationsTableView, topConstraint: donationsTableTop, arrow: donationsArrow, envelope: donationsEnvelope)
+            hideTable(table: savingsTableView, topConstraint: savingsTableTop, arrow: savingsArrow, envelope: savingsEnvelope)
         } else {
             hideTable(table: musicArtTableView, topConstraint: musicArtTableTop, arrow: musicArtArrow, envelope: musicArtEnvelope)
         }
@@ -479,6 +643,10 @@ class Step5ExpensesVC: UIViewController, UITableViewDelegate, UITableViewDataSou
             hideTable(table: electronicsTableView, topConstraint: electronicsTableTop, arrow: electronicsArrow, envelope: electronicsEnvelope)
             hideTable(table: transportationTableView, topConstraint: transportationTableTop, arrow: transportationArrow, envelope: transportationEnvelope)
             hideTable(table: personalCareTableView, topConstraint: personalCareTableTop, arrow: personalCareArrow, envelope: personalCareEnvelope)
+            hideTable(table: otherTableView, topConstraint: otherTableTop, arrow: otherArrow, envelope: otherEnvelope)
+            hideTable(table: funMoneyTableView, topConstraint: funMoneyTableTop, arrow: funMoneyArrow, envelope: funMoneyEnvelope)
+            hideTable(table: donationsTableView, topConstraint: donationsTableTop, arrow: donationsArrow, envelope: donationsEnvelope)
+            hideTable(table: savingsTableView, topConstraint: savingsTableTop, arrow: savingsArrow, envelope: savingsEnvelope)
         } else {
             hideTable(table: schoolTableView, topConstraint: schoolTableTop, arrow: schoolArrow, envelope: schoolEnvelope)
         }
@@ -496,6 +664,10 @@ class Step5ExpensesVC: UIViewController, UITableViewDelegate, UITableViewDataSou
             hideTable(table: electronicsTableView, topConstraint: electronicsTableTop, arrow: electronicsArrow, envelope: electronicsEnvelope)
             hideTable(table: transportationTableView, topConstraint: transportationTableTop, arrow: transportationArrow, envelope: transportationEnvelope)
             hideTable(table: personalCareTableView, topConstraint: personalCareTableTop, arrow: personalCareArrow, envelope: personalCareEnvelope)
+            hideTable(table: otherTableView, topConstraint: otherTableTop, arrow: otherArrow, envelope: otherEnvelope)
+            hideTable(table: funMoneyTableView, topConstraint: funMoneyTableTop, arrow: funMoneyArrow, envelope: funMoneyEnvelope)
+            hideTable(table: donationsTableView, topConstraint: donationsTableTop, arrow: donationsArrow, envelope: donationsEnvelope)
+            hideTable(table: savingsTableView, topConstraint: savingsTableTop, arrow: savingsArrow, envelope: savingsEnvelope)
         } else {
             hideTable(table: summerCampTableView, topConstraint: summerCampTableTop, arrow: summerCampArrow, envelope: summerCampEnvelope)
         }
@@ -513,6 +685,10 @@ class Step5ExpensesVC: UIViewController, UITableViewDelegate, UITableViewDataSou
             hideTable(table: electronicsTableView, topConstraint: electronicsTableTop, arrow: electronicsArrow, envelope: electronicsEnvelope)
             hideTable(table: transportationTableView, topConstraint: transportationTableTop, arrow: transportationArrow, envelope: transportationEnvelope)
             hideTable(table: personalCareTableView, topConstraint: personalCareTableTop, arrow: personalCareArrow, envelope: personalCareEnvelope)
+            hideTable(table: otherTableView, topConstraint: otherTableTop, arrow: otherArrow, envelope: otherEnvelope)
+            hideTable(table: funMoneyTableView, topConstraint: funMoneyTableTop, arrow: funMoneyArrow, envelope: funMoneyEnvelope)
+            hideTable(table: donationsTableView, topConstraint: donationsTableTop, arrow: donationsArrow, envelope: donationsEnvelope)
+            hideTable(table: savingsTableView, topConstraint: savingsTableTop, arrow: savingsArrow, envelope: savingsEnvelope)
         } else {
             hideTable(table: clothingTableView, topConstraint: clothingTableTop, arrow: clothingArrow, envelope: clothingEnvelope)
         }
@@ -530,6 +706,10 @@ class Step5ExpensesVC: UIViewController, UITableViewDelegate, UITableViewDataSou
 //            hideTable(table: electronicsTableView, topConstraint: electronicsTableTop, arrow: electronicsArrow, envelope: electronicsEnvelope)
             hideTable(table: transportationTableView, topConstraint: transportationTableTop, arrow: transportationArrow, envelope: transportationEnvelope)
             hideTable(table: personalCareTableView, topConstraint: personalCareTableTop, arrow: personalCareArrow, envelope: personalCareEnvelope)
+            hideTable(table: otherTableView, topConstraint: otherTableTop, arrow: otherArrow, envelope: otherEnvelope)
+            hideTable(table: funMoneyTableView, topConstraint: funMoneyTableTop, arrow: funMoneyArrow, envelope: funMoneyEnvelope)
+            hideTable(table: donationsTableView, topConstraint: donationsTableTop, arrow: donationsArrow, envelope: donationsEnvelope)
+            hideTable(table: savingsTableView, topConstraint: savingsTableTop, arrow: savingsArrow, envelope: savingsEnvelope)
         } else {
             hideTable(table: electronicsTableView, topConstraint: electronicsTableTop, arrow: electronicsArrow, envelope: electronicsEnvelope)
         }
@@ -547,6 +727,10 @@ class Step5ExpensesVC: UIViewController, UITableViewDelegate, UITableViewDataSou
             hideTable(table: electronicsTableView, topConstraint: electronicsTableTop, arrow: electronicsArrow, envelope: electronicsEnvelope)
 //            hideTable(table: transportationTableView, topConstraint: transportationTableTop, arrow: transportationArrow, envelope: transportationEnvelope)
             hideTable(table: personalCareTableView, topConstraint: personalCareTableTop, arrow: personalCareArrow, envelope: personalCareEnvelope)
+            hideTable(table: otherTableView, topConstraint: otherTableTop, arrow: otherArrow, envelope: otherEnvelope)
+            hideTable(table: funMoneyTableView, topConstraint: funMoneyTableTop, arrow: funMoneyArrow, envelope: funMoneyEnvelope)
+            hideTable(table: donationsTableView, topConstraint: donationsTableTop, arrow: donationsArrow, envelope: donationsEnvelope)
+            hideTable(table: savingsTableView, topConstraint: savingsTableTop, arrow: savingsArrow, envelope: savingsEnvelope)
         } else {
             hideTable(table: transportationTableView, topConstraint: transportationTableTop, arrow: transportationArrow, envelope: transportationEnvelope)
         }
@@ -564,17 +748,98 @@ class Step5ExpensesVC: UIViewController, UITableViewDelegate, UITableViewDataSou
             hideTable(table: electronicsTableView, topConstraint: electronicsTableTop, arrow: electronicsArrow, envelope: electronicsEnvelope)
             hideTable(table: transportationTableView, topConstraint: transportationTableTop, arrow: transportationArrow, envelope: transportationEnvelope)
 //            hideTable(table: personalCareTableView, topConstraint: personalCareTableTop, arrow: personalCareArrow, envelope: personalCareEnvelope)
+            hideTable(table: otherTableView, topConstraint: otherTableTop, arrow: otherArrow, envelope: otherEnvelope)
+            hideTable(table: funMoneyTableView, topConstraint: funMoneyTableTop, arrow: funMoneyArrow, envelope: funMoneyEnvelope)
+            hideTable(table: donationsTableView, topConstraint: donationsTableTop, arrow: donationsArrow, envelope: donationsEnvelope)
+            hideTable(table: savingsTableView, topConstraint: savingsTableTop, arrow: savingsArrow, envelope: savingsEnvelope)
         } else {
             hideTable(table: personalCareTableView, topConstraint: personalCareTableTop, arrow: personalCareArrow, envelope: personalCareEnvelope)
         }
     }
     
+    @IBAction func otherButtonTapped(_ sender: UIButton) {
+        if otherTableTop.constant == -(otherTableView.bounds.height) {
+            revealTable(table: otherTableView, height: otherTableHeight, topConstraint: otherTableTop, arrow: otherArrow, envelope: otherEnvelope)
+            // ...and hide all other tables
+            hideTable(table: sportsTableView, topConstraint: sportsTableTop, arrow: sportsArrow, envelope: sportsEnvelope)
+            hideTable(table: musicArtTableView, topConstraint: musicArtTableTop, arrow: musicArtArrow, envelope: musicArtEnvelope)
+            hideTable(table: schoolTableView, topConstraint: schoolTableTop, arrow: schoolArrow, envelope: schoolEnvelope)
+            hideTable(table: summerCampTableView, topConstraint: summerCampTableTop, arrow: summerCampArrow, envelope: summerCampEnvelope)
+            hideTable(table: clothingTableView, topConstraint: clothingTableTop, arrow: clothingArrow, envelope: clothingEnvelope)
+            hideTable(table: electronicsTableView, topConstraint: electronicsTableTop, arrow: electronicsArrow, envelope: electronicsEnvelope)
+            hideTable(table: transportationTableView, topConstraint: transportationTableTop, arrow: transportationArrow, envelope: transportationEnvelope)
+            hideTable(table: personalCareTableView, topConstraint: personalCareTableTop, arrow: personalCareArrow, envelope: personalCareEnvelope)
+            //            hideTable(table: otherTableView, topConstraint: otherTableTop, arrow: otherArrow, envelope: otherEnvelope)
+            hideTable(table: funMoneyTableView, topConstraint: funMoneyTableTop, arrow: funMoneyArrow, envelope: funMoneyEnvelope)
+            hideTable(table: donationsTableView, topConstraint: donationsTableTop, arrow: donationsArrow, envelope: donationsEnvelope)
+            hideTable(table: savingsTableView, topConstraint: savingsTableTop, arrow: savingsArrow, envelope: savingsEnvelope)
+        } else {
+            hideTable(table: otherTableView, topConstraint: otherTableTop, arrow: otherArrow, envelope: otherEnvelope)
+        }
+    }
     
+    @IBAction func funMoneyButtonTapped(_ sender: UIButton) {
+        if funMoneyTableTop.constant == -(funMoneyTableView.bounds.height) {
+            revealTable(table: funMoneyTableView, height: funMoneyTableHeight, topConstraint: funMoneyTableTop, arrow: funMoneyArrow, envelope: funMoneyEnvelope)
+            // ...and hide all other tables
+            hideTable(table: sportsTableView, topConstraint: sportsTableTop, arrow: sportsArrow, envelope: sportsEnvelope)
+            hideTable(table: musicArtTableView, topConstraint: musicArtTableTop, arrow: musicArtArrow, envelope: musicArtEnvelope)
+            hideTable(table: schoolTableView, topConstraint: schoolTableTop, arrow: schoolArrow, envelope: schoolEnvelope)
+            hideTable(table: summerCampTableView, topConstraint: summerCampTableTop, arrow: summerCampArrow, envelope: summerCampEnvelope)
+            hideTable(table: clothingTableView, topConstraint: clothingTableTop, arrow: clothingArrow, envelope: clothingEnvelope)
+            hideTable(table: electronicsTableView, topConstraint: electronicsTableTop, arrow: electronicsArrow, envelope: electronicsEnvelope)
+            hideTable(table: transportationTableView, topConstraint: transportationTableTop, arrow: transportationArrow, envelope: transportationEnvelope)
+            hideTable(table: personalCareTableView, topConstraint: personalCareTableTop, arrow: personalCareArrow, envelope: personalCareEnvelope)
+            hideTable(table: otherTableView, topConstraint: otherTableTop, arrow: otherArrow, envelope: otherEnvelope)
+            //            hideTable(table: funMoneyTableView, topConstraint: funMoneyTableTop, arrow: funMoneyArrow, envelope: funMoneyEnvelope)
+            hideTable(table: donationsTableView, topConstraint: donationsTableTop, arrow: donationsArrow, envelope: donationsEnvelope)
+            hideTable(table: savingsTableView, topConstraint: savingsTableTop, arrow: savingsArrow, envelope: savingsEnvelope)
+        } else {
+            hideTable(table: funMoneyTableView, topConstraint: funMoneyTableTop, arrow: funMoneyArrow, envelope: funMoneyEnvelope)
+        }
+    }
     
+    @IBAction func donationsButtonTapped(_ sender: UIButton) {
+        if donationsTableTop.constant == -(donationsTableView.bounds.height) {
+            revealTable(table: donationsTableView, height: donationsTableHeight, topConstraint: donationsTableTop, arrow: donationsArrow, envelope: donationsEnvelope)
+            // ...and hide all other tables
+            hideTable(table: sportsTableView, topConstraint: sportsTableTop, arrow: sportsArrow, envelope: sportsEnvelope)
+            hideTable(table: musicArtTableView, topConstraint: musicArtTableTop, arrow: musicArtArrow, envelope: musicArtEnvelope)
+            hideTable(table: schoolTableView, topConstraint: schoolTableTop, arrow: schoolArrow, envelope: schoolEnvelope)
+            hideTable(table: summerCampTableView, topConstraint: summerCampTableTop, arrow: summerCampArrow, envelope: summerCampEnvelope)
+            hideTable(table: clothingTableView, topConstraint: clothingTableTop, arrow: clothingArrow, envelope: clothingEnvelope)
+            hideTable(table: electronicsTableView, topConstraint: electronicsTableTop, arrow: electronicsArrow, envelope: electronicsEnvelope)
+            hideTable(table: transportationTableView, topConstraint: transportationTableTop, arrow: transportationArrow, envelope: transportationEnvelope)
+            hideTable(table: personalCareTableView, topConstraint: personalCareTableTop, arrow: personalCareArrow, envelope: personalCareEnvelope)
+            hideTable(table: otherTableView, topConstraint: otherTableTop, arrow: otherArrow, envelope: otherEnvelope)
+            hideTable(table: funMoneyTableView, topConstraint: funMoneyTableTop, arrow: funMoneyArrow, envelope: funMoneyEnvelope)
+            //            hideTable(table: donationsTableView, topConstraint: donationsTableTop, arrow: donationsArrow, envelope: donationsEnvelope)
+            hideTable(table: savingsTableView, topConstraint: savingsTableTop, arrow: savingsArrow, envelope: savingsEnvelope)
+        } else {
+            hideTable(table: donationsTableView, topConstraint: donationsTableTop, arrow: donationsArrow, envelope: donationsEnvelope)
+        }
+    }
     
-    
-    
-    
+    @IBAction func savingsButtonTapped(_ sender: UIButton) {
+        if savingsTableTop.constant == -(savingsTableView.bounds.height) {
+            revealTable(table: savingsTableView, height: savingsTableHeight, topConstraint: savingsTableTop, arrow: savingsArrow, envelope: savingsEnvelope)
+            // ...and hide all other tables
+            hideTable(table: sportsTableView, topConstraint: sportsTableTop, arrow: sportsArrow, envelope: sportsEnvelope)
+            hideTable(table: musicArtTableView, topConstraint: musicArtTableTop, arrow: musicArtArrow, envelope: musicArtEnvelope)
+            hideTable(table: schoolTableView, topConstraint: schoolTableTop, arrow: schoolArrow, envelope: schoolEnvelope)
+            hideTable(table: summerCampTableView, topConstraint: summerCampTableTop, arrow: summerCampArrow, envelope: summerCampEnvelope)
+            hideTable(table: clothingTableView, topConstraint: clothingTableTop, arrow: clothingArrow, envelope: clothingEnvelope)
+            hideTable(table: electronicsTableView, topConstraint: electronicsTableTop, arrow: electronicsArrow, envelope: electronicsEnvelope)
+            hideTable(table: transportationTableView, topConstraint: transportationTableTop, arrow: transportationArrow, envelope: transportationEnvelope)
+            hideTable(table: personalCareTableView, topConstraint: personalCareTableTop, arrow: personalCareArrow, envelope: personalCareEnvelope)
+            hideTable(table: otherTableView, topConstraint: otherTableTop, arrow: otherArrow, envelope: otherEnvelope)
+            hideTable(table: funMoneyTableView, topConstraint: funMoneyTableTop, arrow: funMoneyArrow, envelope: funMoneyEnvelope)
+            hideTable(table: donationsTableView, topConstraint: donationsTableTop, arrow: donationsArrow, envelope: donationsEnvelope)
+            //            hideTable(table: savingsTableView, topConstraint: savingsTableTop, arrow: savingsArrow, envelope: savingsEnvelope)
+        } else {
+            hideTable(table: savingsTableView, topConstraint: savingsTableTop, arrow: savingsArrow, envelope: savingsEnvelope)
+        }
+    }
     
     // ---------
     // Functions
@@ -673,9 +938,9 @@ class Step5ExpensesVC: UIViewController, UITableViewDelegate, UITableViewDataSou
                                  Expense(ownerName: currentUserName, expenseName: "other 3", category: "other", amount: 0, hasDueDate: false, firstPayment: "none", repeats: "never", finalPayment: "none", order: 2),
                                  Expense(ownerName: currentUserName, expenseName: "other 4", category: "other", amount: 0, hasDueDate: false, firstPayment: "none", repeats: "never", finalPayment: "none", order: 3),
                                  Expense(ownerName: currentUserName, expenseName: "other 5", category: "other", amount: 0, hasDueDate: false, firstPayment: "none", repeats: "never", finalPayment: "none", order: 4),
-                                 Expense(ownerName: currentUserName, expenseName: "fun money", category: "fun money (10%)", amount: 0, hasDueDate: false, firstPayment: "none", repeats: "never", finalPayment: "none", order: 0),
-                                 Expense(ownerName: currentUserName, expenseName: "charitable donations", category: "donations (10%)", amount: 0, hasDueDate: false, firstPayment: "none", repeats: "never", finalPayment: "none", order: 0),
-                                 Expense(ownerName: currentUserName, expenseName: "savings (car)", category: "savings (10%)", amount: 0, hasDueDate: false, firstPayment: "none", repeats: "never", finalPayment: "none", order: 0)]
+                                 Expense(ownerName: currentUserName, expenseName: "fun money", category: "fun money", amount: 0, hasDueDate: false, firstPayment: "none", repeats: "never", finalPayment: "none", order: 0),
+                                 Expense(ownerName: currentUserName, expenseName: "charitable donations", category: "donations", amount: 0, hasDueDate: false, firstPayment: "none", repeats: "never", finalPayment: "none", order: 0),
+                                 Expense(ownerName: currentUserName, expenseName: "savings (car)", category: "savings", amount: 0, hasDueDate: false, firstPayment: "none", repeats: "never", finalPayment: "none", order: 0)]
     }
     
     func createDefaultExpensesOnFirebase() {
