@@ -157,7 +157,6 @@ class Step2VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
                                                                                 "gender" : user.gender,
                                                                                 "childParent" : user.childParent])
             
-            
             let storageRef = FIRStorage.storage().reference().child("users").child(firebaseUser.uid).child("members").child(user.firstName)
             let profileImg = user.photo
             let imageData = UIImageJPEGRepresentation(profileImg, 0.1)      // compress photos

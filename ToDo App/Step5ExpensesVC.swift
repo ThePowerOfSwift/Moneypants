@@ -4,6 +4,8 @@ class Step5ExpensesVC: UIViewController, UITableViewDelegate, UITableViewDataSou
     
     @IBOutlet weak var incomeLabel: UILabel!
     @IBOutlet weak var budgetLabel: UILabel!
+    @IBOutlet weak var topLabel: UILabel!
+    @IBOutlet weak var nextButton: UIButton!
     
     @IBOutlet weak var sportsEnvelope: UIImageView!
     @IBOutlet weak var sportsSubtotalLabel: UILabel!
@@ -34,12 +36,15 @@ class Step5ExpensesVC: UIViewController, UITableViewDelegate, UITableViewDataSou
     @IBOutlet weak var summerCampTableView: UITableView!
     
     var currentUser: Int!               // passed from Step5VC
-    var yearlyOutsideIncome: Int!       // passed from Step5VC
+    var userTotalIncome: Int!           // passed from Step5VC
 
     var currentUserName: String!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        incomeLabel.text = "income: $\(userTotalIncome!)"
+        nextButton.isEnabled = false
         
         tableViewDelegatesAndDataSources()
         
@@ -53,27 +58,19 @@ class Step5ExpensesVC: UIViewController, UITableViewDelegate, UITableViewDataSou
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
         sportsTableView.reloadData()
+        musicArtTableView.reloadData()
+        schoolTableView.reloadData()
+        summerCampTableView.reloadData()
         updateSubtotals()
     }
     
     func updateSubtotals() {
-        // can probably automate this by iterating over the expensesTitles array to get each category
-//        for category in Expense.expenseEnvelopeTitles {
-//            let filteredArray = Expense.expensesArray.filter({ return $0.category == category })
-//            var sum: Int = 0
-//            for expense in filteredArray {
-//                sum += expense.amount
-//            }
-//            if category == "sports & dance" {
-//                print("sports & dance selected")
-//            }
-//        }
         let budgetArray = Expense.expensesArray.filter({ return $0.ownerName == currentUserName })
         var totalSum: Int = 0
         for budgetItem in budgetArray {
             totalSum += budgetItem.amount
         }
-        budgetLabel.text = "budget: \(totalSum)"
+        budgetLabel.text = "budget: $\(totalSum)"
         
         let sportsArray = Expense.expensesArray.filter({ return $0.ownerName == currentUserName }).filter({ return $0.category == "sports & dance" })
         var sportsSum: Int = 0
@@ -103,8 +100,23 @@ class Step5ExpensesVC: UIViewController, UITableViewDelegate, UITableViewDataSou
         }
         summerCampSubtotalLabel.text = "\(summerCampSum)"
         
-        
-        
+        if totalSum == 0 {
+            topLabel.text = "GOAL: get 'budget' to match 'income' by adding expenses to the envelopes below."
+            budgetLabel.textColor = UIColor.red
+            nextButton.isEnabled = false
+        } else if totalSum == userTotalIncome {
+            topLabel.text = "Excellent! Budget matches income. Please tap 'next' to continue."
+            nextButton.isEnabled = true
+            budgetLabel.textColor = UIColor.black
+        } else if totalSum < userTotalIncome {
+            topLabel.text = "You must still add more expenses. Please add $\(userTotalIncome - totalSum) to one or more expense envelopes."
+            budgetLabel.textColor = UIColor.red
+            nextButton.isEnabled = false
+        } else {
+            topLabel.text = "You must remove some expenses. Please remove $\(totalSum - userTotalIncome) from one or more expense envelopes."
+            budgetLabel.textColor = UIColor.red
+            nextButton.isEnabled = false
+        }
     }
     
     func tableViewDelegatesAndDataSources() {
@@ -192,10 +204,32 @@ class Step5ExpensesVC: UIViewController, UITableViewDelegate, UITableViewDataSou
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if tableView == sportsTableView {
+        switch tableView {
+        case sportsTableView:
             let sportsArray = Expense.expensesArray.filter({ return $0.category == "sports & dance" })
-            performSegue(withIdentifier: "EditExpense", sender: sportsArray[indexPath.row])       // MARK: TODO - change this sender to be an array point
+            performSegue(withIdentifier: "EditExpense", sender: sportsArray[indexPath.row])
+        case musicArtTableView:
+            let musicArtArray = Expense.expensesArray.filter({ $0.category == "music & art" })
+            performSegue(withIdentifier: "EditExpense", sender: musicArtArray[indexPath.row])
+        case schoolTableView:
+            let schoolArray = Expense.expensesArray.filter({ $0.category == "school" })
+            performSegue(withIdentifier: "EditExpense", sender: schoolArray[indexPath.row])
+        case summerCampTableView:
+            let summerCampArray = Expense.expensesArray.filter({ $0.category == "summer camps" })
+            performSegue(withIdentifier: "EditExpense", sender: summerCampArray[indexPath.row])
+        default:
+            print("other tableview selected")
         }
+        
+        
+        
+//        if tableView == sportsTableView {
+//            let sportsArray = Expense.expensesArray.filter({ return $0.category == "sports & dance" })
+//            performSegue(withIdentifier: "EditExpense", sender: sportsArray[indexPath.row])
+//        } else if tableView == musicArtTableView {
+//            let musicArtArray = Expense.expensesArray.filter({ $0.category == "music & art" })
+//            performSegue(withIdentifier: "EditExpense", sender: musicArtArray[indexPath.row])
+//        }
     }
     
     // ----------

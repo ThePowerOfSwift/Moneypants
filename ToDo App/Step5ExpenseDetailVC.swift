@@ -41,7 +41,6 @@ class Step5ExpenseDetailVC: UITableViewController, UIPickerViewDelegate, UIPicke
         repeatsLabel.text = "never"
         repeatsPickerView.delegate = self
         hasDueDateSwitch.onTintColor = UIColor(red: 141/255, green: 198/255, blue: 63/255, alpha: 1.0)        // green
-        saveButton.isEnabled = false
         
         currentUserName = User.usersArray[currentUser].firstName
         navigationItem.title = currentUserName!
@@ -232,6 +231,30 @@ class Step5ExpenseDetailVC: UITableViewController, UIPickerViewDelegate, UIPicke
     }
     
     @IBAction func saveButtonTapped(_ sender: UIBarButtonItem) {
+        // if name hasn't changed, update the array
+        if expense?.expenseName == expenseNameTextField.text {
+            updateExpenseInfo()
+            dismiss(animated: true, completion: nil)
+        } else {
+            // iterate over the array (filtered for current user and category) and see if new name is found anywhere
+            let dupArray = Expense.expensesArray.filter({ $0.ownerName == currentUserName && $0.category == expense?.category && $0.expenseName == expenseNameTextField.text })
+            if dupArray.isEmpty {
+                updateExpenseInfo()
+                dismiss(animated: true, completion: nil)
+            } else {
+                duplicateNameAlert()
+            }
+            
+//            let dupArray = Expense.expensesArray.filter({ $0.ownerName == currentUserName && $0.category == expense?.category })
+//            if dupArray.contains(where: { $0.expenseName == expenseNameTextField.text }) {
+//                duplicateNameAlert()
+//            } else {
+//                updateExpenseInfo()
+//            }
+        }
+        
+        
+        
         
         
         // TODO: have due date text field update when user chooses a different date...
@@ -239,50 +262,49 @@ class Step5ExpenseDetailVC: UITableViewController, UIPickerViewDelegate, UIPicke
         // check for if due date is selected, there's a valid due date that's after today
         // check if repeat is selected, there's a final due date that's after today's date AND after the first due date
         
-        
-        if expenseNameTextField.text == "" {
-            blankNameAlert()
-        } else if Int(expenseAmountTextField.text!) == nil {
-            blankAmountAlert()
-        } else if checkForDuplicateNames() == true {
-            duplicateNameAlert()
-        } else {
-            for (index, item) in Expense.expensesArray.enumerated() {
-                if item.ownerName == currentUserName && item.expenseName == expense?.expenseName {
-                    Expense.expensesArray[index].expenseName = expenseNameTextField.text!
-                    Expense.expensesArray[index].amount = Int(expenseAmountTextField.text!)!
-                    if hasDueDateSwitch.isOn {
-                        Expense.expensesArray[index].hasDueDate = true
-                    } else {
-                        Expense.expensesArray[index].hasDueDate = false
-                    }
-                    Expense.expensesArray[index].firstPayment = firstPaymentDueDate!
-                    Expense.expensesArray[index].repeats = repeatsLabel.text!
-                    Expense.expensesArray[index].finalPayment = finalPaymentDueDate!
-                }
-            }
-            dismiss(animated: true, completion: nil)
-        }
+//        if expenseNameTextField.text == "" {
+//            blankNameAlert()
+//        } else if Int(expenseAmountTextField.text!) == nil {
+//            blankAmountAlert()
+//        } else if checkForDuplicateNames() == true {
+//            duplicateNameAlert()
+//        } else {
+//            for (index, item) in Expense.expensesArray.enumerated() {
+//                if item.ownerName == currentUserName && item.expenseName == expense?.expenseName {
+//                    Expense.expensesArray[index].expenseName = expenseNameTextField.text!
+//                    Expense.expensesArray[index].amount = Int(expenseAmountTextField.text!)!
+//                    if hasDueDateSwitch.isOn {
+//                        Expense.expensesArray[index].hasDueDate = true
+//                    } else {
+//                        Expense.expensesArray[index].hasDueDate = false
+//                    }
+//                    Expense.expensesArray[index].firstPayment = firstPaymentDueDate!
+//                    Expense.expensesArray[index].repeats = repeatsLabel.text!
+//                    Expense.expensesArray[index].finalPayment = finalPaymentDueDate!
+//                }
+//            }
+//            dismiss(animated: true, completion: nil)
+//        }
     }
     
     // ---------
     // Functions
     // ---------
     
-    func checkForDuplicateNames() -> Bool {
-        var duplicatesAmount: Int = 0
-        for expense in Expense.expensesArray.filter({ return $0.ownerName == currentUserName }) {
-            print(expense.expenseName)
-            if expense.expenseName.lowercased() == expenseNameTextField.text?.lowercased() {
-                duplicatesAmount += 1
-                print("POTENTIAL DUPLICATE #\(duplicatesAmount): ",expense.expenseName)
+    func updateExpenseInfo() {
+        for (index, item) in Expense.expensesArray.enumerated() {
+            if item.ownerName == currentUserName && item.expenseName == expense?.expenseName {
+                Expense.expensesArray[index].expenseName = expenseNameTextField.text!
+                Expense.expensesArray[index].amount = Int(expenseAmountTextField.text!)!
+                if hasDueDateSwitch.isOn {
+                    Expense.expensesArray[index].hasDueDate = true
+                } else {
+                    Expense.expensesArray[index].hasDueDate = false
+                }
+                Expense.expensesArray[index].firstPayment = firstPaymentDueDate!
+                Expense.expensesArray[index].repeats = repeatsLabel.text!
+                Expense.expensesArray[index].finalPayment = finalPaymentDueDate!
             }
-        }
-        // if there are more than one expense in the array with the same name, return true
-        if duplicatesAmount > 1 {
-            return true
-        } else {
-            return false
         }
     }
     
@@ -306,7 +328,7 @@ class Step5ExpenseDetailVC: UITableViewController, UIPickerViewDelegate, UIPicke
         let alert = UIAlertController(title: "Edit Expense", message: "You have entered in an expense with the same name as another expense. Please choose a unique name for this expense.", preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "okay", style: .default, handler: { (action) in
             alert.dismiss(animated: true, completion: {
-                self.expenseNameTextField.becomeFirstResponder()          // for some reason, this causes a spellcheck error with Xcode
+//                self.expenseNameTextField.becomeFirstResponder()          // for some reason, this causes a spellcheck error with Xcode
             })
         }))
         present(alert, animated: true, completion: nil)
