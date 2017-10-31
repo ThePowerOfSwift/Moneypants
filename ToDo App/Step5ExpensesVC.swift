@@ -35,6 +35,35 @@ class Step5ExpensesVC: UIViewController, UITableViewDelegate, UITableViewDataSou
     @IBOutlet weak var summerCampTableHeight: NSLayoutConstraint!
     @IBOutlet weak var summerCampTableView: UITableView!
     
+    @IBOutlet weak var clothingEnvelope: UIImageView!
+    @IBOutlet weak var clothingSubtotalLabel: UILabel!
+    @IBOutlet weak var clothingArrow: UIImageView!
+    @IBOutlet weak var clothingTableTop: NSLayoutConstraint!
+    @IBOutlet weak var clothingTableHeight: NSLayoutConstraint!
+    @IBOutlet weak var clothingTableView: UITableView!
+    
+    @IBOutlet weak var electronicsEnvelope: UIImageView!
+    @IBOutlet weak var electronicsSubtotalLabel: UILabel!
+    @IBOutlet weak var electronicsArrow: UIImageView!
+    @IBOutlet weak var electronicsTableTop: NSLayoutConstraint!
+    @IBOutlet weak var electronicsTableHeight: NSLayoutConstraint!
+    @IBOutlet weak var electronicsTableView: UITableView!
+    
+    @IBOutlet weak var transportationEnvelope: UIImageView!
+    @IBOutlet weak var transportationSubtotalLabel: UILabel!
+    @IBOutlet weak var transportationArrow: UIImageView!
+    @IBOutlet weak var transportationTableTop: NSLayoutConstraint!
+    @IBOutlet weak var transportationTableHeight: NSLayoutConstraint!
+    @IBOutlet weak var transportationTableView: UITableView!
+    
+    @IBOutlet weak var personalCareEnvelope: UIImageView!
+    @IBOutlet weak var personalCareSubtotalLabel: UILabel!
+    @IBOutlet weak var personalCareArrow: UIImageView!
+    @IBOutlet weak var personalCareTableTop: NSLayoutConstraint!
+    @IBOutlet weak var personalCareTableHeight: NSLayoutConstraint!
+    @IBOutlet weak var personalCareTableView: UITableView!
+    
+    
     var currentUser: Int!               // passed from Step5VC
     var userTotalIncome: Int!           // passed from Step5VC
 
@@ -61,6 +90,10 @@ class Step5ExpensesVC: UIViewController, UITableViewDelegate, UITableViewDataSou
         musicArtTableView.reloadData()
         schoolTableView.reloadData()
         summerCampTableView.reloadData()
+        clothingTableView.reloadData()
+        electronicsTableView.reloadData()
+        transportationTableView.reloadData()
+        personalCareTableView.reloadData()
         updateSubtotals()
     }
     
@@ -70,35 +103,108 @@ class Step5ExpensesVC: UIViewController, UITableViewDelegate, UITableViewDataSou
         for budgetItem in budgetArray {
             totalSum += budgetItem.amount
         }
-        budgetLabel.text = "budget: $\(totalSum)"
+        if totalSum == 0 {
+            budgetLabel.text = "-"
+        } else {
+            budgetLabel.text = "budget: $\(totalSum)"
+        }
+        
         
         let sportsArray = Expense.expensesArray.filter({ return $0.ownerName == currentUserName }).filter({ return $0.category == "sports & dance" })
         var sportsSum: Int = 0
         for expense in sportsArray {
             sportsSum += expense.amount
         }
-        sportsSubtotalLabel.text = "\(sportsSum)"
+        if sportsSum == 0 {
+            sportsSubtotalLabel.text = "-"
+        } else {
+            sportsSubtotalLabel.text = "\(sportsSum)"
+        }
+        
         
         let musicArtArray = Expense.expensesArray.filter({ return $0.ownerName == currentUserName }).filter({ return $0.category == "music & art" })
         var musicArtSum: Int = 0
         for expense in musicArtArray {
             musicArtSum += expense.amount
         }
-        musicArtSubtotalLabel.text = "\(musicArtSum)"
+        if musicArtSum == 0 {
+            musicArtSubtotalLabel.text = "-"
+        } else {
+            musicArtSubtotalLabel.text = "\(musicArtSum)"
+        }
+        
         
         let schoolArray = Expense.expensesArray.filter({ return $0.ownerName == currentUserName }).filter({ return $0.category == "school" })
         var schoolSum: Int = 0
         for expense in schoolArray {
             schoolSum += expense.amount
         }
-        schoolSubtotalLabel.text = "\(schoolSum)"
+        if schoolSum == 0 {
+            schoolSubtotalLabel.text = "-"
+        } else {
+            schoolSubtotalLabel.text = "\(schoolSum)"
+        }
+        
         
         let summerCampArray = Expense.expensesArray.filter({ return $0.ownerName == currentUserName }).filter({ return $0.category == "summer camps" })
         var summerCampSum: Int = 0
         for expense in summerCampArray {
             summerCampSum += expense.amount
         }
-        summerCampSubtotalLabel.text = "\(summerCampSum)"
+        if summerCampSum == 0 {
+            summerCampSubtotalLabel.text = "-"
+        } else {
+            summerCampSubtotalLabel.text = "\(summerCampSum)"
+        }
+        
+        
+        let clothingArray = Expense.expensesArray.filter({ $0.ownerName == currentUserName && $0.category == "clothing" })
+        var clothingSum: Int = 0
+        for expense in clothingArray {
+            clothingSum += expense.amount
+        }
+        if clothingSum == 0 {
+            clothingSubtotalLabel.text = "-"
+        } else {
+            clothingSubtotalLabel.text = "\(clothingSum)"
+        }
+        
+        
+        let electronicsArray = Expense.expensesArray.filter({ $0.ownerName == currentUserName && $0.category == "electronics" })
+        var electronicsSum: Int = 0
+        for expense in electronicsArray {
+            electronicsSum += expense.amount
+        }
+        if electronicsSum == 0 {
+            electronicsSubtotalLabel.text = "-"
+        } else {
+            electronicsSubtotalLabel.text = "\(electronicsSum)"
+        }
+        
+        
+        let transportationArray = Expense.expensesArray.filter({ $0.ownerName == currentUserName && $0.category == "transportation" })
+        var transportationSum: Int = 0
+        for expense in transportationArray {
+            transportationSum += expense.amount
+        }
+        if transportationSum == 0 {
+            transportationSubtotalLabel.text = "-"
+        } else {
+            transportationSubtotalLabel.text = "\(transportationSum)"
+        }
+        
+        
+        let personalCareArray = Expense.expensesArray.filter({ $0.ownerName == currentUserName && $0.category == "personal care" })
+        var personalCareSum: Int = 0
+        for expense in personalCareArray {
+            personalCareSum += expense.amount
+        }
+        if personalCareSum == 0 {
+            personalCareSubtotalLabel.text = "-"
+        } else {
+            personalCareSubtotalLabel.text = "\(personalCareSum)"
+        }
+        
         
         if totalSum == 0 {
             topLabel.text = "GOAL: get 'budget' to match 'income' by adding expenses to the envelopes below."
@@ -135,6 +241,22 @@ class Step5ExpensesVC: UIViewController, UITableViewDelegate, UITableViewDataSou
         summerCampTableView.delegate = self
         summerCampTableView.dataSource = self
         summerCampTableTop.constant = -(summerCampTableView.bounds.height)
+        
+        clothingTableView.delegate = self
+        clothingTableView.dataSource = self
+        clothingTableTop.constant = -(clothingTableView.bounds.height)
+        
+        electronicsTableView.delegate = self
+        electronicsTableView.dataSource = self
+        electronicsTableTop.constant = -(electronicsTableView.bounds.height)
+        
+        transportationTableView.delegate = self
+        transportationTableView.dataSource = self
+        transportationTableTop.constant = -(transportationTableView.bounds.height)
+        
+        personalCareTableView.delegate = self
+        personalCareTableView.dataSource = self
+        personalCareTableTop.constant = -(personalCareTableView.bounds.height)
     }
     
     // ----------
@@ -151,6 +273,14 @@ class Step5ExpensesVC: UIViewController, UITableViewDelegate, UITableViewDataSou
             return Expense.expensesArray.filter({ return $0.category == "school" }).count
         case summerCampTableView:
             return Expense.expensesArray.filter({ return $0.category == "summer camps" }).count
+        case clothingTableView:
+            return Expense.expensesArray.filter({ return $0.category == "clothing" }).count
+        case electronicsTableView:
+            return Expense.expensesArray.filter({ return $0.category == "electronics" }).count
+        case transportationTableView:
+            return Expense.expensesArray.filter({ return $0.category == "transportation" }).count
+        case personalCareTableView:
+            return Expense.expensesArray.filter({ return $0.category == "personal care" }).count
         default:
             return 3
         }
@@ -190,9 +320,53 @@ class Step5ExpensesVC: UIViewController, UITableViewDelegate, UITableViewDataSou
             }
             return cell
             
-        } else {
+        } else if tableView == summerCampTableView {
             let cell = summerCampTableView.dequeueReusableCell(withIdentifier: "expensesCell", for: indexPath) as! Step5ExpensesCell
             let array = Expense.expensesArray.filter({ return $0.category == "summer camps" }).sorted(by: { $0.order < $1.order })
+            cell.expensesLabel.text = "\(array[indexPath.row].expenseName)"
+            if array[indexPath.row].amount == 0 {
+                cell.expenseValue.text = "-"
+            } else {
+                cell.expenseValue.text = "\(array[indexPath.row].amount)"
+            }
+            return cell
+            
+        } else if tableView == clothingTableView {
+            let cell = clothingTableView.dequeueReusableCell(withIdentifier: "expensesCell", for: indexPath) as! Step5ExpensesCell
+            let array = Expense.expensesArray.filter({ return $0.category == "clothing" }).sorted(by: { $0.order < $1.order })
+            cell.expensesLabel.text = "\(array[indexPath.row].expenseName)"
+            if array[indexPath.row].amount == 0 {
+                cell.expenseValue.text = "-"
+            } else {
+                cell.expenseValue.text = "\(array[indexPath.row].amount)"
+            }
+            return cell
+            
+        } else if tableView == electronicsTableView {
+            let cell = electronicsTableView.dequeueReusableCell(withIdentifier: "expensesCell", for: indexPath) as! Step5ExpensesCell
+            let array = Expense.expensesArray.filter({ return $0.category == "electronics" }).sorted(by: { $0.order < $1.order })
+            cell.expensesLabel.text = "\(array[indexPath.row].expenseName)"
+            if array[indexPath.row].amount == 0 {
+                cell.expenseValue.text = "-"
+            } else {
+                cell.expenseValue.text = "\(array[indexPath.row].amount)"
+            }
+            return cell
+            
+        } else if tableView == transportationTableView {
+            let cell = transportationTableView.dequeueReusableCell(withIdentifier: "expensesCell", for: indexPath) as! Step5ExpensesCell
+            let array = Expense.expensesArray.filter({ return $0.category == "transportation" }).sorted(by: { $0.order < $1.order })
+            cell.expensesLabel.text = "\(array[indexPath.row].expenseName)"
+            if array[indexPath.row].amount == 0 {
+                cell.expenseValue.text = "-"
+            } else {
+                cell.expenseValue.text = "\(array[indexPath.row].amount)"
+            }
+            return cell
+            
+        } else { // if tableView == personalCareTableView {
+            let cell = personalCareTableView.dequeueReusableCell(withIdentifier: "expensesCell", for: indexPath) as! Step5ExpensesCell
+            let array = Expense.expensesArray.filter({ return $0.category == "personal care" }).sorted(by: { $0.order < $1.order })
             cell.expensesLabel.text = "\(array[indexPath.row].expenseName)"
             if array[indexPath.row].amount == 0 {
                 cell.expenseValue.text = "-"
@@ -216,6 +390,18 @@ class Step5ExpensesVC: UIViewController, UITableViewDelegate, UITableViewDataSou
             performSegue(withIdentifier: "EditExpense", sender: schoolArray[indexPath.row])
         case summerCampTableView:
             let summerCampArray = Expense.expensesArray.filter({ $0.category == "summer camps" })
+            performSegue(withIdentifier: "EditExpense", sender: summerCampArray[indexPath.row])
+        case clothingTableView:
+            let summerCampArray = Expense.expensesArray.filter({ $0.category == "clothing" })
+            performSegue(withIdentifier: "EditExpense", sender: summerCampArray[indexPath.row])
+        case electronicsTableView:
+            let summerCampArray = Expense.expensesArray.filter({ $0.category == "electronics" })
+            performSegue(withIdentifier: "EditExpense", sender: summerCampArray[indexPath.row])
+        case transportationTableView:
+            let summerCampArray = Expense.expensesArray.filter({ $0.category == "transportation" })
+            performSegue(withIdentifier: "EditExpense", sender: summerCampArray[indexPath.row])
+        case personalCareTableView:
+            let summerCampArray = Expense.expensesArray.filter({ $0.category == "personal care" })
             performSegue(withIdentifier: "EditExpense", sender: summerCampArray[indexPath.row])
         default:
             print("other tableview selected")
@@ -255,6 +441,10 @@ class Step5ExpensesVC: UIViewController, UITableViewDelegate, UITableViewDataSou
             hideTable(table: musicArtTableView, topConstraint: musicArtTableTop, arrow: musicArtArrow, envelope: musicArtEnvelope)
             hideTable(table: schoolTableView, topConstraint: schoolTableTop, arrow: schoolArrow, envelope: schoolEnvelope)
             hideTable(table: summerCampTableView, topConstraint: summerCampTableTop, arrow: summerCampArrow, envelope: summerCampEnvelope)
+            hideTable(table: clothingTableView, topConstraint: clothingTableTop, arrow: clothingArrow, envelope: clothingEnvelope)
+            hideTable(table: electronicsTableView, topConstraint: electronicsTableTop, arrow: electronicsArrow, envelope: electronicsEnvelope)
+            hideTable(table: transportationTableView, topConstraint: transportationTableTop, arrow: transportationArrow, envelope: transportationEnvelope)
+            hideTable(table: personalCareTableView, topConstraint: personalCareTableTop, arrow: personalCareArrow, envelope: personalCareEnvelope)
         } else {
             hideTable(table: sportsTableView, topConstraint: sportsTableTop, arrow: sportsArrow, envelope: sportsEnvelope)
         }
@@ -268,6 +458,10 @@ class Step5ExpensesVC: UIViewController, UITableViewDelegate, UITableViewDataSou
 //            hideTable(table: musicArtTableView, topConstraint: musicArtTableTop, arrow: musicArtArrow, envelope: musicArtEnvelope)
             hideTable(table: schoolTableView, topConstraint: schoolTableTop, arrow: schoolArrow, envelope: schoolEnvelope)
             hideTable(table: summerCampTableView, topConstraint: summerCampTableTop, arrow: summerCampArrow, envelope: summerCampEnvelope)
+            hideTable(table: clothingTableView, topConstraint: clothingTableTop, arrow: clothingArrow, envelope: clothingEnvelope)
+            hideTable(table: electronicsTableView, topConstraint: electronicsTableTop, arrow: electronicsArrow, envelope: electronicsEnvelope)
+            hideTable(table: transportationTableView, topConstraint: transportationTableTop, arrow: transportationArrow, envelope: transportationEnvelope)
+            hideTable(table: personalCareTableView, topConstraint: personalCareTableTop, arrow: personalCareArrow, envelope: personalCareEnvelope)
         } else {
             hideTable(table: musicArtTableView, topConstraint: musicArtTableTop, arrow: musicArtArrow, envelope: musicArtEnvelope)
         }
@@ -281,6 +475,10 @@ class Step5ExpensesVC: UIViewController, UITableViewDelegate, UITableViewDataSou
             hideTable(table: musicArtTableView, topConstraint: musicArtTableTop, arrow: musicArtArrow, envelope: musicArtEnvelope)
 //            hideTable(table: schoolTableView, topConstraint: schoolTableTop, arrow: schoolArrow, envelope: schoolEnvelope)
             hideTable(table: summerCampTableView, topConstraint: summerCampTableTop, arrow: summerCampArrow, envelope: summerCampEnvelope)
+            hideTable(table: clothingTableView, topConstraint: clothingTableTop, arrow: clothingArrow, envelope: clothingEnvelope)
+            hideTable(table: electronicsTableView, topConstraint: electronicsTableTop, arrow: electronicsArrow, envelope: electronicsEnvelope)
+            hideTable(table: transportationTableView, topConstraint: transportationTableTop, arrow: transportationArrow, envelope: transportationEnvelope)
+            hideTable(table: personalCareTableView, topConstraint: personalCareTableTop, arrow: personalCareArrow, envelope: personalCareEnvelope)
         } else {
             hideTable(table: schoolTableView, topConstraint: schoolTableTop, arrow: schoolArrow, envelope: schoolEnvelope)
         }
@@ -294,12 +492,82 @@ class Step5ExpensesVC: UIViewController, UITableViewDelegate, UITableViewDataSou
             hideTable(table: musicArtTableView, topConstraint: musicArtTableTop, arrow: musicArtArrow, envelope: musicArtEnvelope)
             hideTable(table: schoolTableView, topConstraint: schoolTableTop, arrow: schoolArrow, envelope: schoolEnvelope)
 //            hideTable(table: summerCampTableView, topConstraint: summerCampTableTop, arrow: summerCampArrow, envelope: summerCampEnvelope)
+            hideTable(table: clothingTableView, topConstraint: clothingTableTop, arrow: clothingArrow, envelope: clothingEnvelope)
+            hideTable(table: electronicsTableView, topConstraint: electronicsTableTop, arrow: electronicsArrow, envelope: electronicsEnvelope)
+            hideTable(table: transportationTableView, topConstraint: transportationTableTop, arrow: transportationArrow, envelope: transportationEnvelope)
+            hideTable(table: personalCareTableView, topConstraint: personalCareTableTop, arrow: personalCareArrow, envelope: personalCareEnvelope)
         } else {
             hideTable(table: summerCampTableView, topConstraint: summerCampTableTop, arrow: summerCampArrow, envelope: summerCampEnvelope)
         }
     }
     
+    @IBAction func clothingButtonTapped(_ sender: UIButton) {
+        if clothingTableTop.constant == -(clothingTableView.bounds.height) {
+            revealTable(table: clothingTableView, height: clothingTableHeight, topConstraint: clothingTableTop, arrow: clothingArrow, envelope: clothingEnvelope)
+            // ...and hide all other tables
+            hideTable(table: sportsTableView, topConstraint: sportsTableTop, arrow: sportsArrow, envelope: sportsEnvelope)
+            hideTable(table: musicArtTableView, topConstraint: musicArtTableTop, arrow: musicArtArrow, envelope: musicArtEnvelope)
+            hideTable(table: schoolTableView, topConstraint: schoolTableTop, arrow: schoolArrow, envelope: schoolEnvelope)
+            hideTable(table: summerCampTableView, topConstraint: summerCampTableTop, arrow: summerCampArrow, envelope: summerCampEnvelope)
+//                        hideTable(table: clothingTableView, topConstraint: clothingTableTop, arrow: clothingArrow, envelope: clothingEnvelope)
+            hideTable(table: electronicsTableView, topConstraint: electronicsTableTop, arrow: electronicsArrow, envelope: electronicsEnvelope)
+            hideTable(table: transportationTableView, topConstraint: transportationTableTop, arrow: transportationArrow, envelope: transportationEnvelope)
+            hideTable(table: personalCareTableView, topConstraint: personalCareTableTop, arrow: personalCareArrow, envelope: personalCareEnvelope)
+        } else {
+            hideTable(table: clothingTableView, topConstraint: clothingTableTop, arrow: clothingArrow, envelope: clothingEnvelope)
+        }
+    }
     
+    @IBAction func electronicsButtonTapped(_ sender: UIButton) {
+        if electronicsTableTop.constant == -(electronicsTableView.bounds.height) {
+            revealTable(table: electronicsTableView, height: electronicsTableHeight, topConstraint: electronicsTableTop, arrow: electronicsArrow, envelope: electronicsEnvelope)
+            // ...and hide all other tables
+            hideTable(table: sportsTableView, topConstraint: sportsTableTop, arrow: sportsArrow, envelope: sportsEnvelope)
+            hideTable(table: musicArtTableView, topConstraint: musicArtTableTop, arrow: musicArtArrow, envelope: musicArtEnvelope)
+            hideTable(table: schoolTableView, topConstraint: schoolTableTop, arrow: schoolArrow, envelope: schoolEnvelope)
+            hideTable(table: summerCampTableView, topConstraint: summerCampTableTop, arrow: summerCampArrow, envelope: summerCampEnvelope)
+            hideTable(table: clothingTableView, topConstraint: clothingTableTop, arrow: clothingArrow, envelope: clothingEnvelope)
+//            hideTable(table: electronicsTableView, topConstraint: electronicsTableTop, arrow: electronicsArrow, envelope: electronicsEnvelope)
+            hideTable(table: transportationTableView, topConstraint: transportationTableTop, arrow: transportationArrow, envelope: transportationEnvelope)
+            hideTable(table: personalCareTableView, topConstraint: personalCareTableTop, arrow: personalCareArrow, envelope: personalCareEnvelope)
+        } else {
+            hideTable(table: electronicsTableView, topConstraint: electronicsTableTop, arrow: electronicsArrow, envelope: electronicsEnvelope)
+        }
+    }
+    
+    @IBAction func transportationButtonTapped(_ sender: UIButton) {
+        if transportationTableTop.constant == -(transportationTableView.bounds.height) {
+            revealTable(table: transportationTableView, height: transportationTableHeight, topConstraint: transportationTableTop, arrow: transportationArrow, envelope: transportationEnvelope)
+            // ...and hide all other tables
+            hideTable(table: sportsTableView, topConstraint: sportsTableTop, arrow: sportsArrow, envelope: sportsEnvelope)
+            hideTable(table: musicArtTableView, topConstraint: musicArtTableTop, arrow: musicArtArrow, envelope: musicArtEnvelope)
+            hideTable(table: schoolTableView, topConstraint: schoolTableTop, arrow: schoolArrow, envelope: schoolEnvelope)
+            hideTable(table: summerCampTableView, topConstraint: summerCampTableTop, arrow: summerCampArrow, envelope: summerCampEnvelope)
+            hideTable(table: clothingTableView, topConstraint: clothingTableTop, arrow: clothingArrow, envelope: clothingEnvelope)
+            hideTable(table: electronicsTableView, topConstraint: electronicsTableTop, arrow: electronicsArrow, envelope: electronicsEnvelope)
+//            hideTable(table: transportationTableView, topConstraint: transportationTableTop, arrow: transportationArrow, envelope: transportationEnvelope)
+            hideTable(table: personalCareTableView, topConstraint: personalCareTableTop, arrow: personalCareArrow, envelope: personalCareEnvelope)
+        } else {
+            hideTable(table: transportationTableView, topConstraint: transportationTableTop, arrow: transportationArrow, envelope: transportationEnvelope)
+        }
+    }
+    
+    @IBAction func personalCareButtonTapped(_ sender: UIButton) {
+        if personalCareTableTop.constant == -(personalCareTableView.bounds.height) {
+            revealTable(table: personalCareTableView, height: personalCareTableHeight, topConstraint: personalCareTableTop, arrow: personalCareArrow, envelope: personalCareEnvelope)
+            // ...and hide all other tables
+            hideTable(table: sportsTableView, topConstraint: sportsTableTop, arrow: sportsArrow, envelope: sportsEnvelope)
+            hideTable(table: musicArtTableView, topConstraint: musicArtTableTop, arrow: musicArtArrow, envelope: musicArtEnvelope)
+            hideTable(table: schoolTableView, topConstraint: schoolTableTop, arrow: schoolArrow, envelope: schoolEnvelope)
+            hideTable(table: summerCampTableView, topConstraint: summerCampTableTop, arrow: summerCampArrow, envelope: summerCampEnvelope)
+            hideTable(table: clothingTableView, topConstraint: clothingTableTop, arrow: clothingArrow, envelope: clothingEnvelope)
+            hideTable(table: electronicsTableView, topConstraint: electronicsTableTop, arrow: electronicsArrow, envelope: electronicsEnvelope)
+            hideTable(table: transportationTableView, topConstraint: transportationTableTop, arrow: transportationArrow, envelope: transportationEnvelope)
+//            hideTable(table: personalCareTableView, topConstraint: personalCareTableTop, arrow: personalCareArrow, envelope: personalCareEnvelope)
+        } else {
+            hideTable(table: personalCareTableView, topConstraint: personalCareTableTop, arrow: personalCareArrow, envelope: personalCareEnvelope)
+        }
+    }
     
     
     
