@@ -104,7 +104,7 @@ class Step5ExpensesVC: UIViewController, UITableViewDelegate, UITableViewDataSou
             totalSum += budgetItem.amount
         }
         if totalSum == 0 {
-            budgetLabel.text = "-"
+            budgetLabel.text = "budget: $0"
         } else {
             budgetLabel.text = "budget: $\(totalSum)"
         }
@@ -623,21 +623,21 @@ class Step5ExpensesVC: UIViewController, UITableViewDelegate, UITableViewDataSou
     
     func loadDefaultExpenses() {
         // create array of default expenses
-        Expense.expensesArray = [Expense(ownerName: currentUserName, expenseName: "registration fees", category: "sports & dance", amount: 12, hasDueDate: true, firstPayment: "20180412", repeats: "monthly", finalPayment: "20181010", order: 0),
-                                 Expense(ownerName: currentUserName, expenseName: "tuition", category: "sports & dance", amount: 220, hasDueDate: true, firstPayment: "20171101", repeats: "weekly", finalPayment: "20171201", order: 1),
-                                 Expense(ownerName: currentUserName, expenseName: "uniform", category: "sports & dance", amount: 15, hasDueDate: false, firstPayment: "none", repeats: "never", finalPayment: "none", order: 2),
+        Expense.expensesArray = [Expense(ownerName: currentUserName, expenseName: "registration fees", category: "sports & dance", amount: 0, hasDueDate: false, firstPayment: "none", repeats: "never", finalPayment: "none", order: 0),
+                                 Expense(ownerName: currentUserName, expenseName: "tuition", category: "sports & dance", amount: 0, hasDueDate: false, firstPayment: "none", repeats: "never", finalPayment: "none", order: 1),
+                                 Expense(ownerName: currentUserName, expenseName: "uniform", category: "sports & dance", amount: 0, hasDueDate: false, firstPayment: "none", repeats: "never", finalPayment: "none", order: 2),
                                  Expense(ownerName: currentUserName, expenseName: "team shirt", category: "sports & dance", amount: 0, hasDueDate: false, firstPayment: "none", repeats: "never", finalPayment: "none", order: 3),
-                                 Expense(ownerName: currentUserName, expenseName: "equipment", category: "sports & dance", amount: 80, hasDueDate: false, firstPayment: "none", repeats: "never", finalPayment: "none", order: 4),
-                                 Expense(ownerName: currentUserName, expenseName: "competitions", category: "sports & dance", amount: 55, hasDueDate: false, firstPayment: "none", repeats: "never", finalPayment: "none", order: 5),
-                                 Expense(ownerName: currentUserName, expenseName: "performances", category: "sports & dance", amount: 13, hasDueDate: false, firstPayment: "none", repeats: "never", finalPayment: "none", order: 6),
-                                 Expense(ownerName: currentUserName, expenseName: "costumes", category: "sports & dance", amount: 15, hasDueDate: false, firstPayment: "none", repeats: "never", finalPayment: "none", order: 7),
-                                 Expense(ownerName: currentUserName, expenseName: "tuition", category: "music & art", amount: 80, hasDueDate: false, firstPayment: "none", repeats: "never", finalPayment: "none", order: 0),
-                                 Expense(ownerName: currentUserName, expenseName: "supplies & tools", category: "music & art", amount: 71, hasDueDate: false, firstPayment: "none", repeats: "never", finalPayment: "none", order: 1),
-                                 Expense(ownerName: currentUserName, expenseName: "other", category: "music & art", amount: 225, hasDueDate: false, firstPayment: "none", repeats: "never", finalPayment: "none", order: 2),
+                                 Expense(ownerName: currentUserName, expenseName: "equipment", category: "sports & dance", amount: 0, hasDueDate: false, firstPayment: "none", repeats: "never", finalPayment: "none", order: 4),
+                                 Expense(ownerName: currentUserName, expenseName: "competitions", category: "sports & dance", amount: 0, hasDueDate: false, firstPayment: "none", repeats: "never", finalPayment: "none", order: 5),
+                                 Expense(ownerName: currentUserName, expenseName: "performances", category: "sports & dance", amount: 0, hasDueDate: false, firstPayment: "none", repeats: "never", finalPayment: "none", order: 6),
+                                 Expense(ownerName: currentUserName, expenseName: "costumes", category: "sports & dance", amount: 0, hasDueDate: false, firstPayment: "none", repeats: "never", finalPayment: "none", order: 7),
+                                 Expense(ownerName: currentUserName, expenseName: "tuition", category: "music & art", amount: 0, hasDueDate: false, firstPayment: "none", repeats: "never", finalPayment: "none", order: 0),
+                                 Expense(ownerName: currentUserName, expenseName: "supplies & tools", category: "music & art", amount: 0, hasDueDate: false, firstPayment: "none", repeats: "never", finalPayment: "none", order: 1),
+                                 Expense(ownerName: currentUserName, expenseName: "other", category: "music & art", amount: 0, hasDueDate: false, firstPayment: "none", repeats: "never", finalPayment: "none", order: 2),
                                  Expense(ownerName: currentUserName, expenseName: "field trips", category: "school", amount: 0, hasDueDate: false, firstPayment: "none", repeats: "never", finalPayment: "none", order: 0),
                                  Expense(ownerName: currentUserName, expenseName: "clubs", category: "school", amount: 0, hasDueDate: false, firstPayment: "none", repeats: "never", finalPayment: "none", order: 1),
-                                 Expense(ownerName: currentUserName, expenseName: "backpack", category: "school", amount: 14, hasDueDate: false, firstPayment: "none", repeats: "never", finalPayment: "none", order: 2),
-                                 Expense(ownerName: currentUserName, expenseName: "supplies", category: "school", amount: 25, hasDueDate: false, firstPayment: "none", repeats: "never", finalPayment: "none", order: 3),
+                                 Expense(ownerName: currentUserName, expenseName: "backpack", category: "school", amount: 0, hasDueDate: false, firstPayment: "none", repeats: "never", finalPayment: "none", order: 2),
+                                 Expense(ownerName: currentUserName, expenseName: "supplies", category: "school", amount: 0, hasDueDate: false, firstPayment: "none", repeats: "never", finalPayment: "none", order: 3),
                                  Expense(ownerName: currentUserName, expenseName: "camp #1", category: "summer camps", amount: 0, hasDueDate: false, firstPayment: "none", repeats: "never", finalPayment: "none", order: 0),
                                  Expense(ownerName: currentUserName, expenseName: "camp #2", category: "summer camps", amount: 0, hasDueDate: false, firstPayment: "none", repeats: "never", finalPayment: "none", order: 1),
                                  Expense(ownerName: currentUserName, expenseName: "camp #3", category: "summer camps", amount: 0, hasDueDate: false, firstPayment: "none", repeats: "never", finalPayment: "none", order: 2),

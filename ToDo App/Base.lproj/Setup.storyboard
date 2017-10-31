@@ -2492,7 +2492,7 @@
                                 <rect key="frame" x="0.0" y="184" width="320" height="1764"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="CM5 Cape 20160608" translatesAutoresizingMaskIntoConstraints="NO" id="l1J-gh-Gr0">
-                                        <rect key="frame" x="-959.5" y="66" width="2239" height="1632"/>
+                                        <rect key="frame" x="-960" y="66" width="2240" height="1632"/>
                                     </imageView>
                                 </subviews>
                                 <color key="backgroundColor" white="0.90228361999999995" alpha="1" colorSpace="calibratedWhite"/>
@@ -4734,28 +4734,28 @@ The first habit is worth more than all the others and should be the main habit t
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="GOAL: get 'budget' to match 'income' by adding expenses to the envelopes below." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NHw-Jl-3j0">
-                                <rect key="frame" x="16" y="80" width="288" height="31.5"/>
+                                <rect key="frame" x="16" y="80" width="288" height="32"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="income:  $" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="91G-Ey-HPi">
-                                <rect key="frame" x="16" y="119.5" width="85" height="21"/>
+                                <rect key="frame" x="16" y="120" width="85" height="21"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="budget: $0" textAlignment="right" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KiX-uB-hTZ">
-                                <rect key="frame" x="213" y="119.5" width="91" height="21"/>
+                                <rect key="frame" x="213" y="120" width="91" height="21"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Rri-C7-E2F">
-                                <rect key="frame" x="0.0" y="148.5" width="320" height="1799.5"/>
+                                <rect key="frame" x="0.0" y="149" width="320" height="1799"/>
                                 <subviews>
                                     <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="v1c-wW-hk8" userLabel="Personal Care Table View">
-                                        <rect key="frame" x="0.0" y="1051.5" width="320" height="100"/>
+                                        <rect key="frame" x="0.0" y="1052" width="320" height="100"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="100" id="st1-uh-CsL"/>
@@ -4795,7 +4795,7 @@ The first habit is worth more than all the others and should be the main habit t
                                         </prototypes>
                                     </tableView>
                                     <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="UQS-oG-03Y" userLabel="Transportation Table View">
-                                        <rect key="frame" x="0.0" y="907.5" width="320" height="100"/>
+                                        <rect key="frame" x="0.0" y="908" width="320" height="100"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="100" id="P3e-HI-5Xf"/>
@@ -4835,7 +4835,7 @@ The first habit is worth more than all the others and should be the main habit t
                                         </prototypes>
                                     </tableView>
                                     <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="iVx-nG-UVZ" userLabel="Electronics Table View">
-                                        <rect key="frame" x="0.0" y="763.5" width="320" height="100"/>
+                                        <rect key="frame" x="0.0" y="764" width="320" height="100"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="100" id="Qxu-sn-ZIm"/>
@@ -4875,7 +4875,7 @@ The first habit is worth more than all the others and should be the main habit t
                                         </prototypes>
                                     </tableView>
                                     <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Gm6-uV-uKU" userLabel="Clothing Table View">
-                                        <rect key="frame" x="0.0" y="619.5" width="320" height="100"/>
+                                        <rect key="frame" x="0.0" y="620" width="320" height="100"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="100" id="4WZ-0i-vs3"/>
@@ -5453,7 +5453,7 @@ The first habit is worth more than all the others and should be the main habit t
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="o5o-e1-Z9V" userLabel="electronicsView">
-                                        <rect key="frame" x="0.0" y="719.5" width="320" height="44"/>
+                                        <rect key="frame" x="0.0" y="720" width="320" height="44"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="i2o-iV-rqc">
                                                 <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -5469,7 +5469,7 @@ The first habit is worth more than all the others and should be the main habit t
                                                 </constraints>
                                             </imageView>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="electronics" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ig0-6F-2db">
-                                                <rect key="frame" x="64" y="12" width="91.5" height="21"/>
+                                                <rect key="frame" x="64" y="12" width="92" height="21"/>
                                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 <nil key="highlightedColor"/>
@@ -5528,7 +5528,7 @@ The first habit is worth more than all the others and should be the main habit t
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Nsu-mL-mhB" userLabel="transportationView">
-                                        <rect key="frame" x="0.0" y="863.5" width="320" height="44"/>
+                                        <rect key="frame" x="0.0" y="864" width="320" height="44"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Thr-E8-SQ2">
                                                 <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -5603,7 +5603,7 @@ The first habit is worth more than all the others and should be the main habit t
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dlJ-4j-hrn" userLabel="personalCareView">
-                                        <rect key="frame" x="0.0" y="1007.5" width="320" height="44"/>
+                                        <rect key="frame" x="0.0" y="1008" width="320" height="44"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tyH-OL-5Jk">
                                                 <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>

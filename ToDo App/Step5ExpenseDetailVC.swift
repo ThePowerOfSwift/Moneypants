@@ -293,7 +293,7 @@ class Step5ExpenseDetailVC: UITableViewController, UIPickerViewDelegate, UIPicke
     
     func updateExpenseInfo() {
         for (index, item) in Expense.expensesArray.enumerated() {
-            if item.ownerName == currentUserName && item.expenseName == expense?.expenseName {
+            if item.ownerName == currentUserName && item.expenseName == expense?.expenseName && item.category == expense?.category {
                 Expense.expensesArray[index].expenseName = expenseNameTextField.text!
                 Expense.expensesArray[index].amount = Int(expenseAmountTextField.text!)!
                 if hasDueDateSwitch.isOn {
