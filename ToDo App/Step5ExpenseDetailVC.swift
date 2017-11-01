@@ -16,23 +16,39 @@ class Step5ExpenseDetailVC: UITableViewController, UIPickerViewDelegate, UIPicke
     @IBOutlet weak var finalPaymentDatePickerView: UIDatePicker!
     @IBOutlet weak var yearlyTotalLabel: UILabel!
     
+    // for savings selection
+    @IBOutlet weak var expenseAmountCell: UITableViewCell!
+    @IBOutlet weak var hasDueDateCell: UITableViewCell!
+    @IBOutlet weak var expenseAmountDollarSignLabel: UILabel!
+    @IBOutlet weak var hasDueDateLabel: UILabel!
+    var expenseAmountCellIsEnabled = true
+    var hasDueDateCellIsEnabled = true
+    var expenseAmountDollarSignLabelColor = UIColor.black
+    var hasDueDateLabelColor = UIColor.black
+    var expenseAmountTextFieldColor = UIColor.black
+    
     var firstPaymentDatePickerHeight: CGFloat = 0
     var repeatPickerHeight: CGFloat = 0
     var finalPaymentDueCellHeight: CGFloat = 0
     var finalPaymentDatePickerHeight: CGFloat = 0
-    
     var firstPaymentDueDate: String?
     var finalPaymentDueDate: String?
     
     var currentUser: Int!               // passed from Step5VC
     var expense: Expense?               // passed from Step5VC
-    
     var currentUserName: String!
     
     let repeatOptions = ["never", "weekly", "monthly"]
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        // for savings selection
+        expenseAmountCell.isUserInteractionEnabled = expenseAmountCellIsEnabled
+        hasDueDateCell.isUserInteractionEnabled = hasDueDateCellIsEnabled
+        expenseAmountDollarSignLabel.textColor = expenseAmountDollarSignLabelColor
+        expenseAmountTextField.textColor = expenseAmountTextFieldColor
+        hasDueDateLabel.textColor = hasDueDateLabelColor
         
         expenseNameTextField.delegate = self
         expenseAmountTextField.delegate = self
@@ -231,7 +247,37 @@ class Step5ExpenseDetailVC: UITableViewController, UIPickerViewDelegate, UIPicke
     }
     
     @IBAction func saveButtonTapped(_ sender: UIBarButtonItem) {
-        // if name hasn't changed, update the array
+        // TODO: have due date text field update when user chooses a different date...
+        
+        // check for if due date is selected, there's a valid due date that's after today
+        // check if repeat is selected, there's a final due date that's after today's date AND after the first due date
+        
+        // 1. make sure name is not blank
+        // 2. then make sure name is not duplicate
+        // 3. then make sure amount is not blank
+        
+        if expenseNameTextField.text == "" {
+            blankNameAlert()
+        } else if expenseAmountTextField.text == "" {
+            blankAmountAlert()
+        } else {
+            if expense?.expenseName == expenseNameTextField.text {
+                updateExpenseInfo()
+                dismiss(animated: true, completion: nil)
+            } else {
+                let dupArray = Expense.expensesArray.filter({ $0.ownerName == currentUserName && $0.category == expense?.category })
+                if dupArray.contains(where: { $0.expenseName == expenseNameTextField.text }) {
+                    duplicateNameAlert()
+                } else {
+                    updateExpenseInfo()
+                    dismiss(animated: true, completion: nil)
+                }
+            }
+        }
+        
+
+        // BEGIN WORKING CODE
+        /*
         if expense?.expenseName == expenseNameTextField.text {
             updateExpenseInfo()
             dismiss(animated: true, completion: nil)
@@ -245,46 +291,15 @@ class Step5ExpenseDetailVC: UITableViewController, UIPickerViewDelegate, UIPicke
                 duplicateNameAlert()
             }
             
-//            let dupArray = Expense.expensesArray.filter({ $0.ownerName == currentUserName && $0.category == expense?.category })
-//            if dupArray.contains(where: { $0.expenseName == expenseNameTextField.text }) {
-//                duplicateNameAlert()
-//            } else {
-//                updateExpenseInfo()
-//            }
+            //            let dupArray = Expense.expensesArray.filter({ $0.ownerName == currentUserName && $0.category == expense?.category })
+            //            if dupArray.contains(where: { $0.expenseName == expenseNameTextField.text }) {
+            //                duplicateNameAlert()
+            //            } else {
+            //                updateExpenseInfo()
+            //            }
         }
-        
-        
-        
-        
-        
-        // TODO: have due date text field update when user chooses a different date...
-        
-        // check for if due date is selected, there's a valid due date that's after today
-        // check if repeat is selected, there's a final due date that's after today's date AND after the first due date
-        
-//        if expenseNameTextField.text == "" {
-//            blankNameAlert()
-//        } else if Int(expenseAmountTextField.text!) == nil {
-//            blankAmountAlert()
-//        } else if checkForDuplicateNames() == true {
-//            duplicateNameAlert()
-//        } else {
-//            for (index, item) in Expense.expensesArray.enumerated() {
-//                if item.ownerName == currentUserName && item.expenseName == expense?.expenseName {
-//                    Expense.expensesArray[index].expenseName = expenseNameTextField.text!
-//                    Expense.expensesArray[index].amount = Int(expenseAmountTextField.text!)!
-//                    if hasDueDateSwitch.isOn {
-//                        Expense.expensesArray[index].hasDueDate = true
-//                    } else {
-//                        Expense.expensesArray[index].hasDueDate = false
-//                    }
-//                    Expense.expensesArray[index].firstPayment = firstPaymentDueDate!
-//                    Expense.expensesArray[index].repeats = repeatsLabel.text!
-//                    Expense.expensesArray[index].finalPayment = finalPaymentDueDate!
-//                }
-//            }
-//            dismiss(animated: true, completion: nil)
-//        }
+        */
+        // END WORKING CODE
     }
     
     // ---------
