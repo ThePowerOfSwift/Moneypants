@@ -10,6 +10,7 @@ struct Expense {
     var firstPayment: String
     var repeats: String
     var finalPayment: String
+//    var totalNumberOfPayments: Int
     var order: Int
     
     static var expensesArray = [Expense]()

@@ -81,57 +81,6 @@ class Step5ExpenseDetailVC: UITableViewController, UIPickerViewDelegate, UIPicke
         loadExistingExpenseData()
     }
     
-    func loadExistingExpenseData() {
-        if let existingExpense = expense {
-            expenseNameTextField.text = existingExpense.expenseName
-            expenseAmountTextField.text = "\(existingExpense.amount)"
-            hasDueDateSwitch.isOn = existingExpense.hasDueDate
-            
-            // update First Payment Due Date Picker with correct date (if there is one, otherwise make the date today's date)
-            firstPaymentDueDate = "\(existingExpense.firstPayment)"
-            let dateFromString = formatterForFirebase.date(from: firstPaymentDueDate!)
-            firstPaymentDatePickerView.date = dateFromString ?? Date()
-            
-            // show first payment as text in first payment text field (if there is one, otherwise make the date today)
-            firstPaymentDueDateLabel.text = formatterForLabel.string(from: dateFromString ?? Date())
-            
-            repeatsLabel.text = existingExpense.repeats
-            if existingExpense.repeats != "never" {
-                // show final payment due row if the repeat button is set to anything other than "never"
-                totalNumberOfPaymentsHeight = 44
-                finalPaymentDueCellHeight = 44
-            }
-            
-            // update repeat picker with selected frequency (if there is one, otherwise select 'never' at index 0)
-            for (index, repeatInterval) in repeatOptions.enumerated() {
-                if existingExpense.repeats.contains(repeatInterval) {
-                    repeatsPickerView.selectRow(index, inComponent: 0, animated: true)
-                } else {
-                    repeatsPickerView.selectRow(0, inComponent: 0, animated: true)
-                }
-            }
-            
-            // update Final Payment Due Date Picker with correct date (if there is one, otherwise make the date today's date)
-            finalPaymentDueDate = "\(existingExpense.finalPayment)"
-            let dateFromString2 = formatterForFirebase.date(from: finalPaymentDueDate!)
-            finalPaymentDatePickerView.date = dateFromString2 ?? Date()
-            
-            // show final payment as text in final payment text field (if there is one, otherwise make the date today)
-            finalPaymentDueDateLabel.text = formatterForLabel.string(from: dateFromString2 ?? Date())
-            
-            // calculate total at bottom
-            if existingExpense.repeats == "monthly" {
-                let numberOfMonths = dateFromString2?.months(from: dateFromString!)
-                yearlyTotalLabel.text = "\(existingExpense.expenseName) = $\(existingExpense.amount * numberOfMonths!)"
-            } else if existingExpense.repeats == "weekly" {
-                let numberOfWeeks = dateFromString2?.weeks(from: dateFromString!)
-                yearlyTotalLabel.text = "\(existingExpense.expenseName) = $\(existingExpense.amount * numberOfWeeks!)"
-            } else {
-                yearlyTotalLabel.text = "\(existingExpense.expenseName) = $\(existingExpense.amount)"
-            }
-        }
-    }
-    
     // ------------
     // Date Pickers
     // ------------
@@ -139,6 +88,8 @@ class Step5ExpenseDetailVC: UITableViewController, UIPickerViewDelegate, UIPicke
     @IBAction func firstPaymentDueDateChanged(_ sender: UIDatePicker) {
         firstPaymentDueDateLabel.text = formatterForLabel.string(from: sender.date)
         firstPaymentDueDate = formatterForFirebase.string(from: sender.date)
+        
+        updateTotals()
     }
     
     @IBAction func finalPaymentDueDateChanged(_ sender: UIDatePicker) {
@@ -146,21 +97,6 @@ class Step5ExpenseDetailVC: UITableViewController, UIPickerViewDelegate, UIPicke
         finalPaymentDueDate = formatterForFirebase.string(from: sender.date)
         
         updateTotals()
-    }
-
-    func updateTotals() {
-        let dateFromString2 = formatterForFirebase.date(from: finalPaymentDueDate!)
-        
-        
-//        if existingExpense.repeats == "monthly" {
-//            let numberOfMonths = dateFromString2?.months(from: dateFromString!)
-//            yearlyTotalLabel.text = "\(existingExpense.expenseName) = $\(existingExpense.amount * numberOfMonths!)"
-//        } else if existingExpense.repeats == "weekly" {
-//            let numberOfWeeks = dateFromString2?.weeks(from: dateFromString!)
-//            yearlyTotalLabel.text = "\(existingExpense.expenseName) = $\(existingExpense.amount * numberOfWeeks!)"
-//        } else {
-//            yearlyTotalLabel.text = "\(existingExpense.expenseName) = $\(existingExpense.amount)"
-//        }
     }
     
     // -------------
@@ -375,6 +311,78 @@ class Step5ExpenseDetailVC: UITableViewController, UIPickerViewDelegate, UIPicke
     // Functions
     // ---------
     
+    func loadExistingExpenseData() {
+        if let existingExpense = expense {
+            expenseNameTextField.text = existingExpense.expenseName
+            expenseAmountTextField.text = "\(existingExpense.amount)"
+            hasDueDateSwitch.isOn = existingExpense.hasDueDate
+            
+            // update First Payment Due Date Picker with correct date (if there is one, otherwise make the date today's date)
+            firstPaymentDueDate = "\(existingExpense.firstPayment)"
+            let dateFromString = formatterForFirebase.date(from: firstPaymentDueDate!)
+            firstPaymentDatePickerView.date = dateFromString ?? Date()
+            
+            // show first payment as text in first payment text field (if there is one, otherwise make the date today)
+            firstPaymentDueDateLabel.text = formatterForLabel.string(from: dateFromString ?? Date())
+            
+            repeatsLabel.text = existingExpense.repeats
+            if existingExpense.repeats != "never" {
+                // show final payment due row if the repeat button is set to anything other than "never"
+                totalNumberOfPaymentsHeight = 44
+                finalPaymentDueCellHeight = 44
+            }
+            
+            // update repeat picker with selected frequency (if there is one, otherwise select 'never' at index 0)
+            for (index, repeatInterval) in repeatOptions.enumerated() {
+                if existingExpense.repeats.contains(repeatInterval) {
+                    repeatsPickerView.selectRow(index, inComponent: 0, animated: true)
+                } else {
+                    repeatsPickerView.selectRow(0, inComponent: 0, animated: true)
+                }
+            }
+            
+            // update Final Payment Due Date Picker with correct date (if there is one, otherwise make the date today's date)
+            finalPaymentDueDate = "\(existingExpense.finalPayment)"
+            let dateFromString2 = formatterForFirebase.date(from: finalPaymentDueDate!)
+            finalPaymentDatePickerView.date = dateFromString2 ?? Date()
+            
+            // show final payment as text in final payment text field (if there is one, otherwise make the date today)
+            finalPaymentDueDateLabel.text = formatterForLabel.string(from: dateFromString2 ?? Date())
+            
+            // calculate total at bottom
+//            if existingExpense.repeats == "monthly" {
+//                let numberOfMonths = dateFromString2?.months(from: dateFromString!)
+//                yearlyTotalLabel.text = "\(existingExpense.expenseName) = $\(existingExpense.amount * numberOfMonths!)"
+//            } else if existingExpense.repeats == "weekly" {
+//                let numberOfWeeks = dateFromString2?.weeks(from: dateFromString!)
+//                yearlyTotalLabel.text = "\(existingExpense.expenseName) = $\(existingExpense.amount * numberOfWeeks!)"
+//            } else {
+//                yearlyTotalLabel.text = "\(existingExpense.expenseName) = $\(existingExpense.amount)"
+//            }
+            updateTotals()
+        }
+    }
+    
+    func updateTotals() {
+        let firstPayment = formatterForFirebase.date(from: firstPaymentDueDate!)
+        let finalPayment = formatterForFirebase.date(from: finalPaymentDueDate!)
+        if repeatsLabel.text == "weekly" {
+            let numberOfWeeks = finalPayment?.weeks(from: firstPayment!)
+            if expenseNameTextField.text != "" && Int(expenseAmountTextField.text!) != nil {
+                totalNumberOfPaymentsLabel.text = "\(numberOfWeeks!)"
+                yearlyTotalLabel.text = "\(expenseNameTextField.text!) = $\(Int(expenseAmountTextField.text!)! * numberOfWeeks!)"
+            }
+        } else if repeatsLabel.text == "monthly" {
+            let numberOfMonths = finalPayment?.months(from: firstPayment!)
+            if expenseNameTextField.text != "" && Int(expenseAmountTextField.text!) != nil {
+                totalNumberOfPaymentsLabel.text = "\(numberOfMonths!)"
+                yearlyTotalLabel.text = "\(expenseNameTextField.text!) = $\(Int(expenseAmountTextField.text!)! * numberOfMonths!)"
+            }
+        } else {
+            yearlyTotalLabel.text = "\(expenseNameTextField.text!)"
+        }
+    }
+    
     func updateExpenseInfo() {
         for (index, item) in Expense.expensesArray.enumerated() {
             if item.ownerName == currentUserName && item.expenseName == expense?.expenseName && item.category == expense?.category {
@@ -438,10 +446,6 @@ class Step5ExpenseDetailVC: UITableViewController, UIPickerViewDelegate, UIPicke
         tableView.endUpdates()
     }
 
-    func textFieldDidBeginEditing(_ textField: UITextField) {
-        saveButton.isEnabled = false
-    }
-    
     // only allow entry of numbers, nothing else
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         if textField == expenseAmountTextField {
@@ -451,9 +455,9 @@ class Step5ExpenseDetailVC: UITableViewController, UIPickerViewDelegate, UIPicke
         }
         return true
     }
-
+    
     func textFieldDidEndEditing(_ textField: UITextField) {
-        saveButton.isEnabled = true
+        updateTotals()
     }
 }
 
