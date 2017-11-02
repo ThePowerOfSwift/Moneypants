@@ -2584,7 +2584,7 @@
         <!--Outside Income-->
         <scene sceneID="YHp-0v-PnI">
             <objects>
-                <viewController title="Outside Income" id="bHO-6V-EZe" customClass="Step5VC" customModule="ToDo_App" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="Step5VC" title="Outside Income" id="bHO-6V-EZe" customClass="Step5VC" customModule="ToDo_App" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="dwG-9e-JbF"/>
                         <viewControllerLayoutGuide type="bottom" id="H8e-75-e8f"/>
@@ -3060,7 +3060,7 @@
                                             <constraint firstItem="mjU-w1-JFM" firstAttribute="centerY" secondItem="SKb-QG-Eze" secondAttribute="centerY" id="xfT-w6-sSQ"/>
                                         </constraints>
                                     </view>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="income" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DIG-Jh-ton">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="yearly income" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DIG-Jh-ton">
                                         <rect key="frame" x="0.0" y="0.0" width="320" height="28"/>
                                         <color key="backgroundColor" white="0.59999999999999998" alpha="1" colorSpace="calibratedWhite"/>
                                         <constraints>
@@ -4766,7 +4766,7 @@ The first habit is worth more than all the others and should be the main habit t
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="expenses" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bqc-Ft-3L5">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="yearly expenses" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bqc-Ft-3L5">
                                 <rect key="frame" x="0.0" y="44" width="320" height="28"/>
                                 <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
@@ -6285,7 +6285,7 @@ The first habit is worth more than all the others and should be the main habit t
                                 </userDefinedRuntimeAttributes>
                                 <connections>
                                     <action selector="nextButtonTapped:" destination="bHO-6V-EZe" eventType="touchUpInside" id="Aq4-wK-tqL"/>
-                                    <segue destination="0DX-sm-2Nt" kind="show" id="jv4-sw-Rby"/>
+                                    <action selector="nextButtonTapped:" destination="flT-Ij-2PX" eventType="touchUpInside" id="Dhn-cb-GLg"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -6389,6 +6389,7 @@ The first habit is worth more than all the others and should be the main habit t
                         <outlet property="transportationTableView" destination="UQS-oG-03Y" id="Ptm-G6-0jX"/>
                         <segue destination="5VK-WS-ipe" kind="show" identifier="EditExpense" id="ng7-97-kHb"/>
                         <segue destination="5VK-WS-ipe" kind="show" identifier="ShowSavings" id="Ry7-bO-N4h"/>
+                        <segue destination="0DX-sm-2Nt" kind="show" identifier="Congrats" id="q3l-GR-yat"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0jk-do-cRI" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -6451,8 +6452,8 @@ The first habit is worth more than all the others and should be the main habit t
     <inferredMetricsTieBreakers>
         <segue reference="H1i-oa-z71"/>
         <segue reference="eRv-Zp-KnO"/>
+        <segue reference="Ry7-bO-N4h"/>
         <segue reference="AC3-hQ-ggE"/>
         <segue reference="bPF-L7-Z42"/>
-        <segue reference="Ry7-bO-N4h"/>
     </inferredMetricsTieBreakers>
 </document>

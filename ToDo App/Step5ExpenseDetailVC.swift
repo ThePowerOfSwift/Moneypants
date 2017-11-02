@@ -69,7 +69,7 @@ class Step5ExpenseDetailVC: UITableViewController, UIPickerViewDelegate, UIPicke
         repeatsPickerView.delegate = self
         hasDueDateSwitch.onTintColor = UIColor(red: 141/255, green: 198/255, blue: 63/255, alpha: 1.0)        // green
         
-        firstPaymentDatePickerView.minimumDate = Date()
+//        firstPaymentDatePickerView.minimumDate = Date()
         
         currentUserName = User.usersArray[currentUser].firstName
         navigationItem.title = currentUserName!
@@ -394,15 +394,18 @@ class Step5ExpenseDetailVC: UITableViewController, UIPickerViewDelegate, UIPicke
                     if repeatsLabel.text != "never" {
                         Expense.expensesArray[index].repeats = repeatsLabel.text!
                         Expense.expensesArray[index].finalPayment = finalPaymentDueDate!
+                        Expense.expensesArray[index].totalNumberOfPayments = Int(totalNumberOfPaymentsLabel.text!)!
                     } else {
                         Expense.expensesArray[index].repeats = "never"
                         Expense.expensesArray[index].finalPayment = "none"
+                        Expense.expensesArray[index].totalNumberOfPayments = 1
                     }
                 } else {
                     Expense.expensesArray[index].hasDueDate = false
                     Expense.expensesArray[index].firstPayment = "none"
                     Expense.expensesArray[index].repeats = "never"
                     Expense.expensesArray[index].finalPayment = "none"
+                    Expense.expensesArray[index].totalNumberOfPayments = 1
                 }
             }
         }
