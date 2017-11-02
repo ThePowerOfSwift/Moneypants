@@ -379,7 +379,7 @@
                                     <rect key="frame" x="120" y="81" width="80" height="80"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="?" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bFh-xi-zKP">
-                                            <rect key="frame" x="23.5" y="-7" width="35" height="94"/>
+                                            <rect key="frame" x="22.5" y="-7" width="35" height="94"/>
                                             <fontDescription key="fontDescription" name="Arista2.0" family="Arista 2.0" pointSize="80"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
@@ -2096,7 +2096,7 @@
             <objects>
                 <tableViewController id="BPI-jh-F85" customClass="Step5ExpenseDetailVC" customModule="ToDo_App" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="18" sectionFooterHeight="18" id="927-pj-Vhd">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="1000"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="1100"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                         <sections>
@@ -2242,6 +2242,9 @@
                                                     <date key="date" timeIntervalSinceReferenceDate="530636538.03815001">
                                                         <!--2017-10-25 15:02:18 +0000-->
                                                     </date>
+                                                    <connections>
+                                                        <action selector="firstPaymentDueDateChanged:" destination="BPI-jh-F85" eventType="valueChanged" id="14b-k8-YMO"/>
+                                                    </connections>
                                                 </datePicker>
                                             </subviews>
                                             <constraints>
@@ -2346,6 +2349,9 @@
                                                     <date key="date" timeIntervalSinceReferenceDate="530636538.03815001">
                                                         <!--2017-10-25 15:02:18 +0000-->
                                                     </date>
+                                                    <connections>
+                                                        <action selector="finalPaymentDueDateChanged:" destination="BPI-jh-F85" eventType="valueChanged" id="fwL-OJ-1Oy"/>
+                                                    </connections>
                                                 </datePicker>
                                             </subviews>
                                             <constraints>
@@ -2355,12 +2361,42 @@
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="NuZ-1G-Ojy">
+                                        <rect key="frame" x="0.0" y="886" width="320" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="NuZ-1G-Ojy" id="FFo-er-gh1">
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="total number of payments" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xCt-vM-lPn">
+                                                    <rect key="frame" x="16" y="0.0" width="196.5" height="43"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="4" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lcI-f6-TkI">
+                                                    <rect key="frame" x="293" y="0.0" width="11" height="44"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="bottom" secondItem="lcI-f6-TkI" secondAttribute="bottom" id="7sR-cr-pPH"/>
+                                                <constraint firstAttribute="bottom" secondItem="xCt-vM-lPn" secondAttribute="bottom" id="BjL-xz-nei"/>
+                                                <constraint firstItem="lcI-f6-TkI" firstAttribute="top" secondItem="FFo-er-gh1" secondAttribute="top" id="DRG-Xb-1Pk"/>
+                                                <constraint firstAttribute="trailing" secondItem="lcI-f6-TkI" secondAttribute="trailing" constant="16" id="IWK-cG-f2W"/>
+                                                <constraint firstItem="xCt-vM-lPn" firstAttribute="leading" secondItem="FFo-er-gh1" secondAttribute="leading" constant="16" id="MiN-l1-t3k"/>
+                                                <constraint firstItem="xCt-vM-lPn" firstAttribute="top" secondItem="FFo-er-gh1" secondAttribute="top" id="zch-uY-MAC"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
                                 </cells>
                             </tableViewSection>
                             <tableViewSection id="15Y-CK-oC3">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="66" id="WSS-3q-laE">
-                                        <rect key="frame" x="0.0" y="922" width="320" height="66"/>
+                                        <rect key="frame" x="0.0" y="966" width="320" height="66"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="WSS-3q-laE" id="IJ8-xe-DBD">
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="65"/>
@@ -2412,7 +2448,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
-                    <size key="freeformSize" width="320" height="1000"/>
+                    <size key="freeformSize" width="320" height="1100"/>
                     <connections>
                         <outlet property="cancelButton" destination="kM6-VW-7Iz" id="LAO-2L-oi9"/>
                         <outlet property="expenseAmountCell" destination="uB9-jc-vPG" id="Kxx-Vx-pJB"/>
@@ -2429,12 +2465,13 @@
                         <outlet property="repeatsLabel" destination="FU7-Fw-nUk" id="PGN-7v-yxa"/>
                         <outlet property="repeatsPickerView" destination="qdz-om-m3j" id="hWf-rM-JB6"/>
                         <outlet property="saveButton" destination="3L3-tw-sqG" id="Lck-uC-ND8"/>
+                        <outlet property="totalNumberOfPaymentsLabel" destination="lcI-f6-TkI" id="XvE-Ou-HT0"/>
                         <outlet property="yearlyTotalLabel" destination="W0V-iO-kPM" id="Fqp-iN-9E0"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qzq-d4-zBq" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="12443" y="2654"/>
+            <point key="canvasLocation" x="12442.5" y="2653.5211267605632"/>
         </scene>
         <!--complete-->
         <scene sceneID="e33-8p-Bop">
@@ -3238,7 +3275,7 @@ You can add up to 20 daily jobs and 20 weekly jobs.</string>
                                     <rect key="frame" x="120" y="44" width="80" height="80"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="?" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="v3K-mP-aXo">
-                                            <rect key="frame" x="23.5" y="-7" width="35" height="94"/>
+                                            <rect key="frame" x="22.5" y="-7" width="35" height="94"/>
                                             <fontDescription key="fontDescription" name="Arista2.0" family="Arista 2.0" pointSize="80"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
@@ -5869,7 +5906,7 @@ The first habit is worth more than all the others and should be the main habit t
                                                 </constraints>
                                             </imageView>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="other" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wMv-LP-vuj">
-                                                <rect key="frame" x="64" y="12" width="44.5" height="21"/>
+                                                <rect key="frame" x="64" y="12" width="45" height="21"/>
                                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 <nil key="highlightedColor"/>
@@ -5944,13 +5981,13 @@ The first habit is worth more than all the others and should be the main habit t
                                                 </constraints>
                                             </imageView>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="249" verticalHuggingPriority="251" horizontalCompressionResistancePriority="749" text="fun money (10%)" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="5fS-nR-X5r">
-                                                <rect key="frame" x="64" y="12" width="129.5" height="21"/>
+                                                <rect key="frame" x="64" y="12" width="129" height="21"/>
                                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="$" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TDM-ZA-EbA">
-                                                <rect key="frame" x="198.5" y="12" width="11.5" height="21"/>
+                                                <rect key="frame" x="198" y="12" width="12" height="21"/>
                                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 <nil key="highlightedColor"/>
@@ -6019,13 +6056,13 @@ The first habit is worth more than all the others and should be the main habit t
                                                 </constraints>
                                             </imageView>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="249" verticalHuggingPriority="251" horizontalCompressionResistancePriority="749" text="donations (10%)" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="qqS-qF-FsI">
-                                                <rect key="frame" x="64" y="12" width="129.5" height="21"/>
+                                                <rect key="frame" x="64" y="12" width="129" height="21"/>
                                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="$" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="65b-Mz-9L2">
-                                                <rect key="frame" x="198.5" y="12" width="11.5" height="21"/>
+                                                <rect key="frame" x="198" y="12" width="12" height="21"/>
                                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 <nil key="highlightedColor"/>
@@ -6100,7 +6137,7 @@ The first habit is worth more than all the others and should be the main habit t
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="$" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="174-7F-tAK">
-                                                <rect key="frame" x="198.5" y="12" width="11.5" height="21"/>
+                                                <rect key="frame" x="198" y="12" width="12" height="21"/>
                                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 <nil key="highlightedColor"/>

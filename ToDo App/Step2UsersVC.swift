@@ -101,7 +101,6 @@ class Step2UsersVC: UIViewController, UIImagePickerControllerDelegate, UINavigat
         updateSaveButtonState()         // Enable Save button only if all fields are filled out
     }
     
-    
     // --------------------
     // MARK: Choose Picture
     // --------------------
