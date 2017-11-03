@@ -13,7 +13,7 @@ struct Expense {
     var totalNumberOfPayments: Int
     var order: Int
     
-    static var expensesArray = [Expense]()
+    static var budgetsArray = [Expense]()
     
     static let expenseEnvelopeTitles = ["sports & dance",
                                         "music & art",
@@ -32,7 +32,12 @@ struct Expense {
         let firebaseUser = FIRAuth.auth()?.currentUser
         let ref = FIRDatabase.database().reference().child("users").child((firebaseUser?.uid)!)
         ref.child("budgets").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
-            if snapshot.exists() {
+            if !snapshot.exists() {
+                print("no budgets yet")
+                completion()
+            } else {
+                let usersWithBudgets = Int(snapshot.childrenCount)
+                var downloadedUsersWithBudgets = 0
                 for user in User.usersArray {
                     ref.child("budgets").child(user.firstName).observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
                         let budgetCount = Int(snapshot.childrenCount)
@@ -41,6 +46,7 @@ struct Expense {
                             print(user.firstName,"has no budget")
                             return
                         } else {
+                            downloadedUsersWithBudgets += 1
                             for item in snapshot.children {
                                 if let snap = item as? FIRDataSnapshot {
                                     if let value = snap.value as? [String : Any] {
@@ -57,20 +63,17 @@ struct Expense {
                                         
                                         let userBudget = Expense(ownerName: ownerName, expenseName: expenseName, category: category, amount: amount, hasDueDate: hasDueDate, firstPayment: firstPayment, repeats: repeats, finalPayment: finalPayment, totalNumberOfPayments: totalNumberOfPayments, order: order)
                                         
-                                        expensesArray.append(userBudget)
-                                        
-                                        if expensesArray.count == budgetCount {
-                                            completion()
-                                        }
+                                        budgetsArray.append(userBudget)
                                     }
                                 }
+                            }
+                            // wait until all users with budgets have been downloaded
+                            if downloadedUsersWithBudgets == usersWithBudgets {
+                                completion()
                             }
                         }
                     }
                 }
-            } else {
-                print("no budgets yet")
-                completion()
             }
         }
     }

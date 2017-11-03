@@ -72,7 +72,7 @@ class LoadingVC: UIViewController {
                                             print("9. OUTSIDE INCOME")
                                             
                                             Expense.loadBudgetsFromFirebase {
-                                                print("10. BUDGETS",Expense.expensesArray.count)
+                                                print("10. BUDGETS",Expense.budgetsArray.count)
                                             
                                                 self.activityIndicator.stopAnimating()
                                                 self.activityIndicator.hidesWhenStopped = true

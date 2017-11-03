@@ -329,7 +329,7 @@ class Step5ExpenseDetailVC: UITableViewController, UIPickerViewDelegate, UIPicke
                 updateBudgetInfo()
                 dismiss(animated: true, completion: nil)
             } else {
-                let dupArray = Expense.expensesArray.filter({ $0.ownerName == currentUserName && $0.category == expense?.category })
+                let dupArray = Expense.budgetsArray.filter({ $0.ownerName == currentUserName && $0.category == expense?.category })
                 if dupArray.contains(where: { $0.expenseName == expenseNameTextField.text }) {
                     duplicateNameAlert()
                 } else {
@@ -423,11 +423,11 @@ class Step5ExpenseDetailVC: UITableViewController, UIPickerViewDelegate, UIPicke
     }
     
     func updateBudgetInfo() {
-        for (index, item) in Expense.expensesArray.enumerated() {
+        for (index, item) in Expense.budgetsArray.enumerated() {
             if item.ownerName == currentUserName && item.expenseName == expense?.expenseName && item.category == expense?.category {
                 // update local array...
-                Expense.expensesArray[index].expenseName = expenseNameTextField.text!
-                Expense.expensesArray[index].amount = Int(expenseAmountTextField.text!)!
+                Expense.budgetsArray[index].expenseName = expenseNameTextField.text!
+                Expense.budgetsArray[index].amount = Int(expenseAmountTextField.text!)!
                 // ...and update Firebase (get snapshot of all budget items for current user, then sort by category and then by name)
                 
                 
@@ -457,37 +457,37 @@ class Step5ExpenseDetailVC: UITableViewController, UIPickerViewDelegate, UIPicke
                 
                 // if expense amount is zero, nuke all the data
                 if expenseAmountTextField.text == "0" {
-                    Expense.expensesArray[index].hasDueDate = false
-                    Expense.expensesArray[index].firstPayment = "none"
-                    Expense.expensesArray[index].repeats = "never"
-                    Expense.expensesArray[index].finalPayment = "none"
-                    Expense.expensesArray[index].totalNumberOfPayments = 0
+                    Expense.budgetsArray[index].hasDueDate = false
+                    Expense.budgetsArray[index].firstPayment = "none"
+                    Expense.budgetsArray[index].repeats = "never"
+                    Expense.budgetsArray[index].finalPayment = "none"
+                    Expense.budgetsArray[index].totalNumberOfPayments = 0
                     
                 // if expense has due date...
                 } else if hasDueDateSwitch.isOn {
-                    Expense.expensesArray[index].hasDueDate = true
-                    Expense.expensesArray[index].firstPayment = firstPaymentDueDate!
+                    Expense.budgetsArray[index].hasDueDate = true
+                    Expense.budgetsArray[index].firstPayment = firstPaymentDueDate!
                     
                     // ...with repeat
                     if repeatsLabel.text != "never" {
-                        Expense.expensesArray[index].repeats = repeatsLabel.text!
-                        Expense.expensesArray[index].finalPayment = finalPaymentDueDate!
-                        Expense.expensesArray[index].totalNumberOfPayments = Int(totalNumberOfPaymentsLabel.text!)!
+                        Expense.budgetsArray[index].repeats = repeatsLabel.text!
+                        Expense.budgetsArray[index].finalPayment = finalPaymentDueDate!
+                        Expense.budgetsArray[index].totalNumberOfPayments = Int(totalNumberOfPaymentsLabel.text!)!
                         
                     // ...without repeat
                     } else {
-                        Expense.expensesArray[index].repeats = "never"
-                        Expense.expensesArray[index].finalPayment = "none"
-                        Expense.expensesArray[index].totalNumberOfPayments = 1
+                        Expense.budgetsArray[index].repeats = "never"
+                        Expense.budgetsArray[index].finalPayment = "none"
+                        Expense.budgetsArray[index].totalNumberOfPayments = 1
                     }
                     
                 // if expense has no due date
                 } else {
-                    Expense.expensesArray[index].hasDueDate = false
-                    Expense.expensesArray[index].firstPayment = "none"
-                    Expense.expensesArray[index].repeats = "never"
-                    Expense.expensesArray[index].finalPayment = "none"
-                    Expense.expensesArray[index].totalNumberOfPayments = 1
+                    Expense.budgetsArray[index].hasDueDate = false
+                    Expense.budgetsArray[index].firstPayment = "none"
+                    Expense.budgetsArray[index].repeats = "never"
+                    Expense.budgetsArray[index].finalPayment = "none"
+                    Expense.budgetsArray[index].totalNumberOfPayments = 1
                 }
             }
         }
