@@ -52,7 +52,6 @@
 		CE4832C51F28116B005A7A55 /* JobJarVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE4832C41F28116B005A7A55 /* JobJarVC.swift */; };
 		CE4832C91F28611B005A7A55 /* ReportsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE4832C81F28611B005A7A55 /* ReportsVC.swift */; };
 		CE4832CB1F286843005A7A55 /* ReportsNavController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE4832CA1F286843005A7A55 /* ReportsNavController.swift */; };
-		CE4AAD1B1F801AAD00B48209 /* FirebaseCodeSnippets.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE4AAD1A1F801AAD00B48209 /* FirebaseCodeSnippets.swift */; };
 		CE5221101F91136C008CE5BD /* FamilyData.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE52210F1F91136C008CE5BD /* FamilyData.swift */; };
 		CE5221121F916CFA008CE5BD /* JobSummaryCellB.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE5221111F916CFA008CE5BD /* JobSummaryCellB.swift */; };
 		CE55796D1F06134F006FE40B /* JobSummaryVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE55796C1F06134F006FE40B /* JobSummaryVC.swift */; };
@@ -172,7 +171,6 @@
 		CE4832C41F28116B005A7A55 /* JobJarVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JobJarVC.swift; sourceTree = "<group>"; };
 		CE4832C81F28611B005A7A55 /* ReportsVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReportsVC.swift; sourceTree = "<group>"; };
 		CE4832CA1F286843005A7A55 /* ReportsNavController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReportsNavController.swift; sourceTree = "<group>"; };
-		CE4AAD1A1F801AAD00B48209 /* FirebaseCodeSnippets.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirebaseCodeSnippets.swift; sourceTree = "<group>"; };
 		CE52210F1F91136C008CE5BD /* FamilyData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FamilyData.swift; sourceTree = "<group>"; };
 		CE5221111F916CFA008CE5BD /* JobSummaryCellB.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JobSummaryCellB.swift; sourceTree = "<group>"; };
 		CE55796C1F06134F006FE40B /* JobSummaryVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = JobSummaryVC.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
@@ -370,7 +368,6 @@
 				CED7D5981F997BF800351347 /* OutsideIncome.swift */,
 				CEA2BC481F71C3900020D958 /* JobsAndHabits.swift */,
 				CE8FFA011F10AE92004A53BE /* GlobalVariables.swift */,
-				CE4AAD1A1F801AAD00B48209 /* FirebaseCodeSnippets.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -798,7 +795,6 @@
 				CE2CCBDB1F26DE1C00ACA17F /* VideosCell.swift in Sources */,
 				CE1CB50B1F01AD10009A8DAC /* Step1VC.swift in Sources */,
 				CEE4CDD91F8DA066006847E8 /* Step4PaydayInspectVC.swift in Sources */,
-				CE4AAD1B1F801AAD00B48209 /* FirebaseCodeSnippets.swift in Sources */,
 				CE951E431F4B622D003B5EEF /* PaydayDetailCellA1.swift in Sources */,
 				89FB67581D5C82AB002B2484 /* AppDelegate.swift in Sources */,
 				CE36A7361F75B7EE006CAB40 /* Step1PopupVC.swift in Sources */,

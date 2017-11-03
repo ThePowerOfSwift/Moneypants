@@ -284,11 +284,11 @@ class Step5ExpensesVC: UIViewController, UITableViewDelegate, UITableViewDataSou
             
             topLabel.text = "Excellent! Budget matches income. Please tap 'next' to continue."
             topLabel.textColor = .black
-            nextButton.isEnabled = true
             budgetLabel.textColor = .black
             let alert = UIAlertController(title: "Budget Balanced", message: "Excellent. Budget matches income. Tap 'next' to continue.", preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: "okay", style: .cancel, handler: { (action) in
                 alert.dismiss(animated: true, completion: nil)
+                self.nextButton.isEnabled = true
             }))
             present(alert, animated: true, completion: nil)
         } else if totalSum < userTotalIncome {
@@ -374,29 +374,29 @@ class Step5ExpensesVC: UIViewController, UITableViewDelegate, UITableViewDataSou
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch tableView {
         case sportsTableView:
-            return Expense.expensesArray.filter({ return $0.category == "sports & dance" }).count
+            return Expense.expensesArray.filter({ return $0.ownerName == currentUserName && $0.category == "sports & dance" }).count
         case musicArtTableView:
-            return Expense.expensesArray.filter({ return $0.category == "music & art" }).count
+            return Expense.expensesArray.filter({ return $0.ownerName == currentUserName && $0.category == "music & art" }).count
         case schoolTableView:
-            return Expense.expensesArray.filter({ return $0.category == "school" }).count
+            return Expense.expensesArray.filter({ return $0.ownerName == currentUserName && $0.category == "school" }).count
         case summerCampTableView:
-            return Expense.expensesArray.filter({ return $0.category == "summer camps" }).count
+            return Expense.expensesArray.filter({ return $0.ownerName == currentUserName && $0.category == "summer camps" }).count
         case clothingTableView:
-            return Expense.expensesArray.filter({ return $0.category == "clothing" }).count
+            return Expense.expensesArray.filter({ return $0.ownerName == currentUserName && $0.category == "clothing" }).count
         case electronicsTableView:
-            return Expense.expensesArray.filter({ return $0.category == "electronics" }).count
+            return Expense.expensesArray.filter({ return $0.ownerName == currentUserName && $0.category == "electronics" }).count
         case transportationTableView:
-            return Expense.expensesArray.filter({ return $0.category == "transportation" }).count
+            return Expense.expensesArray.filter({ return $0.ownerName == currentUserName && $0.category == "transportation" }).count
         case personalCareTableView:
-            return Expense.expensesArray.filter({ return $0.category == "personal care" }).count
+            return Expense.expensesArray.filter({ return $0.ownerName == currentUserName && $0.category == "personal care" }).count
         case otherTableView:
-            return Expense.expensesArray.filter({ return $0.category == "other" }).count
+            return Expense.expensesArray.filter({ return $0.ownerName == currentUserName && $0.category == "other" }).count
         case funMoneyTableView:
-            return Expense.expensesArray.filter({ return $0.category == "fun money" }).count
+            return Expense.expensesArray.filter({ return $0.ownerName == currentUserName && $0.category == "fun money" }).count
         case donationsTableView:
-            return Expense.expensesArray.filter({ return $0.category == "donations" }).count
+            return Expense.expensesArray.filter({ return $0.ownerName == currentUserName && $0.category == "donations" }).count
         case savingsTableView:
-            return Expense.expensesArray.filter({ return $0.category == "savings" }).count
+            return Expense.expensesArray.filter({ return $0.ownerName == currentUserName && $0.category == "savings" }).count
         default:
             return 3
         }
@@ -432,7 +432,7 @@ class Step5ExpensesVC: UIViewController, UITableViewDelegate, UITableViewDataSou
     
     func formattedTableViewCell(table: UITableView, filteredCategory: String, indxPth: IndexPath) -> UITableViewCell {
         let cell = table.dequeueReusableCell(withIdentifier: "expensesCell", for: indxPth) as! Step5ExpensesCell
-        let array = Expense.expensesArray.filter({ return $0.category == filteredCategory }).sorted(by: { $0.order < $1.order })
+        let array = Expense.expensesArray.filter({ return $0.ownerName == currentUserName && $0.category == filteredCategory }).sorted(by: { $0.order < $1.order })
         cell.expensesLabel.text = "\(array[indxPth.row].expenseName)"
         if array[indxPth.row].amount == 0 {
             cell.expenseValue.text = "-"
@@ -445,40 +445,40 @@ class Step5ExpensesVC: UIViewController, UITableViewDelegate, UITableViewDataSou
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         switch tableView {
         case sportsTableView:
-            let sportsArray = Expense.expensesArray.filter({ return $0.category == "sports & dance" })
+            let sportsArray = Expense.expensesArray.filter({ return $0.ownerName == currentUserName && $0.category == "sports & dance" })
             performSegue(withIdentifier: "EditExpense", sender: sportsArray[indexPath.row])
         case musicArtTableView:
-            let musicArtArray = Expense.expensesArray.filter({ $0.category == "music & art" })
+            let musicArtArray = Expense.expensesArray.filter({ $0.ownerName == currentUserName && $0.category == "music & art" })
             performSegue(withIdentifier: "EditExpense", sender: musicArtArray[indexPath.row])
         case schoolTableView:
-            let schoolArray = Expense.expensesArray.filter({ $0.category == "school" })
+            let schoolArray = Expense.expensesArray.filter({ $0.ownerName == currentUserName && $0.category == "school" })
             performSegue(withIdentifier: "EditExpense", sender: schoolArray[indexPath.row])
         case summerCampTableView:
-            let summerCampArray = Expense.expensesArray.filter({ $0.category == "summer camps" })
+            let summerCampArray = Expense.expensesArray.filter({ $0.ownerName == currentUserName && $0.category == "summer camps" })
             performSegue(withIdentifier: "EditExpense", sender: summerCampArray[indexPath.row])
         case clothingTableView:
-            let clothingArray = Expense.expensesArray.filter({ $0.category == "clothing" })
+            let clothingArray = Expense.expensesArray.filter({ $0.ownerName == currentUserName && $0.category == "clothing" })
             performSegue(withIdentifier: "EditExpense", sender: clothingArray[indexPath.row])
         case electronicsTableView:
-            let electronicsArray = Expense.expensesArray.filter({ $0.category == "electronics" })
+            let electronicsArray = Expense.expensesArray.filter({ $0.ownerName == currentUserName && $0.category == "electronics" })
             performSegue(withIdentifier: "EditExpense", sender: electronicsArray[indexPath.row])
         case transportationTableView:
-            let transportationArray = Expense.expensesArray.filter({ $0.category == "transportation" })
+            let transportationArray = Expense.expensesArray.filter({ $0.ownerName == currentUserName && $0.category == "transportation" })
             performSegue(withIdentifier: "EditExpense", sender: transportationArray[indexPath.row])
         case personalCareTableView:
-            let personalCareArray = Expense.expensesArray.filter({ $0.category == "personal care" })
+            let personalCareArray = Expense.expensesArray.filter({ $0.ownerName == currentUserName && $0.category == "personal care" })
             performSegue(withIdentifier: "EditExpense", sender: personalCareArray[indexPath.row])
         case otherTableView:
-            let otherArray = Expense.expensesArray.filter({ $0.category == "other" })
+            let otherArray = Expense.expensesArray.filter({ $0.ownerName == currentUserName && $0.category == "other" })
             performSegue(withIdentifier: "EditExpense", sender: otherArray[indexPath.row])
         case funMoneyTableView:
-            let funMoneyArray = Expense.expensesArray.filter({ $0.category == "fun money" })
+            let funMoneyArray = Expense.expensesArray.filter({ $0.ownerName == currentUserName && $0.category == "fun money" })
             performSegue(withIdentifier: "ShowSavings", sender: funMoneyArray[indexPath.row])
         case donationsTableView:
-            let donationsArray = Expense.expensesArray.filter({ $0.category == "donations" })
+            let donationsArray = Expense.expensesArray.filter({ $0.ownerName == currentUserName && $0.category == "donations" })
             performSegue(withIdentifier: "ShowSavings", sender: donationsArray[indexPath.row])
         case savingsTableView:
-            let savingsArray = Expense.expensesArray.filter({ $0.category == "savings" })
+            let savingsArray = Expense.expensesArray.filter({ $0.ownerName == currentUserName && $0.category == "savings" })
             performSegue(withIdentifier: "ShowSavings", sender: savingsArray[indexPath.row])
         default:
             print("unknown tableview selected")
@@ -535,23 +535,6 @@ class Step5ExpensesVC: UIViewController, UITableViewDelegate, UITableViewDataSou
     }
     
     @IBAction func selectUserButtonTapped(_ sender: UIButton) {
-        
-        
-        
-        
-        
-        
-        
-        print(Expense.expensesArray)
-        
-        
-        
-        
-        
-        
-        
-        
-        
         let alert = UIAlertController(title: "Select A User", message: "Please choose a family member to review their finances.", preferredStyle: .alert)
         for (index, user) in User.usersArray.enumerated() {
             alert.addAction(UIAlertAction(title: user.firstName, style: .default, handler: { (action) in
@@ -859,6 +842,8 @@ class Step5ExpensesVC: UIViewController, UITableViewDelegate, UITableViewDataSou
     func fetchExpenses() {
         if Expense.expensesArray.filter({ $0.ownerName == currentUserName }).isEmpty {
             createDefaultExpenses()
+        } else {
+            print(currentUserName,"already has a default budget")
         }
     }
     
@@ -923,19 +908,29 @@ class Step5ExpensesVC: UIViewController, UITableViewDelegate, UITableViewDataSou
         
         // ...and send array to Firebase
         for expense in defaultExpensesArray {
-            ref.child("expenses").child(currentUserName).childByAutoId().setValue(["ownerName" : expense.ownerName,
-                                                                                   "expenseName" : expense.expenseName,
-                                                                                   "category" : expense.category,
-                                                                                   "amount" : expense.amount,
-                                                                                   "hasDueDate" : expense.hasDueDate,
-                                                                                   "firstPayment" : expense.firstPayment,
-                                                                                   "repeats" : expense.repeats,
-                                                                                   "finalPayment" : expense.finalPayment,
-                                                                                   "totalNumberOfPayments" : expense.totalNumberOfPayments,
-                                                                                   "order" : expense.order])
+            ref.child("budgets").child(currentUserName).child("\(expense.category) \(expense.order)").setValue(["ownerName" : expense.ownerName,
+                                                                                                                "expenseName" : expense.expenseName,
+                                                                                                                "category" : expense.category,
+                                                                                                                "amount" : expense.amount,
+                                                                                                                "hasDueDate" : expense.hasDueDate,
+                                                                                                                "firstPayment" : expense.firstPayment,
+                                                                                                                "repeats" : expense.repeats,
+                                                                                                                "finalPayment" : expense.finalPayment,
+                                                                                                                "totalNumberOfPayments" : expense.totalNumberOfPayments,
+                                                                                                                "order" : expense.order])
         }
-        
-        
+        sportsTableView.reloadData()
+        musicArtTableView.reloadData()
+        schoolTableView.reloadData()
+        summerCampTableView.reloadData()
+        clothingTableView.reloadData()
+        electronicsTableView.reloadData()
+        transportationTableView.reloadData()
+        personalCareTableView.reloadData()
+        otherTableView.reloadData()
+        funMoneyTableView.reloadData()
+        donationsTableView.reloadData()
+        savingsTableView.reloadData()
     }
 }
 

@@ -21,6 +21,7 @@ struct JobsAndHabits {
             // if there are no jobs on Firebase, return count 0
             if jobsCount == 0 {
                 completion()
+                return
             } else {
                 for item in snapshot.children {
                     if let snap = item as? FIRDataSnapshot {
@@ -53,6 +54,7 @@ struct JobsAndHabits {
             // if there are no jobs on Firebase, return count 0
             if jobsCount == 0 {
                 completion()
+                return
             } else {
                 for item in snapshot.children {
                     if let snap = item as? FIRDataSnapshot {
@@ -85,6 +87,7 @@ struct JobsAndHabits {
             if usersCount == 0 {
                 print("No users created yet")
                 completion()
+                return
             } else {
                 for child in snapshot.children {
                     let snap = child as! FIRDataSnapshot
@@ -94,6 +97,7 @@ struct JobsAndHabits {
                         if habitsCount == 0 {
                             print("no habits created yet")
                             completion()
+                            return
                         } else {
                             for item in snapshot.children {
                                 if let snap = item as? FIRDataSnapshot {

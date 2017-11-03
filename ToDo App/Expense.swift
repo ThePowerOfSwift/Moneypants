@@ -1,5 +1,5 @@
-import Foundation
 import UIKit
+import Firebase
 
 struct Expense {
     var ownerName: String
@@ -27,4 +27,51 @@ struct Expense {
                                         "fun money (10%)",
                                         "donations (10%)",
                                         "savings (10%)"]
+    
+    static func loadBudgetsFromFirebase(completion: @escaping () -> ()) {
+        let firebaseUser = FIRAuth.auth()?.currentUser
+        let ref = FIRDatabase.database().reference().child("users").child((firebaseUser?.uid)!)
+        ref.child("budgets").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
+            if snapshot.exists() {
+                for user in User.usersArray {
+                    ref.child("budgets").child(user.firstName).observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
+                        let budgetCount = Int(snapshot.childrenCount)
+                        // if there are no budgets on Firebase, return count 0
+                        if budgetCount == 0 {
+                            print(user.firstName,"has no budget")
+                            return
+                        } else {
+                            for item in snapshot.children {
+                                if let snap = item as? FIRDataSnapshot {
+                                    if let value = snap.value as? [String : Any] {
+                                        let ownerName = value["ownerName"] as! String
+                                        let expenseName = value["expenseName"] as! String
+                                        let category = value["category"] as! String
+                                        let amount = value["amount"] as! Int
+                                        let hasDueDate = value["hasDueDate"] as! Bool
+                                        let firstPayment = value["firstPayment"] as! String
+                                        let repeats = value["repeats"] as! String
+                                        let finalPayment = value["finalPayment"] as! String
+                                        let totalNumberOfPayments = value["totalNumberOfPayments"] as! Int
+                                        let order = value["order"] as! Int
+                                        
+                                        let userBudget = Expense(ownerName: ownerName, expenseName: expenseName, category: category, amount: amount, hasDueDate: hasDueDate, firstPayment: firstPayment, repeats: repeats, finalPayment: finalPayment, totalNumberOfPayments: totalNumberOfPayments, order: order)
+                                        
+                                        expensesArray.append(userBudget)
+                                        
+                                        if expensesArray.count == budgetCount {
+                                            completion()
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            } else {
+                print("no budgets yet")
+                completion()
+            }
+        }
+    }
 }

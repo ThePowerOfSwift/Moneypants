@@ -1,4 +1,5 @@
 import UIKit
+import Firebase
 
 class Step5ExpenseDetailVC: UITableViewController, UIPickerViewDelegate, UIPickerViewDataSource, UITextFieldDelegate {
     
@@ -46,8 +47,14 @@ class Step5ExpenseDetailVC: UITableViewController, UIPickerViewDelegate, UIPicke
     let formatterForLabel = DateFormatter()
     let formatterForFirebase = DateFormatter()
     
+    var firebaseUser: FIRUser!
+    var ref: FIRDatabaseReference!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        firebaseUser = FIRAuth.auth()?.currentUser
+        ref = FIRDatabase.database().reference().child("users").child(firebaseUser.uid)
         
         formatterForLabel.dateStyle = DateFormatter.Style.medium                        // Shows how date is displayed
         formatterForLabel.timeStyle = DateFormatter.Style.none                          // No time, just date
@@ -319,14 +326,14 @@ class Step5ExpenseDetailVC: UITableViewController, UIPickerViewDelegate, UIPicke
         // 5. then make sure name is not duplicate
         } else {
             if expense?.expenseName == expenseNameTextField.text {
-                updateExpenseInfo()
+                updateBudgetInfo()
                 dismiss(animated: true, completion: nil)
             } else {
                 let dupArray = Expense.expensesArray.filter({ $0.ownerName == currentUserName && $0.category == expense?.category })
                 if dupArray.contains(where: { $0.expenseName == expenseNameTextField.text }) {
                     duplicateNameAlert()
                 } else {
-                    updateExpenseInfo()
+                    updateBudgetInfo()
                     dismiss(animated: true, completion: nil)
                 }
             }
@@ -415,11 +422,38 @@ class Step5ExpenseDetailVC: UITableViewController, UIPickerViewDelegate, UIPicke
         }
     }
     
-    func updateExpenseInfo() {
+    func updateBudgetInfo() {
         for (index, item) in Expense.expensesArray.enumerated() {
             if item.ownerName == currentUserName && item.expenseName == expense?.expenseName && item.category == expense?.category {
+                // update local array...
                 Expense.expensesArray[index].expenseName = expenseNameTextField.text!
                 Expense.expensesArray[index].amount = Int(expenseAmountTextField.text!)!
+                // ...and update Firebase (get snapshot of all budget items for current user, then sort by category and then by name)
+                
+                
+                
+                
+                
+                
+//                ref.child("budgets").child(currentUserName).child("\(expense?.category) \(expense?.order)").queryOrdered(byChild: "expenseName").queryEqual(toValue: expense?.expenseName).observeSingleEvent(of: .childAdded, with: { (snapshot) in
+//                    print(snapshot.key)
+////                    snapshot.ref.updateChildValues(["expenseName" : self.expenseNameTextField.text!,
+////                                                    "amount" : Int(self.expenseAmountTextField.text!)!])
+//                })
+                
+                ref.child("budgets").child(currentUserName).child("\((expense?.category)!) \((expense?.order)!)").updateChildValues(["expenseName" : self.expenseNameTextField.text!,
+                                                                                                                                     "amount" : Int(self.expenseAmountTextField.text!)!])
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
                 
                 // if expense amount is zero, nuke all the data
                 if expenseAmountTextField.text == "0" {

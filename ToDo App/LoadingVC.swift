@@ -71,9 +71,13 @@ class LoadingVC: UIViewController {
                                         OutsideIncome.loadOutsideIncomeFromFirebase {
                                             print("9. OUTSIDE INCOME")
                                             
-                                            self.activityIndicator.stopAnimating()
-                                            self.activityIndicator.hidesWhenStopped = true
-                                            self.performSegue(withIdentifier: "GoToStep1EnterIncome", sender: self)
+                                            Expense.loadBudgetsFromFirebase {
+                                                print("10. BUDGETS",Expense.expensesArray.count)
+                                            
+                                                self.activityIndicator.stopAnimating()
+                                                self.activityIndicator.hidesWhenStopped = true
+                                                self.performSegue(withIdentifier: "GoToStep1EnterIncome", sender: self)
+                                            }
                                         }
                                     }
                                 }
