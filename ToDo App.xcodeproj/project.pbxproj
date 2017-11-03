@@ -40,6 +40,8 @@
 		CE36A7361F75B7EE006CAB40 /* Step1PopupVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE36A7351F75B7EE006CAB40 /* Step1PopupVC.swift */; };
 		CE39F51F1F7D83730053E45D /* Step4PopupVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE39F51E1F7D83730053E45D /* Step4PopupVC.swift */; };
 		CE3CA84F1F32B97C0069129B /* ReportsSpendingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3CA84E1F32B97C0069129B /* ReportsSpendingVC.swift */; };
+		CE464E7E1FAC479800941021 /* Step5ExpensePopupVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE464E7D1FAC479800941021 /* Step5ExpensePopupVC.swift */; };
+		CE464E801FAC4C1C00941021 /* Step5ExpenseVideoVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE464E7F1FAC4C1C00941021 /* Step5ExpenseVideoVC.swift */; };
 		CE4832B61F27E27B005A7A55 /* User.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CE4832B41F27E27B005A7A55 /* User.storyboard */; };
 		CE4832B91F27FB11005A7A55 /* HomeNavController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE4832B81F27FB11005A7A55 /* HomeNavController.swift */; };
 		CE4832BB1F27FCA0005A7A55 /* PaydayNavController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE4832BA1F27FCA0005A7A55 /* PaydayNavController.swift */; };
@@ -158,6 +160,8 @@
 		CE36A7351F75B7EE006CAB40 /* Step1PopupVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = Step1PopupVC.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		CE39F51E1F7D83730053E45D /* Step4PopupVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Step4PopupVC.swift; sourceTree = "<group>"; };
 		CE3CA84E1F32B97C0069129B /* ReportsSpendingVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReportsSpendingVC.swift; sourceTree = "<group>"; };
+		CE464E7D1FAC479800941021 /* Step5ExpensePopupVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Step5ExpensePopupVC.swift; sourceTree = "<group>"; };
+		CE464E7F1FAC4C1C00941021 /* Step5ExpenseVideoVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Step5ExpenseVideoVC.swift; sourceTree = "<group>"; };
 		CE4832B51F27E27B005A7A55 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/User.storyboard; sourceTree = "<group>"; };
 		CE4832B81F27FB11005A7A55 /* HomeNavController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeNavController.swift; sourceTree = "<group>"; };
 		CE4832BA1F27FCA0005A7A55 /* PaydayNavController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaydayNavController.swift; sourceTree = "<group>"; };
@@ -451,6 +455,8 @@
 				CE99F0A71F0B6B5D007E01E7 /* Step5ExpensesVC.swift */,
 				CE8FF9FD1F0F7D88004A53BE /* Step5ExpensesCell.swift */,
 				CE5AD7F71FA19FEE00234469 /* Step5ExpenseDetailVC.swift */,
+				CE464E7D1FAC479800941021 /* Step5ExpensePopupVC.swift */,
+				CE464E7F1FAC4C1C00941021 /* Step5ExpenseVideoVC.swift */,
 			);
 			name = Expenses;
 			sourceTree = "<group>";
@@ -729,6 +735,7 @@
 				CEA738BF1F8F30A400C3266D /* Step4PopupVC2.swift in Sources */,
 				CE55796D1F06134F006FE40B /* JobSummaryVC.swift in Sources */,
 				CEA738C11F8F30BC00C3266D /* Step4VideoVC3.swift in Sources */,
+				CE464E801FAC4C1C00941021 /* Step5ExpenseVideoVC.swift in Sources */,
 				CEF1A4931F022F3F00C010F9 /* Step3VC.swift in Sources */,
 				89FB676C1D5C837D002B2484 /* SignUpVC.swift in Sources */,
 				CE7160FB1F04A9270045AA05 /* Step4HabitCell.swift in Sources */,
@@ -785,6 +792,7 @@
 				CE4832C11F280216005A7A55 /* UserNavController.swift in Sources */,
 				CE5221101F91136C008CE5BD /* FamilyData.swift in Sources */,
 				CEAAF9DE1F35A41C00846DD5 /* SpendingVC.swift in Sources */,
+				CE464E7E1FAC479800941021 /* Step5ExpensePopupVC.swift in Sources */,
 				CE99F0A81F0B6B5D007E01E7 /* Step5ExpensesVC.swift in Sources */,
 				CE24A4381F07121D00A03FA2 /* Step5VC.swift in Sources */,
 				CE2CCBDB1F26DE1C00ACA17F /* VideosCell.swift in Sources */,

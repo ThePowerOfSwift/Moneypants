@@ -1,4 +1,5 @@
 import UIKit
+import Firebase
 
 class Step5ExpensesVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
@@ -6,6 +7,7 @@ class Step5ExpensesVC: UIViewController, UITableViewDelegate, UITableViewDataSou
     @IBOutlet weak var budgetLabel: UILabel!
     @IBOutlet weak var topLabel: UILabel!
     @IBOutlet weak var nextButton: UIButton!
+    @IBOutlet weak var selectUserButton: UIButton!
     
     @IBOutlet weak var sportsEnvelope: UIImageView!
     @IBOutlet weak var sportsSubtotalLabel: UILabel!
@@ -91,7 +93,9 @@ class Step5ExpensesVC: UIViewController, UITableViewDelegate, UITableViewDataSou
     @IBOutlet weak var savingsTableHeight: NSLayoutConstraint!
     @IBOutlet weak var savingsTableView: UITableView!
     
-    var currentUser: Int!               // passed from Step5VC
+    var firebaseUser: FIRUser!
+    var ref: FIRDatabaseReference!
+    
     var userTotalIncome: Int!           // passed from Step5VC
 
     var currentUserName: String!
@@ -100,18 +104,22 @@ class Step5ExpensesVC: UIViewController, UITableViewDelegate, UITableViewDataSou
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        firebaseUser = FIRAuth.auth()?.currentUser
+        ref = FIRDatabase.database().reference().child("users").child(firebaseUser.uid)
+        
         incomeLabel.text = "income: $\(userTotalIncome!)"
         nextButton.isEnabled = false
         
         tableViewDelegatesAndDataSources()
         
-        currentUserName = User.usersArray[currentUser].firstName
-        navigationItem.title = User.usersArray[currentUser].firstName
+        currentUserName = User.usersArray[User.currentUser].firstName
+        navigationItem.title = User.usersArray[User.currentUser].firstName
         
         tenPercentOfUserIncome = Int(Double(userTotalIncome) * 0.10)
         
         fetchExpenses()
         updateSubtotals()
+        checkSetupNumber()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -253,21 +261,45 @@ class Step5ExpensesVC: UIViewController, UITableViewDelegate, UITableViewDataSou
             totalSum += budgetItem.amount * budgetItem.totalNumberOfPayments
         }
         
-        if totalSum == 0 {
+        if totalSum == tenPercentOfUserIncome * 3 {
+            // show default instructions when only budget items are 10-10-10 items
             topLabel.text = "GOAL: get 'budget' to match 'income' by adding expenses to the envelopes below."
-            budgetLabel.textColor = UIColor.red
+            topLabel.textColor = .black
+            budgetLabel.textColor = .red
             nextButton.isEnabled = false
         } else if totalSum == userTotalIncome {
+            // collapse all tables
+            hideTable(table: sportsTableView, topConstraint: sportsTableTop, arrow: sportsArrow, envelope: sportsEnvelope)
+            hideTable(table: musicArtTableView, topConstraint: musicArtTableTop, arrow: musicArtArrow, envelope: musicArtEnvelope)
+            hideTable(table: schoolTableView, topConstraint: schoolTableTop, arrow: schoolArrow, envelope: schoolEnvelope)
+            hideTable(table: summerCampTableView, topConstraint: summerCampTableTop, arrow: summerCampArrow, envelope: summerCampEnvelope)
+            hideTable(table: clothingTableView, topConstraint: clothingTableTop, arrow: clothingArrow, envelope: clothingEnvelope)
+            hideTable(table: electronicsTableView, topConstraint: electronicsTableTop, arrow: electronicsArrow, envelope: electronicsEnvelope)
+            hideTable(table: transportationTableView, topConstraint: transportationTableTop, arrow: transportationArrow, envelope: transportationEnvelope)
+            hideTable(table: personalCareTableView, topConstraint: personalCareTableTop, arrow: personalCareArrow, envelope: personalCareEnvelope)
+            hideTable(table: otherTableView, topConstraint: otherTableTop, arrow: otherArrow, envelope: otherEnvelope)
+            hideTable(table: funMoneyTableView, topConstraint: funMoneyTableTop, arrow: funMoneyArrow, envelope: funMoneyEnvelope)
+            hideTable(table: donationsTableView, topConstraint: donationsTableTop, arrow: donationsArrow, envelope: donationsEnvelope)
+            hideTable(table: savingsTableView, topConstraint: savingsTableTop, arrow: savingsArrow, envelope: savingsEnvelope)
+            
             topLabel.text = "Excellent! Budget matches income. Please tap 'next' to continue."
+            topLabel.textColor = .black
             nextButton.isEnabled = true
-            budgetLabel.textColor = UIColor.black
+            budgetLabel.textColor = .black
+            let alert = UIAlertController(title: "Budget Balanced", message: "Excellent. Budget matches income. Tap 'next' to continue.", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "okay", style: .cancel, handler: { (action) in
+                alert.dismiss(animated: true, completion: nil)
+            }))
+            present(alert, animated: true, completion: nil)
         } else if totalSum < userTotalIncome {
             topLabel.text = "You must still add more expenses. Please add $\(userTotalIncome - totalSum) to one or more expense envelopes."
-            budgetLabel.textColor = UIColor.red
+            topLabel.textColor = .black
+            budgetLabel.textColor = .red
             nextButton.isEnabled = false
         } else {
             topLabel.text = "You must remove some expenses. Please remove $\(totalSum - userTotalIncome) from one or more expense envelopes."
-            budgetLabel.textColor = UIColor.red
+            topLabel.textColor = .red
+            budgetLabel.textColor = .red
             nextButton.isEnabled = false
         }
         budgetLabel.text = "budget: $\(totalSum)"
@@ -469,12 +501,10 @@ class Step5ExpensesVC: UIViewController, UITableViewDelegate, UITableViewDataSou
         if segue.identifier == "EditExpense" {
             let navigationVC = segue.destination as! UINavigationController
             let nextVC = navigationVC.topViewController as! Step5ExpenseDetailVC
-            nextVC.currentUser = currentUser
             nextVC.expense = sender as? Expense
         } else if segue.identifier == "ShowSavings" {
             let navigationVC = segue.destination as! UINavigationController
             let nextVC = navigationVC.topViewController as! Step5ExpenseDetailVC
-            nextVC.currentUser = currentUser
             nextVC.expense = sender as? Expense
             nextVC.expenseAmountCellIsEnabled = false
             nextVC.hasDueDateCellIsEnabled = false
@@ -485,19 +515,60 @@ class Step5ExpensesVC: UIViewController, UITableViewDelegate, UITableViewDataSou
     }
     
     @IBAction func nextButtonTapped(_ sender: UIButton) {
-        if currentUser < (User.usersArray.count - 1) {
-            currentUser! += 1
+        // if we're not at last family member, move on to the next oldest one
+        if User.currentUser < (User.usersArray.count - 1) {
+            User.currentUser += 1
             let storyboard = UIStoryboard(name: "Setup", bundle: nil)
             let vc = storyboard.instantiateViewController(withIdentifier: "Step5VC")
-            
             navigationController?.pushViewController(vc, animated: true)
             
-        } else {
-            performSegue(withIdentifier: "Congrats", sender: self)
+        // we're at last user in array (oldest member of family)
+        } else if User.currentUser == (User.usersArray.count - 1) {
+            // give user opportunity to review family members or move on
+            // reveal 'select user' button
+            if FamilyData.setupProgress < 52 {
+                FamilyData.setupProgress = 52
+                ref.updateChildValues(["setupProgress" : 52])
+            }
+            reviewOrContinueAlert()
         }
     }
     
-    // MARK: Can I combine all the button taps into one function like below? Just check to see which tableview is showing?
+    @IBAction func selectUserButtonTapped(_ sender: UIButton) {
+        
+        
+        
+        
+        
+        
+        
+        print(Expense.expensesArray)
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        let alert = UIAlertController(title: "Select A User", message: "Please choose a family member to review their finances.", preferredStyle: .alert)
+        for (index, user) in User.usersArray.enumerated() {
+            alert.addAction(UIAlertAction(title: user.firstName, style: .default, handler: { (action) in
+                User.currentUser = index
+                let storyboard = UIStoryboard(name: "Setup", bundle: nil)
+                let vc = storyboard.instantiateViewController(withIdentifier: "Step5VC")
+                self.navigationController?.pushViewController(vc, animated: true)
+                alert.dismiss(animated: true, completion: nil)
+            }))
+        }
+        alert.addAction(UIAlertAction(title: "cancel", style: .cancel, handler: { (action) in
+            alert.dismiss(animated: true, completion: nil)
+        }))
+        present(alert, animated: true, completion: nil)
+    }
+    
+    // MARK: Can I combine all the button taps into one function? Just check to see which tableview is showing?
     
     @IBAction func sportsDanceButtonTapped(_ sender: UIButton) {
         if sportsTableTop.constant == -(sportsTableView.bounds.height) {
@@ -729,6 +800,28 @@ class Step5ExpensesVC: UIViewController, UITableViewDelegate, UITableViewDataSou
         present(alert, animated: true, completion: nil)
     }
     
+    func checkSetupNumber() {
+        if FamilyData.setupProgress >= 52 {
+            selectUserButton.isHidden = false
+        } else {
+            selectUserButton.isHidden = true
+        }
+    }
+    
+    func reviewOrContinueAlert() {
+        let alert = UIAlertController(title: "Review Finances", message: "Do you wish to review anyone's income / expenses, or continue with setup?", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "review", style: .cancel, handler: { (action) in
+            alert.dismiss(animated: true, completion: nil)
+            // enable hidden button and allow user to select other users for review
+            self.selectUserButton.isHidden = false
+        }))
+        alert.addAction(UIAlertAction(title: "continue", style: .default, handler: { (action) in
+            alert.dismiss(animated: true, completion: nil)
+            self.performSegue(withIdentifier: "Congrats", sender: self)
+        }))
+        present(alert, animated: true, completion: nil)
+    }
+    
     func revealTable(table: UITableView, height: NSLayoutConstraint, topConstraint: NSLayoutConstraint, arrow: UIImageView, envelope: UIImageView) {
         table.isHidden = false
         // make table size same as number of rows
@@ -764,71 +857,85 @@ class Step5ExpensesVC: UIViewController, UITableViewDelegate, UITableViewDataSou
     }
     
     func fetchExpenses() {
-        if Expense.expensesArray.count == 0 {
-            loadDefaultExpenses()
-            createDefaultExpensesOnFirebase()
+        if Expense.expensesArray.filter({ $0.ownerName == currentUserName }).isEmpty {
+            createDefaultExpenses()
         }
     }
     
-    func loadDefaultExpenses() {
+    func createDefaultExpenses() {
         // create array of default expenses
-        Expense.expensesArray = [Expense(ownerName: currentUserName, expenseName: "registration fees", category: "sports & dance", amount: 0, hasDueDate: false, firstPayment: "none", repeats: "never", finalPayment: "none", totalNumberOfPayments: 1, order: 0),
-                                 Expense(ownerName: currentUserName, expenseName: "tuition", category: "sports & dance", amount: 0, hasDueDate: false, firstPayment: "none", repeats: "never", finalPayment: "none", totalNumberOfPayments: 1, order: 1),
-                                 Expense(ownerName: currentUserName, expenseName: "uniform", category: "sports & dance", amount: 0, hasDueDate: false, firstPayment: "none", repeats: "never", finalPayment: "none", totalNumberOfPayments: 1, order: 2),
-                                 Expense(ownerName: currentUserName, expenseName: "team shirt", category: "sports & dance", amount: 0, hasDueDate: false, firstPayment: "none", repeats: "never", finalPayment: "none", totalNumberOfPayments: 1, order: 3),
-                                 Expense(ownerName: currentUserName, expenseName: "equipment", category: "sports & dance", amount: 0, hasDueDate: false, firstPayment: "none", repeats: "never", finalPayment: "none", totalNumberOfPayments: 1, order: 4),
-                                 Expense(ownerName: currentUserName, expenseName: "competitions", category: "sports & dance", amount: 0, hasDueDate: false, firstPayment: "none", repeats: "never", finalPayment: "none", totalNumberOfPayments: 1, order: 5),
-                                 Expense(ownerName: currentUserName, expenseName: "performances", category: "sports & dance", amount: 0, hasDueDate: false, firstPayment: "none", repeats: "never", finalPayment: "none", totalNumberOfPayments: 1, order: 6),
-                                 Expense(ownerName: currentUserName, expenseName: "costumes", category: "sports & dance", amount: 0, hasDueDate: false, firstPayment: "none", repeats: "never", finalPayment: "none", totalNumberOfPayments: 1, order: 7),
-                                 Expense(ownerName: currentUserName, expenseName: "tuition", category: "music & art", amount: 0, hasDueDate: false, firstPayment: "none", repeats: "never", finalPayment: "none", totalNumberOfPayments: 1, order: 0),
-                                 Expense(ownerName: currentUserName, expenseName: "supplies & tools", category: "music & art", amount: 0, hasDueDate: false, firstPayment: "none", repeats: "never", finalPayment: "none", totalNumberOfPayments: 1, order: 1),
-                                 Expense(ownerName: currentUserName, expenseName: "other", category: "music & art", amount: 0, hasDueDate: false, firstPayment: "none", repeats: "never", finalPayment: "none", totalNumberOfPayments: 1, order: 2),
-                                 Expense(ownerName: currentUserName, expenseName: "field trips", category: "school", amount: 0, hasDueDate: false, firstPayment: "none", repeats: "never", finalPayment: "none", totalNumberOfPayments: 1, order: 0),
-                                 Expense(ownerName: currentUserName, expenseName: "clubs", category: "school", amount: 0, hasDueDate: false, firstPayment: "none", repeats: "never", finalPayment: "none", totalNumberOfPayments: 1, order: 1),
-                                 Expense(ownerName: currentUserName, expenseName: "backpack", category: "school", amount: 0, hasDueDate: false, firstPayment: "none", repeats: "never", finalPayment: "none", totalNumberOfPayments: 1, order: 2),
-                                 Expense(ownerName: currentUserName, expenseName: "supplies", category: "school", amount: 0, hasDueDate: false, firstPayment: "none", repeats: "never", finalPayment: "none", totalNumberOfPayments: 1, order: 3),
-                                 Expense(ownerName: currentUserName, expenseName: "camp #1", category: "summer camps", amount: 0, hasDueDate: false, firstPayment: "none", repeats: "never", finalPayment: "none", totalNumberOfPayments: 1, order: 0),
-                                 Expense(ownerName: currentUserName, expenseName: "camp #2", category: "summer camps", amount: 0, hasDueDate: false, firstPayment: "none", repeats: "never", finalPayment: "none", totalNumberOfPayments: 1, order: 1),
-                                 Expense(ownerName: currentUserName, expenseName: "camp #3", category: "summer camps", amount: 0, hasDueDate: false, firstPayment: "none", repeats: "never", finalPayment: "none", totalNumberOfPayments: 1, order: 2),
-                                 Expense(ownerName: currentUserName, expenseName: "socks & underwear", category: "clothing", amount: 0, hasDueDate: false, firstPayment: "none", repeats: "never", finalPayment: "none", totalNumberOfPayments: 1, order: 0),
-                                 Expense(ownerName: currentUserName, expenseName: "shoes", category: "clothing", amount: 0, hasDueDate: false, firstPayment: "none", repeats: "never", finalPayment: "none", totalNumberOfPayments: 1, order: 1),
-                                 Expense(ownerName: currentUserName, expenseName: "shirts & pants", category: "clothing", amount: 0, hasDueDate: false, firstPayment: "none", repeats: "never", finalPayment: "none", totalNumberOfPayments: 1, order: 2),
-                                 Expense(ownerName: currentUserName, expenseName: "coats", category: "clothing", amount: 0, hasDueDate: false, firstPayment: "none", repeats: "never", finalPayment: "none", totalNumberOfPayments: 1, order: 3),
-                                 Expense(ownerName: currentUserName, expenseName: "dresses", category: "clothing", amount: 0, hasDueDate: false, firstPayment: "none", repeats: "never", finalPayment: "none", totalNumberOfPayments: 1, order: 4),
-                                 Expense(ownerName: currentUserName, expenseName: "suits", category: "clothing", amount: 0, hasDueDate: false, firstPayment: "none", repeats: "never", finalPayment: "none", totalNumberOfPayments: 1, order: 5),
-                                 Expense(ownerName: currentUserName, expenseName: "swimwear", category: "clothing", amount: 0, hasDueDate: false, firstPayment: "none", repeats: "never", finalPayment: "none", totalNumberOfPayments: 1, order: 6),
-                                 Expense(ownerName: currentUserName, expenseName: "jewelry", category: "clothing", amount: 0, hasDueDate: false, firstPayment: "none", repeats: "never", finalPayment: "none", totalNumberOfPayments: 1, order: 7),
-                                 Expense(ownerName: currentUserName, expenseName: "purses / wallets", category: "clothing", amount: 0, hasDueDate: false, firstPayment: "none", repeats: "never", finalPayment: "none", totalNumberOfPayments: 1, order: 8),
-                                 Expense(ownerName: currentUserName, expenseName: "other", category: "clothing", amount: 0, hasDueDate: false, firstPayment: "none", repeats: "never", finalPayment: "none", totalNumberOfPayments: 1, order: 9),
-                                 Expense(ownerName: currentUserName, expenseName: "phone purchase", category: "electronics", amount: 0, hasDueDate: false, firstPayment: "none", repeats: "never", finalPayment: "none", totalNumberOfPayments: 1, order: 0),
-                                 Expense(ownerName: currentUserName, expenseName: "phone bill", category: "electronics", amount: 0, hasDueDate: false, firstPayment: "none", repeats: "never", finalPayment: "none", totalNumberOfPayments: 1, order: 1),
-                                 Expense(ownerName: currentUserName, expenseName: "software purchase", category: "electronics", amount: 0, hasDueDate: false, firstPayment: "none", repeats: "never", finalPayment: "none", totalNumberOfPayments: 1, order: 2),
-                                 Expense(ownerName: currentUserName, expenseName: "games", category: "electronics", amount: 0, hasDueDate: false, firstPayment: "none", repeats: "never", finalPayment: "none", totalNumberOfPayments: 1, order: 3),
-                                 Expense(ownerName: currentUserName, expenseName: "iPods, iPads, &c", category: "electronics", amount: 0, hasDueDate: false, firstPayment: "none", repeats: "never", finalPayment: "none", totalNumberOfPayments: 1, order: 4),
-                                 Expense(ownerName: currentUserName, expenseName: "bicycle maintenance", category: "transportation", amount: 0, hasDueDate: false, firstPayment: "none", repeats: "never", finalPayment: "none", totalNumberOfPayments: 1, order: 0),
-                                 Expense(ownerName: currentUserName, expenseName: "bike gear", category: "transportation", amount: 0, hasDueDate: false, firstPayment: "none", repeats: "never", finalPayment: "none", totalNumberOfPayments: 1, order: 1),
-                                 Expense(ownerName: currentUserName, expenseName: "gasoline (teen car)", category: "transportation", amount: 0, hasDueDate: false, firstPayment: "none", repeats: "never", finalPayment: "none", totalNumberOfPayments: 1, order: 2),
-                                 Expense(ownerName: currentUserName, expenseName: "car insurance (teen)", category: "transportation", amount: 0, hasDueDate: false, firstPayment: "none", repeats: "never", finalPayment: "none", totalNumberOfPayments: 1, order: 3),
-                                 Expense(ownerName: currentUserName, expenseName: "car maintenance (teen car)", category: "transportation", amount: 0, hasDueDate: false, firstPayment: "none", repeats: "never", finalPayment: "none", totalNumberOfPayments: 1, order: 4),
-                                 Expense(ownerName: currentUserName, expenseName: "other", category: "transportation", amount: 0, hasDueDate: false, firstPayment: "none", repeats: "never", finalPayment: "none", totalNumberOfPayments: 1, order: 5),
-                                 Expense(ownerName: currentUserName, expenseName: "haircuts", category: "personal care", amount: 0, hasDueDate: false, firstPayment: "none", repeats: "never", finalPayment: "none", totalNumberOfPayments: 1, order: 0),
-                                 Expense(ownerName: currentUserName, expenseName: "hair color", category: "personal care", amount: 0, hasDueDate: false, firstPayment: "none", repeats: "never", finalPayment: "none", totalNumberOfPayments: 1, order: 1),
-                                 Expense(ownerName: currentUserName, expenseName: "nails", category: "personal care", amount: 0, hasDueDate: false, firstPayment: "none", repeats: "never", finalPayment: "none", totalNumberOfPayments: 1, order: 2),
-                                 Expense(ownerName: currentUserName, expenseName: "eyebrows", category: "personal care", amount: 0, hasDueDate: false, firstPayment: "none", repeats: "never", finalPayment: "none", totalNumberOfPayments: 1, order: 3),
-                                 Expense(ownerName: currentUserName, expenseName: "makeup", category: "personal care", amount: 0, hasDueDate: false, firstPayment: "none", repeats: "never", finalPayment: "none", totalNumberOfPayments: 1, order: 4),
-                                 Expense(ownerName: currentUserName, expenseName: "hair tools &c", category: "personal care", amount: 0, hasDueDate: false, firstPayment: "none", repeats: "never", finalPayment: "none", totalNumberOfPayments: 1, order: 5),
-                                 Expense(ownerName: currentUserName, expenseName: "other #1", category: "other", amount: 0, hasDueDate: false, firstPayment: "none", repeats: "never", finalPayment: "none", totalNumberOfPayments: 1, order: 0),
-                                 Expense(ownerName: currentUserName, expenseName: "other #2", category: "other", amount: 0, hasDueDate: false, firstPayment: "none", repeats: "never", finalPayment: "none", totalNumberOfPayments: 1, order: 1),
-                                 Expense(ownerName: currentUserName, expenseName: "other #3", category: "other", amount: 0, hasDueDate: false, firstPayment: "none", repeats: "never", finalPayment: "none", totalNumberOfPayments: 1, order: 2),
-                                 Expense(ownerName: currentUserName, expenseName: "other #4", category: "other", amount: 0, hasDueDate: false, firstPayment: "none", repeats: "never", finalPayment: "none", totalNumberOfPayments: 1, order: 3),
-                                 Expense(ownerName: currentUserName, expenseName: "other #5", category: "other", amount: 0, hasDueDate: false, firstPayment: "none", repeats: "never", finalPayment: "none", totalNumberOfPayments: 1, order: 4),
-                                 Expense(ownerName: currentUserName, expenseName: "fun money", category: "fun money", amount: Int(tenPercentOfUserIncome), hasDueDate: false, firstPayment: "none", repeats: "never", finalPayment: "none", totalNumberOfPayments: 1, order: 0),
-                                 Expense(ownerName: currentUserName, expenseName: "charitable donations", category: "donations", amount: Int(tenPercentOfUserIncome), hasDueDate: false, firstPayment: "none", repeats: "never", finalPayment: "none", totalNumberOfPayments: 1, order: 0),
-                                 Expense(ownerName: currentUserName, expenseName: "savings for...", category: "savings", amount: Int(tenPercentOfUserIncome), hasDueDate: false, firstPayment: "none", repeats: "never", finalPayment: "none", totalNumberOfPayments: 1, order: 0)]
-    }
-    
-    func createDefaultExpensesOnFirebase() {
-        print("sending default values to Firebase...")
+        let defaultExpensesArray = [Expense(ownerName: currentUserName, expenseName: "registration fees", category: "sports & dance", amount: 0, hasDueDate: false, firstPayment: "none", repeats: "never", finalPayment: "none", totalNumberOfPayments: 1, order: 0),
+                                    Expense(ownerName: currentUserName, expenseName: "tuition", category: "sports & dance", amount: 0, hasDueDate: false, firstPayment: "none", repeats: "never", finalPayment: "none", totalNumberOfPayments: 1, order: 1),
+                                    Expense(ownerName: currentUserName, expenseName: "uniform", category: "sports & dance", amount: 0, hasDueDate: false, firstPayment: "none", repeats: "never", finalPayment: "none", totalNumberOfPayments: 1, order: 2),
+                                    Expense(ownerName: currentUserName, expenseName: "team shirt", category: "sports & dance", amount: 0, hasDueDate: false, firstPayment: "none", repeats: "never", finalPayment: "none", totalNumberOfPayments: 1, order: 3),
+                                    Expense(ownerName: currentUserName, expenseName: "equipment", category: "sports & dance", amount: 0, hasDueDate: false, firstPayment: "none", repeats: "never", finalPayment: "none", totalNumberOfPayments: 1, order: 4),
+                                    Expense(ownerName: currentUserName, expenseName: "competitions", category: "sports & dance", amount: 0, hasDueDate: false, firstPayment: "none", repeats: "never", finalPayment: "none", totalNumberOfPayments: 1, order: 5),
+                                    Expense(ownerName: currentUserName, expenseName: "performances", category: "sports & dance", amount: 0, hasDueDate: false, firstPayment: "none", repeats: "never", finalPayment: "none", totalNumberOfPayments: 1, order: 6),
+                                    Expense(ownerName: currentUserName, expenseName: "costumes", category: "sports & dance", amount: 0, hasDueDate: false, firstPayment: "none", repeats: "never", finalPayment: "none", totalNumberOfPayments: 1, order: 7),
+                                    Expense(ownerName: currentUserName, expenseName: "tuition", category: "music & art", amount: 0, hasDueDate: false, firstPayment: "none", repeats: "never", finalPayment: "none", totalNumberOfPayments: 1, order: 0),
+                                    Expense(ownerName: currentUserName, expenseName: "supplies & tools", category: "music & art", amount: 0, hasDueDate: false, firstPayment: "none", repeats: "never", finalPayment: "none", totalNumberOfPayments: 1, order: 1),
+                                    Expense(ownerName: currentUserName, expenseName: "other", category: "music & art", amount: 0, hasDueDate: false, firstPayment: "none", repeats: "never", finalPayment: "none", totalNumberOfPayments: 1, order: 2),
+                                    Expense(ownerName: currentUserName, expenseName: "field trips", category: "school", amount: 0, hasDueDate: false, firstPayment: "none", repeats: "never", finalPayment: "none", totalNumberOfPayments: 1, order: 0),
+                                    Expense(ownerName: currentUserName, expenseName: "clubs", category: "school", amount: 0, hasDueDate: false, firstPayment: "none", repeats: "never", finalPayment: "none", totalNumberOfPayments: 1, order: 1),
+                                    Expense(ownerName: currentUserName, expenseName: "backpack", category: "school", amount: 0, hasDueDate: false, firstPayment: "none", repeats: "never", finalPayment: "none", totalNumberOfPayments: 1, order: 2),
+                                    Expense(ownerName: currentUserName, expenseName: "supplies", category: "school", amount: 0, hasDueDate: false, firstPayment: "none", repeats: "never", finalPayment: "none", totalNumberOfPayments: 1, order: 3),
+                                    Expense(ownerName: currentUserName, expenseName: "camp #1", category: "summer camps", amount: 0, hasDueDate: false, firstPayment: "none", repeats: "never", finalPayment: "none", totalNumberOfPayments: 1, order: 0),
+                                    Expense(ownerName: currentUserName, expenseName: "camp #2", category: "summer camps", amount: 0, hasDueDate: false, firstPayment: "none", repeats: "never", finalPayment: "none", totalNumberOfPayments: 1, order: 1),
+                                    Expense(ownerName: currentUserName, expenseName: "camp #3", category: "summer camps", amount: 0, hasDueDate: false, firstPayment: "none", repeats: "never", finalPayment: "none", totalNumberOfPayments: 1, order: 2),
+                                    Expense(ownerName: currentUserName, expenseName: "socks & underwear", category: "clothing", amount: 0, hasDueDate: false, firstPayment: "none", repeats: "never", finalPayment: "none", totalNumberOfPayments: 1, order: 0),
+                                    Expense(ownerName: currentUserName, expenseName: "shoes", category: "clothing", amount: 0, hasDueDate: false, firstPayment: "none", repeats: "never", finalPayment: "none", totalNumberOfPayments: 1, order: 1),
+                                    Expense(ownerName: currentUserName, expenseName: "shirts & pants", category: "clothing", amount: 0, hasDueDate: false, firstPayment: "none", repeats: "never", finalPayment: "none", totalNumberOfPayments: 1, order: 2),
+                                    Expense(ownerName: currentUserName, expenseName: "coats", category: "clothing", amount: 0, hasDueDate: false, firstPayment: "none", repeats: "never", finalPayment: "none", totalNumberOfPayments: 1, order: 3),
+                                    Expense(ownerName: currentUserName, expenseName: "dresses", category: "clothing", amount: 0, hasDueDate: false, firstPayment: "none", repeats: "never", finalPayment: "none", totalNumberOfPayments: 1, order: 4),
+                                    Expense(ownerName: currentUserName, expenseName: "suits", category: "clothing", amount: 0, hasDueDate: false, firstPayment: "none", repeats: "never", finalPayment: "none", totalNumberOfPayments: 1, order: 5),
+                                    Expense(ownerName: currentUserName, expenseName: "swimwear", category: "clothing", amount: 0, hasDueDate: false, firstPayment: "none", repeats: "never", finalPayment: "none", totalNumberOfPayments: 1, order: 6),
+                                    Expense(ownerName: currentUserName, expenseName: "jewelry", category: "clothing", amount: 0, hasDueDate: false, firstPayment: "none", repeats: "never", finalPayment: "none", totalNumberOfPayments: 1, order: 7),
+                                    Expense(ownerName: currentUserName, expenseName: "purses / wallets", category: "clothing", amount: 0, hasDueDate: false, firstPayment: "none", repeats: "never", finalPayment: "none", totalNumberOfPayments: 1, order: 8),
+                                    Expense(ownerName: currentUserName, expenseName: "other", category: "clothing", amount: 0, hasDueDate: false, firstPayment: "none", repeats: "never", finalPayment: "none", totalNumberOfPayments: 1, order: 9),
+                                    Expense(ownerName: currentUserName, expenseName: "phone purchase", category: "electronics", amount: 0, hasDueDate: false, firstPayment: "none", repeats: "never", finalPayment: "none", totalNumberOfPayments: 1, order: 0),
+                                    Expense(ownerName: currentUserName, expenseName: "phone bill", category: "electronics", amount: 0, hasDueDate: false, firstPayment: "none", repeats: "never", finalPayment: "none", totalNumberOfPayments: 1, order: 1),
+                                    Expense(ownerName: currentUserName, expenseName: "software purchase", category: "electronics", amount: 0, hasDueDate: false, firstPayment: "none", repeats: "never", finalPayment: "none", totalNumberOfPayments: 1, order: 2),
+                                    Expense(ownerName: currentUserName, expenseName: "games", category: "electronics", amount: 0, hasDueDate: false, firstPayment: "none", repeats: "never", finalPayment: "none", totalNumberOfPayments: 1, order: 3),
+                                    Expense(ownerName: currentUserName, expenseName: "iPods, iPads, &c", category: "electronics", amount: 0, hasDueDate: false, firstPayment: "none", repeats: "never", finalPayment: "none", totalNumberOfPayments: 1, order: 4),
+                                    Expense(ownerName: currentUserName, expenseName: "bicycle maintenance", category: "transportation", amount: 0, hasDueDate: false, firstPayment: "none", repeats: "never", finalPayment: "none", totalNumberOfPayments: 1, order: 0),
+                                    Expense(ownerName: currentUserName, expenseName: "bike gear", category: "transportation", amount: 0, hasDueDate: false, firstPayment: "none", repeats: "never", finalPayment: "none", totalNumberOfPayments: 1, order: 1),
+                                    Expense(ownerName: currentUserName, expenseName: "gasoline (teen car)", category: "transportation", amount: 0, hasDueDate: false, firstPayment: "none", repeats: "never", finalPayment: "none", totalNumberOfPayments: 1, order: 2),
+                                    Expense(ownerName: currentUserName, expenseName: "car insurance (teen)", category: "transportation", amount: 0, hasDueDate: false, firstPayment: "none", repeats: "never", finalPayment: "none", totalNumberOfPayments: 1, order: 3),
+                                    Expense(ownerName: currentUserName, expenseName: "car maintenance (teen car)", category: "transportation", amount: 0, hasDueDate: false, firstPayment: "none", repeats: "never", finalPayment: "none", totalNumberOfPayments: 1, order: 4),
+                                    Expense(ownerName: currentUserName, expenseName: "other", category: "transportation", amount: 0, hasDueDate: false, firstPayment: "none", repeats: "never", finalPayment: "none", totalNumberOfPayments: 1, order: 5),
+                                    Expense(ownerName: currentUserName, expenseName: "haircuts", category: "personal care", amount: 0, hasDueDate: false, firstPayment: "none", repeats: "never", finalPayment: "none", totalNumberOfPayments: 1, order: 0),
+                                    Expense(ownerName: currentUserName, expenseName: "hair color", category: "personal care", amount: 0, hasDueDate: false, firstPayment: "none", repeats: "never", finalPayment: "none", totalNumberOfPayments: 1, order: 1),
+                                    Expense(ownerName: currentUserName, expenseName: "nails", category: "personal care", amount: 0, hasDueDate: false, firstPayment: "none", repeats: "never", finalPayment: "none", totalNumberOfPayments: 1, order: 2),
+                                    Expense(ownerName: currentUserName, expenseName: "eyebrows", category: "personal care", amount: 0, hasDueDate: false, firstPayment: "none", repeats: "never", finalPayment: "none", totalNumberOfPayments: 1, order: 3),
+                                    Expense(ownerName: currentUserName, expenseName: "makeup", category: "personal care", amount: 0, hasDueDate: false, firstPayment: "none", repeats: "never", finalPayment: "none", totalNumberOfPayments: 1, order: 4),
+                                    Expense(ownerName: currentUserName, expenseName: "hair tools &c", category: "personal care", amount: 0, hasDueDate: false, firstPayment: "none", repeats: "never", finalPayment: "none", totalNumberOfPayments: 1, order: 5),
+                                    Expense(ownerName: currentUserName, expenseName: "other #1", category: "other", amount: 0, hasDueDate: false, firstPayment: "none", repeats: "never", finalPayment: "none", totalNumberOfPayments: 1, order: 0),
+                                    Expense(ownerName: currentUserName, expenseName: "other #2", category: "other", amount: 0, hasDueDate: false, firstPayment: "none", repeats: "never", finalPayment: "none", totalNumberOfPayments: 1, order: 1),
+                                    Expense(ownerName: currentUserName, expenseName: "other #3", category: "other", amount: 0, hasDueDate: false, firstPayment: "none", repeats: "never", finalPayment: "none", totalNumberOfPayments: 1, order: 2),
+                                    Expense(ownerName: currentUserName, expenseName: "other #4", category: "other", amount: 0, hasDueDate: false, firstPayment: "none", repeats: "never", finalPayment: "none", totalNumberOfPayments: 1, order: 3),
+                                    Expense(ownerName: currentUserName, expenseName: "other #5", category: "other", amount: 0, hasDueDate: false, firstPayment: "none", repeats: "never", finalPayment: "none", totalNumberOfPayments: 1, order: 4),
+                                    Expense(ownerName: currentUserName, expenseName: "fun money", category: "fun money", amount: Int(tenPercentOfUserIncome), hasDueDate: false, firstPayment: "none", repeats: "never", finalPayment: "none", totalNumberOfPayments: 1, order: 0),
+                                    Expense(ownerName: currentUserName, expenseName: "charitable donations", category: "donations", amount: Int(tenPercentOfUserIncome), hasDueDate: false, firstPayment: "none", repeats: "never", finalPayment: "none", totalNumberOfPayments: 1, order: 0),
+                                    Expense(ownerName: currentUserName, expenseName: "savings for...", category: "savings", amount: Int(tenPercentOfUserIncome), hasDueDate: false, firstPayment: "none", repeats: "never", finalPayment: "none", totalNumberOfPayments: 1, order: 0)]
+        
+        // append local array with current user's expenses...
+        Expense.expensesArray += defaultExpensesArray
+        
+        // ...and send array to Firebase
+        for expense in defaultExpensesArray {
+            ref.child("expenses").child(currentUserName).childByAutoId().setValue(["ownerName" : expense.ownerName,
+                                                                                   "expenseName" : expense.expenseName,
+                                                                                   "category" : expense.category,
+                                                                                   "amount" : expense.amount,
+                                                                                   "hasDueDate" : expense.hasDueDate,
+                                                                                   "firstPayment" : expense.firstPayment,
+                                                                                   "repeats" : expense.repeats,
+                                                                                   "finalPayment" : expense.finalPayment,
+                                                                                   "totalNumberOfPayments" : expense.totalNumberOfPayments,
+                                                                                   "order" : expense.order])
+        }
+        
+        
     }
 }
 

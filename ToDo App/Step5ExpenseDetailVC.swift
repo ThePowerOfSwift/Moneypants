@@ -36,8 +36,9 @@ class Step5ExpenseDetailVC: UITableViewController, UIPickerViewDelegate, UIPicke
     var totalNumberOfPaymentsHeight: CGFloat = 0
     var firstPaymentDueDate: String?
     var finalPaymentDueDate: String?
+    var firstPaymentDueDateHasError: Bool = false       // for checking for valid due date
+    var finalPaymentDueDateError: Bool = false          // for checking for valid date
     
-    var currentUser: Int!               // passed from Step5VC
     var expense: Expense?               // passed from Step5VC
     var currentUserName: String!
     
@@ -71,7 +72,7 @@ class Step5ExpenseDetailVC: UITableViewController, UIPickerViewDelegate, UIPicke
         
 //        firstPaymentDatePickerView.minimumDate = Date()
         
-        currentUserName = User.usersArray[currentUser].firstName
+        currentUserName = User.usersArray[User.currentUser].firstName
         navigationItem.title = currentUserName!
         
         // ----------------------
@@ -88,15 +89,38 @@ class Step5ExpenseDetailVC: UITableViewController, UIPickerViewDelegate, UIPicke
     @IBAction func firstPaymentDueDateChanged(_ sender: UIDatePicker) {
         firstPaymentDueDateLabel.text = formatterForLabel.string(from: sender.date)
         firstPaymentDueDate = formatterForFirebase.string(from: sender.date)
-        
         updateTotals()
+        
+        let today = Int(formatterForFirebase.string(from: Date()))
+        let selectedDate = Int(firstPaymentDueDate!)
+        
+        if today! > selectedDate! {
+            // user has selected a start date that is in the past
+            let attributedString = NSMutableAttributedString(string: firstPaymentDueDateLabel.text!)
+            attributedString.addAttribute(NSStrikethroughStyleAttributeName, value: 1, range: NSMakeRange(0, attributedString.length))
+            firstPaymentDueDateLabel.attributedText = attributedString
+            // set first payment with value of error for checking when saving
+            firstPaymentDueDateHasError = true
+        } else {
+            firstPaymentDueDateHasError = false
+        }
     }
     
     @IBAction func finalPaymentDueDateChanged(_ sender: UIDatePicker) {
         finalPaymentDueDateLabel.text = formatterForLabel.string(from: sender.date)
         finalPaymentDueDate = formatterForFirebase.string(from: sender.date)
-        
         updateTotals()
+        
+        if firstPaymentDueDate! > finalPaymentDueDate! {
+            // user has selected a start date that is in the past
+            let attributedString = NSMutableAttributedString(string: finalPaymentDueDateLabel.text!)
+            attributedString.addAttribute(NSStrikethroughStyleAttributeName, value: 1, range: NSMakeRange(0, attributedString.length))
+            finalPaymentDueDateLabel.attributedText = attributedString
+            // set first payment with value of error for checking when saving
+            finalPaymentDueDateError = true
+        } else {
+            finalPaymentDueDateError = false
+        }
     }
     
     // -------------
@@ -161,6 +185,7 @@ class Step5ExpenseDetailVC: UITableViewController, UIPickerViewDelegate, UIPicke
             finalPaymentDueCellHeight = 0
             totalNumberOfPaymentsHeight = 0
         }
+        updateTotals()
         tableView.beginUpdates()
         tableView.endUpdates()
     }
@@ -278,19 +303,20 @@ class Step5ExpenseDetailVC: UITableViewController, UIPickerViewDelegate, UIPicke
     }
     
     @IBAction func saveButtonTapped(_ sender: UIBarButtonItem) {
-        // TODO: have due date text field update when user chooses a different date...
-        
-        // check for if due date is selected, there's a valid due date that's after today
-        // check if repeat is selected, there's a final due date that's after today's date AND after the first due date
-        
+        view.endEditing(true)
         // 1. make sure name is not blank
-        // 2. then make sure name is not duplicate
-        // 3. then make sure amount is not blank
-        
         if expenseNameTextField.text == "" {
             blankNameAlert()
+        // 2. then make sure amount is not blank
         } else if expenseAmountTextField.text == "" {
             blankAmountAlert()
+        // 3. make sure first payment due is after today's date (not in the past)
+        } else if firstPaymentDueDateHasError {
+            firstDateErrorAlert()
+        // 4. make sure final payment due is after first payment
+        } else if finalPaymentDueDateError {
+            finalDateErrorAlert()
+        // 5. then make sure name is not duplicate
         } else {
             if expense?.expenseName == expenseNameTextField.text {
                 updateExpenseInfo()
@@ -371,12 +397,18 @@ class Step5ExpenseDetailVC: UITableViewController, UIPickerViewDelegate, UIPicke
             if expenseNameTextField.text != "" && Int(expenseAmountTextField.text!) != nil {
                 totalNumberOfPaymentsLabel.text = "\(numberOfWeeks!)"
                 yearlyTotalLabel.text = "\(expenseNameTextField.text!) = $\(Int(expenseAmountTextField.text!)! * numberOfWeeks!)"
+            } else {
+                totalNumberOfPaymentsLabel.text = "\(numberOfWeeks!)"
+                yearlyTotalLabel.text = "\(expenseNameTextField.text!) = $0"
             }
         } else if repeatsLabel.text == "monthly" {
             let numberOfMonths = finalPayment?.months(from: firstPayment!)
             if expenseNameTextField.text != "" && Int(expenseAmountTextField.text!) != nil {
                 totalNumberOfPaymentsLabel.text = "\(numberOfMonths!)"
                 yearlyTotalLabel.text = "\(expenseNameTextField.text!) = $\(Int(expenseAmountTextField.text!)! * numberOfMonths!)"
+            } else {
+                totalNumberOfPaymentsLabel.text = "\(numberOfMonths!)"
+                yearlyTotalLabel.text = "\(expenseNameTextField.text!) = $0"
             }
         } else {
             yearlyTotalLabel.text = "\(expenseNameTextField.text!)"
@@ -388,18 +420,34 @@ class Step5ExpenseDetailVC: UITableViewController, UIPickerViewDelegate, UIPicke
             if item.ownerName == currentUserName && item.expenseName == expense?.expenseName && item.category == expense?.category {
                 Expense.expensesArray[index].expenseName = expenseNameTextField.text!
                 Expense.expensesArray[index].amount = Int(expenseAmountTextField.text!)!
-                if hasDueDateSwitch.isOn {
+                
+                // if expense amount is zero, nuke all the data
+                if expenseAmountTextField.text == "0" {
+                    Expense.expensesArray[index].hasDueDate = false
+                    Expense.expensesArray[index].firstPayment = "none"
+                    Expense.expensesArray[index].repeats = "never"
+                    Expense.expensesArray[index].finalPayment = "none"
+                    Expense.expensesArray[index].totalNumberOfPayments = 0
+                    
+                // if expense has due date...
+                } else if hasDueDateSwitch.isOn {
                     Expense.expensesArray[index].hasDueDate = true
                     Expense.expensesArray[index].firstPayment = firstPaymentDueDate!
+                    
+                    // ...with repeat
                     if repeatsLabel.text != "never" {
                         Expense.expensesArray[index].repeats = repeatsLabel.text!
                         Expense.expensesArray[index].finalPayment = finalPaymentDueDate!
                         Expense.expensesArray[index].totalNumberOfPayments = Int(totalNumberOfPaymentsLabel.text!)!
+                        
+                    // ...without repeat
                     } else {
                         Expense.expensesArray[index].repeats = "never"
                         Expense.expensesArray[index].finalPayment = "none"
                         Expense.expensesArray[index].totalNumberOfPayments = 1
                     }
+                    
+                // if expense has no due date
                 } else {
                     Expense.expensesArray[index].hasDueDate = false
                     Expense.expensesArray[index].firstPayment = "none"
@@ -420,7 +468,7 @@ class Step5ExpenseDetailVC: UITableViewController, UIPickerViewDelegate, UIPicke
     }
     
     func blankAmountAlert() {
-        let alert = UIAlertController(title: "Expense Amount", message: "Please enter an amount for this expense.", preferredStyle: .alert)
+        let alert = UIAlertController(title: "Expense Amount", message: "Please enter an amount for this expense.\n\nIf you wish to cancel this expense, simply add '0' to the amount.", preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "okay", style: .cancel, handler: { (action) in
             alert.dismiss(animated: true, completion: nil)
         }))
@@ -428,10 +476,27 @@ class Step5ExpenseDetailVC: UITableViewController, UIPickerViewDelegate, UIPicke
     }
     
     func duplicateNameAlert() {
-        let alert = UIAlertController(title: "Edit Expense", message: "You have entered in an expense with the same name as another expense. Please choose a unique name for this expense.", preferredStyle: .alert)
+        let alert = UIAlertController(title: "Duplicate Name", message: "You have entered in an expense with the same name as another expense. Please choose a unique name for this expense.", preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "okay", style: .default, handler: { (action) in
             alert.dismiss(animated: true, completion: {
-//                self.expenseNameTextField.becomeFirstResponder()          // for some reason, this causes a spellcheck error with Xcode
+            })
+        }))
+        present(alert, animated: true, completion: nil)
+    }
+    
+    func firstDateErrorAlert() {
+        let alert = UIAlertController(title: "First Due Date", message: "The first payment due date cannot be in the past.", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "okay", style: .default, handler: { (action) in
+            alert.dismiss(animated: true, completion: {
+            })
+        }))
+        present(alert, animated: true, completion: nil)
+    }
+    
+    func finalDateErrorAlert() {
+        let alert = UIAlertController(title: "Final Due Date", message: "The final payment cannot be due before the first payment is due.", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "okay", style: .default, handler: { (action) in
+            alert.dismiss(animated: true, completion: {
             })
         }))
         present(alert, animated: true, completion: nil)

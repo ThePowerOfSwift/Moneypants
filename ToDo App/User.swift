@@ -11,6 +11,7 @@ struct User {
     var childParent: String
     
     static var usersArray = [User]()
+    static var currentUser: Int = 0
     
     static func loadMembers(completion: @escaping () -> ()) {
         let firebaseUser = FIRAuth.auth()?.currentUser

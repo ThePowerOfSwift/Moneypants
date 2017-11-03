@@ -14,7 +14,6 @@ class Step5IncomeSummaryVC: UIViewController {
     
     let numberFormatter = NumberFormatter()
     
-    var currentUser: Int!               // passed from Step5VC
     var yearlyOutsideIncome: Int!       // passed from Step5VC
     var yearlyTotal: Int!
     
@@ -24,9 +23,9 @@ class Step5IncomeSummaryVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        currentUserName = User.usersArray[currentUser].firstName
-        userImage.image = User.usersArray[currentUser].photo
-        navigationItem.title = User.usersArray[currentUser].firstName
+        currentUserName = User.usersArray[User.currentUser].firstName
+        userImage.image = User.usersArray[User.currentUser].photo
+        navigationItem.title = User.usersArray[User.currentUser].firstName
         
         showDetailsButton.setTitle("show details", for: .normal)
         viewTop.constant = -(detailsView.bounds.height)
@@ -48,7 +47,6 @@ class Step5IncomeSummaryVC: UIViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "MemberExpenses" {
             let nextVC = segue.destination as! Step5ExpensesVC
-            nextVC.currentUser = currentUser
             nextVC.userTotalIncome = yearlyTotal
         }
     }

@@ -212,31 +212,31 @@ class Step4HabitVC: UIViewController, UITableViewDataSource, UITableViewDelegate
                     // append local array with parental array...
                     JobsAndHabits.finalDailyHabitsArray += parentalHabitsArray
                     // ...and send array to Firebase
-                    for (index, dailyHabit) in parentalHabitsArray.enumerated() {
+                    for dailyHabit in parentalHabitsArray {
                         ref.child("dailyHabits").child(user.firstName).childByAutoId().setValue(["name" : dailyHabit.name,
-                                                                                                 "description" : "habit description",
+                                                                                                 "description" : dailyHabit.description,
                                                                                                  "assigned" : user.firstName,
-                                                                                                 "order" : index])
+                                                                                                 "order" : dailyHabit.order])
                     }
                 } else if calculateAge(birthday: "\(user.birthday)") < 5 {
                     // append local array with toddler array...
                     JobsAndHabits.finalDailyHabitsArray += toddlerHabitsArray
                     // ...and send array to Firebase
-                    for (index, dailyHabit) in toddlerHabitsArray.enumerated() {
+                    for dailyHabit in toddlerHabitsArray {
                         ref.child("dailyHabits").child(user.firstName).childByAutoId().setValue(["name" : dailyHabit.name,
-                                                                                                 "description" : "habit description",
+                                                                                                 "description" : dailyHabit.description,
                                                                                                  "assigned" : user.firstName,
-                                                                                                 "order" : index])
+                                                                                                 "order" : dailyHabit.order])
                     }
                 } else {
                     // append local array with standard array...
                     JobsAndHabits.finalDailyHabitsArray += standardHabitsArray
                     // ...and send array to Firebase
-                    for (index, dailyHabit) in standardHabitsArray.enumerated() {
+                    for dailyHabit in standardHabitsArray {
                         ref.child("dailyHabits").child(user.firstName).childByAutoId().setValue(["name" : dailyHabit.name,
-                                                                                                 "description" : "habit description",
+                                                                                                 "description" : dailyHabit.description,
                                                                                                  "assigned" : user.firstName,
-                                                                                                 "order" : index])
+                                                                                                 "order" : dailyHabit.order])
                     }
                 }
                 

@@ -421,7 +421,7 @@ class Step4VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
             reviewFamilyJobs()
         } else {
             // perform query on daily jobs to see how many jobs current user has assigned
-            let userJobsList = JobsAndHabits.finalDailyJobsArray.filter({ return $0.assigned == User.usersArray[self.currentMember].firstName })
+            let userJobsList = JobsAndHabits.finalDailyJobsArray.filter({ return $0.assigned == User.usersArray[currentMember].firstName })
             
             // -------------------------------------------------
             // 1. does current user have at least one DAILY job?
@@ -438,11 +438,11 @@ class Step4VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
                 // 2. does current user have at least one WEEKLY job?
                 // --------------------------------------------------
                 
-                let userJobsList2 = JobsAndHabits.finalWeeklyJobsArray.filter({ return $0.assigned == User.usersArray[self.currentMember].firstName })
+                let userJobsList2 = JobsAndHabits.finalWeeklyJobsArray.filter({ return $0.assigned == User.usersArray[currentMember].firstName })
                 
                 // 2A. user has ZERO weekly jobs assigned
                 if userJobsList2.count == 0 {
-                    let alert = UIAlertController(title: "Not Enough Jobs", message: "You have not chosen any weekly jobs for \(User.usersArray[self.currentMember].firstName). Are you sure you want to continue?", preferredStyle: .alert)
+                    let alert = UIAlertController(title: "Not Enough Jobs", message: "You have not chosen any weekly jobs for \(User.usersArray[currentMember].firstName). Are you sure you want to continue?", preferredStyle: .alert)
                     alert.addAction(UIAlertAction(title: "cancel", style: .cancel, handler: { (action) in
                         alert.dismiss(animated: true, completion: nil)
                     }))
@@ -463,7 +463,7 @@ class Step4VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
                             self.reviewFamilyJobs()
                         }
                     }))
-                    self.present(alert, animated: true, completion: nil)
+                    present(alert, animated: true, completion: nil)
                 } else {
                     
                     // -------------------------------------------
@@ -471,10 +471,10 @@ class Step4VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
                     // -------------------------------------------
                     
                     // current user is oldest member of family
-                    if self.currentMember == (User.usersArray.count - 1) {
-                        self.reviewFamilyJobs()
-                    } else if self.currentMember != (User.usersArray.count - 1) {
-                        self.presentNextUser()
+                    if currentMember == (User.usersArray.count - 1) {
+                        reviewFamilyJobs()
+                    } else if currentMember != (User.usersArray.count - 1) {
+                        presentNextUser()
                     }
                 }
             }

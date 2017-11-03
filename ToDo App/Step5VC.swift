@@ -30,7 +30,6 @@ class Step5VC: UIViewController, UITextFieldDelegate {
     var firebaseUser: FIRUser!
     var ref: FIRDatabaseReference!
     
-    var currentUser: Int = 0           // used for cycling through users when 'next' button is tapped
     var currentUserName: String!
     var income = [OutsideIncome]()
         
@@ -49,13 +48,13 @@ class Step5VC: UIViewController, UITextFieldDelegate {
         firebaseUser = FIRAuth.auth()?.currentUser
         ref = FIRDatabase.database().reference().child("users").child(firebaseUser.uid)
         
-        currentUserName = User.usersArray[currentUser].firstName
-        userImage.image = User.usersArray[currentUser].photo
-        navigationItem.title = User.usersArray[currentUser].firstName
-        topQuestionLabel.text = "Does \(currentUserName!) have any income \(User.gender(user: currentUser).he_she.lowercased()) earns OUTSIDE the home?"
+        currentUserName = User.usersArray[User.currentUser].firstName
+        userImage.image = User.usersArray[User.currentUser].photo
+        navigationItem.title = User.usersArray[User.currentUser].firstName
+        topQuestionLabel.text = "Does \(currentUserName!) have any income \(User.gender(user: User.currentUser).he_she.lowercased()) earns OUTSIDE the home?"
         yesLabel.text = "Yes, \(currentUserName!) has other income."
         noLabel.text = "No, \(currentUserName!) does not have other income."
-        bottomQuestionLabel.text = "What are \(User.gender(user: currentUser).his_her.lowercased()) other sources of income?"
+        bottomQuestionLabel.text = "What are \(User.gender(user: User.currentUser).his_her.lowercased()) other sources of income?"
         
         loadExistingOutsideIncome()
     }
@@ -76,7 +75,6 @@ class Step5VC: UIViewController, UITextFieldDelegate {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "IncomeSummary" {
             let nextVC = segue.destination as! Step5IncomeSummaryVC
-            nextVC.currentUser = currentUser
             nextVC.yearlyOutsideIncome = calculateTotal()
             
             if noButton.isSelected == true {
@@ -167,14 +165,8 @@ class Step5VC: UIViewController, UITextFieldDelegate {
     }
     
     func updateLocalArray() {
-//        print("A:  updating local array")
-        
         for (index, income) in OutsideIncome.incomeArray.enumerated() {
-//            print("B:  ",income.userName)
-//            print("C:  ",currentUserName)
             if income.userName == currentUserName {
-//                print("name match!")
-//                print("INDEX:  ",index)
                 OutsideIncome.incomeArray[index].mowingLawns = Int(mowingLawnsTextField.text!) ?? 0
                 OutsideIncome.incomeArray[index].babysitting = Int(babysittingTextField.text!) ?? 0
                 OutsideIncome.incomeArray[index].houseCleaning = Int(houseCleaningTextField.text!) ?? 0
@@ -182,7 +174,6 @@ class Step5VC: UIViewController, UITextFieldDelegate {
                 OutsideIncome.incomeArray[index].allOthers = Int(allOthersTextField.text!) ?? 0
             }
         }
-//        print("D:  ",OutsideIncome.incomeArray)
     }
     
     func updateFirebaseOutsideIncome() {
