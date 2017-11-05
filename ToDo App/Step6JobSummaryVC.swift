@@ -1,13 +1,20 @@
 import UIKit
+import Firebase
 
-class JobSummaryVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
+class Step6JobSummaryVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
     @IBOutlet weak var tableView: UITableView!
     
     var oldestFirstArray: [User]!
     
+    var firebaseUser: FIRUser!
+    var ref: FIRDatabaseReference!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        firebaseUser = FIRAuth.auth()?.currentUser
+        ref = FIRDatabase.database().reference().child("users").child(firebaseUser.uid)
         
         oldestFirstArray = User.usersArray.sorted(by: { $0.birthday < $1.birthday })        // create array with oldest members first
         
@@ -30,7 +37,7 @@ class JobSummaryVC: UIViewController, UITableViewDataSource, UITableViewDelegate
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "customCell") as! JobSummaryCellB
+        let cell = tableView.dequeueReusableCell(withIdentifier: "customCell") as! Step6Step6JobSummaryCellB
         
         // get the job assignments in the 'finalDailyJobs' array that matches the current user in the tableview
         let dailyJobAssignments = JobsAndHabits.finalDailyJobsArray.sorted(by: { $0.order < $1.order }).filter({ return $0.assigned == oldestFirstArray[indexPath.section].firstName })      //.sorted(by: { $0.order < $1.order })
@@ -55,7 +62,7 @@ class JobSummaryVC: UIViewController, UITableViewDataSource, UITableViewDelegate
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "headerCell") as! JobSummaryCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: "headerCell") as! Step6JobSummaryCell
         cell.headerImage.image = oldestFirstArray[section].photo
         cell.headerLabel.text = oldestFirstArray[section].firstName
         return cell
@@ -66,6 +73,10 @@ class JobSummaryVC: UIViewController, UITableViewDataSource, UITableViewDelegate
     }
     
     @IBAction func nextButtonTapped(_ sender: UIButton) {
+        if FamilyData.setupProgress <= 6 {
+            FamilyData.setupProgress = 6
+            ref.updateChildValues(["setupProgress" : 6])
+        }
         performSegue(withIdentifier: "DailyHabits", sender: self)
     }
 }

@@ -4,79 +4,77 @@ import Firebase
 class LoadingVC: UIViewController {
     
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
-//    @IBOutlet weak var progressView: UIProgressView!
+    @IBOutlet weak var progressView: UIProgressView!
     
     var loadingProgress: Double = 0
+    var window: UIWindow?
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
-//        progressView.progress = 0.0
-        
-        
-//        Timer.scheduledTimer(withTimeInterval: 30, repeats: false) { (timer) in
-//            if self.loadingProgress < 1.0 {
-//                print("error. connection taking too long to load")
-//                let alert = UIAlertController(title: "Network Error", message: "The Moneypants Solution app is taking too long to load. Please check your connection and try again.", preferredStyle: .alert)
-//                alert.addAction(UIAlertAction(title: "okay", style: .cancel, handler: { (action) in
-//                    alert.dismiss(animated: true, completion: nil)
-//                    do {
-//                        try FIRAuth.auth()?.signOut()
-//                        let storyBoard: UIStoryboard = UIStoryboard(name: "Setup", bundle: nil)
-//                        let newViewController = storyBoard.instantiateViewController(withIdentifier: "LoginVC") // as! LoginViewController
-//                        self.present(newViewController, animated: true, completion: nil)
-//                    } catch let error {
-//                        assertionFailure("Error signing out: \(error)")
-//                    }
-//                }))
-//                self.present(alert, animated: true, completion: nil)
-//            }
-//        }
-        
-        
-        
-//        JobsAndHabits.loadPaydayAndInspectionsFromFirebase {
-//            print("F:  ",JobsAndHabits.parentalDailyJobsArray)
-//            self.performSegue(withIdentifier: "GoToStep1EnterIncome", sender: self)
-//        }
-        
+        progressView.progress = 0.0
 
         activityIndicator.startAnimating()
         
         FamilyData.getSetupProgressFromFirebase { (setupProgress) in
-            //            self.progressView.progress += 0.1
+            self.progressView.setProgress(0.1, animated: true)
             print("1. SETUP PROGRESS:  ",setupProgress)
             
             FamilyData.loadExistingIncome { (income) in
+                self.progressView.setProgress(0.2, animated: true)
                 print("2. INCOME:  ",income)
                 
                 User.loadMembers {
+                    self.progressView.setProgress(0.3, animated: true)
                     print("3. USERS:  ",User.usersArray.count)
                     
                     JobsAndHabits.loadDailyJobsFromFirebase {
+                        self.progressView.setProgress(0.4, animated: true)
                         print("4. DAILY JOBS:  ",JobsAndHabits.finalDailyJobsArray.count)
                         
                         JobsAndHabits.loadWeeklyJobsFromFirebase {
+                            self.progressView.setProgress(0.5, animated: true)
                             print("5. WEEKLY JOBS:  ",JobsAndHabits.finalWeeklyJobsArray.count)
                             
                             JobsAndHabits.loadDailyHabitsFromFirebase {
+                                self.progressView.setProgress(0.6, animated: true)
                                 print("6. DAILY HABITS:  ",JobsAndHabits.finalDailyHabitsArray.count)
                                 
                                 JobsAndHabits.loadPaydayAndInspectionsFromFirebase {
+                                    self.progressView.setProgress(0.7, animated: true)
                                     print("7. PAYDAY:  ",JobsAndHabits.parentalDailyJobsArray.count)
                                     
                                     FamilyData.loadPaydayTimeFromFirebase { (paydayTime) in
+                                        self.progressView.setProgress(0.8, animated: true)
                                         print("8. PAYDAY TIME:  ",paydayTime)
                                         
                                         OutsideIncome.loadOutsideIncomeFromFirebase {
+                                            self.progressView.setProgress(0.9, animated: true)
                                             print("9. OUTSIDE INCOME")
                                             
                                             Expense.loadBudgetsFromFirebase {
+                                                self.progressView.setProgress(1.0, animated: true)
                                                 print("10. BUDGETS",Expense.budgetsArray.count)
-                                            
+                                                
                                                 self.activityIndicator.stopAnimating()
                                                 self.activityIndicator.hidesWhenStopped = true
-                                                self.performSegue(withIdentifier: "GoToStep1EnterIncome", sender: self)
+                                                
+                                                // if user has completed setup, go to home page
+                                                if FamilyData.setupProgress == 11 {
+                                                    print("user has completed setup. Loading home page...")
+                                                    
+                                                    self.performSegue(withIdentifier: "Home", sender: self)
+                                                    
+//                                                    self.window = UIWindow(frame: UIScreen.main.bounds)
+//                                                    let storyboard = UIStoryboard(name: "Home", bundle: nil)
+//                                                    let initialViewController = storyboard.instantiateViewController(withIdentifier: "HomeVC")
+//                                                    self.window?.rootViewController = initialViewController
+//                                                    self.window?.makeKeyAndVisible()
+                                                    
+                                                    
+                                                } else {
+                                                    self.performSegue(withIdentifier: "GoToStep1EnterIncome", sender: self)
+                                                }
                                             }
                                         }
                                     }
@@ -87,93 +85,5 @@ class LoadingVC: UIViewController {
                 }
             }
         }
-
-        
-        
-        
-        
-        
-//        FamilyData.loadExistingIncome { (income) in
-//            self.loadingProgress += 0.1
-//            print("2. INCOME:  ",income)
-//            self.checkProgress()
-//        }
-
-//        User.loadMembers {
-//            self.loadingProgress += 0.2
-//            print("3. USERS:  ",User.usersArray.count)
-//            self.checkProgress()
-//        }
-
-//        JobsAndHabits.loadDailyJobsFromFirebase {
-//            self.loadingProgress += 0.1
-//            print("4. DAILY JOBS:  ",JobsAndHabits.finalDailyJobsArray.count)
-//            self.checkProgress()
-//        }
-
-//        JobsAndHabits.loadWeeklyJobsFromFirebase {
-//            self.loadingProgress += 0.1
-//            print("5. WEEKLY JOBS:  ",JobsAndHabits.finalWeeklyJobsArray.count)
-//            self.checkProgress()
-//        }
-        
-//        JobsAndHabits.loadDailyHabitsFromFirebase {
-//            self.loadingProgress += 0.1
-//            print("6. DAILY HABITS:  ",JobsAndHabits.finalDailyHabitsArray.count)
-//            self.checkProgress()
-//        }
-//        
-//        JobsAndHabits.loadPaydayAndInspectionsFromFirebase {
-//            self.loadingProgress += 0.1
-//            print("7. PAYDAY:  ",JobsAndHabits.parentalDailyJobsArray.count)
-//            self.checkProgress()
-//        }
-//
-//        FamilyData.loadPaydayTimeFromFirebase { (paydayTime) in
-//            self.loadingProgress += 0.1
-//            print("8. PAYDAY TIME:  ",paydayTime)
-//            self.checkProgress()
-//        }
-//        
-//        OutsideIncome.loadOutsideIncomeFromFirebase {
-//            self.loadingProgress += 0.1
-//            print("9. OUTSIDE INCOME")
-//            self.checkProgress()
-//        }
     }
-    
-//    func checkProgress() {
-//        print("Loading Progress: ",loadingProgress)
-//        if self.loadingProgress >= 1.0 {
-//            print("all done downloading")
-//            self.activityIndicator.stopAnimating()
-//            self.activityIndicator.hidesWhenStopped = true
-//            self.performSegue(withIdentifier: "GoToStep1EnterIncome", sender: self)
-//        } else {
-//            print("still waiting...")
-//        }
-    
-        
-        
-        // IF USING PROGRESS BAR
-//        if self.progressView.progress == 1.0 {
-//            print("all done downloading")
-//            self.activityIndicator.stopAnimating()
-//            self.activityIndicator.hidesWhenStopped = true
-//            self.performSegue(withIdentifier: "GoToStep1EnterIncome", sender: self)
-//        } else {
-//            print("still waiting...")
-//        }
-//    }
-    
-//    func checkConnectivity() {
-//        let connectedRef = FIRDatabase.database().reference(withPath: ".info/connected")
-//        connectedRef.observe(.value, with: { snapshot in
-//            if snapshot.value as? Bool ?? false {
-//                print("Connected")
-//            } else {
-//                print("Not connected")
-//            }
-//        })
-//    }
 }

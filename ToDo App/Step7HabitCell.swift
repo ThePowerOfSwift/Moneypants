@@ -1,6 +1,6 @@
 import UIKit
 
-class Step4HabitCell: UITableViewCell {
+class Step7HabitsCell: UITableViewCell {
     
     @IBOutlet weak var habitLabel: UILabel!
     

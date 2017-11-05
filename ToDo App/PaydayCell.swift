@@ -19,5 +19,6 @@ class PaydayCell: UICollectionViewCell {
         paidBadge.layer.masksToBounds = true
         paidBadge.layer.borderWidth = 0.5
         paidBadge.layer.borderColor = UIColor.black.cgColor
+        paidBadge.layer.backgroundColor = UIColor.lightGray.cgColor
     }
 }

@@ -137,9 +137,9 @@ class Step2VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
                 createAlert(alertTitle: "Users", alertMessage: "You must have at least one parent. Please enter in a parent.")
             } else {
                 performSegue(withIdentifier: "GoToStep3", sender: self)
-                if FamilyData.setupProgress <= 20 {
-                    FamilyData.setupProgress = 20
-                    ref.updateChildValues(["setupProgress" : 20])      // setupProgress: each step is an increment of 10, with each substep being a single digit, so step 4 would be 40, Step 4pt2 would be 42, etc.
+                if FamilyData.setupProgress <= 2 {
+                    FamilyData.setupProgress = 2
+                    ref.updateChildValues(["setupProgress" : 2])
                 }
             }
         }

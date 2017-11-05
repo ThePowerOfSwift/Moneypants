@@ -1,6 +1,6 @@
 import UIKit
 
-class Step4HabitVideoVC: UIViewController {
+class Step7HabitsVideoVC: UIViewController {
     
     @IBOutlet weak var webView: UIWebView!
     

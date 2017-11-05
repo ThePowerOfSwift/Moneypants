@@ -1,7 +1,7 @@
 import UIKit
 import Firebase
 
-class Step4PaydayInspectVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
+class Step5PaydayInspectVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
     
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var secondView: UIView!
@@ -172,7 +172,6 @@ class Step4PaydayInspectVC: UIViewController, UIPickerViewDelegate, UIPickerView
     }
     
     @IBAction func nextButtonTapped(_ sender: UIButton) {
-        print(JobsAndHabits.parentalDailyJobsArray)
         if paydayTimeConfirmed == false {
             let alert = UIAlertController(title: "Payday Time", message: "Please confirm your payday time by tapping the red payday button.", preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: "okay", style: .cancel, handler: { (action) in
@@ -180,6 +179,10 @@ class Step4PaydayInspectVC: UIViewController, UIPickerViewDelegate, UIPickerView
             }))
             present(alert, animated: true, completion: nil)
         } else {
+            if FamilyData.setupProgress <= 5 {
+                FamilyData.setupProgress = 5
+                ref.updateChildValues(["setupProgress" : 5])
+            }
             performSegue(withIdentifier: "AssignmentSummary", sender: self)
         }
     }

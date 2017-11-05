@@ -11,6 +11,7 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         
     let (userName, userPicture, userIncome) = tempUsers[homeIndex]
     let feesDebts: [String] = ["add a fee...", "add a withdrawal..."]
+    var currentUserName: String!
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -26,11 +27,13 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         
 //        tabBarController?.tabBar.items?[2].badgeValue = "1"
         
+        currentUserName = User.usersArray[User.currentUser].firstName
+        navigationItem.title = currentUserName
+        
         tableView.delegate = self
         tableView.dataSource = self
         
-        navigationItem.title = userName
-        userImage.image = userPicture
+        userImage.image = User.usersArray[User.currentUser].photo
         incomeLabel.text = "$\(userIncome)"
         
         userImage.layer.cornerRadius = topView.bounds.height / 6.4
@@ -52,8 +55,7 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         // Date calculator
         // ---------------
         
-        func dayDifference(from interval : TimeInterval) -> String
-        {
+        func dayDifference(from interval : TimeInterval) -> String {
             let calendar = NSCalendar.current
             let date = Date(timeIntervalSince1970: interval)
             if calendar.isDateInYesterday(date) { return "Yesterday" }
@@ -80,12 +82,15 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        let userDailyJobs = JobsAndHabits.finalDailyJobsArray.filter({ return $0.assigned == currentUserName })
+        let userDailyHabits = JobsAndHabits.finalDailyHabitsArray.filter({ return $0.assigned == currentUserName })
+        let userWeeklyJobs = JobsAndHabits.finalWeeklyJobsArray.filter({ return $0.assigned == currentUserName })
         if section == 0 {
-            return dailyJobsSavannah.count
+            return userDailyJobs.count
         } else if section == 1 {
-            return dailyHabits.count
+            return userDailyHabits.count
         } else  if section == 2 {
-            return weeklyJobsSavannah.count
+            return userWeeklyJobs.count
         } else {
             return 2
         }
@@ -112,22 +117,22 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let userDailyJobs = JobsAndHabits.finalDailyJobsArray.filter({ return $0.assigned == currentUserName })
+        let userDailyHabits = JobsAndHabits.finalDailyHabitsArray.filter({ return $0.assigned == currentUserName })
+        let userWeeklyJobs = JobsAndHabits.finalWeeklyJobsArray.filter({ return $0.assigned == currentUserName })
         let cell = tableView.dequeueReusableCell(withIdentifier: "CustomCell", for: indexPath) as! UserCell
         if indexPath.section == 0 {
-            let (jobHabitName, pointsLabelValue, _, _) = dailyJobsSavannah[indexPath.row]
-            cell.jobHabitLabel.text = jobHabitName
-            cell.pointsLabel.text = "\(pointsLabelValue * 15)"
-            cell.pointsLabel.textColor = .black
+            cell.jobHabitLabel.text = userDailyJobs[indexPath.row].name
+            cell.pointsLabel.text = "15"
+            cell.pointsLabel.textColor = .lightGray
         } else if indexPath.section == 1 {
-            let (jobHabitName, pointsLabelValue, _, _) = dailyHabits[indexPath.row]
-            cell.jobHabitLabel.text = jobHabitName
-            cell.pointsLabel.text = "\(Int(pointsLabelValue * 15))"
-            cell.pointsLabel.textColor = .black
+            cell.jobHabitLabel.text = userDailyHabits[indexPath.row].name
+            cell.pointsLabel.text = "10"
+            cell.pointsLabel.textColor = .lightGray
         } else if indexPath.section == 2 {
-            let (jobHabitName, pointsLabelValue, _, _) = weeklyJobsSavannah[indexPath.row]
-            cell.jobHabitLabel.text = jobHabitName
-            cell.pointsLabel.text = "\(Int(pointsLabelValue * 15))"
-            cell.pointsLabel.textColor = .black
+            cell.jobHabitLabel.text = userWeeklyJobs[indexPath.row].name
+            cell.pointsLabel.text = "150"
+            cell.pointsLabel.textColor = .lightGray
         } else if indexPath.section == 3 {
             cell.jobHabitLabel.text = feesDebts[indexPath.row]
             cell.pointsLabel.text = "-100"
@@ -165,7 +170,7 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         let excusedAction = UITableViewRowAction(style: .default, title: "         ", handler: { (action, indexPath) in
             
             // Create alert and allow user to cancel
-            let alert = UIAlertController(title: "Excused From Job", message: "\(self.userName) was excused from doing the job 'clean bedroom'. \(self.userName) won't lose the consistency bonus, but \(self.userName) WILL be charged a $1.00 substitute fee.", preferredStyle: UIAlertControllerStyle.alert)
+            let alert = UIAlertController(title: "Excused From Job", message: "\(self.currentUserName) was excused from doing the job 'clean bedroom'. \(self.currentUserName) won't lose the consistency bonus, but \(self.currentUserName) WILL be charged a $1.00 substitute fee.", preferredStyle: UIAlertControllerStyle.alert)
             
             // --------------------
             // Button ONE: "accept"
@@ -176,7 +181,7 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                 print("excused accepted")
                 
                 // This alert shows up after user taps 'excused'. It allows user to choose who the substitute is
-                let alert2 = UIAlertController(title: "Job Substitute", message: "Who was the job substitute for \(self.userName)'s job 'clean bedroom'?", preferredStyle: UIAlertControllerStyle.alert)
+                let alert2 = UIAlertController(title: "Job Substitute", message: "Who was the job substitute for \(self.currentUserName)'s job 'clean bedroom'?", preferredStyle: UIAlertControllerStyle.alert)
                 alert2.addAction(UIAlertAction(title: "Dad", style: .default, handler: { (action) in
                     alert2.dismiss(animated: true, completion: nil)
                     let tempSubstituteName: String = "Dad"
@@ -198,7 +203,7 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                 alert2.addAction(UIAlertAction(title: "None", style: .cancel, handler: { (action) in
                     
                     // This alert shows up after user taps 'none'. It allows user to confirm a lack of sub, or to cancel
-                    let alert3 = UIAlertController(title: "Job Substitute Missing", message: "You have not chosen a job substitute for \(self.userName)'s job 'clean bedroom'.\n\nNobody will get paid for doing this job and it will remain undone. Are you sure you want to continue?", preferredStyle: UIAlertControllerStyle.alert)
+                    let alert3 = UIAlertController(title: "Job Substitute Missing", message: "You have not chosen a job substitute for \(self.currentUserName)'s job 'clean bedroom'.\n\nNobody will get paid for doing this job and it will remain undone. Are you sure you want to continue?", preferredStyle: UIAlertControllerStyle.alert)
                     alert3.addAction(UIAlertAction(title: "cancel", style: .cancel, handler: { (action) in
                         print("nobody selected as sub. canceled")
                         alert3.dismiss(animated: true, completion: nil)}))
@@ -227,14 +232,14 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         let unexcusedAction = UITableViewRowAction(style: .default, title: "         ", handler: { (action, indexPath) in
             
             // Create alert and allow user to cancel
-            let alert = UIAlertController(title: "Unexcused From Job", message: "\(self.userName) was NOT excused from doing the job 'clean bedroom'.\n\nSince this is a consistency bonus job, \(self.userName) will LOSE the consistency bonus, PLUS \(self.userName) will be charged a $1.00 substitute fee.", preferredStyle: UIAlertControllerStyle.alert)
+            let alert = UIAlertController(title: "Unexcused From Job", message: "\(self.currentUserName) was NOT excused from doing the job 'clean bedroom'.\n\nSince this is a consistency bonus job, \(self.currentUserName) will LOSE the consistency bonus, PLUS \(self.currentUserName) will be charged a $1.00 substitute fee.", preferredStyle: UIAlertControllerStyle.alert)
             
             // Button ONE: "accept"
             alert.addAction(UIAlertAction(title: "accept", style: UIAlertActionStyle.default, handler: { (action) in
                 print("unexcused accepted")
                 
                 // This alert shows up after user taps 'excused'. It allows user to choose who the substitute is
-                let alert2 = UIAlertController(title: "Job Substitute", message: "Who was the job substitute for \(self.userName)'s job 'clean bedroom'?", preferredStyle: UIAlertControllerStyle.alert)
+                let alert2 = UIAlertController(title: "Job Substitute", message: "Who was the job substitute for \(self.currentUserName)'s job 'clean bedroom'?", preferredStyle: UIAlertControllerStyle.alert)
                 alert2.addAction(UIAlertAction(title: "Dad", style: .default, handler: { (action) in
                     alert2.dismiss(animated: true, completion: nil)
                     let tempSubstituteName: String = "Dad"
@@ -256,7 +261,7 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                 alert2.addAction(UIAlertAction(title: "None", style: .default, handler: { (action) in
                     
                     // This alert shows up after user taps 'none'. It allows user to confirm a lack of sub, or to cancel
-                    let alert3 = UIAlertController(title: "Job Substitute Missing", message: "You have not chosen a job substitute for \(self.userName)'s job 'clean bedroom'.\n\nNobody will get paid for doing this job and it will remain undone. Are you sure you want to continue?", preferredStyle: UIAlertControllerStyle.alert)
+                    let alert3 = UIAlertController(title: "Job Substitute Missing", message: "You have not chosen a job substitute for \(self.currentUserName)'s job 'clean bedroom'.\n\nNobody will get paid for doing this job and it will remain undone. Are you sure you want to continue?", preferredStyle: UIAlertControllerStyle.alert)
                     alert3.addAction(UIAlertAction(title: "cancel", style: .cancel, handler: { (action) in
                         print("nobody selected as sub. canceled")
                         alert3.dismiss(animated: true, completion: nil)

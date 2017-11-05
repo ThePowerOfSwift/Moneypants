@@ -7,6 +7,8 @@ class HomeVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UITa
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        User.usersArray.sort(by: {$0.birthday < $1.birthday})       // sort array with oldest users first
+        
         addNavBarImage()
         
         tableView.delegate = self
@@ -20,27 +22,23 @@ class HomeVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UITa
     // ----------
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return tempUsers.count
+        return User.usersArray.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "HomeDetailCell", for: indexPath) as! HomeCustomCell
-        
-        let (userName, userImage, userIncome) = tempUsers[indexPath.row]
-        
-        cell.userName.text = userName
-        cell.userImage.image = userImage
-        cell.userIncome.text = "$\(userIncome)"
-        
+        cell.userName.text = User.usersArray[indexPath.row].firstName
+        cell.userImage.image = User.usersArray[indexPath.row].photo
+        cell.userIncome.text = "$0.00"
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.reloadData()
-        homeIndex = indexPath.row
+//        homeIndex = indexPath.row
+        User.currentUser = indexPath.row
         performSegue(withIdentifier: "DetailSegue", sender: self)
     }
-    
     
     func addNavBarImage() {
         let navController = navigationController!

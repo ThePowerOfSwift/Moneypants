@@ -411,11 +411,6 @@ class Step4VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
     }
     
     @IBAction func nextButtonTapped(_ sender: UIButton) {
-        if FamilyData.setupProgress <= 40 {
-            FamilyData.setupProgress = 40
-            ref.updateChildValues(["setupProgress" : 40])
-        }
-        
         if selectUsersButton.isHidden == false {
             // user has already cycled through all users and made assignments. now still need to check for daily and weekly assignments
             reviewFamilyJobs()
@@ -505,7 +500,7 @@ class Step4VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
     // ---------
     
     func checkSetupNumber() {
-        if FamilyData.setupProgress >= 40 {
+        if FamilyData.setupProgress >= 4 {
             // first view will be of youngest family member
             self.userImage.image = User.usersArray[0].photo
             self.currentUserName = User.usersArray[0].firstName
@@ -620,6 +615,10 @@ class Step4VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
                         alert.dismiss(animated: true, completion: nil)
                     }))
                     alert.addAction(UIAlertAction(title: "continue", style: .default, handler: { (action) in
+                        if FamilyData.setupProgress <= 4 {
+                            FamilyData.setupProgress = 4
+                            self.ref.updateChildValues(["setupProgress" : 4])
+                        }
                         alert.dismiss(animated: true, completion: nil)
                         self.performSegue(withIdentifier: "PaydayInspections", sender: self)
                         self.selectUsersButton.isHidden = false

@@ -172,8 +172,8 @@ var homeIndex = 0       // MARK: global variable, need to change this
 //=====================================
 
 let tempPaydayDailyJobs = [("clean bedroom", "1","1","","1","1","E","1", 60),
-                             ("clean backyard", "1","1","1","1","1","E","1", 60),
-                             ("water garden & feed chickens", "X","3","3","X","3","3","3", 50)]
+                           ("clean backyard", "1","1","1","1","1","E","1", 60),
+                           ("water garden & feed chickens", "X","3","3","X","3","3","3", 50)]
 
 let tempPaydayDailyHabits = [("self ready by 10:am","1","1","1","1","1","","1", 60),
                               ("prayer & scriptures (10 min)", "3","3","1","2","2","1","", 50),

@@ -1,12 +1,12 @@
 import UIKit
 import Firebase
 
-class Step4EditHabitVC: UIViewController, UITextFieldDelegate {
+class Step7EditHabitsVC: UIViewController, UITextFieldDelegate {
     
     @IBOutlet weak var habitTextField: UITextField!
     @IBOutlet weak var saveButton: UIBarButtonItem!
     
-    var habit: JobsAndHabits!                  // is passed from Step4HabitVC
+    var habit: JobsAndHabits!                  // is passed from Step7HabitsVC
     var firebaseUser: FIRUser!
     var ref: FIRDatabaseReference!
     

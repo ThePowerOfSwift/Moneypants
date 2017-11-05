@@ -1,7 +1,7 @@
 import UIKit
 import Firebase
 
-class Step4HabitVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
+class Step7HabitsVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
     @IBOutlet weak var habitsTableView: UITableView!
     @IBOutlet weak var userImage: UIImageView!
@@ -61,7 +61,7 @@ class Step4HabitVC: UIViewController, UITableViewDataSource, UITableViewDelegate
     
     // what are contents of each cell
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "Step4HabitCell", for: indexPath) as! Step4HabitCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: "Step7HabitsCell", for: indexPath) as! Step7HabitsCell
         // only show habit for current user, not entire habits array of all users. NOTE: Have to call this variable every time for table to reload properly (can't make it a global var)
         let habitsArray = JobsAndHabits.finalDailyHabitsArray.sorted(by: { $0.order < $1.order }).filter({ return $0.assigned == User.usersArray[currentMember].firstName })
         
@@ -100,8 +100,8 @@ class Step4HabitVC: UIViewController, UITableViewDataSource, UITableViewDelegate
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "EditHabit" {
-            let nextViewController = segue.destination as! Step4EditHabitVC
-            // send the habit from the tableview cell above to Step4EditHabitVC
+            let nextViewController = segue.destination as! Step7EditHabitsVC
+            // send the habit from the tableview cell above to Step7EditHabitsVC
             nextViewController.habit = sender as! JobsAndHabits
         }
     }
@@ -122,9 +122,9 @@ class Step4HabitVC: UIViewController, UITableViewDataSource, UITableViewDelegate
                 navigationItem.title = User.usersArray[currentMember].firstName
                 habitsTableView.reloadData()
             } else if currentMember == (User.usersArray.count - 1) {
-                if FamilyData.setupProgress <= 43 {
-                    FamilyData.setupProgress = 43
-                    ref.updateChildValues(["setupProgress" : 43])
+                if FamilyData.setupProgress <= 7 {
+                    FamilyData.setupProgress = 7
+                    ref.updateChildValues(["setupProgress" : 7])
                 }
                 reviewOrContinueAlert()
             }
@@ -249,7 +249,7 @@ class Step4HabitVC: UIViewController, UITableViewDataSource, UITableViewDelegate
     
     func checkSetupNumber() {
         // if user has already been to this page of setup...
-        if FamilyData.setupProgress >= 43 {
+        if FamilyData.setupProgress >= 7 {
             // ...unhide the 'select user' button and allow user to choose other members for review
             selectUsersButton.isHidden = false
         } else {

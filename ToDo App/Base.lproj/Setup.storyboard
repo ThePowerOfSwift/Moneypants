@@ -379,7 +379,7 @@
                                     <rect key="frame" x="120" y="106" width="80" height="80"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="?" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bFh-xi-zKP">
-                                            <rect key="frame" x="23" y="-7" width="35" height="94"/>
+                                            <rect key="frame" x="22.5" y="-7" width="35" height="94"/>
                                             <fontDescription key="fontDescription" name="Arista2.0" family="Arista 2.0" pointSize="80"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
@@ -518,16 +518,16 @@
                                         </connections>
                                     </imageView>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="0K3-h0-2Xc" userLabel="Name Stack">
-                                        <rect key="frame" x="35" y="126" width="250" height="56"/>
+                                        <rect key="frame" x="35" y="126" width="250" height="55.5"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XFd-2O-l1e">
-                                                <rect key="frame" x="0.0" y="0.0" width="43" height="21"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="42.5" height="20.5"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="first name" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="sZh-tS-HfZ">
-                                                <rect key="frame" x="0.0" y="26" width="250" height="30"/>
+                                                <rect key="frame" x="0.0" y="25.5" width="250" height="30"/>
                                                 <nil key="textColor"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                                 <textInputTraits key="textInputTraits" autocapitalizationType="words" autocorrectionType="no" spellCheckingType="no" returnKeyType="next" enablesReturnKeyAutomatically="YES"/>
@@ -547,16 +547,16 @@
                                         </constraints>
                                     </stackView>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="x9Y-kO-YQz" userLabel="Birthday Stack">
-                                        <rect key="frame" x="35" y="192" width="250" height="56"/>
+                                        <rect key="frame" x="35" y="191.5" width="250" height="55.5"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="birthday" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yFM-DW-s5y">
-                                                <rect key="frame" x="0.0" y="0.0" width="64" height="21"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="63.5" height="20.5"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <textField opaque="NO" clipsSubviews="YES" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="choose date" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="KkD-A6-7xO">
-                                                <rect key="frame" x="0.0" y="26" width="250" height="30"/>
+                                                <rect key="frame" x="0.0" y="25.5" width="250" height="30"/>
                                                 <nil key="textColor"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                                 <textInputTraits key="textInputTraits"/>
@@ -571,16 +571,16 @@
                                         </constraints>
                                     </stackView>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="i0l-Cf-gdM" userLabel="Password Stack">
-                                        <rect key="frame" x="35" y="258" width="250" height="56"/>
+                                        <rect key="frame" x="35" y="257" width="250" height="55.5"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="individual passcode" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yq0-Yy-EAV">
-                                                <rect key="frame" x="0.0" y="0.0" width="151" height="21"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="151" height="20.5"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <textField opaque="NO" clipsSubviews="YES" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="4-digit passcode" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="ERk-qg-s7B">
-                                                <rect key="frame" x="0.0" y="26" width="250" height="30"/>
+                                                <rect key="frame" x="0.0" y="25.5" width="250" height="30"/>
                                                 <nil key="textColor"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                                 <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardType="numberPad" returnKeyType="next" enablesReturnKeyAutomatically="YES"/>
@@ -600,16 +600,16 @@
                                         </constraints>
                                     </stackView>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="4t7-p2-DCN" userLabel="Gender Stack">
-                                        <rect key="frame" x="35" y="324" width="250" height="62"/>
+                                        <rect key="frame" x="35" y="322.5" width="250" height="61.5"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="gender" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="feB-ae-CNS">
-                                                <rect key="frame" x="0.0" y="0.0" width="55" height="21"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="54.5" height="20.5"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="UdY-ga-kiS">
-                                                <rect key="frame" x="0.0" y="26" width="250" height="36"/>
+                                                <rect key="frame" x="0.0" y="25.5" width="250" height="36"/>
                                                 <subviews>
                                                     <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6TE-fu-m9B">
                                                         <rect key="frame" x="0.0" y="0.0" width="121" height="36"/>
@@ -678,16 +678,16 @@
                                         </constraints>
                                     </stackView>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="Zwi-Hc-sVN" userLabel="Parent Stack">
-                                        <rect key="frame" x="35" y="396" width="250" height="62"/>
+                                        <rect key="frame" x="35" y="394" width="250" height="61.5"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="is user a parent or child?" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8oj-gg-LaG">
-                                                <rect key="frame" x="0.0" y="0.0" width="187" height="21"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="187" height="20.5"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="cF7-DH-xWJ">
-                                                <rect key="frame" x="0.0" y="26" width="250" height="36"/>
+                                                <rect key="frame" x="0.0" y="25.5" width="250" height="36"/>
                                                 <subviews>
                                                     <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Tzx-CC-Tfp">
                                                         <rect key="frame" x="0.0" y="0.0" width="121" height="36"/>
@@ -849,16 +849,16 @@
                                 </constraints>
                             </imageView>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="2sH-na-olQ" userLabel="Job Stack">
-                                <rect key="frame" x="35" y="116" width="250" height="56"/>
+                                <rect key="frame" x="35" y="116" width="250" height="55.5"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="job title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Atg-jK-VlJ">
-                                        <rect key="frame" x="0.0" y="0.0" width="57" height="21"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="56.5" height="20.5"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="enter job name here" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="LVy-ma-IaT">
-                                        <rect key="frame" x="0.0" y="26" width="250" height="30"/>
+                                        <rect key="frame" x="0.0" y="25.5" width="250" height="30"/>
                                         <nil key="textColor"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                         <textInputTraits key="textInputTraits" spellCheckingType="yes"/>
@@ -875,7 +875,7 @@
                                 </constraints>
                             </stackView>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="e85-NO-xGK">
-                                <rect key="frame" x="35" y="196" width="250" height="1"/>
+                                <rect key="frame" x="35" y="195.5" width="250" height="1"/>
                                 <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="250" id="BV3-WS-W5V"/>
@@ -887,13 +887,13 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="•" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2Va-xE-lGx">
-                                <rect key="frame" x="35" y="319" width="9" height="21"/>
+                                <rect key="frame" x="35" y="318" width="8.5" height="20.5"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="NOTE: as a rule of thumb, jobs should take between 10 and 30 minutes for an adult to complete." lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VBn-xb-Fpv">
-                                <rect key="frame" x="35" y="221" width="250" height="82"/>
+                                <rect key="frame" x="35" y="220.5" width="250" height="81.5"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="250" id="kW8-Kb-ri0"/>
                                 </constraints>
@@ -902,13 +902,13 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="If a job takes more than 30 minutes, split it into multiple jobs." lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ba6-js-ZEh">
-                                <rect key="frame" x="49" y="395" width="236" height="61"/>
+                                <rect key="frame" x="49" y="393.5" width="236" height="61"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="•" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ACl-rU-GRO">
-                                <rect key="frame" x="35" y="395" width="9" height="21"/>
+                                <rect key="frame" x="35" y="393.5" width="9" height="20.5"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="8.5" id="Oz0-Df-AbM"/>
                                 </constraints>
@@ -917,7 +917,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="If a job takes less than 10 minutes, combine it with another job." lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8yg-Nc-TS2">
-                                <rect key="frame" x="49" y="319" width="236" height="60"/>
+                                <rect key="frame" x="48.5" y="318" width="236.5" height="59.5"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="17"/>
                                 <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
@@ -1003,9 +1003,15 @@
                             <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="gFw-Yc-uWw">
                                 <rect key="frame" x="150" y="498" width="20" height="20"/>
                             </activityIndicatorView>
+                            <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progress="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="j6Z-gc-c1f">
+                                <rect key="frame" x="0.0" y="566" width="320" height="2"/>
+                            </progressView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="j6Z-gc-c1f" firstAttribute="leading" secondItem="Ia3-Zc-ygh" secondAttribute="leading" id="OsG-CY-QeK"/>
+                            <constraint firstItem="LpI-vh-vdo" firstAttribute="top" secondItem="j6Z-gc-c1f" secondAttribute="bottom" id="Slu-qG-HUt"/>
+                            <constraint firstAttribute="trailing" secondItem="j6Z-gc-c1f" secondAttribute="trailing" id="UbV-gB-KX1"/>
                             <constraint firstItem="gFw-Yc-uWw" firstAttribute="centerX" secondItem="Ia3-Zc-ygh" secondAttribute="centerX" id="ZKK-WB-siT"/>
                             <constraint firstItem="LpI-vh-vdo" firstAttribute="top" secondItem="gFw-Yc-uWw" secondAttribute="bottom" constant="50" id="bCb-HL-eeZ"/>
                             <constraint firstItem="Eve-5T-1Ur" firstAttribute="centerY" secondItem="Ia3-Zc-ygh" secondAttribute="centerY" id="pwM-wA-H4O"/>
@@ -1016,7 +1022,9 @@
                     <navigationItem key="navigationItem" id="a7T-KN-uvz"/>
                     <connections>
                         <outlet property="activityIndicator" destination="gFw-Yc-uWw" id="K8k-8J-t55"/>
+                        <outlet property="progressView" destination="j6Z-gc-c1f" id="Tmi-ww-BLa"/>
                         <segue destination="cwG-Zj-FhD" kind="show" identifier="GoToStep1EnterIncome" id="9o8-Rl-ykq"/>
+                        <segue destination="Cb3-64-p1D" kind="presentation" identifier="Home" modalTransitionStyle="crossDissolve" id="N70-dl-i57"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="j7A-I1-rb1" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1071,19 +1079,19 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="(Be sure to include income from all sources.)" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="chj-RO-d1S">
-                                        <rect key="frame" x="0.0" y="265" width="250" height="32"/>
+                                        <rect key="frame" x="0.0" y="265" width="250" height="31.5"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="$" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HqX-MZ-LYX">
-                                        <rect key="frame" x="0.0" y="317" width="11" height="21"/>
+                                        <rect key="frame" x="0.0" y="316.5" width="11" height="21"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="annual income" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="V3b-gS-R21">
-                                        <rect key="frame" x="15" y="313" width="235" height="30"/>
+                                        <rect key="frame" x="15" y="312.5" width="235" height="30"/>
                                         <nil key="textColor"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
@@ -1143,32 +1151,12 @@
                                     <segue destination="m8E-qX-cfZ" kind="presentation" modalPresentationStyle="overCurrentContext" modalTransitionStyle="crossDissolve" id="ndy-nt-iAd"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="88P-kV-85E">
-                                <rect key="frame" x="35" y="402" width="250" height="30"/>
-                                <color key="backgroundColor" red="0.0" green="0.59999999999999998" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
-                                <state key="normal" title="SKIP TO INCOME">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
-                                        <integer key="value" value="5"/>
-                                    </userDefinedRuntimeAttribute>
-                                    <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
-                                </userDefinedRuntimeAttributes>
-                                <connections>
-                                    <segue destination="bHO-6V-EZe" kind="show" id="QRf-e4-bwF"/>
-                                </connections>
-                            </button>
                         </subviews>
                         <color key="backgroundColor" white="0.90000000000000002" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="Tmg-V6-e1o" firstAttribute="top" secondItem="cya-gt-owO" secondAttribute="bottom" constant="8" id="1ML-6T-dqX"/>
-                            <constraint firstItem="88P-kV-85E" firstAttribute="leading" secondItem="ZFH-u0-XND" secondAttribute="leading" id="1qb-D3-J5L"/>
                             <constraint firstItem="yKO-Dq-X7A" firstAttribute="trailing" secondItem="e0L-ps-0lq" secondAttribute="trailingMargin" id="4CE-wM-rwH"/>
-                            <constraint firstItem="88P-kV-85E" firstAttribute="top" secondItem="ZFH-u0-XND" secondAttribute="bottom" constant="8" id="7X0-TL-7wa"/>
                             <constraint firstItem="ZFH-u0-XND" firstAttribute="centerX" secondItem="e0L-ps-0lq" secondAttribute="centerX" id="eaL-b2-lkD"/>
-                            <constraint firstItem="88P-kV-85E" firstAttribute="trailing" secondItem="ZFH-u0-XND" secondAttribute="trailing" id="gsN-V0-JlG"/>
                             <constraint firstItem="ZFH-u0-XND" firstAttribute="top" secondItem="fxz-nt-k2x" secondAttribute="bottom" id="oaX-uP-3DF"/>
                             <constraint firstItem="Tmg-V6-e1o" firstAttribute="top" secondItem="yKO-Dq-X7A" secondAttribute="bottom" constant="8" id="qRL-8h-F60"/>
                             <constraint firstItem="cya-gt-owO" firstAttribute="leading" secondItem="e0L-ps-0lq" secondAttribute="leading" constant="16" id="uFH-ZU-LNG"/>
@@ -1431,7 +1419,7 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0uv-Ur-BFH">
-                                        <rect key="frame" x="60" y="0.0" width="75" height="36"/>
+                                        <rect key="frame" x="59.5" y="0.0" width="75" height="36"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="75" id="AKM-nH-5Km"/>
                                             <constraint firstAttribute="height" constant="36" id="Lsu-Tn-sCT"/>
@@ -1611,7 +1599,7 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bwZ-1N-E8z">
-                                        <rect key="frame" x="60" y="0.0" width="75" height="36"/>
+                                        <rect key="frame" x="59.5" y="0.0" width="75" height="36"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="36" id="I1V-HO-oAo"/>
                                         </constraints>
@@ -1693,7 +1681,7 @@
         <!--summary-->
         <scene sceneID="gOm-Tc-PCF">
             <objects>
-                <viewController storyboardIdentifier="JobSummaryVC" title="summary" automaticallyAdjustsScrollViewInsets="NO" id="t7X-Fi-ZHA" customClass="JobSummaryVC" customModule="ToDo_App" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="Step6JobSummaryVC" title="summary" automaticallyAdjustsScrollViewInsets="NO" id="t7X-Fi-ZHA" customClass="Step6JobSummaryVC" customModule="ToDo_App" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="0wX-Ut-h4R"/>
                         <viewControllerLayoutGuide type="bottom" id="0CL-em-v4v"/>
@@ -1707,7 +1695,7 @@
                                 <color key="backgroundColor" white="0.90000000000000002" alpha="1" colorSpace="calibratedWhite"/>
                                 <inset key="separatorInset" minX="32" minY="0.0" maxX="32" maxY="0.0"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="headerCell" rowHeight="75" id="aKq-Q7-Ths" customClass="JobSummaryCell" customModule="ToDo_App" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="headerCell" rowHeight="75" id="aKq-Q7-Ths" customClass="Step6JobSummaryCell" customModule="ToDo_App" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="320" height="75"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="aKq-Q7-Ths" id="0Gw-oZ-IdQ">
@@ -1762,7 +1750,7 @@
                                             <outlet property="headerLabel" destination="7bi-u6-mmH" id="Jfi-eC-QAP"/>
                                         </connections>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="customCell" rowHeight="75" id="I61-hF-GNi" customClass="JobSummaryCellB" customModule="ToDo_App" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="customCell" rowHeight="75" id="I61-hF-GNi" customClass="Step6Step6JobSummaryCellB" customModule="ToDo_App" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="103" width="320" height="75"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="I61-hF-GNi" id="vPX-nW-wBX">
@@ -1866,7 +1854,7 @@
         <!--Income Summary-->
         <scene sceneID="ywD-xO-Uj4">
             <objects>
-                <viewController storyboardIdentifier="IndividualIncomeSummary" title="Income Summary" id="Rm3-69-fBo" customClass="Step5IncomeSummaryVC" customModule="ToDo_App" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="IndividualIncomeSummary" title="Income Summary" id="Rm3-69-fBo" customClass="Step9IncomeSummaryVC" customModule="ToDo_App" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="aRm-ln-XdV"/>
                         <viewControllerLayoutGuide type="bottom" id="8PF-XT-53s"/>
@@ -2094,7 +2082,7 @@
         <!--edit expense-->
         <scene sceneID="fB8-WT-bY5">
             <objects>
-                <tableViewController id="BPI-jh-F85" customClass="Step5ExpenseDetailVC" customModule="ToDo_App" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController id="BPI-jh-F85" customClass="Step10ExpenseDetailVC" customModule="ToDo_App" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="18" sectionFooterHeight="18" id="927-pj-Vhd">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -2403,16 +2391,16 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="b2l-Tp-pbx">
-                                                    <rect key="frame" x="56" y="12" width="207" height="41"/>
+                                                    <rect key="frame" x="56.5" y="12.5" width="206.5" height="40.5"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="yearly total for" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vW6-95-DRx">
-                                                            <rect key="frame" x="60" y="0.0" width="88" height="16"/>
+                                                            <rect key="frame" x="59.5" y="0.0" width="87.5" height="16"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                                             <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="basketball shoes = $0.00" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="W0V-iO-kPM">
-                                                            <rect key="frame" x="0.0" y="20" width="207" height="21"/>
+                                                            <rect key="frame" x="0.0" y="20" width="206.5" height="20.5"/>
                                                             <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                                                             <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                             <nil key="highlightedColor"/>
@@ -2526,14 +2514,14 @@
                                     <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
                                 </userDefinedRuntimeAttributes>
                                 <connections>
-                                    <segue destination="Cb3-64-p1D" kind="showDetail" id="20R-1y-PVb"/>
+                                    <action selector="doneButtonTapped:" destination="0DX-sm-2Nt" eventType="touchUpInside" id="qJz-gd-wAU"/>
                                 </connections>
                             </button>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="y7c-1u-0zt">
                                 <rect key="frame" x="0.0" y="184" width="320" height="332"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="CM5 Cape 20160608" translatesAutoresizingMaskIntoConstraints="NO" id="l1J-gh-Gr0">
-                                        <rect key="frame" x="-960" y="66" width="2240" height="200"/>
+                                        <rect key="frame" x="-959.5" y="66" width="2239" height="200"/>
                                     </imageView>
                                 </subviews>
                                 <color key="backgroundColor" white="0.90228361999999995" alpha="1" colorSpace="calibratedWhite"/>
@@ -2566,6 +2554,9 @@
                             <constraint firstAttribute="trailing" secondItem="cyE-CW-vcR" secondAttribute="trailing" constant="16" id="xT8-Xj-2c7"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <segue destination="Cb3-64-p1D" kind="show" identifier="Done" id="UHA-Yb-04J"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xYF-U9-UyW" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -2577,12 +2568,12 @@
                 <viewControllerPlaceholder storyboardName="Home" referencedIdentifier="HomePageTabController" id="Cb3-64-p1D" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dhl-6n-ppB" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="14972" y="1097"/>
+            <point key="canvasLocation" x="15023" y="1098"/>
         </scene>
         <!--Outside Income-->
         <scene sceneID="YHp-0v-PnI">
             <objects>
-                <viewController storyboardIdentifier="Step5VC" title="Outside Income" id="bHO-6V-EZe" customClass="Step5VC" customModule="ToDo_App" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="Step8OutsideIncomeVC" title="Outside Income" id="bHO-6V-EZe" customClass="Step8OutsideIncomeVC" customModule="ToDo_App" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="dwG-9e-JbF"/>
                         <viewControllerLayoutGuide type="bottom" id="H8e-75-e8f"/>
@@ -2595,7 +2586,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="516"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ypg-k8-sKU" userLabel="Bottom View">
-                                        <rect key="frame" x="0.0" y="347" width="320" height="412"/>
+                                        <rect key="frame" x="0.0" y="346.5" width="320" height="412"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="outside income" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gmu-TG-JLN">
                                                 <rect key="frame" x="0.0" y="0.0" width="320" height="28"/>
@@ -2658,7 +2649,7 @@
                                                 </userDefinedRuntimeAttributes>
                                             </textField>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="per year" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IXZ-ZM-O89">
-                                                <rect key="frame" x="258" y="117" width="27" height="32"/>
+                                                <rect key="frame" x="258" y="117.5" width="27" height="31.5"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="27" id="ST2-Uv-Mro"/>
                                                 </constraints>
@@ -2700,7 +2691,7 @@
                                                 </userDefinedRuntimeAttributes>
                                             </textField>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="per year" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3gq-2E-Va6">
-                                                <rect key="frame" x="258" y="163" width="27" height="32"/>
+                                                <rect key="frame" x="258" y="163.5" width="27" height="31.5"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="27" id="ZKG-qC-J30"/>
                                                 </constraints>
@@ -2742,7 +2733,7 @@
                                                 </userDefinedRuntimeAttributes>
                                             </textField>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="per year" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eOp-Kb-Qex">
-                                                <rect key="frame" x="258" y="209" width="27" height="32"/>
+                                                <rect key="frame" x="258" y="209.5" width="27" height="31.5"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="27" id="5NW-xc-01M"/>
                                                 </constraints>
@@ -2784,7 +2775,7 @@
                                                 </userDefinedRuntimeAttributes>
                                             </textField>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="per year" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="N6q-Gd-ST8">
-                                                <rect key="frame" x="258" y="255" width="27" height="32"/>
+                                                <rect key="frame" x="258" y="255.5" width="27" height="31.5"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="27" id="mA5-O4-JPo"/>
                                                 </constraints>
@@ -2826,7 +2817,7 @@
                                                 </userDefinedRuntimeAttributes>
                                             </textField>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="per year" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LE2-ds-Svh">
-                                                <rect key="frame" x="258" y="301" width="27" height="32"/>
+                                                <rect key="frame" x="258" y="301.5" width="27" height="31.5"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="27" id="KD1-DV-FBl"/>
                                                 </constraints>
@@ -2862,7 +2853,7 @@
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="per year" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8cy-Ts-dss">
-                                                <rect key="frame" x="258" y="365" width="27" height="32"/>
+                                                <rect key="frame" x="258" y="365" width="27" height="31.5"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="27" id="a2d-3I-h3a"/>
                                                 </constraints>
@@ -2943,7 +2934,7 @@
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3UK-NY-5mG" userLabel="Middle View">
-                                        <rect key="frame" x="0.0" y="215" width="320" height="132"/>
+                                        <rect key="frame" x="0.0" y="214.5" width="320" height="132"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Yes, Savannah has other income." textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HTw-Y6-cqr">
                                                 <rect key="frame" x="72" y="15" width="232" height="41"/>
@@ -3000,7 +2991,7 @@
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pDE-oV-Nqc" userLabel="Top View">
-                                        <rect key="frame" x="0.0" y="28" width="320" height="187"/>
+                                        <rect key="frame" x="0.0" y="28" width="320" height="186.5"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Does Savannah have any income she earns OUTSIDE the home?" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mjU-w1-JFM">
                                                 <rect key="frame" x="16" y="90" width="288" height="41"/>
@@ -3009,7 +3000,7 @@
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="(This includes mowing lawns for neighbors, babysitting, summer jobs, paper routes, etc.)" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PXS-Pd-TPh">
-                                                <rect key="frame" x="16" y="139" width="288" height="32"/>
+                                                <rect key="frame" x="16" y="139" width="288" height="31.5"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
@@ -3732,7 +3723,7 @@ For each family member, select one or more daily and weekly jobs. Parents will g
         <!--Payday & Inspections-->
         <scene sceneID="Piy-6Z-akj">
             <objects>
-                <viewController storyboardIdentifier="Step4PaydayInspectVC" title="Payday &amp; Inspections" automaticallyAdjustsScrollViewInsets="NO" id="eva-7M-bf6" customClass="Step4PaydayInspectVC" customModule="ToDo_App" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="Step5PaydayInspectVC" title="Payday &amp; Inspections" automaticallyAdjustsScrollViewInsets="NO" id="eva-7M-bf6" customClass="Step5PaydayInspectVC" customModule="ToDo_App" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="yGf-MR-Z1i"/>
                         <viewControllerLayoutGuide type="bottom" id="fCp-vm-YET"/>
@@ -4045,7 +4036,7 @@ For each family member, select one or more daily and weekly jobs. Parents will g
         <!--Payday & Inspections Popup-->
         <scene sceneID="FXY-OL-gWs">
             <objects>
-                <viewController title="Payday &amp; Inspections Popup" id="txg-db-ZY3" customClass="Step4PopupVC3" customModule="ToDo_App" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController title="Payday &amp; Inspections Popup" id="txg-db-ZY3" customClass="Step5PopupVC" customModule="ToDo_App" customModuleProvider="target" sceneMemberID="viewController">
                     <visualEffectView key="view" opaque="NO" contentMode="scaleToFill" id="W2U-oF-azt">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -4177,10 +4168,10 @@ For each family member, select one or more daily and weekly jobs. Parents will g
             </objects>
             <point key="canvasLocation" x="7425" y="1875"/>
         </scene>
-        <!--Step4 VideoVC3-->
+        <!--Step5 VideoVC-->
         <scene sceneID="bDO-Az-5BU">
             <objects>
-                <viewController id="3lu-9G-Tjq" customClass="Step4VideoVC3" customModule="ToDo_App" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="3lu-9G-Tjq" customClass="Step5VideoVC" customModule="ToDo_App" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="U11-a5-gzu"/>
                         <viewControllerLayoutGuide type="bottom" id="MfH-O7-lsy"/>
@@ -4226,7 +4217,7 @@ For each family member, select one or more daily and weekly jobs. Parents will g
         <!--habits-->
         <scene sceneID="9ld-2X-Y7T">
             <objects>
-                <viewController storyboardIdentifier="Step4HabitVC" title="habits" automaticallyAdjustsScrollViewInsets="NO" id="vSt-Mn-pZN" customClass="Step4HabitVC" customModule="ToDo_App" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="Step7HabitsVC" title="habits" automaticallyAdjustsScrollViewInsets="NO" id="vSt-Mn-pZN" customClass="Step7HabitsVC" customModule="ToDo_App" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="Ezl-mt-Ovk"/>
                         <viewControllerLayoutGuide type="bottom" id="tPZ-TP-ZGF"/>
@@ -4236,11 +4227,11 @@ For each family member, select one or more daily and weekly jobs. Parents will g
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" allowsMultipleSelection="YES" rowHeight="50" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="B6u-tu-Ica">
-                                <rect key="frame" x="0.0" y="169" width="320" height="347"/>
+                                <rect key="frame" x="0.0" y="168.5" width="320" height="347.5"/>
                                 <color key="backgroundColor" white="0.90000000000000002" alpha="1" colorSpace="calibratedWhite"/>
                                 <inset key="separatorInset" minX="16" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Step4HabitCell" id="N27-bv-cK8" customClass="Step4HabitCell" customModule="ToDo_App" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Step7HabitsCell" id="N27-bv-cK8" customClass="Step7HabitsCell" customModule="ToDo_App" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="320" height="50"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="N27-bv-cK8" id="aMy-Gy-fsN">
@@ -4311,7 +4302,7 @@ For each family member, select one or more daily and weekly jobs. Parents will g
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1O8-c6-C2y">
-                                        <rect key="frame" x="60" y="0.0" width="75" height="36"/>
+                                        <rect key="frame" x="59.5" y="0.0" width="75" height="36"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="36" id="QgM-FI-9Xd"/>
                                         </constraints>
@@ -4350,7 +4341,7 @@ For each family member, select one or more daily and weekly jobs. Parents will g
                                 </subviews>
                             </stackView>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="yt6-JB-bTf">
-                                <rect key="frame" x="90" y="80" width="214" height="81"/>
+                                <rect key="frame" x="90" y="80" width="214" height="80.5"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Review daily habits for Savannah." lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7Sw-L6-ieo">
                                         <rect key="frame" x="0.0" y="0.0" width="214" height="41"/>
@@ -4359,7 +4350,7 @@ For each family member, select one or more daily and weekly jobs. Parents will g
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="(Tap on a habit to edit the description)" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="351-D8-oZ8">
-                                        <rect key="frame" x="0.0" y="49" width="214" height="32"/>
+                                        <rect key="frame" x="0.0" y="49" width="214" height="31.5"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
@@ -4414,7 +4405,7 @@ For each family member, select one or more daily and weekly jobs. Parents will g
         <!--Habits Popup-->
         <scene sceneID="tI8-Y9-hSr">
             <objects>
-                <viewController title="Habits Popup" id="k2d-X1-0ar" customClass="Step4HabitPopupVC" customModule="ToDo_App" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController title="Habits Popup" id="k2d-X1-0ar" customClass="Step7HabitsPopupVC" customModule="ToDo_App" customModuleProvider="target" sceneMemberID="viewController">
                     <visualEffectView key="view" opaque="NO" contentMode="scaleToFill" id="fw9-OM-aVA">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -4423,7 +4414,7 @@ For each family member, select one or more daily and weekly jobs. Parents will g
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DKx-Ul-Nnx" userLabel="Popup">
-                                    <rect key="frame" x="35" y="101" width="250" height="416.5"/>
+                                    <rect key="frame" x="35" y="101.5" width="250" height="416.5"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="What is this page for?" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sLj-Ab-vtd">
                                             <rect key="frame" x="16" y="58" width="218" height="21"/>
@@ -4499,7 +4490,7 @@ The first habit is worth more than all the others and should be the main habit t
                                     </constraints>
                                 </view>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="EDx-cw-iDL" userLabel="Popup">
-                                    <rect key="frame" x="110" y="51" width="100" height="100"/>
+                                    <rect key="frame" x="110" y="51.5" width="100" height="100"/>
                                     <color key="backgroundColor" red="0.94901960780000005" green="0.39607843139999999" blue="0.1333333333" alpha="1" colorSpace="calibratedRGB"/>
                                     <constraints>
                                         <constraint firstAttribute="width" constant="100" id="B7F-hB-DER"/>
@@ -4507,7 +4498,7 @@ The first habit is worth more than all the others and should be the main habit t
                                     </constraints>
                                 </view>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="v7m-Mg-a6W" userLabel="Popup">
-                                    <rect key="frame" x="120" y="61" width="80" height="80"/>
+                                    <rect key="frame" x="120" y="61.5" width="80" height="80"/>
                                     <subviews>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="habit workout black" translatesAutoresizingMaskIntoConstraints="NO" id="WX4-Zb-WWB">
                                             <rect key="frame" x="10" y="10" width="60" height="60"/>
@@ -4548,10 +4539,10 @@ The first habit is worth more than all the others and should be the main habit t
             </objects>
             <point key="canvasLocation" x="9023" y="1874"/>
         </scene>
-        <!--Step4 Habit VideoVC-->
+        <!--Step7 Habits VideoVC-->
         <scene sceneID="2cf-yk-iFI">
             <objects>
-                <viewController id="c47-N4-hQ3" customClass="Step4HabitVideoVC" customModule="ToDo_App" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="c47-N4-hQ3" customClass="Step7HabitsVideoVC" customModule="ToDo_App" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="kS4-2O-XiZ"/>
                         <viewControllerLayoutGuide type="bottom" id="yNu-is-pAG"/>
@@ -4597,7 +4588,7 @@ The first habit is worth more than all the others and should be the main habit t
         <!--Edit Habit-->
         <scene sceneID="e91-OH-Tsv">
             <objects>
-                <viewController title="Edit Habit" id="S94-Ee-uaR" customClass="Step4EditHabitVC" customModule="ToDo_App" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController title="Edit Habit" id="S94-Ee-uaR" customClass="Step7EditHabitsVC" customModule="ToDo_App" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="OC5-XG-5rU"/>
                         <viewControllerLayoutGuide type="bottom" id="DXG-V7-rtr"/>
@@ -4631,16 +4622,16 @@ The first habit is worth more than all the others and should be the main habit t
                                 </constraints>
                             </imageView>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="aPc-PJ-we1" userLabel="Job Stack">
-                                <rect key="frame" x="35" y="116" width="250" height="56"/>
+                                <rect key="frame" x="35" y="116" width="250" height="55.5"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="habit title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2Y3-SZ-wzo">
-                                        <rect key="frame" x="0.0" y="0.0" width="72" height="21"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="71.5" height="20.5"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="enter habit name here" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="dc6-92-ZqA">
-                                        <rect key="frame" x="0.0" y="26" width="250" height="30"/>
+                                        <rect key="frame" x="0.0" y="25.5" width="250" height="30"/>
                                         <nil key="textColor"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                         <textInputTraits key="textInputTraits" spellCheckingType="yes"/>
@@ -4657,7 +4648,7 @@ The first habit is worth more than all the others and should be the main habit t
                                 </constraints>
                             </stackView>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="s5h-4e-LJ5">
-                                <rect key="frame" x="35" y="196" width="250" height="1"/>
+                                <rect key="frame" x="35" y="195.5" width="250" height="1"/>
                                 <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="250" id="9A9-ht-98f"/>
@@ -4669,7 +4660,7 @@ The first habit is worth more than all the others and should be the main habit t
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bJh-pK-HOp">
-                                <rect key="frame" x="35" y="221" width="250" height="102"/>
+                                <rect key="frame" x="35" y="220.5" width="250" height="101.5"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="250" id="YGK-Xx-U8Q"/>
                                 </constraints>
@@ -4679,7 +4670,7 @@ The first habit is worth more than all the others and should be the main habit t
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="At its core, The Moneypants Solution is simply a system of goals." lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KhZ-kQ-5xl">
-                                <rect key="frame" x="35" y="455" width="250" height="61"/>
+                                <rect key="frame" x="35" y="453.5" width="250" height="61"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="250" id="j3l-3m-6Oc"/>
                                 </constraints>
@@ -4688,7 +4679,7 @@ The first habit is worth more than all the others and should be the main habit t
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Wmp-hp-4jt">
-                                <rect key="frame" x="50" y="339" width="220" height="100"/>
+                                <rect key="frame" x="50" y="338" width="220" height="99.5"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="220" id="pAh-fI-adt"/>
                                 </constraints>
@@ -4702,7 +4693,7 @@ The first habit is worth more than all the others and should be the main habit t
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RUY-CR-P2C">
-                                <rect key="frame" x="35" y="532" width="250" height="33"/>
+                                <rect key="frame" x="35" y="530.5" width="250" height="33"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="250" id="NKK-HQ-xbv"/>
                                 </constraints>
@@ -4743,7 +4734,7 @@ The first habit is worth more than all the others and should be the main habit t
         <!--Expenses-->
         <scene sceneID="fnF-9U-4Ra">
             <objects>
-                <viewController title="Expenses" id="flT-Ij-2PX" customClass="Step5ExpensesVC" customModule="ToDo_App" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController title="Expenses" id="flT-Ij-2PX" customClass="Step10ExpensesVC" customModule="ToDo_App" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="fwl-9n-XTA"/>
                         <viewControllerLayoutGuide type="bottom" id="SYu-3A-jnH"/>
@@ -4763,25 +4754,25 @@ The first habit is worth more than all the others and should be the main habit t
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="GOAL: get 'budget' to match 'income' by adding expenses to the envelopes below." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NHw-Jl-3j0">
-                                <rect key="frame" x="16" y="80" width="288" height="32"/>
+                                <rect key="frame" x="16" y="80" width="288" height="31.5"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="income:  $" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="91G-Ey-HPi">
-                                <rect key="frame" x="16" y="120" width="85" height="21"/>
+                                <rect key="frame" x="16" y="119.5" width="85" height="20.5"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="budget: $0" textAlignment="right" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KiX-uB-hTZ">
-                                <rect key="frame" x="213" y="120" width="91" height="21"/>
+                                <rect key="frame" x="213" y="119.5" width="91" height="20.5"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Rri-C7-E2F">
-                                <rect key="frame" x="0.0" y="150" width="320" height="366"/>
+                                <rect key="frame" x="0.0" y="148" width="320" height="368"/>
                                 <subviews>
                                     <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="0eH-vs-xST" userLabel="Savings Table View">
                                         <rect key="frame" x="0.0" y="1628" width="320" height="100"/>
@@ -4791,7 +4782,7 @@ The first habit is worth more than all the others and should be the main habit t
                                         </constraints>
                                         <inset key="separatorInset" minX="64" minY="0.0" maxX="0.0" maxY="0.0"/>
                                         <prototypes>
-                                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="expensesCell" id="8qO-qu-kfa" customClass="Step5ExpensesCell" customModule="ToDo_App" customModuleProvider="target">
+                                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="expensesCell" id="8qO-qu-kfa" customClass="Step10ExpensesCell" customModule="ToDo_App" customModuleProvider="target">
                                                 <rect key="frame" x="0.0" y="28" width="320" height="44"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="8qO-qu-kfa" id="WG8-g0-ld1">
@@ -4799,15 +4790,15 @@ The first habit is worth more than all the others and should be the main habit t
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <subviews>
                                                         <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GpC-o5-Qur">
-                                                            <rect key="frame" x="64" y="0.0" width="218" height="44"/>
+                                                            <rect key="frame" x="64" y="0.0" width="218" height="43"/>
                                                             <subviews>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GpQ-Hu-DZe">
-                                                                    <rect key="frame" x="0.0" y="0.0" width="210" height="44"/>
+                                                                    <rect key="frame" x="0.0" y="0.0" width="210" height="43"/>
                                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="1000" text="-" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7WF-b2-8kq">
-                                                                    <rect key="frame" x="210" y="0.0" width="8" height="44"/>
+                                                                    <rect key="frame" x="210" y="0.0" width="8" height="43"/>
                                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                                     <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                                                     <nil key="highlightedColor"/>
@@ -4837,7 +4828,7 @@ The first habit is worth more than all the others and should be the main habit t
                                         </constraints>
                                         <inset key="separatorInset" minX="64" minY="0.0" maxX="0.0" maxY="0.0"/>
                                         <prototypes>
-                                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="expensesCell" id="fr4-7a-JBI" customClass="Step5ExpensesCell" customModule="ToDo_App" customModuleProvider="target">
+                                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="expensesCell" id="fr4-7a-JBI" customClass="Step10ExpensesCell" customModule="ToDo_App" customModuleProvider="target">
                                                 <rect key="frame" x="0.0" y="28" width="320" height="44"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="fr4-7a-JBI" id="r9h-fS-ZJb">
@@ -4883,7 +4874,7 @@ The first habit is worth more than all the others and should be the main habit t
                                         </constraints>
                                         <inset key="separatorInset" minX="64" minY="0.0" maxX="0.0" maxY="0.0"/>
                                         <prototypes>
-                                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="expensesCell" id="ovx-QK-5P1" customClass="Step5ExpensesCell" customModule="ToDo_App" customModuleProvider="target">
+                                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="expensesCell" id="ovx-QK-5P1" customClass="Step10ExpensesCell" customModule="ToDo_App" customModuleProvider="target">
                                                 <rect key="frame" x="0.0" y="28" width="320" height="44"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="ovx-QK-5P1" id="erH-N9-voW">
@@ -4929,7 +4920,7 @@ The first habit is worth more than all the others and should be the main habit t
                                         </constraints>
                                         <inset key="separatorInset" minX="64" minY="0.0" maxX="0.0" maxY="0.0"/>
                                         <prototypes>
-                                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="expensesCell" id="EJS-R0-tNA" customClass="Step5ExpensesCell" customModule="ToDo_App" customModuleProvider="target">
+                                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="expensesCell" id="EJS-R0-tNA" customClass="Step10ExpensesCell" customModule="ToDo_App" customModuleProvider="target">
                                                 <rect key="frame" x="0.0" y="28" width="320" height="44"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="EJS-R0-tNA" id="Wpz-xy-hdV">
@@ -4975,7 +4966,7 @@ The first habit is worth more than all the others and should be the main habit t
                                         </constraints>
                                         <inset key="separatorInset" minX="64" minY="0.0" maxX="0.0" maxY="0.0"/>
                                         <prototypes>
-                                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="expensesCell" id="hAt-Me-CS9" customClass="Step5ExpensesCell" customModule="ToDo_App" customModuleProvider="target">
+                                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="expensesCell" id="hAt-Me-CS9" customClass="Step10ExpensesCell" customModule="ToDo_App" customModuleProvider="target">
                                                 <rect key="frame" x="0.0" y="28" width="320" height="44"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="hAt-Me-CS9" id="QBb-Lq-Qzl">
@@ -4983,15 +4974,15 @@ The first habit is worth more than all the others and should be the main habit t
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <subviews>
                                                         <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="h0M-9Q-tgG">
-                                                            <rect key="frame" x="64" y="0.0" width="218" height="44"/>
+                                                            <rect key="frame" x="64" y="0.0" width="218" height="43"/>
                                                             <subviews>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cBY-cn-xog">
-                                                                    <rect key="frame" x="0.0" y="0.0" width="210" height="44"/>
+                                                                    <rect key="frame" x="0.0" y="0.0" width="210" height="43"/>
                                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="1000" text="-" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Bgj-Pf-G4J">
-                                                                    <rect key="frame" x="210" y="0.0" width="8" height="44"/>
+                                                                    <rect key="frame" x="210" y="0.0" width="8" height="43"/>
                                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                                     <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                                                     <nil key="highlightedColor"/>
@@ -5021,7 +5012,7 @@ The first habit is worth more than all the others and should be the main habit t
                                         </constraints>
                                         <inset key="separatorInset" minX="64" minY="0.0" maxX="0.0" maxY="0.0"/>
                                         <prototypes>
-                                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="expensesCell" id="c3h-0a-OI4" customClass="Step5ExpensesCell" customModule="ToDo_App" customModuleProvider="target">
+                                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="expensesCell" id="c3h-0a-OI4" customClass="Step10ExpensesCell" customModule="ToDo_App" customModuleProvider="target">
                                                 <rect key="frame" x="0.0" y="28" width="320" height="44"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="c3h-0a-OI4" id="GGt-F1-wyc">
@@ -5029,15 +5020,15 @@ The first habit is worth more than all the others and should be the main habit t
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <subviews>
                                                         <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8OX-Eg-nze">
-                                                            <rect key="frame" x="64" y="0.0" width="218" height="44"/>
+                                                            <rect key="frame" x="64" y="0.0" width="218" height="43"/>
                                                             <subviews>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bet-gx-ag8">
-                                                                    <rect key="frame" x="0.0" y="0.0" width="210" height="44"/>
+                                                                    <rect key="frame" x="0.0" y="0.0" width="210" height="43"/>
                                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="1000" text="-" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Rab-5M-40v">
-                                                                    <rect key="frame" x="210" y="0.0" width="8" height="44"/>
+                                                                    <rect key="frame" x="210" y="0.0" width="8" height="43"/>
                                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                                     <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                                                     <nil key="highlightedColor"/>
@@ -5067,7 +5058,7 @@ The first habit is worth more than all the others and should be the main habit t
                                         </constraints>
                                         <inset key="separatorInset" minX="64" minY="0.0" maxX="0.0" maxY="0.0"/>
                                         <prototypes>
-                                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="expensesCell" id="cuv-vo-wAe" customClass="Step5ExpensesCell" customModule="ToDo_App" customModuleProvider="target">
+                                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="expensesCell" id="cuv-vo-wAe" customClass="Step10ExpensesCell" customModule="ToDo_App" customModuleProvider="target">
                                                 <rect key="frame" x="0.0" y="28" width="320" height="44"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="cuv-vo-wAe" id="Xgf-3D-Axa">
@@ -5113,7 +5104,7 @@ The first habit is worth more than all the others and should be the main habit t
                                         </constraints>
                                         <inset key="separatorInset" minX="64" minY="0.0" maxX="0.0" maxY="0.0"/>
                                         <prototypes>
-                                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="expensesCell" id="r57-JP-xVF" customClass="Step5ExpensesCell" customModule="ToDo_App" customModuleProvider="target">
+                                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="expensesCell" id="r57-JP-xVF" customClass="Step10ExpensesCell" customModule="ToDo_App" customModuleProvider="target">
                                                 <rect key="frame" x="0.0" y="28" width="320" height="44"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="r57-JP-xVF" id="BeX-Kz-kwa">
@@ -5159,7 +5150,7 @@ The first habit is worth more than all the others and should be the main habit t
                                         </constraints>
                                         <inset key="separatorInset" minX="64" minY="0.0" maxX="0.0" maxY="0.0"/>
                                         <prototypes>
-                                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="expensesCell" id="ZAe-t5-Kg8" customClass="Step5ExpensesCell" customModule="ToDo_App" customModuleProvider="target">
+                                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="expensesCell" id="ZAe-t5-Kg8" customClass="Step10ExpensesCell" customModule="ToDo_App" customModuleProvider="target">
                                                 <rect key="frame" x="0.0" y="28" width="320" height="44"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="ZAe-t5-Kg8" id="P9U-pp-paV">
@@ -5167,15 +5158,15 @@ The first habit is worth more than all the others and should be the main habit t
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <subviews>
                                                         <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QQi-Vs-2tD">
-                                                            <rect key="frame" x="64" y="0.0" width="218" height="44"/>
+                                                            <rect key="frame" x="64" y="0.0" width="218" height="43"/>
                                                             <subviews>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8GX-0e-ugn">
-                                                                    <rect key="frame" x="0.0" y="0.0" width="210" height="44"/>
+                                                                    <rect key="frame" x="0.0" y="0.0" width="210" height="43"/>
                                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="1000" text="-" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8ga-jV-XzD">
-                                                                    <rect key="frame" x="210" y="0.0" width="8" height="44"/>
+                                                                    <rect key="frame" x="210" y="0.0" width="8" height="43"/>
                                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                                     <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                                                     <nil key="highlightedColor"/>
@@ -5205,7 +5196,7 @@ The first habit is worth more than all the others and should be the main habit t
                                         </constraints>
                                         <inset key="separatorInset" minX="64" minY="0.0" maxX="0.0" maxY="0.0"/>
                                         <prototypes>
-                                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="expensesCell" id="D74-SX-uVH" customClass="Step5ExpensesCell" customModule="ToDo_App" customModuleProvider="target">
+                                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="expensesCell" id="D74-SX-uVH" customClass="Step10ExpensesCell" customModule="ToDo_App" customModuleProvider="target">
                                                 <rect key="frame" x="0.0" y="28" width="320" height="44"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="D74-SX-uVH" id="aUx-Z1-D6s">
@@ -5251,7 +5242,7 @@ The first habit is worth more than all the others and should be the main habit t
                                         </constraints>
                                         <inset key="separatorInset" minX="64" minY="0.0" maxX="0.0" maxY="0.0"/>
                                         <prototypes>
-                                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="expensesCell" id="lG9-PX-Zh8" customClass="Step5ExpensesCell" customModule="ToDo_App" customModuleProvider="target">
+                                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="expensesCell" id="lG9-PX-Zh8" customClass="Step10ExpensesCell" customModule="ToDo_App" customModuleProvider="target">
                                                 <rect key="frame" x="0.0" y="28" width="320" height="44"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="lG9-PX-Zh8" id="k7P-hT-3EU">
@@ -5297,7 +5288,7 @@ The first habit is worth more than all the others and should be the main habit t
                                         </constraints>
                                         <inset key="separatorInset" minX="64" minY="0.0" maxX="0.0" maxY="0.0"/>
                                         <prototypes>
-                                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="expensesCell" id="ePI-Lb-4Uw" customClass="Step5ExpensesCell" customModule="ToDo_App" customModuleProvider="target">
+                                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="expensesCell" id="ePI-Lb-4Uw" customClass="Step10ExpensesCell" customModule="ToDo_App" customModuleProvider="target">
                                                 <rect key="frame" x="0.0" y="28" width="320" height="44"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="ePI-Lb-4Uw" id="wmt-T2-qWf">
@@ -5305,15 +5296,15 @@ The first habit is worth more than all the others and should be the main habit t
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <subviews>
                                                         <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Mql-eL-0R1">
-                                                            <rect key="frame" x="64" y="0.0" width="218" height="44"/>
+                                                            <rect key="frame" x="64" y="0.0" width="218" height="43"/>
                                                             <subviews>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fMq-8d-NhN">
-                                                                    <rect key="frame" x="0.0" y="0.0" width="210" height="44"/>
+                                                                    <rect key="frame" x="0.0" y="0.0" width="210" height="43"/>
                                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="1000" text="-" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lKK-kB-aFz">
-                                                                    <rect key="frame" x="210" y="0.0" width="8" height="44"/>
+                                                                    <rect key="frame" x="210" y="0.0" width="8" height="43"/>
                                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                                     <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                                                     <nil key="highlightedColor"/>
@@ -5352,19 +5343,19 @@ The first habit is worth more than all the others and should be the main habit t
                                                 </constraints>
                                             </imageView>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="sports &amp; dance" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Igr-Tg-XUm">
-                                                <rect key="frame" x="64" y="12" width="124" height="21"/>
+                                                <rect key="frame" x="64" y="12.5" width="123.5" height="20.5"/>
                                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="$" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iCZ-3c-eea">
-                                                <rect key="frame" x="198" y="12" width="12" height="21"/>
+                                                <rect key="frame" x="198.5" y="12.5" width="11.5" height="20.5"/>
                                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="-" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Mu9-cC-scl">
-                                                <rect key="frame" x="218" y="12" width="64" height="21"/>
+                                                <rect key="frame" x="218" y="12.5" width="64" height="20.5"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="64" id="ecA-fM-50t"/>
                                                 </constraints>
@@ -5427,19 +5418,19 @@ The first habit is worth more than all the others and should be the main habit t
                                                 </constraints>
                                             </imageView>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="music &amp; art" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="V7d-Fs-qbf">
-                                                <rect key="frame" x="64" y="12" width="93" height="21"/>
+                                                <rect key="frame" x="64" y="12.5" width="93" height="20.5"/>
                                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="$" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qSd-RL-5fI">
-                                                <rect key="frame" x="198" y="12" width="12" height="21"/>
+                                                <rect key="frame" x="198.5" y="12.5" width="11.5" height="20.5"/>
                                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="-" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EtJ-8m-piC">
-                                                <rect key="frame" x="218" y="12" width="64" height="21"/>
+                                                <rect key="frame" x="218" y="12.5" width="64" height="20.5"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="64" id="AkR-4k-mrs"/>
                                                 </constraints>
@@ -5502,19 +5493,19 @@ The first habit is worth more than all the others and should be the main habit t
                                                 </constraints>
                                             </imageView>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="school" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Tto-51-1qq">
-                                                <rect key="frame" x="64" y="12" width="55" height="21"/>
+                                                <rect key="frame" x="64" y="12.5" width="54.5" height="20.5"/>
                                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="$" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="m9p-tX-GT8">
-                                                <rect key="frame" x="198" y="12" width="12" height="21"/>
+                                                <rect key="frame" x="198.5" y="12.5" width="11.5" height="20.5"/>
                                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="-" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pjF-wF-ULe">
-                                                <rect key="frame" x="218" y="12" width="64" height="21"/>
+                                                <rect key="frame" x="218" y="12.5" width="64" height="20.5"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="64" id="xo9-tK-G6r"/>
                                                 </constraints>
@@ -5577,19 +5568,19 @@ The first habit is worth more than all the others and should be the main habit t
                                                 </constraints>
                                             </imageView>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="summer camps" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AA3-In-QjS">
-                                                <rect key="frame" x="64" y="12" width="126" height="21"/>
+                                                <rect key="frame" x="64" y="12.5" width="126" height="20.5"/>
                                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="$" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6OB-kM-b3G">
-                                                <rect key="frame" x="198" y="12" width="12" height="21"/>
+                                                <rect key="frame" x="198.5" y="12.5" width="11.5" height="20.5"/>
                                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="-" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bLM-U8-rCy">
-                                                <rect key="frame" x="218" y="12" width="64" height="21"/>
+                                                <rect key="frame" x="218" y="12.5" width="64" height="20.5"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="64" id="ucF-7k-cpd"/>
                                                 </constraints>
@@ -5652,19 +5643,19 @@ The first habit is worth more than all the others and should be the main habit t
                                                 </constraints>
                                             </imageView>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="clothing" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="j0L-Fa-yn9">
-                                                <rect key="frame" x="64" y="12" width="67" height="21"/>
+                                                <rect key="frame" x="64" y="12.5" width="67" height="20.5"/>
                                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="$" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ic6-1x-ccm">
-                                                <rect key="frame" x="198" y="12" width="12" height="21"/>
+                                                <rect key="frame" x="198.5" y="12.5" width="11.5" height="20.5"/>
                                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="-" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ysd-SC-NRf">
-                                                <rect key="frame" x="218" y="12" width="64" height="21"/>
+                                                <rect key="frame" x="218" y="12.5" width="64" height="20.5"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="64" id="hnz-pV-7gp"/>
                                                 </constraints>
@@ -5727,19 +5718,19 @@ The first habit is worth more than all the others and should be the main habit t
                                                 </constraints>
                                             </imageView>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="electronics" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ig0-6F-2db">
-                                                <rect key="frame" x="64" y="12" width="92" height="21"/>
+                                                <rect key="frame" x="64" y="12.5" width="91.5" height="20.5"/>
                                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="$" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JEB-YV-kg9">
-                                                <rect key="frame" x="198" y="12" width="12" height="21"/>
+                                                <rect key="frame" x="198.5" y="12.5" width="11.5" height="20.5"/>
                                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="-" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kfe-lZ-RGb">
-                                                <rect key="frame" x="218" y="12" width="64" height="21"/>
+                                                <rect key="frame" x="218" y="12.5" width="64" height="20.5"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="64" id="Q4c-0F-Iz0"/>
                                                 </constraints>
@@ -5802,19 +5793,19 @@ The first habit is worth more than all the others and should be the main habit t
                                                 </constraints>
                                             </imageView>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="transportation" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="a1f-FA-ROa">
-                                                <rect key="frame" x="64" y="12" width="119" height="21"/>
+                                                <rect key="frame" x="64" y="12.5" width="119" height="20.5"/>
                                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="$" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="N6e-bh-c9H">
-                                                <rect key="frame" x="198" y="12" width="12" height="21"/>
+                                                <rect key="frame" x="198.5" y="12.5" width="11.5" height="20.5"/>
                                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="-" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3J3-x2-dzf">
-                                                <rect key="frame" x="218" y="12" width="64" height="21"/>
+                                                <rect key="frame" x="218" y="12.5" width="64" height="20.5"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="64" id="N2h-mL-Hdr"/>
                                                 </constraints>
@@ -5877,19 +5868,19 @@ The first habit is worth more than all the others and should be the main habit t
                                                 </constraints>
                                             </imageView>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="personal care" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4Cf-YV-ewn">
-                                                <rect key="frame" x="64" y="12" width="111" height="21"/>
+                                                <rect key="frame" x="64" y="12.5" width="111" height="20.5"/>
                                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="$" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Y8G-l5-5UI">
-                                                <rect key="frame" x="198" y="12" width="12" height="21"/>
+                                                <rect key="frame" x="198.5" y="12.5" width="11.5" height="20.5"/>
                                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="-" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6Hd-Gh-Eur">
-                                                <rect key="frame" x="218" y="12" width="64" height="21"/>
+                                                <rect key="frame" x="218" y="12.5" width="64" height="20.5"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="64" id="eFw-1l-oNt"/>
                                                 </constraints>
@@ -5952,19 +5943,19 @@ The first habit is worth more than all the others and should be the main habit t
                                                 </constraints>
                                             </imageView>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="other" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wMv-LP-vuj">
-                                                <rect key="frame" x="64" y="12" width="45" height="21"/>
+                                                <rect key="frame" x="64" y="12.5" width="44.5" height="20.5"/>
                                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="$" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2sD-YK-heM">
-                                                <rect key="frame" x="198" y="12" width="12" height="21"/>
+                                                <rect key="frame" x="198.5" y="12.5" width="11.5" height="20.5"/>
                                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="-" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="05V-EK-GGe">
-                                                <rect key="frame" x="218" y="12" width="64" height="21"/>
+                                                <rect key="frame" x="218" y="12.5" width="64" height="20.5"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="64" id="78s-sD-EuA"/>
                                                 </constraints>
@@ -6027,19 +6018,19 @@ The first habit is worth more than all the others and should be the main habit t
                                                 </constraints>
                                             </imageView>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="249" verticalHuggingPriority="251" horizontalCompressionResistancePriority="749" text="fun money (10%)" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="5fS-nR-X5r">
-                                                <rect key="frame" x="64" y="12" width="129" height="21"/>
+                                                <rect key="frame" x="64" y="12.5" width="129.5" height="20.5"/>
                                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="$" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TDM-ZA-EbA">
-                                                <rect key="frame" x="198" y="12" width="12" height="21"/>
+                                                <rect key="frame" x="198.5" y="12.5" width="11.5" height="20.5"/>
                                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="-" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Rnw-Vd-oij">
-                                                <rect key="frame" x="218" y="12" width="64" height="21"/>
+                                                <rect key="frame" x="218" y="12.5" width="64" height="20.5"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="64" id="yeo-oI-ay9"/>
                                                 </constraints>
@@ -6102,19 +6093,19 @@ The first habit is worth more than all the others and should be the main habit t
                                                 </constraints>
                                             </imageView>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="249" verticalHuggingPriority="251" horizontalCompressionResistancePriority="749" text="donations (10%)" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="qqS-qF-FsI">
-                                                <rect key="frame" x="64" y="12" width="129" height="21"/>
+                                                <rect key="frame" x="64" y="12.5" width="129.5" height="20.5"/>
                                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="$" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="65b-Mz-9L2">
-                                                <rect key="frame" x="198" y="12" width="12" height="21"/>
+                                                <rect key="frame" x="198.5" y="12.5" width="11.5" height="20.5"/>
                                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="-" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Nok-av-WpM">
-                                                <rect key="frame" x="218" y="12" width="64" height="21"/>
+                                                <rect key="frame" x="218" y="12.5" width="64" height="20.5"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="64" id="4sj-kb-Yk3"/>
                                                 </constraints>
@@ -6177,19 +6168,19 @@ The first habit is worth more than all the others and should be the main habit t
                                                 </constraints>
                                             </imageView>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="savings (10%)" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="x8f-xZ-BTY">
-                                                <rect key="frame" x="64" y="12" width="113" height="21"/>
+                                                <rect key="frame" x="64" y="12.5" width="113" height="20.5"/>
                                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="$" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="174-7F-tAK">
-                                                <rect key="frame" x="198" y="12" width="12" height="21"/>
+                                                <rect key="frame" x="198.5" y="12.5" width="11.5" height="20.5"/>
                                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="-" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hxr-jr-3Yb">
-                                                <rect key="frame" x="218" y="12" width="64" height="21"/>
+                                                <rect key="frame" x="218" y="12.5" width="64" height="20.5"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="64" id="9AU-md-9I5"/>
                                                 </constraints>
@@ -6334,7 +6325,7 @@ The first habit is worth more than all the others and should be the main habit t
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SPB-II-Y7P">
-                                        <rect key="frame" x="60" y="0.0" width="75" height="36"/>
+                                        <rect key="frame" x="59.5" y="0.0" width="75" height="36"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="36" id="zGm-dB-g4Y"/>
                                         </constraints>
@@ -6505,7 +6496,7 @@ The first habit is worth more than all the others and should be the main habit t
         <!--Habits Popup-->
         <scene sceneID="Y7J-hF-O6a">
             <objects>
-                <viewController title="Habits Popup" id="8av-8R-kD7" customClass="Step5ExpensePopupVC" customModule="ToDo_App" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController title="Habits Popup" id="8av-8R-kD7" customClass="Step10ExpensePopupVC" customModule="ToDo_App" customModuleProvider="target" sceneMemberID="viewController">
                     <visualEffectView key="view" opaque="NO" contentMode="scaleToFill" id="tbs-Dc-d1k">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -6514,7 +6505,7 @@ The first habit is worth more than all the others and should be the main habit t
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="t5u-Yd-BAn" userLabel="Popup">
-                                    <rect key="frame" x="35" y="101" width="250" height="416.5"/>
+                                    <rect key="frame" x="35" y="101.5" width="250" height="416.5"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="What is this page for?" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="69r-mB-GsP">
                                             <rect key="frame" x="16" y="58" width="218" height="21"/>
@@ -6590,7 +6581,7 @@ Use the prefilled budget categories to organize each family member's finances. T
                                     </constraints>
                                 </view>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0ml-aa-GqB" userLabel="Popup">
-                                    <rect key="frame" x="110" y="51" width="100" height="100"/>
+                                    <rect key="frame" x="110" y="51.5" width="100" height="100"/>
                                     <color key="backgroundColor" red="0.94901960780000005" green="0.39607843139999999" blue="0.1333333333" alpha="1" colorSpace="calibratedRGB"/>
                                     <constraints>
                                         <constraint firstAttribute="width" constant="100" id="ciM-bg-GUI"/>
@@ -6598,7 +6589,7 @@ Use the prefilled budget categories to organize each family member's finances. T
                                     </constraints>
                                 </view>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Opi-qo-BqH" userLabel="Popup">
-                                    <rect key="frame" x="120" y="61" width="80" height="80"/>
+                                    <rect key="frame" x="120" y="61.5" width="80" height="80"/>
                                     <subviews>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="expenses big" translatesAutoresizingMaskIntoConstraints="NO" id="Ngy-AC-Qo7">
                                             <rect key="frame" x="10" y="10" width="60" height="60"/>
@@ -6640,10 +6631,10 @@ Use the prefilled budget categories to organize each family member's finances. T
             </objects>
             <point key="canvasLocation" x="12306" y="1876"/>
         </scene>
-        <!--Step5 Expense VideoVC-->
+        <!--Step10 Expense VideoVC-->
         <scene sceneID="j3V-EW-uX5">
             <objects>
-                <viewController id="Su6-9n-SWh" customClass="Step5ExpenseVideoVC" customModule="ToDo_App" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="Su6-9n-SWh" customClass="Step10ExpenseVideoVC" customModule="ToDo_App" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="T3o-bG-YKh"/>
                         <viewControllerLayoutGuide type="bottom" id="haD-Cj-xzO"/>
@@ -6724,7 +6715,7 @@ Use the prefilled budget categories to organize each family member's finances. T
         <segue reference="H1i-oa-z71"/>
         <segue reference="AC3-hQ-ggE"/>
         <segue reference="bPF-L7-Z42"/>
-        <segue reference="Oci-q8-TEq"/>
         <segue reference="Ry7-bO-N4h"/>
+        <segue reference="UHA-Yb-04J"/>
     </inferredMetricsTieBreakers>
 </document>

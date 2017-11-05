@@ -1,7 +1,7 @@
 import UIKit
 import Firebase
 
-class Step5ExpenseDetailVC: UITableViewController, UIPickerViewDelegate, UIPickerViewDataSource, UITextFieldDelegate {
+class Step10ExpenseDetailVC: UITableViewController, UIPickerViewDelegate, UIPickerViewDataSource, UITextFieldDelegate {
     
     @IBOutlet weak var saveButton: UIBarButtonItem!
     @IBOutlet weak var cancelButton: UIBarButtonItem!
@@ -18,7 +18,7 @@ class Step5ExpenseDetailVC: UITableViewController, UIPickerViewDelegate, UIPicke
     @IBOutlet weak var totalNumberOfPaymentsLabel: UILabel!
     @IBOutlet weak var yearlyTotalLabel: UILabel!
     
-    // for when user taps 'savings' from Step5ExpensesVC
+    // for when user taps 'savings' from Step10ExpensesVC
     @IBOutlet weak var expenseAmountCell: UITableViewCell!
     @IBOutlet weak var hasDueDateCell: UITableViewCell!
     @IBOutlet weak var expenseAmountDollarSignLabel: UILabel!
@@ -28,7 +28,7 @@ class Step5ExpenseDetailVC: UITableViewController, UIPickerViewDelegate, UIPicke
     var expenseAmountDollarSignLabelColor = UIColor.black
     var hasDueDateLabelColor = UIColor.black
     var expenseAmountTextFieldColor = UIColor.black
-    // end for when user taps 'savings' from Step5ExpensesVC
+    // end for when user taps 'savings' from Step10ExpensesVC
     
     var firstPaymentDatePickerHeight: CGFloat = 0
     var repeatPickerHeight: CGFloat = 0
@@ -40,7 +40,7 @@ class Step5ExpenseDetailVC: UITableViewController, UIPickerViewDelegate, UIPicke
     var firstPaymentDueDateHasError: Bool = false       // for checking for valid due date
     var finalPaymentDueDateError: Bool = false          // for checking for valid date
     
-    var expense: Expense?               // passed from Step5VC
+    var expense: Expense?               // passed from Step8OutsideIncomeVC
     var currentUserName: String!
     
     let repeatOptions = ["never", "weekly", "monthly"]
@@ -62,13 +62,13 @@ class Step5ExpenseDetailVC: UITableViewController, UIPickerViewDelegate, UIPicke
         
         totalNumberOfPaymentsLabel.text = "1"
         
-        // for when user taps 'savings' from Step5ExpensesVC
+        // for when user taps 'savings' from Step10ExpensesVC
         expenseAmountCell.isUserInteractionEnabled = expenseAmountCellIsEnabled
         hasDueDateCell.isUserInteractionEnabled = hasDueDateCellIsEnabled
         expenseAmountDollarSignLabel.textColor = expenseAmountDollarSignLabelColor
         expenseAmountTextField.textColor = expenseAmountTextFieldColor
         hasDueDateLabel.textColor = hasDueDateLabelColor
-        // end for when user taps 'savings' from Step5ExpensesVC
+        // end for when user taps 'savings' from Step10ExpensesVC
         
         expenseNameTextField.delegate = self
         expenseAmountTextField.delegate = self
@@ -429,56 +429,46 @@ class Step5ExpenseDetailVC: UITableViewController, UIPickerViewDelegate, UIPicke
                 Expense.budgetsArray[index].expenseName = expenseNameTextField.text!
                 Expense.budgetsArray[index].amount = Int(expenseAmountTextField.text!)!
                 // ...and update Firebase (get snapshot of all budget items for current user, then sort by category and then by name)
-                
-                
-                
-                
-                
-                
-//                ref.child("budgets").child(currentUserName).child("\(expense?.category) \(expense?.order)").queryOrdered(byChild: "expenseName").queryEqual(toValue: expense?.expenseName).observeSingleEvent(of: .childAdded, with: { (snapshot) in
-//                    print(snapshot.key)
-////                    snapshot.ref.updateChildValues(["expenseName" : self.expenseNameTextField.text!,
-////                                                    "amount" : Int(self.expenseAmountTextField.text!)!])
-//                })
-                
-                ref.child("budgets").child(currentUserName).child("\((expense?.category)!) \((expense?.order)!)").updateChildValues(["expenseName" : self.expenseNameTextField.text!,
-                                                                                                                                     "amount" : Int(self.expenseAmountTextField.text!)!])
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
+                ref.child("budgets").child(currentUserName).child("\((expense?.category)!) \((expense?.order)!)").updateChildValues(["expenseName" : expenseNameTextField.text!,
+                                                                                                                                     "amount" : Int(expenseAmountTextField.text!)!])
                 // if expense amount is zero, nuke all the data
                 if expenseAmountTextField.text == "0" {
                     Expense.budgetsArray[index].hasDueDate = false
                     Expense.budgetsArray[index].firstPayment = "none"
                     Expense.budgetsArray[index].repeats = "never"
                     Expense.budgetsArray[index].finalPayment = "none"
-                    Expense.budgetsArray[index].totalNumberOfPayments = 0
-                    
+                    Expense.budgetsArray[index].totalNumberOfPayments = 1
+                    // ...and update Firebase
+                    ref.child("budgets").child(currentUserName).child("\((expense?.category)!) \((expense?.order)!)").updateChildValues(["hasDueDate" : false,
+                                                                                                                                         "firstPayment" : "none",
+                                                                                                                                         "repeats" : "never",
+                                                                                                                                         "finalPayment" : "none",
+                                                                                                                                         "totalNumberOfPayments" : 1])
                 // if expense has due date...
                 } else if hasDueDateSwitch.isOn {
                     Expense.budgetsArray[index].hasDueDate = true
                     Expense.budgetsArray[index].firstPayment = firstPaymentDueDate!
-                    
+                    // ...and update Firebase
+                    ref.child("budgets").child(currentUserName).child("\((expense?.category)!) \((expense?.order)!)").updateChildValues(["hasDueDate" : true,
+                                                                                                                                         "firstPayment" : firstPaymentDueDate!])
                     // ...with repeat
                     if repeatsLabel.text != "never" {
                         Expense.budgetsArray[index].repeats = repeatsLabel.text!
                         Expense.budgetsArray[index].finalPayment = finalPaymentDueDate!
                         Expense.budgetsArray[index].totalNumberOfPayments = Int(totalNumberOfPaymentsLabel.text!)!
-                        
+                        // ...and udpate Firebase
+                        ref.child("budgets").child(currentUserName).child("\((expense?.category)!) \((expense?.order)!)").updateChildValues(["repeats" : repeatsLabel.text!,
+                                                                                                                                             "finalPayment" : finalPaymentDueDate!,
+                                                                                                                                             "totalNumberOfPayments" : Int(totalNumberOfPaymentsLabel.text!)!])
                     // ...without repeat
                     } else {
                         Expense.budgetsArray[index].repeats = "never"
                         Expense.budgetsArray[index].finalPayment = "none"
                         Expense.budgetsArray[index].totalNumberOfPayments = 1
+                        // ...and update Firebase
+                        ref.child("budgets").child(currentUserName).child("\((expense?.category)!) \((expense?.order)!)").updateChildValues(["repeats" : "never",
+                                                                                                                                             "finalPayment" : "none",
+                                                                                                                                             "totalNumberOfPayments" : 1])
                     }
                     
                 // if expense has no due date
@@ -488,6 +478,12 @@ class Step5ExpenseDetailVC: UITableViewController, UIPickerViewDelegate, UIPicke
                     Expense.budgetsArray[index].repeats = "never"
                     Expense.budgetsArray[index].finalPayment = "none"
                     Expense.budgetsArray[index].totalNumberOfPayments = 1
+                    // ...and update Firebase
+                    ref.child("budgets").child(currentUserName).child("\((expense?.category)!) \((expense?.order)!)").updateChildValues(["hasDueDate" : false,
+                                                                                                                                         "firstPayment" : "none",
+                                                                                                                                         "repeats" : "never",
+                                                                                                                                         "finalPayment" : "none",
+                                                                                                                                         "totalNumberOfPayments" : 1])
                 }
             }
         }

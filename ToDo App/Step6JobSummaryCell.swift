@@ -1,6 +1,6 @@
 import UIKit
 
-class JobSummaryCell: UITableViewCell {
+class Step6JobSummaryCell: UITableViewCell {
     
     @IBOutlet weak var headerImage: UIImageView!
     @IBOutlet weak var headerLabel: UILabel!

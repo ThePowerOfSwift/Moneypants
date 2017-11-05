@@ -54,9 +54,9 @@ class Step1VC: UIViewController, UITextFieldDelegate {
                 performSegue(withIdentifier: "GoToStep2", sender: self)
                 ref.updateChildValues(["income" : FamilyData.yearlyIncome])
                 // only update setup progress if user hasn't progressed past step 1
-                if FamilyData.setupProgress <= 10 {
-                    FamilyData.setupProgress = 10
-                    ref.updateChildValues(["setupProgress" : 10])      // setupProgress: each step is an increment of 10, with each substep being a single digit, so step 4-2 would be 42
+                if FamilyData.setupProgress <= 1 {
+                    FamilyData.setupProgress = 1
+                    ref.updateChildValues(["setupProgress" : 1])      // setupProgress: each step is an increment of 1
                 }
             }
         } else {

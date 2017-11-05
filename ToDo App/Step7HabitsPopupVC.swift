@@ -1,6 +1,6 @@
 import UIKit
 
-class Step4HabitPopupVC: UIViewController {
+class Step7HabitsPopupVC: UIViewController {
     
     @IBOutlet weak var popupView: UIView!
     @IBOutlet weak var popupViewTop: UIView!

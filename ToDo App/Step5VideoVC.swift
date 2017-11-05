@@ -1,7 +1,7 @@
 import UIKit
 
-class Step5ExpenseVideoVC: UIViewController {
-    
+class Step5VideoVC: UIViewController {
+
     @IBOutlet weak var webView: UIWebView!
     
     override func viewDidLoad() {

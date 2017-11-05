@@ -1,6 +1,7 @@
 import UIKit
+import Firebase
 
-class Step5IncomeSummaryVC: UIViewController {
+class Step9IncomeSummaryVC: UIViewController {
     
     @IBOutlet weak var userImage: UIImageView!
     @IBOutlet weak var detailsView: UIView!
@@ -14,14 +15,20 @@ class Step5IncomeSummaryVC: UIViewController {
     
     let numberFormatter = NumberFormatter()
     
-    var yearlyOutsideIncome: Int!       // passed from Step5VC
+    var yearlyOutsideIncome: Int!       // passed from Step8OutsideIncomeVC
     var yearlyTotal: Int!
     
     var currentUserName: String!
     var censusKidsMultiplier: Double!
     
+    var firebaseUser: FIRUser!
+    var ref: FIRDatabaseReference!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        firebaseUser = FIRAuth.auth()?.currentUser
+        ref = FIRDatabase.database().reference().child("users").child(firebaseUser.uid)
         
         currentUserName = User.usersArray[User.currentUser].firstName
         userImage.image = User.usersArray[User.currentUser].photo
@@ -39,14 +46,17 @@ class Step5IncomeSummaryVC: UIViewController {
     // ----------
     
     @IBAction func nextButtonTapped(_ sender: UIButton) {
-        // MARK: TODO - update setupProgress
-
+        // update setupProgress
+        if FamilyData.setupProgress <= 9 {
+            FamilyData.setupProgress = 9
+            ref.updateChildValues(["setupProgress" : 9])
+        }
         performSegue(withIdentifier: "MemberExpenses", sender: self)
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "MemberExpenses" {
-            let nextVC = segue.destination as! Step5ExpensesVC
+            let nextVC = segue.destination as! Step10ExpensesVC
             nextVC.userTotalIncome = yearlyTotal
         }
     }
@@ -55,8 +65,8 @@ class Step5IncomeSummaryVC: UIViewController {
     // Functions
     // ---------
     
-    // CHANGE ALL NUMBERS TO DECIMAL
-//    func calculateCensusFormulas() {
+    // CHANGE ALL NUMBERS TO DECIMAL -- UNUSED
+    func calculateCensusFormulasWithDecimal() {
 //        let secretFormula = Decimal((5.23788 * pow(0.972976, Double(FamilyData.yearlyIncome) / 1000) + 1.56139) / 100)
 //        let householdIncome = Decimal(FamilyData.yearlyIncome)
 //        let natlAvgYearlySpendingPerKid = householdIncome * secretFormula
@@ -92,8 +102,7 @@ class Step5IncomeSummaryVC: UIViewController {
 //        outsideIncomeLabel.text = "$\(numberFormatter.string(from: NSNumber(value: yearlyOutsideIncome))!) / year"
 //        totalIncomeLabel.text = "$\(numberFormatter.string(from: NSNumber(value: yearlyTotal))!) / year"
 //        summaryLabel.text = "\(currentUserName!)'s total estimated yearly income is $\(numberFormatter.string(from: NSNumber(value: yearlyTotal))!) (about $\(numberFormatter.string(from: NSNumber(value: weeklyTotal))!) per week.)"
-//    }
-    
+    }
     
     func calculateCensusFormulas() {
         let secretFormula = ((5.23788 * pow(0.972976, Double(FamilyData.yearlyIncome) / 1000) + 1.56139) / 100) as Double

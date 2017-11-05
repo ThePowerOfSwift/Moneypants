@@ -12,19 +12,19 @@ class PaydayVC: UIViewController, UICollectionViewDelegate, UICollectionViewData
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return tempUsers.count
+        return User.usersArray.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let (tempUserName, tempUserImage, _) = tempUsers[indexPath.row]
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CustomCell", for: indexPath) as! PaydayCell
-        cell.userImage.image = tempUserImage
-        cell.userName.text = tempUserName
+        cell.userName.text = User.usersArray[indexPath.row].firstName
+        cell.userImage.image = User.usersArray[indexPath.row].photo
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        homeIndex = indexPath.row
+//        homeIndex = indexPath.row
+        User.currentUser = indexPath.row
         performSegue(withIdentifier: "DetailSegue", sender: self)
     }
 }

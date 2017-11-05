@@ -358,9 +358,9 @@ class Step3VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
     }
     
     @IBAction func nextButtonTapped(_ sender: UIButton) {
-        if FamilyData.setupProgress <= 30 {
-            FamilyData.setupProgress = 30
-            ref.updateChildValues(["setupProgress" : 30])      // setupProgress: each step is an increment of 10, with each substep being a single digit, so step 4 would be 40
+        if FamilyData.setupProgress <= 3 {
+            FamilyData.setupProgress = 3
+            ref.updateChildValues(["setupProgress" : 3])
         }
         disableTableEdit()
         performSegue(withIdentifier: "AssignJobs", sender: self)

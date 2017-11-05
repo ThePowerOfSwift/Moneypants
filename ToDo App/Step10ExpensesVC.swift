@@ -1,7 +1,7 @@
 import UIKit
 import Firebase
 
-class Step5ExpensesVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class Step10ExpensesVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     @IBOutlet weak var incomeLabel: UILabel!
     @IBOutlet weak var budgetLabel: UILabel!
@@ -96,7 +96,7 @@ class Step5ExpensesVC: UIViewController, UITableViewDelegate, UITableViewDataSou
     var firebaseUser: FIRUser!
     var ref: FIRDatabaseReference!
     
-    var userTotalIncome: Int!           // passed from Step5VC
+    var userTotalIncome: Int!           // passed from Step8OutsideIncomeVC
 
     var currentUserName: String!
     var tenPercentOfUserIncome: Int!
@@ -269,18 +269,18 @@ class Step5ExpensesVC: UIViewController, UITableViewDelegate, UITableViewDataSou
             nextButton.isEnabled = false
         } else if totalSum == userTotalIncome {
             // collapse all tables
-            hideTable(table: sportsTableView, topConstraint: sportsTableTop, arrow: sportsArrow, envelope: sportsEnvelope)
-            hideTable(table: musicArtTableView, topConstraint: musicArtTableTop, arrow: musicArtArrow, envelope: musicArtEnvelope)
-            hideTable(table: schoolTableView, topConstraint: schoolTableTop, arrow: schoolArrow, envelope: schoolEnvelope)
-            hideTable(table: summerCampTableView, topConstraint: summerCampTableTop, arrow: summerCampArrow, envelope: summerCampEnvelope)
-            hideTable(table: clothingTableView, topConstraint: clothingTableTop, arrow: clothingArrow, envelope: clothingEnvelope)
-            hideTable(table: electronicsTableView, topConstraint: electronicsTableTop, arrow: electronicsArrow, envelope: electronicsEnvelope)
-            hideTable(table: transportationTableView, topConstraint: transportationTableTop, arrow: transportationArrow, envelope: transportationEnvelope)
-            hideTable(table: personalCareTableView, topConstraint: personalCareTableTop, arrow: personalCareArrow, envelope: personalCareEnvelope)
-            hideTable(table: otherTableView, topConstraint: otherTableTop, arrow: otherArrow, envelope: otherEnvelope)
-            hideTable(table: funMoneyTableView, topConstraint: funMoneyTableTop, arrow: funMoneyArrow, envelope: funMoneyEnvelope)
-            hideTable(table: donationsTableView, topConstraint: donationsTableTop, arrow: donationsArrow, envelope: donationsEnvelope)
-            hideTable(table: savingsTableView, topConstraint: savingsTableTop, arrow: savingsArrow, envelope: savingsEnvelope)
+//            hideTable(table: sportsTableView, topConstraint: sportsTableTop, arrow: sportsArrow, envelope: sportsEnvelope)
+//            hideTable(table: musicArtTableView, topConstraint: musicArtTableTop, arrow: musicArtArrow, envelope: musicArtEnvelope)
+//            hideTable(table: schoolTableView, topConstraint: schoolTableTop, arrow: schoolArrow, envelope: schoolEnvelope)
+//            hideTable(table: summerCampTableView, topConstraint: summerCampTableTop, arrow: summerCampArrow, envelope: summerCampEnvelope)
+//            hideTable(table: clothingTableView, topConstraint: clothingTableTop, arrow: clothingArrow, envelope: clothingEnvelope)
+//            hideTable(table: electronicsTableView, topConstraint: electronicsTableTop, arrow: electronicsArrow, envelope: electronicsEnvelope)
+//            hideTable(table: transportationTableView, topConstraint: transportationTableTop, arrow: transportationArrow, envelope: transportationEnvelope)
+//            hideTable(table: personalCareTableView, topConstraint: personalCareTableTop, arrow: personalCareArrow, envelope: personalCareEnvelope)
+//            hideTable(table: otherTableView, topConstraint: otherTableTop, arrow: otherArrow, envelope: otherEnvelope)
+//            hideTable(table: funMoneyTableView, topConstraint: funMoneyTableTop, arrow: funMoneyArrow, envelope: funMoneyEnvelope)
+//            hideTable(table: donationsTableView, topConstraint: donationsTableTop, arrow: donationsArrow, envelope: donationsEnvelope)
+//            hideTable(table: savingsTableView, topConstraint: savingsTableTop, arrow: savingsArrow, envelope: savingsEnvelope)
             
             topLabel.text = "Excellent! Budget matches income. Please tap 'next' to continue."
             topLabel.textColor = .black
@@ -431,7 +431,7 @@ class Step5ExpensesVC: UIViewController, UITableViewDelegate, UITableViewDataSou
     }
     
     func formattedTableViewCell(table: UITableView, filteredCategory: String, indxPth: IndexPath) -> UITableViewCell {
-        let cell = table.dequeueReusableCell(withIdentifier: "expensesCell", for: indxPth) as! Step5ExpensesCell
+        let cell = table.dequeueReusableCell(withIdentifier: "expensesCell", for: indxPth) as! Step10ExpensesCell
         let array = Expense.budgetsArray.filter({ return $0.ownerName == currentUserName && $0.category == filteredCategory }).sorted(by: { $0.order < $1.order })
         cell.expensesLabel.text = "\(array[indxPth.row].expenseName)"
         if array[indxPth.row].amount == 0 {
@@ -500,11 +500,11 @@ class Step5ExpensesVC: UIViewController, UITableViewDelegate, UITableViewDataSou
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "EditExpense" {
             let navigationVC = segue.destination as! UINavigationController
-            let nextVC = navigationVC.topViewController as! Step5ExpenseDetailVC
+            let nextVC = navigationVC.topViewController as! Step10ExpenseDetailVC
             nextVC.expense = sender as? Expense
         } else if segue.identifier == "ShowSavings" {
             let navigationVC = segue.destination as! UINavigationController
-            let nextVC = navigationVC.topViewController as! Step5ExpenseDetailVC
+            let nextVC = navigationVC.topViewController as! Step10ExpenseDetailVC
             nextVC.expense = sender as? Expense
             nextVC.expenseAmountCellIsEnabled = false
             nextVC.hasDueDateCellIsEnabled = false
@@ -519,17 +519,13 @@ class Step5ExpensesVC: UIViewController, UITableViewDelegate, UITableViewDataSou
         if User.currentUser < (User.usersArray.count - 1) {
             User.currentUser += 1
             let storyboard = UIStoryboard(name: "Setup", bundle: nil)
-            let vc = storyboard.instantiateViewController(withIdentifier: "Step5VC")
+            let vc = storyboard.instantiateViewController(withIdentifier: "Step8OutsideIncomeVC")
             navigationController?.pushViewController(vc, animated: true)
             
         // we're at last user in array (oldest member of family)
         } else if User.currentUser == (User.usersArray.count - 1) {
             // give user opportunity to review family members or move on
             // reveal 'select user' button
-            if FamilyData.setupProgress < 52 {
-                FamilyData.setupProgress = 52
-                ref.updateChildValues(["setupProgress" : 52])
-            }
             reviewOrContinueAlert()
         }
     }
@@ -540,7 +536,7 @@ class Step5ExpensesVC: UIViewController, UITableViewDelegate, UITableViewDataSou
             alert.addAction(UIAlertAction(title: user.firstName, style: .default, handler: { (action) in
                 User.currentUser = index
                 let storyboard = UIStoryboard(name: "Setup", bundle: nil)
-                let vc = storyboard.instantiateViewController(withIdentifier: "Step5VC")
+                let vc = storyboard.instantiateViewController(withIdentifier: "Step8OutsideIncomeVC")
                 self.navigationController?.pushViewController(vc, animated: true)
                 alert.dismiss(animated: true, completion: nil)
             }))
@@ -784,7 +780,7 @@ class Step5ExpensesVC: UIViewController, UITableViewDelegate, UITableViewDataSou
     }
     
     func checkSetupNumber() {
-        if FamilyData.setupProgress >= 52 {
+        if FamilyData.setupProgress >= 10 {
             selectUserButton.isHidden = false
         } else {
             selectUserButton.isHidden = true
@@ -799,6 +795,10 @@ class Step5ExpensesVC: UIViewController, UITableViewDelegate, UITableViewDataSou
             self.selectUserButton.isHidden = false
         }))
         alert.addAction(UIAlertAction(title: "continue", style: .default, handler: { (action) in
+            if FamilyData.setupProgress < 10 {
+                FamilyData.setupProgress = 10
+                self.ref.updateChildValues(["setupProgress" : 10])
+            }
             alert.dismiss(animated: true, completion: nil)
             self.performSegue(withIdentifier: "Congrats", sender: self)
         }))

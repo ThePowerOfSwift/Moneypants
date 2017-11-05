@@ -1,7 +1,7 @@
 import UIKit
 import Firebase
 
-class Step5VC: UIViewController, UITextFieldDelegate {
+class Step8OutsideIncomeVC: UIViewController, UITextFieldDelegate {
     
     @IBOutlet weak var userImage: UIImageView!
     
@@ -65,16 +65,16 @@ class Step5VC: UIViewController, UITextFieldDelegate {
     
     @IBAction func nextButtonTapped(_ sender: UIButton) {
         // update setupProgress
-        if FamilyData.setupProgress <= 50 {
-            FamilyData.setupProgress = 50
-            ref.updateChildValues(["setupProgress" : 50])
+        if FamilyData.setupProgress <= 8 {
+            FamilyData.setupProgress = 8
+            ref.updateChildValues(["setupProgress" : 8])
         }
         performSegue(withIdentifier: "IncomeSummary", sender: self)
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "IncomeSummary" {
-            let nextVC = segue.destination as! Step5IncomeSummaryVC
+            let nextVC = segue.destination as! Step9IncomeSummaryVC
             nextVC.yearlyOutsideIncome = calculateTotal()
             
             if noButton.isSelected == true {

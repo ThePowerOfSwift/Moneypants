@@ -1,6 +1,6 @@
 import UIKit
 
-class JobSummaryCellB: UITableViewCell {
+class Step6Step6JobSummaryCellB: UITableViewCell {
     
     @IBOutlet weak var dailyWeeklyLabel: UILabel!
     @IBOutlet weak var userNameLabel: UILabel!
