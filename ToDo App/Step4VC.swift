@@ -13,7 +13,6 @@ class Step4VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
     var firebaseUser: FIRUser!
     var ref: FIRDatabaseReference!
     
-    var currentMember = 0           // used for cycling through users when 'next' button is tapped
     var currentUserName: String!
 
     var dailyJobsMax = 3                  // max number of daily jobs allowed
@@ -22,12 +21,14 @@ class Step4VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        User.currentUser = (User.usersArray.count - 1)          // start with youngest user first
+        currentUserName = User.usersArray[User.currentUser].firstName
+        
         userImage.layer.cornerRadius = userImage.bounds.height / 6.4
         userImage.layer.masksToBounds = true
         userImage.layer.borderWidth = 0.5
         userImage.layer.borderColor = UIColor.black.cgColor
         
-        currentUserName = ""
         instructionsLabel.text = ""
         selectUsersButton.isHidden = true
         
@@ -168,7 +169,7 @@ class Step4VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
                 // ----------------------------------------
                 
             } else if JobsAndHabits.finalDailyJobsArray[indexPath.row].assigned == "none" {
-                JobsAndHabits.finalDailyJobsArray[indexPath.row].assigned = self.currentUserName      // update local array
+                JobsAndHabits.finalDailyJobsArray[indexPath.row].assigned = currentUserName      // update local array
                 var selectedDailyJobsCount = 0
                 for job in JobsAndHabits.finalDailyJobsArray {
                     if job.assigned == self.currentUserName {
@@ -210,7 +211,7 @@ class Step4VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
                 // --------------------------------------------------------
                 
                 self.jobsTableView.reloadData()
-                let alert = UIAlertController(title: "Job Selection", message: "The job you selected (\(JobsAndHabits.finalDailyJobsArray[indexPath.row].name)) is already assigned to \(JobsAndHabits.finalDailyJobsArray[indexPath.row].assigned).\n\nDo you want to reassign it to \(User.usersArray[currentMember].firstName) instead?", preferredStyle: .alert)
+                let alert = UIAlertController(title: "Job Selection", message: "The job you selected (\(JobsAndHabits.finalDailyJobsArray[indexPath.row].name)) is already assigned to \(JobsAndHabits.finalDailyJobsArray[indexPath.row].assigned).\n\nDo you want to reassign it to \(User.usersArray[User.currentUser].firstName) instead?", preferredStyle: .alert)
                 alert.addAction(UIAlertAction(title: "cancel", style: .cancel, handler: { (action) in
                     alert.dismiss(animated: true, completion: nil)
                 }))
@@ -238,7 +239,7 @@ class Step4VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
                         alert.addAction(UIAlertAction(title: "okay", style: .default, handler: { (action) in
                             self.dailyJobsMax = self.dailyJobsMax + 1
                             // update local array
-                            JobsAndHabits.finalDailyJobsArray[indexPath.row].assigned = User.usersArray[self.currentMember].firstName
+                            JobsAndHabits.finalDailyJobsArray[indexPath.row].assigned = User.usersArray[User.currentUser].firstName
                             self.jobsTableView.reloadData()
                             // update firebase
                             self.ref.child("dailyJobs").queryOrdered(byChild: "order").queryEqual(toValue: indexPath.row).observeSingleEvent(of: .childAdded, with: { (snapshot) in
@@ -253,7 +254,7 @@ class Step4VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
                         // ...if user doesn't have too many jobs, then assign the job to them
                         // ------------------------------------------------------------------
                         
-                        JobsAndHabits.finalDailyJobsArray[indexPath.row].assigned = User.usersArray[self.currentMember].firstName
+                        JobsAndHabits.finalDailyJobsArray[indexPath.row].assigned = User.usersArray[User.currentUser].firstName
                         self.jobsTableView.reloadData()
                         // update firebase
                         self.ref.child("dailyJobs").queryOrdered(byChild: "order").queryEqual(toValue: indexPath.row).observeSingleEvent(of: .childAdded, with: { (snapshot) in
@@ -331,7 +332,7 @@ class Step4VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
                 // ----------------------------------------------------
                 
                 self.jobsTableView.reloadData()
-                let alert = UIAlertController(title: "Job Selection", message: "The job you selected (\(JobsAndHabits.finalWeeklyJobsArray[indexPath.row].name)) is already assigned to \(JobsAndHabits.finalWeeklyJobsArray[indexPath.row].assigned).\n\nDo you want to reassign it to \(User.usersArray[currentMember].firstName) instead?", preferredStyle: .alert)
+                let alert = UIAlertController(title: "Job Selection", message: "The job you selected (\(JobsAndHabits.finalWeeklyJobsArray[indexPath.row].name)) is already assigned to \(JobsAndHabits.finalWeeklyJobsArray[indexPath.row].assigned).\n\nDo you want to reassign it to \(User.usersArray[User.currentUser].firstName) instead?", preferredStyle: .alert)
                 alert.addAction(UIAlertAction(title: "cancel", style: .cancel, handler: { (action) in
                     alert.dismiss(animated: true, completion: nil)
                 }))
@@ -359,7 +360,7 @@ class Step4VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
                         alert.addAction(UIAlertAction(title: "okay", style: .default, handler: { (action) in
                             self.weeklyJobsMax = self.weeklyJobsMax + 1
                             // update local array
-                            JobsAndHabits.finalWeeklyJobsArray[indexPath.row].assigned = User.usersArray[self.currentMember].firstName
+                            JobsAndHabits.finalWeeklyJobsArray[indexPath.row].assigned = User.usersArray[User.currentUser].firstName
                             self.jobsTableView.reloadData()
                             // update firebase
                             self.ref.child("weeklyJobs").queryOrdered(byChild: "order").queryEqual(toValue: indexPath.row).observeSingleEvent(of: .childAdded, with: { (snapshot) in
@@ -374,7 +375,7 @@ class Step4VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
                         // ...if user doesn't have too many jobs, then assign the job to them
                         // ------------------------------------------------------------------
                         
-                        JobsAndHabits.finalWeeklyJobsArray[indexPath.row].assigned = User.usersArray[self.currentMember].firstName
+                        JobsAndHabits.finalWeeklyJobsArray[indexPath.row].assigned = User.usersArray[User.currentUser].firstName
                         self.jobsTableView.reloadData()
                         // update firebase
                         self.ref.child("weeklyJobs").queryOrdered(byChild: "order").queryEqual(toValue: indexPath.row).observeSingleEvent(of: .childAdded, with: { (snapshot) in
@@ -396,16 +397,16 @@ class Step4VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "UserIntroPopup" {
             let nextViewContoller = segue.destination as! Step4PopupVC
-            nextViewContoller.popupImage = User.usersArray[currentMember].photo
-            nextViewContoller.mainLabelText = User.usersArray[currentMember].firstName
-            let age = calculateAge(birthday: "\(User.usersArray[currentMember].birthday)")
+            nextViewContoller.popupImage = User.usersArray[User.currentUser].photo
+            nextViewContoller.mainLabelText = User.usersArray[User.currentUser].firstName
+            let age = calculateAge(birthday: "\(User.usersArray[User.currentUser].birthday)")
             // determine if current user is child or parent
-            if User.usersArray[currentMember].childParent == "parent" {
-                nextViewContoller.bodyLabelText = "\(User.usersArray[currentMember].firstName) should assign \(determineGender().him_her.lowercased())self any jobs that were not assigned to the children. \(determineGender().he_she) can split the remaining jobs with \(determineGender().his_her.lowercased()) spouse.\n\nIn the next step, \(User.usersArray[currentMember].firstName) will get the chance to assign \(determineGender().him_her.lowercased())self a couple additional duties that only parents can do."
+            if User.usersArray[User.currentUser].childParent == "parent" {
+                nextViewContoller.bodyLabelText = "\(User.usersArray[User.currentUser].firstName) should assign \(determineGender().him_her.lowercased())self any jobs that were not assigned to the children. \(determineGender().he_she) can split the remaining jobs with \(determineGender().his_her.lowercased()) spouse.\n\nIn the next step, \(User.usersArray[User.currentUser].firstName) will get the chance to assign \(determineGender().him_her.lowercased())self a couple additional duties that only parents can do."
                 nextViewContoller.watchVideoButtonHiddenStatus = true
                 nextViewContoller.watchVideoButtonHeightValue = 0
             } else {
-                nextViewContoller.bodyLabelText = "Choose daily and weekly job assignments for \(User.usersArray[currentMember].firstName), who is \(age) years old. For ideas on which jobs to select for \(determineGender().him_her.lowercased()), tap below to see a list of possible age-appropriate jobs."
+                nextViewContoller.bodyLabelText = "Choose daily and weekly job assignments for \(User.usersArray[User.currentUser].firstName), who is \(age) years old. For ideas on which jobs to select for \(determineGender().him_her.lowercased()), tap below to see a list of possible age-appropriate jobs."
             }
         }
     }
@@ -416,7 +417,7 @@ class Step4VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
             reviewFamilyJobs()
         } else {
             // perform query on daily jobs to see how many jobs current user has assigned
-            let userJobsList = JobsAndHabits.finalDailyJobsArray.filter({ return $0.assigned == User.usersArray[currentMember].firstName })
+            let userJobsList = JobsAndHabits.finalDailyJobsArray.filter({ return $0.assigned == User.usersArray[User.currentUser].firstName })
             
             // -------------------------------------------------
             // 1. does current user have at least one DAILY job?
@@ -433,11 +434,11 @@ class Step4VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
                 // 2. does current user have at least one WEEKLY job?
                 // --------------------------------------------------
                 
-                let userJobsList2 = JobsAndHabits.finalWeeklyJobsArray.filter({ return $0.assigned == User.usersArray[currentMember].firstName })
+                let userJobsList2 = JobsAndHabits.finalWeeklyJobsArray.filter({ return $0.assigned == User.usersArray[User.currentUser].firstName })
                 
                 // 2A. user has ZERO weekly jobs assigned
                 if userJobsList2.count == 0 {
-                    let alert = UIAlertController(title: "Not Enough Jobs", message: "You have not chosen any weekly jobs for \(User.usersArray[currentMember].firstName). Are you sure you want to continue?", preferredStyle: .alert)
+                    let alert = UIAlertController(title: "Not Enough Jobs", message: "You have not chosen any weekly jobs for \(User.usersArray[User.currentUser].firstName). Are you sure you want to continue?", preferredStyle: .alert)
                     alert.addAction(UIAlertAction(title: "cancel", style: .cancel, handler: { (action) in
                         alert.dismiss(animated: true, completion: nil)
                     }))
@@ -449,12 +450,12 @@ class Step4VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
                         // -------------------------------------------
                         
                         // 3A. user is NOT oldest member of family
-                        if self.currentMember != (User.usersArray.count - 1) {
+                        if User.currentUser != 0 {
                             // 3A-1. go to next user
                             self.presentNextUser()
                             
                             // 3B. user is oldest member of family
-                        } else if self.currentMember == (User.usersArray.count - 1) {
+                        } else if User.currentUser == 0 {
                             self.reviewFamilyJobs()
                         }
                     }))
@@ -466,9 +467,9 @@ class Step4VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
                     // -------------------------------------------
                     
                     // current user is oldest member of family
-                    if currentMember == (User.usersArray.count - 1) {
+                    if User.currentUser == 0 {
                         reviewFamilyJobs()
-                    } else if currentMember != (User.usersArray.count - 1) {
+                    } else if User.currentUser != 0 {
                         presentNextUser()
                     }
                 }
@@ -480,11 +481,11 @@ class Step4VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
         let alert = UIAlertController(title: "Select A User", message: "Please choose a family member to review their job assignments.", preferredStyle: .alert)
         for (index, user) in User.usersArray.enumerated() {
             alert.addAction(UIAlertAction(title: user.firstName, style: .default, handler: { (action) in
-                self.currentMember = index
-                self.userImage.image = User.usersArray[self.currentMember].photo
-                self.currentUserName = User.usersArray[self.currentMember].firstName
-                self.instructionsLabel.text = "Choose daily and weekly job assignments for \(User.usersArray[self.currentMember].firstName)."
-                self.navigationItem.title = User.usersArray[self.currentMember].firstName
+                User.currentUser = index
+                self.userImage.image = User.usersArray[User.currentUser].photo
+                self.currentUserName = User.usersArray[User.currentUser].firstName
+                self.instructionsLabel.text = "Choose daily and weekly job assignments for \(User.usersArray[User.currentUser].firstName)."
+                self.navigationItem.title = User.usersArray[User.currentUser].firstName
                 self.jobsTableView.reloadData()
                 alert.dismiss(animated: true, completion: nil)
             }))
@@ -502,10 +503,10 @@ class Step4VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
     func checkSetupNumber() {
         if FamilyData.setupProgress >= 4 {
             // first view will be of youngest family member
-            self.userImage.image = User.usersArray[0].photo
-            self.currentUserName = User.usersArray[0].firstName
-            self.instructionsLabel.text = "Choose daily and weekly job assignments for \(User.usersArray[0].firstName)."
-            self.navigationItem.title = User.usersArray[0].firstName
+            self.userImage.image = User.usersArray[User.currentUser].photo
+            self.currentUserName = User.usersArray[User.currentUser].firstName
+            self.instructionsLabel.text = "Choose daily and weekly job assignments for \(User.usersArray[User.currentUser].firstName)."
+            self.navigationItem.title = User.usersArray[User.currentUser].firstName
             self.jobsTableView.reloadData()
             
             // show 'select user' button so user can review other members' assignments
@@ -515,16 +516,16 @@ class Step4VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
             
             // if user hasn't done setup yet, show the overlay
             self.performSegue(withIdentifier: "UserIntroPopup", sender: self)
-            self.userImage.image = User.usersArray[0].photo
-            self.currentUserName = User.usersArray[0].firstName
-            self.instructionsLabel.text = "Choose daily and weekly job assignments for \(User.usersArray[0].firstName)."
-            self.navigationItem.title = User.usersArray[0].firstName
+            self.userImage.image = User.usersArray[User.currentUser].photo
+            self.currentUserName = User.usersArray[User.currentUser].firstName
+            self.instructionsLabel.text = "Choose daily and weekly job assignments for \(User.usersArray[User.currentUser].firstName)."
+            self.navigationItem.title = User.usersArray[User.currentUser].firstName
             self.jobsTableView.reloadData()
         }
     }
     
     func zeroDailyJobsAssignedAlert() {
-        let alert = UIAlertController(title: "Not Enough Jobs", message: "Please assign \(User.usersArray[self.currentMember].firstName) at least one daily job.", preferredStyle: .alert)
+        let alert = UIAlertController(title: "Not Enough Jobs", message: "Please assign \(User.usersArray[User.currentUser].firstName) at least one daily job.", preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "okay", style: .cancel, handler: { (action) in
             alert.dismiss(animated: true, completion: nil)
         }))
@@ -669,19 +670,19 @@ class Step4VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
     }
 
     func presentNextUser() {
-        self.currentMember += 1
+        User.currentUser -= 1
         
         // ----------------------------------------------------------------------------------
         // if next user already has jobs assigned, there's no need to show their popup again?
         // ----------------------------------------------------------------------------------
         
         // filter jobs list to find how many daily jobs current user has
-        let userJobsList = JobsAndHabits.finalDailyJobsArray.filter({ return $0.assigned == User.usersArray[self.currentMember].firstName })
+        let userJobsList = JobsAndHabits.finalDailyJobsArray.filter({ return $0.assigned == User.usersArray[User.currentUser].firstName })
         if userJobsList.count > 0 {
-            self.userImage.image = User.usersArray[self.currentMember].photo
-            self.currentUserName = User.usersArray[self.currentMember].firstName
-            self.instructionsLabel.text = "Choose daily and weekly job assignments for \(User.usersArray[self.currentMember].firstName)."
-            self.navigationItem.title = User.usersArray[self.currentMember].firstName
+            self.userImage.image = User.usersArray[User.currentUser].photo
+            self.currentUserName = User.usersArray[User.currentUser].firstName
+            self.instructionsLabel.text = "Choose daily and weekly job assignments for \(User.usersArray[User.currentUser].firstName)."
+            self.navigationItem.title = User.usersArray[User.currentUser].firstName
             self.dailyJobsMax = 3
             self.weeklyJobsMax = 2
             self.jobsTableView.reloadData()
@@ -693,10 +694,10 @@ class Step4VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
             
             self.performSegue(withIdentifier: "UserIntroPopup", sender: self)
             DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
-                self.userImage.image = User.usersArray[self.currentMember].photo
-                self.currentUserName = User.usersArray[self.currentMember].firstName
-                self.instructionsLabel.text = "Choose daily and weekly job assignments for \(User.usersArray[self.currentMember].firstName)."
-                self.navigationItem.title = User.usersArray[self.currentMember].firstName
+                self.userImage.image = User.usersArray[User.currentUser].photo
+                self.currentUserName = User.usersArray[User.currentUser].firstName
+                self.instructionsLabel.text = "Choose daily and weekly job assignments for \(User.usersArray[User.currentUser].firstName)."
+                self.navigationItem.title = User.usersArray[User.currentUser].firstName
                 self.dailyJobsMax = 3
                 self.weeklyJobsMax = 2
                 self.jobsTableView.reloadData()
@@ -709,7 +710,7 @@ class Step4VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
         var he_she: String!
         var him_her: String!
         var his_her: String!
-        if User.usersArray[currentMember].gender == "male" {
+        if User.usersArray[User.currentUser].gender == "male" {
             he_she = "He"
             him_her = "Him"
             his_her = "His"
@@ -734,15 +735,15 @@ class Step4VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
     }
     
     func determineAgeAppropriateJobs() -> String {
-        let age = calculateAge(birthday: "\(User.usersArray[currentMember].birthday)")
+        let age = calculateAge(birthday: "\(User.usersArray[User.currentUser].birthday)")
         if age < 4 {
             return "Age appropriate jobs can include:\n\ndaily jobs:\n\n• straighten living room\n• clean bedroom\n\nweekly jobs:\n\n• sweep porch\n• clean backyard\n• weed garden & yard"
         } else if age < 6 {
             return "Age appropriate jobs can include:\n\ndaily jobs:\n\n• straighten living room\n• clean bedroom\n• clear & wipe table\n• sweep floors & vacuum rugs\n• feed pet\n• take out garbage\n\nweekly jobs:\n\n• sweep porch\n• clean backyard\n• weed garden & yard\n• wash windows"
         } else if age < 18 {
             return "\(determineGender().he_she) is old enough that all jobs would be appropriate to assign.\n\nIn addition to the regular jobs of basic cleaning and straightening up, \(determineGender().he_she.lowercased()) can also user power tools like the lawnmower or edger."
-        } else if User.usersArray[currentMember].childParent == "parent" {
-            return "\(determineGender().he_she) jobs not assigned to children must be assigned to parents.\n\nIn the next step, \(User.usersArray[currentMember].firstName) will get the chance to assign \(determineGender().him_her.lowercased())self a couple additional duties that only parents can do."
+        } else if User.usersArray[User.currentUser].childParent == "parent" {
+            return "\(determineGender().he_she) jobs not assigned to children must be assigned to parents.\n\nIn the next step, \(User.usersArray[User.currentUser].firstName) will get the chance to assign \(determineGender().him_her.lowercased())self a couple additional duties that only parents can do."
         } else {
             return "nothing to see here"
         }

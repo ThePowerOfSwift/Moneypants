@@ -96,7 +96,7 @@ class Step10ExpensesVC: UIViewController, UITableViewDelegate, UITableViewDataSo
     var firebaseUser: FIRUser!
     var ref: FIRDatabaseReference!
     
-    var userTotalIncome: Int!           // passed from Step8OutsideIncomeVC
+    var userTotalIncome: Int!           // passed from Step9IncomeSummary
 
     var currentUserName: String!
     var tenPercentOfUserIncome: Int!
@@ -114,7 +114,6 @@ class Step10ExpensesVC: UIViewController, UITableViewDelegate, UITableViewDataSo
         
         currentUserName = User.usersArray[User.currentUser].firstName
         navigationItem.title = User.usersArray[User.currentUser].firstName
-        
         tenPercentOfUserIncome = Int(Double(userTotalIncome) * 0.10)
         
         fetchExpenses()
@@ -260,7 +259,6 @@ class Step10ExpensesVC: UIViewController, UITableViewDelegate, UITableViewDataSo
         for budgetItem in budgetArray {
             totalSum += budgetItem.amount * budgetItem.totalNumberOfPayments
         }
-        
         if totalSum == tenPercentOfUserIncome * 3 {
             // show default instructions when only budget items are 10-10-10 items
             topLabel.text = "GOAL: get 'budget' to match 'income' by adding expenses to the envelopes below."
@@ -516,14 +514,14 @@ class Step10ExpensesVC: UIViewController, UITableViewDelegate, UITableViewDataSo
     
     @IBAction func nextButtonTapped(_ sender: UIButton) {
         // if we're not at last family member, move on to the next oldest one
-        if User.currentUser < (User.usersArray.count - 1) {
-            User.currentUser += 1
+        if User.currentUser != 0 {
+            User.currentUser -= 1
             let storyboard = UIStoryboard(name: "Setup", bundle: nil)
             let vc = storyboard.instantiateViewController(withIdentifier: "Step8OutsideIncomeVC")
             navigationController?.pushViewController(vc, animated: true)
             
         // we're at last user in array (oldest member of family)
-        } else if User.currentUser == (User.usersArray.count - 1) {
+        } else if User.currentUser == 0 {
             // give user opportunity to review family members or move on
             // reveal 'select user' button
             reviewOrContinueAlert()
@@ -799,6 +797,7 @@ class Step10ExpensesVC: UIViewController, UITableViewDelegate, UITableViewDataSo
                 FamilyData.setupProgress = 10
                 self.ref.updateChildValues(["setupProgress" : 10])
             }
+            self.selectUserButton.isHidden = false
             alert.dismiss(animated: true, completion: nil)
             self.performSegue(withIdentifier: "Congrats", sender: self)
         }))

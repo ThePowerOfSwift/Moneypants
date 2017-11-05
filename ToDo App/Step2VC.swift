@@ -40,15 +40,8 @@ class Step2VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
-        User.usersArray.sort(by: {$0.birthday < $1.birthday})       // sort users by birthday in descending order
         usersTableView.reloadData()
     }
-    
-    override func viewDidDisappear(_ animated: Bool) {
-        // resort users array to have youngest first
-        User.usersArray.sort(by: { $0.birthday > $1.birthday })
-    }
-    
     
     // ----------
     // Table View
@@ -103,7 +96,7 @@ class Step2VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
         if let selectedIndexPath = usersTableView.indexPathForSelectedRow {
             // Update an existing user
             User.usersArray[selectedIndexPath.row] = updatedUser!
-//            User.usersArray.sort(by: {$0.birthday < $1.birthday})
+            User.usersArray.sort(by: {$0.birthday < $1.birthday})       // resort array before displaying tableview data
             usersTableView.reloadData()
             saveUsersToFirebase()
         } else {
@@ -111,7 +104,7 @@ class Step2VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
             let newIndexPath = IndexPath(row: User.usersArray.count, section: 0)
             User.usersArray.append(updatedUser!)
             usersTableView.insertRows(at: [newIndexPath], with: .automatic)
-            User.usersArray.sort(by: {$0.birthday < $1.birthday})
+            User.usersArray.sort(by: {$0.birthday < $1.birthday})       // resort array before displaying tableview data
             usersTableView.reloadData()
             saveUsersToFirebase()
         }

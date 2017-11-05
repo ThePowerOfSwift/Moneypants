@@ -193,7 +193,7 @@ class Step8OutsideIncomeVC: UIViewController, UITextFieldDelegate {
         income = OutsideIncome.incomeArray.filter({ return $0.userName == currentUserName })
         
         if income.isEmpty {
-            print("empty income array")
+//            print("empty income array")
             // user hasn't entered in any data yet and all data is empty
             // create and append a new array with default values
             let outsideIncome = OutsideIncome(userName: currentUserName,
@@ -203,7 +203,7 @@ class Step8OutsideIncomeVC: UIViewController, UITextFieldDelegate {
                                               mowingLawns: 0,
                                               summerJobs: 0)
             OutsideIncome.incomeArray.append(outsideIncome)
-            print(OutsideIncome.incomeArray)
+//            print(OutsideIncome.incomeArray)
             zeroOutFirebaseOutsideIncome()
             
         } else {

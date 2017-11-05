@@ -13,11 +13,13 @@ class Step7HabitsVC: UIViewController, UITableViewDataSource, UITableViewDelegat
     var firebaseUser: FIRUser!
     var ref: FIRDatabaseReference!
     
-    var currentMember: Int = 0           // used for cycling through users when 'next' button is tapped
     var currentUserName: String!
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        User.currentUser = (User.usersArray.count - 1)          // start with youngest user first
+        currentUserName = User.usersArray[User.currentUser].firstName
         
         firebaseUser = FIRAuth.auth()?.currentUser
         ref = FIRDatabase.database().reference().child("users").child(firebaseUser.uid)
@@ -55,7 +57,7 @@ class Step7HabitsVC: UIViewController, UITableViewDataSource, UITableViewDelegat
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // only show habit for current user, not entire habits array of all users
-        let habitsArray = JobsAndHabits.finalDailyHabitsArray.sorted(by: { $0.order < $1.order }).filter({ return $0.assigned == User.usersArray[currentMember].firstName })
+        let habitsArray = JobsAndHabits.finalDailyHabitsArray.sorted(by: { $0.order < $1.order }).filter({ return $0.assigned == User.usersArray[User.currentUser].firstName })
         return habitsArray.count
     }
     
@@ -63,7 +65,7 @@ class Step7HabitsVC: UIViewController, UITableViewDataSource, UITableViewDelegat
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Step7HabitsCell", for: indexPath) as! Step7HabitsCell
         // only show habit for current user, not entire habits array of all users. NOTE: Have to call this variable every time for table to reload properly (can't make it a global var)
-        let habitsArray = JobsAndHabits.finalDailyHabitsArray.sorted(by: { $0.order < $1.order }).filter({ return $0.assigned == User.usersArray[currentMember].firstName })
+        let habitsArray = JobsAndHabits.finalDailyHabitsArray.sorted(by: { $0.order < $1.order }).filter({ return $0.assigned == User.usersArray[User.currentUser].firstName })
         
         if indexPath.row == 0 {
             cell.habitLabel.font = UIFont.systemFont(ofSize: 17.0, weight: UIFontWeightBold)
@@ -90,7 +92,7 @@ class Step7HabitsVC: UIViewController, UITableViewDataSource, UITableViewDelegat
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let habitsArray = JobsAndHabits.finalDailyHabitsArray.sorted(by: { $0.order < $1.order }).filter({ return $0.assigned == User.usersArray[currentMember].firstName })
+        let habitsArray = JobsAndHabits.finalDailyHabitsArray.sorted(by: { $0.order < $1.order }).filter({ return $0.assigned == User.usersArray[User.currentUser].firstName })
         performSegue(withIdentifier: "EditHabit", sender: habitsArray[indexPath.row])
     }
     
@@ -112,16 +114,15 @@ class Step7HabitsVC: UIViewController, UITableViewDataSource, UITableViewDelegat
             reviewOrContinueAlert()
         } else {
             // if user is NOT oldest member of family...
-            if currentMember != (User.usersArray.count - 1) {
+            if User.currentUser != 0 {
                 // ...go to next user
-                currentMember += 1
-                //            let habitsArray = JobsAndHabits.finalDailyHabitsArray.sorted(by: { $0.order < $1.order }).filter({ return $0.assigned == User.usersArray[currentMember].firstName })
-                userImage.image = User.usersArray[currentMember].photo
-                currentUserName = User.usersArray[currentMember].firstName
-                instructionsLabel.text = "Review daily habits for \(User.usersArray[currentMember].firstName)."
-                navigationItem.title = User.usersArray[currentMember].firstName
+                User.currentUser -= 1
+                userImage.image = User.usersArray[User.currentUser].photo
+                currentUserName = User.usersArray[User.currentUser].firstName
+                instructionsLabel.text = "Review daily habits for \(User.usersArray[User.currentUser].firstName)."
+                navigationItem.title = User.usersArray[User.currentUser].firstName
                 habitsTableView.reloadData()
-            } else if currentMember == (User.usersArray.count - 1) {
+            } else if User.currentUser == 0 {
                 if FamilyData.setupProgress <= 7 {
                     FamilyData.setupProgress = 7
                     ref.updateChildValues(["setupProgress" : 7])
@@ -140,6 +141,8 @@ class Step7HabitsVC: UIViewController, UITableViewDataSource, UITableViewDelegat
         }))
         alert.addAction(UIAlertAction(title: "continue", style: .default, handler: { (action) in
             alert.dismiss(animated: true, completion: nil)
+            User.currentUser = (User.usersArray.count - 1)          // start financial section with youngest user first
+            self.selectUsersButton.isHidden = false
             self.performSegue(withIdentifier: "MemberIncome", sender: self)
         }))
         present(alert, animated: true, completion: nil)
@@ -149,15 +152,32 @@ class Step7HabitsVC: UIViewController, UITableViewDataSource, UITableViewDelegat
         let alert = UIAlertController(title: "Select A User", message: "Please choose a family member to review their habits.", preferredStyle: .alert)
         for (index, user) in User.usersArray.enumerated() {
             alert.addAction(UIAlertAction(title: user.firstName, style: .default, handler: { (action) in
-                self.currentMember = index
-                self.userImage.image = User.usersArray[self.currentMember].photo
-                self.currentUserName = User.usersArray[self.currentMember].firstName
-                self.instructionsLabel.text = "Choose daily habits for \(User.usersArray[self.currentMember].firstName)"
-                self.navigationItem.title = User.usersArray[self.currentMember].firstName
+                User.currentUser = index
+                self.userImage.image = user.photo
+                self.currentUserName = user.firstName
+                self.instructionsLabel.text = "Choose daily habits for \(user.firstName)."
+                self.navigationItem.title = user.firstName
                 self.habitsTableView.reloadData()
                 alert.dismiss(animated: true, completion: nil)
             }))
         }
+        
+        // ORIGINAL CODE
+        /*
+        for (index, user) in User.usersArray.enumerated() {
+            alert.addAction(UIAlertAction(title: user.firstName, style: .default, handler: { (action) in
+                User.currentUser = index
+                self.userImage.image = User.usersArray[User.currentUser].photo
+                self.currentUserName = User.usersArray[User.currentUser].firstName
+                self.instructionsLabel.text = "Choose daily habits for \(User.usersArray[User.currentUser].firstName)."
+                self.navigationItem.title = User.usersArray[User.currentUser].firstName
+                self.habitsTableView.reloadData()
+                alert.dismiss(animated: true, completion: nil)
+            }))
+        }
+        */
+        // end ORIGINAL CODE
+        
         alert.addAction(UIAlertAction(title: "cancel", style: .cancel, handler: { (action) in
             alert.dismiss(animated: true, completion: nil)
         }))
@@ -255,10 +275,10 @@ class Step7HabitsVC: UIViewController, UITableViewDataSource, UITableViewDelegat
         } else {
             selectUsersButton.isHidden = true
         }
-        userImage.image = User.usersArray[0].photo
-        currentUserName = User.usersArray[0].firstName
-        instructionsLabel.text = "Review daily habits for \(User.usersArray[0].firstName)."
-        navigationItem.title = User.usersArray[0].firstName
+        userImage.image = User.usersArray[User.currentUser].photo
+        currentUserName = User.usersArray[User.currentUser].firstName
+        instructionsLabel.text = "Review daily habits for \(User.usersArray[User.currentUser].firstName)."
+        navigationItem.title = User.usersArray[User.currentUser].firstName
         habitsTableView.reloadData()
     }
     
