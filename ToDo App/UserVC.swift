@@ -72,10 +72,9 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         }
     }
     
-    
-    // ----------------
-    // Setup Table View
-    // ----------------
+    // ----------
+    // Table View
+    // ----------
     
     func numberOfSections(in tableView: UITableView) -> Int {
         return 4
@@ -117,9 +116,9 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let userDailyJobs = JobsAndHabits.finalDailyJobsArray.filter({ return $0.assigned == currentUserName })
+        let userDailyJobs = JobsAndHabits.finalDailyJobsArray.filter({ return $0.assigned == currentUserName }).sorted(by: { $0.order < $1.order })
         let userDailyHabits = JobsAndHabits.finalDailyHabitsArray.filter({ return $0.assigned == currentUserName }).sorted(by: { $0.order < $1.order })
-        let userWeeklyJobs = JobsAndHabits.finalWeeklyJobsArray.filter({ return $0.assigned == currentUserName })
+        let userWeeklyJobs = JobsAndHabits.finalWeeklyJobsArray.filter({ return $0.assigned == currentUserName }).sorted(by: { $0.order < $1.order })
         let cell = tableView.dequeueReusableCell(withIdentifier: "CustomCell", for: indexPath) as! UserCell
         
         // ----------
@@ -167,10 +166,6 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
             cell.jobHabitLabel.text = feesDebts[indexPath.row]
             cell.pointsLabel.text = "-100"
             cell.pointsLabel.textColor = UIColor.red
-//            cell.counterLabel.isHidden = true
-//            cell.pointsLabel.isHidden = true
-//            cell.jobHabitButton.isHidden = true
-//            cell.accessoryType = UITableViewCellAccessoryType.disclosureIndicator
         }
         return cell
     }
@@ -181,10 +176,10 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         } else if indexPath.section == 3 && indexPath.row == 1 {
             performSegue(withIdentifier: "DebtsDetailSegue", sender: self)
         } else {
+            tableView.deselectRow(at: indexPath, animated: true)
             print("button tapped at \([indexPath.section]) \([indexPath.row])")
         }
     }
-    
     
     // ----------------------------------
     // customize swipe from right buttons
