@@ -40,7 +40,7 @@ class Step10ExpenseDetailVC: UITableViewController, UIPickerViewDelegate, UIPick
     var firstPaymentDueDateHasError: Bool = false       // for checking for valid due date
     var finalPaymentDueDateError: Bool = false          // for checking for valid date
     
-    var expense: Expense?               // passed from Step8OutsideIncomeVC
+    var expense: Budget?               // passed from Step8OutsideIncomeVC
     var currentUserName: String!
     
     let repeatOptions = ["never", "weekly", "monthly"]
@@ -329,7 +329,7 @@ class Step10ExpenseDetailVC: UITableViewController, UIPickerViewDelegate, UIPick
                 updateBudgetInfo()
                 dismiss(animated: true, completion: nil)
             } else {
-                let dupArray = Expense.budgetsArray.filter({ $0.ownerName == currentUserName && $0.category == expense?.category })
+                let dupArray = Budget.budgetsArray.filter({ $0.ownerName == currentUserName && $0.category == expense?.category })
                 if dupArray.contains(where: { $0.expenseName == expenseNameTextField.text }) {
                     duplicateNameAlert()
                 } else {
@@ -423,21 +423,21 @@ class Step10ExpenseDetailVC: UITableViewController, UIPickerViewDelegate, UIPick
     }
     
     func updateBudgetInfo() {
-        for (index, item) in Expense.budgetsArray.enumerated() {
+        for (index, item) in Budget.budgetsArray.enumerated() {
             if item.ownerName == currentUserName && item.expenseName == expense?.expenseName && item.category == expense?.category {
                 // update local array...
-                Expense.budgetsArray[index].expenseName = expenseNameTextField.text!
-                Expense.budgetsArray[index].amount = Int(expenseAmountTextField.text!)!
+                Budget.budgetsArray[index].expenseName = expenseNameTextField.text!
+                Budget.budgetsArray[index].amount = Int(expenseAmountTextField.text!)!
                 // ...and update Firebase (get snapshot of all budget items for current user, then sort by category and then by name)
                 ref.child("budgets").child(currentUserName).child("\((expense?.category)!) \((expense?.order)!)").updateChildValues(["expenseName" : expenseNameTextField.text!,
                                                                                                                                      "amount" : Int(expenseAmountTextField.text!)!])
                 // if expense amount is zero, nuke all the data
                 if expenseAmountTextField.text == "0" {
-                    Expense.budgetsArray[index].hasDueDate = false
-                    Expense.budgetsArray[index].firstPayment = "none"
-                    Expense.budgetsArray[index].repeats = "never"
-                    Expense.budgetsArray[index].finalPayment = "none"
-                    Expense.budgetsArray[index].totalNumberOfPayments = 1
+                    Budget.budgetsArray[index].hasDueDate = false
+                    Budget.budgetsArray[index].firstPayment = "none"
+                    Budget.budgetsArray[index].repeats = "never"
+                    Budget.budgetsArray[index].finalPayment = "none"
+                    Budget.budgetsArray[index].totalNumberOfPayments = 1
                     // ...and update Firebase
                     ref.child("budgets").child(currentUserName).child("\((expense?.category)!) \((expense?.order)!)").updateChildValues(["hasDueDate" : false,
                                                                                                                                          "firstPayment" : "none",
@@ -446,25 +446,25 @@ class Step10ExpenseDetailVC: UITableViewController, UIPickerViewDelegate, UIPick
                                                                                                                                          "totalNumberOfPayments" : 1])
                 // if expense has due date...
                 } else if hasDueDateSwitch.isOn {
-                    Expense.budgetsArray[index].hasDueDate = true
-                    Expense.budgetsArray[index].firstPayment = firstPaymentDueDate!
+                    Budget.budgetsArray[index].hasDueDate = true
+                    Budget.budgetsArray[index].firstPayment = firstPaymentDueDate!
                     // ...and update Firebase
                     ref.child("budgets").child(currentUserName).child("\((expense?.category)!) \((expense?.order)!)").updateChildValues(["hasDueDate" : true,
                                                                                                                                          "firstPayment" : firstPaymentDueDate!])
                     // ...with repeat
                     if repeatsLabel.text != "never" {
-                        Expense.budgetsArray[index].repeats = repeatsLabel.text!
-                        Expense.budgetsArray[index].finalPayment = finalPaymentDueDate!
-                        Expense.budgetsArray[index].totalNumberOfPayments = Int(totalNumberOfPaymentsLabel.text!)!
+                        Budget.budgetsArray[index].repeats = repeatsLabel.text!
+                        Budget.budgetsArray[index].finalPayment = finalPaymentDueDate!
+                        Budget.budgetsArray[index].totalNumberOfPayments = Int(totalNumberOfPaymentsLabel.text!)!
                         // ...and udpate Firebase
                         ref.child("budgets").child(currentUserName).child("\((expense?.category)!) \((expense?.order)!)").updateChildValues(["repeats" : repeatsLabel.text!,
                                                                                                                                              "finalPayment" : finalPaymentDueDate!,
                                                                                                                                              "totalNumberOfPayments" : Int(totalNumberOfPaymentsLabel.text!)!])
                     // ...without repeat
                     } else {
-                        Expense.budgetsArray[index].repeats = "never"
-                        Expense.budgetsArray[index].finalPayment = "none"
-                        Expense.budgetsArray[index].totalNumberOfPayments = 1
+                        Budget.budgetsArray[index].repeats = "never"
+                        Budget.budgetsArray[index].finalPayment = "none"
+                        Budget.budgetsArray[index].totalNumberOfPayments = 1
                         // ...and update Firebase
                         ref.child("budgets").child(currentUserName).child("\((expense?.category)!) \((expense?.order)!)").updateChildValues(["repeats" : "never",
                                                                                                                                              "finalPayment" : "none",
@@ -473,11 +473,11 @@ class Step10ExpenseDetailVC: UITableViewController, UIPickerViewDelegate, UIPick
                     
                 // if expense has no due date
                 } else {
-                    Expense.budgetsArray[index].hasDueDate = false
-                    Expense.budgetsArray[index].firstPayment = "none"
-                    Expense.budgetsArray[index].repeats = "never"
-                    Expense.budgetsArray[index].finalPayment = "none"
-                    Expense.budgetsArray[index].totalNumberOfPayments = 1
+                    Budget.budgetsArray[index].hasDueDate = false
+                    Budget.budgetsArray[index].firstPayment = "none"
+                    Budget.budgetsArray[index].repeats = "never"
+                    Budget.budgetsArray[index].finalPayment = "none"
+                    Budget.budgetsArray[index].totalNumberOfPayments = 1
                     // ...and update Firebase
                     ref.child("budgets").child(currentUserName).child("\((expense?.category)!) \((expense?.order)!)").updateChildValues(["hasDueDate" : false,
                                                                                                                                          "firstPayment" : "none",

@@ -118,21 +118,51 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let userDailyJobs = JobsAndHabits.finalDailyJobsArray.filter({ return $0.assigned == currentUserName })
-        let userDailyHabits = JobsAndHabits.finalDailyHabitsArray.filter({ return $0.assigned == currentUserName })
+        let userDailyHabits = JobsAndHabits.finalDailyHabitsArray.filter({ return $0.assigned == currentUserName }).sorted(by: { $0.order < $1.order })
         let userWeeklyJobs = JobsAndHabits.finalWeeklyJobsArray.filter({ return $0.assigned == currentUserName })
         let cell = tableView.dequeueReusableCell(withIdentifier: "CustomCell", for: indexPath) as! UserCell
+        
+        // ----------
+        // daily jobs
+        // ----------
+        
         if indexPath.section == 0 {
+            let dailyJobsPointValue = Int((Double(FamilyData.adjustedNatlAvgYrlySpendingEntireFam) * 0.20 / 52 / Double(JobsAndHabits.finalDailyJobsArray.count) * 100 / 7).rounded(.up))
             cell.jobHabitLabel.text = userDailyJobs[indexPath.row].name
-            cell.pointsLabel.text = "15"
+            cell.pointsLabel.text = "\(dailyJobsPointValue)"
             cell.pointsLabel.textColor = .lightGray
+            
+        // ------------
+        // daily habits
+        // ------------
+            
         } else if indexPath.section == 1 {
+            if indexPath.row == 0 {
+                let priorityHabitPointValue = Int((Double(FamilyData.adjustedNatlAvgYrlySpendingPerKid) / 52 * 0.065 / 7 * 100).rounded(.up))
+                cell.pointsLabel.text = "\(priorityHabitPointValue)"
+                cell.jobHabitLabel.font = UIFont.systemFont(ofSize: 17.0, weight: UIFontWeightBold)
+            } else {
+                let regularHabitPointValue = Int((Double(FamilyData.adjustedNatlAvgYrlySpendingPerKid) / 52 * 0.015 / 7 * 100).rounded(.up))
+                cell.pointsLabel.text = "\(regularHabitPointValue)"
+                cell.jobHabitLabel.font = UIFont.systemFont(ofSize: 17.0, weight: UIFontWeightRegular)
+            }
             cell.jobHabitLabel.text = userDailyHabits[indexPath.row].name
-            cell.pointsLabel.text = "10"
             cell.pointsLabel.textColor = .lightGray
+            
+        // -----------
+        // weekly jobs
+        // -----------
+            
         } else if indexPath.section == 2 {
+            let weeklyJobsPointValue = Int((Double(FamilyData.adjustedNatlAvgYrlySpendingEntireFam) * 0.2 / 52 / Double(JobsAndHabits.finalWeeklyJobsArray.count) * 100).rounded(.up))
             cell.jobHabitLabel.text = userWeeklyJobs[indexPath.row].name
-            cell.pointsLabel.text = "150"
+            cell.pointsLabel.text = "\(weeklyJobsPointValue)"
             cell.pointsLabel.textColor = .lightGray
+            
+        // ------------------
+        // fees & withdrawals
+        // ------------------
+            
         } else if indexPath.section == 3 {
             cell.jobHabitLabel.text = feesDebts[indexPath.row]
             cell.pointsLabel.text = "-100"

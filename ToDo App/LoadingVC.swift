@@ -8,6 +8,7 @@ class LoadingVC: UIViewController {
     
     var loadingProgress: Double = 0
     var window: UIWindow?
+    var censusKidsMultiplier: Double!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -52,9 +53,9 @@ class LoadingVC: UIViewController {
                                             self.progressView.setProgress(0.9, animated: true)
                                             print("9. OUTSIDE INCOME")
                                             
-                                            Expense.loadBudgetsFromFirebase {
+                                            Budget.loadBudgetsFromFirebase {
                                                 self.progressView.setProgress(1.0, animated: true)
-                                                print("10. BUDGETS",Expense.budgetsArray.count)
+                                                print("10. BUDGETS",Budget.budgetsArray.count)
                                                 
                                                 self.activityIndicator.stopAnimating()
                                                 self.activityIndicator.hidesWhenStopped = true
@@ -62,16 +63,8 @@ class LoadingVC: UIViewController {
                                                 // if user has completed setup, go to home page
                                                 if FamilyData.setupProgress == 11 {
                                                     print("user has completed setup. Loading home page...")
-                                                    
+                                                    self.updateIncome()
                                                     self.performSegue(withIdentifier: "Home", sender: self)
-                                                    
-//                                                    self.window = UIWindow(frame: UIScreen.main.bounds)
-//                                                    let storyboard = UIStoryboard(name: "Home", bundle: nil)
-//                                                    let initialViewController = storyboard.instantiateViewController(withIdentifier: "HomeVC")
-//                                                    self.window?.rootViewController = initialViewController
-//                                                    self.window?.makeKeyAndVisible()
-                                                    
-                                                    
                                                 } else {
                                                     self.performSegue(withIdentifier: "GoToStep1EnterIncome", sender: self)
                                                 }
@@ -85,5 +78,26 @@ class LoadingVC: UIViewController {
                 }
             }
         }
+    }
+    
+    
+    func updateIncome() {
+        var censusKidsMultiplier: Double = 0
+        // get secret formula %
+        let secretFormula = ((5.23788 * pow(0.972976, Double(FamilyData.yearlyIncome) / 1000) + 1.56139) / 100) as Double
+        let natlAvgYearlySpendingPerKid = Double(FamilyData.yearlyIncome) * secretFormula
+        let numberOfKids = User.usersArray.filter({ return $0.childParent == "child" }).count
+        // adjust multiplier according to census data
+        if numberOfKids >= 3 {
+            censusKidsMultiplier = 0.76
+        } else if numberOfKids == 2 {
+            censusKidsMultiplier = 1
+        } else if numberOfKids <= 1 {
+            censusKidsMultiplier = 1.27
+        }
+        
+        // these two values are basis for all the family points
+        FamilyData.adjustedNatlAvgYrlySpendingEntireFam = Int(natlAvgYearlySpendingPerKid * censusKidsMultiplier * Double(User.usersArray.count))
+        FamilyData.adjustedNatlAvgYrlySpendingPerKid = Int(natlAvgYearlySpendingPerKid * censusKidsMultiplier)
     }
 }

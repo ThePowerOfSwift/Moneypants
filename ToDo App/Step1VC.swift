@@ -47,7 +47,7 @@ class Step1VC: UIViewController, UITextFieldDelegate {
     
     @IBAction func didTapNextButton(_ sender: UIButton) {
         if incomeTextField.text != "" {     // check if field is empty
-            FamilyData.yearlyIncome = Int(incomeTextField.text!.components(separatedBy: [",", " "]).joined())       // remove commas
+            FamilyData.yearlyIncome = Int(incomeTextField.text!.components(separatedBy: [",", " "]).joined())!       // remove commas
             if FamilyData.yearlyIncome < incomeMinimum || FamilyData.yearlyIncome > incomeMaximum {     // check if income is within range
                 createIncomeAlert()
             } else {        // good to go!

@@ -1,7 +1,7 @@
 import UIKit
 import Firebase
 
-struct Expense {
+struct Budget {
     var ownerName: String
     var expenseName: String
     var category: String
@@ -13,7 +13,7 @@ struct Expense {
     var totalNumberOfPayments: Int
     var order: Int
     
-    static var budgetsArray = [Expense]()
+    static var budgetsArray = [Budget]()
     
     static let expenseEnvelopeTitles = ["sports & dance",
                                         "music & art",
@@ -61,7 +61,7 @@ struct Expense {
                                         let totalNumberOfPayments = value["totalNumberOfPayments"] as! Int
                                         let order = value["order"] as! Int
                                         
-                                        let userBudget = Expense(ownerName: ownerName, expenseName: expenseName, category: category, amount: amount, hasDueDate: hasDueDate, firstPayment: firstPayment, repeats: repeats, finalPayment: finalPayment, totalNumberOfPayments: totalNumberOfPayments, order: order)
+                                        let userBudget = Budget(ownerName: ownerName, expenseName: expenseName, category: category, amount: amount, hasDueDate: hasDueDate, firstPayment: firstPayment, repeats: repeats, finalPayment: finalPayment, totalNumberOfPayments: totalNumberOfPayments, order: order)
                                         
                                         budgetsArray.append(userBudget)
                                     }

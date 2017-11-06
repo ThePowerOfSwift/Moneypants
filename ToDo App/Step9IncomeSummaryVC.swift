@@ -105,9 +105,10 @@ class Step9IncomeSummaryVC: UIViewController {
     }
     
     func calculateCensusFormulas() {
+        // get secret formula %
         let secretFormula = ((5.23788 * pow(0.972976, Double(FamilyData.yearlyIncome) / 1000) + 1.56139) / 100) as Double
         let householdIncome = FamilyData.yearlyIncome
-        let natlAvgYearlySpendingPerKid = Double(householdIncome!) * secretFormula
+        let natlAvgYearlySpendingPerKid = Double(householdIncome) * secretFormula
         let numberOfKids = User.usersArray.filter({ return $0.childParent == "child" }).count
         // adjust multiplier according to census data
         if numberOfKids >= 3 {
@@ -117,17 +118,20 @@ class Step9IncomeSummaryVC: UIViewController {
         } else if numberOfKids <= 1 {
             censusKidsMultiplier = 1.27
         }
-        let adjustedNatlAvgYrlySpendingEntireFam = natlAvgYearlySpendingPerKid * censusKidsMultiplier * Double(User.usersArray.count)
-        let adjustedNatlAvgYrlySpendingPerKid = natlAvgYearlySpendingPerKid * censusKidsMultiplier
+        
+        // these two values are basis for all the family points
+        FamilyData.adjustedNatlAvgYrlySpendingEntireFam = Int(natlAvgYearlySpendingPerKid * censusKidsMultiplier * Double(User.usersArray.count))
+        FamilyData.adjustedNatlAvgYrlySpendingPerKid = Int(natlAvgYearlySpendingPerKid * censusKidsMultiplier)
+        
         let numberOfDailyJobs = JobsAndHabits.finalDailyJobsArray.count
         let numberOfAssignedDailyJobs = JobsAndHabits.finalDailyJobsArray.filter({ $0.assigned == currentUserName }).count
         let numberOfWeeklyJobs = JobsAndHabits.finalWeeklyJobsArray.count
         let numberOfAssignedWeeklyJobs = JobsAndHabits.finalWeeklyJobsArray.filter({ $0.assigned == currentUserName }).count
         
         // need to find the yearly adjusted family income, take 20% of it for each section (in this case, daily jobs), then find the yearly amount, then multiply that by how many jobs user has
-        let homeIncomePerWeekForDailyJobs = (0.20 * adjustedNatlAvgYrlySpendingEntireFam / 52) / Double(numberOfDailyJobs) * Double(numberOfAssignedDailyJobs)
-        let homeIncomePerWeekForWeeklyJobs = (0.20 * adjustedNatlAvgYrlySpendingEntireFam / 52) / Double(numberOfWeeklyJobs) * Double(numberOfAssignedWeeklyJobs)
-        let homeIncomePerWeekForHabitsAndBonuses = (0.60 * adjustedNatlAvgYrlySpendingPerKid / 52)
+        let homeIncomePerWeekForDailyJobs = (0.20 * Double(FamilyData.adjustedNatlAvgYrlySpendingEntireFam) / 52) / Double(numberOfDailyJobs) * Double(numberOfAssignedDailyJobs)
+        let homeIncomePerWeekForWeeklyJobs = (0.20 * Double(FamilyData.adjustedNatlAvgYrlySpendingEntireFam) / 52) / Double(numberOfWeeklyJobs) * Double(numberOfAssignedWeeklyJobs)
+        let homeIncomePerWeekForHabitsAndBonuses = (0.60 * Double(FamilyData.adjustedNatlAvgYrlySpendingPerKid) / 52)
         let homeIncomePerWeekTotal = homeIncomePerWeekForDailyJobs + homeIncomePerWeekForWeeklyJobs + homeIncomePerWeekForHabitsAndBonuses
         
         yearlyTotal = Int((homeIncomePerWeekTotal * 52) + Double(yearlyOutsideIncome))

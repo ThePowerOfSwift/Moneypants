@@ -94,7 +94,7 @@
 		CEAAF9DC1F356F2400846DD5 /* PaydayVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEAAF9DB1F356F2400846DD5 /* PaydayVC.swift */; };
 		CEAAF9DE1F35A41C00846DD5 /* SpendingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEAAF9DD1F35A41C00846DD5 /* SpendingVC.swift */; };
 		CEAD053E1F2209A60097CD33 /* UserCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEAD053D1F2209A60097CD33 /* UserCell.swift */; };
-		CEAF71A41FA271DB0097EACF /* Expense.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEAF71A31FA271DB0097EACF /* Expense.swift */; };
+		CEAF71A41FA271DB0097EACF /* Budget.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEAF71A31FA271DB0097EACF /* Budget.swift */; };
 		CEB2FD541EFF4DB300763862 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = CEB2FD531EFF4DB300763862 /* GoogleService-Info.plist */; };
 		CEB32C691F2C09DC0069D8B0 /* ReportsCBVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB32C681F2C09DB0069D8B0 /* ReportsCBVC.swift */; };
 		CEB32C6B1F2C49D10069D8B0 /* ReportsCBCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB32C6A1F2C49D10069D8B0 /* ReportsCBCell.swift */; };
@@ -215,7 +215,7 @@
 		CEAD053D1F2209A60097CD33 /* UserCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserCell.swift; sourceTree = "<group>"; };
 		CEAF1C101F774F7C001A4EE5 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		CEAF1C111F774F7C001A4EE5 /* AVKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVKit.framework; path = System/Library/Frameworks/AVKit.framework; sourceTree = SDKROOT; };
-		CEAF71A31FA271DB0097EACF /* Expense.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Expense.swift; sourceTree = "<group>"; };
+		CEAF71A31FA271DB0097EACF /* Budget.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Budget.swift; sourceTree = "<group>"; };
 		CEB2FD531EFF4DB300763862 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		CEB32C681F2C09DB0069D8B0 /* ReportsCBVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = ReportsCBVC.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		CEB32C6A1F2C49D10069D8B0 /* ReportsCBCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = ReportsCBCell.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
@@ -364,7 +364,7 @@
 				CE18C4D11F64E14F00C748BC /* MaxLengthTextField.swift */,
 				CEFC21FF1F64A82900CC4FC1 /* User.swift */,
 				CE52210F1F91136C008CE5BD /* FamilyData.swift */,
-				CEAF71A31FA271DB0097EACF /* Expense.swift */,
+				CEAF71A31FA271DB0097EACF /* Budget.swift */,
 				CED7D5981F997BF800351347 /* OutsideIncome.swift */,
 				CEA2BC481F71C3900020D958 /* JobsAndHabits.swift */,
 				CE8FFA011F10AE92004A53BE /* GlobalVariables.swift */,
@@ -385,7 +385,7 @@
 				CEA133D41F957E5E00B3625E /* Step 7 - Habits */,
 				CEAF71A11FA24B0F0097EACF /* Step 8 - Outside Income */,
 				CE9B6FD41FAE70C5000A7A26 /* Step 9 - Income Summary */,
-				CEAF71A21FA24B240097EACF /* Step 10 - Expenses */,
+				CEAF71A21FA24B240097EACF /* Step 10 - Budgets */,
 				CE9FFED71FAEC9EA00187CDE /* Step 11 - Completion */,
 				CEB4CD2B1F1ECDC700F9733F /* Home */,
 				CE4832B71F27E9A0005A7A55 /* Users */,
@@ -453,7 +453,7 @@
 			name = "Step 8 - Outside Income";
 			sourceTree = "<group>";
 		};
-		CEAF71A21FA24B240097EACF /* Step 10 - Expenses */ = {
+		CEAF71A21FA24B240097EACF /* Step 10 - Budgets */ = {
 			isa = PBXGroup;
 			children = (
 				CE99F0A71F0B6B5D007E01E7 /* Step10ExpensesVC.swift */,
@@ -462,7 +462,7 @@
 				CE464E7D1FAC479800941021 /* Step10ExpensePopupVC.swift */,
 				CE464E7F1FAC4C1C00941021 /* Step10ExpenseVideoVC.swift */,
 			);
-			name = "Step 10 - Expenses";
+			name = "Step 10 - Budgets";
 			sourceTree = "<group>";
 		};
 		CEB4CD2B1F1ECDC700F9733F /* Home */ = {
@@ -719,7 +719,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CEAF71A41FA271DB0097EACF /* Expense.swift in Sources */,
+				CEAF71A41FA271DB0097EACF /* Budget.swift in Sources */,
 				CE4832BF1F2800A5005A7A55 /* SettingsNavController.swift in Sources */,
 				CE7160F91F04A2A10045AA05 /* Step7HabitsVC.swift in Sources */,
 				CEA133D61F95C74700B3625E /* Step7EditHabitsVC.swift in Sources */,
