@@ -19,7 +19,7 @@
         <!--Money-->
         <scene sceneID="uny-If-0aa">
             <objects>
-                <viewController title="Money" automaticallyAdjustsScrollViewInsets="NO" id="rat-xa-53i" customClass="MoneyVC" customModule="ToDo_App" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController title="Money" automaticallyAdjustsScrollViewInsets="NO" id="rat-xa-53i" customClass="MoneyVC" customModule="Moneypants" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="x4c-jG-R2F"/>
                         <viewControllerLayoutGuide type="bottom" id="0kD-RW-cCH"/>
@@ -39,7 +39,7 @@
                                         </constraints>
                                         <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                         <prototypes>
-                                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="CustomCell" id="0Oa-y7-rqm" customClass="MoneyCell4" customModule="ToDo_App" customModuleProvider="target">
+                                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="CustomCell" id="0Oa-y7-rqm" customClass="MoneyCell4" customModule="Moneypants" customModuleProvider="target">
                                                 <rect key="frame" x="0.0" y="28" width="320" height="50"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="0Oa-y7-rqm" id="DzW-sI-8nE">
@@ -84,7 +84,7 @@
                                         </constraints>
                                         <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                         <prototypes>
-                                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="CustomCell" id="ZWw-cc-bly" customClass="MoneyCell3" customModule="ToDo_App" customModuleProvider="target">
+                                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="CustomCell" id="ZWw-cc-bly" customClass="MoneyCell3" customModule="Moneypants" customModuleProvider="target">
                                                 <rect key="frame" x="0.0" y="28" width="320" height="50"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="ZWw-cc-bly" id="Qse-3Z-ZTX">
@@ -129,7 +129,7 @@
                                         </constraints>
                                         <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                         <prototypes>
-                                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="CustomCell" id="TSu-0T-hsv" customClass="MoneyCell2" customModule="ToDo_App" customModuleProvider="target">
+                                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="CustomCell" id="TSu-0T-hsv" customClass="MoneyCell2" customModule="Moneypants" customModuleProvider="target">
                                                 <rect key="frame" x="0.0" y="28" width="320" height="50"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="TSu-0T-hsv" id="bor-gN-5X7">
@@ -174,7 +174,7 @@
                                         </constraints>
                                         <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                         <prototypes>
-                                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="CustomCell" id="Qjq-SQ-bdk" customClass="MoneyCell1" customModule="ToDo_App" customModuleProvider="target">
+                                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="CustomCell" id="Qjq-SQ-bdk" customClass="MoneyCell1" customModule="Moneypants" customModuleProvider="target">
                                                 <rect key="frame" x="0.0" y="28" width="320" height="50"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Qjq-SQ-bdk" id="ADm-D1-xac">
@@ -888,7 +888,7 @@
         <!--Savannah-->
         <scene sceneID="Zlt-u0-AhO">
             <objects>
-                <viewController storyboardIdentifier="UserVC" title="Savannah" id="fiR-wi-WgP" customClass="UserVC" customModule="ToDo_App" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="UserVC" title="Savannah" id="fiR-wi-WgP" customClass="UserVC" customModule="Moneypants" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="Llo-mb-ZaZ"/>
                         <viewControllerLayoutGuide type="bottom" id="xJD-V6-wsT"/>
@@ -977,7 +977,7 @@
                                 <color key="backgroundColor" white="0.90228361999999995" alpha="1" colorSpace="calibratedWhite"/>
                                 <inset key="separatorInset" minX="72" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="CustomCell" rowHeight="50" id="9YO-5s-dW8" customClass="UserCell" customModule="ToDo_App" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="CustomCell" rowHeight="50" id="9YO-5s-dW8" customClass="UserCell" customModule="Moneypants" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="320" height="50"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="9YO-5s-dW8" id="eTG-ZA-lye">
@@ -1015,18 +1015,30 @@
                                                         <constraint firstAttribute="width" constant="40" id="Skd-FS-4CX"/>
                                                     </constraints>
                                                 </imageView>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="80y-2g-zar">
+                                                    <rect key="frame" x="16" y="0.0" width="40" height="49"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="40" id="iCc-rj-3PD"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
                                             </subviews>
                                             <constraints>
+                                                <constraint firstItem="80y-2g-zar" firstAttribute="top" secondItem="eTG-ZA-lye" secondAttribute="top" id="6Mg-A3-0tE"/>
+                                                <constraint firstItem="80y-2g-zar" firstAttribute="leading" secondItem="eTG-ZA-lye" secondAttribute="leading" constant="16" id="JRF-du-Aw4"/>
                                                 <constraint firstItem="5Nh-VP-ShL" firstAttribute="centerY" secondItem="eTG-ZA-lye" secondAttribute="centerY" id="KyY-6g-Ohc"/>
                                                 <constraint firstAttribute="trailing" secondItem="bAx-z4-7V1" secondAttribute="trailing" constant="16" id="efp-VF-ZV8"/>
+                                                <constraint firstAttribute="bottom" secondItem="80y-2g-zar" secondAttribute="bottom" id="fGt-7H-uvP"/>
                                                 <constraint firstItem="bAx-z4-7V1" firstAttribute="centerY" secondItem="eTG-ZA-lye" secondAttribute="centerY" id="nfo-fH-Pvv"/>
                                                 <constraint firstItem="5Nh-VP-ShL" firstAttribute="leading" secondItem="eTG-ZA-lye" secondAttribute="leading" constant="16" id="q6S-oq-E6S"/>
                                                 <constraint firstItem="bAx-z4-7V1" firstAttribute="leading" secondItem="5Nh-VP-ShL" secondAttribute="trailing" constant="16" id="zOv-aI-woN"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
-                                            <outlet property="counterLabel" destination="p1X-ny-mYc" id="01E-Ro-HH9"/>
                                             <outlet property="jobHabitLabel" destination="20l-o9-4Kf" id="5AB-wN-aVK"/>
+                                            <outlet property="numberOfTapsLabel" destination="80y-2g-zar" id="G7F-P9-sc5"/>
                                             <outlet property="pointsLabel" destination="cLI-eN-D0B" id="rzy-Lv-egN"/>
                                         </connections>
                                     </tableViewCell>
@@ -1069,7 +1081,7 @@
         <!--Points History-->
         <scene sceneID="Df2-UV-y8M">
             <objects>
-                <viewController storyboardIdentifier="ReportsPointsVC" title="Points History" automaticallyAdjustsScrollViewInsets="NO" hidesBottomBarWhenPushed="YES" id="8Y7-4Q-m3X" customClass="ReportsPointsVC" customModule="ToDo_App" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ReportsPointsVC" title="Points History" automaticallyAdjustsScrollViewInsets="NO" hidesBottomBarWhenPushed="YES" id="8Y7-4Q-m3X" customClass="ReportsPointsVC" customModule="Moneypants" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="ArZ-Ez-1jz"/>
                         <viewControllerLayoutGuide type="bottom" id="GVH-vb-7XB"/>
@@ -1099,7 +1111,7 @@
                                 <color key="backgroundColor" white="0.90228361999999995" alpha="1" colorSpace="calibratedWhite"/>
                                 <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="CustomCell" id="OrV-8n-wHG" customClass="ReportsPointsCell" customModule="ToDo_App" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="CustomCell" id="OrV-8n-wHG" customClass="ReportsPointsCell" customModule="Moneypants" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="320" height="50"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="OrV-8n-wHG" id="9k3-44-wxc">
@@ -1222,7 +1234,7 @@
         <!--Spending-->
         <scene sceneID="YbO-p6-gBS">
             <objects>
-                <viewController storyboardIdentifier="SpendingVC" title="Spending" id="VyA-im-hFm" customClass="SpendingVC" customModule="ToDo_App" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="SpendingVC" title="Spending" id="VyA-im-hFm" customClass="SpendingVC" customModule="Moneypants" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="Ugp-4M-Xxc"/>
                         <viewControllerLayoutGuide type="bottom" id="hNs-Ow-SP4"/>
@@ -1396,7 +1408,7 @@
         <!--Reports-->
         <scene sceneID="ays-K3-eTx">
             <objects>
-                <viewController storyboardIdentifier="ReportsVC" title="Reports" id="Txi-l9-KeA" customClass="ReportsVC" customModule="ToDo_App" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ReportsVC" title="Reports" id="Txi-l9-KeA" customClass="ReportsVC" customModule="Moneypants" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="ei9-0X-wNu"/>
                         <viewControllerLayoutGuide type="bottom" id="SrU-5s-b70"/>
@@ -1632,7 +1644,7 @@
         <!--Settings-->
         <scene sceneID="qqk-rO-5SV">
             <objects>
-                <viewController title="Settings" id="LDi-tb-jPp" customClass="UserSettingsVC" customModule="ToDo_App" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController title="Settings" id="LDi-tb-jPp" customClass="UserSettingsVC" customModule="Moneypants" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="KHY-it-XTm"/>
                         <viewControllerLayoutGuide type="bottom" id="wdQ-KW-pzQ"/>
@@ -1682,7 +1694,7 @@
         <!--Mastery-->
         <scene sceneID="2IW-ud-uyc">
             <objects>
-                <viewController title="Mastery" hidesBottomBarWhenPushed="YES" id="xca-w6-ClI" customClass="ReportsCBVC" customModule="ToDo_App" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController title="Mastery" hidesBottomBarWhenPushed="YES" id="xca-w6-ClI" customClass="ReportsCBVC" customModule="Moneypants" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="M6q-Hk-2px"/>
                         <viewControllerLayoutGuide type="bottom" id="mQT-Zx-Z3C"/>
@@ -1706,7 +1718,7 @@
                                 <color key="backgroundColor" white="0.90228361999999995" alpha="1" colorSpace="calibratedWhite"/>
                                 <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="CustomCell" id="vOy-cY-yxg" customClass="ReportsCBCell" customModule="ToDo_App" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="CustomCell" id="vOy-cY-yxg" customClass="ReportsCBCell" customModule="Moneypants" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="320" height="50"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="vOy-cY-yxg" id="8CH-YC-QOn">
@@ -1861,7 +1873,7 @@
         <!--my reports-->
         <scene sceneID="csw-ME-jFC">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="6G4-xI-92Z" customClass="ReportsNavController" customModule="ToDo_App" customModuleProvider="target" sceneMemberID="viewController">
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="6G4-xI-92Z" customClass="ReportsNavController" customModule="Moneypants" customModuleProvider="target" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="my reports" image="reports white" selectedImage="reports black" id="3k9-cZ-nI5"/>
                     <toolbarItems/>
                     <nil key="simulatedStatusBarMetrics"/>
@@ -1904,7 +1916,7 @@
         <!--my spending-->
         <scene sceneID="Tpc-1A-AXL">
             <objects>
-                <navigationController storyboardIdentifier="SpendingNavController" automaticallyAdjustsScrollViewInsets="NO" id="R3d-DN-EvV" customClass="SpendingNavController" customModule="ToDo_App" customModuleProvider="target" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="SpendingNavController" automaticallyAdjustsScrollViewInsets="NO" id="R3d-DN-EvV" customClass="SpendingNavController" customModule="Moneypants" customModuleProvider="target" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="my spending" image="shopping cart small" id="oE1-Zk-h2O"/>
                     <toolbarItems/>
                     <nil key="simulatedStatusBarMetrics"/>
@@ -1924,7 +1936,7 @@
         <!--my settings-->
         <scene sceneID="lm0-AX-ONt">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="A0G-4k-cKl" customClass="UserSettingsNavController" customModule="ToDo_App" customModuleProvider="target" sceneMemberID="viewController">
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="A0G-4k-cKl" customClass="UserSettingsNavController" customModule="Moneypants" customModuleProvider="target" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="my settings" image="gear white" selectedImage="gear black" id="hxL-d1-38a"/>
                     <toolbarItems/>
                     <nil key="simulatedStatusBarMetrics"/>
@@ -1944,7 +1956,7 @@
         <!--my money-->
         <scene sceneID="eNm-JE-YH8">
             <objects>
-                <navigationController storyboardIdentifier="MoneyNavController" automaticallyAdjustsScrollViewInsets="NO" id="Fi1-ip-zaT" customClass="MoneyNavController" customModule="ToDo_App" customModuleProvider="target" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="MoneyNavController" automaticallyAdjustsScrollViewInsets="NO" id="Fi1-ip-zaT" customClass="MoneyNavController" customModule="Moneypants" customModuleProvider="target" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="my money" image="piggy small" id="WuZ-I1-i4B"/>
                     <toolbarItems/>
                     <nil key="simulatedStatusBarMetrics"/>
@@ -1964,7 +1976,7 @@
         <!--my day-->
         <scene sceneID="mHU-l5-b1G">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="YV1-KC-ewf" customClass="UserNavController" customModule="ToDo_App" customModuleProvider="target" sceneMemberID="viewController">
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="YV1-KC-ewf" customClass="UserNavController" customModule="Moneypants" customModuleProvider="target" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="my day" image="broom black" id="26G-BT-p5v"/>
                     <toolbarItems/>
                     <nil key="simulatedStatusBarMetrics"/>
@@ -1984,7 +1996,7 @@
         <!--Savannah-->
         <scene sceneID="Sxf-ch-yc6">
             <objects>
-                <viewController title="Savannah" id="Nsr-LM-qnz" customClass="FeeVC" customModule="ToDo_App" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController title="Savannah" id="Nsr-LM-qnz" customClass="FeeVC" customModule="Moneypants" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="G5R-ID-Cts"/>
                         <viewControllerLayoutGuide type="bottom" id="kEx-Qu-Lnb"/>
@@ -2104,7 +2116,7 @@ The maximum daily limit is $3.00 (3 strikes).</string>
         <!--Savannah-->
         <scene sceneID="EDJ-vV-D9r">
             <objects>
-                <viewController storyboardIdentifier="WithdrawalVC" title="Savannah" id="bMf-nL-IYd" customClass="WithdrawalVC" customModule="ToDo_App" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="WithdrawalVC" title="Savannah" id="bMf-nL-IYd" customClass="WithdrawalVC" customModule="Moneypants" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="0yZ-rw-i8a"/>
                         <viewControllerLayoutGuide type="bottom" id="duA-Y6-5Qe"/>
@@ -2300,7 +2312,7 @@ The maximum daily limit is $3.00 (3 strikes).</string>
         <!--Spending History-->
         <scene sceneID="8fZ-wn-cmR">
             <objects>
-                <viewController storyboardIdentifier="SpendingHistoryVC" title="Spending History" hidesBottomBarWhenPushed="YES" id="upv-EN-bFg" customClass="ReportsSpendingVC" customModule="ToDo_App" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="SpendingHistoryVC" title="Spending History" hidesBottomBarWhenPushed="YES" id="upv-EN-bFg" customClass="ReportsSpendingVC" customModule="Moneypants" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="fe6-4b-Fa7"/>
                         <viewControllerLayoutGuide type="bottom" id="fZR-h3-iMy"/>
@@ -2446,7 +2458,7 @@ The maximum daily limit is $3.00 (3 strikes).</string>
         <!--Budget-->
         <scene sceneID="A9e-eM-oxa">
             <objects>
-                <viewController storyboardIdentifier="ReportsBudgetVC" title="Budget" automaticallyAdjustsScrollViewInsets="NO" hidesBottomBarWhenPushed="YES" id="HCo-tJ-ymk" customClass="ReportsBudgetVC" customModule="ToDo_App" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ReportsBudgetVC" title="Budget" automaticallyAdjustsScrollViewInsets="NO" hidesBottomBarWhenPushed="YES" id="HCo-tJ-ymk" customClass="ReportsBudgetVC" customModule="Moneypants" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="V6n-j0-muk"/>
                         <viewControllerLayoutGuide type="bottom" id="MUv-hC-5bL"/>
@@ -2476,7 +2488,7 @@ The maximum daily limit is $3.00 (3 strikes).</string>
                                 <color key="backgroundColor" white="0.90228361999999995" alpha="1" colorSpace="calibratedWhite"/>
                                 <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="CustomCell1" id="TM6-qk-Hsu" customClass="ReportsBudgetCell1" customModule="ToDo_App" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="CustomCell1" id="TM6-qk-Hsu" customClass="ReportsBudgetCell1" customModule="Moneypants" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="320" height="50"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="TM6-qk-Hsu" id="pxz-3x-fB1">
@@ -2623,7 +2635,7 @@ The maximum daily limit is $3.00 (3 strikes).</string>
                                             <outlet property="itemCategory" destination="UiA-a4-FJJ" id="fsC-CV-7dJ"/>
                                         </connections>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="CustomCell2" id="XKg-Ah-nIN" customClass="ReportsBudgetCell2" customModule="ToDo_App" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="CustomCell2" id="XKg-Ah-nIN" customClass="ReportsBudgetCell2" customModule="Moneypants" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="78" width="320" height="50"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="XKg-Ah-nIN" id="LKW-hK-Xc1">

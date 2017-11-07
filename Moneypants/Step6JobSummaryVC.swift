@@ -40,7 +40,7 @@ class Step6JobSummaryVC: UIViewController, UITableViewDataSource, UITableViewDel
         let cell = tableView.dequeueReusableCell(withIdentifier: "customCell") as! Step6Step6JobSummaryCellB
         
         // get the job assignments in the 'finalDailyJobs' array that matches the current user in the tableview
-        let dailyJobAssignments = JobsAndHabits.finalDailyJobsArray.sorted(by: { $0.order < $1.order }).filter({ return $0.assigned == oldestFirstArray[indexPath.section].firstName })      //.sorted(by: { $0.order < $1.order })
+        let dailyJobAssignments = JobsAndHabits.finalDailyJobsArray.sorted(by: { $0.order < $1.order }).filter({ return $0.assigned == oldestFirstArray[indexPath.section].firstName })
         let weeklyJobAssignments = JobsAndHabits.finalWeeklyJobsArray.sorted(by: { $0.order < $1.order }).filter({ return $0.assigned == oldestFirstArray[indexPath.section].firstName })
         let parentInspectionsAssignment = JobsAndHabits.parentalDailyJobsArray.sorted(by: { $0.order < $1.order }).filter({ return $0.assigned == oldestFirstArray[indexPath.section].firstName })
         let parentPaydayAssignment = JobsAndHabits.parentalWeeklyJobsArray.sorted(by: { $0.order < $1.order }).filter({ $0.assigned == oldestFirstArray[indexPath.section].firstName })

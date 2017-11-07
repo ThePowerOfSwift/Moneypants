@@ -93,7 +93,7 @@ class SettingsVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
             alert.addAction(UIAlertAction(title: "okay", style: UIAlertActionStyle.default, handler: { (action) in
                 alert.dismiss(animated: true, completion: nil)
                 do {
-                    try FIRAuth.auth()?.signOut()
+                    try Auth.auth().signOut()
                     let storyBoard: UIStoryboard = UIStoryboard(name: "Setup", bundle: nil)
                     let newViewController = storyBoard.instantiateViewController(withIdentifier: "LoginVC") // as! LoginVC
                     self.present(newViewController, animated: true, completion: nil)

@@ -102,6 +102,7 @@
 		CEB4CD2D1F1ED77400F9733F /* SetupNavController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB4CD2C1F1ED77400F9733F /* SetupNavController.swift */; };
 		CEB524151F5A13DC00CD8491 /* ReportsBudgetVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB524141F5A13DC00CD8491 /* ReportsBudgetVC.swift */; };
 		CEB524191F5A6F1F00CD8491 /* ReportsBudgetCell2.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB524181F5A6F1F00CD8491 /* ReportsBudgetCell2.swift */; };
+		CEB55ED11FB10A420097F86A /* Points.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB55ED01FB10A420097F86A /* Points.swift */; };
 		CEB7D1681F5A86D3006D9763 /* ReportsBudgetCell1.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB7D1671F5A86D3006D9763 /* ReportsBudgetCell1.swift */; };
 		CEC5BD541F77310500B66CEC /* Step3PopupVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEC5BD531F77310500B66CEC /* Step3PopupVC.swift */; };
 		CED509E21F030F560058728F /* Step4VC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED509E11F030F560058728F /* Step4VC.swift */; };
@@ -220,6 +221,7 @@
 		CEB4CD2C1F1ED77400F9733F /* SetupNavController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SetupNavController.swift; sourceTree = "<group>"; };
 		CEB524141F5A13DC00CD8491 /* ReportsBudgetVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReportsBudgetVC.swift; sourceTree = "<group>"; };
 		CEB524181F5A6F1F00CD8491 /* ReportsBudgetCell2.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReportsBudgetCell2.swift; sourceTree = "<group>"; };
+		CEB55ED01FB10A420097F86A /* Points.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Points.swift; sourceTree = "<group>"; };
 		CEB7D1671F5A86D3006D9763 /* ReportsBudgetCell1.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReportsBudgetCell1.swift; sourceTree = "<group>"; };
 		CEC5BD531F77310500B66CEC /* Step3PopupVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Step3PopupVC.swift; sourceTree = "<group>"; };
 		CED509E11F030F560058728F /* Step4VC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = Step4VC.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
@@ -364,6 +366,7 @@
 				CEAF71A31FA271DB0097EACF /* Budget.swift */,
 				CED7D5981F997BF800351347 /* OutsideIncome.swift */,
 				CEA2BC481F71C3900020D958 /* JobsAndHabits.swift */,
+				CEB55ED01FB10A420097F86A /* Points.swift */,
 				CE8FFA011F10AE92004A53BE /* GlobalVariables.swift */,
 			);
 			name = Model;
@@ -373,17 +376,7 @@
 			isa = PBXGroup;
 			children = (
 				CEFC21FD1F64A65800CC4FC1 /* Login */,
-				CEE4D6A91F0F44AB009BAE6C /* Step1 - Income */,
-				CEE4D6A51F0F4460009BAE6C /* Step2 - Family Members */,
-				CEE4D6A61F0F446A009BAE6C /* Step3 - Job Creation */,
-				CEE4D6A81F0F447D009BAE6C /* Step4 - Job Assign */,
-				CEA738C51F9001EC00C3266D /* Step 5 - Payday Assign */,
-				CE6961A41F92BE8C0028FAB2 /* Step 6 - Job Summary */,
-				CEA133D41F957E5E00B3625E /* Step 7 - Habits */,
-				CEAF71A11FA24B0F0097EACF /* Step 8 - Outside Income */,
-				CE9B6FD41FAE70C5000A7A26 /* Step 9 - Income Summary */,
-				CEAF71A21FA24B240097EACF /* Step 10 - Budgets */,
-				CE9FFED71FAEC9EA00187CDE /* Step 11 - Completion */,
+				CEB55ECF1FB0FE850097F86A /* Setup */,
 				CEB4CD2B1F1ECDC700F9733F /* Home */,
 				CE4832B71F27E9A0005A7A55 /* Users */,
 			);
@@ -501,6 +494,24 @@
 			name = Reports;
 			sourceTree = "<group>";
 		};
+		CEB55ECF1FB0FE850097F86A /* Setup */ = {
+			isa = PBXGroup;
+			children = (
+				CEE4D6A91F0F44AB009BAE6C /* Step 1 - Income */,
+				CEE4D6A51F0F4460009BAE6C /* Step 2 - Family Members */,
+				CEE4D6A61F0F446A009BAE6C /* Step 3 - Job Creation */,
+				CEE4D6A81F0F447D009BAE6C /* Step 4 - Job Assign */,
+				CEA738C51F9001EC00C3266D /* Step 5 - Payday Assign */,
+				CE6961A41F92BE8C0028FAB2 /* Step 6 - Job Summary */,
+				CEA133D41F957E5E00B3625E /* Step 7 - Habits */,
+				CEAF71A11FA24B0F0097EACF /* Step 8 - Outside Income */,
+				CE9B6FD41FAE70C5000A7A26 /* Step 9 - Income Summary */,
+				CEAF71A21FA24B240097EACF /* Step 10 - Budgets */,
+				CE9FFED71FAEC9EA00187CDE /* Step 11 - Completion */,
+			);
+			name = Setup;
+			sourceTree = "<group>";
+		};
 		CEDBFE2C1F2AE41900829DE4 /* View */ = {
 			isa = PBXGroup;
 			children = (
@@ -512,17 +523,17 @@
 			name = View;
 			sourceTree = "<group>";
 		};
-		CEE4D6A51F0F4460009BAE6C /* Step2 - Family Members */ = {
+		CEE4D6A51F0F4460009BAE6C /* Step 2 - Family Members */ = {
 			isa = PBXGroup;
 			children = (
 				CE1CB51F1F02117F009A8DAC /* Step2VC.swift */,
 				CE1CB52C1F0215EA009A8DAC /* Step2Cell.swift */,
 				CE1CB5191F01AF48009A8DAC /* Step2UsersVC.swift */,
 			);
-			name = "Step2 - Family Members";
+			name = "Step 2 - Family Members";
 			sourceTree = "<group>";
 		};
-		CEE4D6A61F0F446A009BAE6C /* Step3 - Job Creation */ = {
+		CEE4D6A61F0F446A009BAE6C /* Step 3 - Job Creation */ = {
 			isa = PBXGroup;
 			children = (
 				CEF1A4921F022F3F00C010F9 /* Step3VC.swift */,
@@ -531,10 +542,10 @@
 				CEF1A4941F02472700C010F9 /* Step3CustomCell.swift */,
 				CE6F69431F868B9E00FE9349 /* Step3VideoVC.swift */,
 			);
-			name = "Step3 - Job Creation";
+			name = "Step 3 - Job Creation";
 			sourceTree = "<group>";
 		};
-		CEE4D6A81F0F447D009BAE6C /* Step4 - Job Assign */ = {
+		CEE4D6A81F0F447D009BAE6C /* Step 4 - Job Assign */ = {
 			isa = PBXGroup;
 			children = (
 				CED509E11F030F560058728F /* Step4VC.swift */,
@@ -545,17 +556,17 @@
 				CEA738BE1F8F30A400C3266D /* Step4PopupVC2.swift */,
 				CE8F1C491F88D6A0000BE9F5 /* Step4VideoVC2.swift */,
 			);
-			name = "Step4 - Job Assign";
+			name = "Step 4 - Job Assign";
 			sourceTree = "<group>";
 		};
-		CEE4D6A91F0F44AB009BAE6C /* Step1 - Income */ = {
+		CEE4D6A91F0F44AB009BAE6C /* Step 1 - Income */ = {
 			isa = PBXGroup;
 			children = (
 				CE1CB50A1F01AD10009A8DAC /* Step1VC.swift */,
 				CE36A7351F75B7EE006CAB40 /* Step1PopupVC.swift */,
 				CEFC56F11F81E93D00B9049B /* Step1VideoVC.swift */,
 			);
-			name = "Step1 - Income";
+			name = "Step 1 - Income";
 			sourceTree = "<group>";
 		};
 		CEFC21FD1F64A65800CC4FC1 /* Login */ = {
@@ -719,6 +730,7 @@
 				CE4832BF1F2800A5005A7A55 /* SettingsNavController.swift in Sources */,
 				CE7160F91F04A2A10045AA05 /* Step7HabitsVC.swift in Sources */,
 				CEA133D61F95C74700B3625E /* Step7EditHabitsVC.swift in Sources */,
+				CEB55ED11FB10A420097F86A /* Points.swift in Sources */,
 				CE4832CB1F286843005A7A55 /* ReportsNavController.swift in Sources */,
 				CEB524151F5A13DC00CD8491 /* ReportsBudgetVC.swift in Sources */,
 				CEF3EBBB1F302CF0008953A8 /* MoneyCell2.swift in Sources */,

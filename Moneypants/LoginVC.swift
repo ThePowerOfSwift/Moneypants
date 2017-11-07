@@ -32,7 +32,7 @@ class LoginVC: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        if let _ = FIRAuth.auth()?.currentUser {
+        if let _ = Auth.auth().currentUser {
             self.signIn()
         }
     }
@@ -40,14 +40,14 @@ class LoginVC: UIViewController {
     @IBAction func didTapSignIn(_ sender: UIButton) {
         let email = emailField.text
         let password = passwordField.text
-        FIRAuth.auth()?.signIn(withEmail: email!, password: password!, completion: { (user, error) in
+        Auth.auth().signIn(withEmail: email!, password: password!, completion: { (user, error) in
             guard let _ = user else {
                 if let error = error {
-                    if let errCode = FIRAuthErrorCode(rawValue: error._code) {
+                    if let errCode = AuthErrorCode(rawValue: error._code) {
                         switch errCode {
-                        case .errorCodeUserNotFound:
+                        case .userNotFound:
                             self.showAlert("The user '\(email!)' was not found. Please try again, or tap 'new member' to create an account.")
-                        case .errorCodeWrongPassword:
+                        case .wrongPassword:
                             self.showAlert("Incorrect username/password combination. Please try again.")
                         default:
                             self.showAlert("Error: \(error.localizedDescription)")
@@ -70,11 +70,11 @@ class LoginVC: UIViewController {
             if (userInput!.isEmpty) {
                 return
             }
-            FIRAuth.auth()?.sendPasswordReset(withEmail: userInput!, completion: { (error) in
+            Auth.auth().sendPasswordReset(withEmail: userInput!, completion: { (error) in
                 if let error = error {
-                    if let errCode = FIRAuthErrorCode(rawValue: error._code) {
+                    if let errCode = AuthErrorCode(rawValue: error._code) {
                         switch errCode {
-                        case .errorCodeUserNotFound:
+                        case .userNotFound:
                             DispatchQueue.main.async {
                                 self.showAlert("User account not found. Please try again, or tap 'new member' to create an account.")
                             }

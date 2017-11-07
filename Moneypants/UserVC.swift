@@ -8,10 +8,20 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var dateLower: UILabel!
     @IBOutlet weak var greenGrid: UIButton!
-        
-    let (userName, userPicture, userIncome) = tempUsers[homeIndex]
+    
     let feesDebts: [String] = ["add a fee...", "add a withdrawal..."]
+    
     var currentUserName: String!
+    
+    var usersDailyJobs: [JobsAndHabits]?
+    var usersDailyHabits: [JobsAndHabits]?
+    var usersWeeklyJobs: [JobsAndHabits]?
+    var dailyJobsPointValue: Int?
+    var priorityHabitPointValue: Int?
+    var regularHabitPointValue: Int?
+    var weeklyJobsPointValue: Int?
+    
+    var tempPointsArray: [Points]?
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -34,7 +44,7 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         tableView.dataSource = self
         
         userImage.image = MPUser.usersArray[MPUser.currentUser].photo
-        incomeLabel.text = "$\(userIncome)"
+        incomeLabel.text = "$6.47"
         
         userImage.layer.cornerRadius = topView.bounds.height / 6.4
         userImage.layer.masksToBounds = true
@@ -46,30 +56,18 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         greenGrid.layer.borderWidth = 0.5
         greenGrid.layer.borderColor = UIColor.black.cgColor
         
-        let date = Date()
-        let formatter = DateFormatter()
-        formatter.dateFormat = "EEE MMM d"        // day of year
-        let result = formatter.string(from: date)
+        usersDailyJobs = JobsAndHabits.finalDailyJobsArray.sorted(by: { $0.order < $1.order }).filter({ return $0.assigned == currentUserName })
+        usersDailyHabits = JobsAndHabits.finalDailyHabitsArray.sorted(by: { $0.order < $1.order }).filter({ return $0.assigned == currentUserName })
+        usersWeeklyJobs = JobsAndHabits.finalWeeklyJobsArray.sorted(by: { $0.order < $1.order }).filter({ return $0.assigned == currentUserName })
+        dailyJobsPointValue = Int((Double(FamilyData.adjustedNatlAvgYrlySpendingEntireFam) * 0.20 / 52 / Double(JobsAndHabits.finalDailyJobsArray.count) * 100 / 7).rounded(.up))
+        priorityHabitPointValue = Int((Double(FamilyData.adjustedNatlAvgYrlySpendingPerKid) / 52 * 0.065 / 7 * 100).rounded(.up))
+        regularHabitPointValue = Int((Double(FamilyData.adjustedNatlAvgYrlySpendingPerKid) / 52 * 0.015 / 7 * 100).rounded(.up))
+        weeklyJobsPointValue = Int((Double(FamilyData.adjustedNatlAvgYrlySpendingEntireFam) * 0.2 / 52 / Double(JobsAndHabits.finalWeeklyJobsArray.count) * 100).rounded(.up))
         
-        // ---------------
-        // Date calculator
-        // ---------------
+        // create temp array
+        tempPointsArray = [Points(numberOfTapsEX: "2", valuePerTap: 54, itemName: "dishes", itemCategory: "daily jobs", itemDate: 20171106, user: "Allan")]
         
-        func dayDifference(from interval : TimeInterval) -> String {
-            let calendar = NSCalendar.current
-            let date = Date(timeIntervalSince1970: interval)
-            if calendar.isDateInYesterday(date) { return "Yesterday" }
-            else if calendar.isDateInToday(date) { return "Today" }
-            else if calendar.isDateInTomorrow(date) { return "Tomorrow" }
-            else {
-                let startOfNow = calendar.startOfDay(for: Date())
-                let startOfTimeStamp = calendar.startOfDay(for: date)
-                let components = calendar.dateComponents([.day], from: startOfNow, to: startOfTimeStamp)
-                let day = components.day!
-                if day < 1 { return "\(abs(day)) days ago" }
-                else { return "In \(day) days" }
-            }
-        }
+        print(Points.pointsArray)
     }
     
     // ----------
@@ -116,9 +114,6 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let userDailyJobs = JobsAndHabits.finalDailyJobsArray.filter({ return $0.assigned == currentUserName }).sorted(by: { $0.order < $1.order })
-        let userDailyHabits = JobsAndHabits.finalDailyHabitsArray.filter({ return $0.assigned == currentUserName }).sorted(by: { $0.order < $1.order })
-        let userWeeklyJobs = JobsAndHabits.finalWeeklyJobsArray.filter({ return $0.assigned == currentUserName }).sorted(by: { $0.order < $1.order })
         let cell = tableView.dequeueReusableCell(withIdentifier: "CustomCell", for: indexPath) as! UserCell
         
         // ----------
@@ -126,37 +121,56 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         // ----------
         
         if indexPath.section == 0 {
-            let dailyJobsPointValue = Int((Double(FamilyData.adjustedNatlAvgYrlySpendingEntireFam) * 0.20 / 52 / Double(JobsAndHabits.finalDailyJobsArray.count) * 100 / 7).rounded(.up))
-            cell.jobHabitLabel.text = userDailyJobs[indexPath.row].name
-            cell.pointsLabel.text = "\(dailyJobsPointValue)"
+            // get an array of this user in this category for this item on this day.
+            let currentUserCategoryItemDateArray = Points.pointsArray.filter({ $0.user == currentUserName && $0.itemCategory == "daily jobs" && $0.itemName == usersDailyJobs?[indexPath.row].name && Calendar.current.isDateInToday(Date(timeIntervalSince1970: $0.itemDate)) })
+            
+            cell.jobHabitLabel.text = usersDailyJobs?[indexPath.row].name
+            cell.pointsLabel.text = "\(dailyJobsPointValue ?? 0)"
             cell.pointsLabel.textColor = .lightGray
+            if currentUserCategoryItemDateArray.isEmpty {
+                cell.numberOfTapsLabel.text = ""
+            } else {
+                cell.numberOfTapsLabel.text = "\(currentUserCategoryItemDateArray[0].numberOfTapsEX)"
+            }
             
         // ------------
         // daily habits
         // ------------
             
         } else if indexPath.section == 1 {
+            // get an array of this user in this category for this item on this day.
+            let currentUserCategoryItemDateArray = Points.pointsArray.filter({ $0.user == currentUserName && $0.itemCategory == "daily habits" && $0.itemName == usersDailyHabits?[indexPath.row].name && Calendar.current.isDateInToday(Date(timeIntervalSince1970: $0.itemDate)) })
+            
+            cell.jobHabitLabel.text = usersDailyHabits?[indexPath.row].name
             if indexPath.row == 0 {
-                let priorityHabitPointValue = Int((Double(FamilyData.adjustedNatlAvgYrlySpendingPerKid) / 52 * 0.065 / 7 * 100).rounded(.up))
-                cell.pointsLabel.text = "\(priorityHabitPointValue)"
-                cell.jobHabitLabel.font = UIFont.systemFont(ofSize: 17.0, weight: UIFontWeightBold)
+                cell.pointsLabel.text = "\(priorityHabitPointValue ?? 0)"
             } else {
-                let regularHabitPointValue = Int((Double(FamilyData.adjustedNatlAvgYrlySpendingPerKid) / 52 * 0.015 / 7 * 100).rounded(.up))
-                cell.pointsLabel.text = "\(regularHabitPointValue)"
-                cell.jobHabitLabel.font = UIFont.systemFont(ofSize: 17.0, weight: UIFontWeightRegular)
+                cell.pointsLabel.text = "\(regularHabitPointValue ?? 0)"
             }
-            cell.jobHabitLabel.text = userDailyHabits[indexPath.row].name
             cell.pointsLabel.textColor = .lightGray
+            if currentUserCategoryItemDateArray.isEmpty {
+                cell.numberOfTapsLabel.text = ""
+            } else {
+                cell.numberOfTapsLabel.text = "\(currentUserCategoryItemDateArray[0].numberOfTapsEX)"
+            }
             
         // -----------
         // weekly jobs
         // -----------
             
         } else if indexPath.section == 2 {
-            let weeklyJobsPointValue = Int((Double(FamilyData.adjustedNatlAvgYrlySpendingEntireFam) * 0.2 / 52 / Double(JobsAndHabits.finalWeeklyJobsArray.count) * 100).rounded(.up))
-            cell.jobHabitLabel.text = userWeeklyJobs[indexPath.row].name
-            cell.pointsLabel.text = "\(weeklyJobsPointValue)"
+            // get an array of this user in this category for this item on this day.
+            let currentUserCategoryItemDateArray = Points.pointsArray.filter({ $0.user == currentUserName && $0.itemCategory == "weekly jobs" && $0.itemName == usersWeeklyJobs?[indexPath.row].name && Calendar.current.isDateInToday(Date(timeIntervalSince1970: $0.itemDate)) })
+            
+            cell.jobHabitLabel.text = usersWeeklyJobs?[indexPath.row].name
+            cell.pointsLabel.text = "\(weeklyJobsPointValue ?? 0)"
             cell.pointsLabel.textColor = .lightGray
+            if currentUserCategoryItemDateArray.isEmpty {
+                cell.numberOfTapsLabel.text = ""
+            } else {
+                // get 'numberOfTapsEX' from Points.pointsArray and show it here
+                cell.numberOfTapsLabel.text = "\(currentUserCategoryItemDateArray[0].numberOfTapsEX)"
+            }
             
         // ------------------
         // fees & withdrawals
@@ -166,19 +180,157 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
             cell.jobHabitLabel.text = feesDebts[indexPath.row]
             cell.pointsLabel.text = "-100"
             cell.pointsLabel.textColor = UIColor.red
+            if Points.pointsArray.filter({ $0.user == currentUserName && $0.itemCategory == "fees & withdrawals" }).isEmpty {
+                cell.numberOfTapsLabel.text = ""
+            } else {
+                cell.numberOfTapsLabel.text = "\(Points.pointsArray[indexPath.row].numberOfTapsEX)"
+            }
         }
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if indexPath.section == 3 && indexPath.row == 0 {
-            performSegue(withIdentifier: "FeesDetailSegue", sender: self)
-        } else if indexPath.section == 3 && indexPath.row == 1 {
-            performSegue(withIdentifier: "DebtsDetailSegue", sender: self)
-        } else {
-            tableView.deselectRow(at: indexPath, animated: true)
-            print("button tapped at \([indexPath.section]) \([indexPath.row])")
+        
+        // ----------
+        // daily jobs
+        // ----------
+        
+        if indexPath.section == 0 {
+            // get an array of this user in this category for this item on this day. If it doesn't exist, then create it w/ # of taps = 1.
+            // if the array isn't empty, check the numberOfTapsEX. If it's X or E, it needs a parental pword, then it becomes 1. Otherwise, add one to the number
+            let currentUserCategoryItemDateArray = Points.pointsArray.filter({ $0.user == currentUserName && $0.itemCategory == "daily jobs" && $0.itemName == usersDailyJobs?[indexPath.row].name && Calendar.current.isDateInToday(Date(timeIntervalSince1970: $0.itemDate)) })
+            if currentUserCategoryItemDateArray.isEmpty {
+                // create new Points item and append to array
+                let numberOfTaps = "1"
+                let valuePerTap = dailyJobsPointValue
+                let itemName = usersDailyJobs?[indexPath.row].name
+                let itemCategory = "daily jobs"
+                let itemDate = Date().timeIntervalSince1970
+                let user = currentUserName
+                
+                let pointThingy = Points(numberOfTapsEX: numberOfTaps, valuePerTap: valuePerTap!, itemName: itemName!, itemCategory: itemCategory, itemDate: itemDate, user: user!)
+                Points.pointsArray.append(pointThingy)
+                
+            // if array isn't empty, check if numberOfTapsEX has an 'X' or an 'E'
+            } else if currentUserCategoryItemDateArray[0].numberOfTapsEX == "X" || currentUserCategoryItemDateArray[0].numberOfTapsEX == "E" {
+                print("need to get parental permission, then reset value to 1")
+                let alert = UIAlertController(title: "Parent Permission Required", message: "To override an 'excused' or 'unexcused' job, you must enter a parental password.", preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "okay", style: .cancel, handler: { (action) in
+                    alert.dismiss(animated: true, completion: nil)
+                }))
+                // update Points item with numberOfTapEX = 1
+                
+                
+            // if array isn't empty and numberOfTapsEX isn't 'X' or 'E'
+            } else {
+                // get # of taps and add one (up to a limit)
+                let numberOfTapsEX = "\(Int(currentUserCategoryItemDateArray[0].numberOfTapsEX)! + 1)"
+                // then update array at that spot (find index of item that has that name)
+                for (index, item) in Points.pointsArray.enumerated() {
+                    if item.itemName == usersDailyJobs?[indexPath.row].name {
+                        Points.pointsArray[index].numberOfTapsEX = numberOfTapsEX
+                    }
+                }
+            }
         }
+        
+        // ------------
+        // daily habits
+        // ------------
+        
+        if indexPath.section == 1 {
+            // get an array of this user in this category for this item on this day. If it doesn't exist, then create it w/ # of taps = 1.
+            // if the array isn't empty, check the numberOfTapsEX. If it's X or E, it needs a parental pword, then it becomes 1. Otherwise, add one to the number
+            let currentUserCategoryItemDateArray = Points.pointsArray.filter({ $0.user == currentUserName && $0.itemCategory == "daily habits" && $0.itemName == usersDailyHabits?[indexPath.row].name && Calendar.current.isDateInToday(Date(timeIntervalSince1970: $0.itemDate)) })
+            if currentUserCategoryItemDateArray.isEmpty {
+                // create new Points item and append to array
+                var valuePerTap = 0
+
+                let numberOfTaps = "1"
+                if indexPath.row == 0 {
+                    valuePerTap = priorityHabitPointValue!
+                } else {
+                    valuePerTap = regularHabitPointValue!
+                }
+                let itemName = usersDailyHabits?[indexPath.row].name
+                let itemCategory = "daily habits"
+                let itemDate = Date().timeIntervalSince1970
+                let user = currentUserName
+                
+                let pointThingy = Points(numberOfTapsEX: numberOfTaps, valuePerTap: valuePerTap, itemName: itemName!, itemCategory: itemCategory, itemDate: itemDate, user: user!)
+                Points.pointsArray.append(pointThingy)
+                
+            // if array isn't empty...
+            } else {
+                // ...get # of taps and add one (up to a limit)
+                let numberOfTapsEX = "\(Int(currentUserCategoryItemDateArray[0].numberOfTapsEX)! + 1)"
+                // the update array at that spot (find index of item that has that name)
+                for (index, item) in Points.pointsArray.enumerated() {
+                    if item.itemName == usersDailyHabits?[indexPath.row].name {
+                        Points.pointsArray[index].numberOfTapsEX = numberOfTapsEX
+                    }
+                }
+            }
+        }
+        
+        // -----------
+        // weekly jobs
+        // -----------
+        
+        if indexPath.section == 2 {
+            // get an array of this user in this category for this item on this day. If it doesn't exist, then create it w/ # of taps = 1.
+            // if the array isn't empty, check the numberOfTapsEX. If it's X or E, it needs a parental pword, then it becomes 1. Otherwise, add one to the number
+            let currentUserCategoryItemDateArray = Points.pointsArray.filter({ $0.user == currentUserName && $0.itemCategory == "weekly jobs" && $0.itemName == usersWeeklyJobs?[indexPath.row].name && Calendar.current.isDateInToday(Date(timeIntervalSince1970: $0.itemDate)) })
+            if currentUserCategoryItemDateArray.isEmpty {
+                // create new Points item and append to array
+                let numberOfTaps = "1"
+                let valuePerTap = weeklyJobsPointValue
+                let itemName = usersWeeklyJobs?[indexPath.row].name
+                let itemCategory = "weekly jobs"
+                let itemDate = Date().timeIntervalSince1970
+                let user = currentUserName
+                
+                let pointThingy = Points(numberOfTapsEX: numberOfTaps, valuePerTap: valuePerTap!, itemName: itemName!, itemCategory: itemCategory, itemDate: itemDate, user: user!)
+                Points.pointsArray.append(pointThingy)
+                
+            // if array isn't empty, check if numberOfTapsEX has an 'X' or an 'E'
+            } else if currentUserCategoryItemDateArray[0].numberOfTapsEX == "X" || currentUserCategoryItemDateArray[0].numberOfTapsEX == "E" {
+                print("need to get parental permission, then reset value to 1")
+                let alert = UIAlertController(title: "Parent Permission Required", message: "To override an 'excused' or 'unexcused' job, you must enter a parental password.", preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "okay", style: .cancel, handler: { (action) in
+                    alert.dismiss(animated: true, completion: nil)
+                }))
+                // update Points item with numberOfTapEX = 1
+                
+                
+            // if array isn't empty and numberOfTapsEX isn't 'X' or 'E'
+            } else {
+                // get # of taps and add one (up to a limit)
+                let numberOfTapsEX = "\(Int(currentUserCategoryItemDateArray[0].numberOfTapsEX)! + 1)"
+                // then update array at that spot (find index of item that has that name)
+                for (index, item) in Points.pointsArray.enumerated() {
+                    if item.itemName == usersWeeklyJobs?[indexPath.row].name {
+                        Points.pointsArray[index].numberOfTapsEX = numberOfTapsEX
+                    }
+                }
+            }
+        }
+        
+        
+        
+        
+        
+        
+        
+//        if indexPath.section == 3 && indexPath.row == 0 {
+//            performSegue(withIdentifier: "FeesDetailSegue", sender: self)
+//        } else if indexPath.section == 3 && indexPath.row == 1 {
+//            performSegue(withIdentifier: "DebtsDetailSegue", sender: self)
+//        } else {
+////            tableView.deselectRow(at: indexPath, animated: true)
+////            print("button tapped at \([indexPath.section]) \([indexPath.row])")
+//        }
+        tableView.reloadData()
     }
     
     // ----------------------------------
@@ -370,6 +522,26 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     @IBAction func unwindToUserVC(segue: UIStoryboardSegue) {
     }
     
+    // ---------------
+    // Date calculator
+    // ---------------
+    
+    func dayDifference(from interval : TimeInterval) -> String {
+        
+        let calendar = NSCalendar.current
+        let date = Date(timeIntervalSince1970: interval)
+        if calendar.isDateInYesterday(date) { return "Yesterday" }
+        else if calendar.isDateInToday(date) { return "Today" }
+        else if calendar.isDateInTomorrow(date) { return "Tomorrow" }
+        else {
+            let startOfNow = calendar.startOfDay(for: Date())
+            let startOfTimeStamp = calendar.startOfDay(for: date)
+            let components = calendar.dateComponents([.day], from: startOfNow, to: startOfTimeStamp)
+            let day = components.day!
+            if day < 1 { return "\(abs(day)) days ago" }
+            else { return "In \(day) days" }
+        }
+    }
 }
 
 

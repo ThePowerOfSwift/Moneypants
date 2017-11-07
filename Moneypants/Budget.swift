@@ -24,9 +24,9 @@ struct Budget {
                                         "transportation",
                                         "personal care",
                                         "other",
-                                        "fun money (10%)",
-                                        "donations (10%)",
-                                        "savings (10%)"]
+                                        "fun money",
+                                        "donations",
+                                        "savings"]
     
     static func loadBudgetsFromFirebase(completion: @escaping () -> ()) {
         let firebaseUser = Auth.auth().currentUser

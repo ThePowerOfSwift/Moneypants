@@ -3,14 +3,14 @@ import Firebase
 
 class SetupCompleteVC: UIViewController {
     
-    var firebaseUser: FIRUser!
-    var ref: FIRDatabaseReference!
+    var firebaseUser: User!
+    var ref: DatabaseReference!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        firebaseUser = FIRAuth.auth()?.currentUser
-        ref = FIRDatabase.database().reference().child("users").child(firebaseUser.uid)
+        firebaseUser = Auth.auth().currentUser
+        ref = Database.database().reference().child("users").child(firebaseUser.uid)
     }
     
     @IBAction func doneButtonTapped(_ sender: UIButton) {

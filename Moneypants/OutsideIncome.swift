@@ -13,16 +13,16 @@ struct OutsideIncome {
     static var incomeArray = [OutsideIncome]()
     
     static func loadOutsideIncomeFromFirebase(completion: @escaping () -> ()) {
-        let firebaseUser = FIRAuth.auth()?.currentUser
-        let ref = FIRDatabase.database().reference().child("users").child((firebaseUser?.uid)!)
-        ref.child("outsideIncome").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
+        let firebaseUser = Auth.auth().currentUser
+        let ref = Database.database().reference().child("users").child((firebaseUser?.uid)!)
+        ref.child("outsideIncome").observeSingleEvent(of: .value) { (snapshot: DataSnapshot) in
             let outsideIncomeCount = Int(snapshot.childrenCount)
             if outsideIncomeCount == 0 {
                 // if there are no outside income amounts, return count 0
                 completion()
             } else {
                 for item in snapshot.children {
-                    let snap = item as? FIRDataSnapshot
+                    let snap = item as? DataSnapshot
                     let userName = snap?.key
                     if let value = snap?.value as? [String : Any] {
                         let allOthers = value["allOthers"] as! Int

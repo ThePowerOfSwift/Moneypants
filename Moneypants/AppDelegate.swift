@@ -10,7 +10,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         
-        FIRApp.configure()
+        FirebaseApp.configure()
 //        FIRDatabase.database().persistenceEnabled = true        // enable offline work
         IQKeyboardManager.sharedManager().enable = true
         
@@ -20,7 +20,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func loadInitialVC() {
-        let firebaseUser = FIRAuth.auth()?.currentUser
+        let firebaseUser = Auth.auth().currentUser
         if firebaseUser != nil {
             print("\((firebaseUser?.email)!) logged in")
             self.window = UIWindow(frame: UIScreen.main.bounds)
