@@ -1,7 +1,7 @@
 import Foundation
 
 struct Points {
-    var numberOfTapsEX: String
+    var completedEX: String
     var valuePerTap: Int
     var itemName: String
     var itemCategory: String
@@ -10,7 +10,7 @@ struct Points {
     
     static var pointsArray = [Points]()
     
-    // numerOfTaps (this is for showing a number in the box, but also for calculating the total for that job for that day)
+    // numerOfTaps (this is for showing a number in the box)
     // valuePerTap (this is the point value calculated from the magic number)
     // itemName (this is for updating the array with the proper item)
     // itemCategory (this is for future reports)
