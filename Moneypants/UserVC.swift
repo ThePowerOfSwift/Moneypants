@@ -64,22 +64,6 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         tableView.reloadData()
     }
     
-    func checkIncome() {
-        if Income.currentPointsArray.filter({ $0.user == currentUserName }).isEmpty {
-            // create a default array
-            let newUserPoints = Income(user: currentUserName, currentPoints: 0)
-            Income.currentPointsArray.append(newUserPoints)
-            incomeLabel.text = "$0.00"
-        } else {
-            for (index, item) in Income.currentPointsArray.enumerated() {
-                if item.user == currentUserName {
-//                    Income.currentPointsArray[index].currentPoints = 0
-                    incomeLabel.text = "$\(Income.currentPointsArray[index].currentPoints)"
-                }
-            }
-        }
-    }
-    
     // ----------
     // Table View
     // ----------
@@ -249,25 +233,7 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
             // if the array isn't empty, check the completedEX. If it's X or E, it needs a parental pword, then it becomes C. Otherwise, do nothing
             let currentUserCategoryItemDateArray = Points.pointsArray.filter({ $0.user == currentUserName && $0.itemCategory == "daily jobs" && $0.itemName == usersDailyJobs?[indexPath.row].name && Calendar.current.isDateInToday(Date(timeIntervalSince1970: $0.itemDate)) })
             if currentUserCategoryItemDateArray.isEmpty {
-                // create new Points item and append to array
-                let numberOfTaps = "C"
-                let valuePerTap = dailyJobsPointValue
-                let itemName = usersDailyJobs?[indexPath.row].name
-                let itemCategory = "daily jobs"
-                let itemDate = Date().timeIntervalSince1970
-                let user = currentUserName
-                
-                let pointThingy = Points(completedEX: numberOfTaps, valuePerTap: valuePerTap!, itemName: itemName!, itemCategory: itemCategory, itemDate: itemDate, user: user!)
-                Points.pointsArray.append(pointThingy)
-                
-                // update local array
-                for (index, item) in Income.currentPointsArray.enumerated() {
-                    if item.user == currentUserName {
-                        Income.currentPointsArray[index].currentPoints += valuePerTap!
-                        incomeLabel.text = "$\(String(format: "%.2f", Double(Income.currentPointsArray[index].currentPoints) / 100))"
-                    }
-                }
-                
+                createNewPointsItemForDailyJobs(indexPath: indexPath)
                 tableView.reloadData()
                 
             // if array isn't empty, check if numberOfTapsEX has an 'X' or an 'E'
@@ -296,36 +262,10 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
             // if the array isn't empty, check the completedEX. If it's X or E, it needs a parental pword, then it becomes C. Otherwise, do nothing
             let currentUserCategoryItemDateArray = Points.pointsArray.filter({ $0.user == currentUserName && $0.itemCategory == "daily habits" && $0.itemName == usersDailyHabits?[indexPath.row].name && Calendar.current.isDateInToday(Date(timeIntervalSince1970: $0.itemDate)) })
             if currentUserCategoryItemDateArray.isEmpty {
-                // create new Points item and append to array
-                var valuePerTap = 0
-
-                let numberOfTaps = "C"
-                if indexPath.row == 0 {
-                    valuePerTap = priorityHabitPointValue!
-                } else {
-                    valuePerTap = regularHabitPointValue!
-                }
-                let itemName = usersDailyHabits?[indexPath.row].name
-                let itemCategory = "daily habits"
-                let itemDate = Date().timeIntervalSince1970
-                let user = currentUserName
-                
-                let pointThingy = Points(completedEX: numberOfTaps, valuePerTap: valuePerTap, itemName: itemName!, itemCategory: itemCategory, itemDate: itemDate, user: user!)
-                Points.pointsArray.append(pointThingy)
-                
-                // update local array
-                for (index, item) in Income.currentPointsArray.enumerated() {
-                    if item.user == currentUserName {
-                        Income.currentPointsArray[index].currentPoints += valuePerTap
-                        incomeLabel.text = "$\(String(format: "%.2f", Double(Income.currentPointsArray[index].currentPoints) / 100))"
-                    }
-                }
-                
+                createNewPointsItemForHabits(indexPath: indexPath)
                 tableView.reloadData()
                 
-            // if array isn't empty and completedEX isn't 'X' or 'E' (if array is 'C')
             } else {
-                // do nothing
                 tableView.deselectRow(at: indexPath, animated: true)
             }
         }
@@ -339,25 +279,7 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
             // if the array isn't empty, check the completedEX. If it's X or E, it needs a parental pword, then it becomes C. Otherwise, do nothing
             let currentUserCategoryItemDateArray = Points.pointsArray.filter({ $0.user == currentUserName && $0.itemCategory == "weekly jobs" && $0.itemName == usersWeeklyJobs?[indexPath.row].name && Calendar.current.isDateInToday(Date(timeIntervalSince1970: $0.itemDate)) })
             if currentUserCategoryItemDateArray.isEmpty {
-                // create new Points item and append to array
-                let numberOfTaps = "C"
-                let valuePerTap = weeklyJobsPointValue
-                let itemName = usersWeeklyJobs?[indexPath.row].name
-                let itemCategory = "weekly jobs"
-                let itemDate = Date().timeIntervalSince1970
-                let user = currentUserName
-                
-                let pointThingy = Points(completedEX: numberOfTaps, valuePerTap: valuePerTap!, itemName: itemName!, itemCategory: itemCategory, itemDate: itemDate, user: user!)
-                Points.pointsArray.append(pointThingy)
-                
-                // update local array
-                for (index, item) in Income.currentPointsArray.enumerated() {
-                    if item.user == currentUserName {
-                        Income.currentPointsArray[index].currentPoints += valuePerTap!
-                        incomeLabel.text = "$\(String(format: "%.2f", Double(Income.currentPointsArray[index].currentPoints) / 100))"
-                    }
-                }
-                
+                createNewPointsItemForWeeklyJobs(indexPath: indexPath)
                 tableView.reloadData()
                 
             // if array isn't empty, check if numberOfTapsEX has an 'X' or an 'E'
@@ -389,8 +311,6 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                 performSegue(withIdentifier: "DebtsDetailSegue", sender: self)
             }
         }
-        
-        updateUserTotal()
     }
     
     // ----------------------------------
@@ -544,14 +464,97 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     // Functions
     // ---------
     
-    func updateUserTotal() {
-//        for (index, item) in Income.currentPointsArray.enumerated() {
-//            if item.user == currentUserName {
-//                Income.currentPointsArray[index].currentPoints +=
-//                    incomeLabel.text = "$\(Income.currentPointsArray[index].currentPoints)"
-//            }
-//        }
-//        incomeLabel.text = "\(Income.currentPointsArray[MPUser.currentUser].currentPoints)"
+    func checkIncome() {
+        if Income.currentPointsArray.filter({ $0.user == currentUserName }).isEmpty {
+            // create a default array
+            let newUserPoints = Income(user: currentUserName, currentPoints: 0)
+            Income.currentPointsArray.append(newUserPoints)
+            incomeLabel.text = "$0.00"
+        } else {
+            for (index, item) in Income.currentPointsArray.enumerated() {
+                if item.user == currentUserName {
+                    //                    Income.currentPointsArray[index].currentPoints = 0
+                    incomeLabel.text = "$\(String(format: "%.2f", Double(Income.currentPointsArray[index].currentPoints) / 100))"
+                    
+                    //                    incomeLabel.text = "$\(Income.currentPointsArray[index].currentPoints)"
+                }
+            }
+        }
+    }
+    
+    func updateUserIncome(itemValue: Int) {
+        for (index, item) in Income.currentPointsArray.enumerated() {
+            if item.user == currentUserName {
+                Income.currentPointsArray[index].currentPoints += itemValue
+                incomeLabel.text = "$\(String(format: "%.2f", Double(Income.currentPointsArray[index].currentPoints) / 100))"
+            }
+        }
+    }
+    
+    func createNewPointsItemForDailyJobs(indexPath: IndexPath) {
+        let numberOfTaps = "C"
+        let valuePerTap = dailyJobsPointValue
+        let itemName = usersDailyJobs?[indexPath.row].name
+        let itemCategory = "daily jobs"
+        let itemDate = Date().timeIntervalSince1970
+        let user = currentUserName
+        
+        let pointsArrayItem = Points(completedEX: numberOfTaps, valuePerTap: valuePerTap!, itemName: itemName!, itemCategory: itemCategory, itemDate: itemDate, user: user!)
+        Points.pointsArray.append(pointsArrayItem)
+        
+        // // update user's income array & income label
+        for (index, item) in Income.currentPointsArray.enumerated() {
+            if item.user == currentUserName {
+                Income.currentPointsArray[index].currentPoints += valuePerTap!
+                incomeLabel.text = "$\(String(format: "%.2f", Double(Income.currentPointsArray[index].currentPoints) / 100))"
+            }
+        }
+    }
+    
+    func createNewPointsItemForHabits(indexPath: IndexPath) {
+        var valuePerTap = 0
+        
+        let numberOfTaps = "C"
+        if indexPath.row == 0 {
+            valuePerTap = priorityHabitPointValue!
+        } else {
+            valuePerTap = regularHabitPointValue!
+        }
+        let itemName = usersDailyHabits?[indexPath.row].name
+        let itemCategory = "daily habits"
+        let itemDate = Date().timeIntervalSince1970
+        let user = currentUserName
+        
+        let pointThingy = Points(completedEX: numberOfTaps, valuePerTap: valuePerTap, itemName: itemName!, itemCategory: itemCategory, itemDate: itemDate, user: user!)
+        Points.pointsArray.append(pointThingy)
+        
+        // // update user's income array & income label
+        for (index, item) in Income.currentPointsArray.enumerated() {
+            if item.user == currentUserName {
+                Income.currentPointsArray[index].currentPoints += valuePerTap
+                incomeLabel.text = "$\(String(format: "%.2f", Double(Income.currentPointsArray[index].currentPoints) / 100))"
+            }
+        }
+    }
+    
+    func createNewPointsItemForWeeklyJobs(indexPath: IndexPath) {
+        let numberOfTaps = "C"
+        let valuePerTap = weeklyJobsPointValue
+        let itemName = usersWeeklyJobs?[indexPath.row].name
+        let itemCategory = "weekly jobs"
+        let itemDate = Date().timeIntervalSince1970
+        let user = currentUserName
+        
+        let newItemTapped = Points(completedEX: numberOfTaps, valuePerTap: valuePerTap!, itemName: itemName!, itemCategory: itemCategory, itemDate: itemDate, user: user!)
+        Points.pointsArray.append(newItemTapped)
+        
+        // update user's income array & income label
+        for (index, item) in Income.currentPointsArray.enumerated() {
+            if item.user == currentUserName {
+                Income.currentPointsArray[index].currentPoints += weeklyJobsPointValue
+                incomeLabel.text = "$\(String(format: "%.2f", Double(Income.currentPointsArray[index].currentPoints) / 100))"
+            }
+        }
     }
     
     // Alert Template

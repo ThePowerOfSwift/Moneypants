@@ -52,7 +52,7 @@ class Step1VC: UIViewController, UITextFieldDelegate {
                 createIncomeAlert()
             } else {        // good to go!
                 performSegue(withIdentifier: "GoToStep2", sender: self)
-                ref.updateChildValues(["income" : FamilyData.yearlyIncome])
+                ref.updateChildValues(["householdIncome" : FamilyData.yearlyIncome])
                 // only update setup progress if user hasn't progressed past step 1
                 if FamilyData.setupProgress <= 1 {
                     FamilyData.setupProgress = 1
@@ -62,7 +62,7 @@ class Step1VC: UIViewController, UITextFieldDelegate {
         } else {
             createIncomeAlert()
         }
-        ref.child("income").removeAllObservers()
+        ref.child("householdIncome").removeAllObservers()
     }
     
     // ---------

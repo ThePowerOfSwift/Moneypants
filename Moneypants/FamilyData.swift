@@ -24,7 +24,7 @@ struct FamilyData {
     static func loadExistingIncome(completion: @escaping (Int) -> ()) {
         let firebaseUser = Auth.auth().currentUser
         let ref = Database.database().reference().child("users").child((firebaseUser?.uid)!)
-        ref.child("income").observeSingleEvent(of: .value, with: { (snapshot) in
+        ref.child("householdIncome").observeSingleEvent(of: .value, with: { (snapshot) in
             if let value = snapshot.value as? Int {
                 yearlyIncome = value
                 completion(yearlyIncome)
