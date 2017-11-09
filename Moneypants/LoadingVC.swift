@@ -64,6 +64,7 @@ class LoadingVC: UIViewController {
                                                 if FamilyData.setupProgress == 11 {
                                                     print("user has completed setup. Loading home page...")
                                                     self.updateIncome()
+                                                    self.calculateFeeValue()
                                                     self.performSegue(withIdentifier: "Home", sender: self)
                                                 } else {
                                                     self.performSegue(withIdentifier: "GoToStep1EnterIncome", sender: self)
@@ -99,5 +100,11 @@ class LoadingVC: UIViewController {
         // these two values are basis for all the family points
         FamilyData.adjustedNatlAvgYrlySpendingEntireFam = Int(natlAvgYearlySpendingPerKid * censusKidsMultiplier * Double(MPUser.usersArray.count))
         FamilyData.adjustedNatlAvgYrlySpendingPerKid = Int(natlAvgYearlySpendingPerKid * censusKidsMultiplier)
+    }
+    
+    func calculateFeeValue() {
+        // round to nearest $0.50
+        FamilyData.feeValue = round(Double(FamilyData.adjustedNatlAvgYrlySpendingPerKid) * 0.001 / 0.5) * 0.5
+        print(FamilyData.feeValue)
     }
 }
