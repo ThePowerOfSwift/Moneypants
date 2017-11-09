@@ -237,14 +237,10 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                 tableView.reloadData()
                 
                 // if array isn't empty, check if numberOfTapsEX has an 'X' or an 'E'
-            } else if currentUserCategoryItemDateArray[0].completedEX == "X" || currentUserCategoryItemDateArray[0].completedEX == "E" {
-                print("need to get parental permission, then reset value to C")
-                let alert = UIAlertController(title: "Parent Permission Required", message: "To override an 'excused' or 'unexcused' job, you must enter a parental password.", preferredStyle: .alert)
-                alert.addAction(UIAlertAction(title: "okay", style: .cancel, handler: { (action) in
-                    alert.dismiss(animated: true, completion: nil)
-                }))
-                // update Points item with numberOfTapEX = 1
-                
+            } else if currentUserCategoryItemDateArray[0].completedEX == "X" {
+                alertX(indexPath: indexPath, deselectRow: true)
+            } else if currentUserCategoryItemDateArray[0].completedEX == "E" {
+                alertE(indexPath: indexPath, deselectRow: true)
                 
                 // if array isn't empty and numberOfTapsEX isn't 'X' or 'E' (if array is just 'C')
             } else {
@@ -273,7 +269,7 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         // -----------
         // weekly jobs
         // -----------
-        
+    
         if indexPath.section == 2 {
             // get an array of this user in this category for this item on this day. If it doesn't exist, then create it w/ tap value = C.
             // if the array isn't empty, check the completedEX. If it's X or E, it needs a parental pword, then it becomes C. Otherwise, do nothing
@@ -324,93 +320,20 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
             // --------------
             
             let excusedAction = UITableViewRowAction(style: .default, title: "         ", handler: { (action, indexPath) in
-                
-                
-                
                 // ...check to see if iso array is empty. If so, don't let user reset anything b/c it will crash the app (b/c the array is empty)
                 if !isoArrayForItem.isEmpty {
                     if isoArrayForItem[0].completedEX == "E" {
-                        print("already excused")
+                        self.alertE(indexPath: indexPath, deselectRow: false)
                     } else if isoArrayForItem[0].completedEX == "X" {
-                        print("already unexcused")
+                        self.alertX(indexPath: indexPath, deselectRow: false)
+                        tableView.setEditing(false, animated: true)
                     } else {
-                        print(isoArrayForItem[0].completedEX)
+                        self.createExcusedDialogue(isoArray: isoArrayForItem, indexPath: indexPath)
                     }
                 } else {
-                    // do regular stuff here
+                    self.createExcusedDialogue(isoArray: isoArrayForItem, indexPath: indexPath)
                 }
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                // Create alert and allow user to cancel
-                let alert = UIAlertController(title: "Excused From Job", message: "\(self.currentUserName!) was excused from doing the job '\(self.usersDailyJobs[indexPath.row].name)'. \(MPUser.gender(user: MPUser.currentUser).he_she) won't lose \(MPUser.gender(user: MPUser.currentUser).his_her.lowercased()) job bonus, but \(MPUser.gender(user: MPUser.currentUser).he_she.lowercased()) WILL be charged a $\(FamilyData.feeValue)0 substitute fee.", preferredStyle: UIAlertControllerStyle.alert)
-                
-                // --------------------
-                // Button ONE: "accept"
-                // --------------------
-                
-                alert.addAction(UIAlertAction(title: "accept", style: UIAlertActionStyle.default, handler: { (action) in
-                    alert.dismiss(animated: true, completion: nil)
-                    print("excused accepted")
-                    
-                    // -----------------
-                    // Choose substitute
-                    // -----------------
-                    
-                    let alert2 = UIAlertController(title: "Job Substitute", message: "Who was the job substitute for \(self.currentUserName!)'s job '\(self.usersDailyJobs[indexPath.row].name)'?", preferredStyle: UIAlertControllerStyle.alert)
-                    for user in MPUser.usersArray {
-                        alert2.addAction(UIAlertAction(title: user.firstName, style: .default, handler: { (action) in
-                            alert2.dismiss(animated: true, completion: nil)
-                            
-                            // ---------------------------
-                            // Confirm / Cancel substitute
-                            // ---------------------------
-                            
-                            self.confirmOrCancelSubstituteForExcused(isoArray: isoArrayForItem, nameOfSub: user.firstName, indexPath: indexPath)
-                            
-                        }))
-                    }
-                    
-                    // -------------
-                    // NO substitute
-                    // -------------
-                    
-                    alert2.addAction(UIAlertAction(title: "None", style: .cancel, handler: { (action) in
-                        
-                        // This alert shows up after user taps 'none'. It allows user to confirm a lack of sub, or to cancel
-                        let alert3 = UIAlertController(title: "Job Substitute Missing", message: "You have not chosen a job substitute for \(self.currentUserName)'s job '\(self.usersDailyJobs[indexPath.row].name)'.\n\nNobody will get paid for doing this job and it will remain undone. Are you sure you want to continue?", preferredStyle: UIAlertControllerStyle.alert)
-                        alert3.addAction(UIAlertAction(title: "cancel", style: .cancel, handler: { (action) in
-                            print("nobody selected as sub. canceled")
-                            alert3.dismiss(animated: true, completion: nil)}))
-                        alert3.addAction(UIAlertAction(title: "accept", style: .default, handler: { (action) in
-                            print("nobody selected as sub. confirmed")
-                            alert3.dismiss(animated: true, completion: nil)}))
-                        self.present(alert3, animated: true, completion: nil)}))
-                    
-                    self.present(alert2, animated: true, completion: nil)}))
-                
-                // --------------------
-                // Button TWO: "cancel"
-                // --------------------
-                
-                alert.addAction(UIAlertAction(title: "cancel", style: UIAlertActionStyle.cancel , handler: { (action) in
-                    alert.dismiss(animated: true, completion: nil)
-                    tableView.setEditing(false, animated: true)
-                    print("excused canceled")
-                }))
-                self.present(alert, animated: true, completion: nil)
             })
-            
-            
-            
-            
-            
             
             // ----------------
             // unexcused action
@@ -549,6 +472,95 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     // ---------
     // Functions
     // ---------
+    
+    func alertE(indexPath: IndexPath, deselectRow: Bool) {
+        let alertE = UIAlertController(title: "Excused", message: "This job is already excused. In order to change it, tap the 'reset' button.", preferredStyle: .alert)
+        alertE.addAction(UIAlertAction(title: "okay", style: .cancel, handler: { (action) in
+            alertE.dismiss(animated: true, completion: nil)
+            
+            // to determine whether to perform tableview animation upon alert dismissal
+            if deselectRow {
+                self.tableView.deselectRow(at: indexPath, animated: true)
+            } else {
+//                self.tableView.setEditing(false, animated: true)
+            }
+        }))
+        self.present(alertE, animated: true, completion: nil)
+    }
+    
+    func alertX(indexPath: IndexPath, deselectRow: Bool) {
+        let alertX = UIAlertController(title: "Unexcused", message: "This job is already unexcused. In order to change it, tap the 'reset' button.", preferredStyle: .alert)
+        alertX.addAction(UIAlertAction(title: "okay", style: .cancel, handler: { (action) in
+            alertX.dismiss(animated: true, completion: nil)
+            
+            // to determine whether to perform tableview animation upon alert dismissal
+            if deselectRow {
+                self.tableView.deselectRow(at: indexPath, animated: true)
+            } else {
+                //                self.tableView.setEditing(false, animated: true)
+            }
+        }))
+        self.present(alertX, animated: true, completion: nil)
+    }
+    
+    func createExcusedDialogue(isoArray: [Points], indexPath: IndexPath) {
+        let alert = UIAlertController(title: "Excused From Job", message: "\(self.currentUserName!) was excused from doing the job '\(self.usersDailyJobs[indexPath.row].name)'. \(MPUser.gender(user: MPUser.currentUser).he_she) won't lose \(MPUser.gender(user: MPUser.currentUser).his_her.lowercased()) job bonus, but \(MPUser.gender(user: MPUser.currentUser).he_she.lowercased()) WILL be charged a $\(FamilyData.feeValue)0 substitute fee.", preferredStyle: UIAlertControllerStyle.alert)
+        
+        // --------------------
+        // Button ONE: "accept"
+        // --------------------
+        
+        alert.addAction(UIAlertAction(title: "accept", style: UIAlertActionStyle.default, handler: { (action) in
+            alert.dismiss(animated: true, completion: nil)
+            print("excused accepted")
+            
+            // -----------------
+            // Choose substitute
+            // -----------------
+            
+            let alert2 = UIAlertController(title: "Job Substitute", message: "Who was the job substitute for \(self.currentUserName!)'s job '\(self.usersDailyJobs[indexPath.row].name)'?", preferredStyle: UIAlertControllerStyle.alert)
+            for user in MPUser.usersArray {
+                alert2.addAction(UIAlertAction(title: user.firstName, style: .default, handler: { (action) in
+                    alert2.dismiss(animated: true, completion: nil)
+                    
+                    // ---------------------------
+                    // Confirm / Cancel substitute
+                    // ---------------------------
+                    
+                    self.confirmOrCancelSubstituteForExcused(isoArray: isoArray, nameOfSub: user.firstName, indexPath: indexPath)
+                }))
+            }
+            
+            // -------------
+            // NO substitute
+            // -------------
+            
+            alert2.addAction(UIAlertAction(title: "None", style: .cancel, handler: { (action) in
+                
+                // This alert shows up after user taps 'none'. It allows user to confirm a lack of sub, or to cancel
+                // be sure to add this money into the family vacation budget for later
+                let alert3 = UIAlertController(title: "Job Substitute Missing", message: "You have not chosen a job substitute for \(self.currentUserName)'s job '\(self.usersDailyJobs[indexPath.row].name)'.\n\nNobody will get paid for doing this job and it will remain undone. Are you sure you want to continue?", preferredStyle: UIAlertControllerStyle.alert)
+                alert3.addAction(UIAlertAction(title: "cancel", style: .cancel, handler: { (action) in
+                    print("nobody selected as sub. canceled")
+                    alert3.dismiss(animated: true, completion: nil)}))
+                alert3.addAction(UIAlertAction(title: "accept", style: .default, handler: { (action) in
+                    print("nobody selected as sub. confirmed")
+                    alert3.dismiss(animated: true, completion: nil)}))
+                self.present(alert3, animated: true, completion: nil)}))
+            
+            self.present(alert2, animated: true, completion: nil)}))
+        
+        // --------------------
+        // Button TWO: "cancel"
+        // --------------------
+        
+        alert.addAction(UIAlertAction(title: "cancel", style: UIAlertActionStyle.cancel , handler: { (action) in
+            alert.dismiss(animated: true, completion: nil)
+            self.tableView.setEditing(false, animated: true)
+            print("excused canceled")
+        }))
+        self.present(alert, animated: true, completion: nil)
+    }
     
     func confirmOrCancelSubstituteForExcused(isoArray: [Points], nameOfSub: String, indexPath: IndexPath) {
         let substituteName: String = nameOfSub
