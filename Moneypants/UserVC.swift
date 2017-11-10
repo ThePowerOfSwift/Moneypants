@@ -333,10 +333,10 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                     } else if isoArrayForItem[0].completedEX == "X" {
                         self.alertX(indexPath: indexPath, deselectRow: false)
                     } else {
-                        self.createExcusedUnexcusedDialogue(alertTitle: self.excusedDialogueTitle, alertMessage: self.excusedDialogueMessage, isoArray: isoArrayForItem, indexPath: indexPath, eORxSelection: "E")
+                        self.createExcusedDialogue(alertTitle: self.excusedDialogueTitle, alertMessage: self.excusedDialogueMessage, isoArray: isoArrayForItem, indexPath: indexPath, eORxSelection: "E")
                     }
                 } else {
-                    self.createExcusedUnexcusedDialogue(alertTitle: self.excusedDialogueTitle, alertMessage: self.excusedDialogueMessage, isoArray: isoArrayForItem, indexPath: indexPath, eORxSelection: "E")
+                    self.createExcusedDialogue(alertTitle: self.excusedDialogueTitle, alertMessage: self.excusedDialogueMessage, isoArray: isoArrayForItem, indexPath: indexPath, eORxSelection: "E")
                 }
             })
             
@@ -502,7 +502,7 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         unexcusedDialogueMessage = "\(self.currentUserName!) was NOT excused from doing the job '\(self.usersDailyJobs[indexPath.row].name)'.\n\n\(self.currentUserName!) will LOSE \(MPUser.gender(user: MPUser.currentUser).his_her.lowercased()) job bonus, PLUS \(MPUser.gender(user: MPUser.currentUser).he_she.lowercased()) will be charged a $\(subFeeFormatted!) substitute fee."
     }
 
-    func createExcusedUnexcusedDialogue(alertTitle: String, alertMessage: String, isoArray: [Points], indexPath: IndexPath, eORxSelection: String) {
+    func createExcusedDialogue(alertTitle: String, alertMessage: String, isoArray: [Points], indexPath: IndexPath, eORxSelection: String) {
         let alert = UIAlertController(title: alertTitle, message: alertMessage, preferredStyle: UIAlertControllerStyle.alert)
 
         // --------------------
@@ -543,18 +543,47 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                     self.tableView.setEditing(false, animated: true)
                     alert3.dismiss(animated: true, completion: nil)}))
                 alert3.addAction(UIAlertAction(title: "accept", style: .default, handler: { (action) in
-                    // subtract money from current user and update their income array
+                    
+                    // --------------------------------------------------------------------------------------------------------------------
                     // 1. if user had added points to their point chart for that job, delete them and their values and update income totals
+                    // --------------------------------------------------------------------------------------------------------------------
+                    
                     if !isoArray.isEmpty {
-                        self.removeSelectedItemFromPointsArrayAndUpdateIncomeArray(indexPath: indexPath, category: "daily jobs", categoryArray: self.usersDailyJobs)
+                        let selectedItemDate = Date(timeIntervalSince1970: isoArray[0].itemDate) //
+                        for (pointsIndex, pointsItem) in Points.pointsArray.enumerated() {
+                            if pointsItem.user == self.currentUserName && pointsItem.itemCategory == "daily jobs" && pointsItem.itemName == isoArray[0].itemName && Calendar.current.isDateInToday(selectedItemDate) {
+                                
+                                // remove item from points array
+                                Points.pointsArray.remove(at: pointsIndex)
+                                
+                                // subtract item from user's income array & the update their income label
+                                for (incomeIndex, incomeItem) in Income.currentIncomeArray.enumerated() {
+                                    if incomeItem.user == self.currentUserName {
+                                        Income.currentIncomeArray[incomeIndex].currentPoints -= pointsItem.valuePerTap
+//                                        self.incomeLabel.text = "$\(String(format: "%.2f", Double(Income.currentIncomeArray[incomeIndex].currentPoints) / 100))"
+                                    }
+                                }
+                                self.tableView.setEditing(false, animated: true)
+                                self.tableView.reloadRows(at: [indexPath], with: .automatic)
+                            }
+                        }
                     }
                     
-                    // 2. ...and subtract the amount from current user's income array (note that the amount is negative)
-                    self.updateUserIncome(itemValue: -(Int(FamilyData.feeValueMultiplier * 100)))
+                    // ----------------------------------------------------------------------------
+                    // 2. charge user substitution fee in Points array and then update Income array
+                    // ----------------------------------------------------------------------------
                     
-                    // 5. charge current user the fee (note that the amount is negative)
-                    let loseSubstitutionPoints = Points(completedEX: eORxSelection, valuePerTap: -(Int(FamilyData.feeValueMultiplier * 100)), itemName: "\(self.usersDailyJobs[indexPath.row].name)", itemCategory: "daily jobs", itemDate: Date().timeIntervalSince1970, user: self.currentUserName)
+                    // subtract fee from Points Array
+                    let loseSubstitutionPoints = Points(completedEX: eORxSelection, valuePerTap: -(self.substituteFee), itemName: "\(self.usersDailyJobs[indexPath.row].name)", itemCategory: "daily jobs", itemDate: Date().timeIntervalSince1970, user: self.currentUserName)
                     Points.pointsArray.append(loseSubstitutionPoints)
+                    
+                    // subtract fee from Income array and update income label
+                    for (index, item) in Income.currentIncomeArray.enumerated() {
+                        if item.user == self.currentUserName {
+                            Income.currentIncomeArray[index].currentPoints -= self.substituteFee
+                            self.incomeLabel.text = "$\(String(format: "%.2f", Double(Income.currentIncomeArray[index].currentPoints) / 100))"
+                        }
+                    }
                     
                     self.tableView.setEditing(false, animated: true)
                     self.tableView.reloadRows(at: [indexPath], with: .automatic)
@@ -872,9 +901,6 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                 }
                 tableView.setEditing(false, animated: true)
                 tableView.reloadRows(at: [indexPath], with: .automatic)
-            } else {
-                // do nothing
-                // print("item at \(pointsIndex) NOT updated")
             }
         }
     }
