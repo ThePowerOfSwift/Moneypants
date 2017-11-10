@@ -20,6 +20,13 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     var priorityHabitPointValue: Int!
     var regularHabitPointValue: Int!
     var weeklyJobsPointValue: Int!
+    var substituteFee: Int!
+    
+    var subFeeFormatted: String!
+    var excusedDialogueTitle: String!
+    var excusedDialogueMessage: String!
+    var unexcusedDialogueTitle: String!
+    var unexcusedDialogueMessage: String!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,7 +35,7 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         // badges
         // ------
         
-        //        tabBarController?.tabBar.items?[2].badgeValue = "1"
+        tabBarController?.tabBar.items?[2].badgeValue = "1"
         
         currentUserName = MPUser.usersArray[MPUser.currentUser].firstName
         navigationItem.title = currentUserName
@@ -55,6 +62,7 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         priorityHabitPointValue = Int((Double(FamilyData.adjustedNatlAvgYrlySpendingPerKid) / 52 * 0.065 / 7 * 100).rounded(.up))
         regularHabitPointValue = Int((Double(FamilyData.adjustedNatlAvgYrlySpendingPerKid) / 52 * 0.015 / 7 * 100).rounded(.up))
         weeklyJobsPointValue = Int((Double(FamilyData.adjustedNatlAvgYrlySpendingEntireFam) * 0.2 / 52 / Double(JobsAndHabits.finalWeeklyJobsArray.count) * 100).rounded(.up))
+        substituteFee = FamilyData.feeValueMultiplier / usersDailyJobs.count
         
         checkIncome()
     }
@@ -234,8 +242,7 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
             let currentUserCategoryItemDateArray = Points.pointsArray.filter({ $0.user == currentUserName && $0.itemCategory == "daily jobs" && $0.itemName == usersDailyJobs?[indexPath.row].name && Calendar.current.isDateInToday(Date(timeIntervalSince1970: $0.itemDate)) })
             if currentUserCategoryItemDateArray.isEmpty {
                 createNewPointsItemForDailyJobs(indexPath: indexPath)
-                tableView.reloadData()
-                
+                tableView.reloadRows(at: [indexPath], with: .automatic)
                 // if array isn't empty, check if numberOfTapsEX has an 'X' or an 'E'
             } else if currentUserCategoryItemDateArray[0].completedEX == "X" {
                 alertX(indexPath: indexPath, deselectRow: true)
@@ -259,8 +266,7 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
             let currentUserCategoryItemDateArray = Points.pointsArray.filter({ $0.user == currentUserName && $0.itemCategory == "daily habits" && $0.itemName == usersDailyHabits?[indexPath.row].name && Calendar.current.isDateInToday(Date(timeIntervalSince1970: $0.itemDate)) })
             if currentUserCategoryItemDateArray.isEmpty {
                 createNewPointsItemForHabits(indexPath: indexPath)
-                tableView.reloadData()
-                
+                tableView.reloadRows(at: [indexPath], with: .automatic)
             } else {
                 tableView.deselectRow(at: indexPath, animated: true)
             }
@@ -276,8 +282,7 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
             let currentUserCategoryItemDateArray = Points.pointsArray.filter({ $0.user == currentUserName && $0.itemCategory == "weekly jobs" && $0.itemName == usersWeeklyJobs?[indexPath.row].name && Calendar.current.isDateInToday(Date(timeIntervalSince1970: $0.itemDate)) })
             if currentUserCategoryItemDateArray.isEmpty {
                 createNewPointsItemForWeeklyJobs(indexPath: indexPath)
-                tableView.reloadData()
-                
+                tableView.reloadRows(at: [indexPath], with: .automatic)
             }  else {
                 // do nothing (because this info is now in the 'swipe from right' section of code
                 tableView.deselectRow(at: indexPath, animated: true)
@@ -306,6 +311,7 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
+        getExcusedUnexcusedDialogueAlertTitleAndMessage(indexPath: indexPath)
         
         // ----------
         // daily jobs
@@ -327,10 +333,10 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                     } else if isoArrayForItem[0].completedEX == "X" {
                         self.alertX(indexPath: indexPath, deselectRow: false)
                     } else {
-                        self.createExcusedDialogue(isoArray: isoArrayForItem, indexPath: indexPath)
+                        self.createExcusedUnexcusedDialogue(alertTitle: self.excusedDialogueTitle, alertMessage: self.excusedDialogueMessage, isoArray: isoArrayForItem, indexPath: indexPath, eORxSelection: "E")
                     }
                 } else {
-                    self.createExcusedDialogue(isoArray: isoArrayForItem, indexPath: indexPath)
+                    self.createExcusedUnexcusedDialogue(alertTitle: self.excusedDialogueTitle, alertMessage: self.excusedDialogueMessage, isoArray: isoArrayForItem, indexPath: indexPath, eORxSelection: "E")
                 }
             })
             
@@ -415,6 +421,21 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     // Functions
     // ---------
     
+    func checkIncome() {
+        if Income.currentIncomeArray.filter({ $0.user == currentUserName }).isEmpty {
+            // create a default array
+            let newUserPoints = Income(user: currentUserName, currentPoints: 0)
+            Income.currentIncomeArray.append(newUserPoints)
+            incomeLabel.text = "$0.00"
+        } else {
+            for (index, item) in Income.currentIncomeArray.enumerated() {
+                if item.user == currentUserName {
+                    incomeLabel.text = "$\(String(format: "%.2f", Double(Income.currentIncomeArray[index].currentPoints) / 100))"
+                }
+            }
+        }
+    }
+    
     func getParentalPasscodeThenResetToZero(indexPath: IndexPath) {
         let alert = UIAlertController(title: "Parental Passcode Required", message: "You must enter a parental passcode to override an excused or unexcused job.", preferredStyle: .alert)
         alert.addTextField(configurationHandler: { (textField) in
@@ -433,14 +454,16 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                 for (pointsIndex, pointsItem) in Points.pointsArray.enumerated() {
                     if pointsItem.itemCategory == "daily jobs" && pointsItem.itemName == "\((self.usersDailyJobs?[indexPath.row].name)!) (sub)" && Calendar.current.isDateInToday(Date(timeIntervalSince1970: pointsItem.itemDate)) {
                         
+                        print(Points.pointsArray)
+                        
                         // find name of substitute before deleting item
                         let substituteName = Points.pointsArray[pointsIndex].user
                         Points.pointsArray.remove(at: pointsIndex)
                         
                         // update substitute's income array
-                        for (incomeIndex, incomeItem) in Income.currentPointsArray.enumerated() {
+                        for (incomeIndex, incomeItem) in Income.currentIncomeArray.enumerated() {
                             if incomeItem.user == substituteName {
-                                Income.currentPointsArray[incomeIndex].currentPoints -= pointsItem.valuePerTap
+                                Income.currentIncomeArray[incomeIndex].currentPoints -= pointsItem.valuePerTap
                             }
                         }
                     }
@@ -467,38 +490,91 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         self.present(wrongPasscodeAlert, animated: true, completion: nil)
     }
     
-    func alertE(indexPath: IndexPath, deselectRow: Bool) {
-        let alertE = UIAlertController(title: "Excused", message: "This job is currently excused. In order to change it, tap the 'reset' button.", preferredStyle: .alert)
-        alertE.addAction(UIAlertAction(title: "okay", style: .cancel, handler: { (action) in
-            alertE.dismiss(animated: true, completion: nil)
-            
-            // to determine whether to perform tableview animation upon alert dismissal
-            if deselectRow {
-                self.tableView.deselectRow(at: indexPath, animated: true)
-            } else {
-//                self.tableView.setEditing(false, animated: true)
-            }
-        }))
-        self.present(alertE, animated: true, completion: nil)
+    func getExcusedUnexcusedDialogueAlertTitleAndMessage(indexPath: IndexPath) {
+        subFeeFormatted = String(format: "%.2f", Double(substituteFee) / 100)
+        
+        excusedDialogueTitle = "Excused From Job"
+        excusedDialogueMessage = "\(self.currentUserName!) was excused from doing the job '\(self.usersDailyJobs[indexPath.row].name)'. \(MPUser.gender(user: MPUser.currentUser).he_she) won't lose \(MPUser.gender(user: MPUser.currentUser).his_her.lowercased()) job bonus, but \(MPUser.gender(user: MPUser.currentUser).he_she.lowercased()) WILL be charged a $\(subFeeFormatted!) substitute fee."
+        
+        unexcusedDialogueTitle = "Unexcused From Job"
+        unexcusedDialogueMessage = "\(self.currentUserName!) was NOT excused from doing the job '\(self.usersDailyJobs[indexPath.row].name)'.\n\n\(self.currentUserName!) will LOSE \(MPUser.gender(user: MPUser.currentUser).his_her.lowercased()) job bonus, PLUS \(MPUser.gender(user: MPUser.currentUser).he_she.lowercased()) will be charged a $\(subFeeFormatted!) substitute fee."
     }
-    
-    func alertX(indexPath: IndexPath, deselectRow: Bool) {
-        let alertX = UIAlertController(title: "Unexcused", message: "This job is currently unexcused. In order to change it, tap the 'reset' button.", preferredStyle: .alert)
-        alertX.addAction(UIAlertAction(title: "okay", style: .cancel, handler: { (action) in
-            alertX.dismiss(animated: true, completion: nil)
+
+    func createExcusedUnexcusedDialogue(alertTitle: String, alertMessage: String, isoArray: [Points], indexPath: IndexPath, eORxSelection: String) {
+        let alert = UIAlertController(title: alertTitle, message: alertMessage, preferredStyle: UIAlertControllerStyle.alert)
+
+        // --------------------
+        // Button ONE: "accept"
+        // --------------------
+        
+        alert.addAction(UIAlertAction(title: "accept", style: UIAlertActionStyle.default, handler: { (action) in
+            alert.dismiss(animated: true, completion: nil)
             
-            // to determine whether to perform tableview animation upon alert dismissal
-            if deselectRow {
-                self.tableView.deselectRow(at: indexPath, animated: true)
-            } else {
-                //                self.tableView.setEditing(false, animated: true)
+            // -----------------
+            // Choose substitute
+            // -----------------
+            
+            let alert2 = UIAlertController(title: "Job Substitute", message: "Who was the job substitute for \(self.currentUserName!)'s job '\(self.usersDailyJobs[indexPath.row].name)'?", preferredStyle: UIAlertControllerStyle.alert)
+            for user in MPUser.usersArray {
+                alert2.addAction(UIAlertAction(title: user.firstName, style: .default, handler: { (action) in
+                    alert2.dismiss(animated: true, completion: nil)
+                    
+                    // ---------------------------
+                    // Confirm / Cancel substitute
+                    // ---------------------------
+                    
+                    self.confirmOrCancelSubstituteForExcused(isoArray: isoArray, nameOfSub: user.firstName, eORx: eORxSelection, indexPath: indexPath)
+                }))
             }
+            
+            // -------------
+            // NO substitute
+            // -------------
+            
+            alert2.addAction(UIAlertAction(title: "None", style: .cancel, handler: { (action) in
+                
+                // This alert shows up after user taps 'none'. It allows user to confirm a lack of sub, or to cancel
+                // be sure to add this money into the family vacation budget for later
+                let alert3 = UIAlertController(title: "Job Substitute Missing", message: "You have not chosen a job substitute for \(self.currentUserName!)'s job '\(self.usersDailyJobs[indexPath.row].name)'.\n\nNobody will get paid for doing this job and it will remain undone. Are you sure you want to continue?", preferredStyle: UIAlertControllerStyle.alert)
+                alert3.addAction(UIAlertAction(title: "cancel", style: .cancel, handler: { (action) in
+                    // do nothing
+                    self.tableView.setEditing(false, animated: true)
+                    alert3.dismiss(animated: true, completion: nil)}))
+                alert3.addAction(UIAlertAction(title: "accept", style: .default, handler: { (action) in
+                    // subtract money from current user and update their income array
+                    // 1. if user had added points to their point chart for that job, delete them and their values and update income totals
+                    if !isoArray.isEmpty {
+                        self.removeSelectedItemFromPointsArrayAndUpdateIncomeArray(indexPath: indexPath, category: "daily jobs", categoryArray: self.usersDailyJobs)
+                    }
+                    
+                    // 2. ...and subtract the amount from current user's income array (note that the amount is negative)
+                    self.updateUserIncome(itemValue: -(Int(FamilyData.feeValueMultiplier * 100)))
+                    
+                    // 5. charge current user the fee (note that the amount is negative)
+                    let loseSubstitutionPoints = Points(completedEX: eORxSelection, valuePerTap: -(Int(FamilyData.feeValueMultiplier * 100)), itemName: "\(self.usersDailyJobs[indexPath.row].name)", itemCategory: "daily jobs", itemDate: Date().timeIntervalSince1970, user: self.currentUserName)
+                    Points.pointsArray.append(loseSubstitutionPoints)
+                    
+                    self.tableView.setEditing(false, animated: true)
+                    self.tableView.reloadRows(at: [indexPath], with: .automatic)
+                    
+                    alert3.dismiss(animated: true, completion: nil)}))
+                self.present(alert3, animated: true, completion: nil)}))
+            self.present(alert2, animated: true, completion: nil)}))
+        
+        // --------------------
+        // Button TWO: "cancel"
+        // --------------------
+        
+        alert.addAction(UIAlertAction(title: "cancel", style: UIAlertActionStyle.cancel , handler: { (action) in
+            alert.dismiss(animated: true, completion: nil)
+            self.tableView.setEditing(false, animated: true)
+            print("excused canceled")
         }))
-        self.present(alertX, animated: true, completion: nil)
+        self.present(alert, animated: true, completion: nil)
     }
     
     func createUnexcusedDialogue(isoArray: [Points], indexPath: IndexPath) {
-        let alert = UIAlertController(title: "Unexcused From Job", message: "\(self.currentUserName!) was NOT excused from doing the job '\(self.usersDailyJobs[indexPath.row].name)'.\n\n\(self.currentUserName!) will LOSE \(MPUser.gender(user: MPUser.currentUser).his_her.lowercased()) job bonus, PLUS \(MPUser.gender(user: MPUser.currentUser).he_she.lowercased()) will be charged a $\(FamilyData.feeValue)0 substitute fee.", preferredStyle: UIAlertControllerStyle.alert)
+        let alert = UIAlertController(title: "Unexcused From Job", message: "\(self.currentUserName!) was NOT excused from doing the job '\(self.usersDailyJobs[indexPath.row].name)'.\n\n\(self.currentUserName!) will LOSE \(MPUser.gender(user: MPUser.currentUser).his_her.lowercased()) job bonus, PLUS \(MPUser.gender(user: MPUser.currentUser).he_she.lowercased()) will be charged a $\(FamilyData.feeValueMultiplier)0 substitute fee.", preferredStyle: UIAlertControllerStyle.alert)
         
         // --------------------
         // Button ONE: "accept"
@@ -535,6 +611,7 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                 // be sure to add this money into the family vacation budget for later
                 let alert3 = UIAlertController(title: "Job Substitute Missing", message: "You have not chosen a job substitute for \(self.currentUserName)'s job '\(self.usersDailyJobs[indexPath.row].name)'.\n\nNobody will get paid for doing this job and it will remain undone. Are you sure you want to continue?", preferredStyle: UIAlertControllerStyle.alert)
                 alert3.addAction(UIAlertAction(title: "cancel", style: .cancel, handler: { (action) in
+                    self.tableView.setEditing(false, animated: true)
                     print("nobody selected as sub. canceled")
                     alert3.dismiss(animated: true, completion: nil)}))
                 alert3.addAction(UIAlertAction(title: "accept", style: .default, handler: { (action) in
@@ -556,75 +633,65 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         self.present(alert, animated: true, completion: nil)
     }
     
-    func createExcusedDialogue(isoArray: [Points], indexPath: IndexPath) {
-        let alert = UIAlertController(title: "Excused From Job", message: "\(self.currentUserName!) was excused from doing the job '\(self.usersDailyJobs[indexPath.row].name)'. \(MPUser.gender(user: MPUser.currentUser).he_she) won't lose \(MPUser.gender(user: MPUser.currentUser).his_her.lowercased()) job bonus, but \(MPUser.gender(user: MPUser.currentUser).he_she.lowercased()) WILL be charged a $\(FamilyData.feeValue)0 substitute fee.", preferredStyle: UIAlertControllerStyle.alert)
-        
-        // --------------------
-        // Button ONE: "accept"
-        // --------------------
-        
-        alert.addAction(UIAlertAction(title: "accept", style: UIAlertActionStyle.default, handler: { (action) in
-            alert.dismiss(animated: true, completion: nil)
-            print("excused accepted")
+    func alertE(indexPath: IndexPath, deselectRow: Bool) {
+        let alertE = UIAlertController(title: "Excused", message: "This job is currently excused. In order to change it, tap the 'reset' button.", preferredStyle: .alert)
+        alertE.addAction(UIAlertAction(title: "okay", style: .cancel, handler: { (action) in
+            alertE.dismiss(animated: true, completion: nil)
             
-            // -----------------
-            // Choose substitute
-            // -----------------
-            
-            let alert2 = UIAlertController(title: "Job Substitute", message: "Who was the job substitute for \(self.currentUserName!)'s job '\(self.usersDailyJobs[indexPath.row].name)'?", preferredStyle: UIAlertControllerStyle.alert)
-            for user in MPUser.usersArray {
-                alert2.addAction(UIAlertAction(title: user.firstName, style: .default, handler: { (action) in
-                    alert2.dismiss(animated: true, completion: nil)
-                    
-                    // ---------------------------
-                    // Confirm / Cancel substitute
-                    // ---------------------------
-                    
-                    self.confirmOrCancelSubstituteForExcused(isoArray: isoArray, nameOfSub: user.firstName, eORx: "E", indexPath: indexPath)
-                }))
+            // to determine whether to perform tableview animation upon alert dismissal
+            if deselectRow {
+                self.tableView.deselectRow(at: indexPath, animated: true)
+            } else {
+                //                self.tableView.setEditing(false, animated: true)
             }
-            
-            // -------------
-            // NO substitute
-            // -------------
-            
-            alert2.addAction(UIAlertAction(title: "None", style: .cancel, handler: { (action) in
-                
-                // This alert shows up after user taps 'none'. It allows user to confirm a lack of sub, or to cancel
-                // be sure to add this money into the family vacation budget for later
-                let alert3 = UIAlertController(title: "Job Substitute Missing", message: "You have not chosen a job substitute for \(self.currentUserName)'s job '\(self.usersDailyJobs[indexPath.row].name)'.\n\nNobody will get paid for doing this job and it will remain undone. Are you sure you want to continue?", preferredStyle: UIAlertControllerStyle.alert)
-                alert3.addAction(UIAlertAction(title: "cancel", style: .cancel, handler: { (action) in
-                    print("nobody selected as sub. canceled")
-                    alert3.dismiss(animated: true, completion: nil)}))
-                alert3.addAction(UIAlertAction(title: "accept", style: .default, handler: { (action) in
-                    print("nobody selected as sub. confirmed")
-                    alert3.dismiss(animated: true, completion: nil)}))
-                self.present(alert3, animated: true, completion: nil)}))
-            
-            self.present(alert2, animated: true, completion: nil)}))
-        
-        // --------------------
-        // Button TWO: "cancel"
-        // --------------------
-        
-        alert.addAction(UIAlertAction(title: "cancel", style: UIAlertActionStyle.cancel , handler: { (action) in
-            alert.dismiss(animated: true, completion: nil)
-            self.tableView.setEditing(false, animated: true)
-            print("excused canceled")
         }))
-        self.present(alert, animated: true, completion: nil)
+        self.present(alertE, animated: true, completion: nil)
+    }
+    
+    func alertX(indexPath: IndexPath, deselectRow: Bool) {
+        let alertX = UIAlertController(title: "Unexcused", message: "This job is currently unexcused. In order to change it, tap the 'reset' button.", preferredStyle: .alert)
+        alertX.addAction(UIAlertAction(title: "okay", style: .cancel, handler: { (action) in
+            alertX.dismiss(animated: true, completion: nil)
+            
+            // to determine whether to perform tableview animation upon alert dismissal
+            if deselectRow {
+                self.tableView.deselectRow(at: indexPath, animated: true)
+            } else {
+                //                self.tableView.setEditing(false, animated: true)
+            }
+        }))
+        self.present(alertX, animated: true, completion: nil)
     }
     
     func confirmOrCancelSubstituteForExcused(isoArray: [Points], nameOfSub: String, eORx: String, indexPath: IndexPath) {
         let substituteName: String = nameOfSub
-        let alert3 = UIAlertController(title: "Confirm Job Substitute", message: "You chose \(substituteName) as the job substitute for '\(self.usersDailyJobs[indexPath.row].name)'. \(substituteName) will get paid the $\(FamilyData.feeValue)0 substitute fee.\n\nDo you wish to continue?", preferredStyle: .alert)
+        let alert3 = UIAlertController(title: "Confirm Job Substitute", message: "You chose \(substituteName) as the job substitute for '\(self.usersDailyJobs[indexPath.row].name)'. \(substituteName) will get paid the $\(subFeeFormatted!) substitute fee.\n\nDo you wish to continue?", preferredStyle: .alert)
         
         // ------------------
         // Confirm substitute
         // ------------------
         
-        alert3.addAction(UIAlertAction(title: "pay \(substituteName) $\(FamilyData.feeValue)0", style: .default, handler: { (action) in
+        alert3.addAction(UIAlertAction(title: "pay \(substituteName) $\(subFeeFormatted!)", style: .default, handler: { (action) in
             alert3.dismiss(animated: true, completion: nil)
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
             
             // 1. if user had added points to their point chart for that job, delete them and their values and update income totals
             if !isoArray.isEmpty {
@@ -632,22 +699,34 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
             }
             
             // 2. ...and subtract the amount from current user's income array (note that the amount is negative)
-            self.updateUserIncome(itemValue: -(Int(FamilyData.feeValue * 100)))
+            self.updateUserIncome(itemValue: -(Int(FamilyData.feeValueMultiplier)))
             
-            // 3. pay the susbtitute the fee...
-            let earnSubstitutionPoints = Points(completedEX: "C", valuePerTap: Int(FamilyData.feeValue * 100), itemName: "\(self.usersDailyJobs[indexPath.row].name) (sub)", itemCategory: "daily jobs", itemDate: Date().timeIntervalSince1970, user: substituteName)
-            Points.pointsArray.append(earnSubstitutionPoints)
+            // 3. pay the susbtitute the substitution fee...
+            let earnedSubstitutionFee = Points(completedEX: "C", valuePerTap: Int(FamilyData.feeValueMultiplier), itemName: "\(self.usersDailyJobs[indexPath.row].name) (sub)", itemCategory: "daily jobs", itemDate: Date().timeIntervalSince1970, user: substituteName)
+            Points.pointsArray.append(earnedSubstitutionFee)
             
-            // 4. ...and update their income
-            for (index, item) in Income.currentPointsArray.enumerated() {
+            // 4. ...and pay the substitute the money for completing the job (the job value)
+            let earnedSubstitutionPoints = Points(completedEX: "C", valuePerTap: self.dailyJobsPointValue, itemName: "\(self.usersDailyJobs[indexPath.row].name) (sub)", itemCategory: "daily jobs", itemDate: Date().timeIntervalSince1970, user: substituteName)
+            Points.pointsArray.append(earnedSubstitutionPoints)
+            
+            // 5. charge current user the fee (note that the amount is negative)
+            let loseSubstitutionPoints = Points(completedEX: eORx, valuePerTap: -(Int(FamilyData.feeValueMultiplier)), itemName: "\(self.usersDailyJobs[indexPath.row].name)", itemCategory: "daily jobs", itemDate: Date().timeIntervalSince1970, user: self.currentUserName)
+            Points.pointsArray.append(loseSubstitutionPoints)
+            
+            // 6. ...and update the current users's income
+            for (index, item) in Income.currentIncomeArray.enumerated() {
                 if item.user == substituteName {
-                    Income.currentPointsArray[index].currentPoints += Int(FamilyData.feeValue * 100)
+                    Income.currentIncomeArray[index].currentPoints += Int(FamilyData.feeValueMultiplier)
                 }
             }
             
-            // 5. charge current user the fee (note that the amount is negative)
-            let loseSubstitutionPoints = Points(completedEX: eORx, valuePerTap: -(Int(FamilyData.feeValue * 100)), itemName: "\(self.usersDailyJobs[indexPath.row].name)", itemCategory: "daily jobs", itemDate: Date().timeIntervalSince1970, user: self.currentUserName)
-            Points.pointsArray.append(loseSubstitutionPoints)
+            // 7. update the current user's income label last (after all calculations are done)
+            // update user's income array & income label
+            for (incomeIndex, incomeItem) in Income.currentIncomeArray.enumerated() {
+                if incomeItem.user == self.currentUserName {
+                    self.incomeLabel.text = "$\(String(format: "%.2f", Double(Income.currentIncomeArray[incomeIndex].currentPoints) / 100))"
+                }
+            }
             
             self.tableView.setEditing(false, animated: true)
             self.tableView.reloadRows(at: [indexPath], with: .automatic)
@@ -666,27 +745,12 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         self.present(alert3, animated: true, completion: nil)
         print("\(substituteName) selected as substitute")
     }
-
-    func checkIncome() {
-        if Income.currentPointsArray.filter({ $0.user == currentUserName }).isEmpty {
-            // create a default array
-            let newUserPoints = Income(user: currentUserName, currentPoints: 0)
-            Income.currentPointsArray.append(newUserPoints)
-            incomeLabel.text = "$0.00"
-        } else {
-            for (index, item) in Income.currentPointsArray.enumerated() {
-                if item.user == currentUserName {
-                    incomeLabel.text = "$\(String(format: "%.2f", Double(Income.currentPointsArray[index].currentPoints) / 100))"
-                }
-            }
-        }
-    }
     
     func updateUserIncome(itemValue: Int) {
-        for (index, item) in Income.currentPointsArray.enumerated() {
+        for (index, item) in Income.currentIncomeArray.enumerated() {
             if item.user == currentUserName {
-                Income.currentPointsArray[index].currentPoints += itemValue
-                incomeLabel.text = "$\(String(format: "%.2f", Double(Income.currentPointsArray[index].currentPoints) / 100))"
+                Income.currentIncomeArray[index].currentPoints += itemValue
+                incomeLabel.text = "$\(String(format: "%.2f", Double(Income.currentIncomeArray[index].currentPoints) / 100))"
             }
         }
     }
@@ -703,10 +767,10 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         Points.pointsArray.append(pointsArrayItem)
         
         // // update user's income array & income label
-        for (index, item) in Income.currentPointsArray.enumerated() {
+        for (index, item) in Income.currentIncomeArray.enumerated() {
             if item.user == currentUserName {
-                Income.currentPointsArray[index].currentPoints += valuePerTap!
-                incomeLabel.text = "$\(String(format: "%.2f", Double(Income.currentPointsArray[index].currentPoints) / 100))"
+                Income.currentIncomeArray[index].currentPoints += valuePerTap!
+                incomeLabel.text = "$\(String(format: "%.2f", Double(Income.currentIncomeArray[index].currentPoints) / 100))"
             }
         }
     }
@@ -729,10 +793,10 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         Points.pointsArray.append(pointThingy)
         
         // // update user's income array & income label
-        for (index, item) in Income.currentPointsArray.enumerated() {
+        for (index, item) in Income.currentIncomeArray.enumerated() {
             if item.user == currentUserName {
-                Income.currentPointsArray[index].currentPoints += valuePerTap
-                incomeLabel.text = "$\(String(format: "%.2f", Double(Income.currentPointsArray[index].currentPoints) / 100))"
+                Income.currentIncomeArray[index].currentPoints += valuePerTap
+                incomeLabel.text = "$\(String(format: "%.2f", Double(Income.currentIncomeArray[index].currentPoints) / 100))"
             }
         }
     }
@@ -749,10 +813,10 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         Points.pointsArray.append(newItemTapped)
         
         // update user's income array & income label
-        for (index, item) in Income.currentPointsArray.enumerated() {
+        for (index, item) in Income.currentIncomeArray.enumerated() {
             if item.user == currentUserName {
-                Income.currentPointsArray[index].currentPoints += weeklyJobsPointValue
-                incomeLabel.text = "$\(String(format: "%.2f", Double(Income.currentPointsArray[index].currentPoints) / 100))"
+                Income.currentIncomeArray[index].currentPoints += weeklyJobsPointValue
+                incomeLabel.text = "$\(String(format: "%.2f", Double(Income.currentIncomeArray[index].currentPoints) / 100))"
             }
         }
     }
@@ -768,10 +832,10 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                 Points.pointsArray.remove(at: pointsIndex)
                 
                 // update user's income array & income label
-                for (incomeIndex, incomeItem) in Income.currentPointsArray.enumerated() {
+                for (incomeIndex, incomeItem) in Income.currentIncomeArray.enumerated() {
                     if incomeItem.user == self.currentUserName {
-                        Income.currentPointsArray[incomeIndex].currentPoints -= pointsItem.valuePerTap
-                        self.incomeLabel.text = "$\(String(format: "%.2f", Double(Income.currentPointsArray[incomeIndex].currentPoints) / 100))"
+                        Income.currentIncomeArray[incomeIndex].currentPoints -= pointsItem.valuePerTap
+                        self.incomeLabel.text = "$\(String(format: "%.2f", Double(Income.currentIncomeArray[incomeIndex].currentPoints) / 100))"
                     }
                 }
                 tableView.setEditing(false, animated: true)
@@ -781,29 +845,6 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                 // print("item at \(pointsIndex) NOT updated")
             }
         }
-    }
-    
-    // Alert Template
-    func subConfirmAlert(alertTitle: String, alertMessage: String, substitute: String) {
-        let alert = UIAlertController(title: alertTitle, message: alertMessage, preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "pay \(substitute) $\(FamilyData.feeValue)0", style: .default, handler: { (action) in
-            alert.dismiss(animated: true, completion: nil)
-            // need to enter code here. add a new Points transaction for 'substitute' and remove points from current user (update user's points array, and income array and tableview)
-            
-            // add points item for 'substitute' 
-            for (pointsIndex, pointsItem) in Points.pointsArray.enumerated() {
-                if pointsItem.user == substitute {
-                    let substitutionPoints = Points(completedEX: "C", valuePerTap: Int(FamilyData.feeValue * 100), itemName: "blah", itemCategory: "blah", itemDate: 2017, user: substitute)
-                }
-            }
-            print("\(substitute) confirmed as substitute")
-        }))
-        alert.addAction(UIAlertAction(title: "cancel", style: .cancel, handler: { (action) in
-            alert.dismiss(animated: true, completion: nil)
-            self.tableView.setEditing(false, animated: true)
-            print("canceled")
-        }))
-        self.present(alert, animated: true, completion: nil)
     }
     
     // ----------
@@ -843,15 +884,6 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
             if day < 1 { return "\(abs(day)) days ago" }
             else { return "In \(day) days" }
         }
-    }
-}
-
-extension UIAlertController {
-    func shake(completion: ((Bool) -> Void)? = nil) {
-        self.view.subviews[0].transform = CGAffineTransform(translationX: 20, y: 0)
-        UIView.animate(withDuration: 0.4, delay: 0, usingSpringWithDamping: 0.2, initialSpringVelocity: 1, options: .curveEaseInOut, animations: {
-            self.view.subviews[0].transform = CGAffineTransform.identity
-        }, completion: completion)
     }
 }
 

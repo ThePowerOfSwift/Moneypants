@@ -57,14 +57,12 @@ class LoadingVC: UIViewController {
                                                 self.progressView.setProgress(1.0, animated: true)
                                                 print("10. BUDGETS",Budget.budgetsArray.count)
                                                 
-                                                self.activityIndicator.stopAnimating()
-                                                self.activityIndicator.hidesWhenStopped = true
-                                                
                                                 // if user has completed setup, go to home page
                                                 if FamilyData.setupProgress == 11 {
+                                                    self.activityIndicator.stopAnimating()
+                                                    self.activityIndicator.hidesWhenStopped = true
                                                     print("user has completed setup. Loading home page...")
-                                                    self.updateIncome()
-                                                    self.calculateFeeValue()
+                                                    self.updateFamilyDataNumbers()
                                                     self.performSegue(withIdentifier: "Home", sender: self)
                                                 } else {
                                                     self.performSegue(withIdentifier: "GoToStep1EnterIncome", sender: self)
@@ -81,8 +79,7 @@ class LoadingVC: UIViewController {
         }
     }
     
-    
-    func updateIncome() {
+    func updateFamilyDataNumbers() {
         var censusKidsMultiplier: Double = 0
         // get secret formula %
         let secretFormula = ((5.23788 * pow(0.972976, Double(FamilyData.yearlyIncome) / 1000) + 1.56139) / 100) as Double
@@ -100,11 +97,6 @@ class LoadingVC: UIViewController {
         // these two values are basis for all the family points
         FamilyData.adjustedNatlAvgYrlySpendingEntireFam = Int(natlAvgYearlySpendingPerKid * censusKidsMultiplier * Double(MPUser.usersArray.count))
         FamilyData.adjustedNatlAvgYrlySpendingPerKid = Int(natlAvgYearlySpendingPerKid * censusKidsMultiplier)
-    }
-    
-    func calculateFeeValue() {
-        // round to nearest $0.50
-        FamilyData.feeValue = round(Double(FamilyData.adjustedNatlAvgYrlySpendingPerKid) * 0.001 / 0.5) * 0.5
-        print(FamilyData.feeValue)
+        FamilyData.feeValueMultiplier = Int(Double(FamilyData.adjustedNatlAvgYrlySpendingPerKid / 52) * 0.20 / 7 * 100)
     }
 }

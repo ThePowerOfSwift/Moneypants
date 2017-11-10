@@ -25,10 +25,10 @@ class HomeVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UITa
     
     func checkForIncome() {
         for user in MPUser.usersArray {
-            let temp = Income.currentPointsArray.filter({ $0.user == user.firstName })
+            let temp = Income.currentIncomeArray.filter({ $0.user == user.firstName })
             if temp.isEmpty {
                 let newUser = Income(user: user.firstName, currentPoints: 0)
-                Income.currentPointsArray.append(newUser)
+                Income.currentIncomeArray.append(newUser)
             } else {
                 print("\(user.firstName) already has income")
             }
@@ -49,7 +49,7 @@ class HomeVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UITa
         cell.userImage.image = MPUser.usersArray[indexPath.row].photo
         
         // WORKS but with odd delay on tableview refresh
-        let currentUser = Income.currentPointsArray.filter({ $0.user == cell.userName.text })
+        let currentUser = Income.currentIncomeArray.filter({ $0.user == cell.userName.text })
 //        cell.userIncome.text = "\(currentUser[0].currentPoints)"
         
         
