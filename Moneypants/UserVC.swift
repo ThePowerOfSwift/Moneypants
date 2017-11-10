@@ -476,6 +476,8 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         }))
         // Button TWO: "cancel", and send user back to home page
         alert.addAction(UIAlertAction(title: "cancel", style: .cancel, handler: {_ in
+            self.tableView.setEditing(false, animated: true)
+
             //                            alert.dismiss(animated: true, completion: nil)
         }))
         
@@ -674,54 +676,80 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         alert3.addAction(UIAlertAction(title: "pay \(substituteName) $\(subFeeFormatted!)", style: .default, handler: { (action) in
             alert3.dismiss(animated: true, completion: nil)
             
+            // -------------------------------------------------------------------------------------------
+            // 1. subtract existing job from Points array AND Income array (if user already "completed" it
+            // -------------------------------------------------------------------------------------------
             
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            // 1. if user had added points to their point chart for that job, delete them and their values and update income totals
             if !isoArray.isEmpty {
-                self.removeSelectedItemFromPointsArrayAndUpdateIncomeArray(indexPath: indexPath, category: "daily jobs", categoryArray: self.usersDailyJobs)
-            }
-            
-            // 2. ...and subtract the amount from current user's income array (note that the amount is negative)
-            self.updateUserIncome(itemValue: -(Int(FamilyData.feeValueMultiplier)))
-            
-            // 3. pay the susbtitute the substitution fee...
-            let earnedSubstitutionFee = Points(completedEX: "C", valuePerTap: Int(FamilyData.feeValueMultiplier), itemName: "\(self.usersDailyJobs[indexPath.row].name) (sub)", itemCategory: "daily jobs", itemDate: Date().timeIntervalSince1970, user: substituteName)
-            Points.pointsArray.append(earnedSubstitutionFee)
-            
-            // 4. ...and pay the substitute the money for completing the job (the job value)
-            let earnedSubstitutionPoints = Points(completedEX: "C", valuePerTap: self.dailyJobsPointValue, itemName: "\(self.usersDailyJobs[indexPath.row].name) (sub)", itemCategory: "daily jobs", itemDate: Date().timeIntervalSince1970, user: substituteName)
-            Points.pointsArray.append(earnedSubstitutionPoints)
-            
-            // 5. charge current user the fee (note that the amount is negative)
-            let loseSubstitutionPoints = Points(completedEX: eORx, valuePerTap: -(Int(FamilyData.feeValueMultiplier)), itemName: "\(self.usersDailyJobs[indexPath.row].name)", itemCategory: "daily jobs", itemDate: Date().timeIntervalSince1970, user: self.currentUserName)
-            Points.pointsArray.append(loseSubstitutionPoints)
-            
-            // 6. ...and update the current users's income
-            for (index, item) in Income.currentIncomeArray.enumerated() {
-                if item.user == substituteName {
-                    Income.currentIncomeArray[index].currentPoints += Int(FamilyData.feeValueMultiplier)
+                for (pointsIndex, pointsItem) in Points.pointsArray.enumerated() {
+                    if pointsItem.user == self.currentUserName && pointsItem.itemCategory == "daily jobs" && pointsItem.itemName == isoArray[0].itemName && Calendar.current.isDateInToday(Date(timeIntervalSince1970: isoArray[0].itemDate)) {
+                        
+                        // remove item from points array
+                        Points.pointsArray.remove(at: pointsIndex)
+                        
+                        // subtract from user's income array
+                        for (incomeIndex, incomeItem) in Income.currentIncomeArray.enumerated() {
+                            if incomeItem.user == self.currentUserName {
+                                Income.currentIncomeArray[incomeIndex].currentPoints -= pointsItem.valuePerTap
+//                                self.incomeLabel.text = "$\(String(format: "%.2f", Double(Income.currentIncomeArray[incomeIndex].currentPoints) / 100))"
+                            }
+                        }
+                        self.tableView.setEditing(false, animated: true)
+                        self.tableView.reloadRows(at: [indexPath], with: .automatic)
+                    }
                 }
             }
             
-            // 7. update the current user's income label last (after all calculations are done)
-            // update user's income array & income label
+            // -------------------------------------------------------------------
+            // 2. charge current user the sub fee in Income array AND Points array
+            // -------------------------------------------------------------------
+            
+            // subtract from income array
+            for (incomeIndex, incomeItem) in Income.currentIncomeArray.enumerated() {
+                if incomeItem.user == self.currentUserName {
+                    Income.currentIncomeArray[incomeIndex].currentPoints -= self.substituteFee
+//                    self.incomeLabel.text = "$\(String(format: "%.2f", Double(Income.currentIncomeArray[index].currentPoints) / 100))"
+                }
+            }
+            
+            // create charge in points array
+            let loseSubstitutionPoints = Points(completedEX: "E", valuePerTap: -(self.substituteFee), itemName: "\(self.usersDailyJobs[indexPath.row].name)", itemCategory: "daily jobs", itemDate: Date().timeIntervalSince1970, user: self.currentUserName)
+            Points.pointsArray.append(loseSubstitutionPoints)
+            
+            // ---------------------------------------------------------------------------
+            // 3. pay the susbtitute the substitution fee in Income array AND Points array
+            // ---------------------------------------------------------------------------
+            
+            // add fee to substitute's Points array
+            let earnedSubstitutionFee = Points(completedEX: "C", valuePerTap: self.substituteFee, itemName: "\(self.usersDailyJobs[indexPath.row].name) (sub)", itemCategory: "daily jobs", itemDate: Date().timeIntervalSince1970, user: substituteName)
+            Points.pointsArray.append(earnedSubstitutionFee)
+            
+            // add fee to Income array at substitute's index
+            for (incomeIndex, incomeItem) in Income.currentIncomeArray.enumerated() {
+                if incomeItem.user == substituteName {
+                    Income.currentIncomeArray[incomeIndex].currentPoints += self.substituteFee
+                }
+            }
+            
+            // -----------------------------------------------------------------------------
+            // 4. pay the susbtitute for completing the job in Income array AND Points array
+            // -----------------------------------------------------------------------------
+            
+            // pay sub for job in Points array
+            let earnedSubstitutionPoints = Points(completedEX: "C", valuePerTap: self.dailyJobsPointValue, itemName: "\(self.usersDailyJobs[indexPath.row].name) (sub)", itemCategory: "daily jobs", itemDate: Date().timeIntervalSince1970, user: substituteName)
+            Points.pointsArray.append(earnedSubstitutionPoints)
+            
+            // pay sub for job in Income array
+            for (incomeIndex, incomeItem) in Income.currentIncomeArray.enumerated() {
+                if incomeItem.user == substituteName {
+                    Income.currentIncomeArray[incomeIndex].currentPoints += self.dailyJobsPointValue
+                }
+            }
+            
+            // --------------------------------------------------------------------------------
+            // 5. update the current user's income label last (after all calculations are done)
+            // --------------------------------------------------------------------------------
+            
             for (incomeIndex, incomeItem) in Income.currentIncomeArray.enumerated() {
                 if incomeItem.user == self.currentUserName {
                     self.incomeLabel.text = "$\(String(format: "%.2f", Double(Income.currentIncomeArray[incomeIndex].currentPoints) / 100))"
@@ -731,6 +759,10 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
             self.tableView.setEditing(false, animated: true)
             self.tableView.reloadRows(at: [indexPath], with: .automatic)
             print("\(substituteName) confirmed as substitute")
+            
+            print(Income.currentIncomeArray)
+            print(Points.pointsArray)
+            
         }))
         
         // -----------------
