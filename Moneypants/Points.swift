@@ -1,12 +1,12 @@
 import Foundation
 
 struct Points {
-    var completedEX: String
-    var valuePerTap: Int
+    var user: String
     var itemName: String
     var itemCategory: String
+    var completedEX: String
+    var valuePerTap: Int
     var itemDate: Double
-    var user: String
     
     static var pointsArray = [Points]()
     

@@ -79,11 +79,11 @@ class HomeVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UITa
     }
     
     @IBAction func printIncomeButtonTapped(_ sender: UIBarButtonItem) {
-        print(Income.currentIncomeArray)
+        print("\nINCOME:\n\n",Income.currentIncomeArray)
     }
     
     @IBAction func printPointsButtonTapped(_ sender: UIBarButtonItem) {
-        print(Points.pointsArray)
+        print("\nPOINTS:\n\n",Points.pointsArray)
     }
     
     
