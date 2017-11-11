@@ -77,13 +77,7 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     // ----------
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        // create array to isolate
-        let subJobsArray = Points.pointsArray.filter({ $0.user == currentUserName && $0.completedEX == "S" && Calendar.current.isDateInToday(Date(timeIntervalSince1970: $0.itemDate)) })
-        if subJobsArray.isEmpty {
-            return 4
-        } else {
-            return 5
-        }
+        return 5
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -98,9 +92,9 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         } else if section == 2 {
             return userWeeklyJobs.count
         } else if section == 3 {
-            return 2
-        } else {
             return subJobsArray.count
+        } else {
+            return 2
         }
     }
     
@@ -112,9 +106,9 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         } else if section == 2 {
             return "weekly jobs"
         } else if section == 3 {
-            return "fees & withdrawals"
+            return "other jobs"
         } else {
-            return "other"
+            return "fees & withdrawals"
         }
     }
     
@@ -124,6 +118,16 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         header.textLabel?.textColor = UIColor.white
         header.textLabel?.textAlignment = .center
         header.contentView.backgroundColor = UIColor(white: 0.5, alpha: 1.0)
+    }
+    
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        // create array to isolate
+        let subJobsArray = Points.pointsArray.filter({ $0.user == currentUserName && $0.completedEX == "S" && Calendar.current.isDateInToday(Date(timeIntervalSince1970: $0.itemDate)) })
+        if section == 3 && subJobsArray.isEmpty {
+            return 0
+        } else {
+            return 28
+        }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -155,9 +159,9 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                 }
             }
             
-            // ------------
-            // daily habits
-            // ------------
+        // ------------
+        // daily habits
+        // ------------
             
         } else if indexPath.section == 1 {
             // get an array of this user in this category for this item on this day.
@@ -185,9 +189,9 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                 }
             }
             
-            // -----------
-            // weekly jobs
-            // -----------
+        // -----------
+        // weekly jobs
+        // -----------
             
         } else if indexPath.section == 2 {
             // get an array of this user in this category for this item on this day.
@@ -211,11 +215,22 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                 }
             }
             
-            // ------------------
-            // fees & withdrawals
-            // ------------------
+        // -----
+        // other
+        // -----
             
         } else if indexPath.section == 3 {
+            let subJobsArray = Points.pointsArray.filter({ $0.user == currentUserName && $0.completedEX == "S" && Calendar.current.isDateInToday(Date(timeIntervalSince1970: $0.itemDate)) })
+            cell.jobHabitLabel.text = subJobsArray[indexPath.row].itemName
+            cell.jobHabitLabel.textColor = .lightGray
+            cell.pointsLabel.text = "\(subJobsArray[indexPath.row].valuePerTap)"
+            cell.selectionBoxImageView.image = UIImage(named: "checkmark white")
+            
+        // ------------------
+        // fees & withdrawals
+        // ------------------
+            
+        } else if indexPath.section == 4 {
             // get an array of this user in this category for this item on this day.
             let currentUserCategoryItemDateArray = Points.pointsArray.filter({ $0.user == currentUserName && $0.itemCategory == "fees & withdrawals" && $0.itemName == usersWeeklyJobs?[indexPath.row].name && Calendar.current.isDateInToday(Date(timeIntervalSince1970: $0.itemDate)) })
             
@@ -237,16 +252,6 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                     cell.selectionBoxImageView.image = UIImage(named: "E gray")
                 }
             }
-            
-            // -----
-            // other
-            // -----
-            
-        } else if indexPath.section == 4 {
-            let subJobsArray = Points.pointsArray.filter({ $0.user == currentUserName && $0.completedEX == "S" && Calendar.current.isDateInToday(Date(timeIntervalSince1970: $0.itemDate)) })
-            cell.jobHabitLabel.text = subJobsArray[indexPath.row].itemName
-            cell.jobHabitLabel.textColor = .lightGray
-            cell.selectionBoxImageView.image = UIImage(named: "checkmark white")
         }
         return cell
     }
@@ -310,29 +315,29 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
             }
         }
         
+        // -----
+        // other
+        // -----
+        
+        if indexPath.section == 3 {
+            tableView.deselectRow(at: indexPath, animated: true)
+        }
+        
         // ------------------
         // fees & withdrawals
         // ------------------
         
-        if indexPath.section == 3 {
+        if indexPath.section == 4 {
             if indexPath.row == 0 {
                 performSegue(withIdentifier: "FeesDetailSegue", sender: self)
             } else {
                 performSegue(withIdentifier: "DebtsDetailSegue", sender: self)
             }
         }
-        
-        // -----
-        // other
-        // -----
-        
-        if indexPath.section == 4 {
-            tableView.deselectRow(at: indexPath, animated: true)
-        }
     }
     
     func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        // disable editing for 'fees and withdrawals' and 'other'
+        // disable editing for 'fees and withdrawals' and 'other jobs'
         if indexPath.section == 3 || indexPath.section == 4 {
             return false
         } else {
@@ -703,18 +708,23 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     func confirmOrCancelSubstitute(isoArray: [Points], nameOfSub: String, eORx: String, indexPath: IndexPath) {
         let substituteName: String = nameOfSub
-        let alert3 = UIAlertController(title: "Confirm Job Substitute", message: "\(substituteName) was the job substitute for '\(self.usersDailyJobs[indexPath.row].name)' and has completed the job. \(substituteName) earned the $\(subFeeFormatted!) substitute fee.\n\nDo you wish to continue?", preferredStyle: .alert)
+        let substituteSubtotal = substituteFee + dailyJobsPointValue
+
+        let dailyJobsPointsFormatter = String(format: "%.2f", Double(dailyJobsPointValue) / 100)
+        let susbtituteSubtotalFormatted = String(format: "%.2f", Double(substituteSubtotal) / 100)
+        
+        let alert3 = UIAlertController(title: "Confirm Job Substitute", message: "\(substituteName) was the job substitute for '\(self.usersDailyJobs[indexPath.row].name)'. \(substituteName) earned the $\(subFeeFormatted!) substitute fee plus $\(dailyJobsPointsFormatter) for completing the job.\n\nDo you wish to continue?", preferredStyle: .alert)
         
         // ------------------
         // Confirm substitute
         // ------------------
         
-        alert3.addAction(UIAlertAction(title: "pay \(substituteName) $\(subFeeFormatted!)", style: .default, handler: { (action) in
+        alert3.addAction(UIAlertAction(title: "pay \(substituteName) $\(susbtituteSubtotalFormatted)", style: .default, handler: { (action) in
             alert3.dismiss(animated: true, completion: nil)
             
-            // ----------------------------------------------------------------------------------------------------------------
-            // 1. subtract existing job from Points array AND Income array (if user already erroneously marked it as "complete"
-            // ----------------------------------------------------------------------------------------------------------------
+            // -----------------------------------------------------------------------------------------------------------------
+            // 1. subtract existing job from Points array AND Income array (if user already erroneously marked it as "complete")
+            // -----------------------------------------------------------------------------------------------------------------
             
             if !isoArray.isEmpty {
                 for (pointsIndex, pointsItem) in Points.pointsArray.enumerated() {
