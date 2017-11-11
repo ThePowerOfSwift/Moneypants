@@ -4,7 +4,7 @@ struct Points {
     var user: String
     var itemName: String
     var itemCategory: String
-    var completedEX: String
+    var codeCEXSN: String
     var valuePerTap: Int
     var itemDate: Double
     
