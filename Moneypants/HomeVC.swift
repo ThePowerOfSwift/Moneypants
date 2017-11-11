@@ -77,6 +77,16 @@ class HomeVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UITa
         imageView.contentMode = .scaleAspectFit
         navigationItem.titleView = imageView
     }
+    
+    @IBAction func printIncomeButtonTapped(_ sender: UIBarButtonItem) {
+        print(Income.currentIncomeArray)
+    }
+    
+    @IBAction func printPointsButtonTapped(_ sender: UIBarButtonItem) {
+        print(Points.pointsArray)
+    }
+    
+    
 }
 
 
