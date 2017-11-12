@@ -443,35 +443,11 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
             let notDoneAction = UITableViewRowAction(style: .default, title: "         ", handler: { (action, indexPath) in
                 if isoArrayForItem.isEmpty {
                     // if array is empty, create new array item with "N" and value of "0"
-                    let undoneHabit = Points(user: self.currentUserName, itemName: self.usersDailyHabits[indexPath.row].name, itemCategory: "daily habits", codeCEXSN: "N", valuePerTap: 0, itemDate: Date().timeIntervalSince1970)
-                    Points.pointsArray.append(undoneHabit)
-                    tableView.setEditing(false, animated: true)
-                    tableView.reloadRows(at: [indexPath], with: .automatic)
+                    self.createNewArrayItemWithValueOfZero(indexPath: indexPath)
                 } else {
                     if isoArrayForItem.first?.codeCEXSN == "C" {
-                        // if array is not empty, subtract "value per tap" from income array (at user's index) and delete the item from the array, then update user's income label
-                        for (pointsIndex, pointsItem) in Points.pointsArray.enumerated() {
-                            if pointsItem.user == self.currentUserName && pointsItem.itemCategory == "daily habits" && pointsItem.itemName == isoArrayForItem.first?.itemName && Calendar.current.isDateInToday(Date(timeIntervalSince1970: (isoArrayForItem.first?.itemDate)!)) {
-                                
-                                // remove item from points array
-                                // Points.pointsArray.remove(at: pointsIndex)
-                                
-                                // update item in points array
-                                Points.pointsArray[pointsIndex].codeCEXSN = "N"
-                                
-                                // update user's income array & income label
-                                for (incomeIndex, incomeItem) in Income.currentIncomeArray.enumerated() {
-                                    if incomeItem.user == self.currentUserName {
-                                        Income.currentIncomeArray[incomeIndex].currentPoints -= pointsItem.valuePerTap
-                                        self.incomeLabel.text = "$\(String(format: "%.2f", Double(Income.currentIncomeArray[incomeIndex].currentPoints) / 100))"
-                                    }
-                                }
-                                tableView.setEditing(false, animated: true)
-                                tableView.reloadRows(at: [indexPath], with: .automatic)
-                            }
-                        }
+                        self.deleteItemFromArrayAndUpdateIncomeArrayAndLabel(isoArray: isoArrayForItem, indexPath: indexPath)
                     } else if isoArrayForItem.first?.codeCEXSN == "N" {
-                        // if array is already marked 'not done', give user alert and refer them to the reset button
                         self.alertN(indexPath: indexPath, deselectRow: false)
                     }
                 }
@@ -483,57 +459,14 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
             
             let resetAction = UITableViewRowAction(style: .default, title: "         ", handler: { (action, indexPath) in
                 // check to see if iso array is empty. If so, don't let user reset anything (b/c it will crash the app)
-                // get an array of this user in this category for this item on this day (should be single item)
                 if isoArrayForItem.isEmpty {
-                    print("array is empty. resetting tableview to normal...")
                     // do nothing
                     tableView.setEditing(false, animated: true)
                 } else {
                     if isoArrayForItem.first?.codeCEXSN == "N" {
-                        let alert = UIAlertController(title: "Parental Passcode Required", message: "You must enter a parental passcode to override a habit that's been marked 'not done'.", preferredStyle: .alert)
-                        alert.addTextField(configurationHandler: { (textField) in
-                            textField.placeholder = "enter passcode"
-                            textField.isSecureTextEntry = true
-                        })
-                        alert.addAction(UIAlertAction(title: "okay", style: UIAlertActionStyle.default , handler: { (action) in
-                            // get passcodes for just parents, no kids
-                            let parentalArray = MPUser.usersArray.filter({ $0.childParent == "parent" })
-                            if parentalArray.contains(where: { "\($0.passcode)" == alert.textFields![0].text }) {
-                                
-                                // if array is not empty, delete the item from the array
-                                for (pointsIndex, pointsItem) in Points.pointsArray.enumerated() {
-                                    if pointsItem.user == self.currentUserName && pointsItem.itemCategory == "daily habits" && pointsItem.itemName == isoArrayForItem.first?.itemName && Calendar.current.isDateInToday(Date(timeIntervalSince1970: (isoArrayForItem.first?.itemDate)!)) {
-                                        
-                                        // remove item from points array (no need to do anything else: value was already zero)
-                                        Points.pointsArray.remove(at: pointsIndex)
-                                        
-                                        // update tableview
-                                        tableView.setEditing(false, animated: true)
-                                        tableView.reloadRows(at: [indexPath], with: .automatic)
-                                    }
-                                }
-                            } else {
-                                self.incorrectPasscodeAlert()
-                            }
-                        }))
-                        // Button TWO: "cancel", reset table to normal
-                        alert.addAction(UIAlertAction(title: "cancel", style: .cancel, handler: {_ in
-                            self.tableView.setEditing(false, animated: true)
-                        }))
-                        self.present(alert, animated: true, completion: nil)
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        print("array has gray 'X'. requires parental password to reset.")
-                        // change poinst array to "nothing"
+                        self.getParentalPasscodeThenResetItemToZero(isoArray: isoArrayForItem, indexPath: indexPath)
                     } else {
+                        // change poinst array to "nothing"
                         print("array has checkmark. requires parental password to reset.")
                         self.removeSelectedItemFromPointsArrayAndUpdateIncomeArray(indexPath: indexPath, category: "daily habits", categoryArray: self.usersDailyHabits)
                     }
@@ -558,6 +491,68 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     // ---------
     // Functions
     // ---------
+    
+    func deleteItemFromArrayAndUpdateIncomeArrayAndLabel(isoArray: [Points], indexPath: IndexPath) {
+        // if array is not empty, subtract "value per tap" from income array (at user's index) and delete the item from the array, then update user's income label
+        for (pointsIndex, pointsItem) in Points.pointsArray.enumerated() {
+            if pointsItem.user == self.currentUserName && pointsItem.itemCategory == "daily habits" && pointsItem.itemName == isoArray.first?.itemName && Calendar.current.isDateInToday(Date(timeIntervalSince1970: (isoArray.first?.itemDate)!)) {
+                
+                // update item in points array
+                Points.pointsArray[pointsIndex].codeCEXSN = "N"
+                
+                // update user's income array & income label
+                for (incomeIndex, incomeItem) in Income.currentIncomeArray.enumerated() {
+                    if incomeItem.user == self.currentUserName {
+                        Income.currentIncomeArray[incomeIndex].currentPoints -= pointsItem.valuePerTap
+                        self.incomeLabel.text = "$\(String(format: "%.2f", Double(Income.currentIncomeArray[incomeIndex].currentPoints) / 100))"
+                    }
+                }
+                tableView.setEditing(false, animated: true)
+                tableView.reloadRows(at: [indexPath], with: .automatic)
+            }
+        }
+    }
+    
+    func createNewArrayItemWithValueOfZero(indexPath: IndexPath) {
+        let undoneHabit = Points(user: self.currentUserName, itemName: self.usersDailyHabits[indexPath.row].name, itemCategory: "daily habits", codeCEXSN: "N", valuePerTap: 0, itemDate: Date().timeIntervalSince1970)
+        Points.pointsArray.append(undoneHabit)
+        tableView.setEditing(false, animated: true)
+        tableView.reloadRows(at: [indexPath], with: .automatic)
+    }
+    
+    func getParentalPasscodeThenResetItemToZero(isoArray: [Points], indexPath: IndexPath) {
+        let alert = UIAlertController(title: "Parental Passcode Required", message: "You must enter a parental passcode to override a habit that's been marked 'not done'.", preferredStyle: .alert)
+        alert.addTextField(configurationHandler: { (textField) in
+            textField.placeholder = "enter passcode"
+            textField.isSecureTextEntry = true
+        })
+        alert.addAction(UIAlertAction(title: "okay", style: UIAlertActionStyle.default , handler: { (action) in
+            // get passcodes for just parents, no kids
+            let parentalArray = MPUser.usersArray.filter({ $0.childParent == "parent" })
+            if parentalArray.contains(where: { "\($0.passcode)" == alert.textFields![0].text }) {
+                
+                // if array is not empty, delete the item from the array
+                for (pointsIndex, pointsItem) in Points.pointsArray.enumerated() {
+                    if pointsItem.user == self.currentUserName && pointsItem.itemCategory == "daily habits" && pointsItem.itemName == isoArray.first?.itemName && Calendar.current.isDateInToday(Date(timeIntervalSince1970: (isoArray.first?.itemDate)!)) {
+                        
+                        // remove item from points array (no need to do anything else: value was already zero)
+                        Points.pointsArray.remove(at: pointsIndex)
+                        
+                        // update tableview
+                        self.tableView.setEditing(false, animated: true)
+                        self.tableView.reloadRows(at: [indexPath], with: .automatic)
+                    }
+                }
+            } else {
+                self.incorrectPasscodeAlert()
+            }
+        }))
+        // Button TWO: "cancel", reset table to normal
+        alert.addAction(UIAlertAction(title: "cancel", style: .cancel, handler: {_ in
+            self.tableView.setEditing(false, animated: true)
+        }))
+        self.present(alert, animated: true, completion: nil)
+    }
     
     func checkIncome() {
         if Income.currentIncomeArray.filter({ $0.user == currentUserName }).isEmpty {
@@ -820,7 +815,7 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     }
     
     func alertN(indexPath: IndexPath, deselectRow: Bool) {
-        let alertN = UIAlertController(title: "Not Done", message: "This job is currently marked as 'not done'. In order to change it, tap the 'reset' button.", preferredStyle: .alert)
+        let alertN = UIAlertController(title: "Not Done", message: "This habit is currently marked as 'not done'. In order to change it, tap the 'reset' button.", preferredStyle: .alert)
         alertN.addAction(UIAlertAction(title: "okay", style: .cancel, handler: { (action) in
             alertN.dismiss(animated: true, completion: nil)
             // to determine whether to perform tableview animation upon alert dismissal
