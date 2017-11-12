@@ -507,24 +507,41 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
             let parentalArray = MPUser.usersArray.filter({ $0.childParent == "parent" })
             if parentalArray.contains(where: { "\($0.passcode)" == alert.textFields![0].text }) {
                 
-                // create array to isolate selected item
-                let isoArrayForItem = Points.pointsArray.filter({ $0.user == self.currentUserName && $0.itemCategory == "daily jobs" && $0.itemName == self.usersDailyJobs[indexPath.row].name && Calendar.current.isDateInToday(Date(timeIntervalSince1970: $0.itemDate)) })
+                // once parental password is confirmed, simply do 2 things: remove current user's 'E' or 'X' fee, and remove sub's 'S' fee
+                // then update Points array, update Income array, then update current user's label (and remove row from table if user was their own sub)
                 
+                // create array to isolate selected item (for current user, this category, this job name, on this date)
+                // NOTE: 'Calendar.current' automatically determines local time zone (no need to setup time zone properties if calling 'Calendar.current')
+                let isoArrayForItem = Points.pointsArray.filter({ $0.user == self.currentUserName && $0.itemCategory == "daily jobs" && $0.itemName == self.usersDailyJobs[indexPath.row].name && Calendar.current.isDateInToday(Date(timeIntervalSince1970: $0.itemDate)) })
+
+                // -------------------------------
+                // 1. remove item for current user
+                // -------------------------------
                 
                 for (pointsIndex, pointsItem) in Points.pointsArray.enumerated() {
                     if pointsItem.user == self.currentUserName && pointsItem.itemCategory == "daily jobs" && pointsItem.itemName == isoArrayForItem[0].itemName && Calendar.current.isDateInToday(Date(timeIntervalSince1970: pointsItem.itemDate)) {
                         
-                        // remove item from points array
+                        // ------------------------------------------------
+                        // 1A. remove current user's item from points array
+                        // ------------------------------------------------
+                        
                         Points.pointsArray.remove(at: pointsIndex)
                         
-                        // update user's income array
+                        
+                        // --------------------------------------
+                        // 1B. update current user's income array
+                        // --------------------------------------
+                        
                         for (incomeIndex, incomeItem) in Income.currentIncomeArray.enumerated() {
                             if incomeItem.user == self.currentUserName {
                                 Income.currentIncomeArray[incomeIndex].currentPoints -= pointsItem.valuePerTap
                             }
                         }
                         
-                        // update user's income label
+                        // --------------------------------------
+                        // 1C. update current user's income label
+                        // --------------------------------------
+                        
                         for (incomeIndex, incomeItem) in Income.currentIncomeArray.enumerated() {
                             if incomeItem.user == self.currentUserName {
                                 self.incomeLabel.text = "$\(String(format: "%.2f", Double(Income.currentIncomeArray[incomeIndex].currentPoints) / 100))"
@@ -536,35 +553,54 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                     }
                 }
                 
-                // find the daily job with that name on that day for current user and remove it
-                self.removeSelectedItemFromPointsArrayAndUpdateIncomeArray(indexPath: indexPath, category: "daily jobs", categoryArray: self.usersDailyJobs)
+                // -----------------------------
+                // 2. remove item for substitute
+                // -----------------------------
                 
-                // remove job substitute daily job
-                for (pointsIndex, pointsItem) in Points.pointsArray.enumerated() {
-                    if pointsItem.itemCategory == "daily jobs" && pointsItem.itemName == "\((self.usersDailyJobs?[indexPath.row].name)!) (sub)" && Calendar.current.isDateInToday(Date(timeIntervalSince1970: pointsItem.itemDate)) {
+                var substituteName: String!
+                var substituteValue: Int!
+                // iterate over array to find item with code 'S' in current category with 'sub' in job name on this date (b/c there can only be one daily job with that name that has a sub)
+                for (pointsIndex2, pointsItem2) in Points.pointsArray.enumerated() {
+                    if pointsItem2.codeCEXSN == "S" && pointsItem2.itemCategory == "daily jobs" && pointsItem2.itemName == "\(self.usersDailyJobs[indexPath.row].name) (sub)" && Calendar.current.isDateInToday(Date(timeIntervalSince1970: pointsItem2.itemDate)) {
                         
-                        // find name of substitute before deleting item
-                        let substituteName = Points.pointsArray[pointsIndex].user
-                        Points.pointsArray.remove(at: pointsIndex)
+                        // get sub's name before deleting array item (for later use)
+                        // also get the amount the sub was paid (to subtract from the income array)
+                        substituteName = Points.pointsArray[pointsIndex2].user
+                        substituteValue = Points.pointsArray[pointsIndex2].valuePerTap
                         
-                        // update substitute's income array
-                        for (incomeIndex, incomeItem) in Income.currentIncomeArray.enumerated() {
-                            if incomeItem.user == substituteName {
-                                Income.currentIncomeArray[incomeIndex].currentPoints -= pointsItem.valuePerTap
-                            }
-                        }
+                        // ----------------------------------------------
+                        // 2A. remove substitute's item from points array
+                        // ----------------------------------------------
+                        
+                        Points.pointsArray.remove(at: pointsIndex2)
+                        
+                        // ------------------------------------------------------------------------------------------------
+                        // 2B. reload the "other jobs" section of tableView (for rare cases where current user is also sub)
+                        // ------------------------------------------------------------------------------------------------
+                        
+                        self.tableView.reloadSections([3], with: .automatic)
                     }
                 }
                 
-                // update current user's income again (for rare instances when current user assigned themself as substitute)
+                // ------------------------------------
+                // 2C. update substitute's income array
+                // ------------------------------------
+                
+                for (incomeIndex2, incomeItem2) in Income.currentIncomeArray.enumerated() {
+                    if incomeItem2.user == substituteName {
+                        Income.currentIncomeArray[incomeIndex2].currentPoints -= substituteValue
+                    }
+                }
+                
+                // -------------------------------------------------------------------------------
+                // 3. update income label again in rare instance the sub was also the current user
+                // -------------------------------------------------------------------------------
+                
                 for (incomeIndex, incomeItem) in Income.currentIncomeArray.enumerated() {
                     if incomeItem.user == self.currentUserName {
                         self.incomeLabel.text = "$\(String(format: "%.2f", Double(Income.currentIncomeArray[incomeIndex].currentPoints) / 100))"
                     }
                 }
-                
-                self.tableView.setEditing(false, animated: true)
-                self.tableView.reloadRows(at: [indexPath], with: .automatic)
             } else {
                 self.incorrectPasscodeAlert()
             }
@@ -572,8 +608,6 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         // Button TWO: "cancel", and send user back to home page
         alert.addAction(UIAlertAction(title: "cancel", style: .cancel, handler: {_ in
             self.tableView.setEditing(false, animated: true)
-
-            //                            alert.dismiss(animated: true, completion: nil)
         }))
         
         self.present(alert, animated: true, completion: nil)
