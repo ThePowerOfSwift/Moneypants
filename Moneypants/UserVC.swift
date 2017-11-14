@@ -416,7 +416,7 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                     if isoArrayForItem[0].codeCEXSN == "C" {
                         self.removeSelectedItemFromPointsArrayAndUpdateIncomeArray(indexPath: indexPath, category: "daily jobs", categoryArray: self.usersDailyJobs)
                     } else if isoArrayForItem.first?.codeCEXSN == "E" || isoArrayForItem.first?.codeCEXSN == "X" {
-                        self.getParentalPasscodeThenResetToZero(indexPath: indexPath)
+                        self.getParentalPasscodeThenResetToZero(indexPath: indexPath, category: "daily jobs", categoryArray: self.usersDailyJobs)
                     }
                 }
             })
@@ -508,6 +508,11 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
             let resetAction = UITableViewRowAction(style: .default, title: "         ", handler: { (action, indexPath) in
                 if isoArrayForItem.isEmpty {
                     tableView.setEditing(false, animated: true)
+                } else if isoArrayForItem.first?.codeCEXSN == "C" {
+                    self.removeSelectedItemFromPointsArrayAndUpdateIncomeArray(indexPath: indexPath, category: "weekly jobs", categoryArray: self.usersWeeklyJobs)
+                } else if isoArrayForItem.first?.codeCEXSN == "N" {
+                    print("need parental password to reset this to zero. Then remove substitute's values as well")
+                    self.getParentalPasscodeThenResetToZero(indexPath: indexPath, category: "weekly jobs", categoryArray: self.usersWeeklyJobs)
                 }
             })
             
@@ -521,42 +526,7 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     // Functions
     // ---------
     
-    func getParentalPasscodeThenResetItemToZero(isoArray: [Points], indexPath: IndexPath) {
-        let alert = UIAlertController(title: "Parental Passcode Required", message: "You must enter a parental passcode to override a habit that has been marked 'not done'.", preferredStyle: .alert)
-        alert.addTextField(configurationHandler: { (textField) in
-            textField.placeholder = "enter passcode"
-            textField.isSecureTextEntry = true
-            textField.keyboardType = .numberPad
-        })
-        alert.addAction(UIAlertAction(title: "okay", style: UIAlertActionStyle.default , handler: { (action) in
-            // get passcodes for just parents, no kids
-            let parentalArray = MPUser.usersArray.filter({ $0.childParent == "parent" })
-            if parentalArray.contains(where: { "\($0.passcode)" == alert.textFields![0].text }) {
-                
-                // if array is not empty, delete the item from the array
-                for (pointsIndex, pointsItem) in Points.pointsArray.enumerated() {
-                    if pointsItem.user == self.currentUserName && pointsItem.itemCategory == "daily habits" && pointsItem.itemName == isoArray.first?.itemName && Calendar.current.isDateInToday(Date(timeIntervalSince1970: (isoArray.first?.itemDate)!)) {
-                        
-                        // remove item from points array (no need to do anything else: value was already zero)
-                        Points.pointsArray.remove(at: pointsIndex)
-                        
-                        // update tableview
-                        self.tableView.setEditing(false, animated: true)
-                        self.tableView.reloadRows(at: [indexPath], with: .automatic)
-                    }
-                }
-            } else {
-                self.incorrectPasscodeAlert()
-            }
-        }))
-        // Button TWO: "cancel", reset table to normal
-        alert.addAction(UIAlertAction(title: "cancel", style: .cancel, handler: {_ in
-            self.tableView.setEditing(false, animated: true)
-        }))
-        self.present(alert, animated: true, completion: nil)
-    }
-    
-    func getParentalPasscodeThenResetToZero(indexPath: IndexPath) {
+    func getParentalPasscodeThenResetToZero(indexPath: IndexPath, category: String, categoryArray: [JobsAndHabits]) {
         let alert = UIAlertController(title: "Parental Passcode Required", message: "You must enter a parental passcode to override an excused or unexcused job.", preferredStyle: .alert)
         alert.addTextField(configurationHandler: { (textField) in
             textField.placeholder = "enter passcode"
@@ -573,14 +543,14 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                 
                 // create array to isolate selected item (for current user, this category, this job name, on this date)
                 // NOTE: 'Calendar.current' automatically determines local time zone (no need to setup time zone properties if calling 'Calendar.current')
-                let isoArrayForItem = Points.pointsArray.filter({ $0.user == self.currentUserName && $0.itemCategory == "daily jobs" && $0.itemName == self.usersDailyJobs[indexPath.row].name && Calendar.current.isDateInToday(Date(timeIntervalSince1970: $0.itemDate)) })
+                let isoArrayForItem = Points.pointsArray.filter({ $0.user == self.currentUserName && $0.itemCategory == category && $0.itemName == categoryArray[indexPath.row].name && Calendar.current.isDateInToday(Date(timeIntervalSince1970: $0.itemDate)) })
 
                 // -------------------------------
                 // 1. remove item for current user
                 // -------------------------------
                 
                 for (pointsIndex, pointsItem) in Points.pointsArray.enumerated() {
-                    if pointsItem.user == self.currentUserName && pointsItem.itemCategory == "daily jobs" && pointsItem.itemName == isoArrayForItem[0].itemName && Calendar.current.isDateInToday(Date(timeIntervalSince1970: pointsItem.itemDate)) {
+                    if pointsItem.user == self.currentUserName && pointsItem.itemCategory == category && pointsItem.itemName == isoArrayForItem[0].itemName && Calendar.current.isDateInToday(Date(timeIntervalSince1970: pointsItem.itemDate)) {
                         
                         // ------------------------------------------------
                         // 1A. remove current user's item from points array
@@ -622,7 +592,7 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                 var substituteValue: Int!
                 // iterate over array to find item with code 'S' in current category with 'sub' in job name on this date (b/c there can only be one daily job with that name that has a sub)
                 for (pointsIndex2, pointsItem2) in Points.pointsArray.enumerated() {
-                    if pointsItem2.codeCEXSN == "S" && pointsItem2.itemCategory == "daily jobs" && pointsItem2.itemName == "\(self.usersDailyJobs[indexPath.row].name) (sub)" && Calendar.current.isDateInToday(Date(timeIntervalSince1970: pointsItem2.itemDate)) {
+                    if pointsItem2.codeCEXSN == "S" && pointsItem2.itemCategory == category && pointsItem2.itemName == "\(categoryArray[indexPath.row].name) (sub)" && Calendar.current.isDateInToday(Date(timeIntervalSince1970: pointsItem2.itemDate)) {
                         
                         // get sub's name before deleting array item (for later use)
                         // also get the amount the sub was paid (to subtract from the income array)
