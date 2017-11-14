@@ -156,7 +156,7 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                 } else if currentUserCategoryItemDateArray[0].codeCEXSN == "X" {
                     cell.selectionBoxImageView.image = UIImage(named: "X red")
                 } else {
-                    cell.selectionBoxImageView.image = UIImage(named: "E gray")
+                    cell.selectionBoxImageView.image = UIImage(named: "X gray")
                 }
             }
             
@@ -210,7 +210,7 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                 } else if currentUserCategoryItemDateArray[0].codeCEXSN == "X" {
                     cell.selectionBoxImageView.image = UIImage(named: "X red")
                 } else {
-                    cell.selectionBoxImageView.image = UIImage(named: "E gray")
+                    cell.selectionBoxImageView.image = UIImage(named: "X gray")
                 }
             }
             
@@ -292,7 +292,7 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                 createNewItemForDailyHabit(indexPath: indexPath)
                 tableView.reloadRows(at: [indexPath], with: .automatic)
             } else if currentUserCategoryItemDateArray.first?.codeCEXSN == "N" {
-                alertN(indexPath: indexPath, deselectRow: true)
+                alertN(indexPath: indexPath, deselectRow: true, jobOrHabit: "habit")
             } else {
                 tableView.deselectRow(at: indexPath, animated: true)
             }
@@ -309,9 +309,10 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
             if currentUserCategoryItemDateArray.isEmpty {
                 createNewPointsItemForWeeklyJobs(indexPath: indexPath)
                 tableView.reloadRows(at: [indexPath], with: .automatic)
-            }  else {
-                // do nothing (because this info is now in the 'swipe from right' section of code
+            } else if currentUserCategoryItemDateArray.first?.codeCEXSN == "C" {
                 tableView.deselectRow(at: indexPath, animated: true)
+            } else if currentUserCategoryItemDateArray.first?.codeCEXSN == "N" {
+                alertN(indexPath: indexPath, deselectRow: true, jobOrHabit: "job")
             }
         }
         
@@ -447,7 +448,7 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                     if isoArrayForItem.first?.codeCEXSN == "C" {
                         self.deleteItemFromArrayAndUpdateIncomeArrayAndLabel(isoArray: isoArrayForItem, indexPath: indexPath)
                     } else if isoArrayForItem.first?.codeCEXSN == "N" {
-                        self.alertN(indexPath: indexPath, deselectRow: false)
+                        self.alertN(indexPath: indexPath, deselectRow: false, jobOrHabit: "habit")
                     }
                 }
             })
@@ -476,7 +477,6 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
             
         } else {
 
-            
             // -----------
             // weekly jobs
             // -----------
@@ -484,20 +484,19 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
             // get an array of this user in this category for this item on this day (should be single item)
             let isoArrayForItem = Points.pointsArray.filter({ $0.user == self.currentUserName && $0.itemCategory == "weekly jobs" && $0.itemName == self.usersWeeklyJobs?[indexPath.row].name && Calendar.current.isDateInToday(Date(timeIntervalSince1970: $0.itemDate)) })
             
-            // -----------------
-            // 'not done' action
-            // -----------------
+            // -------------------
+            // 'substitute' action
+            // -------------------
             
-            let notDoneAction = UITableViewRowAction(style: .default, title: "         ", handler: { (action, indexPath) in
+            let substituteAction = UITableViewRowAction(style: .default, title: "         ", handler: { (action, indexPath) in
                 if isoArrayForItem.isEmpty {
                     // if array is empty, create new array item with "N" and value of "0"
-                    print("iso array is empty. need to just allow user to select sub and then pay sub")
                     self.weeklyJobsSubDialogue(indexPath: indexPath, isoArray: isoArrayForItem)
                 } else {
                     if isoArrayForItem.first?.codeCEXSN == "C" {
-                        print("iso array has a completed job already there. Need to delete the job, then assign sub and give sub the money")
+                        self.weeklyJobsSubDialogue(indexPath: indexPath, isoArray: isoArrayForItem)
                     } else if isoArrayForItem.first?.codeCEXSN == "N" {
-                        print("I don't know what this means")
+                        self.alertN(indexPath: indexPath, deselectRow: false, jobOrHabit: "job")
                     }
                 }
             })
@@ -512,9 +511,9 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                 }
             })
             
-            notDoneAction.backgroundColor = UIColor(patternImage: UIImage(named: "substitute")!)
+            substituteAction.backgroundColor = UIColor(patternImage: UIImage(named: "substitute")!)
             resetAction.backgroundColor = UIColor(patternImage: UIImage(named: "reset")!)
-            return [resetAction, notDoneAction]
+            return [resetAction, substituteAction]
         }
     }
     

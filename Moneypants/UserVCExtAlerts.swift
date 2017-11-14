@@ -47,8 +47,8 @@ extension UserVC {
         self.present(alertX, animated: true, completion: nil)
     }
     
-    func alertN(indexPath: IndexPath, deselectRow: Bool) {
-        let alertN = UIAlertController(title: "Not Done", message: "This habit is currently marked as 'not done'. In order to change it, tap the 'reset' button.", preferredStyle: .alert)
+    func alertN(indexPath: IndexPath, deselectRow: Bool, jobOrHabit: String) {
+        let alertN = UIAlertController(title: "Not Done", message: "This \(jobOrHabit) is currently marked as 'not done'. In order to change it, tap the 'reset' button.", preferredStyle: .alert)
         alertN.addAction(UIAlertAction(title: "okay", style: .cancel, handler: { (action) in
             alertN.dismiss(animated: true, completion: nil)
             // to determine whether to perform tableview animation upon alert dismissal

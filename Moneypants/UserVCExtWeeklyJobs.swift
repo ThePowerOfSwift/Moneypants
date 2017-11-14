@@ -8,7 +8,7 @@ extension UserVC {
         // Choose substitute
         // -----------------
         
-        let alert2 = UIAlertController(title: "Job Substitute", message: "Who was the job substitute for \(self.currentUserName!)'s job '\(self.usersDailyJobs[indexPath.row].name)'?", preferredStyle: UIAlertControllerStyle.alert)
+        let alert2 = UIAlertController(title: "Job Substitute", message: "Who was the job substitute for \(self.currentUserName!)'s job '\(self.usersWeeklyJobs[indexPath.row].name)'?", preferredStyle: UIAlertControllerStyle.alert)
         for user in MPUser.usersArray {
             alert2.addAction(UIAlertAction(title: user.firstName, style: .default, handler: { (action) in
                 print(self.currentUserName, user.firstName)
@@ -40,7 +40,7 @@ extension UserVC {
         // -------------
         
         alert2.addAction(UIAlertAction(title: "None", style: .cancel, handler: { (action) in
-            let alert3 = UIAlertController(title: "Job Substitute Missing", message: "You have not chosen a job substitute for \(self.currentUserName!)'s job '\(self.usersDailyJobs[indexPath.row].name)'.\n\nNobody will get paid for doing this job and it will remain undone. Are you sure you want to continue?", preferredStyle: UIAlertControllerStyle.alert)
+            let alert3 = UIAlertController(title: "Job Substitute Missing", message: "You have not chosen a job substitute for \(self.currentUserName!)'s job '\(self.usersWeeklyJobs[indexPath.row].name)'.\n\nNobody will get paid for doing this job and it will remain undone. Are you sure you want to continue?", preferredStyle: UIAlertControllerStyle.alert)
             alert3.addAction(UIAlertAction(title: "cancel", style: .cancel, handler: { (action) in
                 // do nothing
                 self.tableView.setEditing(false, animated: true)
@@ -51,12 +51,24 @@ extension UserVC {
                 // 1. if user had added points to their point chart for that job, delete them and their values and update income totals
                 // --------------------------------------------------------------------------------------------------------------------
                 
-                if !isoArray.isEmpty {
+                // if array is empty, create a new Points item with a value of zero and a code of "N" for current user
+                if isoArray.isEmpty {
+                    let noSub = Points(user: self.currentUserName,
+                                       itemName: self.usersWeeklyJobs[indexPath.row].name,
+                                       itemCategory: "weekly jobs",
+                                       codeCEXSN: "N",
+                                       valuePerTap: 0,
+                                       itemDate: Date().timeIntervalSince1970)
+                    Points.pointsArray.append(noSub)
+                    
+                // if array isn't empty, change the existing Points item to be zero and code "N", and subtract corresponding Income value from user's income
+                } else {
                     for (pointsIndex, pointsItem) in Points.pointsArray.enumerated() {
                         if pointsItem.user == self.currentUserName && pointsItem.itemCategory == "weekly jobs" && pointsItem.itemName == isoArray[0].itemName && Calendar.current.isDateInToday(Date(timeIntervalSince1970: isoArray[0].itemDate)) {
                             
-                            // remove item from points array
-                            Points.pointsArray.remove(at: pointsIndex)
+                            // update item at points array
+                            Points.pointsArray[pointsIndex].codeCEXSN = "N"
+                            Points.pointsArray[pointsIndex].valuePerTap = 0
                             
                             // subtract item from user's income array and update income label
                             for (incomeIndex, incomeItem) in Income.currentIncomeArray.enumerated() {
@@ -83,7 +95,7 @@ extension UserVC {
         let substituteName: String = nameOfSub
         let weeklyJobsPointsFormatter = String(format: "%.2f", Double(weeklyJobsPointValue) / 100)
         
-        let alert = UIAlertController(title: "Confirm Job Substitute", message: "\(substituteName) was the job substitute for \(currentUserName!)'s job '\(self.usersDailyJobs[indexPath.row].name)' and earned $\(weeklyJobsPointsFormatter) for completing the job.\n\nDo you wish to continue?", preferredStyle: .alert)
+        let alert = UIAlertController(title: "Confirm Job Substitute", message: "\(substituteName) was the job substitute for \(currentUserName!)'s job '\(self.usersWeeklyJobs[indexPath.row].name)' and earned $\(weeklyJobsPointsFormatter) for completing the job.\n\nDo you wish to continue?", preferredStyle: .alert)
         
         // ------------------
         // Confirm substitute
@@ -92,25 +104,37 @@ extension UserVC {
         alert.addAction(UIAlertAction(title: "pay \(substituteName) $\(weeklyJobsPointsFormatter)", style: .default, handler: { (action) in
             alert.dismiss(animated: true, completion: nil)
             
-            // -----------------------------------------------------------------------------------------------------------------
-            // 1. subtract existing job from Points array AND Income array (if user already erroneously marked it as "complete")
-            // -----------------------------------------------------------------------------------------------------------------
+            // --------------------------------------------------------
+            // 1. create or update current user Points array and Income
+            // --------------------------------------------------------
             
-            if !isoArray.isEmpty {
+            // if array is empty, create a new Points item with a value of zero and a code of "N" for current user
+            if isoArray.isEmpty {
+                print("array is empty; item must be blank")
+                let noSub = Points(user: self.currentUserName,
+                                   itemName: self.usersWeeklyJobs[indexPath.row].name,
+                                   itemCategory: "weekly jobs",
+                                   codeCEXSN: "N",
+                                   valuePerTap: 0,
+                                   itemDate: Date().timeIntervalSince1970)
+                Points.pointsArray.append(noSub)
+                
+            // if array isn't empty, change the existing Points item to be zero and code "N", and subtract corresponding Income value from user's income
+            } else {
                 for (pointsIndex, pointsItem) in Points.pointsArray.enumerated() {
                     if pointsItem.user == self.currentUserName && pointsItem.itemCategory == "weekly jobs" && pointsItem.itemName == isoArray[0].itemName && Calendar.current.isDateInToday(Date(timeIntervalSince1970: isoArray[0].itemDate)) {
                         
-                        // remove item from points array
-                        Points.pointsArray.remove(at: pointsIndex)
+                        // update item at points array
+                        Points.pointsArray[pointsIndex].codeCEXSN = "N"
+                        Points.pointsArray[pointsIndex].valuePerTap = 0
                         
-                        // subtract from user's income array
+                        // subtract item from user's income array and update income label
                         for (incomeIndex, incomeItem) in Income.currentIncomeArray.enumerated() {
                             if incomeItem.user == self.currentUserName {
                                 Income.currentIncomeArray[incomeIndex].currentPoints -= pointsItem.valuePerTap
+                                self.incomeLabel.text = "$\(String(format: "%.2f", Double(Income.currentIncomeArray[incomeIndex].currentPoints) / 100))"
                             }
                         }
-                        self.tableView.setEditing(false, animated: true)
-                        self.tableView.reloadRows(at: [indexPath], with: .automatic)
                     }
                 }
             }
@@ -127,19 +151,6 @@ extension UserVC {
             for (incomeIndex, incomeItem) in Income.currentIncomeArray.enumerated() {
                 if incomeItem.user == substituteName {
                     Income.currentIncomeArray[incomeIndex].currentPoints += self.weeklyJobsPointValue
-                }
-            }
-            
-            // --------------------------------------------------------------------------------
-            // 3. update the current user's income label last (after all calculations are done)
-            // --------------------------------------------------------------------------------
-            
-            let subtractedSubstitutionValue = Points(user: self.currentUserName, itemName: self.usersWeeklyJobs[indexPath.row].name, itemCategory: "weekly jobs", codeCEXSN: "N", valuePerTap: -(self.weeklyJobsPointValue), itemDate: Date().timeIntervalSince1970)
-            Points.pointsArray.append(subtractedSubstitutionValue)
-            
-            for (incomeIndex, incomeItem) in Income.currentIncomeArray.enumerated() {
-                if incomeItem.user == self.currentUserName {
-                    self.incomeLabel.text = "$\(String(format: "%.2f", Double(Income.currentIncomeArray[incomeIndex].currentPoints) / 100))"
                 }
             }
             

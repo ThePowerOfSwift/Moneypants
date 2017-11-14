@@ -215,13 +215,10 @@ extension UserVC {
                                      itemDate: Date().timeIntervalSince1970)
         
         Points.pointsArray.append(pointsArrayItem)
-        updateUserIncomeArrayAndIncomeLabel(valuePerTap: dailyJobsPointValue)
-    }
-    
-    func updateUserIncomeArrayAndIncomeLabel(valuePerTap: Int) {
+        
         for (index, item) in Income.currentIncomeArray.enumerated() {
             if item.user == currentUserName {
-                Income.currentIncomeArray[index].currentPoints += valuePerTap
+                Income.currentIncomeArray[index].currentPoints += dailyJobsPointValue
                 incomeLabel.text = "$\(String(format: "%.2f", Double(Income.currentIncomeArray[index].currentPoints) / 100))"
             }
         }

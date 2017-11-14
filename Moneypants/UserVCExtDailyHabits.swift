@@ -20,7 +20,7 @@ extension UserVC {
         
         Points.pointsArray.append(pointThingy)
         
-        // // update user's income array & income label
+        // update user's income array & income label
         for (index, item) in Income.currentIncomeArray.enumerated() {
             if item.user == currentUserName {
                 Income.currentIncomeArray[index].currentPoints += valuePerTap
@@ -36,6 +36,7 @@ extension UserVC {
                                  codeCEXSN: "N",
                                  valuePerTap: 0,
                                  itemDate: Date().timeIntervalSince1970)
+        
         Points.pointsArray.append(undoneHabit)
         tableView.setEditing(false, animated: true)
         tableView.reloadRows(at: [indexPath], with: .automatic)
