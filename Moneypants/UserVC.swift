@@ -35,7 +35,7 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         // badges
         // ------
         
-        tabBarController?.tabBar.items?[2].badgeValue = "1"
+//        tabBarController?.tabBar.items?[2].badgeValue = "1"
         
         currentUserName = MPUser.usersArray[MPUser.currentUser].firstName
         navigationItem.title = currentUserName
@@ -214,9 +214,9 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                 }
             }
             
-        // -----
-        // other
-        // -----
+        // ----------
+        // other jobs
+        // ----------
             
         } else if indexPath.section == 3 {
             let subJobsArray = Points.pointsArray.filter({ $0.user == currentUserName && $0.codeCEXSN == "S" && Calendar.current.isDateInToday(Date(timeIntervalSince1970: $0.itemDate)) })
@@ -289,7 +289,7 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
             // if the array isn't empty, check the codeCEXSN. If it's X or E, it needs a parental pword, then it becomes C. Otherwise, do nothing
             let currentUserCategoryItemDateArray = Points.pointsArray.filter({ $0.user == currentUserName && $0.itemCategory == "daily habits" && $0.itemName == usersDailyHabits?[indexPath.row].name && Calendar.current.isDateInToday(Date(timeIntervalSince1970: $0.itemDate)) })
             if currentUserCategoryItemDateArray.isEmpty {
-                createNewPointsItemForHabits(indexPath: indexPath)
+                createNewItemForDailyHabit(indexPath: indexPath)
                 tableView.reloadRows(at: [indexPath], with: .automatic)
             } else if currentUserCategoryItemDateArray.first?.codeCEXSN == "N" {
                 alertN(indexPath: indexPath, deselectRow: true)
@@ -370,16 +370,16 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
             
             let excusedAction = UITableViewRowAction(style: .default, title: "         ", handler: { (action, indexPath) in
                 // ...check to see if iso array is empty. If so, don't let user reset anything b/c it will crash the app (b/c the array is empty)
-                if !isoArrayForItem.isEmpty {
-                    if isoArrayForItem[0].codeCEXSN == "E" {
-                        self.alertE(indexPath: indexPath, deselectRow: false)
-                    } else if isoArrayForItem[0].codeCEXSN == "X" {
-                        self.alertX(indexPath: indexPath, deselectRow: false)
-                    } else {
-                        self.runExcusedUnexcusedDialogue(alertTitle: self.excusedTitle, alertMessage: self.excusedMessage, isoArray: isoArrayForItem, indexPath: indexPath, assignEorX: "E")
-                    }
+                if isoArrayForItem.isEmpty {
+                    self.runExcusedUnexcusedDialogueForDailyJob(alertTitle: self.excusedTitle, alertMessage: self.excusedMessage, isoArray: isoArrayForItem, indexPath: indexPath, assignEorX: "E")
                 } else {
-                    self.runExcusedUnexcusedDialogue(alertTitle: self.excusedTitle, alertMessage: self.excusedMessage, isoArray: isoArrayForItem, indexPath: indexPath, assignEorX: "E")
+                    if isoArrayForItem.first?.codeCEXSN == "C" {
+                        self.runExcusedUnexcusedDialogueForDailyJob(alertTitle: self.excusedTitle, alertMessage: self.excusedMessage, isoArray: isoArrayForItem, indexPath: indexPath, assignEorX: "E")
+                    } else if isoArrayForItem.first?.codeCEXSN == "E" {
+                        self.alertE(indexPath: indexPath, deselectRow: false)
+                    } else if isoArrayForItem.first?.codeCEXSN == "X" {
+                        self.alertX(indexPath: indexPath, deselectRow: false)
+                    }
                 }
             })
             
@@ -388,17 +388,16 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
             // ----------------
             
             let unexcusedAction = UITableViewRowAction(style: .default, title: "         ", handler: { (action, indexPath) in
-                
-                if !isoArrayForItem.isEmpty {
-                    if isoArrayForItem[0].codeCEXSN == "E" {
-                        self.alertE(indexPath: indexPath, deselectRow: false)
-                    } else if isoArrayForItem[0].codeCEXSN == "X" {
-                        self.alertX(indexPath: indexPath, deselectRow: false)
-                    } else {
-                        self.runExcusedUnexcusedDialogue(alertTitle: self.unexcusedTitle, alertMessage: self.unexcusedMessage, isoArray: isoArrayForItem, indexPath: indexPath, assignEorX: "X")
-                    }
+                if isoArrayForItem.isEmpty {
+                    self.runExcusedUnexcusedDialogueForDailyJob(alertTitle: self.unexcusedTitle, alertMessage: self.unexcusedMessage, isoArray: isoArrayForItem, indexPath: indexPath, assignEorX: "X")
                 } else {
-                    self.runExcusedUnexcusedDialogue(alertTitle: self.unexcusedTitle, alertMessage: self.unexcusedMessage, isoArray: isoArrayForItem, indexPath: indexPath, assignEorX: "X")
+                    if isoArrayForItem.first?.codeCEXSN == "C" {
+                        self.runExcusedUnexcusedDialogueForDailyJob(alertTitle: self.unexcusedTitle, alertMessage: self.unexcusedMessage, isoArray: isoArrayForItem, indexPath: indexPath, assignEorX: "X")
+                    } else if isoArrayForItem.first?.codeCEXSN == "E" {
+                        self.alertE(indexPath: indexPath, deselectRow: false)
+                    } else if isoArrayForItem.first?.codeCEXSN == "X" {
+                        self.alertX(indexPath: indexPath, deselectRow: false)
+                    }
                 }
             })
             
@@ -415,13 +414,13 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                     // need to check if item is 'X' or 'E', and if so, need parental password to reset to zero. Otherwise, user can reset 'C' to zero
                     if isoArrayForItem[0].codeCEXSN == "C" {
                         self.removeSelectedItemFromPointsArrayAndUpdateIncomeArray(indexPath: indexPath, category: "daily jobs", categoryArray: self.usersDailyJobs)
-                    } else {
+                    } else if isoArrayForItem.first?.codeCEXSN == "E" || isoArrayForItem.first?.codeCEXSN == "X" {
                         self.getParentalPasscodeThenResetToZero(indexPath: indexPath)
                     }
                 }
             })
             
-            excusedAction.backgroundColor = UIColor(patternImage: UIImage(named: "excused")!)       // button image must be same height as tableview row height
+            excusedAction.backgroundColor = UIColor(patternImage: UIImage(named: "excused")!)
             unexcusedAction.backgroundColor = UIColor(patternImage: UIImage(named: "unexcused")!)
             resetAction.backgroundColor = UIColor(patternImage: UIImage(named: "reset")!)
             
@@ -443,7 +442,7 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
             let notDoneAction = UITableViewRowAction(style: .default, title: "         ", handler: { (action, indexPath) in
                 if isoArrayForItem.isEmpty {
                     // if array is empty, create new array item with "N" and value of "0"
-                    self.createNewArrayItemWithValueOfZero(indexPath: indexPath)
+                    self.createZeroValueItemForDailyHabit(indexPath: indexPath)
                 } else {
                     if isoArrayForItem.first?.codeCEXSN == "C" {
                         self.deleteItemFromArrayAndUpdateIncomeArrayAndLabel(isoArray: isoArrayForItem, indexPath: indexPath)
@@ -466,8 +465,6 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                     if isoArrayForItem.first?.codeCEXSN == "N" {
                         self.getParentalPasscodeThenResetItemToZero(isoArray: isoArrayForItem, indexPath: indexPath)
                     } else {
-                        // change poinst array to "nothing"
-                        print("array has checkmark. requires parental password to reset.")
                         self.removeSelectedItemFromPointsArrayAndUpdateIncomeArray(indexPath: indexPath, category: "daily habits", categoryArray: self.usersDailyHabits)
                     }
                 }
@@ -478,13 +475,46 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
             return [resetAction, notDoneAction]
             
         } else {
+
             
             // -----------
             // weekly jobs
             // -----------
             
-            let resetAction = UITableViewRowAction()
-            return [resetAction]
+            // get an array of this user in this category for this item on this day (should be single item)
+            let isoArrayForItem = Points.pointsArray.filter({ $0.user == self.currentUserName && $0.itemCategory == "weekly jobs" && $0.itemName == self.usersWeeklyJobs?[indexPath.row].name && Calendar.current.isDateInToday(Date(timeIntervalSince1970: $0.itemDate)) })
+            
+            // -----------------
+            // 'not done' action
+            // -----------------
+            
+            let notDoneAction = UITableViewRowAction(style: .default, title: "         ", handler: { (action, indexPath) in
+                if isoArrayForItem.isEmpty {
+                    // if array is empty, create new array item with "N" and value of "0"
+                    print("iso array is empty. need to just allow user to select sub and then pay sub")
+                    self.weeklyJobsSubDialogue(indexPath: indexPath, isoArray: isoArrayForItem)
+                } else {
+                    if isoArrayForItem.first?.codeCEXSN == "C" {
+                        print("iso array has a completed job already there. Need to delete the job, then assign sub and give sub the money")
+                    } else if isoArrayForItem.first?.codeCEXSN == "N" {
+                        print("I don't know what this means")
+                    }
+                }
+            })
+            
+            // ------------
+            // reset action
+            // ------------
+            
+            let resetAction = UITableViewRowAction(style: .default, title: "         ", handler: { (action, indexPath) in
+                if isoArrayForItem.isEmpty {
+                    tableView.setEditing(false, animated: true)
+                }
+            })
+            
+            notDoneAction.backgroundColor = UIColor(patternImage: UIImage(named: "substitute")!)
+            resetAction.backgroundColor = UIColor(patternImage: UIImage(named: "reset")!)
+            return [resetAction, notDoneAction]
         }
     }
     
@@ -492,39 +522,12 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     // Functions
     // ---------
     
-    func deleteItemFromArrayAndUpdateIncomeArrayAndLabel(isoArray: [Points], indexPath: IndexPath) {
-        // if array is not empty, subtract "value per tap" from income array (at user's index) and delete the item from the array, then update user's income label
-        for (pointsIndex, pointsItem) in Points.pointsArray.enumerated() {
-            if pointsItem.user == self.currentUserName && pointsItem.itemCategory == "daily habits" && pointsItem.itemName == isoArray.first?.itemName && Calendar.current.isDateInToday(Date(timeIntervalSince1970: (isoArray.first?.itemDate)!)) {
-                
-                // update item in points array
-                Points.pointsArray[pointsIndex].codeCEXSN = "N"
-                
-                // update user's income array & income label
-                for (incomeIndex, incomeItem) in Income.currentIncomeArray.enumerated() {
-                    if incomeItem.user == self.currentUserName {
-                        Income.currentIncomeArray[incomeIndex].currentPoints -= pointsItem.valuePerTap
-                        self.incomeLabel.text = "$\(String(format: "%.2f", Double(Income.currentIncomeArray[incomeIndex].currentPoints) / 100))"
-                    }
-                }
-                tableView.setEditing(false, animated: true)
-                tableView.reloadRows(at: [indexPath], with: .automatic)
-            }
-        }
-    }
-    
-    func createNewArrayItemWithValueOfZero(indexPath: IndexPath) {
-        let undoneHabit = Points(user: self.currentUserName, itemName: self.usersDailyHabits[indexPath.row].name, itemCategory: "daily habits", codeCEXSN: "N", valuePerTap: 0, itemDate: Date().timeIntervalSince1970)
-        Points.pointsArray.append(undoneHabit)
-        tableView.setEditing(false, animated: true)
-        tableView.reloadRows(at: [indexPath], with: .automatic)
-    }
-    
     func getParentalPasscodeThenResetItemToZero(isoArray: [Points], indexPath: IndexPath) {
-        let alert = UIAlertController(title: "Parental Passcode Required", message: "You must enter a parental passcode to override a habit that's been marked 'not done'.", preferredStyle: .alert)
+        let alert = UIAlertController(title: "Parental Passcode Required", message: "You must enter a parental passcode to override a habit that has been marked 'not done'.", preferredStyle: .alert)
         alert.addTextField(configurationHandler: { (textField) in
             textField.placeholder = "enter passcode"
             textField.isSecureTextEntry = true
+            textField.keyboardType = .numberPad
         })
         alert.addAction(UIAlertAction(title: "okay", style: UIAlertActionStyle.default , handler: { (action) in
             // get passcodes for just parents, no kids
@@ -554,26 +557,12 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         self.present(alert, animated: true, completion: nil)
     }
     
-    func checkIncome() {
-        if Income.currentIncomeArray.filter({ $0.user == currentUserName }).isEmpty {
-            // create a default array
-            let newUserPoints = Income(user: currentUserName, currentPoints: 0)
-            Income.currentIncomeArray.append(newUserPoints)
-            incomeLabel.text = "$0.00"
-        } else {
-            for (index, item) in Income.currentIncomeArray.enumerated() {
-                if item.user == currentUserName {
-                    incomeLabel.text = "$\(String(format: "%.2f", Double(Income.currentIncomeArray[index].currentPoints) / 100))"
-                }
-            }
-        }
-    }
-    
     func getParentalPasscodeThenResetToZero(indexPath: IndexPath) {
         let alert = UIAlertController(title: "Parental Passcode Required", message: "You must enter a parental passcode to override an excused or unexcused job.", preferredStyle: .alert)
         alert.addTextField(configurationHandler: { (textField) in
             textField.placeholder = "enter passcode"
             textField.isSecureTextEntry = true
+            textField.keyboardType = .numberPad
         })
         alert.addAction(UIAlertAction(title: "okay", style: UIAlertActionStyle.default , handler: { (action) in
             // get passcodes for just parents, not kids
@@ -686,328 +675,6 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         self.present(alert, animated: true, completion: nil)
     }
     
-    func runExcusedUnexcusedDialogue(alertTitle: String, alertMessage: String, isoArray: [Points], indexPath: IndexPath, assignEorX: String) {
-        let alert = UIAlertController(title: alertTitle, message: alertMessage, preferredStyle: UIAlertControllerStyle.alert)
-
-        // --------------------
-        // Button ONE: "accept"
-        // --------------------
-        
-        alert.addAction(UIAlertAction(title: "accept", style: UIAlertActionStyle.default, handler: { (action) in
-            alert.dismiss(animated: true, completion: nil)
-            
-            // -----------------
-            // Choose substitute
-            // -----------------
-            
-            let alert2 = UIAlertController(title: "Job Substitute", message: "Who was the job substitute for \(self.currentUserName!)'s job '\(self.usersDailyJobs[indexPath.row].name)'?", preferredStyle: UIAlertControllerStyle.alert)
-            for user in MPUser.usersArray {
-                alert2.addAction(UIAlertAction(title: user.firstName, style: .default, handler: { (action) in
-                    alert2.dismiss(animated: true, completion: nil)
-                    
-                    // ---------------------------
-                    // Confirm / Cancel substitute
-                    // ---------------------------
-                    
-                    self.confirmOrCancelSubstitute(isoArray: isoArray, nameOfSub: user.firstName, eORx: assignEorX, indexPath: indexPath)
-                }))
-            }
-            
-            // -------------
-            // NO substitute
-            // -------------
-            
-            alert2.addAction(UIAlertAction(title: "None", style: .cancel, handler: { (action) in
-                let alert3 = UIAlertController(title: "Job Substitute Missing", message: "You have not chosen a job substitute for \(self.currentUserName!)'s job '\(self.usersDailyJobs[indexPath.row].name)'.\n\nNobody will get paid for doing this job and it will remain undone. Are you sure you want to continue?", preferredStyle: UIAlertControllerStyle.alert)
-                alert3.addAction(UIAlertAction(title: "cancel", style: .cancel, handler: { (action) in
-                    // do nothing
-                    self.tableView.setEditing(false, animated: true)
-                    alert3.dismiss(animated: true, completion: nil)}))
-                alert3.addAction(UIAlertAction(title: "accept", style: .default, handler: { (action) in
-                    
-                    // --------------------------------------------------------------------------------------------------------------------
-                    // 1. if user had added points to their point chart for that job, delete them and their values and update income totals
-                    // --------------------------------------------------------------------------------------------------------------------
-                    
-                    if !isoArray.isEmpty {
-                        let selectedItemDate = Date(timeIntervalSince1970: isoArray[0].itemDate) //
-                        for (pointsIndex, pointsItem) in Points.pointsArray.enumerated() {
-                            if pointsItem.user == self.currentUserName && pointsItem.itemCategory == "daily jobs" && pointsItem.itemName == isoArray[0].itemName && Calendar.current.isDateInToday(selectedItemDate) {
-                                
-                                // remove item from points array
-                                Points.pointsArray.remove(at: pointsIndex)
-                                
-                                // subtract item from user's income array
-                                for (incomeIndex, incomeItem) in Income.currentIncomeArray.enumerated() {
-                                    if incomeItem.user == self.currentUserName {
-                                        Income.currentIncomeArray[incomeIndex].currentPoints -= pointsItem.valuePerTap
-                                    }
-                                }
-                                self.tableView.setEditing(false, animated: true)
-                                self.tableView.reloadRows(at: [indexPath], with: .automatic)
-                            }
-                        }
-                    }
-                    
-                    // ----------------------------------------------------------------------------
-                    // 2. charge user substitution fee in Points array and then update Income array
-                    // ----------------------------------------------------------------------------
-                    
-                    // subtract fee from Points Array
-                    let loseSubstitutionPoints = Points(user: self.currentUserName, itemName: "\(self.usersDailyJobs[indexPath.row].name)", itemCategory: "daily jobs", codeCEXSN: assignEorX, valuePerTap: -(self.substituteFee), itemDate: Date().timeIntervalSince1970)
-                    Points.pointsArray.append(loseSubstitutionPoints)
-                    
-                    // subtract fee from Income array and update income label
-                    for (index, item) in Income.currentIncomeArray.enumerated() {
-                        if item.user == self.currentUserName {
-                            Income.currentIncomeArray[index].currentPoints -= self.substituteFee
-                            self.incomeLabel.text = "$\(String(format: "%.2f", Double(Income.currentIncomeArray[index].currentPoints) / 100))"
-                        }
-                    }
-                    
-                    self.tableView.setEditing(false, animated: true)
-                    self.tableView.reloadRows(at: [indexPath], with: .automatic)
-                    
-                    alert3.dismiss(animated: true, completion: nil)}))
-                self.present(alert3, animated: true, completion: nil)}))
-            self.present(alert2, animated: true, completion: nil)}))
-        
-        // --------------------
-        // Button TWO: "cancel"
-        // --------------------
-        
-        alert.addAction(UIAlertAction(title: "cancel", style: UIAlertActionStyle.cancel , handler: { (action) in
-            alert.dismiss(animated: true, completion: nil)
-            self.tableView.setEditing(false, animated: true)
-            print("excused canceled")
-        }))
-        self.present(alert, animated: true, completion: nil)
-    }
-    
-    func alertE(indexPath: IndexPath, deselectRow: Bool) {
-        let alertE = UIAlertController(title: "Excused", message: "This job is currently excused. In order to change it, tap the 'reset' button.", preferredStyle: .alert)
-        alertE.addAction(UIAlertAction(title: "okay", style: .cancel, handler: { (action) in
-            alertE.dismiss(animated: true, completion: nil)
-            
-            // to determine whether to perform tableview animation upon alert dismissal
-            if deselectRow == true {
-                self.tableView.deselectRow(at: indexPath, animated: true)
-            } else {
-                //                self.tableView.setEditing(false, animated: true)
-            }
-        }))
-        present(alertE, animated: true, completion: nil)
-    }
-    
-    func alertX(indexPath: IndexPath, deselectRow: Bool) {
-        let alertX = UIAlertController(title: "Unexcused", message: "This job is currently unexcused. In order to change it, tap the 'reset' button.", preferredStyle: .alert)
-        alertX.addAction(UIAlertAction(title: "okay", style: .cancel, handler: { (action) in
-            alertX.dismiss(animated: true, completion: nil)
-            
-            // to determine whether to perform tableview animation upon alert dismissal
-            if deselectRow == true {
-                self.tableView.deselectRow(at: indexPath, animated: true)
-            } else {
-                //                self.tableView.setEditing(false, animated: true)
-            }
-        }))
-        self.present(alertX, animated: true, completion: nil)
-    }
-    
-    func alertN(indexPath: IndexPath, deselectRow: Bool) {
-        let alertN = UIAlertController(title: "Not Done", message: "This habit is currently marked as 'not done'. In order to change it, tap the 'reset' button.", preferredStyle: .alert)
-        alertN.addAction(UIAlertAction(title: "okay", style: .cancel, handler: { (action) in
-            alertN.dismiss(animated: true, completion: nil)
-            // to determine whether to perform tableview animation upon alert dismissal
-            if deselectRow == true {
-                self.tableView.deselectRow(at: indexPath, animated: true)
-            }
-        }))
-        present(alertN, animated: true, completion: nil)
-    }
-    
-    func confirmOrCancelSubstitute(isoArray: [Points], nameOfSub: String, eORx: String, indexPath: IndexPath) {
-        let substituteName: String = nameOfSub
-        let substituteSubtotal = substituteFee + dailyJobsPointValue
-
-        let dailyJobsPointsFormatter = String(format: "%.2f", Double(dailyJobsPointValue) / 100)
-        let susbtituteSubtotalFormatted = String(format: "%.2f", Double(substituteSubtotal) / 100)
-        
-        let alert3 = UIAlertController(title: "Confirm Job Substitute", message: "\(substituteName) was the job substitute for '\(self.usersDailyJobs[indexPath.row].name)'. \(substituteName) earned the $\(subFeeFormatted!) substitute fee plus $\(dailyJobsPointsFormatter) for completing the job.\n\nDo you wish to continue?", preferredStyle: .alert)
-        
-        // ------------------
-        // Confirm substitute
-        // ------------------
-        
-        alert3.addAction(UIAlertAction(title: "pay \(substituteName) $\(susbtituteSubtotalFormatted)", style: .default, handler: { (action) in
-            alert3.dismiss(animated: true, completion: nil)
-            
-            // -----------------------------------------------------------------------------------------------------------------
-            // 1. subtract existing job from Points array AND Income array (if user already erroneously marked it as "complete")
-            // -----------------------------------------------------------------------------------------------------------------
-            
-            if !isoArray.isEmpty {
-                for (pointsIndex, pointsItem) in Points.pointsArray.enumerated() {
-                    if pointsItem.user == self.currentUserName && pointsItem.itemCategory == "daily jobs" && pointsItem.itemName == isoArray[0].itemName && Calendar.current.isDateInToday(Date(timeIntervalSince1970: isoArray[0].itemDate)) {
-                        
-                        // remove item from points array
-                        Points.pointsArray.remove(at: pointsIndex)
-                        
-                        // subtract from user's income array
-                        for (incomeIndex, incomeItem) in Income.currentIncomeArray.enumerated() {
-                            if incomeItem.user == self.currentUserName {
-                                Income.currentIncomeArray[incomeIndex].currentPoints -= pointsItem.valuePerTap
-                            }
-                        }
-                        self.tableView.setEditing(false, animated: true)
-                        self.tableView.reloadRows(at: [indexPath], with: .automatic)
-                    }
-                }
-            }
-            
-            // -------------------------------------------------------------------
-            // 2. charge current user the sub fee in Income array AND Points array
-            // -------------------------------------------------------------------
-            
-            // subtract from income array
-            for (incomeIndex, incomeItem) in Income.currentIncomeArray.enumerated() {
-                if incomeItem.user == self.currentUserName {
-                    Income.currentIncomeArray[incomeIndex].currentPoints -= self.substituteFee
-                }
-            }
-            
-            // create charge in points array
-            let loseSubstitutionPoints = Points(user: self.currentUserName, itemName: "\(self.usersDailyJobs[indexPath.row].name)", itemCategory: "daily jobs", codeCEXSN: eORx, valuePerTap: -(self.substituteFee), itemDate: Date().timeIntervalSince1970)
-            Points.pointsArray.append(loseSubstitutionPoints)
-            
-            // -----------------------------------------------------------------------------------------
-            // 3. pay the susbtitute the substitution fee AND job value in Income array AND Points array
-            // -----------------------------------------------------------------------------------------
-            
-            // add fee and job value to substitute's Points array
-            let earnedSubstitutionFee = Points(user: substituteName, itemName: "\(self.usersDailyJobs[indexPath.row].name) (sub)", itemCategory: "daily jobs", codeCEXSN: "S", valuePerTap: (self.substituteFee + self.dailyJobsPointValue), itemDate: Date().timeIntervalSince1970)
-            Points.pointsArray.append(earnedSubstitutionFee)
-            
-            // update current user's table view with new row in 'other jobs' only if they assigned the substitution to themself
-            if substituteName == self.currentUserName {
-                let subJobsArray = Points.pointsArray.filter({ $0.user == self.currentUserName && $0.codeCEXSN == "S" && Calendar.current.isDateInToday(Date(timeIntervalSince1970: $0.itemDate)) })
-                
-                let jobSubIndexPath = IndexPath(row: subJobsArray.count - 1, section: 3)
-                self.tableView.beginUpdates()
-                self.tableView.insertRows(at: [jobSubIndexPath], with: .automatic)
-                self.tableView.endUpdates()
-            }
-            
-            // add fee and job value to Income array at substitute's index
-            for (incomeIndex, incomeItem) in Income.currentIncomeArray.enumerated() {
-                if incomeItem.user == substituteName {
-                    Income.currentIncomeArray[incomeIndex].currentPoints += (self.substituteFee + self.dailyJobsPointValue)
-                }
-            }
-            
-            // --------------------------------------------------------------------------------
-            // 4. update the current user's income label last (after all calculations are done)
-            // --------------------------------------------------------------------------------
-            
-            for (incomeIndex, incomeItem) in Income.currentIncomeArray.enumerated() {
-                if incomeItem.user == self.currentUserName {
-                    self.incomeLabel.text = "$\(String(format: "%.2f", Double(Income.currentIncomeArray[incomeIndex].currentPoints) / 100))"
-                }
-            }
-            
-            self.tableView.setEditing(false, animated: true)
-            self.tableView.reloadRows(at: [indexPath], with: .automatic)
-            print("\(substituteName) confirmed as substitute")
-        }))
-        
-        // -----------------
-        // Cancel substitute
-        // -----------------
-        
-        alert3.addAction(UIAlertAction(title: "cancel", style: .cancel, handler: { (action) in
-            alert3.dismiss(animated: true, completion: nil)
-            self.tableView.setEditing(false, animated: true)
-            print("canceled")
-        }))
-        self.present(alert3, animated: true, completion: nil)
-        print("\(substituteName) selected as substitute")
-    }
-    
-    func updateUserIncome(itemValue: Int) {
-        for (index, item) in Income.currentIncomeArray.enumerated() {
-            if item.user == currentUserName {
-                Income.currentIncomeArray[index].currentPoints += itemValue
-                incomeLabel.text = "$\(String(format: "%.2f", Double(Income.currentIncomeArray[index].currentPoints) / 100))"
-            }
-        }
-    }
-    
-    func createNewPointsItemForDailyJobs(indexPath: IndexPath) {
-        let tapCode = "C"
-        let valuePerTap = dailyJobsPointValue
-        let itemName = usersDailyJobs?[indexPath.row].name
-        let itemCategory = "daily jobs"
-        let itemDate = Date().timeIntervalSince1970
-        let user = currentUserName
-        
-        let pointsArrayItem = Points(user: user!, itemName: itemName!, itemCategory: itemCategory, codeCEXSN: tapCode, valuePerTap: valuePerTap!, itemDate: itemDate)
-        Points.pointsArray.append(pointsArrayItem)
-        
-        // // update user's income array & income label
-        for (index, item) in Income.currentIncomeArray.enumerated() {
-            if item.user == currentUserName {
-                Income.currentIncomeArray[index].currentPoints += valuePerTap!
-                incomeLabel.text = "$\(String(format: "%.2f", Double(Income.currentIncomeArray[index].currentPoints) / 100))"
-            }
-        }
-    }
-    
-    func createNewPointsItemForHabits(indexPath: IndexPath) {
-        var valuePerTap = 0
-        
-        let tapCode = "C"
-        if indexPath.row == 0 {
-            valuePerTap = priorityHabitPointValue!
-        } else {
-            valuePerTap = regularHabitPointValue!
-        }
-        let itemName = usersDailyHabits?[indexPath.row].name
-        let itemCategory = "daily habits"
-        let itemDate = Date().timeIntervalSince1970
-        let user = currentUserName
-        
-        let pointThingy = Points(user: user!, itemName: itemName!, itemCategory: itemCategory, codeCEXSN: tapCode, valuePerTap: valuePerTap, itemDate: itemDate)
-        Points.pointsArray.append(pointThingy)
-        
-        // // update user's income array & income label
-        for (index, item) in Income.currentIncomeArray.enumerated() {
-            if item.user == currentUserName {
-                Income.currentIncomeArray[index].currentPoints += valuePerTap
-                incomeLabel.text = "$\(String(format: "%.2f", Double(Income.currentIncomeArray[index].currentPoints) / 100))"
-            }
-        }
-    }
-    
-    func createNewPointsItemForWeeklyJobs(indexPath: IndexPath) {
-        let tapCode = "C"
-        let valuePerTap = weeklyJobsPointValue
-        let itemName = usersWeeklyJobs?[indexPath.row].name
-        let itemCategory = "weekly jobs"
-        let itemDate = Date().timeIntervalSince1970
-        let user = currentUserName
-        
-        let newItemTapped = Points(user: user!, itemName: itemName!, itemCategory: itemCategory, codeCEXSN: tapCode, valuePerTap: valuePerTap!, itemDate: itemDate)
-        Points.pointsArray.append(newItemTapped)
-        
-        // update user's income array & income label
-        for (index, item) in Income.currentIncomeArray.enumerated() {
-            if item.user == currentUserName {
-                Income.currentIncomeArray[index].currentPoints += weeklyJobsPointValue
-                incomeLabel.text = "$\(String(format: "%.2f", Double(Income.currentIncomeArray[index].currentPoints) / 100))"
-            }
-        }
-    }
-    
     func removeSelectedItemFromPointsArrayAndUpdateIncomeArray(indexPath: IndexPath, category: String, categoryArray: [JobsAndHabits]) {
         // create array to isolate selected item (there should only be one item with current user, current category, current name, and current date of today)
         // NOTE: 'Calendar.current' automatically determines local time zone (no need to setup time zone properties if calling 'Calendar.current')
@@ -1039,12 +706,25 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         }
     }
     
-    func incorrectPasscodeAlert() {
-        let wrongPasscodeAlert = UIAlertController(title: "Incorrect Passcode", message: "Please try again.", preferredStyle: .alert)
-        wrongPasscodeAlert.addAction(UIAlertAction(title: "okay", style: .cancel, handler: { (action) in
-            wrongPasscodeAlert.dismiss(animated: true, completion: nil)
-        }))
-        self.present(wrongPasscodeAlert, animated: true, completion: nil)
+    func deleteItemFromArrayAndUpdateIncomeArrayAndLabel(isoArray: [Points], indexPath: IndexPath) {
+        // if array is not empty, subtract "value per tap" from income array (at user's index) and delete the item from the array, then update user's income label
+        for (pointsIndex, pointsItem) in Points.pointsArray.enumerated() {
+            if pointsItem.user == self.currentUserName && pointsItem.itemCategory == "daily habits" && pointsItem.itemName == isoArray.first?.itemName && Calendar.current.isDateInToday(Date(timeIntervalSince1970: (isoArray.first?.itemDate)!)) {
+                
+                // update item in points array
+                Points.pointsArray[pointsIndex].codeCEXSN = "N"
+                
+                // update user's income array & income label
+                for (incomeIndex, incomeItem) in Income.currentIncomeArray.enumerated() {
+                    if incomeItem.user == self.currentUserName {
+                        Income.currentIncomeArray[incomeIndex].currentPoints -= pointsItem.valuePerTap
+                        self.incomeLabel.text = "$\(String(format: "%.2f", Double(Income.currentIncomeArray[incomeIndex].currentPoints) / 100))"
+                    }
+                }
+                tableView.setEditing(false, animated: true)
+                tableView.reloadRows(at: [indexPath], with: .automatic)
+            }
+        }
     }
     
     // ----------
@@ -1063,27 +743,6 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         let storyboard = UIStoryboard(name: "User", bundle: nil)
         let vc = storyboard.instantiateViewController(withIdentifier: "ReportsVC") as! ReportsVC
         navigationController?.pushViewController(vc, animated: true)
-    }
-    
-    // ---------------
-    // Date calculator
-    // ---------------
-    
-    func dayDifference(from interval : TimeInterval) -> String {
-        
-        let calendar = NSCalendar.current
-        let date = Date(timeIntervalSince1970: interval)
-        if calendar.isDateInYesterday(date) { return "Yesterday" }
-        else if calendar.isDateInToday(date) { return "Today" }
-        else if calendar.isDateInTomorrow(date) { return "Tomorrow" }
-        else {
-            let startOfNow = calendar.startOfDay(for: Date())
-            let startOfTimeStamp = calendar.startOfDay(for: date)
-            let components = calendar.dateComponents([.day], from: startOfNow, to: startOfTimeStamp)
-            let day = components.day!
-            if day < 1 { return "\(abs(day)) days ago" }
-            else { return "In \(day) days" }
-        }
     }
 }
 
