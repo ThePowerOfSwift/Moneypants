@@ -54,7 +54,7 @@
 		CE4832CB1F286843005A7A55 /* ReportsNavController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE4832CA1F286843005A7A55 /* ReportsNavController.swift */; };
 		CE5221101F91136C008CE5BD /* FamilyData.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE52210F1F91136C008CE5BD /* FamilyData.swift */; };
 		CE5221121F916CFA008CE5BD /* Step6JobSummaryCellB.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE5221111F916CFA008CE5BD /* Step6JobSummaryCellB.swift */; };
-		CE532D171FBAD04300381807 /* UserVCExtAlerts.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE532D161FBAD04300381807 /* UserVCExtAlerts.swift */; };
+		CE532D171FBAD04300381807 /* UserVCExtAlertsEtc.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE532D161FBAD04300381807 /* UserVCExtAlertsEtc.swift */; };
 		CE532D191FBAD3C900381807 /* UserVCExtWeeklyJobs.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE532D181FBAD3C900381807 /* UserVCExtWeeklyJobs.swift */; };
 		CE532D1B1FBAD69A00381807 /* UserVCExtDailyHabits.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE532D1A1FBAD69A00381807 /* UserVCExtDailyHabits.swift */; };
 		CE532D1D1FBAD7F100381807 /* UserVCExtDailyJobs.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE532D1C1FBAD7F100381807 /* UserVCExtDailyJobs.swift */; };
@@ -99,6 +99,8 @@
 		CEAAF9DC1F356F2400846DD5 /* PaydayVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEAAF9DB1F356F2400846DD5 /* PaydayVC.swift */; };
 		CEAAF9DE1F35A41C00846DD5 /* SpendingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEAAF9DD1F35A41C00846DD5 /* SpendingVC.swift */; };
 		CEAD053E1F2209A60097CD33 /* UserCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEAD053D1F2209A60097CD33 /* UserCell.swift */; };
+		CEAF4B3C1FBBF1FE008E623C /* 008732264-coin-gold.wav in Resources */ = {isa = PBXBuildFile; fileRef = CEAF4B3B1FBBF1FE008E623C /* 008732264-coin-gold.wav */; };
+		CEAF4B3E1FBBF490008E623C /* SOUND EFFECT TADA.wav in Resources */ = {isa = PBXBuildFile; fileRef = CEAF4B3D1FBBF490008E623C /* SOUND EFFECT TADA.wav */; };
 		CEAF71A41FA271DB0097EACF /* Budget.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEAF71A31FA271DB0097EACF /* Budget.swift */; };
 		CEB2FD541EFF4DB300763862 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = CEB2FD531EFF4DB300763862 /* GoogleService-Info.plist */; };
 		CEB32C691F2C09DC0069D8B0 /* ReportsCBVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB32C681F2C09DB0069D8B0 /* ReportsCBVC.swift */; };
@@ -178,7 +180,7 @@
 		CE4832CA1F286843005A7A55 /* ReportsNavController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReportsNavController.swift; sourceTree = "<group>"; };
 		CE52210F1F91136C008CE5BD /* FamilyData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FamilyData.swift; sourceTree = "<group>"; };
 		CE5221111F916CFA008CE5BD /* Step6JobSummaryCellB.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Step6JobSummaryCellB.swift; sourceTree = "<group>"; };
-		CE532D161FBAD04300381807 /* UserVCExtAlerts.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserVCExtAlerts.swift; sourceTree = "<group>"; };
+		CE532D161FBAD04300381807 /* UserVCExtAlertsEtc.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserVCExtAlertsEtc.swift; sourceTree = "<group>"; };
 		CE532D181FBAD3C900381807 /* UserVCExtWeeklyJobs.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserVCExtWeeklyJobs.swift; sourceTree = "<group>"; };
 		CE532D1A1FBAD69A00381807 /* UserVCExtDailyHabits.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserVCExtDailyHabits.swift; sourceTree = "<group>"; };
 		CE532D1C1FBAD7F100381807 /* UserVCExtDailyJobs.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserVCExtDailyJobs.swift; sourceTree = "<group>"; };
@@ -223,6 +225,8 @@
 		CEAAF9DB1F356F2400846DD5 /* PaydayVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaydayVC.swift; sourceTree = "<group>"; };
 		CEAAF9DD1F35A41C00846DD5 /* SpendingVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpendingVC.swift; sourceTree = "<group>"; };
 		CEAD053D1F2209A60097CD33 /* UserCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserCell.swift; sourceTree = "<group>"; };
+		CEAF4B3B1FBBF1FE008E623C /* 008732264-coin-gold.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "008732264-coin-gold.wav"; sourceTree = "<group>"; };
+		CEAF4B3D1FBBF490008E623C /* SOUND EFFECT TADA.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "SOUND EFFECT TADA.wav"; sourceTree = "<group>"; };
 		CEAF71A31FA271DB0097EACF /* Budget.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Budget.swift; sourceTree = "<group>"; };
 		CEB2FD531EFF4DB300763862 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		CEB32C681F2C09DB0069D8B0 /* ReportsCBVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = ReportsCBVC.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
@@ -302,6 +306,7 @@
 				CEDBFE2C1F2AE41900829DE4 /* View */,
 				CE69C0EA1F7434BD0024D09F /* Controller */,
 				89FB675E1D5C82AB002B2484 /* Assets.xcassets */,
+				CEAF4B3F1FBC43C1008E623C /* SoundFX */,
 				89FB67631D5C82AB002B2484 /* Info.plist */,
 				CEB2FD531EFF4DB300763862 /* GoogleService-Info.plist */,
 			);
@@ -341,7 +346,7 @@
 				CE532D1C1FBAD7F100381807 /* UserVCExtDailyJobs.swift */,
 				CE532D1A1FBAD69A00381807 /* UserVCExtDailyHabits.swift */,
 				CE532D181FBAD3C900381807 /* UserVCExtWeeklyJobs.swift */,
-				CE532D161FBAD04300381807 /* UserVCExtAlerts.swift */,
+				CE532D161FBAD04300381807 /* UserVCExtAlertsEtc.swift */,
 				CEAD053D1F2209A60097CD33 /* UserCell.swift */,
 				CE7FF98E1F34124F000AD071 /* FeeVC.swift */,
 				CE7FF98C1F340E6A000AD071 /* WithdrawalVC.swift */,
@@ -448,6 +453,15 @@
 				CEA738C01F8F30BC00C3266D /* Step5VideoVC.swift */,
 			);
 			name = "Step 5 - Payday Assign";
+			sourceTree = "<group>";
+		};
+		CEAF4B3F1FBC43C1008E623C /* SoundFX */ = {
+			isa = PBXGroup;
+			children = (
+				CEAF4B3B1FBBF1FE008E623C /* 008732264-coin-gold.wav */,
+				CEAF4B3D1FBBF490008E623C /* SOUND EFFECT TADA.wav */,
+			);
+			name = SoundFX;
 			sourceTree = "<group>";
 		};
 		CEAF71A11FA24B0F0097EACF /* Step 8 - Outside Income */ = {
@@ -676,12 +690,14 @@
 				CEB2FD541EFF4DB300763862 /* GoogleService-Info.plist in Resources */,
 				CE1CB5291F0214BB009A8DAC /* Mom.jpg in Resources */,
 				CE1CB5161F01AD9E009A8DAC /* Arista2.0_fat.ttf in Resources */,
+				CEAF4B3C1FBBF1FE008E623C /* 008732264-coin-gold.wav in Resources */,
 				CE1CB5151F01AD9E009A8DAC /* Arista2.0.ttf in Resources */,
 				CE1CB5131F01AD9E009A8DAC /* Arista2.0 Alternate light.ttf in Resources */,
 				89FB675F1D5C82AB002B2484 /* Assets.xcassets in Resources */,
 				CE1CB5181F01AD9E009A8DAC /* Arista2.0Alternate_full.ttf in Resources */,
 				89FB675D1D5C82AB002B2484 /* Setup.storyboard in Resources */,
 				CE1CB5171F01AD9E009A8DAC /* Arista2.0Alternate.ttf in Resources */,
+				CEAF4B3E1FBBF490008E623C /* SOUND EFFECT TADA.wav in Resources */,
 				CE0E19731F168B3900DEDBDE /* Home.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -799,7 +815,7 @@
 				CE2CCC001F27136C00ACA17F /* VideoPlaybackVC.swift in Sources */,
 				CE951E4D1F4B7C63003B5EEF /* PaydayDetailCellC2.swift in Sources */,
 				CE7FF98F1F34124F000AD071 /* FeeVC.swift in Sources */,
-				CE532D171FBAD04300381807 /* UserVCExtAlerts.swift in Sources */,
+				CE532D171FBAD04300381807 /* UserVCExtAlertsEtc.swift in Sources */,
 				CE1B477F1F186E99007C7515 /* HomeCustomCell.swift in Sources */,
 				CEAAF9DA1F356D3800846DD5 /* PaydayCell.swift in Sources */,
 				CE99F07E1F0AB53D007E01E7 /* Step9IncomeSummaryVC.swift in Sources */,

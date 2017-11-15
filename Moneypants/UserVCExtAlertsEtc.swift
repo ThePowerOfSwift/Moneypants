@@ -87,4 +87,25 @@ extension UserVC {
             else { return "In \(day) days" }
         }
     }
+    
+    func calculateLastPayday() -> Date {
+        let today = Date()
+        var lastPayday: Date!
+        
+        for n in 1...7 {
+            let previousDate = Calendar.current.date(byAdding: Calendar.Component.day, value: -n, to: today)
+            // format previous date to show weekday in long format
+            // if weekday matches payday, then count number of days since then and only subtotal values since then
+            let formatterLong = DateFormatter()
+            formatterLong.dateFormat = "EEEE"
+            
+            if formatterLong.string(from: previousDate!).contains("Saturday") {
+                lastPayday = previousDate
+                print("payday last was:",previousDate!)
+            }
+        }
+//        print(lastPayday)
+//        print(Date().days(from: lastPayday))
+        return lastPayday
+    }
 }

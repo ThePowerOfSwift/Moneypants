@@ -1,4 +1,5 @@
 import UIKit
+import AVFoundation
 
 class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
@@ -7,7 +8,9 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     @IBOutlet weak var topView: UIView!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var dateLower: UILabel!
-    @IBOutlet weak var greenGrid: UIButton!
+    @IBOutlet weak var earningsIndicatorButton: UIButton!
+    @IBOutlet weak var habitBonusCenterConstraint: NSLayoutConstraint!
+    @IBOutlet weak var habitBonusView: UIView!
     
     let feesDebts: [String] = ["add a fee...", "add a withdrawal..."]
     
@@ -20,6 +23,7 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     var priorityHabitPointValue: Int!
     var regularHabitPointValue: Int!
     var weeklyJobsPointValue: Int!
+    var jobAndHabitBonusValue: Int!
     var substituteFee: Int!
     
     var subFeeFormatted: String!
@@ -28,8 +32,12 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     var unexcusedTitle: String!
     var unexcusedMessage: String!
     
+    var habitBonusSound = AVAudioPlayer()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        prepHabitBonusSFX()
         
         // ------
         // badges
@@ -51,10 +59,14 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         userImage.layer.borderWidth = 0.5
         userImage.layer.borderColor = UIColor.black.cgColor
         
-        greenGrid.layer.cornerRadius = greenGrid.bounds.height / 6.4
-        greenGrid.layer.masksToBounds = true
-        greenGrid.layer.borderWidth = 0.5
-        greenGrid.layer.borderColor = UIColor.black.cgColor
+        habitBonusView.layer.borderWidth = 4
+        habitBonusView.layer.borderColor = UIColor.lightGray.cgColor
+        habitBonusView.alpha = 0
+        
+        earningsIndicatorButton.layer.cornerRadius = earningsIndicatorButton.bounds.height / 6.4
+        earningsIndicatorButton.layer.masksToBounds = true
+        earningsIndicatorButton.layer.borderWidth = 0.5
+        earningsIndicatorButton.layer.borderColor = UIColor.black.cgColor
         
         usersDailyJobs = JobsAndHabits.finalDailyJobsArray.sorted(by: { $0.order < $1.order }).filter({ return $0.assigned == currentUserName })
         usersDailyHabits = JobsAndHabits.finalDailyHabitsArray.sorted(by: { $0.order < $1.order }).filter({ return $0.assigned == currentUserName })
@@ -63,6 +75,7 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         priorityHabitPointValue = Int((Double(FamilyData.adjustedNatlAvgYrlySpendingPerKid) / 52 * 0.065 / 7 * 100).rounded(.up))
         regularHabitPointValue = Int((Double(FamilyData.adjustedNatlAvgYrlySpendingPerKid) / 52 * 0.015 / 7 * 100).rounded(.up))
         weeklyJobsPointValue = Int((Double(FamilyData.adjustedNatlAvgYrlySpendingEntireFam) * 0.2 / 52 / Double(JobsAndHabits.finalWeeklyJobsArray.count) * 100).rounded(.up))
+        jobAndHabitBonusValue = Int(Double(FamilyData.adjustedNatlAvgYrlySpendingPerKid) / 52 * 0.20 * 100)
         substituteFee = FamilyData.feeValueMultiplier / usersDailyJobs.count
         
         checkIncome()
@@ -296,6 +309,23 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
             } else {
                 tableView.deselectRow(at: indexPath, animated: true)
             }
+            
+            // calculate how much user has earned for habits since last payday
+            // create array to isolate current user's daily habit points for all days that are greater than last payday
+            let pointsEarnedSinceLastPayday = Points.pointsArray.filter({ $0.user == currentUserName && $0.itemCategory == "daily habits" && Date(timeIntervalSince1970: $0.itemDate) >= calculateLastPayday() })
+            var habitSubtotal: Int = 0
+            for pointsItem in pointsEarnedSinceLastPayday {
+                habitSubtotal += pointsItem.valuePerTap
+            }
+            if habitSubtotal >= 50 {
+                displayHabitBonusFlyover()
+                habitBonusSound.play()
+            }
+            
+            if habitSubtotal >= jobAndHabitBonusValue {
+                displayHabitBonusFlyover()
+                habitBonusSound.play()
+            }
         }
         
         // -----------
@@ -526,6 +556,58 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     // Functions
     // ---------
     
+    func removeSelectedItemFromPointsArrayAndUpdateIncomeArray(indexPath: IndexPath, category: String, categoryArray: [JobsAndHabits]) {
+        // create array to isolate selected item (there should only be one item with current user, current category, current name, and current date of today)
+        // NOTE: 'Calendar.current' automatically determines local time zone (no need to setup time zone properties if calling 'Calendar.current')
+        let isoArrayForItem = Points.pointsArray.filter({ $0.user == self.currentUserName && $0.itemCategory == category && $0.itemName == categoryArray[indexPath.row].name && Calendar.current.isDateInToday(Date(timeIntervalSince1970: $0.itemDate)) })
+        
+        if isoArrayForItem.isEmpty {
+            // do nothing (this is the rare instance where user is resetting an excused or unexcused job that was assigned to themself)
+            // update user's income label
+            tableView.setEditing(false, animated: true)
+            tableView.reloadRows(at: [indexPath], with: .automatic)
+        } else {
+            for (pointsIndex, pointsItem) in Points.pointsArray.enumerated() {
+                if pointsItem.user == self.currentUserName && pointsItem.itemCategory == category && pointsItem.itemName == isoArrayForItem[0].itemName && Calendar.current.isDateInToday(Date(timeIntervalSince1970: (isoArrayForItem.first?.itemDate)!)) {
+                    
+                    // remove item from points array
+                    Points.pointsArray.remove(at: pointsIndex)
+                    
+                    // update user's income array & income label
+                    for (incomeIndex, incomeItem) in Income.currentIncomeArray.enumerated() {
+                        if incomeItem.user == self.currentUserName {
+                            Income.currentIncomeArray[incomeIndex].currentPoints -= pointsItem.valuePerTap
+                            self.incomeLabel.text = "$\(String(format: "%.2f", Double(Income.currentIncomeArray[incomeIndex].currentPoints) / 100))"
+                        }
+                    }
+                    tableView.setEditing(false, animated: true)
+                    tableView.reloadRows(at: [indexPath], with: .automatic)
+                }
+            }
+        }
+    }
+    
+    func deleteItemFromArrayAndUpdateIncomeArrayAndLabel(isoArray: [Points], indexPath: IndexPath) {
+        // if array is not empty, subtract "value per tap" from income array (at user's index) and delete the item from the array, then update user's income label
+        for (pointsIndex, pointsItem) in Points.pointsArray.enumerated() {
+            if pointsItem.user == self.currentUserName && pointsItem.itemCategory == "daily habits" && pointsItem.itemName == isoArray.first?.itemName && Calendar.current.isDateInToday(Date(timeIntervalSince1970: (isoArray.first?.itemDate)!)) {
+                
+                // update item in points array
+                Points.pointsArray[pointsIndex].codeCEXSN = "N"
+                
+                // update user's income array & income label
+                for (incomeIndex, incomeItem) in Income.currentIncomeArray.enumerated() {
+                    if incomeItem.user == self.currentUserName {
+                        Income.currentIncomeArray[incomeIndex].currentPoints -= pointsItem.valuePerTap
+                        self.incomeLabel.text = "$\(String(format: "%.2f", Double(Income.currentIncomeArray[incomeIndex].currentPoints) / 100))"
+                    }
+                }
+                tableView.setEditing(false, animated: true)
+                tableView.reloadRows(at: [indexPath], with: .automatic)
+            }
+        }
+    }
+    
     func getParentalPasscodeThenResetToZero(indexPath: IndexPath, category: String, categoryArray: [JobsAndHabits]) {
         let alert = UIAlertController(title: "Parental Passcode Required", message: "You must enter a parental passcode to override an excused or unexcused job.", preferredStyle: .alert)
         alert.addTextField(configurationHandler: { (textField) in
@@ -544,7 +626,7 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                 // create array to isolate selected item (for current user, this category, this job name, on this date)
                 // NOTE: 'Calendar.current' automatically determines local time zone (no need to setup time zone properties if calling 'Calendar.current')
                 let isoArrayForItem = Points.pointsArray.filter({ $0.user == self.currentUserName && $0.itemCategory == category && $0.itemName == categoryArray[indexPath.row].name && Calendar.current.isDateInToday(Date(timeIntervalSince1970: $0.itemDate)) })
-
+                
                 // -------------------------------
                 // 1. remove item for current user
                 // -------------------------------
@@ -644,58 +726,6 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         self.present(alert, animated: true, completion: nil)
     }
     
-    func removeSelectedItemFromPointsArrayAndUpdateIncomeArray(indexPath: IndexPath, category: String, categoryArray: [JobsAndHabits]) {
-        // create array to isolate selected item (there should only be one item with current user, current category, current name, and current date of today)
-        // NOTE: 'Calendar.current' automatically determines local time zone (no need to setup time zone properties if calling 'Calendar.current')
-        let isoArrayForItem = Points.pointsArray.filter({ $0.user == self.currentUserName && $0.itemCategory == category && $0.itemName == categoryArray[indexPath.row].name && Calendar.current.isDateInToday(Date(timeIntervalSince1970: $0.itemDate)) })
-        
-        if isoArrayForItem.isEmpty {
-            // do nothing (this is the rare instance where user is resetting an excused or unexcused job that was assigned to themself)
-            // update user's income label
-            tableView.setEditing(false, animated: true)
-            tableView.reloadRows(at: [indexPath], with: .automatic)
-        } else {
-            for (pointsIndex, pointsItem) in Points.pointsArray.enumerated() {
-                if pointsItem.user == self.currentUserName && pointsItem.itemCategory == category && pointsItem.itemName == isoArrayForItem[0].itemName && Calendar.current.isDateInToday(Date(timeIntervalSince1970: (isoArrayForItem.first?.itemDate)!)) {
-                    
-                    // remove item from points array
-                    Points.pointsArray.remove(at: pointsIndex)
-                    
-                    // update user's income array & income label
-                    for (incomeIndex, incomeItem) in Income.currentIncomeArray.enumerated() {
-                        if incomeItem.user == self.currentUserName {
-                            Income.currentIncomeArray[incomeIndex].currentPoints -= pointsItem.valuePerTap
-                            self.incomeLabel.text = "$\(String(format: "%.2f", Double(Income.currentIncomeArray[incomeIndex].currentPoints) / 100))"
-                        }
-                    }
-                    tableView.setEditing(false, animated: true)
-                    tableView.reloadRows(at: [indexPath], with: .automatic)
-                }
-            }
-        }
-    }
-    
-    func deleteItemFromArrayAndUpdateIncomeArrayAndLabel(isoArray: [Points], indexPath: IndexPath) {
-        // if array is not empty, subtract "value per tap" from income array (at user's index) and delete the item from the array, then update user's income label
-        for (pointsIndex, pointsItem) in Points.pointsArray.enumerated() {
-            if pointsItem.user == self.currentUserName && pointsItem.itemCategory == "daily habits" && pointsItem.itemName == isoArray.first?.itemName && Calendar.current.isDateInToday(Date(timeIntervalSince1970: (isoArray.first?.itemDate)!)) {
-                
-                // update item in points array
-                Points.pointsArray[pointsIndex].codeCEXSN = "N"
-                
-                // update user's income array & income label
-                for (incomeIndex, incomeItem) in Income.currentIncomeArray.enumerated() {
-                    if incomeItem.user == self.currentUserName {
-                        Income.currentIncomeArray[incomeIndex].currentPoints -= pointsItem.valuePerTap
-                        self.incomeLabel.text = "$\(String(format: "%.2f", Double(Income.currentIncomeArray[incomeIndex].currentPoints) / 100))"
-                    }
-                }
-                tableView.setEditing(false, animated: true)
-                tableView.reloadRows(at: [indexPath], with: .automatic)
-            }
-        }
-    }
-    
     // ----------
     // Navigation
     // ----------
@@ -708,10 +738,37 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     // Green Grid Button
     // -----------------
     
-    @IBAction func greenGridButtonTapped(_ sender: UIButton) {
-        let storyboard = UIStoryboard(name: "User", bundle: nil)
-        let vc = storyboard.instantiateViewController(withIdentifier: "ReportsVC") as! ReportsVC
-        navigationController?.pushViewController(vc, animated: true)
+    @IBAction func earningsIndicatorButtonTapped(_ sender: UIButton) {
+        //        let storyboard = UIStoryboard(name: "User", bundle: nil)
+        //        let vc = storyboard.instantiateViewController(withIdentifier: "ReportsVC") as! ReportsVC
+        //        navigationController?.pushViewController(vc, animated: true)
+    }
+    
+    func prepHabitBonusSFX() {
+        do {
+            habitBonusSound = try AVAudioPlayer(contentsOf: URL.init(fileURLWithPath: Bundle.main.path(forResource: "008732264-coin-gold", ofType: "wav")!))
+            habitBonusSound.prepareToPlay()
+        } catch {
+            print(error)
+        }
+    }
+    
+    func displayHabitBonusFlyover() {
+        habitBonusCenterConstraint.constant = 0
+        UIView.animate(withDuration: 0.3) {
+            self.habitBonusView.alpha = 1
+            self.view.layoutIfNeeded()
+        }
+        
+        habitBonusSound.play()
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+            UIView.animate(withDuration: 0.3, animations: {
+                self.habitBonusCenterConstraint.constant = 300
+                self.habitBonusView.alpha = 0
+                self.view.layoutIfNeeded()
+            })
+        }
     }
 }
 
