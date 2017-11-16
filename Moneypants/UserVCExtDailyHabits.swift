@@ -25,6 +25,7 @@ extension UserVC {
             if item.user == currentUserName {
                 Income.currentIncomeArray[index].currentPoints += valuePerTap
                 incomeLabel.text = "$\(String(format: "%.2f", Double(Income.currentIncomeArray[index].currentPoints) / 100))"
+                updateProgressMeterHeights()
             }
         }
     }

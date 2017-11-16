@@ -439,8 +439,6 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
             unexcusedAction.backgroundColor = UIColor(patternImage: UIImage(named: "unexcused")!)
             resetAction.backgroundColor = UIColor(patternImage: UIImage(named: "reset")!)
             
-            updateProgressMeterHeights()
-            
             return [resetAction, unexcusedAction, excusedAction]
             
         } else if indexPath.section == 1 {
@@ -462,7 +460,7 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                     self.createZeroValueItemForDailyHabit(indexPath: indexPath)
                 } else {
                     if isoArrayForItem.first?.codeCEXSN == "C" {
-                        self.deleteItemFromArrayAndUpdateIncomeArrayAndLabel(isoArray: isoArrayForItem, indexPath: indexPath)
+                        self.updateItemInArrayAndUpdateIncomeArrayAndLabel(isoArray: isoArrayForItem, indexPath: indexPath)
                     } else if isoArrayForItem.first?.codeCEXSN == "N" {
                         self.alertN(indexPath: indexPath, deselectRow: false, jobOrHabit: "habit")
                     }
@@ -489,8 +487,6 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
             
             notDoneAction.backgroundColor = UIColor(patternImage: UIImage(named: "not done")!)
             resetAction.backgroundColor = UIColor(patternImage: UIImage(named: "reset")!)
-            
-            updateProgressMeterHeights()
             
             return [resetAction, notDoneAction]
             
@@ -538,8 +534,6 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
             substituteAction.backgroundColor = UIColor(patternImage: UIImage(named: "substitute")!)
             resetAction.backgroundColor = UIColor(patternImage: UIImage(named: "reset")!)
             
-            updateProgressMeterHeights()
-            
             return [resetAction, substituteAction]
         }
     }
@@ -585,7 +579,8 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                     for (incomeIndex, incomeItem) in Income.currentIncomeArray.enumerated() {
                         if incomeItem.user == self.currentUserName {
                             Income.currentIncomeArray[incomeIndex].currentPoints -= pointsItem.valuePerTap
-                            self.incomeLabel.text = "$\(String(format: "%.2f", Double(Income.currentIncomeArray[incomeIndex].currentPoints) / 100))"
+                            incomeLabel.text = "$\(String(format: "%.2f", Double(Income.currentIncomeArray[incomeIndex].currentPoints) / 100))"
+                            updateProgressMeterHeights()
                         }
                     }
                     tableView.setEditing(false, animated: true)
@@ -595,7 +590,7 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         }
     }
     
-    func deleteItemFromArrayAndUpdateIncomeArrayAndLabel(isoArray: [Points], indexPath: IndexPath) {
+    func updateItemInArrayAndUpdateIncomeArrayAndLabel(isoArray: [Points], indexPath: IndexPath) {
         // if array is not empty, subtract "value per tap" from income array (at user's index) and delete the item from the array, then update user's income label
         for (pointsIndex, pointsItem) in Points.pointsArray.enumerated() {
             if pointsItem.user == self.currentUserName && pointsItem.itemCategory == "daily habits" && pointsItem.itemName == isoArray.first?.itemName && Calendar.current.isDateInToday(Date(timeIntervalSince1970: (isoArray.first?.itemDate)!)) {
@@ -607,7 +602,8 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                 for (incomeIndex, incomeItem) in Income.currentIncomeArray.enumerated() {
                     if incomeItem.user == self.currentUserName {
                         Income.currentIncomeArray[incomeIndex].currentPoints -= pointsItem.valuePerTap
-                        self.incomeLabel.text = "$\(String(format: "%.2f", Double(Income.currentIncomeArray[incomeIndex].currentPoints) / 100))"
+                        incomeLabel.text = "$\(String(format: "%.2f", Double(Income.currentIncomeArray[incomeIndex].currentPoints) / 100))"
+                        updateProgressMeterHeights()
                     }
                 }
                 tableView.setEditing(false, animated: true)
@@ -666,9 +662,9 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                         for (incomeIndex, incomeItem) in Income.currentIncomeArray.enumerated() {
                             if incomeItem.user == self.currentUserName {
                                 self.incomeLabel.text = "$\(String(format: "%.2f", Double(Income.currentIncomeArray[incomeIndex].currentPoints) / 100))"
+                                self.updateProgressMeterHeights()
                             }
                         }
-                        
                         self.tableView.setEditing(false, animated: true)
                         self.tableView.reloadRows(at: [indexPath], with: .automatic)
                     }
@@ -725,6 +721,7 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                     for (incomeIndex, incomeItem) in Income.currentIncomeArray.enumerated() {
                         if incomeItem.user == self.currentUserName {
                             self.incomeLabel.text = "$\(String(format: "%.2f", Double(Income.currentIncomeArray[incomeIndex].currentPoints) / 100))"
+                            self.updateProgressMeterHeights()
                         }
                     }
                 }
@@ -756,7 +753,9 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         totalProgressMeterHeight.constant = habitTotalProgressView.bounds.height * CGFloat(pointsEarnedSinceLastPayday().total) / CGFloat(potentialWeeklyEarnings)
             
         UIView.animate(withDuration: 0.3) {
-            self.view.layoutIfNeeded()
+            
+            self.habitTotalProgressView.layoutIfNeeded()
+//            self.view.layoutIfNeeded()
         }
     }
     

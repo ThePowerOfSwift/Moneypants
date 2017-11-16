@@ -3,16 +3,9 @@ import UIKit
 extension UserVC {
     
     func checkIncome() {
-        if Income.currentIncomeArray.filter({ $0.user == currentUserName }).isEmpty {
-            // create a default array
-            let newUserPoints = Income(user: currentUserName, currentPoints: 0)
-            Income.currentIncomeArray.append(newUserPoints)
-            incomeLabel.text = "$0.00"
-        } else {
-            for (index, item) in Income.currentIncomeArray.enumerated() {
-                if item.user == currentUserName {
-                    incomeLabel.text = "$\(String(format: "%.2f", Double(Income.currentIncomeArray[index].currentPoints) / 100))"
-                }
+        for (index, item) in Income.currentIncomeArray.enumerated() {
+            if item.user == currentUserName {
+                incomeLabel.text = "$\(String(format: "%.2f", Double(Income.currentIncomeArray[index].currentPoints) / 100))"
             }
         }
     }

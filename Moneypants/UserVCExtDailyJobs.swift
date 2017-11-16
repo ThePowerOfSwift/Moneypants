@@ -77,9 +77,9 @@ extension UserVC {
                         if item.user == self.currentUserName {
                             Income.currentIncomeArray[index].currentPoints -= self.substituteFee
                             self.incomeLabel.text = "$\(String(format: "%.2f", Double(Income.currentIncomeArray[index].currentPoints) / 100))"
+                            self.updateProgressMeterHeights()
                         }
                     }
-                    
                     self.tableView.setEditing(false, animated: true)
                     self.tableView.reloadRows(at: [indexPath], with: .automatic)
                     
@@ -185,9 +185,9 @@ extension UserVC {
             for (incomeIndex, incomeItem) in Income.currentIncomeArray.enumerated() {
                 if incomeItem.user == self.currentUserName {
                     self.incomeLabel.text = "$\(String(format: "%.2f", Double(Income.currentIncomeArray[incomeIndex].currentPoints) / 100))"
+                    self.updateProgressMeterHeights()
                 }
             }
-            
             self.tableView.setEditing(false, animated: true)
             self.tableView.reloadRows(at: [indexPath], with: .automatic)
             print("\(substituteName) confirmed as substitute")
@@ -220,6 +220,7 @@ extension UserVC {
             if item.user == currentUserName {
                 Income.currentIncomeArray[index].currentPoints += dailyJobsPointValue
                 incomeLabel.text = "$\(String(format: "%.2f", Double(Income.currentIncomeArray[index].currentPoints) / 100))"
+                updateProgressMeterHeights()
             }
         }
     }

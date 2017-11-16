@@ -75,6 +75,7 @@ extension UserVC {
                                 if incomeItem.user == self.currentUserName {
                                     Income.currentIncomeArray[incomeIndex].currentPoints -= pointsItem.valuePerTap
                                     self.incomeLabel.text = "$\(String(format: "%.2f", Double(Income.currentIncomeArray[incomeIndex].currentPoints) / 100))"
+                                    self.updateProgressMeterHeights()
                                 }
                             }
                             self.tableView.setEditing(false, animated: true)
@@ -133,6 +134,7 @@ extension UserVC {
                             if incomeItem.user == self.currentUserName {
                                 Income.currentIncomeArray[incomeIndex].currentPoints -= pointsItem.valuePerTap
                                 self.incomeLabel.text = "$\(String(format: "%.2f", Double(Income.currentIncomeArray[incomeIndex].currentPoints) / 100))"
+                                self.updateProgressMeterHeights()
                             }
                         }
                     }
@@ -187,6 +189,7 @@ extension UserVC {
             if item.user == currentUserName {
                 Income.currentIncomeArray[index].currentPoints += weeklyJobsPointValue
                 incomeLabel.text = "$\(String(format: "%.2f", Double(Income.currentIncomeArray[index].currentPoints) / 100))"
+                updateProgressMeterHeights()
             }
         }
     }
