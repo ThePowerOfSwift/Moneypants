@@ -85,8 +85,6 @@ class HomeVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UITa
     @IBAction func printPointsButtonTapped(_ sender: UIBarButtonItem) {
         print("\nPOINTS:\n\n",Points.pointsArray)
     }
-    
-    
 }
 
 

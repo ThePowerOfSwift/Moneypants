@@ -8,9 +8,15 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     @IBOutlet weak var topView: UIView!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var dateLower: UILabel!
-    @IBOutlet weak var earningsIndicatorButton: UIButton!
-    @IBOutlet weak var habitBonusCenterConstraint: NSLayoutConstraint!
+    
+    // flyover
     @IBOutlet weak var habitBonusView: UIView!
+    @IBOutlet weak var habitBonusCenterConstraint: NSLayoutConstraint!
+    
+    // progress meters
+    @IBOutlet weak var habitProgressMeterHeight: NSLayoutConstraint!
+    @IBOutlet weak var totalProgressMeterHeight: NSLayoutConstraint!
+    @IBOutlet weak var habitTotalProgressView: UIView!
     
     let feesDebts: [String] = ["add a fee...", "add a withdrawal..."]
     
@@ -25,6 +31,7 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     var weeklyJobsPointValue: Int!
     var jobAndHabitBonusValue: Int!
     var substituteFee: Int!
+    var bonusSoundAlreadyPlayed: Bool!
     
     var subFeeFormatted: String!
     var excusedTitle: String!
@@ -37,14 +44,6 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        prepHabitBonusSFX()
-        
-        // ------
-        // badges
-        // ------
-        
-//        tabBarController?.tabBar.items?[2].badgeValue = "1"
-        
         currentUserName = MPUser.usersArray[MPUser.currentUser].firstName
         navigationItem.title = currentUserName
         
@@ -54,19 +53,7 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         
         userImage.image = MPUser.usersArray[MPUser.currentUser].photo
         
-        userImage.layer.cornerRadius = topView.bounds.height / 6.4
-        userImage.layer.masksToBounds = true
-        userImage.layer.borderWidth = 0.5
-        userImage.layer.borderColor = UIColor.black.cgColor
-        
-        habitBonusView.layer.borderWidth = 4
-        habitBonusView.layer.borderColor = UIColor.lightGray.cgColor
-        habitBonusView.alpha = 0
-        
-        earningsIndicatorButton.layer.cornerRadius = earningsIndicatorButton.bounds.height / 6.4
-        earningsIndicatorButton.layer.masksToBounds = true
-        earningsIndicatorButton.layer.borderWidth = 0.5
-        earningsIndicatorButton.layer.borderColor = UIColor.black.cgColor
+        customizeImages()
         
         usersDailyJobs = JobsAndHabits.finalDailyJobsArray.sorted(by: { $0.order < $1.order }).filter({ return $0.assigned == currentUserName })
         usersDailyHabits = JobsAndHabits.finalDailyHabitsArray.sorted(by: { $0.order < $1.order }).filter({ return $0.assigned == currentUserName })
@@ -79,6 +66,13 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         substituteFee = FamilyData.feeValueMultiplier / usersDailyJobs.count
         
         checkIncome()
+        prepHabitBonusSFX()
+        checkHabitBonusStatus()
+        
+        // update progress meters with current data
+        let potentialWeeklyEarnings = FamilyData.adjustedNatlAvgYrlySpendingPerKid * 100 / 52
+        habitProgressMeterHeight.constant = habitTotalProgressView.bounds.height * CGFloat(pointsEarnedSinceLastPayday().habits) / CGFloat(jobAndHabitBonusValue)
+        totalProgressMeterHeight.constant = habitTotalProgressView.bounds.height * CGFloat(pointsEarnedSinceLastPayday().total) / CGFloat(potentialWeeklyEarnings)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -309,22 +303,10 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
             } else {
                 tableView.deselectRow(at: indexPath, animated: true)
             }
-            
-            // calculate how much user has earned for habits since last payday
-            // create array to isolate current user's daily habit points for all days that are greater than last payday
-            let pointsEarnedSinceLastPayday = Points.pointsArray.filter({ $0.user == currentUserName && $0.itemCategory == "daily habits" && Date(timeIntervalSince1970: $0.itemDate) >= calculateLastPayday() })
-            var habitSubtotal: Int = 0
-            for pointsItem in pointsEarnedSinceLastPayday {
-                habitSubtotal += pointsItem.valuePerTap
-            }
-            if habitSubtotal >= 50 {
+            // only show flyover if user has earned 75% of their habit points AND the flyover hasn't shown up yet.
+            if pointsEarnedSinceLastPayday().habits >= Int(Double(jobAndHabitBonusValue) * 0.75) && bonusSoundAlreadyPlayed == false {
                 displayHabitBonusFlyover()
-                habitBonusSound.play()
-            }
-            
-            if habitSubtotal >= jobAndHabitBonusValue {
-                displayHabitBonusFlyover()
-                habitBonusSound.play()
+                bonusSoundAlreadyPlayed = true
             }
         }
         
@@ -365,6 +347,8 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                 performSegue(withIdentifier: "DebtsDetailSegue", sender: self)
             }
         }
+        
+        updateProgressMeterHeights()
     }
     
     func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
@@ -455,6 +439,8 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
             unexcusedAction.backgroundColor = UIColor(patternImage: UIImage(named: "unexcused")!)
             resetAction.backgroundColor = UIColor(patternImage: UIImage(named: "reset")!)
             
+            updateProgressMeterHeights()
+            
             return [resetAction, unexcusedAction, excusedAction]
             
         } else if indexPath.section == 1 {
@@ -503,6 +489,9 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
             
             notDoneAction.backgroundColor = UIColor(patternImage: UIImage(named: "not done")!)
             resetAction.backgroundColor = UIColor(patternImage: UIImage(named: "reset")!)
+            
+            updateProgressMeterHeights()
+            
             return [resetAction, notDoneAction]
             
         } else {
@@ -548,13 +537,32 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
             
             substituteAction.backgroundColor = UIColor(patternImage: UIImage(named: "substitute")!)
             resetAction.backgroundColor = UIColor(patternImage: UIImage(named: "reset")!)
+            
+            updateProgressMeterHeights()
+            
             return [resetAction, substituteAction]
         }
+    }
+    
+    // ----------
+    // Navigation
+    // ----------
+    
+    @IBAction func homeButtonTapped(_ sender: UIBarButtonItem) {
+        dismiss(animated: true, completion: nil)
     }
     
     // ---------
     // Functions
     // ---------
+    
+    func checkHabitBonusStatus() {
+        if pointsEarnedSinceLastPayday().habits >= Int(Double(jobAndHabitBonusValue) * 0.75) {
+            bonusSoundAlreadyPlayed = true
+        } else {
+            bonusSoundAlreadyPlayed = false
+        }
+    }
     
     func removeSelectedItemFromPointsArrayAndUpdateIncomeArray(indexPath: IndexPath, category: String, categoryArray: [JobsAndHabits]) {
         // create array to isolate selected item (there should only be one item with current user, current category, current name, and current date of today)
@@ -666,52 +674,58 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                     }
                 }
                 
-                // -----------------------------
-                // 2. remove item for substitute
-                // -----------------------------
+                // check array for value (if current chose 'none' as sub, there will be no "S" entry and the array will be empty)
+                let subIsoArray = Points.pointsArray.filter({ $0.codeCEXSN == "S" && $0.itemCategory == category && $0.itemName == "\(categoryArray[indexPath.row].name) (sub)" && Calendar.current.isDateInToday(Date(timeIntervalSince1970: $0.itemDate)) })
                 
-                var substituteName: String!
-                var substituteValue: Int!
-                // iterate over array to find item with code 'S' in current category with 'sub' in job name on this date (b/c there can only be one daily job with that name that has a sub)
-                for (pointsIndex2, pointsItem2) in Points.pointsArray.enumerated() {
-                    if pointsItem2.codeCEXSN == "S" && pointsItem2.itemCategory == category && pointsItem2.itemName == "\(categoryArray[indexPath.row].name) (sub)" && Calendar.current.isDateInToday(Date(timeIntervalSince1970: pointsItem2.itemDate)) {
-                        
-                        // get sub's name before deleting array item (for later use)
-                        // also get the amount the sub was paid (to subtract from the income array)
-                        substituteName = Points.pointsArray[pointsIndex2].user
-                        substituteValue = Points.pointsArray[pointsIndex2].valuePerTap
-                        
-                        // ----------------------------------------------
-                        // 2A. remove substitute's item from points array
-                        // ----------------------------------------------
-                        
-                        Points.pointsArray.remove(at: pointsIndex2)
-                        
-                        // ------------------------------------------------------------------------------------------------
-                        // 2B. reload the "other jobs" section of tableView (for rare cases where current user is also sub)
-                        // ------------------------------------------------------------------------------------------------
-                        
-                        self.tableView.reloadSections([3], with: .automatic)
+                if !subIsoArray.isEmpty {
+                    
+                    // -----------------------------
+                    // 2. remove item for substitute
+                    // -----------------------------
+                    
+                    var substituteName: String!
+                    var substituteValue: Int!
+                    // iterate over array to find item with code 'S' in current category with 'sub' in job name on this date (b/c there can only be one daily job with that name that has a sub)
+                    for (pointsIndex2, pointsItem2) in Points.pointsArray.enumerated() {
+                        if pointsItem2.codeCEXSN == "S" && pointsItem2.itemCategory == category && pointsItem2.itemName == "\(categoryArray[indexPath.row].name) (sub)" && Calendar.current.isDateInToday(Date(timeIntervalSince1970: pointsItem2.itemDate)) {
+                            
+                            // get sub's name before deleting array item (for later use)
+                            // also get the amount the sub was paid (to subtract from the income array)
+                            substituteName = Points.pointsArray[pointsIndex2].user
+                            substituteValue = Points.pointsArray[pointsIndex2].valuePerTap
+                            
+                            // ----------------------------------------------
+                            // 2A. remove substitute's item from points array
+                            // ----------------------------------------------
+                            
+                            Points.pointsArray.remove(at: pointsIndex2)
+                            
+                            // ------------------------------------------------------------------------------------------------
+                            // 2B. reload the "other jobs" section of tableView (for rare cases where current user is also sub)
+                            // ------------------------------------------------------------------------------------------------
+                            
+                            self.tableView.reloadSections([3], with: .automatic)
+                        }
                     }
-                }
-                
-                // ------------------------------------
-                // 2C. update substitute's income array
-                // ------------------------------------
-                
-                for (incomeIndex2, incomeItem2) in Income.currentIncomeArray.enumerated() {
-                    if incomeItem2.user == substituteName {
-                        Income.currentIncomeArray[incomeIndex2].currentPoints -= substituteValue
+                    
+                    // ------------------------------------
+                    // 2C. update substitute's income array
+                    // ------------------------------------
+                    
+                    for (incomeIndex2, incomeItem2) in Income.currentIncomeArray.enumerated() {
+                        if incomeItem2.user == substituteName {
+                            Income.currentIncomeArray[incomeIndex2].currentPoints -= substituteValue
+                        }
                     }
-                }
-                
-                // -------------------------------------------------------------------------------
-                // 3. update income label again in rare instance the sub was also the current user
-                // -------------------------------------------------------------------------------
-                
-                for (incomeIndex, incomeItem) in Income.currentIncomeArray.enumerated() {
-                    if incomeItem.user == self.currentUserName {
-                        self.incomeLabel.text = "$\(String(format: "%.2f", Double(Income.currentIncomeArray[incomeIndex].currentPoints) / 100))"
+                    
+                    // -------------------------------------------------------------------------------
+                    // 3. update income label again in rare instance the sub was also the current user
+                    // -------------------------------------------------------------------------------
+                    
+                    for (incomeIndex, incomeItem) in Income.currentIncomeArray.enumerated() {
+                        if incomeItem.user == self.currentUserName {
+                            self.incomeLabel.text = "$\(String(format: "%.2f", Double(Income.currentIncomeArray[incomeIndex].currentPoints) / 100))"
+                        }
                     }
                 }
             } else {
@@ -726,24 +740,6 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         self.present(alert, animated: true, completion: nil)
     }
     
-    // ----------
-    // Navigation
-    // ----------
-    
-    @IBAction func homeButtonTapped(_ sender: UIBarButtonItem) {
-        dismiss(animated: true, completion: nil)
-    }
-    
-    // -----------------
-    // Green Grid Button
-    // -----------------
-    
-    @IBAction func earningsIndicatorButtonTapped(_ sender: UIButton) {
-        //        let storyboard = UIStoryboard(name: "User", bundle: nil)
-        //        let vc = storyboard.instantiateViewController(withIdentifier: "ReportsVC") as! ReportsVC
-        //        navigationController?.pushViewController(vc, animated: true)
-    }
-    
     func prepHabitBonusSFX() {
         do {
             habitBonusSound = try AVAudioPlayer(contentsOf: URL.init(fileURLWithPath: Bundle.main.path(forResource: "008732264-coin-gold", ofType: "wav")!))
@@ -753,22 +749,45 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         }
     }
     
-    func displayHabitBonusFlyover() {
-        habitBonusCenterConstraint.constant = 0
+    func updateProgressMeterHeights() {
+        let potentialWeeklyEarnings = FamilyData.adjustedNatlAvgYrlySpendingPerKid * 100 / 52
+        
+        habitProgressMeterHeight.constant = habitTotalProgressView.bounds.height * CGFloat(pointsEarnedSinceLastPayday().habits) / CGFloat(jobAndHabitBonusValue)
+        totalProgressMeterHeight.constant = habitTotalProgressView.bounds.height * CGFloat(pointsEarnedSinceLastPayday().total) / CGFloat(potentialWeeklyEarnings)
+            
         UIView.animate(withDuration: 0.3) {
-            self.habitBonusView.alpha = 1
             self.view.layoutIfNeeded()
         }
-        
-        habitBonusSound.play()
-        
-        DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
-            UIView.animate(withDuration: 0.3, animations: {
-                self.habitBonusCenterConstraint.constant = 300
-                self.habitBonusView.alpha = 0
-                self.view.layoutIfNeeded()
-            })
+    }
+    
+    func pointsEarnedSinceLastPayday() -> (dailyJobs: Int, habits: Int, weeklyJobs: Int, total: Int) {
+        // calculate how much user has earned for all jobs and habits since last payday
+        // create array to isolate current user's points for all days that are greater than last payday
+        let totalPointsEarnedSinceLastPayday = Points.pointsArray.filter({ $0.user == currentUserName && Date(timeIntervalSince1970: $0.itemDate) >= FamilyData.calculatePayday().last })
+        var pointsSubtotal: Int = 0
+        for pointsItem in totalPointsEarnedSinceLastPayday {
+            pointsSubtotal += pointsItem.valuePerTap
         }
+        
+        let habitPointsEarnedSinceLastPayday = Points.pointsArray.filter({ $0.user == currentUserName && $0.itemCategory == "daily habits" && Date(timeIntervalSince1970: $0.itemDate) >= FamilyData.calculatePayday().last })
+        var habitsSubtotal: Int = 0
+        for pointsItem in habitPointsEarnedSinceLastPayday {
+            habitsSubtotal += pointsItem.valuePerTap
+        }
+        
+        let dailyJobsPointsEarnedSinceLastPayday = Points.pointsArray.filter({ $0.user == currentUserName && $0.itemCategory == "daily jobs" && Date(timeIntervalSince1970: $0.itemDate) >= FamilyData.calculatePayday().last })
+        var dailyJobsSubtotal: Int = 0
+        for pointsItem in dailyJobsPointsEarnedSinceLastPayday {
+            dailyJobsSubtotal += pointsItem.valuePerTap
+        }
+        
+        let weeklyJobsPointsEarnedSinceLastPayday = Points.pointsArray.filter({ $0.user == currentUserName && $0.itemCategory == "weekly jobs" && Date(timeIntervalSince1970: $0.itemDate) >= FamilyData.calculatePayday().last })
+        var weeklyJobsSubtotal: Int = 0
+        for pointsItem in weeklyJobsPointsEarnedSinceLastPayday {
+            weeklyJobsSubtotal += pointsItem.valuePerTap
+        }
+        
+        return (dailyJobsSubtotal, habitsSubtotal, weeklyJobsSubtotal, pointsSubtotal)
     }
 }
 

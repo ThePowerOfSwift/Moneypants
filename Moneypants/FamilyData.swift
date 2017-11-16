@@ -48,4 +48,35 @@ struct FamilyData {
             }
         })
     }
+    
+    static func calculatePayday() -> (last: Date, next: Date) {
+        // extract day of week from paydayTime
+        let daysOfWeek = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
+//        let payday = "Saturday 2 PM"
+        var paydayWeekday: String!
+        for day in daysOfWeek {
+            if self.paydayTime.contains(day) {
+                paydayWeekday = day
+            }
+        }
+        
+        // calculate most recent payday, then use that to calculate next payday
+        let today = Date()
+        var lastPayday: Date!
+        var nextPayday: Date!
+        
+        for n in 1...7 {
+            let previousDate = Calendar.current.date(byAdding: Calendar.Component.day, value: -n, to: today)
+            // format previous date to show weekday in long format
+            // if weekday matches payday, then count number of days since then and only subtotal values since then
+            let formatterLong = DateFormatter()
+            formatterLong.dateFormat = "EEEE"
+            
+            if formatterLong.string(from: previousDate!).contains(paydayWeekday) {
+                lastPayday = previousDate
+            }
+        }
+        nextPayday = Calendar.current.date(byAdding: Calendar.Component.day, value: 7, to: lastPayday)
+        return (lastPayday, nextPayday)
+    }
 }
