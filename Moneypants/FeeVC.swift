@@ -1,6 +1,6 @@
 import UIKit
 
-class FeeVC: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate {
+class FeeVC: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate, UITextFieldDelegate {
 
     @IBOutlet weak var feeTextField: UITextField!
     @IBOutlet weak var feeButton: UIButton!
@@ -25,6 +25,7 @@ class FeeVC: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate {
         feePicker.dataSource = self
         feePicker.backgroundColor = UIColor.white
         feeTextField.inputView = feePicker
+        feeTextField.delegate = self
     }
     
     // -----------------
@@ -47,16 +48,16 @@ class FeeVC: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate {
         feeTextField.text = fees[row]
     }
     
-    // --------------
-    // Add Fee Button
-    // --------------
+    // ---------
+    // Functions
+    // ---------
     
     @IBAction func addFeeButtonTapped(_ sender: UIButton) {
         // dismiss keyboard
         view.endEditing(true)
         
         // setup two alert messages (one for 'fighting', and one for everything else)
-        let alertMessageFighting = "You have chosen to charge \(currentUserName!) a $\(String(format: "%.2f", Double(FamilyData.feeValueMultiplier) / 100)) fee for '\(feeTextField.text!)'.\n\nLet \(currentUserName!) know that if \(MPUser.gender(user: MPUser.currentUser).he_she.lowercased()) goes the remainder of the day without \(feeTextField.text!), the fee will be refunded. Tap okay to confirm."
+        let alertMessageFighting = "You have chosen to charge \(currentUserName!) a $\(String(format: "%.2f", Double(FamilyData.feeValueMultiplier) / 100)) fee for '\(feeTextField.text!)'.\n\nLet \(currentUserName!) know that if \(MPUser.gender(user: MPUser.currentUser).he_she.lowercased()) goes the remainder of the day without \(feeTextField.text!), this fee will be refunded. Tap okay to confirm."
         let alertMessageDefault = "You have chosen to charge \(currentUserName!) a $\(String(format: "%.2f", Double(FamilyData.feeValueMultiplier) / 100)) fee for '\(feeTextField.text!)'. Tap okay to confirm."
         
         // throw error message if fee field is blank or has something other than the five options (if user pasted text from somewhere else)
@@ -83,7 +84,7 @@ class FeeVC: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate {
         let alert = UIAlertController(title: "\(feeTextField.text!.capitalized) Fee", message: alertMessage, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "okay", style: .default, handler: {_ in
             CATransaction.setCompletionBlock({
-                let fee = Points(user: self.currentUserName, itemName: self.feeTextField.text!, itemCategory: "fees", codeCEXSN: "F", valuePerTap: -(FamilyData.feeValueMultiplier), itemDate: Date().timeIntervalSince1970)
+                let fee = Points(user: self.currentUserName, itemName: self.feeTextField.text!, itemCategory: "fees", code: "F", valuePerTap: -(FamilyData.feeValueMultiplier), itemDate: Date().timeIntervalSince1970)
                 Points.pointsArray.append(fee)
                 // subtract amount from user's income
                 for (incomeIndex, incomeItem) in Income.currentIncomeArray.enumerated() {
@@ -99,6 +100,12 @@ class FeeVC: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate {
             alert.dismiss(animated: true, completion: nil)
         }))
         self.present(alert, animated: true, completion: nil)
+    }
+    
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        if feeTextField.text == "" {
+            feeTextField.text = "fighting"
+        }
     }
 }
 

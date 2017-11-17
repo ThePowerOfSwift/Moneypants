@@ -93,7 +93,7 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         let userDailyJobs = JobsAndHabits.finalDailyJobsArray.filter({ return $0.assigned == currentUserName })
         let userDailyHabits = JobsAndHabits.finalDailyHabitsArray.filter({ return $0.assigned == currentUserName })
         let userWeeklyJobs = JobsAndHabits.finalWeeklyJobsArray.filter({ return $0.assigned == currentUserName })
-        let subJobsArray = Points.pointsArray.filter({ $0.user == currentUserName && $0.codeCEXSN == "S" && Calendar.current.isDateInToday(Date(timeIntervalSince1970: $0.itemDate)) })
+        let subJobsArray = Points.pointsArray.filter({ $0.user == currentUserName && $0.code == "S" && Calendar.current.isDateInToday(Date(timeIntervalSince1970: $0.itemDate)) })
         if section == 0 {
             return userDailyJobs.count
         } else if section == 1 {
@@ -131,7 +131,7 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         // create array to isolate
-        let subJobsArray = Points.pointsArray.filter({ $0.user == currentUserName && $0.codeCEXSN == "S" && Calendar.current.isDateInToday(Date(timeIntervalSince1970: $0.itemDate)) })
+        let subJobsArray = Points.pointsArray.filter({ $0.user == currentUserName && $0.code == "S" && Calendar.current.isDateInToday(Date(timeIntervalSince1970: $0.itemDate)) })
         if section == 3 && subJobsArray.isEmpty {
             return 0
         } else {
@@ -161,9 +161,9 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                 cell.jobHabitLabel.textColor = .black
             } else {
                 cell.jobHabitLabel.textColor = .lightGray
-                if currentUserCategoryItemDateArray[0].codeCEXSN == "C" {
+                if currentUserCategoryItemDateArray[0].code == "C" {
                     cell.selectionBoxImageView.image = UIImage(named: "checkmark white")
-                } else if currentUserCategoryItemDateArray[0].codeCEXSN == "X" {
+                } else if currentUserCategoryItemDateArray[0].code == "X" {
                     cell.selectionBoxImageView.image = UIImage(named: "X red")
                 } else {
                     cell.selectionBoxImageView.image = UIImage(named: "X gray")
@@ -194,9 +194,9 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                 cell.jobHabitLabel.textColor = .black
             } else {
                 cell.jobHabitLabel.textColor = .lightGray
-                if currentUserCategoryItemDateArray[0].codeCEXSN == "C" {
+                if currentUserCategoryItemDateArray[0].code == "C" {
                     cell.selectionBoxImageView.image = UIImage(named: "checkmark white")
-                } else if currentUserCategoryItemDateArray[0].codeCEXSN == "N" {
+                } else if currentUserCategoryItemDateArray[0].code == "N" {
                     cell.selectionBoxImageView.image = UIImage(named: "X gray")
                 }
             }
@@ -219,9 +219,9 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                 cell.jobHabitLabel.textColor = .black
             } else {
                 cell.jobHabitLabel.textColor = .lightGray
-                if currentUserCategoryItemDateArray[0].codeCEXSN == "C" {
+                if currentUserCategoryItemDateArray[0].code == "C" {
                     cell.selectionBoxImageView.image = UIImage(named: "checkmark white")
-                } else if currentUserCategoryItemDateArray[0].codeCEXSN == "X" {
+                } else if currentUserCategoryItemDateArray[0].code == "X" {
                     cell.selectionBoxImageView.image = UIImage(named: "X red")
                 } else {
                     cell.selectionBoxImageView.image = UIImage(named: "X gray")
@@ -233,7 +233,7 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         // ----------
             
         } else if indexPath.section == 3 {
-            let subJobsArray = Points.pointsArray.filter({ $0.user == currentUserName && $0.codeCEXSN == "S" && Calendar.current.isDateInToday(Date(timeIntervalSince1970: $0.itemDate)) })
+            let subJobsArray = Points.pointsArray.filter({ $0.user == currentUserName && $0.code == "S" && Calendar.current.isDateInToday(Date(timeIntervalSince1970: $0.itemDate)) })
             cell.jobHabitLabel.text = subJobsArray[indexPath.row].itemName
             cell.jobHabitLabel.textColor = .lightGray
             cell.pointsLabel.text = "\(subJobsArray[indexPath.row].valuePerTap)"
@@ -256,7 +256,7 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
             // fees
             if indexPath.row == 0 {
                 // get an array of this user in this category for this item on this day (this may contain multiple values b/c user can add up to 3 fees per day)
-                let isoArrayForItem = Points.pointsArray.filter({ $0.user == currentUserName && $0.codeCEXSN == "F" && Calendar.current.isDateInToday(Date(timeIntervalSince1970: $0.itemDate)) })
+                let isoArrayForItem = Points.pointsArray.filter({ $0.user == currentUserName && $0.code == "F" && Calendar.current.isDateInToday(Date(timeIntervalSince1970: $0.itemDate)) })
                 if isoArrayForItem.isEmpty {
                     cell.jobHabitLabel.textColor = .black
                     cell.selectionBoxLabel.text = ""
@@ -277,15 +277,15 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         
         if indexPath.section == 0 {
             // get an array of this user in this category for this item on this day. If it doesn't exist, then create it w/ tap value = C.
-            // if the array isn't empty, check the codeCEXSN. If it's X or E, it needs a parental pword, then it becomes C. Otherwise, do nothing
+            // if the array isn't empty, check the code. If it's X or E, it needs a parental pword, then it becomes C. Otherwise, do nothing
             let currentUserCategoryItemDateArray = Points.pointsArray.filter({ $0.user == currentUserName && $0.itemCategory == "daily jobs" && $0.itemName == usersDailyJobs?[indexPath.row].name && Calendar.current.isDateInToday(Date(timeIntervalSince1970: $0.itemDate)) })
             if currentUserCategoryItemDateArray.isEmpty {
                 createNewPointsItemForDailyJobs(indexPath: indexPath)
                 tableView.reloadRows(at: [indexPath], with: .automatic)
                 // if array isn't empty, check if numberOfTapsEX has an 'X' or an 'E'
-            } else if currentUserCategoryItemDateArray[0].codeCEXSN == "X" {
+            } else if currentUserCategoryItemDateArray[0].code == "X" {
                 alertX(indexPath: indexPath, deselectRow: true)
-            } else if currentUserCategoryItemDateArray[0].codeCEXSN == "E" {
+            } else if currentUserCategoryItemDateArray[0].code == "E" {
                 alertE(indexPath: indexPath, deselectRow: true)
                 // if array isn't empty and numberOfTapsEX isn't 'X' or 'E' (if array is just 'C')
             } else {
@@ -300,12 +300,12 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         
         if indexPath.section == 1 {
             // get an array of this user in this category for this item on this day. If it doesn't exist, then create it w/ tap value = C.
-            // if the array isn't empty, check the codeCEXSN. If it's X or E, it needs a parental pword, then it becomes C. Otherwise, do nothing
+            // if the array isn't empty, check the code. If it's X or E, it needs a parental pword, then it becomes C. Otherwise, do nothing
             let currentUserCategoryItemDateArray = Points.pointsArray.filter({ $0.user == currentUserName && $0.itemCategory == "daily habits" && $0.itemName == usersDailyHabits?[indexPath.row].name && Calendar.current.isDateInToday(Date(timeIntervalSince1970: $0.itemDate)) })
             if currentUserCategoryItemDateArray.isEmpty {
                 createNewItemForDailyHabit(indexPath: indexPath)
                 tableView.reloadRows(at: [indexPath], with: .automatic)
-            } else if currentUserCategoryItemDateArray.first?.codeCEXSN == "N" {
+            } else if currentUserCategoryItemDateArray.first?.code == "N" {
                 alertN(indexPath: indexPath, deselectRow: true, jobOrHabit: "habit")
             } else {
                 tableView.deselectRow(at: indexPath, animated: true)
@@ -323,14 +323,14 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
         if indexPath.section == 2 {
             // get an array of this user in this category for this item on this day. If it doesn't exist, then create it w/ tap value = C.
-            // if the array isn't empty, check the codeCEXSN. If it's X or E, it needs a parental pword, then it becomes C. Otherwise, do nothing
+            // if the array isn't empty, check the code. If it's X or E, it needs a parental pword, then it becomes C. Otherwise, do nothing
             let currentUserCategoryItemDateArray = Points.pointsArray.filter({ $0.user == currentUserName && $0.itemCategory == "weekly jobs" && $0.itemName == usersWeeklyJobs?[indexPath.row].name && Calendar.current.isDateInToday(Date(timeIntervalSince1970: $0.itemDate)) })
             if currentUserCategoryItemDateArray.isEmpty {
                 createNewPointsItemForWeeklyJobs(indexPath: indexPath)
                 tableView.reloadRows(at: [indexPath], with: .automatic)
-            } else if currentUserCategoryItemDateArray.first?.codeCEXSN == "C" {
+            } else if currentUserCategoryItemDateArray.first?.code == "C" {
                 tableView.deselectRow(at: indexPath, animated: true)
-            } else if currentUserCategoryItemDateArray.first?.codeCEXSN == "N" {
+            } else if currentUserCategoryItemDateArray.first?.code == "N" {
                 alertN(indexPath: indexPath, deselectRow: true, jobOrHabit: "job")
             }
         }
@@ -350,7 +350,7 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         if indexPath.section == 4 {
             if indexPath.row == 0 {
                 // get an array of this user in this category for this item on this day (this may contain multiple values b/c user can add up to 3 fees per day)
-                let isoArrayForItem = Points.pointsArray.filter({ $0.user == currentUserName && $0.codeCEXSN == "F" && Calendar.current.isDateInToday(Date(timeIntervalSince1970: $0.itemDate)) })
+                let isoArrayForItem = Points.pointsArray.filter({ $0.user == currentUserName && $0.code == "F" && Calendar.current.isDateInToday(Date(timeIntervalSince1970: $0.itemDate)) })
                 if isoArrayForItem.count == 3 {
                     tooManyStrikesAlert()
                     tableView.deselectRow(at: indexPath, animated: true)
@@ -402,11 +402,11 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                 if isoArrayForItem.isEmpty {
                     self.runExcusedUnexcusedDialogueForDailyJob(alertTitle: self.excusedTitle, alertMessage: self.excusedMessage, isoArray: isoArrayForItem, indexPath: indexPath, assignEorX: "E")
                 } else {
-                    if isoArrayForItem.first?.codeCEXSN == "C" {
+                    if isoArrayForItem.first?.code == "C" {
                         self.runExcusedUnexcusedDialogueForDailyJob(alertTitle: self.excusedTitle, alertMessage: self.excusedMessage, isoArray: isoArrayForItem, indexPath: indexPath, assignEorX: "E")
-                    } else if isoArrayForItem.first?.codeCEXSN == "E" {
+                    } else if isoArrayForItem.first?.code == "E" {
                         self.alertE(indexPath: indexPath, deselectRow: false)
-                    } else if isoArrayForItem.first?.codeCEXSN == "X" {
+                    } else if isoArrayForItem.first?.code == "X" {
                         self.alertX(indexPath: indexPath, deselectRow: false)
                     }
                 }
@@ -420,11 +420,11 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                 if isoArrayForItem.isEmpty {
                     self.runExcusedUnexcusedDialogueForDailyJob(alertTitle: self.unexcusedTitle, alertMessage: self.unexcusedMessage, isoArray: isoArrayForItem, indexPath: indexPath, assignEorX: "X")
                 } else {
-                    if isoArrayForItem.first?.codeCEXSN == "C" {
+                    if isoArrayForItem.first?.code == "C" {
                         self.runExcusedUnexcusedDialogueForDailyJob(alertTitle: self.unexcusedTitle, alertMessage: self.unexcusedMessage, isoArray: isoArrayForItem, indexPath: indexPath, assignEorX: "X")
-                    } else if isoArrayForItem.first?.codeCEXSN == "E" {
+                    } else if isoArrayForItem.first?.code == "E" {
                         self.alertE(indexPath: indexPath, deselectRow: false)
-                    } else if isoArrayForItem.first?.codeCEXSN == "X" {
+                    } else if isoArrayForItem.first?.code == "X" {
                         self.alertX(indexPath: indexPath, deselectRow: false)
                     }
                 }
@@ -441,9 +441,9 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                     tableView.setEditing(false, animated: true)
                 } else {
                     // need to check if item is 'X' or 'E', and if so, need parental password to reset to zero. Otherwise, user can reset 'C' to zero
-                    if isoArrayForItem[0].codeCEXSN == "C" {
+                    if isoArrayForItem[0].code == "C" {
                         self.removeSelectedItemFromPointsArrayAndUpdateIncomeArray(indexPath: indexPath, category: "daily jobs", categoryArray: self.usersDailyJobs)
-                    } else if isoArrayForItem.first?.codeCEXSN == "E" || isoArrayForItem.first?.codeCEXSN == "X" {
+                    } else if isoArrayForItem.first?.code == "E" || isoArrayForItem.first?.code == "X" {
                         self.getParentalPasscodeThenResetToZero(indexPath: indexPath, category: "daily jobs", categoryArray: self.usersDailyJobs)
                     }
                 }
@@ -473,9 +473,9 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                     // if array is empty, create new array item with "N" and value of "0"
                     self.createZeroValueItemForDailyHabit(indexPath: indexPath)
                 } else {
-                    if isoArrayForItem.first?.codeCEXSN == "C" {
+                    if isoArrayForItem.first?.code == "C" {
                         self.updateItemInArrayAndUpdateIncomeArrayAndLabel(isoArray: isoArrayForItem, indexPath: indexPath)
-                    } else if isoArrayForItem.first?.codeCEXSN == "N" {
+                    } else if isoArrayForItem.first?.code == "N" {
                         self.alertN(indexPath: indexPath, deselectRow: false, jobOrHabit: "habit")
                     }
                 }
@@ -491,7 +491,7 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                     // do nothing
                     tableView.setEditing(false, animated: true)
                 } else {
-                    if isoArrayForItem.first?.codeCEXSN == "N" {
+                    if isoArrayForItem.first?.code == "N" {
                         self.getParentalPasscodeThenResetItemToZero(isoArray: isoArrayForItem, indexPath: indexPath)
                     } else {
                         self.removeSelectedItemFromPointsArrayAndUpdateIncomeArray(indexPath: indexPath, category: "daily habits", categoryArray: self.usersDailyHabits)
@@ -522,9 +522,9 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                     // if array is empty, create new array item with "N" and value of "0"
                     self.weeklyJobsSubDialogue(indexPath: indexPath, isoArray: isoArrayForItem)
                 } else {
-                    if isoArrayForItem.first?.codeCEXSN == "C" {
+                    if isoArrayForItem.first?.code == "C" {
                         self.weeklyJobsSubDialogue(indexPath: indexPath, isoArray: isoArrayForItem)
-                    } else if isoArrayForItem.first?.codeCEXSN == "N" {
+                    } else if isoArrayForItem.first?.code == "N" {
                         self.alertN(indexPath: indexPath, deselectRow: false, jobOrHabit: "job")
                     }
                 }
@@ -537,9 +537,9 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
             let resetAction = UITableViewRowAction(style: .default, title: "         ", handler: { (action, indexPath) in
                 if isoArrayForItem.isEmpty {
                     tableView.setEditing(false, animated: true)
-                } else if isoArrayForItem.first?.codeCEXSN == "C" {
+                } else if isoArrayForItem.first?.code == "C" {
                     self.removeSelectedItemFromPointsArrayAndUpdateIncomeArray(indexPath: indexPath, category: "weekly jobs", categoryArray: self.usersWeeklyJobs)
-                } else if isoArrayForItem.first?.codeCEXSN == "N" {
+                } else if isoArrayForItem.first?.code == "N" {
                     print("need parental password to reset this to zero. Then remove substitute's values as well")
                     self.getParentalPasscodeThenResetToZero(indexPath: indexPath, category: "weekly jobs", categoryArray: self.usersWeeklyJobs)
                 }
@@ -610,7 +610,7 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
             if pointsItem.user == self.currentUserName && pointsItem.itemCategory == "daily habits" && pointsItem.itemName == isoArray.first?.itemName && Calendar.current.isDateInToday(Date(timeIntervalSince1970: (isoArray.first?.itemDate)!)) {
                 
                 // update item in points array
-                Points.pointsArray[pointsIndex].codeCEXSN = "N"
+                Points.pointsArray[pointsIndex].code = "N"
                 
                 // update user's income array & income label
                 for (incomeIndex, incomeItem) in Income.currentIncomeArray.enumerated() {
@@ -685,7 +685,7 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                 }
                 
                 // check array for value (if current chose 'none' as sub, there will be no "S" entry and the array will be empty)
-                let subIsoArray = Points.pointsArray.filter({ $0.codeCEXSN == "S" && $0.itemCategory == category && $0.itemName == "\(categoryArray[indexPath.row].name) (sub)" && Calendar.current.isDateInToday(Date(timeIntervalSince1970: $0.itemDate)) })
+                let subIsoArray = Points.pointsArray.filter({ $0.code == "S" && $0.itemCategory == category && $0.itemName == "\(categoryArray[indexPath.row].name) (sub)" && Calendar.current.isDateInToday(Date(timeIntervalSince1970: $0.itemDate)) })
                 
                 if !subIsoArray.isEmpty {
                     
@@ -697,7 +697,7 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                     var substituteValue: Int!
                     // iterate over array to find item with code 'S' in current category with 'sub' in job name on this date (b/c there can only be one daily job with that name that has a sub)
                     for (pointsIndex2, pointsItem2) in Points.pointsArray.enumerated() {
-                        if pointsItem2.codeCEXSN == "S" && pointsItem2.itemCategory == category && pointsItem2.itemName == "\(categoryArray[indexPath.row].name) (sub)" && Calendar.current.isDateInToday(Date(timeIntervalSince1970: pointsItem2.itemDate)) {
+                        if pointsItem2.code == "S" && pointsItem2.itemCategory == category && pointsItem2.itemName == "\(categoryArray[indexPath.row].name) (sub)" && Calendar.current.isDateInToday(Date(timeIntervalSince1970: pointsItem2.itemDate)) {
                             
                             // get sub's name before deleting array item (for later use)
                             // also get the amount the sub was paid (to subtract from the income array)
@@ -768,8 +768,8 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
             
         UIView.animate(withDuration: 0.3) {
             
+            // only animate progress view, not whole page (isolate the animation)
             self.habitTotalProgressView.layoutIfNeeded()
-//            self.view.layoutIfNeeded()
         }
     }
     
@@ -782,7 +782,7 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
             pointsSubtotal += pointsItem.valuePerTap
         }
         
-        let habitPointsEarnedSinceLastPayday = Points.pointsArray.filter({ $0.user == currentUserName && $0.itemCategory == "daily habits" && $0.codeCEXSN == "C" && Date(timeIntervalSince1970: $0.itemDate) >= FamilyData.calculatePayday().last })
+        let habitPointsEarnedSinceLastPayday = Points.pointsArray.filter({ $0.user == currentUserName && $0.itemCategory == "daily habits" && $0.code == "C" && Date(timeIntervalSince1970: $0.itemDate) >= FamilyData.calculatePayday().last })
         var habitsSubtotal: Int = 0
         for pointsItem in habitPointsEarnedSinceLastPayday {
             habitsSubtotal += pointsItem.valuePerTap

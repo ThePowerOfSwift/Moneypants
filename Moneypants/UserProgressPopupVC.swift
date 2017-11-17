@@ -10,12 +10,17 @@ class UserProgressPopupVC: UIViewController {
     @IBOutlet weak var habitsProgressBar: UIImageView!
     @IBOutlet weak var totalEarningsProgressBar: UIImageView!
     
+    @IBOutlet weak var habitsMeterLabel: UILabel!
+    @IBOutlet weak var totalMeterLabel: UILabel!
+    
     @IBOutlet weak var habitsHeight: NSLayoutConstraint!
     @IBOutlet weak var totalEarningsHeight: NSLayoutConstraint!
     
     @IBOutlet weak var weekLabel: UILabel!
     
     var currentUserName: String!
+    var jobAndHabitBonusValue: Int!
+    var potentialWeeklyEarnings: Int!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -27,8 +32,8 @@ class UserProgressPopupVC: UIViewController {
         
         currentUserName = MPUser.usersArray[MPUser.currentUser].firstName
         
-        let jobAndHabitBonusValue = Int(Double(FamilyData.adjustedNatlAvgYrlySpendingPerKid) / 52 * 0.20 * 100)
-        let potentialWeeklyEarnings = FamilyData.adjustedNatlAvgYrlySpendingPerKid * 100 / 52
+        jobAndHabitBonusValue = Int(Double(FamilyData.adjustedNatlAvgYrlySpendingPerKid) / 52 * 0.20 * 100)
+        potentialWeeklyEarnings = FamilyData.adjustedNatlAvgYrlySpendingPerKid * 100 / 52
         
         popupView.layer.cornerRadius = 15
         popupView.layer.masksToBounds = true
@@ -45,6 +50,14 @@ class UserProgressPopupVC: UIViewController {
         
         habitsHeight.constant = earningsIndicatorOverlay.bounds.height * CGFloat(pointsEarnedSinceLastPayday().habits) / CGFloat(jobAndHabitBonusValue)
         totalEarningsHeight.constant = earningsIndicatorOverlay.bounds.height * CGFloat(pointsEarnedSinceLastPayday().total) / CGFloat(potentialWeeklyEarnings)
+        
+        print("job and habit bonus value:",jobAndHabitBonusValue)
+        print("75% would be at:",Double(jobAndHabitBonusValue) * 0.75)
+        print("potential weekly earnings:",potentialWeeklyEarnings)
+        print("total points still needed:",potentialWeeklyEarnings - pointsEarnedSinceLastPayday().total)
+        print("total points halfway point:",potentialWeeklyEarnings / 2)
+        
+        showOrHidePointsNeeded()
     }
     
     // ----------
@@ -58,6 +71,25 @@ class UserProgressPopupVC: UIViewController {
     // ---------
     // functions
     // ---------
+    
+    func showOrHidePointsNeeded() {
+        habitsMeterLabel.text = "\(Int((Double(jobAndHabitBonusValue) * 0.75)) - pointsEarnedSinceLastPayday().habits) points needed to earn bonus"
+        totalMeterLabel.text = "\(potentialWeeklyEarnings - pointsEarnedSinceLastPayday().total) points needed to meet budget"
+        
+        // if user has earned at least half of their total habit amount, then show the tedt label
+        if (jobAndHabitBonusValue - pointsEarnedSinceLastPayday().habits) < (jobAndHabitBonusValue / 2) {
+            habitsMeterLabel.isHidden = false
+        } else {
+            habitsMeterLabel.isHidden = true
+        }
+        
+        // if user has earned at least half of their total weekly amount, then show the text label
+        if (potentialWeeklyEarnings - pointsEarnedSinceLastPayday().total < (potentialWeeklyEarnings / 2)) {
+            totalMeterLabel.isHidden = false
+        } else {
+            totalMeterLabel.isHidden = true
+        }
+    }
     
     func pointsEarnedSinceLastPayday() -> (dailyJobs: Int, habits: Int, weeklyJobs: Int, total: Int) {
         // calculate how much user has earned for all jobs and habits since last payday

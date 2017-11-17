@@ -14,7 +14,7 @@ extension UserVC {
         let pointThingy = Points(user: currentUserName,
                                  itemName: (usersDailyHabits?[indexPath.row].name)!,
                                  itemCategory: "daily habits",
-                                 codeCEXSN: "C",
+                                 code: "C",
                                  valuePerTap: valuePerTap,
                                  itemDate: Date().timeIntervalSince1970)
         
@@ -34,7 +34,7 @@ extension UserVC {
         let undoneHabit = Points(user: self.currentUserName,
                                  itemName: self.usersDailyHabits[indexPath.row].name,
                                  itemCategory: "daily habits",
-                                 codeCEXSN: "N",
+                                 code: "N",
                                  valuePerTap: 0,
                                  itemDate: Date().timeIntervalSince1970)
         

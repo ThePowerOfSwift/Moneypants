@@ -69,7 +69,7 @@ extension UserVC {
                     // ----------------------------------------------------------------------------
                     
                     // subtract fee from Points Array
-                    let loseSubstitutionPoints = Points(user: self.currentUserName, itemName: "\(self.usersDailyJobs[indexPath.row].name)", itemCategory: "daily jobs", codeCEXSN: assignEorX, valuePerTap: -(self.substituteFee), itemDate: Date().timeIntervalSince1970)
+                    let loseSubstitutionPoints = Points(user: self.currentUserName, itemName: "\(self.usersDailyJobs[indexPath.row].name)", itemCategory: "daily jobs", code: assignEorX, valuePerTap: -(self.substituteFee), itemDate: Date().timeIntervalSince1970)
                     Points.pointsArray.append(loseSubstitutionPoints)
                     
                     // subtract fee from Income array and update income label
@@ -150,7 +150,7 @@ extension UserVC {
             }
             
             // create charge in points array
-            let loseSubstitutionPoints = Points(user: self.currentUserName, itemName: "\(self.usersDailyJobs[indexPath.row].name)", itemCategory: "daily jobs", codeCEXSN: eORx, valuePerTap: -(self.substituteFee), itemDate: Date().timeIntervalSince1970)
+            let loseSubstitutionPoints = Points(user: self.currentUserName, itemName: "\(self.usersDailyJobs[indexPath.row].name)", itemCategory: "daily jobs", code: eORx, valuePerTap: -(self.substituteFee), itemDate: Date().timeIntervalSince1970)
             Points.pointsArray.append(loseSubstitutionPoints)
             
             // -----------------------------------------------------------------------------------------
@@ -158,12 +158,12 @@ extension UserVC {
             // -----------------------------------------------------------------------------------------
             
             // add fee and job value to substitute's Points array
-            let earnedSubstitutionFee = Points(user: substituteName, itemName: "\(self.usersDailyJobs[indexPath.row].name) (sub)", itemCategory: "daily jobs", codeCEXSN: "S", valuePerTap: (self.substituteFee + self.dailyJobsPointValue), itemDate: Date().timeIntervalSince1970)
+            let earnedSubstitutionFee = Points(user: substituteName, itemName: "\(self.usersDailyJobs[indexPath.row].name) (sub)", itemCategory: "daily jobs", code: "S", valuePerTap: (self.substituteFee + self.dailyJobsPointValue), itemDate: Date().timeIntervalSince1970)
             Points.pointsArray.append(earnedSubstitutionFee)
             
             // update current user's table view with new row in 'other jobs' only if they assigned the substitution to themself
             if substituteName == self.currentUserName {
-                let subJobsArray = Points.pointsArray.filter({ $0.user == self.currentUserName && $0.codeCEXSN == "S" && Calendar.current.isDateInToday(Date(timeIntervalSince1970: $0.itemDate)) })
+                let subJobsArray = Points.pointsArray.filter({ $0.user == self.currentUserName && $0.code == "S" && Calendar.current.isDateInToday(Date(timeIntervalSince1970: $0.itemDate)) })
                 
                 let jobSubIndexPath = IndexPath(row: subJobsArray.count - 1, section: 3)
                 self.tableView.beginUpdates()
@@ -210,7 +210,7 @@ extension UserVC {
         let pointsArrayItem = Points(user: currentUserName,
                                      itemName: (usersDailyJobs?[indexPath.row].name)!,
                                      itemCategory: "daily jobs",
-                                     codeCEXSN: "C",
+                                     code: "C",
                                      valuePerTap: dailyJobsPointValue,
                                      itemDate: Date().timeIntervalSince1970)
         

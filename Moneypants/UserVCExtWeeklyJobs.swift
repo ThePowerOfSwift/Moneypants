@@ -56,7 +56,7 @@ extension UserVC {
                     let noSub = Points(user: self.currentUserName,
                                        itemName: self.usersWeeklyJobs[indexPath.row].name,
                                        itemCategory: "weekly jobs",
-                                       codeCEXSN: "N",
+                                       code: "N",
                                        valuePerTap: 0,
                                        itemDate: Date().timeIntervalSince1970)
                     Points.pointsArray.append(noSub)
@@ -67,7 +67,7 @@ extension UserVC {
                         if pointsItem.user == self.currentUserName && pointsItem.itemCategory == "weekly jobs" && pointsItem.itemName == isoArray[0].itemName && Calendar.current.isDateInToday(Date(timeIntervalSince1970: isoArray[0].itemDate)) {
                             
                             // update item at points array
-                            Points.pointsArray[pointsIndex].codeCEXSN = "N"
+                            Points.pointsArray[pointsIndex].code = "N"
                             Points.pointsArray[pointsIndex].valuePerTap = 0
                             
                             // subtract item from user's income array and update income label
@@ -115,7 +115,7 @@ extension UserVC {
                 let noSub = Points(user: self.currentUserName,
                                    itemName: self.usersWeeklyJobs[indexPath.row].name,
                                    itemCategory: "weekly jobs",
-                                   codeCEXSN: "N",
+                                   code: "N",
                                    valuePerTap: 0,
                                    itemDate: Date().timeIntervalSince1970)
                 Points.pointsArray.append(noSub)
@@ -126,7 +126,7 @@ extension UserVC {
                     if pointsItem.user == self.currentUserName && pointsItem.itemCategory == "weekly jobs" && pointsItem.itemName == isoArray[0].itemName && Calendar.current.isDateInToday(Date(timeIntervalSince1970: isoArray[0].itemDate)) {
                         
                         // update item at points array
-                        Points.pointsArray[pointsIndex].codeCEXSN = "N"
+                        Points.pointsArray[pointsIndex].code = "N"
                         Points.pointsArray[pointsIndex].valuePerTap = 0
                         
                         // subtract item from user's income array and update income label
@@ -146,7 +146,7 @@ extension UserVC {
             // ------------------------------------------------------------------------
             
             // add job value to Points array for substitute
-            let earnedSubstitutionValue = Points(user: substituteName, itemName: "\(self.usersWeeklyJobs[indexPath.row].name) (sub)", itemCategory: "weekly jobs", codeCEXSN: "S", valuePerTap: self.weeklyJobsPointValue, itemDate: Date().timeIntervalSince1970)
+            let earnedSubstitutionValue = Points(user: substituteName, itemName: "\(self.usersWeeklyJobs[indexPath.row].name) (sub)", itemCategory: "weekly jobs", code: "S", valuePerTap: self.weeklyJobsPointValue, itemDate: Date().timeIntervalSince1970)
             Points.pointsArray.append(earnedSubstitutionValue)
             
             // add fee and job value to Income array at substitute's index
@@ -178,7 +178,7 @@ extension UserVC {
         let newItemTapped = Points(user: currentUserName,
                                    itemName: (usersWeeklyJobs?[indexPath.row].name)!,
                                    itemCategory: "weekly jobs",
-                                   codeCEXSN: "C",
+                                   code: "C",
                                    valuePerTap: weeklyJobsPointValue,
                                    itemDate: Date().timeIntervalSince1970)
         
