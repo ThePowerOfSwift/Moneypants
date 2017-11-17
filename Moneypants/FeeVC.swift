@@ -52,6 +52,10 @@ class FeeVC: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate {
     // --------------
     
     @IBAction func addFeeButtonTapped(_ sender: UIButton) {
+        // dismiss keyboard
+        view.endEditing(true)
+        
+        // setup two alert messages (one for 'fighting', and one for everything else)
         let alertMessageFighting = "You have chosen to charge \(currentUserName!) a $\(String(format: "%.2f", Double(FamilyData.feeValueMultiplier) / 100)) fee for '\(feeTextField.text!)'.\n\nLet \(currentUserName!) know that if \(MPUser.gender(user: MPUser.currentUser).he_she.lowercased()) goes the remainder of the day without \(feeTextField.text!), the fee will be refunded. Tap okay to confirm."
         let alertMessageDefault = "You have chosen to charge \(currentUserName!) a $\(String(format: "%.2f", Double(FamilyData.feeValueMultiplier) / 100)) fee for '\(feeTextField.text!)'. Tap okay to confirm."
         

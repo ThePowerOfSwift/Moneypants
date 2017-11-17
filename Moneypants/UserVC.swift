@@ -263,16 +263,6 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                 } else {
                     // display # of fees user has
                     cell.selectionBoxLabel.text = "\(isoArrayForItem.count)"
-                    
-                    
-                    
-                    
-                    // if there are 3 fees, gray out the text label and disable the row. Instead have an alert pop up telling user they can't add any more fees...?
-//                    if isoArrayForItem.count == 3 {
-//                        // disable cell taps?
-//                        // or should this code go into "didSelectRow"?
-//                        cell.isUserInteractionEnabled = false
-//                    }
                 }
             }
         }
@@ -359,7 +349,14 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         
         if indexPath.section == 4 {
             if indexPath.row == 0 {
-                performSegue(withIdentifier: "FeesDetailSegue", sender: self)
+                // get an array of this user in this category for this item on this day (this may contain multiple values b/c user can add up to 3 fees per day)
+                let isoArrayForItem = Points.pointsArray.filter({ $0.user == currentUserName && $0.codeCEXSN == "F" && Calendar.current.isDateInToday(Date(timeIntervalSince1970: $0.itemDate)) })
+                if isoArrayForItem.count == 3 {
+                    tooManyStrikesAlert()
+                    tableView.deselectRow(at: indexPath, animated: true)
+                } else {
+                    performSegue(withIdentifier: "FeesDetailSegue", sender: self)
+                }
             } else {
                 performSegue(withIdentifier: "DebtsDetailSegue", sender: self)
             }
@@ -785,7 +782,7 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
             pointsSubtotal += pointsItem.valuePerTap
         }
         
-        let habitPointsEarnedSinceLastPayday = Points.pointsArray.filter({ $0.user == currentUserName && $0.itemCategory == "daily habits" && Date(timeIntervalSince1970: $0.itemDate) >= FamilyData.calculatePayday().last })
+        let habitPointsEarnedSinceLastPayday = Points.pointsArray.filter({ $0.user == currentUserName && $0.itemCategory == "daily habits" && $0.codeCEXSN == "C" && Date(timeIntervalSince1970: $0.itemDate) >= FamilyData.calculatePayday().last })
         var habitsSubtotal: Int = 0
         for pointsItem in habitPointsEarnedSinceLastPayday {
             habitsSubtotal += pointsItem.valuePerTap

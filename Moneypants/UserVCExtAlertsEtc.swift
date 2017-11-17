@@ -52,6 +52,14 @@ extension UserVC {
         present(alertN, animated: true, completion: nil)
     }
     
+    func tooManyStrikesAlert() {
+        let alert = UIAlertController(title: "3 Strikes", message: "\(currentUserName!) has reached the maximum daily fee amount. It's been a rough day.\n\n\(currentUserName!) should just go to \(MPUser.gender(user: MPUser.currentUser).his_her.lowercased()) room for the remainder of the day and try again tomorrow.", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "okay", style: .cancel, handler: { (action) in
+            alert.dismiss(animated: true, completion: nil)
+        }))
+        present(alert, animated: true, completion: nil)
+    }
+    
     func incorrectPasscodeAlert() {
         let wrongPasscodeAlert = UIAlertController(title: "Incorrect Passcode", message: "Please try again.", preferredStyle: .alert)
         wrongPasscodeAlert.addAction(UIAlertAction(title: "okay", style: .cancel, handler: { (action) in
