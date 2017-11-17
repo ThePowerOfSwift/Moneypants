@@ -50,13 +50,13 @@
                                                             <rect key="frame" x="8" y="12" width="304" height="24"/>
                                                             <subviews>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="tithing / donations and lots of other stuff" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="C6C-Zx-Vj4">
-                                                                    <rect key="frame" x="0.0" y="0.0" width="232" height="24"/>
+                                                                    <rect key="frame" x="0.0" y="0.0" width="232.5" height="24"/>
                                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                                     <nil key="textColor"/>
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="$258" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="aTu-eG-vhR">
-                                                                    <rect key="frame" x="248" y="0.0" width="56" height="24"/>
+                                                                    <rect key="frame" x="248.5" y="0.0" width="55.5" height="24"/>
                                                                     <fontDescription key="fontDescription" type="system" weight="black" pointSize="20"/>
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
@@ -95,13 +95,13 @@
                                                             <rect key="frame" x="8" y="12" width="304" height="24"/>
                                                             <subviews>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="tithing / donations and lots of other stuff" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DC8-0V-bSt">
-                                                                    <rect key="frame" x="0.0" y="0.0" width="232" height="24"/>
+                                                                    <rect key="frame" x="0.0" y="0.0" width="232.5" height="24"/>
                                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                                     <nil key="textColor"/>
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="$258" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="qAB-89-URN">
-                                                                    <rect key="frame" x="248" y="0.0" width="56" height="24"/>
+                                                                    <rect key="frame" x="248.5" y="0.0" width="55.5" height="24"/>
                                                                     <fontDescription key="fontDescription" type="system" weight="black" pointSize="20"/>
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
@@ -140,13 +140,13 @@
                                                             <rect key="frame" x="8" y="12" width="304" height="24"/>
                                                             <subviews>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="tithing / donations and lots of other stuff" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Vpo-A7-aq3">
-                                                                    <rect key="frame" x="0.0" y="0.0" width="232" height="24"/>
+                                                                    <rect key="frame" x="0.0" y="0.0" width="232.5" height="24"/>
                                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                                     <nil key="textColor"/>
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="$258" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="UYA-le-hCO">
-                                                                    <rect key="frame" x="248" y="0.0" width="56" height="24"/>
+                                                                    <rect key="frame" x="248.5" y="0.0" width="55.5" height="24"/>
                                                                     <fontDescription key="fontDescription" type="system" weight="black" pointSize="20"/>
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
@@ -185,13 +185,13 @@
                                                             <rect key="frame" x="8" y="12" width="304" height="24"/>
                                                             <subviews>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="tithing / donations and lots of other stuff" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eYp-Xj-dfC">
-                                                                    <rect key="frame" x="0.0" y="0.0" width="232" height="24"/>
+                                                                    <rect key="frame" x="0.0" y="0.0" width="232.5" height="24"/>
                                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                                     <nil key="textColor"/>
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="$258" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="Hqb-tK-mZB">
-                                                                    <rect key="frame" x="248" y="0.0" width="56" height="24"/>
+                                                                    <rect key="frame" x="248.5" y="0.0" width="55.5" height="24"/>
                                                                     <fontDescription key="fontDescription" type="system" weight="black" pointSize="20"/>
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
@@ -944,6 +944,9 @@
                                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="earnings indicator small" translatesAutoresizingMaskIntoConstraints="NO" id="Y6v-7A-hxm">
                                                 <rect key="frame" x="0.0" y="0.0" width="58" height="58"/>
                                             </imageView>
+                                            <imageView userInteractionEnabled="NO" alpha="0.10000000000000001" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="trophy black" translatesAutoresizingMaskIntoConstraints="NO" id="G5D-8l-tav">
+                                                <rect key="frame" x="8" y="8" width="42" height="42"/>
+                                            </imageView>
                                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="saL-Ht-eyG" userLabel="Habits Progress Meter">
                                                 <rect key="frame" x="4" y="0.0" width="23" height="58"/>
                                                 <color key="backgroundColor" red="0.80000000000000004" green="0.0" blue="0.40000000000000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -969,9 +972,13 @@
                                         </subviews>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <constraints>
+                                            <constraint firstAttribute="bottom" secondItem="G5D-8l-tav" secondAttribute="bottom" constant="8" id="2kc-YB-2h6"/>
                                             <constraint firstAttribute="bottom" secondItem="saL-Ht-eyG" secondAttribute="bottom" id="4eC-Lm-wWP"/>
                                             <constraint firstAttribute="trailing" secondItem="2QD-pa-nnG" secondAttribute="trailing" constant="4" id="BKK-FI-8sc"/>
                                             <constraint firstItem="zuq-lU-4OG" firstAttribute="leading" secondItem="kSV-Jl-4Gq" secondAttribute="leading" id="DJF-Xh-IXh"/>
+                                            <constraint firstItem="G5D-8l-tav" firstAttribute="leading" secondItem="kSV-Jl-4Gq" secondAttribute="leading" constant="8" id="DUn-Z2-A7g"/>
+                                            <constraint firstItem="G5D-8l-tav" firstAttribute="top" secondItem="kSV-Jl-4Gq" secondAttribute="top" constant="8" id="Kys-n9-pa2"/>
+                                            <constraint firstAttribute="trailing" secondItem="G5D-8l-tav" secondAttribute="trailing" constant="8" id="NVR-mm-Fgp"/>
                                             <constraint firstAttribute="trailing" secondItem="zuq-lU-4OG" secondAttribute="trailing" id="Vjp-qJ-h7B"/>
                                             <constraint firstAttribute="bottom" secondItem="zuq-lU-4OG" secondAttribute="bottom" id="W0h-q2-nB5"/>
                                             <constraint firstItem="Y6v-7A-hxm" firstAttribute="top" secondItem="kSV-Jl-4Gq" secondAttribute="top" id="YLU-YF-Ihb"/>
@@ -1012,16 +1019,16 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="bAx-z4-7V1">
-                                                    <rect key="frame" x="72" y="14" width="232" height="21"/>
+                                                    <rect key="frame" x="72" y="14.5" width="232" height="20.5"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" horizontalCompressionResistancePriority="749" text="get self &amp; buddy ready for" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="20l-o9-4Kf">
-                                                            <rect key="frame" x="0.0" y="0.0" width="200" height="21"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="199.5" height="20.5"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="15" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cLI-eN-D0B">
-                                                            <rect key="frame" x="214" y="0.0" width="18" height="21"/>
+                                                            <rect key="frame" x="214" y="0.0" width="18" height="20.5"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                             <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                                             <nil key="highlightedColor"/>
@@ -1035,14 +1042,14 @@
                                                         <constraint firstAttribute="width" constant="40" id="Skd-FS-4CX"/>
                                                     </constraints>
                                                 </imageView>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PDm-Z5-ya9">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PDm-Z5-ya9">
                                                     <rect key="frame" x="16" y="5" width="40" height="40"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="40" id="3cb-a0-tOM"/>
                                                         <constraint firstAttribute="width" constant="40" id="5Uu-i3-EAW"/>
                                                     </constraints>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <nil key="textColor"/>
+                                                    <fontDescription key="fontDescription" type="system" weight="black" pointSize="17"/>
+                                                    <color key="textColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
@@ -1350,7 +1357,7 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qBe-09-5YU">
-                                <rect key="frame" x="60" y="160" width="200" height="277"/>
+                                <rect key="frame" x="60" y="160" width="200" height="276.5"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="How much did you spend?" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="F7p-Hn-qhp">
                                         <rect key="frame" x="0.0" y="0.0" width="200" height="16"/>
@@ -1383,13 +1390,13 @@
                                         <textInputTraits key="textInputTraits"/>
                                     </textField>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Which budget category does it belong in?" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ax6-4a-2cu">
-                                        <rect key="frame" x="0.0" y="140" width="200" height="32"/>
+                                        <rect key="frame" x="0.0" y="140" width="200" height="31.5"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MO1-Bf-UhP">
-                                        <rect key="frame" x="0.0" y="225" width="200" height="36"/>
+                                        <rect key="frame" x="0.0" y="224.5" width="200" height="36"/>
                                         <color key="backgroundColor" red="0.0" green="0.59999999999999998" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="36" id="EbR-cL-hnQ"/>
@@ -1409,7 +1416,7 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="N8P-Bo-fAR">
-                                        <rect key="frame" x="0.0" y="180" width="200" height="29"/>
+                                        <rect key="frame" x="0.0" y="179.5" width="200" height="29"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <state key="normal" title="  choose a category...">
@@ -1506,10 +1513,10 @@
                                         <rect key="frame" x="20" y="16" width="280" height="78"/>
                                         <subviews>
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="wKF-5O-KVd">
-                                                <rect key="frame" x="0.0" y="0.0" width="93" height="78"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="93.5" height="78"/>
                                                 <subviews>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tsV-3p-eP5">
-                                                        <rect key="frame" x="18" y="0.0" width="58" height="58"/>
+                                                        <rect key="frame" x="17.5" y="0.0" width="58" height="58"/>
                                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="58" id="3mz-2m-lmV"/>
@@ -1521,7 +1528,7 @@
                                                         </connections>
                                                     </button>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="points" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MvL-zv-aYH">
-                                                        <rect key="frame" x="28" y="62" width="38" height="16"/>
+                                                        <rect key="frame" x="28" y="62" width="37.5" height="16"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                                         <nil key="textColor"/>
                                                         <nil key="highlightedColor"/>
@@ -1529,10 +1536,10 @@
                                                 </subviews>
                                             </stackView>
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="KFb-ys-ZtM">
-                                                <rect key="frame" x="93" y="0.0" width="94" height="78"/>
+                                                <rect key="frame" x="93.5" y="0.0" width="93" height="78"/>
                                                 <subviews>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IDF-LY-ujx">
-                                                        <rect key="frame" x="18" y="0.0" width="58" height="58"/>
+                                                        <rect key="frame" x="17.5" y="0.0" width="58" height="58"/>
                                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="58" id="fkK-mJ-bAB"/>
@@ -1544,7 +1551,7 @@
                                                         </connections>
                                                     </button>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="spending" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Sv5-Ig-HzY">
-                                                        <rect key="frame" x="19" y="62" width="56" height="16"/>
+                                                        <rect key="frame" x="18.5" y="62" width="56" height="16"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                                         <nil key="textColor"/>
                                                         <nil key="highlightedColor"/>
@@ -1552,10 +1559,10 @@
                                                 </subviews>
                                             </stackView>
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="c3J-DD-yTN">
-                                                <rect key="frame" x="187" y="0.0" width="93" height="78"/>
+                                                <rect key="frame" x="186.5" y="0.0" width="93.5" height="78"/>
                                                 <subviews>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ACe-qb-zpV">
-                                                        <rect key="frame" x="17" y="0.0" width="58" height="58"/>
+                                                        <rect key="frame" x="18" y="0.0" width="58" height="58"/>
                                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                         <constraints>
                                                             <constraint firstAttribute="width" constant="58" id="9af-8m-x09"/>
@@ -1567,7 +1574,7 @@
                                                         </connections>
                                                     </button>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="mastery" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2tp-ih-8Vj">
-                                                        <rect key="frame" x="22" y="62" width="49" height="16"/>
+                                                        <rect key="frame" x="22.5" y="62" width="49" height="16"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                                         <nil key="textColor"/>
                                                         <nil key="highlightedColor"/>
@@ -1580,10 +1587,10 @@
                                         <rect key="frame" x="20" y="110" width="280" height="78"/>
                                         <subviews>
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="nsf-Yb-C4c">
-                                                <rect key="frame" x="0.0" y="0.0" width="93" height="78"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="93.5" height="78"/>
                                                 <subviews>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QMv-14-weE">
-                                                        <rect key="frame" x="18" y="0.0" width="58" height="58"/>
+                                                        <rect key="frame" x="17.5" y="0.0" width="58" height="58"/>
                                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                         <constraints>
                                                             <constraint firstAttribute="width" constant="58" id="HDp-uc-dCr"/>
@@ -1595,7 +1602,7 @@
                                                         </connections>
                                                     </button>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="budget" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6dq-a8-JdA">
-                                                        <rect key="frame" x="25" y="62" width="44" height="16"/>
+                                                        <rect key="frame" x="25" y="62" width="43.5" height="16"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                                         <nil key="textColor"/>
                                                         <nil key="highlightedColor"/>
@@ -1603,10 +1610,10 @@
                                                 </subviews>
                                             </stackView>
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="9oG-dT-nAB">
-                                                <rect key="frame" x="93" y="0.0" width="94" height="78"/>
+                                                <rect key="frame" x="93.5" y="0.0" width="93" height="78"/>
                                                 <subviews>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xNN-2p-uKE">
-                                                        <rect key="frame" x="18" y="0.0" width="58" height="58"/>
+                                                        <rect key="frame" x="17.5" y="0.0" width="58" height="58"/>
                                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                         <constraints>
                                                             <constraint firstAttribute="width" constant="58" id="4ht-Aq-a8V"/>
@@ -1618,7 +1625,7 @@
                                                         </connections>
                                                     </button>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="testing" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iiG-Ea-Fsk">
-                                                        <rect key="frame" x="26" y="62" width="42" height="16"/>
+                                                        <rect key="frame" x="25.5" y="62" width="42" height="16"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                                         <nil key="textColor"/>
                                                         <nil key="highlightedColor"/>
@@ -1626,7 +1633,7 @@
                                                 </subviews>
                                             </stackView>
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="Ghe-y6-6jn">
-                                                <rect key="frame" x="187" y="0.0" width="93" height="78"/>
+                                                <rect key="frame" x="186.5" y="0.0" width="93.5" height="78"/>
                                             </stackView>
                                         </subviews>
                                     </stackView>
@@ -2088,7 +2095,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Why was this fee collected?" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0IJ-bG-QwT">
-                                <rect key="frame" x="60" y="183" width="200" height="16"/>
+                                <rect key="frame" x="60" y="183.5" width="200" height="16"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="200" id="XBF-gm-Lbx"/>
                                 </constraints>
@@ -2097,13 +2104,16 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jsy-uI-TSj">
-                                <rect key="frame" x="0.0" y="72" width="320" height="95"/>
+                                <rect key="frame" x="0.0" y="72" width="320" height="95.5"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RQB-5E-kWw">
-                                        <rect key="frame" x="16" y="16" width="288" height="63"/>
-                                        <string key="text">Fees should be used sparingly and only in rare cases to help motivate healthy behavior.
-
-The maximum daily limit is $3.00 (3 strikes).</string>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="The maximum daily limit is $3.00 (3 strikes)." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RQB-5E-kWw">
+                                        <rect key="frame" x="16" y="63.5" width="288" height="16"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Fees should be used sparingly and only in rare cases to help motivate healthy behavior." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uwe-zY-C1u">
+                                        <rect key="frame" x="16" y="16" width="288" height="31.5"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
@@ -2111,12 +2121,15 @@ The maximum daily limit is $3.00 (3 strikes).</string>
                                 </subviews>
                                 <color key="backgroundColor" white="0.80000000000000004" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
-                                    <constraint firstItem="RQB-5E-kWw" firstAttribute="top" secondItem="jsy-uI-TSj" secondAttribute="top" constant="16" id="RDk-tg-tbu"/>
+                                    <constraint firstAttribute="trailing" secondItem="uwe-zY-C1u" secondAttribute="trailing" constant="16" id="HIh-Gx-oQI"/>
+                                    <constraint firstItem="uwe-zY-C1u" firstAttribute="top" secondItem="jsy-uI-TSj" secondAttribute="top" constant="16" id="Kga-Yy-PmE"/>
+                                    <constraint firstItem="RQB-5E-kWw" firstAttribute="top" secondItem="uwe-zY-C1u" secondAttribute="bottom" constant="16" id="Ngk-Vx-QBD"/>
                                     <constraint firstAttribute="bottom" secondItem="RQB-5E-kWw" secondAttribute="bottom" constant="16" id="csl-XU-Aol"/>
+                                    <constraint firstItem="uwe-zY-C1u" firstAttribute="leading" secondItem="jsy-uI-TSj" secondAttribute="leading" constant="16" id="wlJ-wa-5tX"/>
                                 </constraints>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Utg-q4-GAA">
-                                <rect key="frame" x="60" y="253" width="200" height="36"/>
+                                <rect key="frame" x="60" y="253.5" width="200" height="36"/>
                                 <color key="backgroundColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="36" id="CwI-Cb-Zz6"/>
@@ -2138,13 +2151,13 @@ The maximum daily limit is $3.00 (3 strikes).</string>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hue-hu-6ga">
                                 <rect key="frame" x="16" y="475" width="288" height="36"/>
-                                <string key="text">NOTE: when applying a fee, you may consider allowing the child to get the money back by doing a job for free, or perform an act of service or an other good behavior.</string>
+                                <string key="text">NOTE: when applying a fee, you may consider allowing the child to get the money back by doing a job for free, or by performing an act of service or other good behavior.</string>
                                 <fontDescription key="fontDescription" type="system" pointSize="10"/>
                                 <color key="textColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="choose a fee..." textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="JB4-Pc-DbI">
-                                <rect key="frame" x="60" y="207" width="200" height="30"/>
+                                <rect key="frame" x="60" y="207.5" width="200" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="200" id="sK8-l6-5Zh"/>
                                 </constraints>
@@ -2176,6 +2189,8 @@ The maximum daily limit is $3.00 (3 strikes).</string>
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="explainerLabel" destination="RQB-5E-kWw" id="9To-hv-KgI"/>
+                        <outlet property="feeButton" destination="Utg-q4-GAA" id="Clb-IY-lCf"/>
                         <outlet property="feeTextField" destination="JB4-Pc-DbI" id="wr8-3B-75z"/>
                         <segue destination="RLG-LP-OVL" kind="unwind" identifier="UnwindToUserVCSegue" unwindAction="unwindToUserVCWithSegue:" id="3Cg-bO-0QX"/>
                     </connections>
@@ -2286,7 +2301,7 @@ The maximum daily limit is $3.00 (3 strikes).</string>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Which budget category does it belong in?" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NlS-YL-u5o">
-                                <rect key="frame" x="60" y="306" width="200" height="32"/>
+                                <rect key="frame" x="60" y="306" width="200" height="31.5"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="200" id="9AT-yS-UXM"/>
                                 </constraints>
@@ -2295,7 +2310,7 @@ The maximum daily limit is $3.00 (3 strikes).</string>
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WZt-p7-XkQ">
-                                <rect key="frame" x="60" y="392" width="200" height="36"/>
+                                <rect key="frame" x="60" y="391.5" width="200" height="36"/>
                                 <color key="backgroundColor" red="0.0" green="0.59999999999999998" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="36" id="0s3-TC-cSR"/>
@@ -2322,7 +2337,7 @@ The maximum daily limit is $3.00 (3 strikes).</string>
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FPC-aD-eUR">
-                                <rect key="frame" x="60" y="346" width="200" height="30"/>
+                                <rect key="frame" x="60" y="345.5" width="200" height="30"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="5Kc-1L-IeZ"/>
@@ -2540,7 +2555,7 @@ The maximum daily limit is $3.00 (3 strikes).</string>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="transactions page" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lwE-Yz-taR">
-                                <rect key="frame" x="91" y="274" width="138" height="21"/>
+                                <rect key="frame" x="91.5" y="274.5" width="137.5" height="20.5"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -2571,7 +2586,7 @@ The maximum daily limit is $3.00 (3 strikes).</string>
                                                     <rect key="frame" x="0.0" y="0.0" width="200" height="49"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="clothing" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="UiA-a4-FJJ">
-                                                            <rect key="frame" x="8" y="14" width="184" height="21"/>
+                                                            <rect key="frame" x="8" y="14.5" width="184" height="20.5"/>
                                                             <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                                                             <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                             <nil key="highlightedColor"/>
@@ -2718,7 +2733,7 @@ The maximum daily limit is $3.00 (3 strikes).</string>
                                                     <rect key="frame" x="0.0" y="0.0" width="200" height="49"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="socks" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="jzs-s4-W68">
-                                                            <rect key="frame" x="8" y="14" width="183" height="21"/>
+                                                            <rect key="frame" x="8" y="14.5" width="183" height="20.5"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
@@ -2982,16 +2997,16 @@ The maximum daily limit is $3.00 (3 strikes).</string>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ehx-dC-5JU" userLabel="Popup">
-                                    <rect key="frame" x="35" y="93" width="250" height="433"/>
+                                    <rect key="frame" x="35" y="93.5" width="250" height="432.5"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Earnings Progress" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="akJ-4S-yA9">
-                                            <rect key="frame" x="16" y="57" width="218" height="28"/>
+                                            <rect key="frame" x="16" y="57" width="218" height="27.5"/>
                                             <fontDescription key="fontDescription" name="Arista2.0" family="Arista 2.0" pointSize="23"/>
                                             <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1tt-J2-034">
-                                            <rect key="frame" x="0.0" y="397" width="250" height="36"/>
+                                            <rect key="frame" x="0.0" y="396.5" width="250" height="36"/>
                                             <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="36" id="Rbi-qs-oUI"/>
@@ -3005,14 +3020,14 @@ The maximum daily limit is $3.00 (3 strikes).</string>
                                             </connections>
                                         </button>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="earnings indicator large" translatesAutoresizingMaskIntoConstraints="NO" id="nJs-5W-XqI">
-                                            <rect key="frame" x="5" y="93" width="240" height="240"/>
+                                            <rect key="frame" x="5" y="92.5" width="240" height="240"/>
                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" secondItem="nJs-5W-XqI" secondAttribute="height" multiplier="1:1" id="F8H-ic-coM"/>
                                             </constraints>
                                         </imageView>
                                         <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="Hm9-6k-7At">
-                                            <rect key="frame" x="5" y="341" width="240" height="20"/>
+                                            <rect key="frame" x="5" y="340.5" width="240" height="20"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="habits" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cnM-Xz-2Wa">
                                                     <rect key="frame" x="0.0" y="0.0" width="120" height="20"/>
@@ -3029,7 +3044,7 @@ The maximum daily limit is $3.00 (3 strikes).</string>
                                             </subviews>
                                         </stackView>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="0y2-qT-7or">
-                                            <rect key="frame" x="25" y="133" width="90" height="200"/>
+                                            <rect key="frame" x="25" y="132" width="90" height="200"/>
                                             <color key="backgroundColor" red="0.80000000000000004" green="0.0" blue="0.40000000000000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="200" id="439-N9-ba3"/>
@@ -3037,7 +3052,7 @@ The maximum daily limit is $3.00 (3 strikes).</string>
                                             </constraints>
                                         </imageView>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="6nX-jy-IKn">
-                                            <rect key="frame" x="135" y="133" width="90" height="200"/>
+                                            <rect key="frame" x="135" y="132.5" width="90" height="200"/>
                                             <color key="backgroundColor" red="0.0" green="0.59999999999999998" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="200" id="asW-VA-tfD"/>
@@ -3045,8 +3060,32 @@ The maximum daily limit is $3.00 (3 strikes).</string>
                                             </constraints>
                                         </imageView>
                                         <label opaque="NO" userInteractionEnabled="NO" alpha="0.5" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="for the week ending Nov 18, 2017" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="53P-03-Z8q">
-                                            <rect key="frame" x="40" y="377" width="171" height="12"/>
+                                            <rect key="frame" x="40.5" y="376.5" width="170.5" height="12"/>
                                             <fontDescription key="fontDescription" type="boldSystem" pointSize="10"/>
+                                            <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="bonus!" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5X2-K1-d5d">
+                                            <rect key="frame" x="25" y="142" width="90" height="20"/>
+                                            <fontDescription key="fontDescription" name="Arista2.0" family="Arista 2.0" pointSize="17"/>
+                                            <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wr8-IW-vzw">
+                                            <rect key="frame" x="25" y="270.5" width="90" height="46"/>
+                                            <string key="text">255 points
+needed to
+earn bonus</string>
+                                            <fontDescription key="fontDescription" name="Arista2.0" family="Arista 2.0" pointSize="13"/>
+                                            <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="K14-u8-Ec5">
+                                            <rect key="frame" x="135" y="270.5" width="90" height="46"/>
+                                            <string key="text">255 points
+needed to
+match budget</string>
+                                            <fontDescription key="fontDescription" name="Arista2.0" family="Arista 2.0" pointSize="13"/>
                                             <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                             <nil key="highlightedColor"/>
                                         </label>
@@ -3058,24 +3097,33 @@ The maximum daily limit is $3.00 (3 strikes).</string>
                                         <constraint firstItem="6nX-jy-IKn" firstAttribute="bottom" secondItem="nJs-5W-XqI" secondAttribute="bottom" id="4er-Xv-11I"/>
                                         <constraint firstItem="1tt-J2-034" firstAttribute="top" secondItem="53P-03-Z8q" secondAttribute="bottom" constant="8" id="5mI-Jm-mDj"/>
                                         <constraint firstAttribute="trailing" secondItem="akJ-4S-yA9" secondAttribute="trailing" constant="16" id="5oR-xQ-ThE"/>
+                                        <constraint firstItem="0y2-qT-7or" firstAttribute="leading" secondItem="5X2-K1-d5d" secondAttribute="leading" id="8Ep-zY-Fy4"/>
                                         <constraint firstItem="53P-03-Z8q" firstAttribute="centerX" secondItem="ehx-dC-5JU" secondAttribute="centerX" id="J5f-uS-dZ3"/>
                                         <constraint firstItem="Hm9-6k-7At" firstAttribute="leading" secondItem="nJs-5W-XqI" secondAttribute="leading" id="JSl-u6-iBX"/>
                                         <constraint firstAttribute="bottom" secondItem="1tt-J2-034" secondAttribute="bottom" id="PiL-8O-vVA"/>
                                         <constraint firstItem="1tt-J2-034" firstAttribute="leading" secondItem="ehx-dC-5JU" secondAttribute="leading" id="PtR-Ke-4ea"/>
+                                        <constraint firstItem="0y2-qT-7or" firstAttribute="leading" secondItem="wr8-IW-vzw" secondAttribute="leading" id="YVm-o6-fqh"/>
                                         <constraint firstItem="Hm9-6k-7At" firstAttribute="top" secondItem="nJs-5W-XqI" secondAttribute="bottom" constant="8" id="a8L-ze-khJ"/>
                                         <constraint firstItem="53P-03-Z8q" firstAttribute="top" secondItem="Hm9-6k-7At" secondAttribute="bottom" constant="16" id="gHD-5Q-cvy"/>
                                         <constraint firstItem="0y2-qT-7or" firstAttribute="bottom" secondItem="nJs-5W-XqI" secondAttribute="bottom" id="i7m-pN-uab"/>
                                         <constraint firstItem="6nX-jy-IKn" firstAttribute="trailing" secondItem="nJs-5W-XqI" secondAttribute="trailing" constant="-20" id="m1Z-hX-KF2"/>
                                         <constraint firstItem="0y2-qT-7or" firstAttribute="leading" secondItem="nJs-5W-XqI" secondAttribute="leading" constant="20" id="mnm-Zk-7Qc"/>
                                         <constraint firstAttribute="trailing" secondItem="1tt-J2-034" secondAttribute="trailing" id="nPV-Uv-KsA"/>
+                                        <constraint firstItem="K14-u8-Ec5" firstAttribute="bottom" secondItem="nJs-5W-XqI" secondAttribute="bottom" constant="-16" id="pCp-xp-s2C"/>
                                         <constraint firstItem="nJs-5W-XqI" firstAttribute="leading" secondItem="ehx-dC-5JU" secondAttribute="leading" constant="5" id="qiQ-Zx-gUW"/>
+                                        <constraint firstItem="K14-u8-Ec5" firstAttribute="leading" secondItem="6nX-jy-IKn" secondAttribute="leading" id="ry8-Ej-zeM"/>
+                                        <constraint firstItem="0y2-qT-7or" firstAttribute="trailing" secondItem="5X2-K1-d5d" secondAttribute="trailing" id="sN3-KI-Uq6"/>
                                         <constraint firstItem="akJ-4S-yA9" firstAttribute="leading" secondItem="ehx-dC-5JU" secondAttribute="leading" constant="16" id="tyg-HH-Uft"/>
+                                        <constraint firstItem="K14-u8-Ec5" firstAttribute="trailing" secondItem="6nX-jy-IKn" secondAttribute="trailing" id="ukT-1e-lxG"/>
+                                        <constraint firstItem="wr8-IW-vzw" firstAttribute="bottom" secondItem="nJs-5W-XqI" secondAttribute="bottom" constant="-16" id="w5v-Sz-00u"/>
+                                        <constraint firstItem="5X2-K1-d5d" firstAttribute="top" secondItem="akJ-4S-yA9" secondAttribute="bottom" constant="57.5" id="yjd-QL-Ltm"/>
                                         <constraint firstItem="Hm9-6k-7At" firstAttribute="trailing" secondItem="nJs-5W-XqI" secondAttribute="trailing" id="ynX-VK-00p"/>
                                         <constraint firstItem="nJs-5W-XqI" firstAttribute="top" secondItem="akJ-4S-yA9" secondAttribute="bottom" constant="8" id="ypr-3T-bQE"/>
+                                        <constraint firstItem="0y2-qT-7or" firstAttribute="trailing" secondItem="wr8-IW-vzw" secondAttribute="trailing" id="zWV-O9-LDQ"/>
                                     </constraints>
                                 </view>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7do-mJ-m2O" userLabel="Popup">
-                                    <rect key="frame" x="110" y="44" width="100" height="100"/>
+                                    <rect key="frame" x="110" y="44.5" width="100" height="100"/>
                                     <color key="backgroundColor" red="0.94901960780000005" green="0.39607843139999999" blue="0.1333333333" alpha="1" colorSpace="calibratedRGB"/>
                                     <constraints>
                                         <constraint firstAttribute="width" constant="100" id="23v-1I-5dq"/>
@@ -3083,7 +3131,7 @@ The maximum daily limit is $3.00 (3 strikes).</string>
                                     </constraints>
                                 </view>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="oRx-Y2-2XW" userLabel="Popup">
-                                    <rect key="frame" x="120" y="54" width="80" height="80"/>
+                                    <rect key="frame" x="120" y="54.5" width="80" height="80"/>
                                     <subviews>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="trophy black" translatesAutoresizingMaskIntoConstraints="NO" id="gaI-rb-bZ6">
                                             <rect key="frame" x="16" y="16" width="48" height="48"/>

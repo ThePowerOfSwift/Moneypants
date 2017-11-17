@@ -78,6 +78,7 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         tableView.reloadData()
+        checkIncome()
     }
     
     // ----------
@@ -153,6 +154,8 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
             cell.pointsLabel.text = "\(dailyJobsPointValue ?? 0)"
             cell.pointsLabel.textColor = .lightGray
             cell.accessoryType = .none
+            cell.selectionBoxLabel.text = ""
+
             if currentUserCategoryItemDateArray.isEmpty {
                 cell.selectionBoxImageView.image = UIImage(named: "blank")
                 cell.jobHabitLabel.textColor = .black
@@ -176,13 +179,16 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
             let currentUserCategoryItemDateArray = Points.pointsArray.filter({ $0.user == currentUserName && $0.itemCategory == "daily habits" && $0.itemName == usersDailyHabits?[indexPath.row].name && Calendar.current.isDateInToday(Date(timeIntervalSince1970: $0.itemDate)) })
             
             cell.jobHabitLabel.text = usersDailyHabits?[indexPath.row].name
+            cell.selectionBoxLabel.text = ""
+            cell.pointsLabel.textColor = .lightGray
+            cell.accessoryType = .none
+            
             if indexPath.row == 0 {
                 cell.pointsLabel.text = "\(priorityHabitPointValue ?? 0)"
             } else {
                 cell.pointsLabel.text = "\(regularHabitPointValue ?? 0)"
             }
-            cell.pointsLabel.textColor = .lightGray
-            cell.accessoryType = .none
+            
             if currentUserCategoryItemDateArray.isEmpty {
                 cell.selectionBoxImageView.image = UIImage(named: "blank")
                 cell.jobHabitLabel.textColor = .black
@@ -206,6 +212,7 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
             cell.jobHabitLabel.text = usersWeeklyJobs?[indexPath.row].name
             cell.pointsLabel.text = "\(weeklyJobsPointValue ?? 0)"
             cell.pointsLabel.textColor = .lightGray
+            cell.selectionBoxLabel.text = ""
             cell.accessoryType = .none
             if currentUserCategoryItemDateArray.isEmpty {
                 cell.selectionBoxImageView.image = UIImage(named: "blank")
@@ -231,31 +238,41 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
             cell.jobHabitLabel.textColor = .lightGray
             cell.pointsLabel.text = "\(subJobsArray[indexPath.row].valuePerTap)"
             cell.selectionBoxImageView.image = UIImage(named: "checkmark white")
+            cell.selectionBoxLabel.text = ""
+            cell.accessoryType = .none
             
         // ------------------
         // fees & withdrawals
         // ------------------
             
         } else if indexPath.section == 4 {
-            // get an array of this user in this category for this item on this day.
-            let currentUserCategoryItemDateArray = Points.pointsArray.filter({ $0.user == currentUserName && $0.itemCategory == "fees & withdrawals" && $0.itemName == usersWeeklyJobs?[indexPath.row].name && Calendar.current.isDateInToday(Date(timeIntervalSince1970: $0.itemDate)) })
-            
+            cell.selectionBoxImageView.image = nil
             cell.jobHabitLabel.text = feesDebts[indexPath.row]
             cell.jobHabitLabel.textColor = .black
             cell.pointsLabel.text = ""
             cell.accessoryType = .disclosureIndicator
-            if currentUserCategoryItemDateArray.isEmpty {
-                cell.selectionBoxImageView.image = nil
-                //                cell.selectionBoxImageView.image = UIImage(named: "blank")
-                cell.jobHabitLabel.textColor = .black
-            } else {
-                cell.jobHabitLabel.textColor = .lightGray
-                if currentUserCategoryItemDateArray[0].codeCEXSN == "C" {
-                    cell.selectionBoxImageView.image = UIImage(named: "checkmark white")
-                } else if currentUserCategoryItemDateArray[0].codeCEXSN == "X" {
-                    cell.selectionBoxImageView.image = UIImage(named: "X red")
+            cell.selectionBoxLabel.textColor = .red
+            
+            // fees
+            if indexPath.row == 0 {
+                // get an array of this user in this category for this item on this day (this may contain multiple values b/c user can add up to 3 fees per day)
+                let isoArrayForItem = Points.pointsArray.filter({ $0.user == currentUserName && $0.codeCEXSN == "F" && Calendar.current.isDateInToday(Date(timeIntervalSince1970: $0.itemDate)) })
+                if isoArrayForItem.isEmpty {
+                    cell.jobHabitLabel.textColor = .black
+                    cell.selectionBoxLabel.text = ""
                 } else {
-                    cell.selectionBoxImageView.image = UIImage(named: "E gray")
+                    // display # of fees user has
+                    cell.selectionBoxLabel.text = "\(isoArrayForItem.count)"
+                    
+                    
+                    
+                    
+                    // if there are 3 fees, gray out the text label and disable the row. Instead have an alert pop up telling user they can't add any more fees...?
+//                    if isoArrayForItem.count == 3 {
+//                        // disable cell taps?
+//                        // or should this code go into "didSelectRow"?
+//                        cell.isUserInteractionEnabled = false
+//                    }
                 }
             }
         }

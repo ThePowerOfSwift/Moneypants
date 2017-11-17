@@ -233,7 +233,6 @@ let tempHabitsCB = [7,16,38,9,24,3,12,8,10,22]
 
 //====================================
 
-let fees = ["fighting", "lying", "stealing", "disobedience", "bad language"]
 
 //====================================
 
