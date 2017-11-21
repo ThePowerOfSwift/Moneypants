@@ -17,4 +17,6 @@ struct Points {
     // S = sub (for daily and weekly jobs)
     // N = not complete (for habits and weekly jobs)
     // F = fee
+    // B = bonus (for daily jobs and habits)
+    // P = paid (for payday items)
 }

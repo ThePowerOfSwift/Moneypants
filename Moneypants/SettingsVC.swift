@@ -25,9 +25,9 @@ class SettingsVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        if self.tabBarController?.selectedIndex == 3 {
+        if self.tabBarController?.selectedIndex == 4 {
             
-            let alert = UIAlertController(title: "Parental Passcode Required", message: "You must enter a parental passcode to access the settings page. Please enter your passcode:", preferredStyle: .alert)
+            let alert = UIAlertController(title: "Parental Passcode Required", message: "You must enter a parental passcode to access the settings page:", preferredStyle: .alert)
             alert.addTextField(configurationHandler: { (textField) in
                 textField.placeholder = "enter passcode"
                 textField.isSecureTextEntry = true
