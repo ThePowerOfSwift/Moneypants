@@ -23,8 +23,7 @@ class PaydayVC: UIViewController, UICollectionViewDelegate, UICollectionViewData
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-//        homeIndex = indexPath.row
         MPUser.currentUser = indexPath.row
-        performSegue(withIdentifier: "DetailSegue", sender: self)
+        performSegue(withIdentifier: "PaydayDetail", sender: self)
     }
 }

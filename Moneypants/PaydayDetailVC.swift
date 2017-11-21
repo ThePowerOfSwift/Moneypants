@@ -23,6 +23,9 @@ class PaydayDetailVC: UIViewController, UITableViewDelegate, UITableViewDataSour
     @IBOutlet weak var totalEarningsLabel: UILabel!
     @IBOutlet weak var questionMark: UIButton!
     
+    var currentUserName: String!
+    var currentUserIncome: Int!
+    
     let (userName, _, userIncome) = tempUsers[homeIndex]
     
     let customCell1Height: CGFloat = 75
@@ -38,36 +41,24 @@ class PaydayDetailVC: UIViewController, UITableViewDelegate, UITableViewDataSour
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        loadDataSourcesAndDelegates()
+
+        currentUserName = MPUser.usersArray[MPUser.currentUser].firstName
+        self.navigationItem.title = currentUserName
+        
         questionMark.layer.cornerRadius = questionMark.bounds.height / 6.4
         questionMark.layer.masksToBounds = true
         
-        dailyJobsTableView.dataSource = self
-        dailyJobsTableView.delegate = self
-        dailyJobsTableViewTop.constant = -(dailyJobsTableView.bounds.height)
-        dailyJobsTableView.isHidden = true
-        dailyJobsTableView.isScrollEnabled = false
+        currentUserIncome = Income.currentIncomeArray.filter({ $0.user == currentUserName }).first?.currentPoints
         
-        dailyHabitsTableView.dataSource = self
-        dailyHabitsTableView.delegate = self
-        dailyHabitsTableViewTop.constant = -(dailyHabitsTableView.bounds.height)
-        dailyHabitsTableView.isHidden = true
-        dailyHabitsTableView.isScrollEnabled = false
+        totalEarningsLabel.text = "$\(String(format: "%.2f", Double(currentUserIncome!) / 100))"
         
-        weeklyJobsTableView.dataSource = self
-        weeklyJobsTableView.delegate = self
-        weeklyJobsTableViewTop.constant = -(weeklyJobsTableView.bounds.height)
-        weeklyJobsTableView.isHidden = true
-        weeklyJobsTableView.isScrollEnabled = false
-        
-        self.navigationItem.title = userName
-        totalEarningsLabel.text = "\(userIncome)"
         dailyJobsReviewed = false
         dailyHabitsReviewed = false
         weeklyJobsReviewed = false
         
         tableViewData = tempPaydayDailyJobs     // default value for table view
     }
-    
     
     // ----------
     // Table View
@@ -97,23 +88,6 @@ class PaydayDetailVC: UIViewController, UITableViewDelegate, UITableViewDataSour
                 let cell = dailyJobsTableView.dequeueReusableCell(withIdentifier: "CustomCell1", for: indexPath) as! PaydayDetailCellA1
                 cell.jobDesc.text = "\(jobName)"
                 cell.jobSubtotal.text = "\(jobNumber) points"
-                
-//                for day in 0...index {
-//                    switch day[index] {
-//                    case "1":
-//                        cell.tallyDay[index].text = ""
-//                        cell.tallyDay[index].backgroundColor = UIColor(red: 141/255, green: 198/255, blue: 63/255, alpha: 1.0)
-//                    case "X":
-//                        cell.tallyDay[index].text = ""
-//                        cell.tallyDay[index].backgroundColor = UIColor.red
-//                    case "E":
-//                        cell.tallyDay[index].backgroundColor = UIColor.lightGray
-//                    default:
-//                        cell.tallyDay[index].backgroundColor = UIColor(red: 141/255, green: 198/255, blue: 63/255, alpha: 1.0)
-//                    }
-//                }
-                
-                
                 cell.tallyDay1.text = day1
                 switch day1 {
                 case "":
@@ -513,15 +487,11 @@ class PaydayDetailVC: UIViewController, UITableViewDelegate, UITableViewDataSour
         tableView.reloadData()
     }
     
-    
     // -----------
     // Button Taps
     // -----------
     
-    // -----------------
     // Daily Jobs Button
-    // -----------------
-    
     @IBAction func dailyJobsButtonTapped(_ sender: UIButton) {
         tableViewRowCount = tempPaydayDailyJobs.count
         tableViewData = tempPaydayDailyJobs
@@ -563,10 +533,7 @@ class PaydayDetailVC: UIViewController, UITableViewDelegate, UITableViewDataSour
         }
     }
     
-    // -------------------
     // Daily Habits Button
-    // -------------------
-    
     @IBAction func dailyHabitsButtonTapped(_ sender: UIButton) {
         tableViewRowCount = tempPaydayDailyHabits.count
         tableViewData = tempPaydayDailyHabits
@@ -608,10 +575,7 @@ class PaydayDetailVC: UIViewController, UITableViewDelegate, UITableViewDataSour
         }
     }
     
-    // ------------------
     // Weekly Jobs Button
-    // ------------------
-    
     @IBAction func weeklyJobsButtonTapped(_ sender: UIButton) {
         tableViewRowCount = tempPaydayWeeklyJobs.count
         tableViewData = tempPaydayWeeklyJobs
@@ -653,10 +617,7 @@ class PaydayDetailVC: UIViewController, UITableViewDelegate, UITableViewDataSour
         }
     }
     
-    // ---------------
     // Question Button
-    // ---------------
-    
     @IBAction func questionButtonTapped(_ sender: UIButton) {
         
         // Left justify the alert bubble
@@ -684,17 +645,12 @@ class PaydayDetailVC: UIViewController, UITableViewDelegate, UITableViewDataSour
         present(alert, animated: true, completion: nil)
     }
     
-    
-    
-    // ----------
     // Pay Button
-    // ----------
-    
     @IBAction func payButtonTapped(_ sender: UIButton) {
         
         // Don't allow user to proceed unless they're reviewed the jobs and habits
         if (!dailyJobsReviewed || !dailyHabitsReviewed || !weeklyJobsReviewed) {
-            let alert = UIAlertController(title: "Payday Error", message: "Before paying \(userName), please review the daily jobs, daily habits, and weekly jobs first. You can review jobs and habits by tapping on the icons above.", preferredStyle: .alert)
+            let alert = UIAlertController(title: "Payday Error", message: "Before paying \(currentUserName), please review the daily jobs, daily habits, and weekly jobs first. You can review jobs and habits by tapping on the icons above.", preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: "okay", style: .cancel, handler: { (action) in
                 alert.dismiss(animated: true, completion: nil)
             }))
@@ -729,7 +685,7 @@ class PaydayDetailVC: UIViewController, UITableViewDelegate, UITableViewDataSour
         
         // Lengthy alert bubble
         let messageText = NSMutableAttributedString(
-            string: "\(userName) earned $\(userIncome) this week. \n \nBe sure to compliment progress. \n \n\(userName)'s money will be allocated like this: \n \n$\(tenPercent) (10% charity) \n$\(tenPercent) (10% personal money) \n$\(tenPercent) (10% long-term savings) \n \n$\(seventyPercent) (70% expenses) \n \nWhen you are done paying \(userName), tap 'okay'. This will zero out the account to start a new week. You can still see all \(userName)'s transactions on the 'reports' page.",
+            string: "\(currentUserName) earned $\(userIncome) this week. \n \nBe sure to compliment progress. \n \n\(currentUserName)'s money will be allocated like this: \n \n$\(tenPercent) (10% charity) \n$\(tenPercent) (10% personal money) \n$\(tenPercent) (10% long-term savings) \n \n$\(seventyPercent) (70% expenses) \n \nWhen you are done paying \(currentUserName), tap 'okay'. This will zero out the account to start a new week. You can still see all \(currentUserName)'s transactions on the 'reports' page.",
             attributes: [
                 NSParagraphStyleAttributeName : paragraphStyle,
                 NSFontAttributeName : UIFont.systemFont(ofSize: 13.0),
@@ -738,19 +694,19 @@ class PaydayDetailVC: UIViewController, UITableViewDelegate, UITableViewDataSour
         )
         
         // Not sure what this does,  but it works
-        let alert = UIAlertController(title: "\(userName)'s Payday", message: "", preferredStyle: .alert)
+        let alert = UIAlertController(title: "\(currentUserName)'s Payday", message: "", preferredStyle: .alert)
         alert.setValue(messageText, forKey: "attributedMessage")
         
         // Button one: "pay user $x.xx"
-        alert.addAction(UIAlertAction(title: "pay \(userName) $\(userIncome)", style: .default, handler: { (action) in
+        alert.addAction(UIAlertAction(title: "pay \(currentUserName) $\(userIncome)", style: .default, handler: { (action) in
             alert.dismiss(animated: true, completion: nil)
             
             // ---------------------
             // Second Alert for Fees
             // ---------------------
             
-            let feesAlert = UIAlertController(title: "\(self.userName)'s Fees", message: "\(self.userName) incurred one or more fees this week, totalling $1.50:\n\n$1.00 fighting\n$0.50 broken fence\n\n\(self.userName) should pay any fees immediately with the payday money just earned.", preferredStyle: .alert)
-            feesAlert.addAction(UIAlertAction(title: "collect $1.50 from \(self.userName)", style: .default, handler: {_ in
+            let feesAlert = UIAlertController(title: "\(self.currentUserName)'s Fees", message: "\(self.currentUserName) incurred one or more fees this week, totalling $1.50:\n\n$1.00 fighting\n$0.50 broken fence\n\n\(self.currentUserName) should pay any fees immediately with the payday money just earned.", preferredStyle: .alert)
+            feesAlert.addAction(UIAlertAction(title: "collect $1.50 from \(self.currentUserName)", style: .default, handler: {_ in
                 CATransaction.setCompletionBlock({
                     let _ = self.navigationController?.popViewController(animated: true)        // return to previous screen
                 })
@@ -768,5 +724,29 @@ class PaydayDetailVC: UIViewController, UITableViewDelegate, UITableViewDataSour
         }))
         present(alert, animated: true, completion: nil)
         
+    }
+    
+    // ---------
+    // functions
+    // ---------
+    
+    func loadDataSourcesAndDelegates() {
+        dailyJobsTableView.dataSource = self
+        dailyJobsTableView.delegate = self
+        dailyJobsTableViewTop.constant = -(dailyJobsTableView.bounds.height)
+        dailyJobsTableView.isHidden = true
+        dailyJobsTableView.isScrollEnabled = false
+        
+        dailyHabitsTableView.dataSource = self
+        dailyHabitsTableView.delegate = self
+        dailyHabitsTableViewTop.constant = -(dailyHabitsTableView.bounds.height)
+        dailyHabitsTableView.isHidden = true
+        dailyHabitsTableView.isScrollEnabled = false
+        
+        weeklyJobsTableView.dataSource = self
+        weeklyJobsTableView.delegate = self
+        weeklyJobsTableViewTop.constant = -(weeklyJobsTableView.bounds.height)
+        weeklyJobsTableView.isHidden = true
+        weeklyJobsTableView.isScrollEnabled = false
     }
 }

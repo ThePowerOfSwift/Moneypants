@@ -57,8 +57,8 @@ class FeeVC: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate, UIT
         view.endEditing(true)
         
         // setup two alert messages (one for 'fighting', and one for everything else)
-        let alertMessageFighting = "You have chosen to charge \(currentUserName!) a $\(String(format: "%.2f", Double(FamilyData.feeValueMultiplier) / 100)) fee for '\(feeTextField.text!)'.\n\nLet \(currentUserName!) know that if \(MPUser.gender(user: MPUser.currentUser).he_she.lowercased()) goes the remainder of the day without \(feeTextField.text!), this fee will be refunded. Tap okay to confirm."
-        let alertMessageDefault = "You have chosen to charge \(currentUserName!) a $\(String(format: "%.2f", Double(FamilyData.feeValueMultiplier) / 100)) fee for '\(feeTextField.text!)'. Tap okay to confirm."
+        let alertMessageFighting = "\(currentUserName!) will get charged a $\(String(format: "%.2f", Double(FamilyData.feeValueMultiplier) / 100)) fee for '\(feeTextField.text!)'.\n\nLet \(currentUserName!) know that if \(MPUser.gender(user: MPUser.currentUser).he_she.lowercased()) goes the remainder of the day without \(feeTextField.text!), this fee will be refunded. Tap okay to confirm."
+        let alertMessageDefault = "\(currentUserName!) will get charged a $\(String(format: "%.2f", Double(FamilyData.feeValueMultiplier) / 100)) fee for '\(feeTextField.text!)'. Tap okay to confirm."
         
         // throw error message if fee field is blank or has something other than the five options (if user pasted text from somewhere else)
         if feeTextField.text! == "" || !fees.contains(feeTextField.text!) {

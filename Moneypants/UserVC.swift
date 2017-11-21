@@ -18,7 +18,7 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     @IBOutlet weak var totalProgressMeterHeight: NSLayoutConstraint!
     @IBOutlet weak var habitTotalProgressView: UIView!
     
-    let feesDebts: [String] = ["add a fee...", "add a withdrawal..."]
+    let feesDebts: [String] = ["add a fee...", "make a withdrawal..."]
     
     var currentUserName: String!
     
@@ -252,6 +252,7 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
             cell.pointsLabel.text = ""
             cell.accessoryType = .disclosureIndicator
             cell.selectionBoxLabel.textColor = .red
+            cell.selectionBoxLabel.text = ""
             
             // fees
             if indexPath.row == 0 {

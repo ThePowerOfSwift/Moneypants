@@ -31,8 +31,9 @@ class MoneyVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     // For Modal Presentation (from 'withdrawal' or 'spending' VC's)
     @IBOutlet weak var navBar: UINavigationItem!
     @IBOutlet weak var navBarTop: NSLayoutConstraint!
-    
     var navTop: Int = -44
+    var withdrawalAmount: Int?
+    // end modal presentation from 'withdrawal'
     
     var currentUserName: String!
     
@@ -44,11 +45,12 @@ class MoneyVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         super.viewDidLoad()
         
         currentUserName = MPUser.usersArray[MPUser.currentUser].firstName
-        navigationItem.title = MPUser.usersArray[MPUser.currentUser].firstName
+        navigationItem.title = currentUserName
         
         // for modal presentation only (so we can hide it when not modally presented)
         navBarTop.constant = CGFloat(navTop)
         navBar.title = currentUserName
+        print(withdrawalAmount ?? "no withdrawal amount")
         
         tableView1.delegate = self
         tableView1.dataSource = self
@@ -81,8 +83,6 @@ class MoneyVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         funMoneyButton.isSelected = false
         savingsButton.isSelected = false
         donationsButton.isSelected = false
-        
-        navigationItem.title = currentUserName
     }
     
     // ----------
@@ -115,6 +115,15 @@ class MoneyVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
             cell.envelopeLabel.text = tableViewBudgetItemNames?[indexPath.row].expenseName
             return cell
         }
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        // iterate over the piggy banks and find which one is pink. That'll be the category, and then I can find the item from the row
+        print(Budget.budgetsArray)
+        
+        
+        
+        print(indexPath)
     }
     
     // -------------------

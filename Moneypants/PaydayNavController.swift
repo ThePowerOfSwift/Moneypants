@@ -6,7 +6,7 @@ class PaydayNavController: UINavigationController {
         
         print("green")
         
-        UINavigationBar.appearance().barTintColor = UIColor(red: 141/255, green: 198/255, blue: 63/255, alpha: 1)
+        UINavigationBar.appearance().barTintColor = UIColor(red: 125/255, green: 190/255, blue: 48/255, alpha: 1)
         UINavigationBar.appearance().tintColor = UIColor.white
         UINavigationBar.appearance().titleTextAttributes = [
             NSForegroundColorAttributeName : UIColor.white,

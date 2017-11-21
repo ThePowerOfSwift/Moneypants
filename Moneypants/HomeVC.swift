@@ -23,18 +23,6 @@ class HomeVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UITa
         tableView.reloadData()
     }
     
-    func checkForIncome() {
-        for user in MPUser.usersArray {
-            let temp = Income.currentIncomeArray.filter({ $0.user == user.firstName })
-            if temp.isEmpty {
-                let newUser = Income(user: user.firstName, currentPoints: 0)
-                Income.currentIncomeArray.append(newUser)
-            } else {
-                print("\(user.firstName) already has income")
-            }
-        }
-    }
-    
     // ----------
     // Table View
     // ----------
@@ -84,6 +72,22 @@ class HomeVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UITa
     
     @IBAction func printPointsButtonTapped(_ sender: UIBarButtonItem) {
         print("\nPOINTS:\n\n",Points.pointsArray)
+    }
+    
+    // ---------
+    // functions
+    // ---------
+    
+    func checkForIncome() {
+        for user in MPUser.usersArray {
+            let temp = Income.currentIncomeArray.filter({ $0.user == user.firstName })
+            if temp.isEmpty {
+                let newUser = Income(user: user.firstName, currentPoints: 0)
+                Income.currentIncomeArray.append(newUser)
+            } else {
+                print("\(user.firstName) already has income")
+            }
+        }
     }
 }
 

@@ -73,18 +73,18 @@ class UserProgressPopupVC: UIViewController {
     // ---------
     
     func showOrHidePointsNeeded() {
-        habitsMeterLabel.text = "\(Int((Double(jobAndHabitBonusValue) * 0.75)) - pointsEarnedSinceLastPayday().habits) points needed to earn bonus"
-        totalMeterLabel.text = "\(potentialWeeklyEarnings - pointsEarnedSinceLastPayday().total) points needed to meet budget"
+        habitsMeterLabel.text = "\(Int((Double(jobAndHabitBonusValue) * 0.75)) - pointsEarnedSinceLastPayday().habits) points\nneeded to\nearn bonus"
+        totalMeterLabel.text = "\(potentialWeeklyEarnings - pointsEarnedSinceLastPayday().total) points\nneeded to\nmeet budget"
         
-        // if user has earned at least half of their total habit amount, then show the tedt label
-        if (jobAndHabitBonusValue - pointsEarnedSinceLastPayday().habits) < (jobAndHabitBonusValue / 2) {
+        // if user has earned at least a third of their total habit amount, then show the tedt label
+        if pointsEarnedSinceLastPayday().habits > (jobAndHabitBonusValue / 3) {
             habitsMeterLabel.isHidden = false
         } else {
             habitsMeterLabel.isHidden = true
         }
         
-        // if user has earned at least half of their total weekly amount, then show the text label
-        if (potentialWeeklyEarnings - pointsEarnedSinceLastPayday().total < (potentialWeeklyEarnings / 2)) {
+        // if user has earned at least a third of their total weekly amount, then show the text label
+        if pointsEarnedSinceLastPayday().total > (potentialWeeklyEarnings / 3) {
             totalMeterLabel.isHidden = false
         } else {
             totalMeterLabel.isHidden = true

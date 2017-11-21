@@ -2,25 +2,22 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "music white.png",
+      "filename" : "shopping cart small white.png",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
-      "filename" : "music white@2x.png",
+      "filename" : "shopping cart small white@2x.png",
       "scale" : "2x"
     },
     {
       "idiom" : "universal",
-      "filename" : "music white@3x.png",
+      "filename" : "shopping cart small white@3x.png",
       "scale" : "3x"
     }
   ],
   "info" : {
     "version" : 1,
     "author" : "xcode"
-  },
-  "properties" : {
-    "template-rendering-intent" : "template"
   }
 }
