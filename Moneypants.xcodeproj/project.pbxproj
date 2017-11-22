@@ -134,6 +134,7 @@
 		CEF3EBBB1F302CF0008953A8 /* MoneyCell2.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEF3EBBA1F302CF0008953A8 /* MoneyCell2.swift */; };
 		CEF3EBBD1F305A45008953A8 /* MoneyCell3.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEF3EBBC1F305A45008953A8 /* MoneyCell3.swift */; };
 		CEF3EBBF1F305FE4008953A8 /* MoneyCell4.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEF3EBBE1F305FE4008953A8 /* MoneyCell4.swift */; };
+		CEFBE7951FC559F300467321 /* PaydayDetailsPopupCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEFBE7941FC559F300467321 /* PaydayDetailsPopupCell.swift */; };
 		CEFC22001F64A82900CC4FC1 /* MPUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEFC21FF1F64A82900CC4FC1 /* MPUser.swift */; };
 		CEFC56F21F81E93D00B9049B /* Step1VideoVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEFC56F11F81E93D00B9049B /* Step1VideoVC.swift */; };
 /* End PBXBuildFile section */
@@ -268,6 +269,7 @@
 		CEF3EBBA1F302CF0008953A8 /* MoneyCell2.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MoneyCell2.swift; sourceTree = "<group>"; };
 		CEF3EBBC1F305A45008953A8 /* MoneyCell3.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MoneyCell3.swift; sourceTree = "<group>"; };
 		CEF3EBBE1F305FE4008953A8 /* MoneyCell4.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MoneyCell4.swift; sourceTree = "<group>"; };
+		CEFBE7941FC559F300467321 /* PaydayDetailsPopupCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaydayDetailsPopupCell.swift; sourceTree = "<group>"; };
 		CEFC21FF1F64A82900CC4FC1 /* MPUser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MPUser.swift; sourceTree = "<group>"; };
 		CEFC56F11F81E93D00B9049B /* Step1VideoVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Step1VideoVC.swift; sourceTree = "<group>"; };
 		E702D73712A3CC1338585505 /* Pods-Moneypants.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Moneypants.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Moneypants/Pods-Moneypants.debug.xcconfig"; sourceTree = "<group>"; };
@@ -472,6 +474,7 @@
 				CEA564371FC37F4800331A14 /* PaydayDetailsVC.swift */,
 				CEA564391FC37F7200331A14 /* PaydayDetailsCell.swift */,
 				CEA5643B1FC3E13300331A14 /* PaydayDetailsPopup.swift */,
+				CEFBE7941FC559F300467321 /* PaydayDetailsPopupCell.swift */,
 			);
 			name = "PAYDAY TESTING";
 			sourceTree = "<group>";
@@ -808,6 +811,7 @@
 				CE464E801FAC4C1C00941021 /* Step10ExpenseVideoVC.swift in Sources */,
 				CE4D2B801FC012D700B21FF7 /* Withdrawal.swift in Sources */,
 				CE532D191FBAD3C900381807 /* UserVCExtWeeklyJobs.swift in Sources */,
+				CEFBE7951FC559F300467321 /* PaydayDetailsPopupCell.swift in Sources */,
 				CEF1A4931F022F3F00C010F9 /* Step3VC.swift in Sources */,
 				89FB676C1D5C837D002B2484 /* SignUpVC.swift in Sources */,
 				CE7160FB1F04A9270045AA05 /* Step7HabitCell.swift in Sources */,

@@ -9,10 +9,12 @@ class PaydayDetailsPopup: UIViewController, UITableViewDelegate, UITableViewData
     @IBOutlet weak var categoryLabel: UILabel!
     
     @IBOutlet weak var detailsTableView: UITableView!
+    @IBOutlet weak var detailsTableViewHeight: NSLayoutConstraint!
     @IBOutlet weak var subtotalLabel: UILabel!
     
     var categoryLabelText: String!
     var currentUserName: String!
+    var jobAndHabitBonusValue: Int!
     var jobsHabitsIsoArray: [JobsAndHabits]!
     var code: String!
     var isoArraySubtotals: [(jobName: String, jobSubtotal: Int)] = []
@@ -20,10 +22,15 @@ class PaydayDetailsPopup: UIViewController, UITableViewDelegate, UITableViewData
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        
+        print("A: ",detailsTableView.contentSize.height)
+        
         detailsTableView.delegate = self
         detailsTableView.dataSource = self
         detailsTableView.tableFooterView = UIView()
+//        detailsTableViewHeight.constant = detailsTableView.contentSize.height
         currentUserName = MPUser.usersArray[MPUser.currentUser].firstName
+        jobAndHabitBonusValue = Int(Double(FamilyData.adjustedNatlAvgYrlySpendingPerKid) / 52 * 0.20 * 100)
         
         // all I need is the category and I can calculate everything else I need
         // I don't even need current user b/c it's global and I can just call currentUser
@@ -83,10 +90,18 @@ class PaydayDetailsPopup: UIViewController, UITableViewDelegate, UITableViewData
         subtotalLabel.text = "$\(String(format: "%.2f", Double(isoArraySubtotals.reduce(0, { $0 + $1.jobSubtotal })) / 100))"
         
         customizeBackground()
+        detailsTableView.reloadData()
+        detailsTableViewHeight.constant = detailsTableView.contentSize.height
+        view.layoutIfNeeded()
+        
+        print("B: ",detailsTableView.contentSize.height)
     }
     
     @IBAction func doneButtonTapped(_ sender: UIButton) {
         dismiss(animated: true, completion: nil)
+//        print("C: ",detailsTableView.contentSize.height)
+//        detailsTableViewHeight.constant = detailsTableView.contentSize.height
+//        view.layoutIfNeeded()
     }
     
     func customizeBackground() {
@@ -112,21 +127,21 @@ class PaydayDetailsPopup: UIViewController, UITableViewDelegate, UITableViewData
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         if indexPath.section == 0 {
-            return 90
+            return 50
         } else {
             return 75
         }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = detailsTableView.dequeueReusableCell(withIdentifier: "detailsCell")
+        let cell = detailsTableView.dequeueReusableCell(withIdentifier: "detailsCell") as! PaydayDetailsPopupCell
         if indexPath.section == 0 {
-            cell?.textLabel?.text = isoArraySubtotals[indexPath.row].jobName
-            cell?.detailTextLabel?.text = "\(isoArraySubtotals[indexPath.row].jobSubtotal)"
+            cell.itemDescriptionLabel.text = isoArraySubtotals[indexPath.row].jobName
+            cell.itemWeeklySubtotalLabel.text = "\(isoArraySubtotals[indexPath.row].jobSubtotal)"
         } else {
-            cell?.textLabel?.text = "bonus"
-            cell?.detailTextLabel?.text = "$5.00"
+            cell.itemDescriptionLabel.text = "bonus"
+            cell.itemWeeklySubtotalLabel.text = "$\(String(format: "%.2f", Double(jobAndHabitBonusValue) / 100))"
         }
-        return cell!
+        return cell
     }
 }

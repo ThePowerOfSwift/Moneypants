@@ -9,11 +9,32 @@ class HomeVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UITa
         
         MPUser.usersArray.sort(by: {$0.birthday < $1.birthday})       // sort array with oldest users first
         
-//        addNavBarImage()
-        
         tableView.delegate = self
         tableView.dataSource = self
         tableView.tableFooterView = UIView()
+        
+        
+        
+        
+        
+        
+        
+        // temp arrays for testing
+        Points.pointsArray = [Points(user: "Father", itemName: "feed pet / garbage", itemCategory: "daily jobs", code: "C", valuePerTap: 54, itemDate: 1511333997.678102),
+                              Points(user: "Father", itemName: "enter your top priority habit here", itemCategory: "daily habits", code: "C", valuePerTap: 24, itemDate: 1511333997.9687519),
+                              Points(user: "Father", itemName: "wash car", itemCategory: "weekly jobs", code: "C", valuePerTap: 302, itemDate: 1511333999.4136181)]
+        
+        Income.currentIncomeArray = [Income(user: "Father", currentPoints: 380),
+                                     Income(user: "Mother", currentPoints: 0),
+                                     Income(user: "Allan", currentPoints: 0),
+                                     Income(user: "Sophie", currentPoints: 0),
+                                     Income(user: "Savannah", currentPoints: 0),
+                                     Income(user: "Flower", currentPoints: 0)]
+        
+        
+        
+        
+        
         
         checkForIncome()
     }
@@ -51,19 +72,6 @@ class HomeVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UITa
         MPUser.currentUser = indexPath.row
         performSegue(withIdentifier: "DetailSegue", sender: self)
         tableView.deselectRow(at: indexPath, animated: true)
-    }
-    
-    func addNavBarImage() {
-        let navController = navigationController!
-        let barImage = #imageLiteral(resourceName: "MPS logo white")
-        let imageView = UIImageView(image: barImage)
-        let bannerWidth = navController.navigationBar.frame.size.width
-        let bannerHeight = navController.navigationBar.frame.size.height
-        let bannerX = bannerWidth / 2 - barImage.size.width / 2
-        let bannerY = bannerHeight / 2 - barImage.size.height / 2
-        imageView.frame = CGRect(x: bannerX, y: bannerY, width: bannerWidth * 0.75, height: bannerHeight * 0.75)
-        imageView.contentMode = .scaleAspectFit
-        navigationItem.titleView = imageView
     }
     
     @IBAction func printIncomeButtonTapped(_ sender: UIBarButtonItem) {
