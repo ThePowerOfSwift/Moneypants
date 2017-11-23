@@ -4,11 +4,14 @@ class PaydayDetailsPopupCell: UITableViewCell {
     
     @IBOutlet weak var itemDescriptionLabel: UILabel!
     @IBOutlet weak var itemWeeklySubtotalLabel: UILabel!
+    @IBOutlet weak var trophyImageView: UIImageView!
     
     @IBOutlet weak var dailyView: UIView!
 
     override func awakeFromNib() {
         super.awakeFromNib()
+        
+        dailyView.isHidden = true
         
         dailyView.layer.cornerRadius = dailyView.bounds.height / 6.4
         dailyView.layer.masksToBounds = true

@@ -331,6 +331,45 @@
 			path = Moneypants;
 			sourceTree = "<group>";
 		};
+		CE1A69A01FC640D00012AC6D /* Home Page */ = {
+			isa = PBXGroup;
+			children = (
+				CE4832B81F27FB11005A7A55 /* HomeNavController.swift */,
+				CE1B477C1F185025007C7515 /* HomeVC.swift */,
+				CE1B477E1F186E99007C7515 /* HomeCustomCell.swift */,
+			);
+			name = "Home Page";
+			sourceTree = "<group>";
+		};
+		CE1A69A11FC640E10012AC6D /* Job Jar */ = {
+			isa = PBXGroup;
+			children = (
+				CE4832C21F281154005A7A55 /* JobJarNavController.swift */,
+				CE4832C41F28116B005A7A55 /* JobJarVC.swift */,
+			);
+			name = "Job Jar";
+			sourceTree = "<group>";
+		};
+		CE1A69A21FC640EA0012AC6D /* Videos */ = {
+			isa = PBXGroup;
+			children = (
+				CE4832BC1F28005A005A7A55 /* VideosNavController.swift */,
+				CE79B8931F233F290032DD70 /* VideosVC.swift */,
+				CE2CCBDA1F26DE1C00ACA17F /* VideosCell.swift */,
+				CE2CCBFF1F27136C00ACA17F /* VideoPlaybackVC.swift */,
+			);
+			name = Videos;
+			sourceTree = "<group>";
+		};
+		CE1A69A31FC640F10012AC6D /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				CE4832BE1F2800A5005A7A55 /* SettingsNavController.swift */,
+				CE1B47801F1885B0007C7515 /* SettingsVC.swift */,
+			);
+			name = Settings;
+			sourceTree = "<group>";
+		};
 		CE1CB50C1F01AD9E009A8DAC /* arista_2_0 */ = {
 			isa = PBXGroup;
 			children = (
@@ -471,6 +510,9 @@
 		CEA564361FC37F1D00331A14 /* PAYDAY TESTING */ = {
 			isa = PBXGroup;
 			children = (
+				CE4832BA1F27FCA0005A7A55 /* PaydayNavController.swift */,
+				CEAAF9DB1F356F2400846DD5 /* PaydayVC.swift */,
+				CEAAF9D91F356D3800846DD5 /* PaydayCell.swift */,
 				CEA564371FC37F4800331A14 /* PaydayDetailsVC.swift */,
 				CEA564391FC37F7200331A14 /* PaydayDetailsCell.swift */,
 				CEA5643B1FC3E13300331A14 /* PaydayDetailsPopup.swift */,
@@ -521,22 +563,12 @@
 		CEB4CD2B1F1ECDC700F9733F /* Home */ = {
 			isa = PBXGroup;
 			children = (
-				CE4832B81F27FB11005A7A55 /* HomeNavController.swift */,
-				CE1B477C1F185025007C7515 /* HomeVC.swift */,
-				CE1B477E1F186E99007C7515 /* HomeCustomCell.swift */,
-				CE4832BA1F27FCA0005A7A55 /* PaydayNavController.swift */,
-				CEAAF9DB1F356F2400846DD5 /* PaydayVC.swift */,
-				CEAAF9D91F356D3800846DD5 /* PaydayCell.swift */,
+				CE1A69A01FC640D00012AC6D /* Home Page */,
 				CEA564361FC37F1D00331A14 /* PAYDAY TESTING */,
 				CE951E3F1F4B5D24003B5EEF /* Payday OLD */,
-				CE4832C21F281154005A7A55 /* JobJarNavController.swift */,
-				CE4832C41F28116B005A7A55 /* JobJarVC.swift */,
-				CE4832BC1F28005A005A7A55 /* VideosNavController.swift */,
-				CE79B8931F233F290032DD70 /* VideosVC.swift */,
-				CE2CCBDA1F26DE1C00ACA17F /* VideosCell.swift */,
-				CE2CCBFF1F27136C00ACA17F /* VideoPlaybackVC.swift */,
-				CE4832BE1F2800A5005A7A55 /* SettingsNavController.swift */,
-				CE1B47801F1885B0007C7515 /* SettingsVC.swift */,
+				CE1A69A11FC640E10012AC6D /* Job Jar */,
+				CE1A69A21FC640EA0012AC6D /* Videos */,
+				CE1A69A31FC640F10012AC6D /* Settings */,
 			);
 			name = Home;
 			sourceTree = "<group>";

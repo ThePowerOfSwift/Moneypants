@@ -22,14 +22,20 @@ class HomeVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UITa
         // temp arrays for testing
         Points.pointsArray = [Points(user: "Father", itemName: "feed pet / garbage", itemCategory: "daily jobs", code: "C", valuePerTap: 54, itemDate: 1511333997.678102),
                               Points(user: "Father", itemName: "enter your top priority habit here", itemCategory: "daily habits", code: "C", valuePerTap: 24, itemDate: 1511333997.9687519),
-                              Points(user: "Father", itemName: "wash car", itemCategory: "weekly jobs", code: "C", valuePerTap: 302, itemDate: 1511333999.4136181)]
+                              Points(user: "Father", itemName: "wash car", itemCategory: "weekly jobs", code: "C", valuePerTap: 302, itemDate: 1511333999.4136181),
+                              Points(user: "Father", itemName: "bad language", itemCategory: "fees", code: "F", valuePerTap: -71, itemDate: 1511395725.283673),
+                              Points(user: "Mother", itemName: "living room", itemCategory: "daily jobs", code: "C", valuePerTap: 54, itemDate: 1511413767.8222201),
+                              Points(user: "Mother", itemName: "meal prep", itemCategory: "daily jobs", code: "E", valuePerTap: -35, itemDate: 1511413773.4892831),
+                              Points(user: "Allan", itemName: "meal prep (sub)", itemCategory: "daily jobs", code: "S", valuePerTap: 89, itemDate: 1511413773.4893231)]
         
-        Income.currentIncomeArray = [Income(user: "Father", currentPoints: 380),
-                                     Income(user: "Mother", currentPoints: 0),
-                                     Income(user: "Allan", currentPoints: 0),
+        Income.currentIncomeArray = [Income(user: "Father", currentPoints: 309),
+                                     Income(user: "Mother", currentPoints: 19),
+                                     Income(user: "Allan", currentPoints: 89),
                                      Income(user: "Sophie", currentPoints: 0),
                                      Income(user: "Savannah", currentPoints: 0),
                                      Income(user: "Flower", currentPoints: 0)]
+        
+        print("Payday is: ",FamilyData.paydayTime)
         
         
         

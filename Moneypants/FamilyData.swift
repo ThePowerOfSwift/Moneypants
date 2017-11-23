@@ -8,6 +8,8 @@ struct FamilyData {
     static var adjustedNatlAvgYrlySpendingEntireFam: Int = 0
     static var adjustedNatlAvgYrlySpendingPerKid: Int = 0
     static var feeValueMultiplier: Int = 0
+    
+    static let fees = ["fighting", "lying", "stealing", "disobedience", "bad language"]
 
     static func getSetupProgressFromFirebase(completion: @escaping (Int) -> ()) {
         let firebaseUser = Auth.auth().currentUser

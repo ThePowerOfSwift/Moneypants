@@ -7,7 +7,6 @@ class FeeVC: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate, UIT
     @IBOutlet weak var explainerLabel: UILabel!
     
     let feePicker = UIPickerView()
-    let fees = ["fighting", "lying", "stealing", "disobedience", "bad language"]
     
     var currentUserName: String!
     
@@ -37,15 +36,15 @@ class FeeVC: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate, UIT
     }
     
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        return fees[row]
+        return FamilyData.fees[row]
     }
     
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        return fees.count
+        return FamilyData.fees.count
     }
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        feeTextField.text = fees[row]
+        feeTextField.text = FamilyData.fees[row]
     }
     
     // ---------
@@ -61,7 +60,7 @@ class FeeVC: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate, UIT
         let alertMessageDefault = "\(currentUserName!) will get charged a $\(String(format: "%.2f", Double(FamilyData.feeValueMultiplier) / 100)) fee for '\(feeTextField.text!)'. Tap okay to confirm."
         
         // throw error message if fee field is blank or has something other than the five options (if user pasted text from somewhere else)
-        if feeTextField.text! == "" || !fees.contains(feeTextField.text!) {
+        if feeTextField.text! == "" || !FamilyData.fees.contains(feeTextField.text!) {
             selectionErrorAlert()
         } else {
             if feeTextField.text == "fighting" {

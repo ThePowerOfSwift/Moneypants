@@ -8,7 +8,7 @@ class PaydayDetailsVC: UIViewController, UICollectionViewDataSource, UICollectio
     var currentUserName: String!
     var currentUserIncome: Int!
     
-    var paydayData: [(String, String, Int)] = []
+    var paydayData: [(icon: String, category: String, amount: Int)] = []
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -37,6 +37,11 @@ class PaydayDetailsVC: UIViewController, UICollectionViewDataSource, UICollectio
             cell.categoryImageView.alpha = 0.5
             cell.categoryLabel.alpha = 0.5
             cell.categoryAmountLabel.text = "$ -"
+        } else if paydayData[indexPath.row].2 < 0 {
+            cell.bgImageView.layer.backgroundColor = UIColor(red: 125/255, green: 190/255, blue: 48/255, alpha: 1).cgColor
+            cell.categoryImageView.alpha = 1.0
+            cell.categoryLabel.alpha = 1.0
+            cell.categoryAmountLabel.text = "-$\(String(format: "%.2f", Double(abs(paydayData[indexPath.row].2)) / 100))"
         } else {
             cell.bgImageView.layer.backgroundColor = UIColor(red: 125/255, green: 190/255, blue: 48/255, alpha: 1).cgColor
             cell.categoryImageView.alpha = 1.0
@@ -56,13 +61,6 @@ class PaydayDetailsVC: UIViewController, UICollectionViewDataSource, UICollectio
     // ----------
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-//        let filteredArray = paydayData.filter({ $0.2 != 0 })
-//        for (filteredIndex, item) in filteredArray.enumerated() {
-//            if indexPath.row == filteredIndex {
-//                print(item.1)
-//                performSegue(withIdentifier: "PaydayDetailsPopup", sender: item.1)
-//            }
-//        }
         if paydayData[indexPath.row].2 == 0 {
             noDataInCategoryAlert(indexPath: indexPath)
         } else {
@@ -91,10 +89,8 @@ class PaydayDetailsVC: UIViewController, UICollectionViewDataSource, UICollectio
         
         
         // and what about the job bonus? Does that go here? How to calculate that?
-        // payday bonus should be calculated automatically at the end of the seventh day since payday (so on payday, the app will automatically calculate if user has earned the job bonus, and if so, it will create a Points item for the bonus.
-        // Question: where does the code go that automatically calculates the bonus? The main page? The user's page?
-        // how to calculate and when?
         // it happens on button tap for daily jobs. When user taps 'daily job', app runs program to see if that day is the seventh day since last payday. If so, app checks to see if there are any 'x' marks in their points array for daily jobs. If not, then user gets a bonus. It's a Points item, and the code is "B". NOTE: make sure you erase it if user undoes job bonus with an "X". How to do that?
+        // question: what if user leaves daily job blank? does it automatically become unexcused?
         
         
         
