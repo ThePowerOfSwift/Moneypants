@@ -45,14 +45,27 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     var firebaseUser: User!
     var ref: DatabaseReference!
     
+    var selectedDate: Date!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        habitBonusCenterConstraint.constant = -300
         
         firebaseUser = Auth.auth().currentUser
         ref = Database.database().reference().child("users").child(firebaseUser.uid)
         
         currentUserName = MPUser.usersArray[MPUser.currentUser].firstName
         navigationItem.title = currentUserName
+        
+        // -------------
+        // selected date
+        // -------------
+        
+        selectedDate = Date()
+        updateFormattedDate()
+        
+        
         
         tableView.delegate = self
         tableView.dataSource = self
@@ -289,7 +302,8 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
             let currentUserCategoryItemDateArray = Points.pointsArray.filter({ $0.user == currentUserName && $0.itemCategory == "daily jobs" && $0.itemName == usersDailyJobs?[indexPath.row].name && Calendar.current.isDateInToday(Date(timeIntervalSince1970: $0.itemDate)) })
             if currentUserCategoryItemDateArray.isEmpty {
                 createNewPointsItemForDailyJobs(indexPath: indexPath)
-                tableView.reloadRows(at: [indexPath], with: .automatic)
+                tableView.reloadData()
+//                tableView.reloadRows(at: [indexPath], with: .automatic)
                 // if array isn't empty, check if numberOfTapsEX has an 'X' or an 'E'
             } else if currentUserCategoryItemDateArray[0].code == "X" {
                 alertX(indexPath: indexPath, deselectRow: true)
@@ -312,7 +326,8 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
             let currentUserCategoryItemDateArray = Points.pointsArray.filter({ $0.user == currentUserName && $0.itemCategory == "daily habits" && $0.itemName == usersDailyHabits?[indexPath.row].name && Calendar.current.isDateInToday(Date(timeIntervalSince1970: $0.itemDate)) })
             if currentUserCategoryItemDateArray.isEmpty {
                 createNewItemForDailyHabit(indexPath: indexPath)
-                tableView.reloadRows(at: [indexPath], with: .automatic)
+                tableView.reloadData()
+//                tableView.reloadRows(at: [indexPath], with: .automatic)
             } else if currentUserCategoryItemDateArray.first?.code == "N" {
                 alertN(indexPath: indexPath, deselectRow: true, jobOrHabit: "habit")
             } else {
@@ -335,7 +350,8 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
             let currentUserCategoryItemDateArray = Points.pointsArray.filter({ $0.user == currentUserName && $0.itemCategory == "weekly jobs" && $0.itemName == usersWeeklyJobs?[indexPath.row].name && Calendar.current.isDateInToday(Date(timeIntervalSince1970: $0.itemDate)) })
             if currentUserCategoryItemDateArray.isEmpty {
                 createNewPointsItemForWeeklyJobs(indexPath: indexPath)
-                tableView.reloadRows(at: [indexPath], with: .automatic)
+                tableView.reloadData()
+//                tableView.reloadRows(at: [indexPath], with: .automatic)
             } else if currentUserCategoryItemDateArray.first?.code == "C" {
                 tableView.deselectRow(at: indexPath, animated: true)
             } else if currentUserCategoryItemDateArray.first?.code == "N" {
@@ -548,7 +564,6 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                 } else if isoArrayForItem.first?.code == "C" {
                     self.removeSelectedItemFromPointsArrayAndUpdateIncomeArray(indexPath: indexPath, category: "weekly jobs", categoryArray: self.usersWeeklyJobs)
                 } else if isoArrayForItem.first?.code == "N" {
-                    print("need parental password to reset this to zero. Then remove substitute's values as well")
                     self.getParentalPasscodeThenResetToZero(indexPath: indexPath, category: "weekly jobs", categoryArray: self.usersWeeklyJobs)
                 }
             })
@@ -568,9 +583,66 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         dismiss(animated: true, completion: nil)
     }
     
+    @IBAction func dateArrowLeftTapped(_ sender: UIButton) {
+        if dateLower.text == "yesterday" {
+            getParentalPasscodeBeforeProceeding()
+        } else if Calendar.current.isDate(selectedDate, inSameDayAs: FamilyData.calculatePayday().previous) == true {
+            limitReachedAlert()
+        } else {
+            // subtract one day from selected date
+            selectedDate = Calendar.current.date(byAdding: .day, value: -1, to: selectedDate)
+            updateFormattedDate()
+        }
+    }
+    
+    @IBAction func dateArrowRightTapped(_ sender: UIButton) {
+        // check to see if day is already 'today'. If so, user can't go forward any more
+        if Calendar.current.isDateInToday(selectedDate) {
+            print("can't go into the future!")
+        } else {
+            // add one day to currently selected date
+            selectedDate = Calendar.current.date(byAdding: .day, value: 1, to: selectedDate)
+            updateFormattedDate()
+        }
+    }
+    
     // ---------
     // Functions
     // ---------
+    
+    func getParentalPasscodeBeforeProceeding() {
+        let alert = UIAlertController(title: "Parental Passcode Required", message: "To change information for more than one day ago, a parental passcode is required.", preferredStyle: .alert)
+        alert.addTextField(configurationHandler: { (textField) in
+            textField.placeholder = "enter passcode"
+            textField.isSecureTextEntry = true
+            textField.keyboardType = .numberPad
+        })
+        // Button ONE: "okay"
+        alert.addAction(UIAlertAction(title: "okay", style: UIAlertActionStyle.default , handler: { (action) in
+            // get passcodes for just parents, not kids
+            let parentalPasscodeArray = MPUser.usersArray.filter({ $0.childParent == "parent" })
+            if parentalPasscodeArray.contains(where: { "\($0.passcode)" == alert.textFields![0].text }) {
+                // subtract one day from selected date
+                self.selectedDate = Calendar.current.date(byAdding: .day, value: -1, to: self.selectedDate)
+                self.updateFormattedDate()
+            } else {
+                self.incorrectPasscodeAlert()
+            }
+        }))
+        // Button TWO: "cancel"
+        alert.addAction(UIAlertAction(title: "cancel", style: .cancel, handler: {_ in
+            alert.dismiss(animated: true, completion: nil)
+        }))
+        present(alert, animated: true, completion: nil)
+    }
+    
+    func limitReachedAlert() {
+        let alert = UIAlertController(title: "Limit Reached", message: "You can only modify point values as far back as the previous pay period.", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "okay", style: .cancel, handler: { (action) in
+            alert.dismiss(animated: true, completion: nil)
+        }))
+        present(alert, animated: true, completion: nil)
+    }
     
     func checkHabitBonusStatus() {
         if pointsEarnedSinceLastPayday().habits >= Int(Double(jobAndHabitBonusValue) * 0.75) {
@@ -597,7 +669,7 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                     pointsItem.itemCategory == category &&
                     pointsItem.itemName == isoArrayForItem[0].itemName &&
                     
-                    // can use 
+                    // can use this for comparing dates when user changes the date code atop the screen (below earnigns subtotal)
                     Calendar.current.isDate(Date(timeIntervalSince1970: pointsItem.itemDate), inSameDayAs: Date()) {
                     
                     // remove item from points array
@@ -649,8 +721,8 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         })
         alert.addAction(UIAlertAction(title: "okay", style: UIAlertActionStyle.default , handler: { (action) in
             // get passcodes for just parents, not kids
-            let parentalArray = MPUser.usersArray.filter({ $0.childParent == "parent" })
-            if parentalArray.contains(where: { "\($0.passcode)" == alert.textFields![0].text }) {
+            let parentalPasscodeArray = MPUser.usersArray.filter({ $0.childParent == "parent" })
+            if parentalPasscodeArray.contains(where: { "\($0.passcode)" == alert.textFields![0].text }) {
                 
                 // once parental password is confirmed, simply do 2 things: remove current user's 'E' or 'X' fee, and remove sub's 'S' fee
                 // then update Points array, update Income array, then update current user's label (and remove row from table if user was their own sub)
@@ -850,6 +922,18 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         }
         
         ref.child("mpIncome").updateChildValues([currentUserName! : Income.currentIncomeArray[MPUser.currentUser].currentPoints])
+    }
+    
+    func updateFormattedDate() {
+        let formatter = DateFormatter()
+        if Calendar.current.isDateInToday(selectedDate) {
+            formatter.dateFormat = "'today'"
+        } else if Calendar.current.isDateInYesterday(selectedDate) {
+            formatter.dateFormat = "'yesterday'"
+        } else {
+            formatter.dateFormat = "EEEE"
+        }
+        dateLower.text = "\(formatter.string(from: selectedDate))"
     }
 }
 

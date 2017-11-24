@@ -39,7 +39,7 @@ class WithdrawalVC: UIViewController {
         
         // Lengthy alert bubble
         let messageText = NSMutableAttributedString(
-            string: "Withdrawals should be used for the following reasons:\n\n1. if child wishes to purchase something but their card won't allow it (e.g. Internet purchases)\n\n2. if child forgot their debit card at a store but has sufficient funds in their bank account to buy an item\n\n3. if child broke something and needs to pay for it",
+            string: "Withdrawals should be used for the following reasons:\n\n1. if child wishes to purchase something but their card won't allow it (e.g. Internet purchases)\n\n2. if child forgot their debit card but has sufficient funds in their bank account to buy an item\n\n3. if child broke something and needs to pay for it",
             attributes: [
                 NSParagraphStyleAttributeName : paragraphStyle,
                 NSFontAttributeName : UIFont.systemFont(ofSize: 13.0),
