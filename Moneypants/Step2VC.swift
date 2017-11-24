@@ -107,6 +107,10 @@ class Step2VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
             MPUser.usersArray.sort(by: {$0.birthday < $1.birthday})       // resort array before displaying tableview data
             usersTableView.reloadData()
             saveUsersToFirebase()
+            
+            // create income array item for them (with value of zero)
+            let newUserIncome = Income(user: (updatedUser?.firstName)!, currentPoints: 0)
+            Income.currentIncomeArray.append(newUserIncome)
         }
     }
     

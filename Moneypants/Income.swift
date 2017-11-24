@@ -1,4 +1,5 @@
 import Foundation
+import Firebase
 
 struct Income {
     var user: String

@@ -150,11 +150,11 @@ class Step2UsersVC: UIViewController, UIImagePickerControllerDelegate, UINavigat
         let childParent = childParentValue
         
         user = MPUser(photo: photo,
-                    firstName: name,
-                    birthday: birthday,
-                    passcode: passcode,
-                    gender: gender,
-                    childParent: childParent)
+                      firstName: name,
+                      birthday: birthday,
+                      passcode: passcode,
+                      gender: gender,
+                      childParent: childParent)
     }
     
     // -----------------------

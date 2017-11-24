@@ -1,4 +1,5 @@
 import UIKit
+import Firebase
 
 extension UserVC {
     
@@ -121,7 +122,12 @@ extension UserVC {
             
             if !isoArray.isEmpty {
                 for (pointsIndex, pointsItem) in Points.pointsArray.enumerated() {
-                    if pointsItem.user == self.currentUserName && pointsItem.itemCategory == "daily jobs" && pointsItem.itemName == isoArray[0].itemName && Calendar.current.isDateInToday(Date(timeIntervalSince1970: isoArray[0].itemDate)) {
+                    if pointsItem.user == self.currentUserName &&
+                        pointsItem.itemCategory == "daily jobs" &&
+                        pointsItem.itemName == isoArray[0].itemName &&
+                        
+                        // can use this code for when user changes date at top of screen (beneath income total)
+                        Calendar.current.isDate(Date(timeIntervalSince1970: pointsItem.itemDate), inSameDayAs: Date()) {
                         
                         // remove item from points array
                         Points.pointsArray.remove(at: pointsIndex)
@@ -206,22 +212,5 @@ extension UserVC {
         print("\(substituteName) selected as substitute")
     }
     
-    func createNewPointsItemForDailyJobs(indexPath: IndexPath) {
-        let pointsArrayItem = Points(user: currentUserName,
-                                     itemName: (usersDailyJobs?[indexPath.row].name)!,
-                                     itemCategory: "daily jobs",
-                                     code: "C",
-                                     valuePerTap: dailyJobsPointValue,
-                                     itemDate: Date().timeIntervalSince1970)
-        
-        Points.pointsArray.append(pointsArrayItem)
-        
-        for (index, item) in Income.currentIncomeArray.enumerated() {
-            if item.user == currentUserName {
-                Income.currentIncomeArray[index].currentPoints += dailyJobsPointValue
-                incomeLabel.text = "$\(String(format: "%.2f", Double(Income.currentIncomeArray[index].currentPoints) / 100))"
-                updateProgressMeterHeights()
-            }
-        }
-    }
+    
 }

@@ -78,18 +78,18 @@ class PaydayDetailsVC: UIViewController, UICollectionViewDataSource, UICollectio
     // ---------
     
     func createIsoArraysAndSubtotalsForCategories() {
-        // need to recalculate this to only include days since last payday up to current payday (7 days)
+        // need to recalculate this to only include days since previous payday up to current payday (7 days)
         // what about excused and unexcused daily jobs? need to subtract those from this number
-        let dailyJobsFiltered = Points.pointsArray.filter({ $0.user == currentUserName && $0.itemCategory == "daily jobs" && $0.code == "C" && Date(timeIntervalSince1970: $0.itemDate) >= FamilyData.calculatePayday().last })
-        let excusedUnexcusedDailyJobs = Points.pointsArray.filter({ $0.user == currentUserName && $0.itemCategory == "daily jobs" && $0.code == "E" && Date(timeIntervalSince1970: $0.itemDate) >= FamilyData.calculatePayday().last })
-        let unexcusedDailyJobs = Points.pointsArray.filter({ $0.user == currentUserName && $0.itemCategory == "daily jobs" && $0.code == "X" && Date(timeIntervalSince1970: $0.itemDate) >= FamilyData.calculatePayday().last })
+        let dailyJobsFiltered = Points.pointsArray.filter({ $0.user == currentUserName && $0.itemCategory == "daily jobs" && $0.code == "C" && Date(timeIntervalSince1970: $0.itemDate) >= FamilyData.calculatePayday().previous })
+        let excusedUnexcusedDailyJobs = Points.pointsArray.filter({ $0.user == currentUserName && $0.itemCategory == "daily jobs" && $0.code == "E" && Date(timeIntervalSince1970: $0.itemDate) >= FamilyData.calculatePayday().previous })
+        let unexcusedDailyJobs = Points.pointsArray.filter({ $0.user == currentUserName && $0.itemCategory == "daily jobs" && $0.code == "X" && Date(timeIntervalSince1970: $0.itemDate) >= FamilyData.calculatePayday().previous })
         
         
         
         
         
         // and what about the job bonus? Does that go here? How to calculate that?
-        // it happens on button tap for daily jobs. When user taps 'daily job', app runs program to see if that day is the seventh day since last payday. If so, app checks to see if there are any 'x' marks in their points array for daily jobs. If not, then user gets a bonus. It's a Points item, and the code is "B". NOTE: make sure you erase it if user undoes job bonus with an "X". How to do that?
+        // it happens on button tap for daily jobs. When user taps 'daily job', app runs program to see if that day is the seventh day since previous payday. If so, app checks to see if there are any 'x' marks in their points array for daily jobs. If not, then user gets a bonus. It's a Points item, and the code is "B". NOTE: make sure you erase it if user undoes job bonus with an "X". How to do that?
         // question: what if user leaves daily job blank? does it automatically become unexcused?
         
         
@@ -100,11 +100,11 @@ class PaydayDetailsVC: UIViewController, UICollectionViewDataSource, UICollectio
             print("user should get their payday bonus...")
         }
         
-        let dailyHabitsFiltered = Points.pointsArray.filter({ $0.user == currentUserName && $0.itemCategory == "daily habits" && $0.code == "C" && Date(timeIntervalSince1970: $0.itemDate) >= FamilyData.calculatePayday().last })
-        let weeklyJobsFiltered = Points.pointsArray.filter({ $0.user == currentUserName && $0.itemCategory == "weekly jobs" && $0.code == "C" && Date(timeIntervalSince1970: $0.itemDate) >= FamilyData.calculatePayday().last })
+        let dailyHabitsFiltered = Points.pointsArray.filter({ $0.user == currentUserName && $0.itemCategory == "daily habits" && $0.code == "C" && Date(timeIntervalSince1970: $0.itemDate) >= FamilyData.calculatePayday().previous })
+        let weeklyJobsFiltered = Points.pointsArray.filter({ $0.user == currentUserName && $0.itemCategory == "weekly jobs" && $0.code == "C" && Date(timeIntervalSince1970: $0.itemDate) >= FamilyData.calculatePayday().previous })
         // what is code for job jar? need to include those completed jobs in here...
-        let otherJobsFiltered = Points.pointsArray.filter({ $0.user == currentUserName && $0.code == "S" && Date(timeIntervalSince1970: $0.itemDate) >= FamilyData.calculatePayday().last })
-        let feesFiltered = Points.pointsArray.filter({ $0.user == currentUserName && $0.code == "F" && Date(timeIntervalSince1970: $0.itemDate) >= FamilyData.calculatePayday().last })
+        let otherJobsFiltered = Points.pointsArray.filter({ $0.user == currentUserName && $0.code == "S" && Date(timeIntervalSince1970: $0.itemDate) >= FamilyData.calculatePayday().previous })
+        let feesFiltered = Points.pointsArray.filter({ $0.user == currentUserName && $0.code == "F" && Date(timeIntervalSince1970: $0.itemDate) >= FamilyData.calculatePayday().previous })
         
         // need to setup withdrawals
         //        withdrawalsFilterd = Withdrawal.withdrawalsArray.filter({  })
@@ -112,7 +112,7 @@ class PaydayDetailsVC: UIViewController, UICollectionViewDataSource, UICollectio
         // all unpaid amounts. How to calculate this?? It can't just be all the transactions that occurred before the past payday...
         // maybe I need to add a 'reconciled' or 'paid' tag to each item on payday?
         // and how far back do I go to get this information? A week? A month?
-        let unpaidFiltered = Points.pointsArray.filter({ $0.user == currentUserName && Date(timeIntervalSince1970: $0.itemDate) < FamilyData.calculatePayday().last })
+        let unpaidFiltered = Points.pointsArray.filter({ $0.user == currentUserName && Date(timeIntervalSince1970: $0.itemDate) < FamilyData.calculatePayday().previous })
         
         
         // create daily jobs points subtotal for current user

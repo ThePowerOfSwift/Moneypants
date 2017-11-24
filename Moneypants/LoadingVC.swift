@@ -21,7 +21,7 @@ class LoadingVC: UIViewController {
             self.progressView.setProgress(0.1, animated: true)
             print("1. SETUP PROGRESS:  ",setupProgress)
             
-            FamilyData.loadExistingIncome { (income) in
+            FamilyData.loadExistingHouseholdIncome { (income) in
                 self.progressView.setProgress(0.2, animated: true)
                 print("2. INCOME:  ",income)
                 
@@ -51,11 +51,11 @@ class LoadingVC: UIViewController {
                                         
                                         OutsideIncome.loadOutsideIncomeFromFirebase {
                                             self.progressView.setProgress(0.9, animated: true)
-                                            print("9. OUTSIDE INCOME")
+                                            print("9. OUTSIDE INCOME:  ",OutsideIncome.incomeArray.count)
                                             
                                             Budget.loadBudgetsFromFirebase {
                                                 self.progressView.setProgress(1.0, animated: true)
-                                                print("10. BUDGETS",Budget.budgetsArray.count)
+                                                print("10. BUDGETS:  ",Budget.budgetsArray.count)
                                                 
                                                 // if user has completed setup, go to home page
                                                 if FamilyData.setupProgress == 11 {

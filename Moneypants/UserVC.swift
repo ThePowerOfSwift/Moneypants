@@ -1,5 +1,6 @@
 import UIKit
 import AVFoundation
+import Firebase
 
 class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
@@ -41,8 +42,14 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     var habitBonusSound = AVAudioPlayer()
     
+    var firebaseUser: User!
+    var ref: DatabaseReference!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        firebaseUser = Auth.auth().currentUser
+        ref = Database.database().reference().child("users").child(firebaseUser.uid)
         
         currentUserName = MPUser.usersArray[MPUser.currentUser].firstName
         navigationItem.title = currentUserName
@@ -585,7 +592,13 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
             tableView.reloadRows(at: [indexPath], with: .automatic)
         } else {
             for (pointsIndex, pointsItem) in Points.pointsArray.enumerated() {
-                if pointsItem.user == self.currentUserName && pointsItem.itemCategory == category && pointsItem.itemName == isoArrayForItem[0].itemName && Calendar.current.isDateInToday(Date(timeIntervalSince1970: (isoArrayForItem.first?.itemDate)!)) {
+                // isolate item in Points array (current user, current category, current item name, and current date)
+                if pointsItem.user == self.currentUserName &&
+                    pointsItem.itemCategory == category &&
+                    pointsItem.itemName == isoArrayForItem[0].itemName &&
+                    
+                    // can use 
+                    Calendar.current.isDate(Date(timeIntervalSince1970: pointsItem.itemDate), inSameDayAs: Date()) {
                     
                     // remove item from points array
                     Points.pointsArray.remove(at: pointsIndex)
@@ -776,32 +789,67 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     func pointsEarnedSinceLastPayday() -> (dailyJobs: Int, habits: Int, weeklyJobs: Int, total: Int) {
         // calculate how much user has earned for all jobs and habits since last payday
-        // create array to isolate current user's points for all days that are greater than last payday
-        let totalPointsEarnedSinceLastPayday = Points.pointsArray.filter({ $0.user == currentUserName && Date(timeIntervalSince1970: $0.itemDate) >= FamilyData.calculatePayday().last })
+        // create array to isolate current user's points for all days that are in current pay period
+        let totalPointsEarnedSinceLastPayday = Points.pointsArray.filter({ $0.user == currentUserName && Date(timeIntervalSince1970: $0.itemDate) >= FamilyData.calculatePayday().current })
         var pointsSubtotal: Int = 0
         for pointsItem in totalPointsEarnedSinceLastPayday {
             pointsSubtotal += pointsItem.valuePerTap
         }
         
-        let habitPointsEarnedSinceLastPayday = Points.pointsArray.filter({ $0.user == currentUserName && $0.itemCategory == "daily habits" && $0.code == "C" && Date(timeIntervalSince1970: $0.itemDate) >= FamilyData.calculatePayday().last })
+        let habitPointsEarnedSinceLastPayday = Points.pointsArray.filter({ $0.user == currentUserName && $0.itemCategory == "daily habits" && $0.code == "C" && Date(timeIntervalSince1970: $0.itemDate) >= FamilyData.calculatePayday().current })
         var habitsSubtotal: Int = 0
         for pointsItem in habitPointsEarnedSinceLastPayday {
             habitsSubtotal += pointsItem.valuePerTap
         }
         
-        let dailyJobsPointsEarnedSinceLastPayday = Points.pointsArray.filter({ $0.user == currentUserName && $0.itemCategory == "daily jobs" && Date(timeIntervalSince1970: $0.itemDate) >= FamilyData.calculatePayday().last })
+        let dailyJobsPointsEarnedSinceLastPayday = Points.pointsArray.filter({ $0.user == currentUserName && $0.itemCategory == "daily jobs" && Date(timeIntervalSince1970: $0.itemDate) >= FamilyData.calculatePayday().current })
         var dailyJobsSubtotal: Int = 0
         for pointsItem in dailyJobsPointsEarnedSinceLastPayday {
             dailyJobsSubtotal += pointsItem.valuePerTap
         }
         
-        let weeklyJobsPointsEarnedSinceLastPayday = Points.pointsArray.filter({ $0.user == currentUserName && $0.itemCategory == "weekly jobs" && Date(timeIntervalSince1970: $0.itemDate) >= FamilyData.calculatePayday().last })
+        let weeklyJobsPointsEarnedSinceLastPayday = Points.pointsArray.filter({ $0.user == currentUserName && $0.itemCategory == "weekly jobs" && Date(timeIntervalSince1970: $0.itemDate) >= FamilyData.calculatePayday().current })
         var weeklyJobsSubtotal: Int = 0
         for pointsItem in weeklyJobsPointsEarnedSinceLastPayday {
             weeklyJobsSubtotal += pointsItem.valuePerTap
         }
         
         return (dailyJobsSubtotal, habitsSubtotal, weeklyJobsSubtotal, pointsSubtotal)
+    }
+    
+    func createNewPointsItemForDailyJobs(indexPath: IndexPath) {
+        let pointsArrayItem = Points(user: currentUserName,
+                                     itemName: (usersDailyJobs?[indexPath.row].name)!,
+                                     itemCategory: "daily jobs",
+                                     code: "C",
+                                     valuePerTap: dailyJobsPointValue,
+                                     itemDate: Date().timeIntervalSince1970)
+        
+        Points.pointsArray.append(pointsArrayItem)
+        
+        
+        
+        
+        // add item to Firebase
+        // need to organize them in some way? perhaps by date? category?
+        ref.child("points").childByAutoId().setValue(["user" : currentUserName,
+                                                      "itemName" : (usersDailyJobs?[indexPath.row].name)!,
+                                                      "itemCategory" : "daily jobs",
+                                                      "code" : "C",
+                                                      "valuePerTap" : dailyJobsPointValue,
+                                                      "itemDate" : Date().timeIntervalSince1970])
+        
+        
+        
+        for (index, item) in Income.currentIncomeArray.enumerated() {
+            if item.user == currentUserName {
+                Income.currentIncomeArray[index].currentPoints += dailyJobsPointValue
+                incomeLabel.text = "$\(String(format: "%.2f", Double(Income.currentIncomeArray[index].currentPoints) / 100))"
+                updateProgressMeterHeights()
+            }
+        }
+        
+        ref.child("mpIncome").updateChildValues([currentUserName! : Income.currentIncomeArray[MPUser.currentUser].currentPoints])
     }
 }
 

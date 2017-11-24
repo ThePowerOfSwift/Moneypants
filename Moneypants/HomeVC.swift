@@ -1,17 +1,19 @@
 import UIKit
+import Firebase
 
 class HomeVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UITabBarDelegate {
     
     @IBOutlet weak var tableView: UITableView!
     
+    var firebaseUser: User!
+    var ref: DatabaseReference!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         MPUser.usersArray.sort(by: {$0.birthday < $1.birthday})       // sort array with oldest users first
+
         
-        tableView.delegate = self
-        tableView.dataSource = self
-        tableView.tableFooterView = UIView()
         
         
         
@@ -35,13 +37,15 @@ class HomeVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UITa
                                      Income(user: "Savannah", currentPoints: 0),
                                      Income(user: "Flower", currentPoints: 0)]
         
-        print("Payday is: ",FamilyData.paydayTime)
         
         
         
+        firebaseUser = Auth.auth().currentUser
+        ref = Database.database().reference().child("users").child(firebaseUser.uid)
         
-        
-        
+        tableView.delegate = self
+        tableView.dataSource = self
+        tableView.tableFooterView = UIView()
         checkForIncome()
     }
     
@@ -94,8 +98,8 @@ class HomeVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UITa
     
     func checkForIncome() {
         for user in MPUser.usersArray {
-            let temp = Income.currentIncomeArray.filter({ $0.user == user.firstName })
-            if temp.isEmpty {
+            let isoArray = Income.currentIncomeArray.filter({ $0.user == user.firstName })
+            if isoArray.isEmpty {
                 let newUser = Income(user: user.firstName, currentPoints: 0)
                 Income.currentIncomeArray.append(newUser)
             } else {
