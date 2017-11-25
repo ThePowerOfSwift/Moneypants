@@ -726,9 +726,6 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
             $0.itemName == categoryArray[indexPath.row].name &&
             Calendar.current.isDate(Date(timeIntervalSince1970: $0.itemDate), inSameDayAs: selectedDate) })
         
-        // OLD CODE
-//            Calendar.current.isDateInToday(Date(timeIntervalSince1970: $0.itemDate)) })
-        
         if isoArrayForItem.isEmpty {
             // do nothing (this is the rare instance where user is resetting an excused or unexcused job that was assigned to themself)
             // update user's income label
@@ -767,9 +764,6 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                 pointsItem.itemCategory == "daily habits" &&
                 pointsItem.itemName == isoArray.first?.itemName &&
                 Calendar.current.isDate(Date(timeIntervalSince1970: (isoArray.first?.itemDate)!), inSameDayAs: selectedDate) {
-                
-                // OLD CODE
-//                Calendar.current.isDateInToday(Date(timeIntervalSince1970: (isoArray.first?.itemDate)!)) {
                 
                 // update item in points array
                 Points.pointsArray[pointsIndex].code = "N"
