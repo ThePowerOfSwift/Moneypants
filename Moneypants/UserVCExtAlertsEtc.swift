@@ -104,9 +104,9 @@ extension UserVC {
         }
     }
     
-    // ----------------
-    // Date calculators
-    // ----------------
+    // ---------------
+    // Date calculator
+    // ---------------
     
     func dayDifference(from interval : TimeInterval) -> String {
         

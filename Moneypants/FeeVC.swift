@@ -1,4 +1,5 @@
 import UIKit
+import Firebase
 
 class FeeVC: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate, UITextFieldDelegate {
 
@@ -9,9 +10,17 @@ class FeeVC: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate, UIT
     let feePicker = UIPickerView()
     
     var currentUserName: String!
+    var firebaseUser: User!
+    var ref: DatabaseReference!
+    
+    var selectedDate: Date!
+    var selectedDateNumber: Int!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        firebaseUser = Auth.auth().currentUser
+        ref = Database.database().reference().child("users").child(firebaseUser.uid)
         
         explainerLabel.text = "The maximum daily limit is $\(String(format: "%.2f", Double(FamilyData.feeValueMultiplier * 3) / 100)) (3 strikes)."
         feeButton.setTitle("add $\(String(format: "%.2f", Double(FamilyData.feeValueMultiplier) / 100)) fee", for: .normal)
@@ -83,14 +92,36 @@ class FeeVC: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate, UIT
         let alert = UIAlertController(title: "\(feeTextField.text!.capitalized) Fee", message: alertMessage, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "okay", style: .default, handler: {_ in
             CATransaction.setCompletionBlock({
-                let fee = Points(user: self.currentUserName, itemName: self.feeTextField.text!, itemCategory: "fees", code: "F", valuePerTap: -(FamilyData.feeValueMultiplier), itemDate: Date().timeIntervalSince1970)
+                // refresh selectedDate variable with current time
+                self.selectedDate = Calendar.current.date(byAdding: .day, value: self.selectedDateNumber, to: Date())
+                let fee = Points(user: self.currentUserName,
+                                 itemName: self.feeTextField.text!,
+                                 itemCategory: "fees",
+                                 code: "F",
+                                 valuePerTap: -(FamilyData.feeValueMultiplier),
+                                 itemDate: self.selectedDate.timeIntervalSince1970)
+                
                 Points.pointsArray.append(fee)
+                
+                // add item to Firebase
+                // need to organize them in some way? perhaps by date? category?
+                self.ref.child("points").childByAutoId().setValue(["user" : self.currentUserName,
+                                                                   "itemName" : self.feeTextField.text!,
+                                                                   "itemCategory" : "fees",
+                                                                   "code" : "F",
+                                                                   "valuePerTap" : -(FamilyData.feeValueMultiplier),
+                                                                   "itemDate" : self.selectedDate.timeIntervalSince1970])
+                
                 // subtract amount from user's income
                 for (incomeIndex, incomeItem) in Income.currentIncomeArray.enumerated() {
                     if incomeItem.user == self.currentUserName {
                         Income.currentIncomeArray[incomeIndex].currentPoints -= FamilyData.feeValueMultiplier
                     }
                 }
+                
+                // update Firebase
+                self.ref.child("mpIncome").updateChildValues([self.currentUserName! : Income.currentIncomeArray[MPUser.currentUser].currentPoints])
+                
                 self.view.endEditing(true)
                 _ = self.navigationController?.popViewController(animated: true)
             })

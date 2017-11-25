@@ -26,7 +26,10 @@ extension UserVC {
                     // Confirm / Cancel substitute
                     // ---------------------------
                     
-                    self.confirmOrCancelSubstituteForDailyJob(isoArray: isoArray, nameOfSub: user.firstName, eORx: assignEorX, indexPath: indexPath)
+                    self.confirmOrCancelSubstituteForDailyJob(isoArray: isoArray,
+                                                              nameOfSub: user.firstName,
+                                                              eORx: assignEorX,
+                                                              indexPath: indexPath)
                 }))
             }
             
@@ -48,7 +51,13 @@ extension UserVC {
                     
                     if !isoArray.isEmpty {
                         for (pointsIndex, pointsItem) in Points.pointsArray.enumerated() {
-                            if pointsItem.user == self.currentUserName && pointsItem.itemCategory == "daily jobs" && pointsItem.itemName == isoArray[0].itemName && Calendar.current.isDateInToday(Date(timeIntervalSince1970: isoArray[0].itemDate)) {
+                            if pointsItem.user == self.currentUserName &&
+                                pointsItem.itemCategory == "daily jobs" &&
+                                pointsItem.itemName == isoArray[0].itemName &&
+                                Calendar.current.isDate(Date(timeIntervalSince1970: isoArray[0].itemDate), inSameDayAs: self.selectedDate!) {
+                                
+                                // OLD CODE
+//                                Calendar.current.isDateInToday(Date(timeIntervalSince1970: isoArray[0].itemDate)) {
                                 
                                 // remove item from points array
                                 Points.pointsArray.remove(at: pointsIndex)
@@ -70,7 +79,13 @@ extension UserVC {
                     // ----------------------------------------------------------------------------
                     
                     // subtract fee from Points Array
-                    let loseSubstitutionPoints = Points(user: self.currentUserName, itemName: "\(self.usersDailyJobs[indexPath.row].name)", itemCategory: "daily jobs", code: assignEorX, valuePerTap: -(self.substituteFee), itemDate: Date().timeIntervalSince1970)
+                    let loseSubstitutionPoints = Points(user: self.currentUserName,
+                                                        itemName: "\(self.usersDailyJobs[indexPath.row].name)",
+                                                        itemCategory: "daily jobs",
+                                                        code: assignEorX,
+                                                        valuePerTap: -(self.substituteFee),
+                                                        itemDate: (self.selectedDate?.timeIntervalSince1970)!)
+                    
                     Points.pointsArray.append(loseSubstitutionPoints)
                     
                     // subtract fee from Income array and update income label
@@ -125,9 +140,7 @@ extension UserVC {
                     if pointsItem.user == self.currentUserName &&
                         pointsItem.itemCategory == "daily jobs" &&
                         pointsItem.itemName == isoArray[0].itemName &&
-                        
-                        // can use this code for when user changes date at top of screen (beneath income total)
-                        Calendar.current.isDate(Date(timeIntervalSince1970: pointsItem.itemDate), inSameDayAs: Date()) {
+                        Calendar.current.isDate(Date(timeIntervalSince1970: pointsItem.itemDate), inSameDayAs: self.selectedDate!) {
                         
                         // remove item from points array
                         Points.pointsArray.remove(at: pointsIndex)
@@ -156,7 +169,13 @@ extension UserVC {
             }
             
             // create charge in points array
-            let loseSubstitutionPoints = Points(user: self.currentUserName, itemName: "\(self.usersDailyJobs[indexPath.row].name)", itemCategory: "daily jobs", code: eORx, valuePerTap: -(self.substituteFee), itemDate: Date().timeIntervalSince1970)
+            let loseSubstitutionPoints = Points(user: self.currentUserName,
+                                                itemName: "\(self.usersDailyJobs[indexPath.row].name)",
+                                                itemCategory: "daily jobs",
+                                                code: eORx,
+                                                valuePerTap: -(self.substituteFee),
+                                                itemDate: (self.selectedDate?.timeIntervalSince1970)!)
+            
             Points.pointsArray.append(loseSubstitutionPoints)
             
             // -----------------------------------------------------------------------------------------
@@ -164,12 +183,19 @@ extension UserVC {
             // -----------------------------------------------------------------------------------------
             
             // add fee and job value to substitute's Points array
-            let earnedSubstitutionFee = Points(user: substituteName, itemName: "\(self.usersDailyJobs[indexPath.row].name) (sub)", itemCategory: "daily jobs", code: "S", valuePerTap: (self.substituteFee + self.dailyJobsPointValue), itemDate: Date().timeIntervalSince1970)
+            let earnedSubstitutionFee = Points(user: substituteName, itemName: "\(self.usersDailyJobs[indexPath.row].name) (sub)",
+                                               itemCategory: "daily jobs",
+                                               code: "S",
+                                               valuePerTap: (self.substituteFee + self.dailyJobsPointValue),
+                                               itemDate: (self.selectedDate?.timeIntervalSince1970)!)
+            
             Points.pointsArray.append(earnedSubstitutionFee)
             
             // update current user's table view with new row in 'other jobs' only if they assigned the substitution to themself
             if substituteName == self.currentUserName {
-                let subJobsArray = Points.pointsArray.filter({ $0.user == self.currentUserName && $0.code == "S" && Calendar.current.isDateInToday(Date(timeIntervalSince1970: $0.itemDate)) })
+                let subJobsArray = Points.pointsArray.filter({ $0.user == self.currentUserName &&
+                    $0.code == "S" &&
+                    Calendar.current.isDate(Date(timeIntervalSince1970: $0.itemDate), inSameDayAs: self.selectedDate!) })
                 
                 let jobSubIndexPath = IndexPath(row: subJobsArray.count - 1, section: 3)
                 self.tableView.beginUpdates()
@@ -212,5 +238,36 @@ extension UserVC {
         print("\(substituteName) selected as substitute")
     }
     
-    
+    func createNewPointsItemForDailyJobs(indexPath: IndexPath) {
+        // refresh selectedDate variable with current time
+        selectedDate = Calendar.current.date(byAdding: .day, value: selectedDateNumber, to: Date())
+        let pointsArrayItem = Points(user: currentUserName,
+                                     itemName: (usersDailyJobs?[indexPath.row].name)!,
+                                     itemCategory: "daily jobs",
+                                     code: "C",
+                                     valuePerTap: dailyJobsPointValue,
+                                     itemDate: selectedDate.timeIntervalSince1970)
+        
+        Points.pointsArray.append(pointsArrayItem)
+        
+        // add item to Firebase
+        // need to organize them in some way? perhaps by date? category?
+        ref.child("points").childByAutoId().setValue(["user" : currentUserName,
+                                                      "itemName" : (usersDailyJobs?[indexPath.row].name)!,
+                                                      "itemCategory" : "daily jobs",
+                                                      "code" : "C",
+                                                      "valuePerTap" : dailyJobsPointValue,
+                                                      "itemDate" : selectedDate.timeIntervalSince1970])
+        
+        for (index, item) in Income.currentIncomeArray.enumerated() {
+            if item.user == currentUserName {
+                Income.currentIncomeArray[index].currentPoints += dailyJobsPointValue
+                incomeLabel.text = "$\(String(format: "%.2f", Double(Income.currentIncomeArray[index].currentPoints) / 100))"
+                updateProgressMeterHeights()
+            }
+        }
+        
+        updateUserIncomeOnFirebase()
+    }
+
 }

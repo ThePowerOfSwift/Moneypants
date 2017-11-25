@@ -58,13 +58,20 @@ extension UserVC {
                                        itemCategory: "weekly jobs",
                                        code: "N",
                                        valuePerTap: 0,
-                                       itemDate: Date().timeIntervalSince1970)
+                                       itemDate: (self.selectedDate?.timeIntervalSince1970)!)
+                    
                     Points.pointsArray.append(noSub)
                     
                 // if array isn't empty, change the existing Points item to be zero and code "N", and subtract corresponding Income value from user's income
                 } else {
                     for (pointsIndex, pointsItem) in Points.pointsArray.enumerated() {
-                        if pointsItem.user == self.currentUserName && pointsItem.itemCategory == "weekly jobs" && pointsItem.itemName == isoArray[0].itemName && Calendar.current.isDateInToday(Date(timeIntervalSince1970: isoArray[0].itemDate)) {
+                        if pointsItem.user == self.currentUserName &&
+                            pointsItem.itemCategory == "weekly jobs" &&
+                            pointsItem.itemName == isoArray[0].itemName &&
+                            Calendar.current.isDate(Date(timeIntervalSince1970: isoArray[0].itemDate), inSameDayAs: self.selectedDate!) {
+                            
+                            // OLD CODE
+//                            Calendar.current.isDateInToday(Date(timeIntervalSince1970: isoArray[0].itemDate)) {
                             
                             // update item at points array
                             Points.pointsArray[pointsIndex].code = "N"
@@ -117,13 +124,19 @@ extension UserVC {
                                    itemCategory: "weekly jobs",
                                    code: "N",
                                    valuePerTap: 0,
-                                   itemDate: Date().timeIntervalSince1970)
+                                   itemDate: (self.selectedDate?.timeIntervalSince1970)!)
                 Points.pointsArray.append(noSub)
                 
             // if array isn't empty, change the existing Points item to be zero and code "N", and subtract corresponding Income value from user's income
             } else {
                 for (pointsIndex, pointsItem) in Points.pointsArray.enumerated() {
-                    if pointsItem.user == self.currentUserName && pointsItem.itemCategory == "weekly jobs" && pointsItem.itemName == isoArray[0].itemName && Calendar.current.isDateInToday(Date(timeIntervalSince1970: isoArray[0].itemDate)) {
+                    if pointsItem.user == self.currentUserName &&
+                        pointsItem.itemCategory == "weekly jobs" &&
+                        pointsItem.itemName == isoArray[0].itemName &&
+                        Calendar.current.isDate(Date(timeIntervalSince1970: isoArray[0].itemDate), inSameDayAs: self.selectedDate!) {
+                        
+                        // OLD CODE
+//                        Calendar.current.isDateInToday(Date(timeIntervalSince1970: isoArray[0].itemDate)) {
                         
                         // update item at points array
                         Points.pointsArray[pointsIndex].code = "N"
@@ -146,7 +159,13 @@ extension UserVC {
             // ------------------------------------------------------------------------
             
             // add job value to Points array for substitute
-            let earnedSubstitutionValue = Points(user: substituteName, itemName: "\(self.usersWeeklyJobs[indexPath.row].name) (sub)", itemCategory: "weekly jobs", code: "S", valuePerTap: self.weeklyJobsPointValue, itemDate: Date().timeIntervalSince1970)
+            let earnedSubstitutionValue = Points(user: substituteName,
+                                                 itemName: "\(self.usersWeeklyJobs[indexPath.row].name) (sub)",
+                                                 itemCategory: "weekly jobs",
+                                                 code: "S",
+                                                 valuePerTap: self.weeklyJobsPointValue,
+                                                 itemDate: (self.selectedDate?.timeIntervalSince1970)!)
+            
             Points.pointsArray.append(earnedSubstitutionValue)
             
             // add fee and job value to Income array at substitute's index
@@ -175,14 +194,24 @@ extension UserVC {
     }
     
     func createNewPointsItemForWeeklyJobs(indexPath: IndexPath) {
+        // refresh selectedDate variable with current time
+        selectedDate = Calendar.current.date(byAdding: .day, value: selectedDateNumber, to: Date())
         let newItemTapped = Points(user: currentUserName,
                                    itemName: (usersWeeklyJobs?[indexPath.row].name)!,
                                    itemCategory: "weekly jobs",
                                    code: "C",
                                    valuePerTap: weeklyJobsPointValue,
-                                   itemDate: Date().timeIntervalSince1970)
+                                   itemDate: selectedDate.timeIntervalSince1970)
         
         Points.pointsArray.append(newItemTapped)
+        
+        // add item to Firebase
+        ref.child("points").childByAutoId().setValue(["user" : currentUserName,
+                                                      "itemName" : (usersWeeklyJobs?[indexPath.row].name)!,
+                                                      "itemCategory" : "weekly jobs",
+                                                      "code" : "C",
+                                                      "valuePerTap" : weeklyJobsPointValue,
+                                                      "itemDate" : selectedDate.timeIntervalSince1970])
         
         // update user's income array & income label
         for (index, item) in Income.currentIncomeArray.enumerated() {
@@ -192,5 +221,7 @@ extension UserVC {
                 updateProgressMeterHeights()
             }
         }
+        
+        updateUserIncomeOnFirebase()
     }
 }

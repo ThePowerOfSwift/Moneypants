@@ -46,6 +46,7 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     var ref: DatabaseReference!
     
     var selectedDate: Date!
+    var selectedDateNumber: Int!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -63,9 +64,8 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         // -------------
         
         selectedDate = Date()
+        selectedDateNumber = 0
         updateFormattedDate()
-        
-        
         
         tableView.delegate = self
         tableView.dataSource = self
@@ -168,8 +168,11 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         
         if indexPath.section == 0 {
             // get an array of this user in this category for this item on this day.
-            let currentUserCategoryItemDateArray = Points.pointsArray.filter({ $0.user == currentUserName && $0.itemCategory == "daily jobs" && $0.itemName == usersDailyJobs?[indexPath.row].name && Calendar.current.isDateInToday(Date(timeIntervalSince1970: $0.itemDate)) })
-            
+            let currentUserCategoryItemDateArray = Points.pointsArray.filter({ $0.user == currentUserName &&
+                $0.itemCategory == "daily jobs" &&
+                $0.itemName == usersDailyJobs?[indexPath.row].name &&
+                Calendar.current.isDate(Date(timeIntervalSince1970: $0.itemDate), inSameDayAs: selectedDate) })
+                
             cell.jobHabitLabel.text = usersDailyJobs?[indexPath.row].name
             cell.pointsLabel.text = "\(dailyJobsPointValue ?? 0)"
             cell.pointsLabel.textColor = .lightGray
@@ -196,8 +199,11 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
             
         } else if indexPath.section == 1 {
             // get an array of this user in this category for this item on this day.
-            let currentUserCategoryItemDateArray = Points.pointsArray.filter({ $0.user == currentUserName && $0.itemCategory == "daily habits" && $0.itemName == usersDailyHabits?[indexPath.row].name && Calendar.current.isDateInToday(Date(timeIntervalSince1970: $0.itemDate)) })
-            
+            let currentUserCategoryItemDateArray = Points.pointsArray.filter({ $0.user == currentUserName &&
+                $0.itemCategory == "daily habits" &&
+                $0.itemName == usersDailyHabits?[indexPath.row].name &&
+                Calendar.current.isDate(Date(timeIntervalSince1970: $0.itemDate), inSameDayAs: selectedDate) })
+                
             cell.jobHabitLabel.text = usersDailyHabits?[indexPath.row].name
             cell.selectionBoxLabel.text = ""
             cell.pointsLabel.textColor = .lightGray
@@ -227,8 +233,11 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
             
         } else if indexPath.section == 2 {
             // get an array of this user in this category for this item on this day.
-            let currentUserCategoryItemDateArray = Points.pointsArray.filter({ $0.user == currentUserName && $0.itemCategory == "weekly jobs" && $0.itemName == usersWeeklyJobs?[indexPath.row].name && Calendar.current.isDateInToday(Date(timeIntervalSince1970: $0.itemDate)) })
-            
+            let currentUserCategoryItemDateArray = Points.pointsArray.filter({ $0.user == currentUserName &&
+                $0.itemCategory == "weekly jobs" &&
+                $0.itemName == usersWeeklyJobs?[indexPath.row].name &&
+                Calendar.current.isDate(Date(timeIntervalSince1970: $0.itemDate), inSameDayAs: selectedDate) })
+                
             cell.jobHabitLabel.text = usersWeeklyJobs?[indexPath.row].name
             cell.pointsLabel.text = "\(weeklyJobsPointValue ?? 0)"
             cell.pointsLabel.textColor = .lightGray
@@ -253,7 +262,10 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         // ----------
             
         } else if indexPath.section == 3 {
-            let subJobsArray = Points.pointsArray.filter({ $0.user == currentUserName && $0.code == "S" && Calendar.current.isDateInToday(Date(timeIntervalSince1970: $0.itemDate)) })
+            let subJobsArray = Points.pointsArray.filter({ $0.user == currentUserName &&
+                $0.code == "S" &&
+                Calendar.current.isDate(Date(timeIntervalSince1970: $0.itemDate), inSameDayAs: selectedDate) })
+            
             cell.jobHabitLabel.text = subJobsArray[indexPath.row].itemName
             cell.jobHabitLabel.textColor = .lightGray
             cell.pointsLabel.text = "\(subJobsArray[indexPath.row].valuePerTap)"
@@ -277,7 +289,10 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
             // fees
             if indexPath.row == 0 {
                 // get an array of this user in this category for this item on this day (this may contain multiple values b/c user can add up to 3 fees per day)
-                let isoArrayForItem = Points.pointsArray.filter({ $0.user == currentUserName && $0.code == "F" && Calendar.current.isDateInToday(Date(timeIntervalSince1970: $0.itemDate)) })
+                let isoArrayForItem = Points.pointsArray.filter({ $0.user == currentUserName &&
+                    $0.code == "F" &&
+                    Calendar.current.isDate(Date(timeIntervalSince1970: $0.itemDate), inSameDayAs: selectedDate) })
+                
                 if isoArrayForItem.isEmpty {
                     cell.jobHabitLabel.textColor = .black
                     cell.selectionBoxLabel.text = ""
@@ -299,7 +314,11 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         if indexPath.section == 0 {
             // get an array of this user in this category for this item on this day. If it doesn't exist, then create it w/ tap value = C.
             // if the array isn't empty, check the code. If it's X or E, it needs a parental pword, then it becomes C. Otherwise, do nothing
-            let currentUserCategoryItemDateArray = Points.pointsArray.filter({ $0.user == currentUserName && $0.itemCategory == "daily jobs" && $0.itemName == usersDailyJobs?[indexPath.row].name && Calendar.current.isDateInToday(Date(timeIntervalSince1970: $0.itemDate)) })
+            let currentUserCategoryItemDateArray = Points.pointsArray.filter({ $0.user == currentUserName &&
+                $0.itemCategory == "daily jobs" &&
+                $0.itemName == usersDailyJobs?[indexPath.row].name &&
+                Calendar.current.isDate(Date(timeIntervalSince1970: $0.itemDate), inSameDayAs: selectedDate) })
+            
             if currentUserCategoryItemDateArray.isEmpty {
                 createNewPointsItemForDailyJobs(indexPath: indexPath)
                 tableView.reloadData()
@@ -323,7 +342,11 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         if indexPath.section == 1 {
             // get an array of this user in this category for this item on this day. If it doesn't exist, then create it w/ tap value = C.
             // if the array isn't empty, check the code. If it's X or E, it needs a parental pword, then it becomes C. Otherwise, do nothing
-            let currentUserCategoryItemDateArray = Points.pointsArray.filter({ $0.user == currentUserName && $0.itemCategory == "daily habits" && $0.itemName == usersDailyHabits?[indexPath.row].name && Calendar.current.isDateInToday(Date(timeIntervalSince1970: $0.itemDate)) })
+            let currentUserCategoryItemDateArray = Points.pointsArray.filter({ $0.user == currentUserName &&
+                $0.itemCategory == "daily habits" &&
+                $0.itemName == usersDailyHabits?[indexPath.row].name &&
+                Calendar.current.isDate(Date(timeIntervalSince1970: $0.itemDate), inSameDayAs: selectedDate) })
+            
             if currentUserCategoryItemDateArray.isEmpty {
                 createNewItemForDailyHabit(indexPath: indexPath)
                 tableView.reloadData()
@@ -347,7 +370,11 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         if indexPath.section == 2 {
             // get an array of this user in this category for this item on this day. If it doesn't exist, then create it w/ tap value = C.
             // if the array isn't empty, check the code. If it's X or E, it needs a parental pword, then it becomes C. Otherwise, do nothing
-            let currentUserCategoryItemDateArray = Points.pointsArray.filter({ $0.user == currentUserName && $0.itemCategory == "weekly jobs" && $0.itemName == usersWeeklyJobs?[indexPath.row].name && Calendar.current.isDateInToday(Date(timeIntervalSince1970: $0.itemDate)) })
+            let currentUserCategoryItemDateArray = Points.pointsArray.filter({ $0.user == currentUserName &&
+                $0.itemCategory == "weekly jobs" &&
+                $0.itemName == usersWeeklyJobs?[indexPath.row].name &&
+                Calendar.current.isDate(Date(timeIntervalSince1970: $0.itemDate), inSameDayAs: selectedDate) })
+            
             if currentUserCategoryItemDateArray.isEmpty {
                 createNewPointsItemForWeeklyJobs(indexPath: indexPath)
                 tableView.reloadData()
@@ -374,7 +401,10 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         if indexPath.section == 4 {
             if indexPath.row == 0 {
                 // get an array of this user in this category for this item on this day (this may contain multiple values b/c user can add up to 3 fees per day)
-                let isoArrayForItem = Points.pointsArray.filter({ $0.user == currentUserName && $0.code == "F" && Calendar.current.isDateInToday(Date(timeIntervalSince1970: $0.itemDate)) })
+                let isoArrayForItem = Points.pointsArray.filter({ $0.user == currentUserName &&
+                    $0.code == "F" &&
+                    Calendar.current.isDate(Date(timeIntervalSince1970: $0.itemDate), inSameDayAs: selectedDate) })
+                
                 if isoArrayForItem.count == 3 {
                     tooManyStrikesAlert()
                     tableView.deselectRow(at: indexPath, animated: true)
@@ -415,7 +445,10 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
             // get an array of this user in this category for this item on this day (should be single item)
             // this code recalculates each time a row is selected
-            let isoArrayForItem = Points.pointsArray.filter({ $0.user == self.currentUserName && $0.itemCategory == "daily jobs" && $0.itemName == self.usersDailyJobs?[indexPath.row].name && Calendar.current.isDateInToday(Date(timeIntervalSince1970: $0.itemDate)) })
+            let isoArrayForItem = Points.pointsArray.filter({ $0.user == self.currentUserName &&
+                $0.itemCategory == "daily jobs" &&
+                $0.itemName == self.usersDailyJobs?[indexPath.row].name &&
+                Calendar.current.isDate(Date(timeIntervalSince1970: $0.itemDate), inSameDayAs: selectedDate) })
             
             // --------------
             // excused action
@@ -461,13 +494,17 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
             let resetAction = UITableViewRowAction(style: .default, title: "         ", handler: { (action, indexPath) in
                 // ...check to see if iso array is empty. If so, don't let user reset anything b/c it will crash the app (b/c the array is empty)
                 if isoArrayForItem.isEmpty {
+                    print("iso array is empty. nothing to delete")
                     // do nothing
                     tableView.setEditing(false, animated: true)
                 } else {
+                    print("need to delete some stuff")
                     // need to check if item is 'X' or 'E', and if so, need parental password to reset to zero. Otherwise, user can reset 'C' to zero
                     if isoArrayForItem[0].code == "C" {
+                        print("item is marked with a C")
                         self.removeSelectedItemFromPointsArrayAndUpdateIncomeArray(indexPath: indexPath, category: "daily jobs", categoryArray: self.usersDailyJobs)
                     } else if isoArrayForItem.first?.code == "E" || isoArrayForItem.first?.code == "X" {
+                        print("itme is marked with E or X")
                         self.getParentalPasscodeThenResetToZero(indexPath: indexPath, category: "daily jobs", categoryArray: self.usersDailyJobs)
                     }
                 }
@@ -486,7 +523,10 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
             // ------------
             
             // get an array of this user in this category for this item on this day (should be single item)
-            let isoArrayForItem = Points.pointsArray.filter({ $0.user == self.currentUserName && $0.itemCategory == "daily habits" && $0.itemName == self.usersDailyHabits?[indexPath.row].name && Calendar.current.isDateInToday(Date(timeIntervalSince1970: $0.itemDate)) })
+            let isoArrayForItem = Points.pointsArray.filter({ $0.user == self.currentUserName &&
+                $0.itemCategory == "daily habits" &&
+                $0.itemName == self.usersDailyHabits?[indexPath.row].name &&
+                Calendar.current.isDate(Date(timeIntervalSince1970: $0.itemDate), inSameDayAs: selectedDate) })
             
             // -----------------
             // 'not done' action
@@ -504,7 +544,7 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                     }
                 }
             })
-            
+        
             // ------------
             // reset action
             // ------------
@@ -535,7 +575,13 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
             // -----------
             
             // get an array of this user in this category for this item on this day (should be single item)
-            let isoArrayForItem = Points.pointsArray.filter({ $0.user == self.currentUserName && $0.itemCategory == "weekly jobs" && $0.itemName == self.usersWeeklyJobs?[indexPath.row].name && Calendar.current.isDateInToday(Date(timeIntervalSince1970: $0.itemDate)) })
+            let isoArrayForItem = Points.pointsArray.filter({ $0.user == self.currentUserName &&
+                $0.itemCategory == "weekly jobs" &&
+                $0.itemName == self.usersWeeklyJobs?[indexPath.row].name &&
+                Calendar.current.isDate(Date(timeIntervalSince1970: $0.itemDate), inSameDayAs: selectedDate) })
+            
+            // OLD CODE
+//                Calendar.current.isDateInToday(Date(timeIntervalSince1970: $0.itemDate)) })
             
             // -------------------
             // 'substitute' action
@@ -579,6 +625,17 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     // Navigation
     // ----------
     
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "FeesDetailSegue" {
+            print("heading over to fees now!!!")
+            let nextVC = segue.destination as! FeeVC
+            nextVC.selectedDate = selectedDate
+            nextVC.selectedDateNumber = selectedDateNumber
+        } else if segue.identifier == "DebtsDetailSegue" {
+            print("headed over to record some expenses")
+        }
+    }
+    
     @IBAction func homeButtonTapped(_ sender: UIBarButtonItem) {
         dismiss(animated: true, completion: nil)
     }
@@ -590,9 +647,12 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
             limitReachedAlert()
         } else {
             // subtract one day from selected date
-            selectedDate = Calendar.current.date(byAdding: .day, value: -1, to: selectedDate)
+            let today = Date()
+            selectedDateNumber! -= 1
+            selectedDate = Calendar.current.date(byAdding: .day, value: selectedDateNumber, to: today)
             updateFormattedDate()
         }
+        tableView.reloadData()
     }
     
     @IBAction func dateArrowRightTapped(_ sender: UIButton) {
@@ -601,9 +661,12 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
             print("can't go into the future!")
         } else {
             // add one day to currently selected date
-            selectedDate = Calendar.current.date(byAdding: .day, value: 1, to: selectedDate)
+            let today = Date()
+            selectedDateNumber! += 1
+            selectedDate = Calendar.current.date(byAdding: .day, value: selectedDateNumber, to: today)
             updateFormattedDate()
         }
+        tableView.reloadData()
     }
     
     // ---------
@@ -623,8 +686,11 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
             let parentalPasscodeArray = MPUser.usersArray.filter({ $0.childParent == "parent" })
             if parentalPasscodeArray.contains(where: { "\($0.passcode)" == alert.textFields![0].text }) {
                 // subtract one day from selected date
-                self.selectedDate = Calendar.current.date(byAdding: .day, value: -1, to: self.selectedDate)
+                let today = Date()
+                self.selectedDateNumber! -= 1
+                self.selectedDate = Calendar.current.date(byAdding: .day, value: self.selectedDateNumber, to: today)
                 self.updateFormattedDate()
+                self.tableView.reloadData()
             } else {
                 self.incorrectPasscodeAlert()
             }
@@ -655,7 +721,13 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     func removeSelectedItemFromPointsArrayAndUpdateIncomeArray(indexPath: IndexPath, category: String, categoryArray: [JobsAndHabits]) {
         // create array to isolate selected item (there should only be one item with current user, current category, current name, and current date of today)
         // NOTE: 'Calendar.current' automatically determines local time zone (no need to setup time zone properties if calling 'Calendar.current')
-        let isoArrayForItem = Points.pointsArray.filter({ $0.user == self.currentUserName && $0.itemCategory == category && $0.itemName == categoryArray[indexPath.row].name && Calendar.current.isDateInToday(Date(timeIntervalSince1970: $0.itemDate)) })
+        let isoArrayForItem = Points.pointsArray.filter({ $0.user == self.currentUserName &&
+            $0.itemCategory == category &&
+            $0.itemName == categoryArray[indexPath.row].name &&
+            Calendar.current.isDate(Date(timeIntervalSince1970: $0.itemDate), inSameDayAs: selectedDate) })
+        
+        // OLD CODE
+//            Calendar.current.isDateInToday(Date(timeIntervalSince1970: $0.itemDate)) })
         
         if isoArrayForItem.isEmpty {
             // do nothing (this is the rare instance where user is resetting an excused or unexcused job that was assigned to themself)
@@ -668,9 +740,7 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                 if pointsItem.user == self.currentUserName &&
                     pointsItem.itemCategory == category &&
                     pointsItem.itemName == isoArrayForItem[0].itemName &&
-                    
-                    // can use this for comparing dates when user changes the date code atop the screen (below earnigns subtotal)
-                    Calendar.current.isDate(Date(timeIntervalSince1970: pointsItem.itemDate), inSameDayAs: Date()) {
+                    Calendar.current.isDate(Date(timeIntervalSince1970: pointsItem.itemDate), inSameDayAs: selectedDate) {
                     
                     // remove item from points array
                     Points.pointsArray.remove(at: pointsIndex)
@@ -693,7 +763,13 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     func updateItemInArrayAndUpdateIncomeArrayAndLabel(isoArray: [Points], indexPath: IndexPath) {
         // if array is not empty, subtract "value per tap" from income array (at user's index) and delete the item from the array, then update user's income label
         for (pointsIndex, pointsItem) in Points.pointsArray.enumerated() {
-            if pointsItem.user == self.currentUserName && pointsItem.itemCategory == "daily habits" && pointsItem.itemName == isoArray.first?.itemName && Calendar.current.isDateInToday(Date(timeIntervalSince1970: (isoArray.first?.itemDate)!)) {
+            if pointsItem.user == self.currentUserName &&
+                pointsItem.itemCategory == "daily habits" &&
+                pointsItem.itemName == isoArray.first?.itemName &&
+                Calendar.current.isDate(Date(timeIntervalSince1970: (isoArray.first?.itemDate)!), inSameDayAs: selectedDate) {
+                
+                // OLD CODE
+//                Calendar.current.isDateInToday(Date(timeIntervalSince1970: (isoArray.first?.itemDate)!)) {
                 
                 // update item in points array
                 Points.pointsArray[pointsIndex].code = "N"
@@ -729,14 +805,26 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                 
                 // create array to isolate selected item (for current user, this category, this job name, on this date)
                 // NOTE: 'Calendar.current' automatically determines local time zone (no need to setup time zone properties if calling 'Calendar.current')
-                let isoArrayForItem = Points.pointsArray.filter({ $0.user == self.currentUserName && $0.itemCategory == category && $0.itemName == categoryArray[indexPath.row].name && Calendar.current.isDateInToday(Date(timeIntervalSince1970: $0.itemDate)) })
+                let isoArrayForItem = Points.pointsArray.filter({ $0.user == self.currentUserName &&
+                    $0.itemCategory == category &&
+                    $0.itemName == categoryArray[indexPath.row].name &&
+                    Calendar.current.isDate(Date(timeIntervalSince1970: $0.itemDate), inSameDayAs: self.selectedDate) })
+                
+                // OLD CODE
+//                    Calendar.current.isDateInToday(Date(timeIntervalSince1970: $0.itemDate)) })
                 
                 // -------------------------------
                 // 1. remove item for current user
                 // -------------------------------
                 
                 for (pointsIndex, pointsItem) in Points.pointsArray.enumerated() {
-                    if pointsItem.user == self.currentUserName && pointsItem.itemCategory == category && pointsItem.itemName == isoArrayForItem[0].itemName && Calendar.current.isDateInToday(Date(timeIntervalSince1970: pointsItem.itemDate)) {
+                    if pointsItem.user == self.currentUserName &&
+                        pointsItem.itemCategory == category &&
+                        pointsItem.itemName == isoArrayForItem[0].itemName &&
+                        Calendar.current.isDate(Date(timeIntervalSince1970: pointsItem.itemDate), inSameDayAs: self.selectedDate) {
+                        
+                        // OLD CODE
+//                        Calendar.current.isDateInToday(Date(timeIntervalSince1970: pointsItem.itemDate)) {
                         
                         // ------------------------------------------------
                         // 1A. remove current user's item from points array
@@ -771,7 +859,13 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                 }
                 
                 // check array for value (if current chose 'none' as sub, there will be no "S" entry and the array will be empty)
-                let subIsoArray = Points.pointsArray.filter({ $0.code == "S" && $0.itemCategory == category && $0.itemName == "\(categoryArray[indexPath.row].name) (sub)" && Calendar.current.isDateInToday(Date(timeIntervalSince1970: $0.itemDate)) })
+                let subIsoArray = Points.pointsArray.filter({ $0.code == "S" &&
+                    $0.itemCategory == category &&
+                    $0.itemName == "\(categoryArray[indexPath.row].name) (sub)" &&
+                    Calendar.current.isDate(Date(timeIntervalSince1970: $0.itemDate), inSameDayAs: self.selectedDate) })
+                
+                // OLD CODE
+//                    Calendar.current.isDateInToday(Date(timeIntervalSince1970: $0.itemDate)) })
                 
                 if !subIsoArray.isEmpty {
                     
@@ -783,7 +877,13 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                     var substituteValue: Int!
                     // iterate over array to find item with code 'S' in current category with 'sub' in job name on this date (b/c there can only be one daily job with that name that has a sub)
                     for (pointsIndex2, pointsItem2) in Points.pointsArray.enumerated() {
-                        if pointsItem2.code == "S" && pointsItem2.itemCategory == category && pointsItem2.itemName == "\(categoryArray[indexPath.row].name) (sub)" && Calendar.current.isDateInToday(Date(timeIntervalSince1970: pointsItem2.itemDate)) {
+                        if pointsItem2.code == "S" &&
+                            pointsItem2.itemCategory == category &&
+                            pointsItem2.itemName == "\(categoryArray[indexPath.row].name) (sub)" &&
+                            Calendar.current.isDate(Date(timeIntervalSince1970: pointsItem2.itemDate), inSameDayAs: self.selectedDate) {
+                            
+                            // OLD CODE
+//                            Calendar.current.isDateInToday(Date(timeIntervalSince1970: pointsItem2.itemDate)) {
                             
                             // get sub's name before deleting array item (for later use)
                             // also get the amount the sub was paid (to subtract from the income array)
@@ -889,38 +989,7 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         return (dailyJobsSubtotal, habitsSubtotal, weeklyJobsSubtotal, pointsSubtotal)
     }
     
-    func createNewPointsItemForDailyJobs(indexPath: IndexPath) {
-        let pointsArrayItem = Points(user: currentUserName,
-                                     itemName: (usersDailyJobs?[indexPath.row].name)!,
-                                     itemCategory: "daily jobs",
-                                     code: "C",
-                                     valuePerTap: dailyJobsPointValue,
-                                     itemDate: Date().timeIntervalSince1970)
-        
-        Points.pointsArray.append(pointsArrayItem)
-        
-        
-        
-        
-        // add item to Firebase
-        // need to organize them in some way? perhaps by date? category?
-        ref.child("points").childByAutoId().setValue(["user" : currentUserName,
-                                                      "itemName" : (usersDailyJobs?[indexPath.row].name)!,
-                                                      "itemCategory" : "daily jobs",
-                                                      "code" : "C",
-                                                      "valuePerTap" : dailyJobsPointValue,
-                                                      "itemDate" : Date().timeIntervalSince1970])
-        
-        
-        
-        for (index, item) in Income.currentIncomeArray.enumerated() {
-            if item.user == currentUserName {
-                Income.currentIncomeArray[index].currentPoints += dailyJobsPointValue
-                incomeLabel.text = "$\(String(format: "%.2f", Double(Income.currentIncomeArray[index].currentPoints) / 100))"
-                updateProgressMeterHeights()
-            }
-        }
-        
+    func updateUserIncomeOnFirebase() {
         ref.child("mpIncome").updateChildValues([currentUserName! : Income.currentIncomeArray[MPUser.currentUser].currentPoints])
     }
     

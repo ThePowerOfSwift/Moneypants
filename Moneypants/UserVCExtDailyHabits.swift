@@ -11,14 +11,24 @@ extension UserVC {
             valuePerTap = regularHabitPointValue!
         }
         
-        let pointThingy = Points(user: currentUserName,
-                                 itemName: (usersDailyHabits?[indexPath.row].name)!,
-                                 itemCategory: "daily habits",
-                                 code: "C",
-                                 valuePerTap: valuePerTap,
-                                 itemDate: Date().timeIntervalSince1970)
+        // refresh selectedDate variable with current time
+        selectedDate = Calendar.current.date(byAdding: .day, value: selectedDateNumber, to: Date())
+        let pointsArrayItem = Points(user: currentUserName,
+                                     itemName: (usersDailyHabits?[indexPath.row].name)!,
+                                     itemCategory: "daily habits",
+                                     code: "C",
+                                     valuePerTap: valuePerTap,
+                                     itemDate: selectedDate.timeIntervalSince1970)
         
-        Points.pointsArray.append(pointThingy)
+        Points.pointsArray.append(pointsArrayItem)
+        
+        // add item to Firebase
+        ref.child("points").childByAutoId().setValue(["user" : currentUserName,
+                                                      "itemName" : (usersDailyHabits?[indexPath.row].name)!,
+                                                      "itemCategory" : "daily habits",
+                                                      "code" : "C",
+                                                      "valuePerTap" : valuePerTap,
+                                                      "itemDate" : selectedDate.timeIntervalSince1970])
         
         // update user's income array & income label
         for (index, item) in Income.currentIncomeArray.enumerated() {
@@ -28,6 +38,8 @@ extension UserVC {
                 updateProgressMeterHeights()
             }
         }
+        
+        updateUserIncomeOnFirebase()
     }
     
     func createZeroValueItemForDailyHabit(indexPath: IndexPath) {
@@ -36,7 +48,7 @@ extension UserVC {
                                  itemCategory: "daily habits",
                                  code: "N",
                                  valuePerTap: 0,
-                                 itemDate: Date().timeIntervalSince1970)
+                                 itemDate: selectedDate.timeIntervalSince1970)
         
         Points.pointsArray.append(undoneHabit)
         tableView.setEditing(false, animated: true)
@@ -57,7 +69,13 @@ extension UserVC {
                 
                 // if array is not empty, delete the item from the array
                 for (pointsIndex, pointsItem) in Points.pointsArray.enumerated() {
-                    if pointsItem.user == self.currentUserName && pointsItem.itemCategory == "daily habits" && pointsItem.itemName == isoArray.first?.itemName && Calendar.current.isDateInToday(Date(timeIntervalSince1970: (isoArray.first?.itemDate)!)) {
+                    if pointsItem.user == self.currentUserName &&
+                        pointsItem.itemCategory == "daily habits" &&
+                        pointsItem.itemName == isoArray.first?.itemName &&
+                        Calendar.current.isDate(Date(timeIntervalSince1970: (isoArray.first?.itemDate)!), inSameDayAs: self.selectedDate!) {
+                        
+                        // OLD CODE
+//                        Calendar.current.isDateInToday(Date(timeIntervalSince1970: (isoArray.first?.itemDate)!)) {
                         
                         // remove item from points array (no need to do anything else: value was already zero)
                         Points.pointsArray.remove(at: pointsIndex)
