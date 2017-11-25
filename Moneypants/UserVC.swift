@@ -760,10 +760,11 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     func updateItemInArrayAndUpdateIncomeArrayAndLabel(isoArray: [Points], indexPath: IndexPath) {
         // if array is not empty, subtract "value per tap" from income array (at user's index) and delete the item from the array, then update user's income label
         for (pointsIndex, pointsItem) in Points.pointsArray.enumerated() {
+            // if PointsArray item matches the isoArray item, then use the pointsarray index to delete that item from the points array
             if pointsItem.user == self.currentUserName &&
                 pointsItem.itemCategory == "daily habits" &&
                 pointsItem.itemName == isoArray.first?.itemName &&
-                Calendar.current.isDate(Date(timeIntervalSince1970: (isoArray.first?.itemDate)!), inSameDayAs: selectedDate) {
+                pointsItem.itemDate == isoArray.first?.itemDate {
                 
                 // update item in points array
                 Points.pointsArray[pointsIndex].code = "N"

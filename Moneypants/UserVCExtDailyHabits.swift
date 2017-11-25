@@ -69,13 +69,11 @@ extension UserVC {
                 
                 // if array is not empty, delete the item from the array
                 for (pointsIndex, pointsItem) in Points.pointsArray.enumerated() {
+                    // if PointsArray item matches the isoArray item, then use the pointsarray index to delete that item from the points array
                     if pointsItem.user == self.currentUserName &&
                         pointsItem.itemCategory == "daily habits" &&
                         pointsItem.itemName == isoArray.first?.itemName &&
-                        Calendar.current.isDate(Date(timeIntervalSince1970: (isoArray.first?.itemDate)!), inSameDayAs: self.selectedDate!) {
-                        
-                        // OLD CODE
-//                        Calendar.current.isDateInToday(Date(timeIntervalSince1970: (isoArray.first?.itemDate)!)) {
+                        pointsItem.itemDate == isoArray.first?.itemDate {
                         
                         // remove item from points array (no need to do anything else: value was already zero)
                         Points.pointsArray.remove(at: pointsIndex)
