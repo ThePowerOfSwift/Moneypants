@@ -93,4 +93,42 @@ extension UserVC {
         }))
         self.present(alert, animated: true, completion: nil)
     }
+    
+    func habitBonusEarned() {
+        // refresh selectedDate variable with current time
+//        selectedDate = Calendar.current.date(byAdding: .day, value: selectedDateNumber, to: Date())
+        let pointsArrayItem = Points(user: currentUserName,
+                                     itemName: "habit bonus",
+                                     itemCategory: "daily habits",
+                                     code: "B",
+                                     valuePerTap: jobAndHabitBonusValue,
+                                     itemDate: Date().timeIntervalSince1970)
+        
+        Points.pointsArray.append(pointsArrayItem)
+        
+        // add item to Firebase
+        ref.child("points").childByAutoId().setValue(["user" : currentUserName,
+                                                      "itemName" : "habit bonus",
+                                                      "itemCategory" : "daily habits",
+                                                      "code" : "B",
+                                                      "valuePerTap" : jobAndHabitBonusValue,
+                                                      "itemDate" : Date().timeIntervalSince1970])
+        
+        // update user's income array & income label
+        for (index, item) in Income.currentIncomeArray.enumerated() {
+            if item.user == currentUserName {
+                Income.currentIncomeArray[index].currentPoints += jobAndHabitBonusValue
+                incomeLabel.text = "$\(String(format: "%.2f", Double(Income.currentIncomeArray[index].currentPoints) / 100))"
+                updateProgressMeterHeights()
+            }
+        }
+        
+        // update user's income on Firebase
+        updateUserIncomeOnFirebase()
+        
+        habitProgressMeterView.backgroundColor = UIColor(red: 125/255, green: 190/255, blue: 48/255, alpha: 1.0)
+        
+        displayHabitBonusFlyover()
+        bonusSoundAlreadyPlayed = true
+    }
 }

@@ -87,6 +87,7 @@ extension UserVC {
     }
     
     func displayHabitBonusFlyover() {
+        habitBonusAmountLabel.text = "$\(String(format: "%.2f", Double(jobAndHabitBonusValue!) / 100))"
         habitBonusCenterConstraint.constant = 0
         UIView.animate(withDuration: 0.3) {
             self.habitBonusView.alpha = 1

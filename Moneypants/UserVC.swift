@@ -16,8 +16,10 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     // progress meters
     @IBOutlet weak var habitProgressMeterHeight: NSLayoutConstraint!
+    @IBOutlet weak var habitProgressMeterView: UIImageView!
     @IBOutlet weak var totalProgressMeterHeight: NSLayoutConstraint!
     @IBOutlet weak var habitTotalProgressView: UIView!
+    @IBOutlet weak var habitBonusAmountLabel: UILabel!
     
     let feesDebts: [String] = ["add a fee...", "make a withdrawal..."]
     
@@ -266,6 +268,20 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                 $0.code == "S" &&
                 Calendar.current.isDate(Date(timeIntervalSince1970: $0.itemDate), inSameDayAs: selectedDate) })
             
+            
+            
+            
+            
+            
+            print(subJobsArray)
+            
+            
+            
+            
+            
+            
+            
+            
             cell.jobHabitLabel.text = subJobsArray[indexPath.row].itemName
             cell.jobHabitLabel.textColor = .lightGray
             cell.pointsLabel.text = "\(subJobsArray[indexPath.row].valuePerTap)"
@@ -357,9 +373,8 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                 tableView.deselectRow(at: indexPath, animated: true)
             }
             // only show flyover if user has earned 75% of their habit points AND the flyover hasn't shown up yet.
-            if pointsEarnedSinceLastPayday().habits >= Int(Double(jobAndHabitBonusValue) * 0.75) && bonusSoundAlreadyPlayed == false {
-                displayHabitBonusFlyover()
-                bonusSoundAlreadyPlayed = true
+            if pointsEarnedSinceLastPayday().habits >= Int(Double(jobAndHabitBonusValue) * 0.75) && !bonusSoundAlreadyPlayed {
+                habitBonusEarned()
             }
         }
         

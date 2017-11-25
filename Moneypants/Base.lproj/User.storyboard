@@ -1017,7 +1017,7 @@
                                 <color key="backgroundColor" white="0.90228361999999995" alpha="1" colorSpace="calibratedWhite"/>
                                 <inset key="separatorInset" minX="72" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="CustomCell" rowHeight="50" id="9YO-5s-dW8" customClass="UserCell" customModule="Moneypants" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="CustomCell" rowHeight="50" id="9YO-5s-dW8" customClass="UserCell" customModule="Moneypants" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="320" height="50"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="9YO-5s-dW8" id="eTG-ZA-lye">
@@ -1146,9 +1146,11 @@
                     </navigationItem>
                     <connections>
                         <outlet property="dateLower" destination="xY3-Fg-XeI" id="5Wo-Or-aYO"/>
+                        <outlet property="habitBonusAmountLabel" destination="VJu-Lj-aOx" id="Ded-bg-qwS"/>
                         <outlet property="habitBonusCenterConstraint" destination="iBk-cH-sAy" id="CE6-J5-qts"/>
                         <outlet property="habitBonusView" destination="aZW-Bd-WPV" id="LM3-wK-bDN"/>
                         <outlet property="habitProgressMeterHeight" destination="fPQ-KM-oaZ" id="hrC-2B-mwC"/>
+                        <outlet property="habitProgressMeterView" destination="saL-Ht-eyG" id="1ji-3Y-qK7"/>
                         <outlet property="habitTotalProgressView" destination="kSV-Jl-4Gq" id="32b-t1-hfU"/>
                         <outlet property="incomeLabel" destination="Hsm-fj-V6x" id="6o6-By-bRS"/>
                         <outlet property="tableView" destination="coj-ep-PbJ" id="393-N4-Uai"/>
@@ -3168,6 +3170,7 @@ meet budget</string>
                     </visualEffectView>
                     <connections>
                         <outlet property="earningsIndicatorOverlay" destination="nJs-5W-XqI" id="dOn-4y-Vb0"/>
+                        <outlet property="habitBonusLabel" destination="5X2-K1-d5d" id="2NZ-Fq-QEY"/>
                         <outlet property="habitsHeight" destination="439-N9-ba3" id="Hac-zo-O8b"/>
                         <outlet property="habitsMeterLabel" destination="wr8-IW-vzw" id="A5K-K9-YGg"/>
                         <outlet property="habitsProgressBar" destination="0y2-qT-7or" id="Mfo-fF-ns7"/>
