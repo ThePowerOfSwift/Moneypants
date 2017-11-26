@@ -387,45 +387,31 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                 Calendar.current.isDate(Date(timeIntervalSince1970: $0.itemDate), inSameDayAs: selectedDate) })
             
             if currentUserCategoryItemDateArray.isEmpty {
-                // need to check if user has already done weekly job
-                // there are two separate weeks to check: 1. previous pay period, and 2. current pay period
+                // if weekly job is blank, still need to check if user has already done weekly job on another day
+                // need to find out which week user is trying to select: 1. previous pay period, and 2. current pay period
                 
-                // -------------------
-                // previous pay period
-                // -------------------
-                
-                let prevPayPeriodWeeklyJobsIsoArray = Points.pointsArray.filter({ $0.user == currentUserName &&
+                let prevPayPeriod = Points.pointsArray.filter({ $0.user == currentUserName &&
                     $0.itemCategory == "weekly jobs" &&
                     $0.itemName == usersWeeklyJobs[indexPath.row].name &&
                     $0.itemDate >= FamilyData.calculatePayday().previous.timeIntervalSince1970 &&
                     $0.itemDate < FamilyData.calculatePayday().current.timeIntervalSince1970 })
                 
-                if prevPayPeriodWeeklyJobsIsoArray.isEmpty {
-                    print("previous pay period has no weekly job completed")
-                
-                    createNewPointsItemForWeeklyJobs(indexPath: indexPath)
-                    tableView.reloadData()
-                } else {
-                    print("previous pay period already has weekly job completed")
-                    weeklyJobAlreadyCompletedAlert(indexPath: indexPath)
-                }
-                
-                // ------------------
-                // current pay period
-                // ------------------
-                
-                let currentPayPeriodWeeklyJobsIsoArray = Points.pointsArray.filter({ $0.user == currentUserName &&
+                let currentPayPeriod = Points.pointsArray.filter({ $0.user == currentUserName &&
                     $0.itemCategory == "weekly jobs" &&
                     $0.itemName == usersWeeklyJobs[indexPath.row].name &&
-                    $0.itemDate >= FamilyData.calculatePayday().previous.timeIntervalSince1970 })
+                    $0.itemDate >= FamilyData.calculatePayday().current.timeIntervalSince1970 })
                 
-                if currentPayPeriodWeeklyJobsIsoArray.isEmpty {
-                    print("current pay period has no weekly job completed")
+                
+                // if selected date is in previous pay period and there are no weekly jobs done, then
+                if selectedDate.timeIntervalSince1970 >= FamilyData.calculatePayday().previous.timeIntervalSince1970 && selectedDate.timeIntervalSince1970 < FamilyData.calculatePayday().current.timeIntervalSince1970 && prevPayPeriod.isEmpty {
+                    createNewPointsItemForWeeklyJobs(indexPath: indexPath)
+                    tableView.reloadData()
+                } else if selectedDate.timeIntervalSince1970 >= FamilyData.calculatePayday().current.timeIntervalSince1970 && currentPayPeriod.isEmpty {
                     createNewPointsItemForWeeklyJobs(indexPath: indexPath)
                     tableView.reloadData()
                 } else {
-                    print("current pay period already has weekly job completed")
                     weeklyJobAlreadyCompletedAlert(indexPath: indexPath)
+                    tableView.reloadData()
                 }
 //                tableView.reloadRows(at: [indexPath], with: .automatic)
             } else if currentUserCategoryItemDateArray.first?.code == "C" {
