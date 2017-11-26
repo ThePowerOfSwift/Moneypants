@@ -95,14 +95,14 @@ extension UserVC {
     }
     
     func habitBonusEarned() {
-        // refresh selectedDate variable with current time
-//        selectedDate = Calendar.current.date(byAdding: .day, value: selectedDateNumber, to: Date())
+        // refresh selectedDate variable with selected time
+        selectedDate = Calendar.current.date(byAdding: .day, value: selectedDateNumber, to: Date())
         let pointsArrayItem = Points(user: currentUserName,
                                      itemName: "habit bonus",
                                      itemCategory: "daily habits",
                                      code: "B",
                                      valuePerTap: jobAndHabitBonusValue,
-                                     itemDate: Date().timeIntervalSince1970)
+                                     itemDate: selectedDate.timeIntervalSince1970)
         
         Points.pointsArray.append(pointsArrayItem)
         
@@ -112,7 +112,7 @@ extension UserVC {
                                                       "itemCategory" : "daily habits",
                                                       "code" : "B",
                                                       "valuePerTap" : jobAndHabitBonusValue,
-                                                      "itemDate" : Date().timeIntervalSince1970])
+                                                      "itemDate" : selectedDate.timeIntervalSince1970])
         
         // update user's income array & income label
         for (index, item) in Income.currentIncomeArray.enumerated() {

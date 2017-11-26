@@ -37,8 +37,7 @@ class HomeVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UITa
 //                                     Income(user: "Savannah", currentPoints: 0),
 //                                     Income(user: "Flower", currentPoints: 0)]
         
-        Points.pointsArray = [Points(user: "Father", itemName: "enter your top priority habit here", itemCategory: "daily habits", code: "C", valuePerTap: 24, itemDate: 1511647885.2186561),
-                              Points(user: "Father", itemName: "pray & scripture study", itemCategory: "daily habits", code: "C", valuePerTap: 6, itemDate: 1511647885.722846),
+        Points.pointsArray = [Points(user: "Father", itemName: "pray & scripture study", itemCategory: "daily habits", code: "C", valuePerTap: 6, itemDate: 1511647885.722846),
                               Points(user: "Father", itemName: "exercise (20 min)", itemCategory: "daily habits", code: "C", valuePerTap: 6, itemDate: 1511647886.0822151),
                               Points(user: "Father", itemName: "journal", itemCategory: "daily habits", code: "C", valuePerTap: 6, itemDate: 1511647886.4109979),
                               Points(user: "Father", itemName: "1-on-1 time with kid", itemCategory: "daily habits", code: "C", valuePerTap: 6, itemDate: 1511647886.7559009),
@@ -80,9 +79,15 @@ class HomeVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UITa
                               Points(user: "Father", itemName: "enter your top priority habit here", itemCategory: "daily habits", code: "C", valuePerTap: 24, itemDate: 1511302319.7712111),
                               Points(user: "Father", itemName: "pray & scripture study", itemCategory: "daily habits", code: "C", valuePerTap: 6, itemDate: 1511302321.155077),
                               Points(user: "Father", itemName: "exercise (20 min)", itemCategory: "daily habits", code: "C", valuePerTap: 6, itemDate: 1511302321.6023149),
-                              Points(user: "Father", itemName: "journal", itemCategory: "daily habits", code: "C", valuePerTap: 6, itemDate: 1511302322.0879591)]
+                              Points(user: "Father", itemName: "journal", itemCategory: "daily habits", code: "C", valuePerTap: 6, itemDate: 1511302322.0879591),
+                              Points(user: "Father", itemName: "1-on-1 time with kid", itemCategory: "daily habits", code: "C", valuePerTap: 6, itemDate: 1511313983.285332),
+                              Points(user: "Father", itemName: "practice talent (30 min)", itemCategory: "daily habits", code: "C", valuePerTap: 6, itemDate: 1511313983.7765191),
+                              Points(user: "Father", itemName: "good deed / service", itemCategory: "daily habits", code: "C", valuePerTap: 6, itemDate: 1511313986.460258),
+                              Points(user: "Father", itemName: "family prayer & scriptures", itemCategory: "daily habits", code: "C", valuePerTap: 6, itemDate: 1511313987.2143409),
+                              Points(user: "Father", itemName: "on time to events", itemCategory: "daily habits", code: "C", valuePerTap: 6, itemDate: 1511313991.7086849),
+                              Points(user: "Father", itemName: "read (20 min)", itemCategory: "daily habits", code: "C", valuePerTap: 6, itemDate: 1511313992.2569959)]
         
-        Income.currentIncomeArray = [Income(user: "Father", currentPoints: 354),
+        Income.currentIncomeArray = [Income(user: "Father", currentPoints: 366),
                                      Income(user: "Mother", currentPoints: 0),
                                      Income(user: "Allan", currentPoints: 0),
                                      Income(user: "Sophie", currentPoints: 0),
