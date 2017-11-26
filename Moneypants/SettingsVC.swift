@@ -16,6 +16,8 @@ class SettingsVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        tableView.tableFooterView = UIView()
+        
         addNavBarImage()
     }
     
@@ -25,29 +27,31 @@ class SettingsVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        if self.tabBarController?.selectedIndex == 4 {
-            
-            let alert = UIAlertController(title: "Parental Passcode Required", message: "You must enter a parental passcode to access the settings page:", preferredStyle: .alert)
+        let alert = UIAlertController(title: "Parental Passcode Required", message: "You must enter a parental passcode to access the settings page:", preferredStyle: .alert)
             alert.addTextField(configurationHandler: { (textField) in
                 textField.placeholder = "enter passcode"
                 textField.isSecureTextEntry = true
+                textField.keyboardType = .numberPad
             })
-            // Button ONE: "okay", and allow user access to page
+            // Button ONE: "okay"
             alert.addAction(UIAlertAction(title: "okay", style: UIAlertActionStyle.default , handler: { (action) in
-                alert.dismiss(animated: true, completion: nil)
-                print("okay")
+                // get passcodes for just parents, not kids
+                let parentalPasscodeArray = MPUser.usersArray.filter({ $0.childParent == "parent" })
+                if parentalPasscodeArray.contains(where: { "\($0.passcode)" == alert.textFields![0].text }) {
+                    alert.dismiss(animated: true, completion: nil)
+                } else {
+                    self.incorrectPasscodeAlert()
+                }
             }))
-            // Button TWO: "cancel", and send user back to home page
+            // Button TWO: "cancel"
             alert.addAction(UIAlertAction(title: "cancel", style: .cancel, handler: {_ in
+                alert.dismiss(animated: true, completion: nil)
+                // send user back to home page
                 CATransaction.setCompletionBlock({
                     self.tabBarController?.selectedIndex = 0
                 })
             }))
-            
-            self.present(alert, animated: true, completion: nil)
-        } else {
-            print("other view")
-        }
+            present(alert, animated: true, completion: nil)
     }
     
     // ----------------
@@ -128,4 +132,15 @@ class SettingsVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         navigationItem.titleView = imageView
     }
 
+    func incorrectPasscodeAlert() {
+        let wrongPasscodeAlert = UIAlertController(title: "Incorrect Passcode", message: "", preferredStyle: .alert)
+        wrongPasscodeAlert.addAction(UIAlertAction(title: "okay", style: .cancel, handler: { (action) in
+            wrongPasscodeAlert.dismiss(animated: true, completion: nil)
+            // send user back to home page
+            CATransaction.setCompletionBlock({
+                self.tabBarController?.selectedIndex = 0
+            })
+        }))
+        self.present(wrongPasscodeAlert, animated: true, completion: nil)
+    }
 }

@@ -419,17 +419,17 @@
 			isa = PBXGroup;
 			children = (
 				89FB67571D5C82AB002B2484 /* AppDelegate.swift */,
-				CE18C4D11F64E14F00C748BC /* MaxLengthTextField.swift */,
-				CEFC21FF1F64A82900CC4FC1 /* MPUser.swift */,
-				CE52210F1F91136C008CE5BD /* FamilyData.swift */,
 				CEAF71A31FA271DB0097EACF /* Budget.swift */,
-				CE4D2B7F1FC012D700B21FF7 /* Withdrawal.swift */,
-				CED7D5981F997BF800351347 /* OutsideIncome.swift */,
-				CEA2BC481F71C3900020D958 /* JobsAndHabits.swift */,
-				CEB55ED01FB10A420097F86A /* Points.swift */,
+				CE4D2B811FC013D300B21FF7 /* Envelope.swift */,
+				CE52210F1F91136C008CE5BD /* FamilyData.swift */,
 				CE8FFA011F10AE92004A53BE /* GlobalVariables.swift */,
 				CEA300241FB28E7700BEE503 /* Income.swift */,
-				CE4D2B811FC013D300B21FF7 /* Envelope.swift */,
+				CEA2BC481F71C3900020D958 /* JobsAndHabits.swift */,
+				CE18C4D11F64E14F00C748BC /* MaxLengthTextField.swift */,
+				CEFC21FF1F64A82900CC4FC1 /* MPUser.swift */,
+				CED7D5981F997BF800351347 /* OutsideIncome.swift */,
+				CEB55ED01FB10A420097F86A /* Points.swift */,
+				CE4D2B7F1FC012D700B21FF7 /* Withdrawal.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";

@@ -62,12 +62,13 @@ struct FamilyData {
         
         // calculate most recent payday, then use that to calculate next payday
         let today = Date()
+        let calendar = Calendar.current
         var previousPayday: Date!
         var currentPayday: Date!
         var nextPayday: Date!
         
         for n in 8...14 {
-            let previousDate = Calendar.current.date(byAdding: Calendar.Component.day, value: -n, to: today)
+            let previousDate = calendar.date(byAdding: .day, value: -n, to: today)
             // format previous date to show weekday in long format
             // if weekday matches payday, then count number of days since then and only subtotal values since then
             let formatterLong = DateFormatter()
@@ -77,8 +78,13 @@ struct FamilyData {
                 previousPayday = previousDate
             }
         }
-        currentPayday = Calendar.current.date(byAdding: Calendar.Component.day, value: 7, to: previousPayday)
-        nextPayday = Calendar.current.date(byAdding: .day, value: 14, to: previousPayday)
+        currentPayday = calendar.date(byAdding: Calendar.Component.day, value: 7, to: previousPayday)
+        nextPayday = calendar.date(byAdding: .day, value: 14, to: previousPayday)
+        
+        previousPayday = calendar.startOfDay(for: previousPayday)
+        currentPayday = calendar.startOfDay(for: currentPayday)
+        nextPayday = calendar.startOfDay(for: nextPayday)
+        
         return (previousPayday, currentPayday, nextPayday)
         
         // NOTES:

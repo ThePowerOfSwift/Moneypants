@@ -70,9 +70,6 @@ extension UserVC {
                             pointsItem.itemName == isoArray[0].itemName &&
                             Calendar.current.isDate(Date(timeIntervalSince1970: isoArray[0].itemDate), inSameDayAs: self.selectedDate!) {
                             
-                            // OLD CODE
-//                            Calendar.current.isDateInToday(Date(timeIntervalSince1970: isoArray[0].itemDate)) {
-                            
                             // update item at points array
                             Points.pointsArray[pointsIndex].code = "N"
                             Points.pointsArray[pointsIndex].valuePerTap = 0
@@ -134,9 +131,6 @@ extension UserVC {
                         pointsItem.itemCategory == "weekly jobs" &&
                         pointsItem.itemName == isoArray[0].itemName &&
                         Calendar.current.isDate(Date(timeIntervalSince1970: isoArray[0].itemDate), inSameDayAs: self.selectedDate!) {
-                        
-                        // OLD CODE
-//                        Calendar.current.isDateInToday(Date(timeIntervalSince1970: isoArray[0].itemDate)) {
                         
                         // update item at points array
                         Points.pointsArray[pointsIndex].code = "N"
@@ -223,5 +217,14 @@ extension UserVC {
         }
         
         updateUserIncomeOnFirebase()
+    }
+    
+    func weeklyJobAlreadyCompletedAlert(indexPath: IndexPath) {
+        let alert = UIAlertController(title: "Weekly Job", message: "The weekly job '\(usersWeeklyJobs[indexPath.row].name)' has already been completed for the week.", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "okay", style: .cancel, handler: { (action) in
+            alert.dismiss(animated: true, completion: nil)
+        }))
+        present(alert, animated: true, completion: nil)
+        tableView.reloadRows(at: [indexPath], with: .automatic)
     }
 }

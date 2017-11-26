@@ -1079,26 +1079,26 @@
                                 </prototypes>
                             </tableView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aZW-Bd-WPV" userLabel="Habit Bonus Flyover">
-                                <rect key="frame" x="35" y="249" width="250" height="70"/>
+                                <rect key="frame" x="35" y="244" width="250" height="80"/>
                                 <subviews>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="trophy" translatesAutoresizingMaskIntoConstraints="NO" id="weA-ei-3rK">
-                                        <rect key="frame" x="8" y="10" width="50" height="50"/>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="trophy black" translatesAutoresizingMaskIntoConstraints="NO" id="weA-ei-3rK">
+                                        <rect key="frame" x="16" y="20" width="40" height="40"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="50" id="2Hg-YF-9yY"/>
-                                            <constraint firstAttribute="width" constant="50" id="Et7-F4-6WM"/>
+                                            <constraint firstAttribute="height" constant="40" id="2Hg-YF-9yY"/>
+                                            <constraint firstAttribute="width" constant="40" id="Et7-F4-6WM"/>
                                         </constraints>
                                     </imageView>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="-5" translatesAutoresizingMaskIntoConstraints="NO" id="GTa-6T-lAR">
-                                        <rect key="frame" x="66" y="5.5" width="176" height="59"/>
+                                        <rect key="frame" x="56" y="10.5" width="186" height="59"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="752" text="Habit Bonus Earned!" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KJU-RF-wqc">
-                                                <rect key="frame" x="0.0" y="0.0" width="176" height="21.5"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="186" height="21.5"/>
                                                 <fontDescription key="fontDescription" name="Arista2.0" family="Arista 2.0" pointSize="18"/>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="$5.00" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VJu-Lj-aOx">
-                                                <rect key="frame" x="0.0" y="16.5" width="176" height="42.5"/>
+                                                <rect key="frame" x="0.0" y="16.5" width="186" height="42.5"/>
                                                 <fontDescription key="fontDescription" name="Arista2.0" family="Arista 2.0" pointSize="36"/>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 <nil key="highlightedColor"/>
@@ -1109,12 +1109,12 @@
                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="250" id="FAz-we-7FK"/>
-                                    <constraint firstItem="weA-ei-3rK" firstAttribute="leading" secondItem="aZW-Bd-WPV" secondAttribute="leading" constant="8" id="TMC-Wo-Mvq"/>
+                                    <constraint firstItem="weA-ei-3rK" firstAttribute="leading" secondItem="aZW-Bd-WPV" secondAttribute="leading" constant="16" id="TMC-Wo-Mvq"/>
                                     <constraint firstItem="GTa-6T-lAR" firstAttribute="centerY" secondItem="aZW-Bd-WPV" secondAttribute="centerY" id="TQ7-BN-bR0"/>
-                                    <constraint firstItem="GTa-6T-lAR" firstAttribute="leading" secondItem="weA-ei-3rK" secondAttribute="trailing" constant="8" id="TUe-He-hJJ"/>
+                                    <constraint firstItem="GTa-6T-lAR" firstAttribute="leading" secondItem="weA-ei-3rK" secondAttribute="trailing" id="TUe-He-hJJ"/>
                                     <constraint firstItem="weA-ei-3rK" firstAttribute="centerY" secondItem="aZW-Bd-WPV" secondAttribute="centerY" id="TfJ-sE-jEJ"/>
                                     <constraint firstAttribute="trailing" secondItem="GTa-6T-lAR" secondAttribute="trailing" constant="8" id="Wsc-lJ-eik"/>
-                                    <constraint firstAttribute="height" constant="70" id="ws8-qS-DvR"/>
+                                    <constraint firstAttribute="height" constant="80" id="ws8-qS-DvR"/>
                                 </constraints>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
@@ -1156,6 +1156,7 @@
                         <outlet property="tableView" destination="coj-ep-PbJ" id="393-N4-Uai"/>
                         <outlet property="topView" destination="UPa-Aj-CEH" id="Le0-rL-LV8"/>
                         <outlet property="totalProgressMeterHeight" destination="FiW-xG-oxg" id="alE-u5-XUy"/>
+                        <outlet property="trophyView" destination="weA-ei-3rK" id="nzB-FR-r9X"/>
                         <outlet property="userImage" destination="6Qy-gJ-dCc" id="OvW-6T-dHu"/>
                         <segue destination="Nsr-LM-qnz" kind="show" identifier="FeesDetailSegue" id="YZR-WR-lvN"/>
                         <segue destination="bMf-nL-IYd" kind="show" identifier="DebtsDetailSegue" id="Rn6-dk-qWW"/>
@@ -3212,7 +3213,6 @@ meet budget</string>
         <image name="shopping cart black" width="120" height="97"/>
         <image name="shopping cart black no alpha" width="150" height="150"/>
         <image name="shopping cart small" width="31" height="25"/>
-        <image name="trophy" width="250" height="250"/>
         <image name="trophy black" width="150" height="150"/>
     </resources>
     <inferredMetricsTieBreakers>

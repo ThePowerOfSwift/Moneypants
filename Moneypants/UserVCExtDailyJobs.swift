@@ -56,9 +56,6 @@ extension UserVC {
                                 pointsItem.itemName == isoArray[0].itemName &&
                                 Calendar.current.isDate(Date(timeIntervalSince1970: isoArray[0].itemDate), inSameDayAs: self.selectedDate!) {
                                 
-                                // OLD CODE
-//                                Calendar.current.isDateInToday(Date(timeIntervalSince1970: isoArray[0].itemDate)) {
-                                
                                 // remove item from points array
                                 Points.pointsArray.remove(at: pointsIndex)
                                 

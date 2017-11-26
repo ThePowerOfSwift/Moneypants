@@ -88,6 +88,8 @@ extension UserVC {
     
     func displayHabitBonusFlyover() {
         habitBonusAmountLabel.text = "$\(String(format: "%.2f", Double(jobAndHabitBonusValue!) / 100))"
+        trophyView.image = UIImage(named: "trophy black")
+        trophyView.tintColor = .white
         habitBonusCenterConstraint.constant = 0
         UIView.animate(withDuration: 0.3) {
             self.habitBonusView.alpha = 1
@@ -103,6 +105,18 @@ extension UserVC {
                 self.view.layoutIfNeeded()
             })
         }
+    }
+    
+    func updateFormattedDate() {
+        let formatter = DateFormatter()
+        if Calendar.current.isDateInToday(selectedDate) {
+            formatter.dateFormat = "'today'"
+        } else if Calendar.current.isDateInYesterday(selectedDate) {
+            formatter.dateFormat = "'yesterday'"
+        } else {
+            formatter.dateFormat = "EEEE"
+        }
+        dateLower.text = "\(formatter.string(from: selectedDate))"
     }
     
     // ---------------

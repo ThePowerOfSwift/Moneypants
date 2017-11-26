@@ -131,4 +131,18 @@ extension UserVC {
         displayHabitBonusFlyover()
         bonusSoundAlreadyPlayed = true
     }
+    
+    func checkHabitBonusStatus() {
+        // update progress meters with current data
+        let potentialWeeklyEarnings = FamilyData.adjustedNatlAvgYrlySpendingPerKid * 100 / 52
+        habitProgressMeterHeight.constant = habitTotalProgressView.bounds.height * CGFloat(pointsEarnedInCurrentPayPeriod().habits) / CGFloat(jobAndHabitBonusValue)
+        totalProgressMeterHeight.constant = habitTotalProgressView.bounds.height * CGFloat(pointsEarnedInCurrentPayPeriod().total) / CGFloat(potentialWeeklyEarnings)
+        
+        if pointsEarnedInCurrentPayPeriod().habits >= Int(Double(jobAndHabitBonusValue) * 0.75) {
+            bonusSoundAlreadyPlayed = true
+            habitProgressMeterView.backgroundColor = UIColor(red: 125/255, green: 190/255, blue: 48/255, alpha: 1.0) // green
+        } else {
+            bonusSoundAlreadyPlayed = false
+        }
+    }
 }

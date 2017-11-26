@@ -12,6 +12,7 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     // flyover
     @IBOutlet weak var habitBonusView: UIView!
+    @IBOutlet weak var trophyView: UIImageView!
     @IBOutlet weak var habitBonusCenterConstraint: NSLayoutConstraint!
     
     // progress meters
@@ -90,11 +91,6 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         checkIncome()
         prepHabitBonusSFX()
         checkHabitBonusStatus()
-        
-        // update progress meters with current data
-        let potentialWeeklyEarnings = FamilyData.adjustedNatlAvgYrlySpendingPerKid * 100 / 52
-        habitProgressMeterHeight.constant = habitTotalProgressView.bounds.height * CGFloat(pointsEarnedSinceLastPayday().habits) / CGFloat(jobAndHabitBonusValue)
-        totalProgressMeterHeight.constant = habitTotalProgressView.bounds.height * CGFloat(pointsEarnedSinceLastPayday().total) / CGFloat(potentialWeeklyEarnings)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -115,7 +111,7 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         let userDailyJobs = JobsAndHabits.finalDailyJobsArray.filter({ return $0.assigned == currentUserName })
         let userDailyHabits = JobsAndHabits.finalDailyHabitsArray.filter({ return $0.assigned == currentUserName })
         let userWeeklyJobs = JobsAndHabits.finalWeeklyJobsArray.filter({ return $0.assigned == currentUserName })
-        let subJobsArray = Points.pointsArray.filter({ $0.user == currentUserName && $0.code == "S" && Calendar.current.isDateInToday(Date(timeIntervalSince1970: $0.itemDate)) })
+        let subJobsArray = Points.pointsArray.filter({ $0.user == currentUserName && $0.code == "S" && Calendar.current.isDate(Date(timeIntervalSince1970: $0.itemDate), inSameDayAs: selectedDate) })
         if section == 0 {
             return userDailyJobs.count
         } else if section == 1 {
@@ -153,7 +149,7 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         // create array to isolate
-        let subJobsArray = Points.pointsArray.filter({ $0.user == currentUserName && $0.code == "S" && Calendar.current.isDateInToday(Date(timeIntervalSince1970: $0.itemDate)) })
+        let subJobsArray = Points.pointsArray.filter({ $0.user == currentUserName && $0.code == "S" && Calendar.current.isDate(Date(timeIntervalSince1970: $0.itemDate), inSameDayAs: selectedDate) })
         if section == 3 && subJobsArray.isEmpty {
             return 0
         } else {
@@ -373,7 +369,7 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                 tableView.deselectRow(at: indexPath, animated: true)
             }
             // only show flyover if user has earned 75% of their habit points AND the flyover hasn't shown up yet.
-            if pointsEarnedSinceLastPayday().habits >= Int(Double(jobAndHabitBonusValue) * 0.75) && !bonusSoundAlreadyPlayed {
+            if pointsEarnedInCurrentPayPeriod().habits >= Int(Double(jobAndHabitBonusValue) * 0.75) && !bonusSoundAlreadyPlayed {
                 habitBonusEarned()
             }
         }
@@ -391,8 +387,46 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                 Calendar.current.isDate(Date(timeIntervalSince1970: $0.itemDate), inSameDayAs: selectedDate) })
             
             if currentUserCategoryItemDateArray.isEmpty {
-                createNewPointsItemForWeeklyJobs(indexPath: indexPath)
-                tableView.reloadData()
+                // need to check if user has already done weekly job
+                // there are two separate weeks to check: 1. previous pay period, and 2. current pay period
+                
+                // -------------------
+                // previous pay period
+                // -------------------
+                
+                let prevPayPeriodWeeklyJobsIsoArray = Points.pointsArray.filter({ $0.user == currentUserName &&
+                    $0.itemCategory == "weekly jobs" &&
+                    $0.itemName == usersWeeklyJobs[indexPath.row].name &&
+                    $0.itemDate >= FamilyData.calculatePayday().previous.timeIntervalSince1970 &&
+                    $0.itemDate < FamilyData.calculatePayday().current.timeIntervalSince1970 })
+                
+                if prevPayPeriodWeeklyJobsIsoArray.isEmpty {
+                    print("previous pay period has no weekly job completed")
+                
+                    createNewPointsItemForWeeklyJobs(indexPath: indexPath)
+                    tableView.reloadData()
+                } else {
+                    print("previous pay period already has weekly job completed")
+                    weeklyJobAlreadyCompletedAlert(indexPath: indexPath)
+                }
+                
+                // ------------------
+                // current pay period
+                // ------------------
+                
+                let currentPayPeriodWeeklyJobsIsoArray = Points.pointsArray.filter({ $0.user == currentUserName &&
+                    $0.itemCategory == "weekly jobs" &&
+                    $0.itemName == usersWeeklyJobs[indexPath.row].name &&
+                    $0.itemDate >= FamilyData.calculatePayday().previous.timeIntervalSince1970 })
+                
+                if currentPayPeriodWeeklyJobsIsoArray.isEmpty {
+                    print("current pay period has no weekly job completed")
+                    createNewPointsItemForWeeklyJobs(indexPath: indexPath)
+                    tableView.reloadData()
+                } else {
+                    print("current pay period already has weekly job completed")
+                    weeklyJobAlreadyCompletedAlert(indexPath: indexPath)
+                }
 //                tableView.reloadRows(at: [indexPath], with: .automatic)
             } else if currentUserCategoryItemDateArray.first?.code == "C" {
                 tableView.deselectRow(at: indexPath, animated: true)
@@ -595,9 +629,6 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                 $0.itemName == self.usersWeeklyJobs?[indexPath.row].name &&
                 Calendar.current.isDate(Date(timeIntervalSince1970: $0.itemDate), inSameDayAs: selectedDate) })
             
-            // OLD CODE
-//                Calendar.current.isDateInToday(Date(timeIntervalSince1970: $0.itemDate)) })
-            
             // -------------------
             // 'substitute' action
             // -------------------
@@ -725,14 +756,6 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         present(alert, animated: true, completion: nil)
     }
     
-    func checkHabitBonusStatus() {
-        if pointsEarnedSinceLastPayday().habits >= Int(Double(jobAndHabitBonusValue) * 0.75) {
-            bonusSoundAlreadyPlayed = true
-        } else {
-            bonusSoundAlreadyPlayed = false
-        }
-    }
-    
     func removeSelectedItemFromPointsArrayAndUpdateIncomeArray(indexPath: IndexPath, category: String, categoryArray: [JobsAndHabits]) {
         // create array to isolate selected item (there should only be one item with current user, current category, current name, and current date of today)
         // NOTE: 'Calendar.current' automatically determines local time zone (no need to setup time zone properties if calling 'Calendar.current')
@@ -820,9 +843,6 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                     $0.itemName == categoryArray[indexPath.row].name &&
                     Calendar.current.isDate(Date(timeIntervalSince1970: $0.itemDate), inSameDayAs: self.selectedDate) })
                 
-                // OLD CODE
-//                    Calendar.current.isDateInToday(Date(timeIntervalSince1970: $0.itemDate)) })
-                
                 // -------------------------------
                 // 1. remove item for current user
                 // -------------------------------
@@ -832,9 +852,6 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                         pointsItem.itemCategory == category &&
                         pointsItem.itemName == isoArrayForItem[0].itemName &&
                         Calendar.current.isDate(Date(timeIntervalSince1970: pointsItem.itemDate), inSameDayAs: self.selectedDate) {
-                        
-                        // OLD CODE
-//                        Calendar.current.isDateInToday(Date(timeIntervalSince1970: pointsItem.itemDate)) {
                         
                         // ------------------------------------------------
                         // 1A. remove current user's item from points array
@@ -874,9 +891,6 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                     $0.itemName == "\(categoryArray[indexPath.row].name) (sub)" &&
                     Calendar.current.isDate(Date(timeIntervalSince1970: $0.itemDate), inSameDayAs: self.selectedDate) })
                 
-                // OLD CODE
-//                    Calendar.current.isDateInToday(Date(timeIntervalSince1970: $0.itemDate)) })
-                
                 if !subIsoArray.isEmpty {
                     
                     // -----------------------------
@@ -891,9 +905,6 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                             pointsItem2.itemCategory == category &&
                             pointsItem2.itemName == "\(categoryArray[indexPath.row].name) (sub)" &&
                             Calendar.current.isDate(Date(timeIntervalSince1970: pointsItem2.itemDate), inSameDayAs: self.selectedDate) {
-                            
-                            // OLD CODE
-//                            Calendar.current.isDateInToday(Date(timeIntervalSince1970: pointsItem2.itemDate)) {
                             
                             // get sub's name before deleting array item (for later use)
                             // also get the amount the sub was paid (to subtract from the income array)
@@ -947,20 +958,11 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         self.present(alert, animated: true, completion: nil)
     }
     
-    func prepHabitBonusSFX() {
-        do {
-            habitBonusSound = try AVAudioPlayer(contentsOf: URL.init(fileURLWithPath: Bundle.main.path(forResource: "008732264-coin-gold", ofType: "wav")!))
-            habitBonusSound.prepareToPlay()
-        } catch {
-            print(error)
-        }
-    }
-    
     func updateProgressMeterHeights() {
         let potentialWeeklyEarnings = FamilyData.adjustedNatlAvgYrlySpendingPerKid * 100 / 52
         
-        habitProgressMeterHeight.constant = habitTotalProgressView.bounds.height * CGFloat(pointsEarnedSinceLastPayday().habits) / CGFloat(jobAndHabitBonusValue)
-        totalProgressMeterHeight.constant = habitTotalProgressView.bounds.height * CGFloat(pointsEarnedSinceLastPayday().total) / CGFloat(potentialWeeklyEarnings)
+        habitProgressMeterHeight.constant = habitTotalProgressView.bounds.height * CGFloat(pointsEarnedInCurrentPayPeriod().habits) / CGFloat(jobAndHabitBonusValue)
+        totalProgressMeterHeight.constant = habitTotalProgressView.bounds.height * CGFloat(pointsEarnedInCurrentPayPeriod().total) / CGFloat(potentialWeeklyEarnings)
             
         UIView.animate(withDuration: 0.3) {
             
@@ -969,30 +971,30 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         }
     }
     
-    func pointsEarnedSinceLastPayday() -> (dailyJobs: Int, habits: Int, weeklyJobs: Int, total: Int) {
-        // calculate how much user has earned for all jobs and habits since last payday
+    func pointsEarnedInCurrentPayPeriod() -> (dailyJobs: Int, habits: Int, weeklyJobs: Int, total: Int) {
+        // calculate how much user has earned for all jobs and habits in current pay period
         // create array to isolate current user's points for all days that are in current pay period
-        let totalPointsEarnedSinceLastPayday = Points.pointsArray.filter({ $0.user == currentUserName && Date(timeIntervalSince1970: $0.itemDate) >= FamilyData.calculatePayday().current })
+        let totalPointsEarnedSinceBeginningOfCurrentPayPeriod = Points.pointsArray.filter({ $0.user == currentUserName && $0.itemDate >= FamilyData.calculatePayday().current.timeIntervalSince1970 })
         var pointsSubtotal: Int = 0
-        for pointsItem in totalPointsEarnedSinceLastPayday {
+        for pointsItem in totalPointsEarnedSinceBeginningOfCurrentPayPeriod {
             pointsSubtotal += pointsItem.valuePerTap
         }
         
-        let habitPointsEarnedSinceLastPayday = Points.pointsArray.filter({ $0.user == currentUserName && $0.itemCategory == "daily habits" && $0.code == "C" && Date(timeIntervalSince1970: $0.itemDate) >= FamilyData.calculatePayday().current })
+        let habitPointsEarnedSinceBeginningOfCurrentPayPeriod = Points.pointsArray.filter({ $0.user == currentUserName && $0.itemCategory == "daily habits" && $0.code == "C" && $0.itemDate >= FamilyData.calculatePayday().current.timeIntervalSince1970 })
         var habitsSubtotal: Int = 0
-        for pointsItem in habitPointsEarnedSinceLastPayday {
+        for pointsItem in habitPointsEarnedSinceBeginningOfCurrentPayPeriod {
             habitsSubtotal += pointsItem.valuePerTap
         }
         
-        let dailyJobsPointsEarnedSinceLastPayday = Points.pointsArray.filter({ $0.user == currentUserName && $0.itemCategory == "daily jobs" && Date(timeIntervalSince1970: $0.itemDate) >= FamilyData.calculatePayday().current })
+        let dailyJobsPointsEarnedSinceBeginningOfCurrentPayPeriod = Points.pointsArray.filter({ $0.user == currentUserName && $0.itemCategory == "daily jobs" && $0.itemDate >= FamilyData.calculatePayday().current.timeIntervalSince1970 })
         var dailyJobsSubtotal: Int = 0
-        for pointsItem in dailyJobsPointsEarnedSinceLastPayday {
+        for pointsItem in dailyJobsPointsEarnedSinceBeginningOfCurrentPayPeriod {
             dailyJobsSubtotal += pointsItem.valuePerTap
         }
         
-        let weeklyJobsPointsEarnedSinceLastPayday = Points.pointsArray.filter({ $0.user == currentUserName && $0.itemCategory == "weekly jobs" && Date(timeIntervalSince1970: $0.itemDate) >= FamilyData.calculatePayday().current })
+        let weeklyJobsPointsEarnedSinceBeginningOfCurrentPayPeriod = Points.pointsArray.filter({ $0.user == currentUserName && $0.itemCategory == "weekly jobs" && $0.itemDate >= FamilyData.calculatePayday().current.timeIntervalSince1970 })
         var weeklyJobsSubtotal: Int = 0
-        for pointsItem in weeklyJobsPointsEarnedSinceLastPayday {
+        for pointsItem in weeklyJobsPointsEarnedSinceBeginningOfCurrentPayPeriod {
             weeklyJobsSubtotal += pointsItem.valuePerTap
         }
         
@@ -1003,16 +1005,13 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         ref.child("mpIncome").updateChildValues([currentUserName! : Income.currentIncomeArray[MPUser.currentUser].currentPoints])
     }
     
-    func updateFormattedDate() {
-        let formatter = DateFormatter()
-        if Calendar.current.isDateInToday(selectedDate) {
-            formatter.dateFormat = "'today'"
-        } else if Calendar.current.isDateInYesterday(selectedDate) {
-            formatter.dateFormat = "'yesterday'"
-        } else {
-            formatter.dateFormat = "EEEE"
+    func prepHabitBonusSFX() {
+        do {
+            habitBonusSound = try AVAudioPlayer(contentsOf: URL.init(fileURLWithPath: Bundle.main.path(forResource: "008732264-coin-gold", ofType: "wav")!))
+            habitBonusSound.prepareToPlay()
+        } catch {
+            print(error)
         }
-        dateLower.text = "\(formatter.string(from: selectedDate))"
     }
 }
 
