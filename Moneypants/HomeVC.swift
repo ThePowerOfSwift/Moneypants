@@ -96,6 +96,12 @@ class HomeVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UITa
 //                                     Income(user: "Flower", currentPoints: 0)]
         
         
+        // testing pay period
+//        Points.pointsArray = [Moneypants.Points(user: "Father", itemName: "feed pet / garbage", itemCategory: "daily jobs", code: "E", valuePerTap: -71, itemDate: 1511220335.44522), Moneypants.Points(user: "Mother", itemName: "feed pet / garbage (sub)", itemCategory: "daily jobs", code: "S", valuePerTap: 125, itemDate: 1511220335.44522), Moneypants.Points(user: "Father", itemName: "feed pet / garbage", itemCategory: "daily jobs", code: "C", valuePerTap: 54, itemDate: 1511306745.6326621)]
+//        
+//        Income.currentIncomeArray = [Moneypants.Income(user: "Father", currentPoints: -17), Moneypants.Income(user: "Mother", currentPoints: 125), Moneypants.Income(user: "Allan", currentPoints: 0), Moneypants.Income(user: "Sophie", currentPoints: 0), Moneypants.Income(user: "Savannah", currentPoints: 0), Moneypants.Income(user: "Flower", currentPoints: 0)]
+        
+        
         
         
         

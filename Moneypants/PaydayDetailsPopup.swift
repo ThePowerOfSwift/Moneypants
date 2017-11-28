@@ -44,8 +44,6 @@ class PaydayDetailsPopup: UIViewController, UITableViewDelegate, UITableViewData
     
     @IBAction func doneButtonTapped(_ sender: UIButton) {
         dismiss(animated: true, completion: nil)
-        
-        print(bonusAmount)
     }
     
     // table view

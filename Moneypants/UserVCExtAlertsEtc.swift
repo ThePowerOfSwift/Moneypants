@@ -114,7 +114,18 @@ extension UserVC {
         } else if Calendar.current.isDateInYesterday(selectedDate) {
             formatter.dateFormat = "'yesterday'"
         } else {
-            formatter.dateFormat = "EEEE"
+            // calculate timestamp for 6 days ago (from today)
+            // if 'selected date' is more than the calculated timestamp, change the format to be long format
+            let startOfNow = Calendar.current.startOfDay(for: Date())
+            let startOfTimeStamp = Calendar.current.startOfDay(for: selectedDate)
+            let components = Calendar.current.dateComponents([.day], from: startOfTimeStamp, to: startOfNow)
+            let day = components.day!
+            // if selected date is more than 5 days ago, show longer date format
+            if day > 5 {
+                formatter.dateFormat = "E, d MMM"
+            } else {
+                formatter.dateFormat = "EEEE"
+            }
         }
         dateLower.text = "\(formatter.string(from: selectedDate))"
     }

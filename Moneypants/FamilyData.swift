@@ -67,7 +67,7 @@ struct FamilyData {
         var currentPayday: Date!
         var nextPayday: Date!
         
-        for n in 8...14 {
+        for n in 7...13 {
             let previousDate = calendar.date(byAdding: .day, value: -n, to: today)
             // format previous date to show weekday in long format
             // if weekday matches payday, then count number of days since then and only subtotal values since then
