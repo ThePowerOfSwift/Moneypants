@@ -20,6 +20,7 @@ struct Points {
     // F = fee
     // B = bonus (for daily jobs and habits)
     // P = paid (for payday items)
+    // U = unpaid
     
     static func loadPoints(completion: @escaping () -> ()) {
         let firebaseUser = Auth.auth().currentUser

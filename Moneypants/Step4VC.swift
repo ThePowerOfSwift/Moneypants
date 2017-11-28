@@ -89,11 +89,13 @@ class Step4VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
             
             if JobsAndHabits.finalDailyJobsArray[indexPath.row].assigned != "none" {        // 1. check if array has selected job at current location...
                 if JobsAndHabits.finalDailyJobsArray[indexPath.row].assigned == currentUserName {      // 2. ...and if it is current user...
-                    cell.selectionBoxImageView.image = UIImage(named: "checkmark white")        // 3. ...then show white/green checkmark, black text, job name
+                    cell.selectionBoxImageView.image = UIImage(named: "checkmark")        // 3. ...then show white/green checkmark, black text, job name
+                    cell.selectionBoxImageView.tintColor = UIColor(red: 125/255, green: 190/255, blue: 48/255, alpha: 1.0)  // green
                     cell.jobLabel.textColor = UIColor.black
                     cell.jobLabel.text = JobsAndHabits.finalDailyJobsArray[indexPath.row].name
                 } else {
-                    cell.selectionBoxImageView.image = UIImage(named: "checkmark gray")         // 4. ...otherwise show gray checkmark, gray text, assigned name
+                    cell.selectionBoxImageView.image = UIImage(named: "checkmark")         // 4. ...otherwise show gray checkmark, gray text, assigned name
+                    cell.selectionBoxImageView.tintColor = UIColor.lightGray
                     cell.jobLabel.textColor = UIColor(white: 0.8, alpha: 1.0)
                     cell.jobLabel.text = JobsAndHabits.finalDailyJobsArray[indexPath.row].name + " (\(JobsAndHabits.finalDailyJobsArray[indexPath.row].assigned))"
                 }
@@ -111,11 +113,13 @@ class Step4VC: UIViewController, UITableViewDataSource, UITableViewDelegate {
             
             if JobsAndHabits.finalWeeklyJobsArray[indexPath.row].assigned != "none" {        // 1. check if array has selected job at current location...
                 if JobsAndHabits.finalWeeklyJobsArray[indexPath.row].assigned == currentUserName {      // 2. ...and if it is current user...
-                    cell.selectionBoxImageView.image = UIImage(named: "checkmark white")        // 3. ...then show white/green checkmark and black text
+                    cell.selectionBoxImageView.image = UIImage(named: "checkmark")        // 3. ...then show white/green checkmark and black text
+                    cell.selectionBoxImageView.tintColor = UIColor(red: 125/255, green: 190/255, blue: 48/255, alpha: 1.0)
                     cell.jobLabel.textColor = UIColor.black
                     cell.jobLabel.text = JobsAndHabits.finalWeeklyJobsArray[indexPath.row].name
                 } else {
-                    cell.selectionBoxImageView.image = UIImage(named: "checkmark gray")         // 4. ...otherwise show gray checkmark and gray text
+                    cell.selectionBoxImageView.image = UIImage(named: "checkmark")         // 4. ...otherwise show gray checkmark and gray text
+                    cell.selectionBoxImageView.tintColor = UIColor.lightGray
                     cell.jobLabel.textColor = UIColor(white: 0.8, alpha: 1.0)
                     cell.jobLabel.text = JobsAndHabits.finalWeeklyJobsArray[indexPath.row].name + " (\(JobsAndHabits.finalWeeklyJobsArray[indexPath.row].assigned))"
                 }

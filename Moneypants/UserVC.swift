@@ -35,7 +35,8 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     var weeklyJobsPointValue: Int!
     var jobAndHabitBonusValue: Int!
     var substituteFee: Int!
-    var bonusSoundAlreadyPlayed: Bool!
+//    var currentBonusSoundAlreadyPlayed: Bool!
+//    var previousBonusSoundAlreadyPlayed: Bool!
     
     var subFeeFormatted: String!
     var excusedTitle: String!
@@ -54,29 +55,22 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        habitBonusCenterConstraint.constant = -300
-        
         firebaseUser = Auth.auth().currentUser
         ref = Database.database().reference().child("users").child(firebaseUser.uid)
         
         currentUserName = MPUser.usersArray[MPUser.currentUser].firstName
         navigationItem.title = currentUserName
         
-        // -------------
-        // selected date
-        // -------------
-        
         selectedDate = Date()
         selectedDateNumber = 0
-        updateFormattedDate()
         
         tableView.delegate = self
         tableView.dataSource = self
         tableView.tableFooterView = UIView()
         
+        habitBonusCenterConstraint.constant = -300
+
         userImage.image = MPUser.usersArray[MPUser.currentUser].photo
-        
-        customizeImages()
         
         usersDailyJobs = JobsAndHabits.finalDailyJobsArray.sorted(by: { $0.order < $1.order }).filter({ return $0.assigned == currentUserName })
         usersDailyHabits = JobsAndHabits.finalDailyHabitsArray.sorted(by: { $0.order < $1.order }).filter({ return $0.assigned == currentUserName })
@@ -87,10 +81,12 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         weeklyJobsPointValue = Int((Double(FamilyData.adjustedNatlAvgYrlySpendingEntireFam) * 0.2 / 52 / Double(JobsAndHabits.finalWeeklyJobsArray.count) * 100).rounded(.up))
         jobAndHabitBonusValue = Int(Double(FamilyData.adjustedNatlAvgYrlySpendingPerKid) / 52 * 0.20 * 100)
         substituteFee = FamilyData.feeValueMultiplier / usersDailyJobs.count
-        
+    
+        customizeImages()
+        updateFormattedDate()
         checkIncome()
         prepHabitBonusSFX()
-        checkHabitBonusStatus()
+        updateProgressMeters()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -183,7 +179,8 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
             } else {
                 cell.jobHabitLabel.textColor = .lightGray
                 if currentUserCategoryItemDateArray[0].code == "C" {
-                    cell.selectionBoxImageView.image = UIImage(named: "checkmark white")
+                    cell.selectionBoxImageView.image = UIImage(named: "checkmark")
+                    cell.selectionBoxImageView.tintColor = UIColor(red: 125/255, green: 190/255, blue: 48/255, alpha: 1.0)
                 } else if currentUserCategoryItemDateArray[0].code == "X" {
                     cell.selectionBoxImageView.image = UIImage(named: "X red")
                 } else {
@@ -219,7 +216,8 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
             } else {
                 cell.jobHabitLabel.textColor = .lightGray
                 if currentUserCategoryItemDateArray[0].code == "C" {
-                    cell.selectionBoxImageView.image = UIImage(named: "checkmark white")
+                    cell.selectionBoxImageView.image = UIImage(named: "checkmark")
+                    cell.selectionBoxImageView.tintColor = UIColor(red: 125/255, green: 190/255, blue: 48/255, alpha: 1.0)
                 } else if currentUserCategoryItemDateArray[0].code == "N" {
                     cell.selectionBoxImageView.image = UIImage(named: "X gray")
                 }
@@ -235,19 +233,42 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                 $0.itemCategory == "weekly jobs" &&
                 $0.itemName == usersWeeklyJobs?[indexPath.row].name &&
                 Calendar.current.isDate(Date(timeIntervalSince1970: $0.itemDate), inSameDayAs: selectedDate) })
-                
+            
             cell.jobHabitLabel.text = usersWeeklyJobs?[indexPath.row].name
             cell.pointsLabel.text = "\(weeklyJobsPointValue ?? 0)"
             cell.pointsLabel.textColor = .lightGray
             cell.selectionBoxLabel.text = ""
             cell.accessoryType = .none
+            
             if currentUserCategoryItemDateArray.isEmpty {
-                cell.selectionBoxImageView.image = UIImage(named: "blank")
-                cell.jobHabitLabel.textColor = .black
+                // check to see if the week has the job completed
+                let previousWeeklyJobsIsoArray = Points.pointsArray.filter({ $0.user == currentUserName &&
+                    $0.itemCategory == "weekly jobs" &&
+                    $0.itemName == usersWeeklyJobs[indexPath.row].name &&
+                    $0.itemDate >= FamilyData.calculatePayday().previous.timeIntervalSince1970 &&
+                    $0.itemDate < FamilyData.calculatePayday().current.timeIntervalSince1970 })
+                
+                let currentWeeklyJobsIsoArray = Points.pointsArray.filter({ $0.user == currentUserName &&
+                    $0.itemCategory == "weekly jobs" &&
+                    $0.itemName == usersWeeklyJobs[indexPath.row].name &&
+                    $0.itemDate >= FamilyData.calculatePayday().current.timeIntervalSince1970 })
+                
+                // if current pay period already has the job done, mark all other days of the week with gray checkmark
+                if selectedDate.timeIntervalSince1970 >= FamilyData.calculatePayday().previous.timeIntervalSince1970 && selectedDate.timeIntervalSince1970 < FamilyData.calculatePayday().current.timeIntervalSince1970 && !previousWeeklyJobsIsoArray.isEmpty {
+                    cell.selectionBoxImageView.image = UIImage(named: "checkmark")
+                    cell.selectionBoxImageView.tintColor = .lightGray
+                } else if selectedDate.timeIntervalSince1970 >= FamilyData.calculatePayday().current.timeIntervalSince1970 && !currentWeeklyJobsIsoArray.isEmpty {
+                    cell.selectionBoxImageView.image = UIImage(named: "checkmark")
+                    cell.selectionBoxImageView.tintColor = .lightGray
+                } else {
+                    cell.selectionBoxImageView.image = UIImage(named: "blank")
+                    cell.jobHabitLabel.textColor = .black
+                }
             } else {
                 cell.jobHabitLabel.textColor = .lightGray
                 if currentUserCategoryItemDateArray[0].code == "C" {
-                    cell.selectionBoxImageView.image = UIImage(named: "checkmark white")
+                    cell.selectionBoxImageView.image = UIImage(named: "checkmark")
+                    cell.selectionBoxImageView.tintColor = UIColor(red: 125/255, green: 190/255, blue: 48/255, alpha: 1.0)  // green
                 } else if currentUserCategoryItemDateArray[0].code == "X" {
                     cell.selectionBoxImageView.image = UIImage(named: "X red")
                 } else {
@@ -263,25 +284,11 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
             let subJobsArray = Points.pointsArray.filter({ $0.user == currentUserName &&
                 $0.code == "S" &&
                 Calendar.current.isDate(Date(timeIntervalSince1970: $0.itemDate), inSameDayAs: selectedDate) })
-            
-            
-            
-            
-            
-            
-            print(subJobsArray)
-            
-            
-            
-            
-            
-            
-            
-            
             cell.jobHabitLabel.text = subJobsArray[indexPath.row].itemName
             cell.jobHabitLabel.textColor = .lightGray
             cell.pointsLabel.text = "\(subJobsArray[indexPath.row].valuePerTap)"
-            cell.selectionBoxImageView.image = UIImage(named: "checkmark white")
+            cell.selectionBoxImageView.image = UIImage(named: "checkmark")
+            cell.selectionBoxImageView.tintColor = UIColor(red: 125/255, green: 190/255, blue: 48/255, alpha: 1.0)
             cell.selectionBoxLabel.text = ""
             cell.accessoryType = .none
             
@@ -368,9 +375,21 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
             } else {
                 tableView.deselectRow(at: indexPath, animated: true)
             }
+            
             // only show flyover if user has earned 75% of their habit points AND the flyover hasn't shown up yet.
-            if pointsEarnedInCurrentPayPeriod().habits >= Int(Double(jobAndHabitBonusValue) * 0.75) && !bonusSoundAlreadyPlayed {
-                habitBonusEarned()
+            if selectedDate.timeIntervalSince1970 >= FamilyData.calculatePayday().previous.timeIntervalSince1970 && selectedDate.timeIntervalSince1970 < FamilyData.calculatePayday().current.timeIntervalSince1970 {
+                // calculate habits for previous pay period
+                if pointsEarnedInPayPeriod(previousOrCurrent: "previous").habits >= Int(Double(jobAndHabitBonusValue) * 0.75) {
+                    habitBonusEarned()
+                    displayHabitBonusFlyover()
+                }
+                
+            } else if selectedDate.timeIntervalSince1970 >= FamilyData.calculatePayday().current.timeIntervalSince1970 {
+                // calculate habits for current pay period
+                if pointsEarnedInPayPeriod(previousOrCurrent: "current").habits >= Int(Double(jobAndHabitBonusValue) * 0.75) {
+                    habitBonusEarned()
+                    displayHabitBonusFlyover()
+                }
             }
         }
         
@@ -477,7 +496,7 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
             
             unexcusedTitle = "Unexcused From Job"
             unexcusedMessage = "\(self.currentUserName!) was NOT excused from doing the job '\(self.usersDailyJobs[indexPath.row].name)'.\n\n\(MPUser.gender(user: MPUser.currentUser).he_she) will LOSE \(MPUser.gender(user: MPUser.currentUser).his_her.lowercased()) job bonus, PLUS \(MPUser.gender(user: MPUser.currentUser).he_she.lowercased()) will be charged a $\(subFeeFormatted!) substitute fee."
-
+            
             // get an array of this user in this category for this item on this day (should be single item)
             // this code recalculates each time a row is selected
             let isoArrayForItem = Points.pointsArray.filter({ $0.user == self.currentUserName &&
@@ -551,12 +570,13 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
             
             return [resetAction, unexcusedAction, excusedAction]
             
-        } else if indexPath.section == 1 {
-            
-            // ------------
-            // daily habits
-            // ------------
-            
+        }
+        
+        // ------------
+        // daily habits
+        // ------------
+        
+        if indexPath.section == 1 {
             // get an array of this user in this category for this item on this day (should be single item)
             let isoArrayForItem = Points.pointsArray.filter({ $0.user == self.currentUserName &&
                 $0.itemCategory == "daily habits" &&
@@ -571,15 +591,52 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                 if isoArrayForItem.isEmpty {
                     // if array is empty, create new array item with "N" and value of "0"
                     self.createZeroValueItemForDailyHabit(indexPath: indexPath)
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    print("1. need to check if user has dropped below 75% habit threshold")
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
                 } else {
                     if isoArrayForItem.first?.code == "C" {
                         self.updateItemInArrayAndUpdateIncomeArrayAndLabel(isoArray: isoArrayForItem, indexPath: indexPath)
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        print("2. need to check if user has dropped below the 75% threshold")
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
                     } else if isoArrayForItem.first?.code == "N" {
                         self.alertN(indexPath: indexPath, deselectRow: false, jobOrHabit: "habit")
                     }
                 }
             })
-        
+            
             // ------------
             // reset action
             // ------------
@@ -592,23 +649,56 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                 } else {
                     if isoArrayForItem.first?.code == "N" {
                         self.getParentalPasscodeThenResetItemToZero(isoArray: isoArrayForItem, indexPath: indexPath)
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        print("3. need to check if user has dropped below 75% threshold")
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
                     } else {
                         self.removeSelectedItemFromPointsArrayAndUpdateIncomeArray(indexPath: indexPath, category: "daily habits", categoryArray: self.usersDailyHabits)
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        print("4. need to check if user has dropped below the 75% threshold")
+                        print(self.pointsEarnedInPayPeriod(previousOrCurrent: "previous").habits)
+                        
+                        
+                        
+                        
+                        
                     }
                 }
             })
-            
+        
             notDoneAction.backgroundColor = UIColor(patternImage: UIImage(named: "not done")!)
             resetAction.backgroundColor = UIColor(patternImage: UIImage(named: "reset")!)
             
             return [resetAction, notDoneAction]
-            
-        } else {
-
-            // -----------
-            // weekly jobs
-            // -----------
-            
+        }
+        
+        // -----------
+        // weekly jobs
+        // -----------
+        
+        if indexPath.section == 2 {
             // get an array of this user in this category for this item on this day (should be single item)
             let isoArrayForItem = Points.pointsArray.filter({ $0.user == self.currentUserName &&
                 $0.itemCategory == "weekly jobs" &&
@@ -651,6 +741,8 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
             
             return [resetAction, substituteAction]
         }
+        let nothing = UITableViewRowAction()
+        return [nothing]
     }
     
     // ----------
@@ -777,33 +869,6 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                     tableView.setEditing(false, animated: true)
                     tableView.reloadRows(at: [indexPath], with: .automatic)
                 }
-            }
-        }
-    }
-    
-    func updateItemInArrayAndUpdateIncomeArrayAndLabel(isoArray: [Points], indexPath: IndexPath) {
-        // if array is not empty, subtract "value per tap" from income array (at user's index) and change item code to "N" and "value per tap" to zero
-        for (pointsIndex, pointsItem) in Points.pointsArray.enumerated() {
-            // if PointsArray item matches the isoArray item, then use the pointsarray index to update that item in the points array
-            if pointsItem.user == self.currentUserName &&
-                pointsItem.itemCategory == "daily habits" &&
-                pointsItem.itemName == isoArray.first?.itemName &&
-                pointsItem.itemDate == isoArray.first?.itemDate {
-                
-                // update item in points array
-                Points.pointsArray[pointsIndex].code = "N"
-                Points.pointsArray[pointsIndex].valuePerTap = 0
-                
-                // update user's income array & income label
-                for (incomeIndex, incomeItem) in Income.currentIncomeArray.enumerated() {
-                    if incomeItem.user == self.currentUserName {
-                        Income.currentIncomeArray[incomeIndex].currentPoints -= pointsItem.valuePerTap
-                        incomeLabel.text = "$\(String(format: "%.2f", Double(Income.currentIncomeArray[incomeIndex].currentPoints) / 100))"
-                        updateProgressMeterHeights()
-                    }
-                }
-                tableView.setEditing(false, animated: true)
-                tableView.reloadRows(at: [indexPath], with: .automatic)
             }
         }
     }
@@ -948,8 +1013,8 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     func updateProgressMeterHeights() {
         let potentialWeeklyEarnings = FamilyData.adjustedNatlAvgYrlySpendingPerKid * 100 / 52
         
-        habitProgressMeterHeight.constant = habitTotalProgressView.bounds.height * CGFloat(pointsEarnedInCurrentPayPeriod().habits) / CGFloat(jobAndHabitBonusValue)
-        totalProgressMeterHeight.constant = habitTotalProgressView.bounds.height * CGFloat(pointsEarnedInCurrentPayPeriod().total) / CGFloat(potentialWeeklyEarnings)
+        habitProgressMeterHeight.constant = habitTotalProgressView.bounds.height * CGFloat(pointsEarnedInPayPeriod(previousOrCurrent: "current").habits) / CGFloat(jobAndHabitBonusValue)
+        totalProgressMeterHeight.constant = habitTotalProgressView.bounds.height * CGFloat(pointsEarnedInPayPeriod(previousOrCurrent: "current").total) / CGFloat(potentialWeeklyEarnings)
             
         UIView.animate(withDuration: 0.3) {
             
@@ -958,32 +1023,52 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         }
     }
     
-    func pointsEarnedInCurrentPayPeriod() -> (dailyJobs: Int, habits: Int, weeklyJobs: Int, total: Int) {
+    func pointsEarnedInPayPeriod(previousOrCurrent: String) -> (dailyJobs: Int, habits: Int, weeklyJobs: Int, total: Int) {
+        var isoArrayForPayPeriod: [Points]!
+        
+        let previous = Points.pointsArray.filter({ $0.user == currentUserName &&
+            $0.itemDate >= FamilyData.calculatePayday().previous.timeIntervalSince1970 &&
+            $0.itemDate < FamilyData.calculatePayday().current.timeIntervalSince1970 })
+        
+        let current = Points.pointsArray.filter({ $0.user == currentUserName &&
+            $0.itemDate >= FamilyData.calculatePayday().current.timeIntervalSince1970 })
+        
+        if previousOrCurrent == "previous" {
+            isoArrayForPayPeriod = previous
+        } else {
+            isoArrayForPayPeriod = current
+        }
+        
         // calculate how much user has earned for all jobs and habits in current pay period
         // create array to isolate current user's points for all days that are in current pay period
-        let totalPointsEarnedSinceBeginningOfCurrentPayPeriod = Points.pointsArray.filter({ $0.user == currentUserName && $0.itemDate >= FamilyData.calculatePayday().current.timeIntervalSince1970 })
-        var pointsSubtotal: Int = 0
-        for pointsItem in totalPointsEarnedSinceBeginningOfCurrentPayPeriod {
-            pointsSubtotal += pointsItem.valuePerTap
-        }
+        let dailyJobsSubtotal = isoArrayForPayPeriod.filter({ $0.itemCategory == "daily jobs" }).reduce(0, { $0 + $1.valuePerTap })
+        let habitsSubtotal = isoArrayForPayPeriod.filter({ $0.itemCategory == "daily habits" }).reduce(0, { $0 + $1.valuePerTap })
+        let weeklyJobsSubtotal = isoArrayForPayPeriod.filter({ $0.itemCategory == "weekly jobs" }).reduce(0, { $0 + $1.valuePerTap })
+        let pointsSubtotal = isoArrayForPayPeriod.reduce(0, { $0 + $1.valuePerTap })
         
-        let habitPointsEarnedSinceBeginningOfCurrentPayPeriod = Points.pointsArray.filter({ $0.user == currentUserName && $0.itemCategory == "daily habits" && $0.code == "C" && $0.itemDate >= FamilyData.calculatePayday().current.timeIntervalSince1970 })
-        var habitsSubtotal: Int = 0
-        for pointsItem in habitPointsEarnedSinceBeginningOfCurrentPayPeriod {
-            habitsSubtotal += pointsItem.valuePerTap
-        }
+//        let totalPointsEarnedInSelectedPayPeriod = isoArrayForPayPeriod
+//        var pointsSubtotal: Int = 0
+//        for pointsItem in totalPointsEarnedInSelectedPayPeriod! {
+//            pointsSubtotal += pointsItem.valuePerTap
+//        }
         
-        let dailyJobsPointsEarnedSinceBeginningOfCurrentPayPeriod = Points.pointsArray.filter({ $0.user == currentUserName && $0.itemCategory == "daily jobs" && $0.itemDate >= FamilyData.calculatePayday().current.timeIntervalSince1970 })
-        var dailyJobsSubtotal: Int = 0
-        for pointsItem in dailyJobsPointsEarnedSinceBeginningOfCurrentPayPeriod {
-            dailyJobsSubtotal += pointsItem.valuePerTap
-        }
-        
-        let weeklyJobsPointsEarnedSinceBeginningOfCurrentPayPeriod = Points.pointsArray.filter({ $0.user == currentUserName && $0.itemCategory == "weekly jobs" && $0.itemDate >= FamilyData.calculatePayday().current.timeIntervalSince1970 })
-        var weeklyJobsSubtotal: Int = 0
-        for pointsItem in weeklyJobsPointsEarnedSinceBeginningOfCurrentPayPeriod {
-            weeklyJobsSubtotal += pointsItem.valuePerTap
-        }
+//        let habitPointsEarnedInSelectedPayPeriod = isoArrayForPayPeriod.filter({ $0.itemCategory == "daily habits" })
+//        var habitsSubtotal: Int = 0
+//        for pointsItem in habitPointsEarnedInSelectedPayPeriod {
+//            habitsSubtotal += pointsItem.valuePerTap
+//        }
+//        
+//        let dailyJobsPointsEarnedInSelectedPayPeriod = isoArrayForPayPeriod.filter({ $0.itemCategory == "daily jobs" })
+//        var dailyJobsSubtotal: Int = 0
+//        for pointsItem in dailyJobsPointsEarnedInSelectedPayPeriod {
+//            dailyJobsSubtotal += pointsItem.valuePerTap
+//        }
+//        
+//        let weeklyJobsPointsEarnedInSelectedPayPeriod = isoArrayForPayPeriod.filter({ $0.itemCategory == "weekly jobs" })
+//        var weeklyJobsSubtotal: Int = 0
+//        for pointsItem in weeklyJobsPointsEarnedInSelectedPayPeriod {
+//            weeklyJobsSubtotal += pointsItem.valuePerTap
+//        }
         
         return (dailyJobsSubtotal, habitsSubtotal, weeklyJobsSubtotal, pointsSubtotal)
     }

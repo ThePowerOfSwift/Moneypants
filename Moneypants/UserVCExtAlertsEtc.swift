@@ -108,25 +108,43 @@ extension UserVC {
     }
     
     func updateFormattedDate() {
+        // format text color (if user is in current pay period, text color is black and label shows full day name.
+        // if user is in previous pay period, text color is gray and shows day of month and short day name.
         let formatter = DateFormatter()
         if Calendar.current.isDateInToday(selectedDate) {
             formatter.dateFormat = "'today'"
+            dateLower.textColor = .black
         } else if Calendar.current.isDateInYesterday(selectedDate) {
             formatter.dateFormat = "'yesterday'"
-        } else {
-            // calculate timestamp for 6 days ago (from today)
-            // if 'selected date' is more than the calculated timestamp, change the format to be long format
-            let startOfNow = Calendar.current.startOfDay(for: Date())
-            let startOfTimeStamp = Calendar.current.startOfDay(for: selectedDate)
-            let components = Calendar.current.dateComponents([.day], from: startOfTimeStamp, to: startOfNow)
-            let day = components.day!
-            // if selected date is more than 5 days ago, show longer date format
-            if day > 5 {
-                formatter.dateFormat = "E, d MMM"
+            if selectedDate.timeIntervalSince1970 >= FamilyData.calculatePayday().current.timeIntervalSince1970 {
+                dateLower.textColor = .black
             } else {
-                formatter.dateFormat = "EEEE"
+                dateLower.textColor = .lightGray
             }
+        } else if selectedDate.timeIntervalSince1970 >= FamilyData.calculatePayday().current.timeIntervalSince1970 {
+            formatter.dateFormat = "EEEE"
+            dateLower.textColor = .black
+        } else {
+            formatter.dateFormat = "E, d MMM"
+            dateLower.textColor = .lightGray
         }
+        
+        
+//        } else {
+//            // calculate timestamp for 6 days ago (from today)
+//            // if 'selected date' is more than the calculated timestamp, change the format to be long format
+//            let startOfNow = Calendar.current.startOfDay(for: Date())
+//            let startOfTimeStamp = Calendar.current.startOfDay(for: selectedDate)
+//            let components = Calendar.current.dateComponents([.day], from: startOfTimeStamp, to: startOfNow)
+//            let day = components.day!
+//            // if selected date is more than 5 days ago, show longer date format
+//            if day > 6 {
+//                formatter.dateFormat = "E, d MMM"
+//            } else {
+//                formatter.dateFormat = "EEEE"
+//            }
+//        }
+        
         dateLower.text = "\(formatter.string(from: selectedDate))"
     }
     

@@ -104,9 +104,10 @@ extension UserVC {
                                      valuePerTap: jobAndHabitBonusValue,
                                      itemDate: selectedDate.timeIntervalSince1970)
         
+        // add bonus to local array
         Points.pointsArray.append(pointsArrayItem)
         
-        // add item to Firebase
+        // add bonus to Firebase
         ref.child("points").childByAutoId().setValue(["user" : currentUserName,
                                                       "itemName" : "habit bonus",
                                                       "itemCategory" : "daily habits",
@@ -127,22 +128,94 @@ extension UserVC {
         updateUserIncomeOnFirebase()
         
         habitProgressMeterView.backgroundColor = UIColor(red: 125/255, green: 190/255, blue: 48/255, alpha: 1.0)
-        
-        displayHabitBonusFlyover()
-        bonusSoundAlreadyPlayed = true
     }
     
-    func checkHabitBonusStatus() {
+    func updateProgressMeters() {
         // update progress meters with current data
         let potentialWeeklyEarnings = FamilyData.adjustedNatlAvgYrlySpendingPerKid * 100 / 52
-        habitProgressMeterHeight.constant = habitTotalProgressView.bounds.height * CGFloat(pointsEarnedInCurrentPayPeriod().habits) / CGFloat(jobAndHabitBonusValue)
-        totalProgressMeterHeight.constant = habitTotalProgressView.bounds.height * CGFloat(pointsEarnedInCurrentPayPeriod().total) / CGFloat(potentialWeeklyEarnings)
-        
-        if pointsEarnedInCurrentPayPeriod().habits >= Int(Double(jobAndHabitBonusValue) * 0.75) {
-            bonusSoundAlreadyPlayed = true
+        habitProgressMeterHeight.constant = habitTotalProgressView.bounds.height * CGFloat(pointsEarnedInPayPeriod(previousOrCurrent: "current").habits) / CGFloat(jobAndHabitBonusValue)
+        totalProgressMeterHeight.constant = habitTotalProgressView.bounds.height * CGFloat(pointsEarnedInPayPeriod(previousOrCurrent: "current").total) / CGFloat(potentialWeeklyEarnings)
+    
+        if pointsEarnedInPayPeriod(previousOrCurrent: "current").habits >= Int(Double(jobAndHabitBonusValue) * 0.75) {
+//            currentBonusSoundAlreadyPlayed = true
             habitProgressMeterView.backgroundColor = UIColor(red: 125/255, green: 190/255, blue: 48/255, alpha: 1.0) // green
         } else {
-            bonusSoundAlreadyPlayed = false
+            habitProgressMeterView.backgroundColor = UIColor(red: 204/255, green: 0/255, blue: 102/255, alpha: 1.0) // purple
+//            currentBonusSoundAlreadyPlayed = false
+        }
+        
+        if pointsEarnedInPayPeriod(previousOrCurrent: "previous").habits >= Int(Double(jobAndHabitBonusValue) * 0.75) {
+//            previousBonusSoundAlreadyPlayed = true
+            habitProgressMeterView.backgroundColor = UIColor(red: 125/255, green: 190/255, blue: 48/255, alpha: 1.0) // green
+        } else {
+            habitProgressMeterView.backgroundColor = UIColor(red: 204/255, green: 0/255, blue: 102/255, alpha: 1.0) // purple
+//            previousBonusSoundAlreadyPlayed = false
+        }
+    }
+    
+    func updateItemInArrayAndUpdateIncomeArrayAndLabel(isoArray: [Points], indexPath: IndexPath) {
+        // if array is not empty, subtract "value per tap" from income array (at user's index) and change item code to "N" and "value per tap" to zero
+        for (pointsIndex, pointsItem) in Points.pointsArray.enumerated() {
+            // if PointsArray item matches the isoArray item, then use the pointsarray index to update that item in the points array
+            if pointsItem.user == self.currentUserName &&
+                pointsItem.itemCategory == "daily habits" &&
+                pointsItem.itemName == isoArray.first?.itemName &&
+                pointsItem.itemDate == isoArray.first?.itemDate {
+                
+                // update item in points array
+                Points.pointsArray[pointsIndex].code = "N"
+                Points.pointsArray[pointsIndex].valuePerTap = 0
+                
+                // update user's income array & income label
+                for (incomeIndex, incomeItem) in Income.currentIncomeArray.enumerated() {
+                    if incomeItem.user == self.currentUserName {
+                        Income.currentIncomeArray[incomeIndex].currentPoints -= pointsItem.valuePerTap
+                        incomeLabel.text = "$\(String(format: "%.2f", Double(Income.currentIncomeArray[incomeIndex].currentPoints) / 100))"
+                        updateProgressMeterHeights()
+                    }
+                }
+                tableView.setEditing(false, animated: true)
+                tableView.reloadRows(at: [indexPath], with: .automatic)
+            }
+        }
+    }
+    
+    func updateHabitBonus() {
+        // if user hasn't yet earned the 75% for the habit bonus...
+        if pointsEarnedInPayPeriod(previousOrCurrent: "current").habits < Int(Double(jobAndHabitBonusValue) * 0.75) {
+            // remove the bonus from the array (if it exists)
+            if let index = Points.pointsArray.index(where: { $0.user == currentUserName &&
+                $0.itemCategory == "daily habits" &&
+                $0.code == "B" &&
+                $0.itemDate >= FamilyData.calculatePayday().current.timeIntervalSince1970 }) {
+                
+                // remove bonus amount from Income array first before deleting item from array
+                print(Income.currentIncomeArray[MPUser.currentUser].currentPoints)
+                print(Points.pointsArray[index].valuePerTap)
+
+                Income.currentIncomeArray[MPUser.currentUser].currentPoints -= Points.pointsArray[index].valuePerTap
+                
+                // then remove item from array
+                Points.pointsArray.remove(at: index)
+            }
+            
+//            for (pointsIndex, pointsItem) in Points.pointsArray.enumerated() {
+//                if pointsItem.user == currentUserName && pointsItem.itemCategory == "daily habits" && pointsItem.code == "B" {
+//                    
+//                    // update item in points array
+//                    // or do I just delete it?
+//                    Points.pointsArray[pointsIndex].valuePerTap = 0
+//                }
+//                
+//                // update user's income array & income label
+//                for (incomeIndex, incomeItem) in Income.currentIncomeArray.enumerated() {
+//                    if incomeItem.user == self.currentUserName {
+//                        Income.currentIncomeArray[incomeIndex].currentPoints -= pointsItem.valuePerTap
+//                        incomeLabel.text = "$\(String(format: "%.2f", Double(Income.currentIncomeArray[incomeIndex].currentPoints) / 100))"
+//                        updateProgressMeterHeights()
+//                    }
+//                }
+//            }
         }
     }
 }
