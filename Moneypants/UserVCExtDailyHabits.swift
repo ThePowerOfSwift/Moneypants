@@ -97,23 +97,38 @@ extension UserVC {
     func habitBonusEarned() {
         // refresh selectedDate variable with selected time
         selectedDate = Calendar.current.date(byAdding: .day, value: selectedDateNumber, to: Date())
-        let pointsArrayItem = Points(user: currentUserName,
-                                     itemName: "habit bonus",
-                                     itemCategory: "daily habits",
-                                     code: "B",
-                                     valuePerTap: jobAndHabitBonusValue,
-                                     itemDate: selectedDate.timeIntervalSince1970)
         
-        // add bonus to local array
-        Points.pointsArray.append(pointsArrayItem)
+        // if selected habit is in current pay period, update habit bonus for current pay period
+        if self.selectedDate.timeIntervalSince1970 >= FamilyData.calculatePayday().current.timeIntervalSince1970 {
+            if let index = Points.pointsArray.index(where: { $0.user == currentUserName &&
+                $0.itemCategory == "daily habits" &&
+                $0.code == "B" &&
+                $0.itemDate >= FamilyData.calculatePayday().current.timeIntervalSince1970 }) {
+                
+                // update array at index
+                Points.pointsArray[index].valuePerTap = jobAndHabitBonusValue
+                Points.pointsArray[index].itemDate = selectedDate.timeIntervalSince1970
+            }
+        } else if self.selectedDate.timeIntervalSince1970 >= FamilyData.calculatePayday().previous.timeIntervalSince1970 && self.selectedDate.timeIntervalSince1970 < FamilyData.calculatePayday().current.timeIntervalSince1970 {
+            if let index = Points.pointsArray.index(where: { $0.user == currentUserName &&
+                $0.itemCategory == "daily habits" &&
+                $0.code == "B" &&
+                $0.itemDate >= FamilyData.calculatePayday().previous.timeIntervalSince1970 &&
+                $0.itemDate < FamilyData.calculatePayday().current.timeIntervalSince1970 }) {
+                
+                // update array at index
+                Points.pointsArray[index].valuePerTap = jobAndHabitBonusValue
+                Points.pointsArray[index].itemDate = selectedDate.timeIntervalSince1970
+            }
+        }
         
-        // add bonus to Firebase
-        ref.child("points").childByAutoId().setValue(["user" : currentUserName,
-                                                      "itemName" : "habit bonus",
-                                                      "itemCategory" : "daily habits",
-                                                      "code" : "B",
-                                                      "valuePerTap" : jobAndHabitBonusValue,
-                                                      "itemDate" : selectedDate.timeIntervalSince1970])
+        // update bonus on Firebase (this code is wrong: it is for adding, not updating Firebase)
+//        ref.child("points").childByAutoId().setValue(["user" : currentUserName,
+//                                                      "itemName" : "habit bonus",
+//                                                      "itemCategory" : "daily habits",
+//                                                      "code" : "B",
+//                                                      "valuePerTap" : jobAndHabitBonusValue,
+//                                                      "itemDate" : selectedDate.timeIntervalSince1970])
         
         // update user's income array & income label
         for (index, item) in Income.currentIncomeArray.enumerated() {
@@ -240,7 +255,7 @@ extension UserVC {
         }
     }
     
-    func checkHabitsBonusValue() {
+    func checkHabitsDefaultBonusValue() {
         let currentPayPeriodBonusIsoArray = Points.pointsArray.filter({ $0.user == currentUserName &&
             $0.itemCategory == "daily habits" &&
             $0.code == "B" &&
@@ -256,12 +271,14 @@ extension UserVC {
         if selectedDate.timeIntervalSince1970 >= FamilyData.calculatePayday().current.timeIntervalSince1970 {
             if currentPayPeriodBonusIsoArray.isEmpty {
                 createZeroValueHabitBonusItem()
+                print("zero bonus item created")
             } else {
                 print("current pay period already has bonus")
             }
         } else if selectedDate.timeIntervalSince1970 >= FamilyData.calculatePayday().previous.timeIntervalSince1970 && selectedDate.timeIntervalSince1970 < FamilyData.calculatePayday().current.timeIntervalSince1970 {
             if previousPayPeriodBonusIsoArray.isEmpty {
                 createZeroValueHabitBonusItem()
+                print("zero bonus item created")
             } else {
                 print("previous pay period already has bonus")  // not sure when this code would run...
             }
@@ -288,5 +305,99 @@ extension UserVC {
                                                       "code" : "B",
                                                       "valuePerTap" : 0,
                                                       "itemDate" : selectedDate.timeIntervalSince1970])
+    }
+    
+    func checkIfUserStillEarnedBonusAndUpdateAccordingly() {
+        // 1. need to check if user has dropped below 75% threshold
+        // SO: get total habits points earned in pay period
+        // get habit bonus value
+        // subtract bonus value from habit points (bonus could be zero, and wouldn't change anything)
+        // then compare if that amount is less than the 75% threshold
+        // if so, change the bonus value for that pay period to zero and update user's income
+        // if not, don't do anything
+        
+        // ------------------
+        // current pay period
+        // ------------------
+        
+        let currentPayPeriodBonusIsoArray = Points.pointsArray.filter({ $0.user == self.currentUserName &&
+            $0.itemCategory == "daily habits" &&
+            $0.code == "B" &&
+            $0.itemDate >= FamilyData.calculatePayday().current.timeIntervalSince1970 })
+        
+        // check to see if selected date is in current pay period
+        if self.selectedDate.timeIntervalSince1970 >= FamilyData.calculatePayday().current.timeIntervalSince1970 {
+            let pointsEarned = self.pointsEarnedInPayPeriod(previousOrCurrent: "current").habits
+            let bonusValue = currentPayPeriodBonusIsoArray.first?.valuePerTap
+            let the75PercentMark = Int(Double(self.jobAndHabitBonusValue) * 0.75)
+            
+            if pointsEarned - bonusValue! < the75PercentMark {
+                
+                // find index of bonus in previous pay period
+                if let index = Points.pointsArray.index(where: { $0.user == self.currentUserName &&
+                    $0.itemCategory == "daily habits" &&
+                    $0.code == "B" &&
+                    $0.itemDate >= FamilyData.calculatePayday().current.timeIntervalSince1970 }) {
+                    
+                    // update array at index
+                    Points.pointsArray[index].valuePerTap = 0
+                    Points.pointsArray[index].itemDate = self.selectedDate.timeIntervalSince1970
+                    
+                    // update user's income array & income label
+                    for (incomeIndex, incomeItem) in Income.currentIncomeArray.enumerated() {
+                        if incomeItem.user == self.currentUserName {
+                            Income.currentIncomeArray[incomeIndex].currentPoints -= bonusValue!
+                            self.incomeLabel.text = "$\(String(format: "%.2f", Double(Income.currentIncomeArray[incomeIndex].currentPoints) / 100))"
+                            self.updateProgressMeterHeights()
+                        }
+                    }
+                }
+            } else {
+                // do nothing b/c user's habit total is still above the 75% threshold
+            }
+        }
+        
+        // -------------------
+        // previous pay period
+        // -------------------
+        
+        let previousPayPeriodBonusIsoArray = Points.pointsArray.filter({ $0.user == self.currentUserName &&
+            $0.itemCategory == "daily habits" &&
+            $0.code == "B" &&
+            $0.itemDate >= FamilyData.calculatePayday().previous.timeIntervalSince1970 &&
+            $0.itemDate < FamilyData.calculatePayday().current.timeIntervalSince1970 })
+        
+        // check to see if selected date is in previous pay period
+        if self.selectedDate.timeIntervalSince1970 >= FamilyData.calculatePayday().previous.timeIntervalSince1970 && self.selectedDate.timeIntervalSince1970 < FamilyData.calculatePayday().current.timeIntervalSince1970 {
+            let pointsEarned = self.pointsEarnedInPayPeriod(previousOrCurrent: "previous").habits
+            let bonusValue = previousPayPeriodBonusIsoArray.first?.valuePerTap
+            let the75PercentMark = Int(Double(self.jobAndHabitBonusValue) * 0.75)
+            
+            if pointsEarned - bonusValue! < the75PercentMark {
+                
+                // find index of bonus in previous pay period
+                if let index = Points.pointsArray.index(where: { $0.user == self.currentUserName &&
+                    $0.itemCategory == "daily habits" &&
+                    $0.code == "B" &&
+                    $0.itemDate >= FamilyData.calculatePayday().previous.timeIntervalSince1970 &&
+                    $0.itemDate < FamilyData.calculatePayday().current.timeIntervalSince1970 }) {
+                    
+                    // update array at index
+                    Points.pointsArray[index].valuePerTap = 0
+                    Points.pointsArray[index].itemDate = self.selectedDate.timeIntervalSince1970
+                    
+                    // update user's income array & income label
+                    for (incomeIndex, incomeItem) in Income.currentIncomeArray.enumerated() {
+                        if incomeItem.user == self.currentUserName {
+                            Income.currentIncomeArray[incomeIndex].currentPoints -= bonusValue!
+                            self.incomeLabel.text = "$\(String(format: "%.2f", Double(Income.currentIncomeArray[incomeIndex].currentPoints) / 100))"
+                            self.updateProgressMeterHeights()
+                        }
+                    }
+                }
+            } else {
+                // do nothing b/c user's habit total is still above the 75% threshold
+            }
+        }
     }
 }

@@ -84,7 +84,7 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
         customizeImages()
         updateFormattedDate()
-        checkHabitsBonusValue()
+        checkHabitsDefaultBonusValue()
         checkIncome()
         prepHabitBonusSFX()
         updateProgressMeters()
@@ -378,18 +378,40 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
             }
             
             // only show flyover if user has earned 75% of their habit points AND the flyover hasn't shown up yet.
+            // previous pay period
+            let bonusIsoArray = Points.pointsArray.filter({ $0.user == currentUserName &&
+                $0.itemCategory == "daily habits" &&
+                $0.code == "B" &&
+                selectedDate.timeIntervalSince1970 >= FamilyData.calculatePayday().previous.timeIntervalSince1970 &&
+                selectedDate.timeIntervalSince1970 < FamilyData.calculatePayday().current.timeIntervalSince1970 })
+            
             if selectedDate.timeIntervalSince1970 >= FamilyData.calculatePayday().previous.timeIntervalSince1970 && selectedDate.timeIntervalSince1970 < FamilyData.calculatePayday().current.timeIntervalSince1970 {
                 // calculate habits for previous pay period
                 if pointsEarnedInPayPeriod(previousOrCurrent: "previous").habits >= Int(Double(jobAndHabitBonusValue) * 0.75) {
-                    habitBonusEarned()
-                    displayHabitBonusFlyover()
+                    if bonusIsoArray.first?.valuePerTap == 0 {
+                        habitBonusEarned()
+                        displayHabitBonusFlyover()
+                    } else {
+//                        print("do nothing b/c user already has bonus")
+                    }
                 }
-                
-            } else if selectedDate.timeIntervalSince1970 >= FamilyData.calculatePayday().current.timeIntervalSince1970 {
+            }
+        
+            // current pay period
+            if selectedDate.timeIntervalSince1970 >= FamilyData.calculatePayday().current.timeIntervalSince1970 {
                 // calculate habits for current pay period
+                let bonusIsoArray = Points.pointsArray.filter({ $0.user == currentUserName &&
+                    $0.itemCategory == "daily habits" &&
+                    $0.code == "B" &&
+                    selectedDate.timeIntervalSince1970 >= FamilyData.calculatePayday().current.timeIntervalSince1970 })
+                
                 if pointsEarnedInPayPeriod(previousOrCurrent: "current").habits >= Int(Double(jobAndHabitBonusValue) * 0.75) {
-                    habitBonusEarned()
-                    displayHabitBonusFlyover()
+                    if bonusIsoArray.first?.valuePerTap == 0 {
+                        habitBonusEarned()
+                        displayHabitBonusFlyover()
+                    } else {
+//                        print("do nothing b/c user already has bonus")
+                    }
                 }
             }
         }
@@ -593,27 +615,10 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                     self.createZeroValueItemForDailyHabit(indexPath: indexPath)
                 } else {
                     if isoArrayForItem.first?.code == "C" {
+                        // refresh selectedDate variable with selected time
+                        self.selectedDate = Calendar.current.date(byAdding: .day, value: self.selectedDateNumber, to: Date())
                         self.updateItemInArrayAndUpdateIncomeArrayAndLabel(isoArray: isoArrayForItem, indexPath: indexPath)
-                        
-                        
-                        
-                        
-                        // 1. need to check if user has dropped below 75% threshold
-                        // so, get total habits points earned in pay period
-                        // get habit bonus value
-                        // subtract bonus value from habit points (bonus could be zero, and wouldn't change anything)
-                        // then compare if that amount is less than the 75% threshold
-                        // if so, change the bonus value for that pay period to zero and update user's income
-                        // if not, don't do anything
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
+                        self.checkIfUserStillEarnedBonusAndUpdateAccordingly()
                     } else if isoArrayForItem.first?.code == "N" {
                         self.alertN(indexPath: indexPath, deselectRow: false, jobOrHabit: "habit")
                     }
@@ -634,22 +639,7 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                         self.getParentalPasscodeThenResetItemToZero(isoArray: isoArrayForItem, indexPath: indexPath)
                     } else {
                         self.removeSelectedItemFromPointsArrayAndUpdateIncomeArray(indexPath: indexPath, category: "daily habits", categoryArray: self.usersDailyHabits)
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        print("2. need to check if user has dropped below the 75% threshold")
-                        print(self.pointsEarnedInPayPeriod(previousOrCurrent: "previous").habits)
-                        
-                        
-                        
-                        
-                        
+                        self.checkIfUserStillEarnedBonusAndUpdateAccordingly()
                     }
                 }
             })
@@ -741,7 +731,7 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
             selectedDateNumber! -= 1
             selectedDate = Calendar.current.date(byAdding: .day, value: selectedDateNumber, to: today)
             updateFormattedDate()
-            checkHabitsBonusValue()
+            checkHabitsDefaultBonusValue()
         }
         tableView.reloadData()
     }
@@ -782,7 +772,7 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                 self.selectedDate = Calendar.current.date(byAdding: .day, value: self.selectedDateNumber, to: today)
                 self.updateFormattedDate()
                 self.tableView.reloadData()
-                self.checkHabitsBonusValue()
+                self.checkHabitsDefaultBonusValue()
             } else {
                 self.incorrectPasscodeAlert()
             }
