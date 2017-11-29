@@ -631,8 +631,31 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
             
             let substituteAction = UITableViewRowAction(style: .default, title: "         ", handler: { (action, indexPath) in
                 if isoArrayForItem.isEmpty {
-                    // if array is empty, create new array item with "N" and value of "0"
-                    self.weeklyJobsSubDialogue(indexPath: indexPath, isoArray: isoArrayForItem)
+                    // need to check if job has been completed for the week
+                    // if so, let user know it's already been done
+                    let prevPayPeriod = Points.pointsArray.filter({ $0.user == self.currentUserName &&
+                        $0.itemCategory == "weekly jobs" &&
+                        $0.itemName == self.usersWeeklyJobs[indexPath.row].name &&
+                        $0.itemDate >= FamilyData.calculatePayday().previous.timeIntervalSince1970 &&
+                        $0.itemDate < FamilyData.calculatePayday().current.timeIntervalSince1970 })
+                    
+                    let currentPayPeriod = Points.pointsArray.filter({ $0.user == self.currentUserName &&
+                        $0.itemCategory == "weekly jobs" &&
+                        $0.itemName == self.usersWeeklyJobs[indexPath.row].name &&
+                        $0.itemDate >= FamilyData.calculatePayday().current.timeIntervalSince1970 })
+                    
+                    // if selected date is in previous pay period and the selected weekly job is already done, then show message telling user job is already done
+                    if self.selectedDate.timeIntervalSince1970 >= FamilyData.calculatePayday().previous.timeIntervalSince1970 && self.selectedDate.timeIntervalSince1970 < FamilyData.calculatePayday().current.timeIntervalSince1970 && !prevPayPeriod.isEmpty {
+                        self.weeklyJobAlreadyCompletedAlert(indexPath: indexPath)
+                        
+                        // if selected date is in current pay period and the selected weekly job is already done, then show message telling user job is already done
+                    } else if self.selectedDate.timeIntervalSince1970 >= FamilyData.calculatePayday().current.timeIntervalSince1970 && !currentPayPeriod.isEmpty {
+                        print("job already done for current week")
+                        self.weeklyJobAlreadyCompletedAlert(indexPath: indexPath)
+                    } else {
+                        // if array is empty, create new array item with "N" and value of "0"
+                        self.weeklyJobsSubDialogue(indexPath: indexPath, isoArray: isoArrayForItem)
+                    }
                 } else {
                     if isoArrayForItem.first?.code == "C" {
                         self.weeklyJobsSubDialogue(indexPath: indexPath, isoArray: isoArrayForItem)
