@@ -377,43 +377,7 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                 tableView.deselectRow(at: indexPath, animated: true)
             }
             
-            // only show flyover if user has earned 75% of their habit points AND the flyover hasn't shown up yet.
-            // previous pay period
-            let bonusIsoArray = Points.pointsArray.filter({ $0.user == currentUserName &&
-                $0.itemCategory == "daily habits" &&
-                $0.code == "B" &&
-                selectedDate.timeIntervalSince1970 >= FamilyData.calculatePayday().previous.timeIntervalSince1970 &&
-                selectedDate.timeIntervalSince1970 < FamilyData.calculatePayday().current.timeIntervalSince1970 })
-            
-            if selectedDate.timeIntervalSince1970 >= FamilyData.calculatePayday().previous.timeIntervalSince1970 && selectedDate.timeIntervalSince1970 < FamilyData.calculatePayday().current.timeIntervalSince1970 {
-                // calculate habits for previous pay period
-                if pointsEarnedInPayPeriod(previousOrCurrent: "previous").habits >= Int(Double(jobAndHabitBonusValue) * 0.75) {
-                    if bonusIsoArray.first?.valuePerTap == 0 {
-                        habitBonusEarned()
-                        displayHabitBonusFlyover()
-                    } else {
-//                        print("do nothing b/c user already has bonus")
-                    }
-                }
-            }
-        
-            // current pay period
-            if selectedDate.timeIntervalSince1970 >= FamilyData.calculatePayday().current.timeIntervalSince1970 {
-                // calculate habits for current pay period
-                let bonusIsoArray = Points.pointsArray.filter({ $0.user == currentUserName &&
-                    $0.itemCategory == "daily habits" &&
-                    $0.code == "B" &&
-                    selectedDate.timeIntervalSince1970 >= FamilyData.calculatePayday().current.timeIntervalSince1970 })
-                
-                if pointsEarnedInPayPeriod(previousOrCurrent: "current").habits >= Int(Double(jobAndHabitBonusValue) * 0.75) {
-                    if bonusIsoArray.first?.valuePerTap == 0 {
-                        habitBonusEarned()
-                        displayHabitBonusFlyover()
-                    } else {
-//                        print("do nothing b/c user already has bonus")
-                    }
-                }
-            }
+            showHabitBonusIfEarned()
         }
         
         // -----------

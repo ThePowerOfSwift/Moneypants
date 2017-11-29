@@ -220,7 +220,7 @@ extension UserVC {
     }
     
     func weeklyJobAlreadyCompletedAlert(indexPath: IndexPath) {
-        let alert = UIAlertController(title: "Weekly Job", message: "The weekly job '\(usersWeeklyJobs[indexPath.row].name)' has already been completed for the week.", preferredStyle: .alert)
+        let alert = UIAlertController(title: "Weekly Job", message: "The job '\(usersWeeklyJobs[indexPath.row].name)' has already been completed for the week.", preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "okay", style: .cancel, handler: { (action) in
             alert.dismiss(animated: true, completion: nil)
         }))

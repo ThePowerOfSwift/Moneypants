@@ -252,6 +252,8 @@ extension UserVC {
                 self.habitBonusView.alpha = 0
                 self.view.layoutIfNeeded()
             })
+            
+//            self.habitBonusCenterConstraint.constant = -300
         }
     }
     
@@ -398,6 +400,32 @@ extension UserVC {
             } else {
                 // do nothing b/c user's habit total is still above the 75% threshold
             }
+        }
+    }
+    
+    func showHabitBonusIfEarned() {
+        let currentBonusIsoArray = Points.pointsArray.filter({ $0.user == currentUserName &&
+            $0.itemCategory == "daily habits" &&
+            $0.code == "B" &&
+            $0.itemDate >= FamilyData.calculatePayday().current.timeIntervalSince1970 })
+        
+        let previousBonusIsoArray = Points.pointsArray.filter({ $0.user == currentUserName &&
+            $0.itemCategory == "daily habits" &&
+            $0.code == "B" &&
+            $0.itemDate >= FamilyData.calculatePayday().previous.timeIntervalSince1970
+            && $0.itemDate < FamilyData.calculatePayday().current.timeIntervalSince1970 })
+        
+        // if selected date is in current pay period AND user hasn't earned current pay period bonus AND user has reached the 75% threshold
+        if selectedDate.timeIntervalSince1970 >= FamilyData.calculatePayday().current.timeIntervalSince1970 &&
+            currentBonusIsoArray.first?.valuePerTap == 0 && pointsEarnedInPayPeriod(previousOrCurrent: "current").habits >= Int(Double(jobAndHabitBonusValue) * 0.75) {
+            habitBonusEarned()
+            displayHabitBonusFlyover()
+        }
+        
+        // if selected date is in previous pay period AND user hasn't earned previous pay period bonus AND user has reached the 75% threshold
+        if selectedDate.timeIntervalSince1970 >= FamilyData.calculatePayday().previous.timeIntervalSince1970 && selectedDate.timeIntervalSince1970 < FamilyData.calculatePayday().current.timeIntervalSince1970 && previousBonusIsoArray.first?.valuePerTap == 0 && pointsEarnedInPayPeriod(previousOrCurrent: "previous").habits >= Int(Double(jobAndHabitBonusValue) * 0.75) {
+            habitBonusEarned()
+            displayHabitBonusFlyover()
         }
     }
 }
