@@ -85,28 +85,7 @@ extension UserVC {
         habitTotalProgressView.layer.borderWidth = 0.5
         habitTotalProgressView.layer.borderColor = UIColor.black.cgColor
     }
-    
-    func displayHabitBonusFlyover() {
-        habitBonusAmountLabel.text = "$\(String(format: "%.2f", Double(jobAndHabitBonusValue!) / 100))"
-        trophyView.image = UIImage(named: "trophy black")
-        trophyView.tintColor = .white
-        habitBonusCenterConstraint.constant = 0
-        UIView.animate(withDuration: 0.3) {
-            self.habitBonusView.alpha = 1
-            self.view.layoutIfNeeded()
-        }
-        
-        habitBonusSound.play()
-        
-        DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
-            UIView.animate(withDuration: 0.3, animations: {
-                self.habitBonusCenterConstraint.constant = 300
-                self.habitBonusView.alpha = 0
-                self.view.layoutIfNeeded()
-            })
-        }
-    }
-    
+
     func updateFormattedDate() {
         // format text color (if user is in current pay period, text color is black and label shows full day name.
         // if user is in previous pay period, text color is gray and shows day of month and short day name.

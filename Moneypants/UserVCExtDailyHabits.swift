@@ -180,7 +180,7 @@ extension UserVC {
         }
     }
     
-    func updateHabitBonus() {
+    func removeHabitBonus() {
         // if user hasn't yet earned the 75% for the habit bonus...
         if pointsEarnedInPayPeriod(previousOrCurrent: "current").habits < Int(Double(jobAndHabitBonusValue) * 0.75) {
             // remove the bonus from the array (if it exists)
@@ -217,5 +217,76 @@ extension UserVC {
 //                }
 //            }
         }
+    }
+    
+    func displayHabitBonusFlyover() {
+        habitBonusAmountLabel.text = "$\(String(format: "%.2f", Double(jobAndHabitBonusValue!) / 100))"
+        trophyView.image = UIImage(named: "trophy black")
+        trophyView.tintColor = .white
+        habitBonusCenterConstraint.constant = 0
+        UIView.animate(withDuration: 0.3) {
+            self.habitBonusView.alpha = 1
+            self.view.layoutIfNeeded()
+        }
+        
+        habitBonusSound.play()
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+            UIView.animate(withDuration: 0.3, animations: {
+                self.habitBonusCenterConstraint.constant = 300
+                self.habitBonusView.alpha = 0
+                self.view.layoutIfNeeded()
+            })
+        }
+    }
+    
+    func checkHabitsBonusValue() {
+        let currentPayPeriodBonusIsoArray = Points.pointsArray.filter({ $0.user == currentUserName &&
+            $0.itemCategory == "daily habits" &&
+            $0.code == "B" &&
+            $0.itemDate >= FamilyData.calculatePayday().current.timeIntervalSince1970 })
+        
+        let previousPayPeriodBonusIsoArray = Points.pointsArray.filter({ $0.user == currentUserName &&
+            $0.itemCategory == "daily habits" &&
+            $0.code == "B" &&
+            $0.itemDate >= FamilyData.calculatePayday().previous.timeIntervalSince1970 &&
+            $0.itemDate < FamilyData.calculatePayday().current.timeIntervalSince1970 })
+        
+        // check to see if current pay period has bonus
+        if selectedDate.timeIntervalSince1970 >= FamilyData.calculatePayday().current.timeIntervalSince1970 {
+            if currentPayPeriodBonusIsoArray.isEmpty {
+                createZeroValueHabitBonusItem()
+            } else {
+                print("current pay period already has bonus")
+            }
+        } else if selectedDate.timeIntervalSince1970 >= FamilyData.calculatePayday().previous.timeIntervalSince1970 && selectedDate.timeIntervalSince1970 < FamilyData.calculatePayday().current.timeIntervalSince1970 {
+            if previousPayPeriodBonusIsoArray.isEmpty {
+                createZeroValueHabitBonusItem()
+            } else {
+                print("previous pay period already has bonus")  // not sure when this code would run...
+            }
+        }
+    }
+    
+    func createZeroValueHabitBonusItem() {
+        // refresh selectedDate variable with selected time
+        selectedDate = Calendar.current.date(byAdding: .day, value: selectedDateNumber, to: Date())
+        let pointsArrayItem = Points(user: currentUserName,
+                                     itemName: "habit bonus",
+                                     itemCategory: "daily habits",
+                                     code: "B",
+                                     valuePerTap: 0,
+                                     itemDate: selectedDate.timeIntervalSince1970)
+        
+        // add bonus to local array
+        Points.pointsArray.append(pointsArrayItem)
+        
+        // add bonus to Firebase
+        ref.child("points").childByAutoId().setValue(["user" : currentUserName,
+                                                      "itemName" : "habit bonus",
+                                                      "itemCategory" : "daily habits",
+                                                      "code" : "B",
+                                                      "valuePerTap" : 0,
+                                                      "itemDate" : selectedDate.timeIntervalSince1970])
     }
 }

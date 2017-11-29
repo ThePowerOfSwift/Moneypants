@@ -84,11 +84,12 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
         customizeImages()
         updateFormattedDate()
+        checkHabitsBonusValue()
         checkIncome()
         prepHabitBonusSFX()
         updateProgressMeters()
     }
-    
+
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         tableView.reloadData()
@@ -420,7 +421,6 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                     $0.itemName == usersWeeklyJobs[indexPath.row].name &&
                     $0.itemDate >= FamilyData.calculatePayday().current.timeIntervalSince1970 })
                 
-                
                 // if selected date is in previous pay period and there are no weekly jobs done, then
                 if selectedDate.timeIntervalSince1970 >= FamilyData.calculatePayday().previous.timeIntervalSince1970 && selectedDate.timeIntervalSince1970 < FamilyData.calculatePayday().current.timeIntervalSince1970 && prevPayPeriod.isEmpty {
                     createNewPointsItemForWeeklyJobs(indexPath: indexPath)
@@ -591,25 +591,6 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                 if isoArrayForItem.isEmpty {
                     // if array is empty, create new array item with "N" and value of "0"
                     self.createZeroValueItemForDailyHabit(indexPath: indexPath)
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    print("1. need to check if user has dropped below 75% habit threshold")
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
                 } else {
                     if isoArrayForItem.first?.code == "C" {
                         self.updateItemInArrayAndUpdateIncomeArrayAndLabel(isoArray: isoArrayForItem, indexPath: indexPath)
@@ -617,11 +598,13 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                         
                         
                         
-                        
-                        
-                        
-                        
-                        print("2. need to check if user has dropped below the 75% threshold")
+                        // 1. need to check if user has dropped below 75% threshold
+                        // so, get total habits points earned in pay period
+                        // get habit bonus value
+                        // subtract bonus value from habit points (bonus could be zero, and wouldn't change anything)
+                        // then compare if that amount is less than the 75% threshold
+                        // if so, change the bonus value for that pay period to zero and update user's income
+                        // if not, don't do anything
                         
                         
                         
@@ -649,23 +632,6 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                 } else {
                     if isoArrayForItem.first?.code == "N" {
                         self.getParentalPasscodeThenResetItemToZero(isoArray: isoArrayForItem, indexPath: indexPath)
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        print("3. need to check if user has dropped below 75% threshold")
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
                     } else {
                         self.removeSelectedItemFromPointsArrayAndUpdateIncomeArray(indexPath: indexPath, category: "daily habits", categoryArray: self.usersDailyHabits)
                         
@@ -677,7 +643,7 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                         
                         
                         
-                        print("4. need to check if user has dropped below the 75% threshold")
+                        print("2. need to check if user has dropped below the 75% threshold")
                         print(self.pointsEarnedInPayPeriod(previousOrCurrent: "previous").habits)
                         
                         
@@ -775,6 +741,7 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
             selectedDateNumber! -= 1
             selectedDate = Calendar.current.date(byAdding: .day, value: selectedDateNumber, to: today)
             updateFormattedDate()
+            checkHabitsBonusValue()
         }
         tableView.reloadData()
     }
@@ -815,6 +782,7 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                 self.selectedDate = Calendar.current.date(byAdding: .day, value: self.selectedDateNumber, to: today)
                 self.updateFormattedDate()
                 self.tableView.reloadData()
+                self.checkHabitsBonusValue()
             } else {
                 self.incorrectPasscodeAlert()
             }
