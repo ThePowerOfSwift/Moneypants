@@ -5,7 +5,6 @@ class HomeCustomCell: UITableViewCell {
     @IBOutlet weak var userImage: UIImageView!
     @IBOutlet weak var userName: UILabel!
     @IBOutlet weak var userIncome: UILabel!
-    @IBOutlet weak var paidBadge: UIImageView!
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -15,12 +14,6 @@ class HomeCustomCell: UITableViewCell {
         userImage.layer.masksToBounds = true
         userImage.layer.borderWidth = 0.5
         userImage.layer.borderColor = UIColor.black.cgColor
-        
-        paidBadge.layer.cornerRadius = paidBadge.bounds.height / 2
-        paidBadge.layer.masksToBounds = true
-        paidBadge.layer.borderWidth = 0.5
-        paidBadge.layer.borderColor = UIColor.black.cgColor
-        paidBadge.layer.backgroundColor = UIColor.lightGray.cgColor
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {

@@ -18,28 +18,14 @@ class HomeVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UITa
         
         tableView.delegate = self
         tableView.dataSource = self
+        tableView.tableFooterView = UIView()
         checkForIncome()
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(false)
-        tableView.beginUpdates()
-        tableView.setEditing(false, animated: false)
+        super.viewDidAppear(true)
         tableView.reloadData()
-        tableView.endUpdates()
-        
-//        var count = 0
-//        for n in 0..<MPUser.usersArray.count {
-//            tableView.reloadRows(at: [(0, count) as! IndexPath], with: .automatic)
-//            count += 1
-//        }
-        //        tableView.reloadSections([0], with: .automatic)
     }
-    
-//    override func viewWillAppear(_ animated: Bool) {
-//        tableView.setEditing(false, animated: false)
-//        tableView.reloadData()
-//    }
     
     // ----------
     // Table View
@@ -53,7 +39,6 @@ class HomeVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UITa
         let cell = tableView.dequeueReusableCell(withIdentifier: "HomeDetailCell", for: indexPath) as! HomeCustomCell
         cell.userName.text = MPUser.usersArray[indexPath.row].firstName
         cell.userImage.image = MPUser.usersArray[indexPath.row].photo
-        cell.paidBadge.isHidden = true
         
         // WORKS but with odd delay on tableview refresh
         let currentUser = Income.currentIncomeArray.filter({ $0.user == cell.userName.text })
@@ -67,20 +52,6 @@ class HomeVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UITa
         MPUser.currentUser = indexPath.row
         performSegue(withIdentifier: "DetailSegue", sender: self)
         tableView.deselectRow(at: indexPath, animated: true)
-    }
-    
-    func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
-        let paydayAction = UITableViewRowAction(style: .default, title: "             ") { (action, indexPath) in
-            MPUser.currentUser = indexPath.row
-            self.performSegue(withIdentifier: "PaydayDetail", sender: self)
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) {
-                tableView.setEditing(false, animated: true)
-            }
-        }
-        
-        paydayAction.backgroundColor = UIColor(patternImage: UIImage(named: "payday")!)
-        
-        return [paydayAction]
     }
     
     @IBAction func printIncomeButtonTapped(_ sender: UIBarButtonItem) {

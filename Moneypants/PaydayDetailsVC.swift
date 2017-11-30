@@ -2,7 +2,6 @@ import UIKit
 
 class PaydayDetailsVC: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate {
     
-    @IBOutlet weak var navigationBar: UINavigationBar!
     @IBOutlet weak var paydayCollectionView: UICollectionView!
     @IBOutlet weak var totalEarningsLabel: UILabel!
     
@@ -18,8 +17,7 @@ class PaydayDetailsVC: UIViewController, UICollectionViewDataSource, UICollectio
         paydayCollectionView.delegate = self
         
         currentUserName = MPUser.usersArray[MPUser.currentUser].firstName
-        navigationBar.topItem?.title = currentUserName
-        navigationBar.barTintColor = UIColor(red: 125/255, green: 190/255, blue: 48/255, alpha: 1.0)    // green
+        navigationItem.title = currentUserName
         
         // get array of current user's income for all categories except withdrawals, and then total the amounts
         currentUserIncome = Points.pointsArray.filter({ $0.user == currentUserName &&
@@ -79,10 +77,6 @@ class PaydayDetailsVC: UIViewController, UICollectionViewDataSource, UICollectio
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         let nextVC = segue.destination as! PaydayDetailsPopup
         nextVC.categoryLabelText = sender as! String
-    }
-    
-    @IBAction func cancelButtonTapped(_ sender: UIBarButtonItem) {
-        self.dismiss(animated: true, completion: nil)
     }
     
     // ---------
@@ -232,7 +226,7 @@ class PaydayDetailsVC: UIViewController, UICollectionViewDataSource, UICollectio
         alert.addAction(UIAlertAction(title: "okay", style: .cancel, handler: { (action) in
             alert.dismiss(animated: true, completion: nil)
         }))
-        self.present(alert, animated: true, completion: nil)
+        present(alert, animated: true, completion: nil)
     }
 }
 
