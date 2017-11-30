@@ -75,7 +75,7 @@ class Step10ExpenseDetailVC: UITableViewController, UIPickerViewDelegate, UIPick
         hasDueDateSwitch.isOn = false
         repeatsLabel.text = "never"
         repeatsPickerView.delegate = self
-        hasDueDateSwitch.onTintColor = UIColor(red: 141/255, green: 198/255, blue: 63/255, alpha: 1.0)        // green
+        hasDueDateSwitch.onTintColor = UIColor(red: 125/255, green: 190/255, blue: 48/255, alpha: 1.0)  // green
         
 //        firstPaymentDatePickerView.minimumDate = Date()
         

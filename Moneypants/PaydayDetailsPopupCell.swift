@@ -7,16 +7,17 @@ class PaydayDetailsPopupCell: UITableViewCell {
     @IBOutlet weak var trophyImageView: UIImageView!
     
     @IBOutlet weak var dailyView: UIView!
+    
+    @IBOutlet weak var day1SLabel: UILabel!
+    @IBOutlet weak var day2MLabel: UILabel!
+    @IBOutlet weak var day3TLabel: UILabel!
+    @IBOutlet weak var day4WLabel: UILabel!
+    @IBOutlet weak var day5ThLabel: UILabel!
+    @IBOutlet weak var day6FLabel: UILabel!
+    @IBOutlet weak var day7SLabel: UILabel!
+    
 
     override func awakeFromNib() {
         super.awakeFromNib()
-        
-        dailyView.isHidden = true
-        
-        dailyView.layer.cornerRadius = dailyView.bounds.height / 6.4
-        dailyView.layer.masksToBounds = true
-        dailyView.layer.borderColor = UIColor.lightGray.cgColor
-        dailyView.layer.borderWidth = 0.5
-        dailyView.backgroundColor = UIColor.white
     }
 }

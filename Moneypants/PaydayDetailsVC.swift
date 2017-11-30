@@ -38,26 +38,26 @@ class PaydayDetailsVC: UIViewController, UICollectionViewDataSource, UICollectio
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = paydayCollectionView.dequeueReusableCell(withReuseIdentifier: "collectionViewCell", for: indexPath) as! PaydayDetailsCell
         
-        if paydayData[indexPath.row].2 == 0 {
+        if paydayData[indexPath.row].amount == 0 {
             cell.bgImageView.layer.backgroundColor = UIColor.lightGray.cgColor
             cell.categoryImageView.alpha = 0.5
             cell.categoryLabel.alpha = 0.5
             cell.categoryAmountLabel.text = "$ -"
-        } else if paydayData[indexPath.row].2 < 0 {
+        } else if paydayData[indexPath.row].amount < 0 {
             cell.bgImageView.layer.backgroundColor = UIColor(red: 125/255, green: 190/255, blue: 48/255, alpha: 1).cgColor
             cell.categoryImageView.alpha = 1.0
             cell.categoryLabel.alpha = 1.0
-            cell.categoryAmountLabel.text = "-$\(String(format: "%.2f", Double(abs(paydayData[indexPath.row].2)) / 100))"
+            cell.categoryAmountLabel.text = "-$\(String(format: "%.2f", Double(abs(paydayData[indexPath.row].amount)) / 100))"
         } else {
             cell.bgImageView.layer.backgroundColor = UIColor(red: 125/255, green: 190/255, blue: 48/255, alpha: 1).cgColor
             cell.categoryImageView.alpha = 1.0
             cell.categoryLabel.alpha = 1.0
-            cell.categoryAmountLabel.text = "$\(String(format: "%.2f", Double(paydayData[indexPath.row].2) / 100))"
+            cell.categoryAmountLabel.text = "$\(String(format: "%.2f", Double(paydayData[indexPath.row].amount) / 100))"
         }
         
-        cell.categoryImageView.image = UIImage(named: paydayData[indexPath.row].0)
+        cell.categoryImageView.image = UIImage(named: paydayData[indexPath.row].icon)
         cell.categoryImageView.tintColor = UIColor.white
-        cell.categoryLabel.text = paydayData[indexPath.row].1
+        cell.categoryLabel.text = paydayData[indexPath.row].category
         
         return cell
     }
@@ -67,10 +67,10 @@ class PaydayDetailsVC: UIViewController, UICollectionViewDataSource, UICollectio
     // ----------
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        if paydayData[indexPath.row].2 == 0 {
+        if paydayData[indexPath.row].amount == 0 {
             noDataInCategoryAlert(indexPath: indexPath)
         } else {
-            performSegue(withIdentifier: "PaydayDetailsPopup", sender: paydayData[indexPath.row].1)
+            performSegue(withIdentifier: "PaydayDetailsPopup", sender: paydayData[indexPath.row].category)
         }
     }
     
@@ -132,7 +132,7 @@ class PaydayDetailsVC: UIViewController, UICollectionViewDataSource, UICollectio
         
         let weeklyJobsFiltered = Points.pointsArray.filter({ $0.user == currentUserName &&
             $0.itemCategory == "weekly jobs" &&
-            $0.code == "C" &&
+            ($0.code == "C" || $0.code == "N") &&
             $0.itemDate >= previousPayday &&
             $0.itemDate < currentPayday })
         
@@ -165,9 +165,14 @@ class PaydayDetailsVC: UIViewController, UICollectionViewDataSource, UICollectio
         }
         
         // subtract excused jobs
-        var dailyJobsExcusedUnexcusedSubtotal: Int = 0
+        var dailyJobsExcusedSubtotal: Int = 0
         for item in excusedDailyJobs {
-            dailyJobsExcusedUnexcusedSubtotal += item.valuePerTap
+            dailyJobsExcusedSubtotal += item.valuePerTap
+        }
+        
+        var dailyJobsUnexcusedSubtotal: Int = 0
+        for item in unexcusedDailyJobs {
+            dailyJobsUnexcusedSubtotal += item.valuePerTap
         }
         
         var dailyHabitsSubtotal: Int = 0
@@ -195,21 +200,21 @@ class PaydayDetailsVC: UIViewController, UICollectionViewDataSource, UICollectio
             unpaidSubtotal += item.valuePerTap
         }
         
-        paydayData = [("broom white", "daily jobs", dailyJobsSubtotal + dailyJobsExcusedUnexcusedSubtotal),
-                      ("music white", "daily habits", dailyHabitsSubtotal),
+        paydayData = [("broom white", "daily jobs", dailyJobsSubtotal + dailyJobsExcusedSubtotal + dailyJobsUnexcusedSubtotal),
+                      ("workout", "daily habits", dailyHabitsSubtotal),
                       ("lawnmower white", "weekly jobs", weeklyJobsSubtotal),
                       ("broom plus white", "other jobs", otherJobsSubtotal),
                       ("dollar minus white", "fees", feesSubtotal),
                       ("shopping cart small white", "withdrawals", 0),
                       ("dollar white", "unpaid", unpaidSubtotal)]
         
-        if paydayData.filter({ $0.2 != 0 }).isEmpty {
+        if paydayData.filter({ $0.amount != 0 }).isEmpty {
             noDataAlert()
         }
     }
     
     func noDataInCategoryAlert(indexPath: IndexPath) {
-        let alert = UIAlertController(title: "No Data", message: "\(currentUserName!) has no transactions in '\(paydayData[indexPath.row].1)' for this payday period.", preferredStyle: .alert)
+        let alert = UIAlertController(title: "No Data", message: "\(currentUserName!) has no transactions in '\(paydayData[indexPath.row].category)' for this payday period.", preferredStyle: .alert)
                 alert.addAction(UIAlertAction(title: "okay", style: .cancel, handler: { (action) in
                     alert.dismiss(animated: true, completion: nil)
                 }))
