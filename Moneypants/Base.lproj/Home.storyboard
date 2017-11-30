@@ -31,7 +31,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                                 <items>
                                     <navigationItem title="Savannah" id="fTg-eU-CyD">
-                                        <barButtonItem key="leftBarButtonItem" title="cancel" style="plain" id="bJC-oj-wIl">
+                                        <barButtonItem key="leftBarButtonItem" title="cancel" id="bJC-oj-wIl">
                                             <connections>
                                                 <action selector="cancelButtonTapped:" destination="iW7-e5-08C" id="ouT-9w-TPa"/>
                                             </connections>
@@ -53,7 +53,7 @@
                                 <rect key="frame" x="0.0" y="72" width="320" height="28"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tap an item to see details." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IPg-Uj-jAk">
-                                        <rect key="frame" x="81" y="6" width="158.5" height="16"/>
+                                        <rect key="frame" x="81.5" y="6" width="158.5" height="16"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
@@ -223,7 +223,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="z8w-CN-Tgm" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="18018.75" y="303.16901408450707"/>
+            <point key="canvasLocation" x="18381" y="1124"/>
         </scene>
         <!--videos-->
         <scene sceneID="Pjd-QL-IXx">
@@ -364,7 +364,7 @@
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="XPz-WF-pDX" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="18941" y="-1306"/>
+            <point key="canvasLocation" x="19423" y="-1314"/>
         </scene>
         <!--Settings-->
         <scene sceneID="spL-HP-XfB">
@@ -577,7 +577,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8tE-Ec-QC8" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="17079" y="305"/>
+            <point key="canvasLocation" x="17854" y="298"/>
         </scene>
         <!--Settings-->
         <scene sceneID="nmn-Df-UGd">
@@ -617,7 +617,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0Pu-zf-fvN" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="17079" y="-456"/>
+            <point key="canvasLocation" x="17854" y="-463"/>
         </scene>
         <!--Videos-->
         <scene sceneID="NlL-kU-5JN">
@@ -645,7 +645,7 @@
                 <viewControllerPlaceholder storyboardName="User" referencedIdentifier="UserTabBarController" id="wKi-J8-Z7P" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="jUg-ut-sY4" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="17078" y="851"/>
+            <point key="canvasLocation" x="17391" y="839"/>
         </scene>
         <!--Job Jar-->
         <scene sceneID="5W5-cI-sLd">
@@ -980,7 +980,7 @@
                     </connections>
                 </viewController>
             </objects>
-            <point key="canvasLocation" x="18019" y="1130"/>
+            <point key="canvasLocation" x="18379" y="1949"/>
         </scene>
     </scenes>
     <resources>

@@ -232,7 +232,7 @@ class PaydayDetailsVC: UIViewController, UICollectionViewDataSource, UICollectio
         alert.addAction(UIAlertAction(title: "okay", style: .cancel, handler: { (action) in
             alert.dismiss(animated: true, completion: nil)
         }))
-        present(alert, animated: true, completion: nil)
+        self.present(alert, animated: true, completion: nil)
     }
 }
 

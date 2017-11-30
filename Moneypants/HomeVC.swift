@@ -57,9 +57,6 @@ class HomeVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UITa
         
         // WORKS but with odd delay on tableview refresh
         let currentUser = Income.currentIncomeArray.filter({ $0.user == cell.userName.text })
-//        cell.userIncome.text = "\(currentUser[0].currentPoints)"
-        
-        
         cell.userIncome.text = "$\(String(format: "%.2f", Double(currentUser[0].currentPoints) / 100))"
         // END WORKS but with odd delay
         
@@ -76,7 +73,9 @@ class HomeVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UITa
         let paydayAction = UITableViewRowAction(style: .default, title: "             ") { (action, indexPath) in
             MPUser.currentUser = indexPath.row
             self.performSegue(withIdentifier: "PaydayDetail", sender: self)
-            tableView.setEditing(false, animated: true)
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) {
+                tableView.setEditing(false, animated: true)
+            }
         }
         
         paydayAction.backgroundColor = UIColor(patternImage: UIImage(named: "payday")!)
