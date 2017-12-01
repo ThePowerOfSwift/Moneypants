@@ -4,6 +4,7 @@ class PaydayDetailsVC: UIViewController, UICollectionViewDataSource, UICollectio
     
     @IBOutlet weak var paydayCollectionView: UICollectionView!
     @IBOutlet weak var totalEarningsLabel: UILabel!
+    @IBOutlet weak var questionButton: UIButton!
     
     var currentUserName: String!
     var currentUserIncome: Int!
@@ -15,6 +16,9 @@ class PaydayDetailsVC: UIViewController, UICollectionViewDataSource, UICollectio
         
         paydayCollectionView.dataSource = self
         paydayCollectionView.delegate = self
+        
+        questionButton.layer.cornerRadius = questionButton.layer.bounds.height / 6.4
+        questionButton.layer.masksToBounds = true
         
         currentUserName = MPUser.usersArray[MPUser.currentUser].firstName
         navigationItem.title = currentUserName
@@ -75,8 +79,10 @@ class PaydayDetailsVC: UIViewController, UICollectionViewDataSource, UICollectio
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        let nextVC = segue.destination as! PaydayDetailsPopup
-        nextVC.categoryLabelText = sender as! String
+        if segue.identifier == "PaydayDetailsPopup" {
+            let nextVC = segue.destination as! PaydayDetailsPopup
+            nextVC.categoryLabelText = sender as! String
+        }
     }
     
     // ---------

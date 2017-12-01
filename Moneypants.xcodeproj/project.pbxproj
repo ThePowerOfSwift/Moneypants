@@ -111,6 +111,7 @@
 		CEB55ED11FB10A420097F86A /* Points.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB55ED01FB10A420097F86A /* Points.swift */; };
 		CEB7D1681F5A86D3006D9763 /* ReportsBudgetCell1.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB7D1671F5A86D3006D9763 /* ReportsBudgetCell1.swift */; };
 		CEC5BD541F77310500B66CEC /* Step3PopupVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEC5BD531F77310500B66CEC /* Step3PopupVC.swift */; };
+		CECB1EBA1FD0DF780048535D /* PaydayQuestionVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CECB1EB91FD0DF780048535D /* PaydayQuestionVC.swift */; };
 		CED509E21F030F560058728F /* Step4VC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED509E11F030F560058728F /* Step4VC.swift */; };
 		CED509E41F0310740058728F /* Step4CustomCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED509E31F0310740058728F /* Step4CustomCell.swift */; };
 		CED7D5991F997BF800351347 /* OutsideIncome.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED7D5981F997BF800351347 /* OutsideIncome.swift */; };
@@ -237,6 +238,7 @@
 		CEB55ED01FB10A420097F86A /* Points.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Points.swift; sourceTree = "<group>"; };
 		CEB7D1671F5A86D3006D9763 /* ReportsBudgetCell1.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReportsBudgetCell1.swift; sourceTree = "<group>"; };
 		CEC5BD531F77310500B66CEC /* Step3PopupVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Step3PopupVC.swift; sourceTree = "<group>"; };
+		CECB1EB91FD0DF780048535D /* PaydayQuestionVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaydayQuestionVC.swift; sourceTree = "<group>"; };
 		CED509E11F030F560058728F /* Step4VC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = Step4VC.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		CED509E31F0310740058728F /* Step4CustomCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Step4CustomCell.swift; sourceTree = "<group>"; };
 		CED7D5981F997BF800351347 /* OutsideIncome.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OutsideIncome.swift; sourceTree = "<group>"; };
@@ -483,6 +485,7 @@
 				CEA564391FC37F7200331A14 /* PaydayDetailsCell.swift */,
 				CEA5643B1FC3E13300331A14 /* PaydayDetailsPopup.swift */,
 				CEFBE7941FC559F300467321 /* PaydayDetailsPopupCell.swift */,
+				CECB1EB91FD0DF780048535D /* PaydayQuestionVC.swift */,
 			);
 			name = Payday;
 			sourceTree = "<group>";
@@ -842,6 +845,7 @@
 				CEF1A4951F02472700C010F9 /* Step3CustomCell.swift in Sources */,
 				CEA300251FB28E7700BEE503 /* Income.swift in Sources */,
 				CE1B477D1F185025007C7515 /* HomeVC.swift in Sources */,
+				CECB1EBA1FD0DF780048535D /* PaydayQuestionVC.swift in Sources */,
 				CEEBB3401F202D900046E3FE /* SetupCompleteVC.swift in Sources */,
 				CE1CB5201F02117F009A8DAC /* Step2VC.swift in Sources */,
 				CEAAF9DC1F356F2400846DD5 /* PaydayVC.swift in Sources */,

@@ -7,6 +7,7 @@ class PaydayDetailsPopup: UIViewController, UITableViewDelegate, UITableViewData
     @IBOutlet weak var topPopupWhiteBG: UIView!
     @IBOutlet weak var topPopupImageView: UIImageView!
     @IBOutlet weak var categoryLabel: UILabel!
+    @IBOutlet weak var mainPopupBGWidth: NSLayoutConstraint!
     
     @IBOutlet weak var detailsTableView: UITableView!
     @IBOutlet weak var detailsTableViewHeight: NSLayoutConstraint!
@@ -22,8 +23,6 @@ class PaydayDetailsPopup: UIViewController, UITableViewDelegate, UITableViewData
     
     // two arrays created from isoArraySubtotals
     var showHideDailyView: [(index: Int, itemName: String, selected: Bool)] = []
-    var dailyCodeArray: [(day: Int, code: String)] = []
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -41,13 +40,15 @@ class PaydayDetailsPopup: UIViewController, UITableViewDelegate, UITableViewData
         bonusAmount = 0
         
         createIsoArrayForCurrentCategory()
+        changePopupWidthDependingOnScreenSize()
         
-        
-        print("G: ",dailyCodeArray)
-        print("H: ",dailyCodeArray[5])
-        print("I: ",dailyCodeArray[5].code)
-        
-        print(Points.pointsArray.filter({ $0.user == currentUserName && $0.itemCategory == isoArraySubtotals[0].itemCategory && $0.itemName == isoArraySubtotals[0].itemName }))// && Calendar.current.isDate(Date(timeIntervalSince1970: $0.itemDate), inSameDayAs: FamilyData.calculatePayday().previous) }))
+        print("J: ",isoArraySubtotals)
+    }
+    
+    func changePopupWidthDependingOnScreenSize() {
+        if UIScreen.main.bounds.width > 700 {
+            mainPopupBGWidth.constant = 560
+        }
     }
     
     // ----------
@@ -84,14 +85,24 @@ class PaydayDetailsPopup: UIViewController, UITableViewDelegate, UITableViewData
             cell.dailyView.layer.borderWidth = 0.5
             cell.dailyView.backgroundColor = UIColor.white
             
-            
-            
+            // format day label text to be single letter of weekday (S, M, T, W, T, F, S)
+            let formatter = DateFormatter()
+            formatter.dateFormat = "EEEEEE"
             
             let dayLabels: [UILabel] = [cell.day1SLabel, cell.day2MLabel, cell.day3TLabel, cell.day4WLabel, cell.day5ThLabel, cell.day6FLabel, cell.day7SLabel]
-            
             for n in 0...6 {
                 let payPeriodDay = Calendar.current.date(byAdding: .day, value: n, to: FamilyData.calculatePayday().previous)
-                let dayIsoArray = Points.pointsArray.filter({ $0.user == currentUserName && $0.itemCategory == isoArraySubtotals[indexPath.row].itemCategory && $0.itemName == isoArraySubtotals[indexPath.row].itemName && Calendar.current.isDate(Date(timeIntervalSince1970: $0.itemDate), inSameDayAs: payPeriodDay!) })
+                
+                // show day label text according to day of week (starting on the family's payday)
+                dayLabels[n].text = formatter.string(from: payPeriodDay!)
+                
+                // show day label color according to the job code for that day (C, E, X, S, F, N)
+                let dayIsoArray = Points.pointsArray.filter({ $0.user == currentUserName &&
+                    $0.itemCategory == isoArraySubtotals[indexPath.row].itemCategory &&
+                    $0.itemName == isoArraySubtotals[indexPath.row].itemName &&
+                    Calendar.current.isDate(Date(timeIntervalSince1970: $0.itemDate), inSameDayAs: payPeriodDay!) })
+                
+                print(dayIsoArray.first?.code ?? "\nno code for item")
                 
                 if dayIsoArray.first?.code == "C" || dayIsoArray.first?.code == "S" {
                     dayLabels[n].backgroundColor = UIColor(red: 125/255, green: 190/255, blue: 48/255, alpha: 1.0)  // green
@@ -103,110 +114,6 @@ class PaydayDetailsPopup: UIViewController, UITableViewDelegate, UITableViewData
                     dayLabels[n].backgroundColor = UIColor.clear
                 }
             }
-            
-            
-//            let dayOneItem = Points.pointsArray.filter({ $0.user == currentUserName && $0.itemCategory == isoArraySubtotals[indexPath.row].itemCategory && $0.itemName == isoArraySubtotals[indexPath.row].itemName && Calendar.current.isDate(Date(timeIntervalSince1970: $0.itemDate), inSameDayAs: FamilyData.calculatePayday().previous) })
-//            if dayOneItem.first?.code == "C" || dayOneItem.first?.code == "S" {
-//                cell.day1SLabel.backgroundColor = UIColor(red: 125/255, green: 190/255, blue: 48/255, alpha: 1.0)  // green
-//            } else if dayOneItem.first?.code == "X" || dayOneItem.first?.code == "F" {
-//                cell.day1SLabel.backgroundColor = UIColor.red
-//            } else if dayOneItem.first?.code == "E" || dayOneItem.first?.code == "N" {
-//                cell.day1SLabel.backgroundColor = UIColor.lightGray
-//            } else {
-//                cell.day1SLabel.backgroundColor = UIColor.clear
-//            }
-//            
-//            
-//            let payPeriodDayTwo = Calendar.current.date(byAdding: .day, value: 1, to: FamilyData.calculatePayday().previous)
-//            let dayTwoItem = Points.pointsArray.filter({ $0.user == currentUserName && $0.itemCategory == isoArraySubtotals[indexPath.row].itemCategory && $0.itemName == isoArraySubtotals[indexPath.row].itemName && Calendar.current.isDate(Date(timeIntervalSince1970: $0.itemDate), inSameDayAs: payPeriodDayTwo!) })
-//            if dayTwoItem.first?.code == "C" || dayTwoItem.first?.code == "S" {
-//                cell.day2MLabel.backgroundColor = UIColor(red: 125/255, green: 190/255, blue: 48/255, alpha: 1.0)  // green
-//            } else if dayTwoItem.first?.code == "X" || dayTwoItem.first?.code == "F" {
-//                cell.day2MLabel.backgroundColor = UIColor.red
-//            } else if dayTwoItem.first?.code == "E" || dayTwoItem.first?.code == "N" {
-//                cell.day2MLabel.backgroundColor = UIColor.lightGray
-//            } else {
-//                cell.day2MLabel.backgroundColor = UIColor.clear
-//            }
-//            
-//            
-//            let payPeriodDayThree = Calendar.current.date(byAdding: .day, value: 2, to: FamilyData.calculatePayday().previous)
-//            let dayThreeItem = Points.pointsArray.filter({ $0.user == currentUserName && $0.itemCategory == isoArraySubtotals[indexPath.row].itemCategory && $0.itemName == isoArraySubtotals[indexPath.row].itemName && Calendar.current.isDate(Date(timeIntervalSince1970: $0.itemDate), inSameDayAs: payPeriodDayThree!) })
-//            if dayThreeItem.first?.code == "C" || dayThreeItem.first?.code == "S" {
-//                cell.day3TLabel.backgroundColor = UIColor(red: 125/255, green: 190/255, blue: 48/255, alpha: 1.0)  // green
-//            } else if dayThreeItem.first?.code == "X" || dayThreeItem.first?.code == "F" {
-//                cell.day3TLabel.backgroundColor = UIColor.red
-//            } else if dayThreeItem.first?.code == "E" || dayThreeItem.first?.code == "N" {
-//                cell.day3TLabel.backgroundColor = UIColor.lightGray
-//            } else {
-//                cell.day3TLabel.backgroundColor = UIColor.clear
-//            }
-//
-//            
-//            let payPeriodDayFour = Calendar.current.date(byAdding: .day, value: 3, to: FamilyData.calculatePayday().previous)
-//            let dayFourItem = Points.pointsArray.filter({ $0.user == currentUserName && $0.itemCategory == isoArraySubtotals[indexPath.row].itemCategory && $0.itemName == isoArraySubtotals[indexPath.row].itemName && Calendar.current.isDate(Date(timeIntervalSince1970: $0.itemDate), inSameDayAs: payPeriodDayFour!) })
-//            if dayFourItem.first?.code == "C" || dayFourItem.first?.code == "S" {
-//                cell.day4WLabel.backgroundColor = UIColor(red: 125/255, green: 190/255, blue: 48/255, alpha: 1.0)  // green
-//            } else if dayFourItem.first?.code == "X" || dayFourItem.first?.code == "F" {
-//                cell.day4WLabel.backgroundColor = UIColor.red
-//            } else if dayFourItem.first?.code == "E" || dayFourItem.first?.code == "N" {
-//                cell.day4WLabel.backgroundColor = UIColor.lightGray
-//            } else {
-//                cell.day4WLabel.backgroundColor = UIColor.clear
-//            }
-//
-//            
-//            let payPeriodDayFive = Calendar.current.date(byAdding: .day, value: 4, to: FamilyData.calculatePayday().previous)
-//            let dayFiveItem = Points.pointsArray.filter({ $0.user == currentUserName && $0.itemCategory == isoArraySubtotals[indexPath.row].itemCategory && $0.itemName == isoArraySubtotals[indexPath.row].itemName && Calendar.current.isDate(Date(timeIntervalSince1970: $0.itemDate), inSameDayAs: payPeriodDayFive!) })
-//            if dayFiveItem.first?.code == "C" || dayFiveItem.first?.code == "S" {
-//                cell.day5ThLabel.backgroundColor = UIColor(red: 125/255, green: 190/255, blue: 48/255, alpha: 1.0)  // green
-//            } else if dayFiveItem.first?.code == "X" || dayFiveItem.first?.code == "F" {
-//                cell.day5ThLabel.backgroundColor = UIColor.red
-//            } else if dayFiveItem.first?.code == "E" || dayFiveItem.first?.code == "N" {
-//                cell.day5ThLabel.backgroundColor = UIColor.lightGray
-//            } else {
-//                cell.day5ThLabel.backgroundColor = UIColor.clear
-//            }
-//            
-//            
-//            let payPeriodDaySix = Calendar.current.date(byAdding: .day, value: 5, to: FamilyData.calculatePayday().previous)
-//            let daySixItem = Points.pointsArray.filter({ $0.user == currentUserName && $0.itemCategory == isoArraySubtotals[indexPath.row].itemCategory && $0.itemName == isoArraySubtotals[indexPath.row].itemName && Calendar.current.isDate(Date(timeIntervalSince1970: $0.itemDate), inSameDayAs: payPeriodDaySix!) })
-//            if daySixItem.first?.code == "C" || daySixItem.first?.code == "S" {
-//                cell.day6FLabel.backgroundColor = UIColor(red: 125/255, green: 190/255, blue: 48/255, alpha: 1.0)  // green
-//            } else if daySixItem.first?.code == "X" || daySixItem.first?.code == "F" {
-//                cell.day6FLabel.backgroundColor = UIColor.red
-//            } else if daySixItem.first?.code == "E" || daySixItem.first?.code == "N" {
-//                cell.day6FLabel.backgroundColor = UIColor.lightGray
-//            } else {
-//                cell.day6FLabel.backgroundColor = UIColor.clear
-//            }
-//            
-//            
-//            let payPeriodDaySeven = Calendar.current.date(byAdding: .day, value: 6, to: FamilyData.calculatePayday().previous)
-//            let daySevenItem = Points.pointsArray.filter({ $0.user == currentUserName && $0.itemCategory == isoArraySubtotals[indexPath.row].itemCategory && $0.itemName == isoArraySubtotals[indexPath.row].itemName && Calendar.current.isDate(Date(timeIntervalSince1970: $0.itemDate), inSameDayAs: payPeriodDaySeven!) })
-//            if daySevenItem.first?.code == "C" || daySevenItem.first?.code == "S" {
-//                cell.day7SLabel.backgroundColor = UIColor(red: 125/255, green: 190/255, blue: 48/255, alpha: 1.0)  // green
-//            } else if daySevenItem.first?.code == "X" || daySevenItem.first?.code == "F" {
-//                cell.day7SLabel.backgroundColor = UIColor.red
-//            } else if daySevenItem.first?.code == "E" || daySevenItem.first?.code == "N" {
-//                cell.day7SLabel.backgroundColor = UIColor.lightGray
-//            } else {
-//                cell.day7SLabel.backgroundColor = UIColor.clear
-//            }
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
             
             // need to make an array of rows for selection
             if showHideDailyView[indexPath.row].selected == true {
@@ -353,17 +260,31 @@ class PaydayDetailsPopup: UIViewController, UITableViewDelegate, UITableViewData
         case "other jobs":
             topPopupImageView.image = UIImage(named: "broom plus white")
             topPopupImageView.tintColor = UIColor.black
-            // get array of current user's substitution jobs
-            let otherJobsFiltered = Points.pointsArray.filter({ $0.user == currentUserName &&
-                $0.code == "S" &&
-                $0.itemDate >= previousPayday &&
-                $0.itemDate < currentPayday })
             
-            for job in otherJobsFiltered {
-                print(job.itemName)
-                let isoItem = (job.itemName, categoryLabelText!, job.valuePerTap)
-                isoArraySubtotals.append(isoItem)
+            let isoArray = Points.pointsArray.filter({ $0.user == currentUserName && $0.code == "S" && $0.itemDate >= previousPayday && $0.itemDate < currentPayday })
+            for otherJob in isoArray {
+                let pointsSubtotal = isoArray.filter({ $0.itemName == otherJob.itemName }).reduce(0, { $0 + $1.valuePerTap })
+                let isoItem = (otherJob.itemName, categoryLabelText!, pointsSubtotal)
+                
+                // only append item if array doesn't already have a substitution job with that name
+                if !isoArraySubtotals.contains(where: { $0.itemName == otherJob.itemName }) {
+                    isoArraySubtotals.append(isoItem)
+                }
             }
+            
+            // OLD CODE (WORKS!)
+            // get array of current user's substitution jobs
+//            let otherJobsFiltered = Points.pointsArray.filter({ $0.user == currentUserName &&
+//                $0.code == "S" &&
+//                $0.itemDate >= previousPayday &&
+//                $0.itemDate < currentPayday })
+//            
+//            for job in otherJobsFiltered {
+//                let isoItem = (job.itemName, categoryLabelText!, job.valuePerTap)
+//                isoArraySubtotals.append(isoItem)
+//                print(isoItem)
+//            }
+            // END OLD CODE (WORKS)
             
         case "fees":
             topPopupImageView.image = UIImage(named: "dollar minus black")
@@ -419,89 +340,7 @@ class PaydayDetailsPopup: UIViewController, UITableViewDelegate, UITableViewData
             showHideDailyView.append(newItem)
             count += 1
         }
-        
-        // create array for current category for each job's day code
-        for n in 0...6 {
-            let singleDay = Calendar.current.date(byAdding: .day, value: n, to: FamilyData.calculatePayday().previous)
-            
-            // ... get the list of each job and the code
-            for isoItem in isoArraySubtotals {
-                let theMagic = Points.pointsArray.filter({ $0.user == currentUserName &&
-                    $0.itemCategory == categoryLabelText &&
-                    $0.itemName == isoItem.itemName &&
-                    Calendar.current.isDate(Date(timeIntervalSince1970: $0.itemDate), inSameDayAs: singleDay!) })
-                
-                let happiness = (n,theMagic.first?.code ?? "")
-                dailyCodeArray.append(happiness)
-                
-                print(n,isoItem.itemName,theMagic.first?.code ?? "no code")
-            }
-        }
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        // for each day of the previous pay period...
-//        let dayArray = []
-//        for n in 0...6 {
-//            let singleDay = Calendar.current.date(byAdding: .day, value: n, to: FamilyData.calculatePayday().previous)
-//            var tempArray: [(Date, String, String)] = []
-//            
-//            // ... get the list of each job and the code
-//            for item in Points.pointsArray.filter({ $0.user == currentUserName &&
-//                $0.itemCategory == categoryLabelText &&
-//                Calendar.current.isDate(Date(timeIntervalSince1970: $0.itemDate), inSameDayAs: singleDay!) }) {
-//                    let tempItem = (singleDay!,item.itemName,item.code)
-//                    tempArray.append(tempItem)
-//                    print("B: ",singleDay!,item.itemName,item.code)
-//            }
-//            let dayItem = (n)
-//        }
-        
-        
-        
-        
-        
-//        for n in 0...6 {
-//            let singleDay = Calendar.current.date(byAdding: .day, value: n, to: FamilyData.calculatePayday().previous)
-//            
-//            // ... get the list of each job and the code
-//            for isoItem in Points.pointsArray.filter({ $0.user == currentUserName && $0.itemCategory == categoryLabelText && Calendar.current.isDate(Date(timeIntervalSince1970: $0.itemDate), inSameDayAs: singleDay!) }) {
-//                    print("E: ",n,isoItem.itemName,isoItem.code)
-//            }
-//            
-////            print("D: ",itemIsoArray.first?.code ?? "blank")
-//        }
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
 
-        
-        
-        
-        
-        
-        
         customizeBackground()
         detailsTableView.reloadData()
         detailsTableViewHeight.constant = detailsTableView.contentSize.height
