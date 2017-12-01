@@ -272,7 +272,7 @@ class PaydayDetailsPopup: UIViewController, UITableViewDelegate, UITableViewData
                 }
             }
             
-            // OLD CODE (WORKS!)
+            // OLD CODE (WORKS! but shows each job in its own line rather than combining all similar jobs together)
             // get array of current user's substitution jobs
 //            let otherJobsFiltered = Points.pointsArray.filter({ $0.user == currentUserName &&
 //                $0.code == "S" &&

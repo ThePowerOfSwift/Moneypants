@@ -11,17 +11,6 @@ struct Points {
     
     static var pointsArray = [Points]()
     
-    // code:
-    // C = completed (for daily jobs, daily habits, and weekly jobs)
-    // E = excused (for daily jobs only)
-    // X = unexcused (for daily jobs only)
-    // S = sub (for daily and weekly jobs)
-    // N = not complete (for habits and weekly jobs)
-    // F = fee
-    // B = bonus (for daily jobs and habits)
-    // P = paid (for payday items)
-    // U = unpaid
-    
     static func loadPoints(completion: @escaping () -> ()) {
         let firebaseUser = Auth.auth().currentUser
         let ref = Database.database().reference().child("users").child((firebaseUser?.uid)!)
@@ -45,4 +34,24 @@ struct Points {
             }
         }
     }
+    
+    // code:
+    // C = completed (for daily jobs, daily habits, and weekly jobs)
+    // E = excused (for daily jobs only)
+    // X = unexcused (for daily jobs only)
+    // S = sub (for daily and weekly jobs)
+    // J = job jar
+    // N = not complete (for habits and weekly jobs)
+    // F = fee
+    // B = bonus (for daily jobs and habits)
+    // P = paid (for payday items)
+    // U = unpaid
+    
+    // daily jobs:      C, E, X, B
+    // daily habits:    C, N, B
+    // weekly jobs:     C, N
+    // other jobs:      S, J
+    // 
+    // where to put P and U
+    
 }

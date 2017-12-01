@@ -152,10 +152,12 @@ extension UserVC {
             // 2. pay the susbtitute for doing the job in Income array AND Points array
             // ------------------------------------------------------------------------
             
+            // MARK: changed "weekly jobs" category to "other jobs" category for substitute
+            
             // add job value to Points array for substitute
             let earnedSubstitutionValue = Points(user: substituteName,
                                                  itemName: "\(self.usersWeeklyJobs[indexPath.row].name) (sub)",
-                                                 itemCategory: "weekly jobs",
+                                                 itemCategory: "other jobs",   // previously was "weekly jobs"
                                                  code: "S",
                                                  valuePerTap: self.weeklyJobsPointValue,
                                                  itemDate: (self.selectedDate?.timeIntervalSince1970)!)

@@ -285,6 +285,7 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
             let subJobsArray = Points.pointsArray.filter({ $0.user == currentUserName &&
                 $0.code == "S" &&
                 Calendar.current.isDate(Date(timeIntervalSince1970: $0.itemDate), inSameDayAs: selectedDate) })
+            
             cell.jobHabitLabel.text = subJobsArray[indexPath.row].itemName
             cell.jobHabitLabel.textColor = .lightGray
             cell.pointsLabel.text = "\(subJobsArray[indexPath.row].valuePerTap)"
