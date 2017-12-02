@@ -76,7 +76,7 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         dailyJobsPointValue = Int((Double(FamilyData.adjustedNatlAvgYrlySpendingEntireFam) * 0.20 / 52 / Double(JobsAndHabits.finalDailyJobsArray.count) * 100 / 7).rounded(.up))
         priorityHabitPointValue = Int((Double(FamilyData.adjustedNatlAvgYrlySpendingPerKid) / 52 * 0.065 / 7 * 100).rounded(.up))
         regularHabitPointValue = Int((Double(FamilyData.adjustedNatlAvgYrlySpendingPerKid) / 52 * 0.015 / 7 * 100).rounded(.up))
-        weeklyJobsPointValue = Int((Double(FamilyData.adjustedNatlAvgYrlySpendingEntireFam) * 0.2 / 52 / Double(JobsAndHabits.finalWeeklyJobsArray.count) * 100).rounded(.up))
+        weeklyJobsPointValue = Int((Double(FamilyData.adjustedNatlAvgYrlySpendingEntireFam) * 0.20 / 52 / Double(JobsAndHabits.finalWeeklyJobsArray.count) * 100).rounded(.up))
         jobAndHabitBonusValue = Int(Double(FamilyData.adjustedNatlAvgYrlySpendingPerKid) / 52 * 0.20 * 100)
         substituteFee = FamilyData.feeValueMultiplier / usersDailyJobs.count
     
@@ -86,6 +86,7 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         checkIncome()
         prepHabitBonusSFX()
         updateProgressMeters()
+        updateJobBonus()        // this also needs to go on main page and payday page, but I don't know how to do that...
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -339,26 +340,13 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                 Calendar.current.isDate(Date(timeIntervalSince1970: $0.itemDate), inSameDayAs: selectedDate) })
             
             if dailyJobIsoArray.isEmpty {
-                createNewPointsItemForDailyJobs(indexPath: indexPath)
+                createNewPointsItem(itemName: usersDailyJobs[indexPath.row].name, itemCategory: "daily jobs", code: "C", valuePerTap: dailyJobsPointValue)
+                updateProgressMeters()
                 tableView.reloadData()
+
+                
+//                createNewPointsItemForDailyJobs(indexPath: indexPath)
 //                tableView.reloadRows(at: [indexPath], with: .automatic)
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                // check for job bonus (this will only ever happen either a. on the seventh day, or b. on the eighth day which is payday
-                
                 
                 // ------------------
                 // seventh day logic:
@@ -378,26 +366,22 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                     // 5. and the current pay period has no X's or B's
                     !currentPayPeriodIsoArray.contains(where: { $0.code == "X" || $0.code == "B" }) &&
                     // 6. and user has completed all their assigned jobs for the day (the last day of the pay period)
-                    assignedDailyJobs.count == currentPayPeriodIsoArray.filter({ $0.code == "C" || $0.code == "E" && Calendar.current.isDate(Date(timeIntervalSince1970: $0.itemDate), inSameDayAs: lastDayOfCurrentPayPeriod!) }).count {
+                    assignedDailyJobs.count == currentPayPeriodIsoArray.filter({ ($0.code == "C" || $0.code == "E") && Calendar.current.isDate(Date(timeIntervalSince1970: $0.itemDate), inSameDayAs: lastDayOfCurrentPayPeriod!) }).count {
                     createNewPointsItem(itemName: "job bonus", itemCategory: "daily jobs", code: "B", valuePerTap: jobAndHabitBonusValue)
-                } else {
-                    print("no bonus for you!")
+                    updateProgressMeters()
                 }
                 
-                
-                
-                
-                
-                
-                
-                
                 // --------------------------------
-                // eighth day logic (payday logic):
+                // eighth day logic (payday logic): is in home VC as well
                 // --------------------------------
                 
                 // no need for default job bonus
                 // if on payday, user has no X's for the week AND user has no jobs bonus, then calculate bonus
-                
+//                let previousPayPeriodIsoArray = Points.pointsArray.filter({ $0.user == currentUserName && $0.itemCategory == "daily jobs" && $0.itemDate >= FamilyData.calculatePayday().previous.timeIntervalSince1970 && $0.itemDate < FamilyData.calculatePayday().current.timeIntervalSince1970 && ($0.code == "X" || $0.code == "B") })
+//                
+//                if Calendar.current.isDate(Date(), inSameDayAs: FamilyData.calculatePayday().current) && previousPayPeriodIsoArray.isEmpty {
+//                    print("give that user a job bonus")
+//                }
                 
                 
                 
@@ -487,10 +471,19 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                 
                 // if selected date is in previous pay period and there are no weekly jobs done, then
                 if selectedDate.timeIntervalSince1970 >= FamilyData.calculatePayday().previous.timeIntervalSince1970 && selectedDate.timeIntervalSince1970 < FamilyData.calculatePayday().current.timeIntervalSince1970 && prevPayPeriod.isEmpty {
-                    createNewPointsItemForWeeklyJobs(indexPath: indexPath)
+                    createNewPointsItem(itemName: usersWeeklyJobs[indexPath.row].name, itemCategory: "weekly jobs", code: "C", valuePerTap: weeklyJobsPointValue)
+                    updateProgressMeters()
+                    
+                    
+                    
+//                    createNewPointsItemForWeeklyJobs(indexPath: indexPath)
                     tableView.reloadData()
                 } else if selectedDate.timeIntervalSince1970 >= FamilyData.calculatePayday().current.timeIntervalSince1970 && currentPayPeriod.isEmpty {
-                    createNewPointsItemForWeeklyJobs(indexPath: indexPath)
+                    createNewPointsItem(itemName: usersWeeklyJobs[indexPath.row].name, itemCategory: "weekly jobs", code: "C", valuePerTap: weeklyJobsPointValue)
+                    updateProgressMeters()
+                    
+                    
+//                    createNewPointsItemForWeeklyJobs(indexPath: indexPath)
                     tableView.reloadData()
                 } else {
                     weeklyJobAlreadyCompletedAlert(indexPath: indexPath)
@@ -1065,30 +1058,6 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         let weeklyJobsSubtotal = isoArrayForPayPeriod.filter({ $0.itemCategory == "weekly jobs" }).reduce(0, { $0 + $1.valuePerTap })
         let pointsSubtotal = isoArrayForPayPeriod.reduce(0, { $0 + $1.valuePerTap })
         
-//        let totalPointsEarnedInSelectedPayPeriod = isoArrayForPayPeriod
-//        var pointsSubtotal: Int = 0
-//        for pointsItem in totalPointsEarnedInSelectedPayPeriod! {
-//            pointsSubtotal += pointsItem.valuePerTap
-//        }
-        
-//        let habitPointsEarnedInSelectedPayPeriod = isoArrayForPayPeriod.filter({ $0.itemCategory == "daily habits" })
-//        var habitsSubtotal: Int = 0
-//        for pointsItem in habitPointsEarnedInSelectedPayPeriod {
-//            habitsSubtotal += pointsItem.valuePerTap
-//        }
-//        
-//        let dailyJobsPointsEarnedInSelectedPayPeriod = isoArrayForPayPeriod.filter({ $0.itemCategory == "daily jobs" })
-//        var dailyJobsSubtotal: Int = 0
-//        for pointsItem in dailyJobsPointsEarnedInSelectedPayPeriod {
-//            dailyJobsSubtotal += pointsItem.valuePerTap
-//        }
-//        
-//        let weeklyJobsPointsEarnedInSelectedPayPeriod = isoArrayForPayPeriod.filter({ $0.itemCategory == "weekly jobs" })
-//        var weeklyJobsSubtotal: Int = 0
-//        for pointsItem in weeklyJobsPointsEarnedInSelectedPayPeriod {
-//            weeklyJobsSubtotal += pointsItem.valuePerTap
-//        }
-        
         return (dailyJobsSubtotal, habitsSubtotal, weeklyJobsSubtotal, pointsSubtotal)
     }
     
@@ -1103,6 +1072,42 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         } catch {
             print(error)
         }
+    }
+    
+    func createNewPointsItem(itemName: String, itemCategory: String, code: String, valuePerTap: Int) {
+        if itemName == "job bonus" {
+            // create job bonus for last day of pay period (not first day of current pay period)
+            selectedDate = Calendar.current.date(byAdding: .day, value: -1, to: FamilyData.calculatePayday().current)
+        } else {
+            // refresh selectedDate variable with current time
+            selectedDate = Calendar.current.date(byAdding: .day, value: selectedDateNumber, to: Date())
+        }
+        
+        let pointsArrayItem = Points(user: currentUserName,
+                                     itemName: itemName,      // previous was (usersDailyJobs?[indexPath.row].name)!
+                                     itemCategory: itemCategory,
+                                     code: code,
+                                     valuePerTap: valuePerTap,      // previous was dailyJobsPointValue
+                                     itemDate: selectedDate.timeIntervalSince1970)
+        
+        Points.pointsArray.append(pointsArrayItem)
+        
+        // add item to Firebase
+        // need to organize them in some way? perhaps by date? category?
+        ref.child("points").childByAutoId().setValue(["user" : currentUserName,
+                                                      "itemName" : itemName,
+                                                      "itemCategory" : itemCategory,
+                                                      "code" : code,
+                                                      "valuePerTap" : valuePerTap,
+                                                      "itemDate" : selectedDate.timeIntervalSince1970])
+        
+        for (index, item) in Income.currentIncomeArray.enumerated() {
+            if item.user == currentUserName {
+                Income.currentIncomeArray[index].currentPoints += valuePerTap
+                incomeLabel.text = "$\(String(format: "%.2f", Double(Income.currentIncomeArray[index].currentPoints) / 100))"
+            }
+        }
+        updateUserIncomeOnFirebase()
     }
 }
 

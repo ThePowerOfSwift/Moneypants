@@ -196,8 +196,8 @@ class PaydayDetailsPopup: UIViewController, UITableViewDelegate, UITableViewData
         switch categoryLabelText {
             
         case "daily jobs":
-            topPopupImageView.image = UIImage(named: "broom black")
-            
+            topPopupImageView.image = UIImage(named: "broom")
+            topPopupImageView.tintColor = UIColor.black
             // need all daily jobs: C, X, and E (not just C)
             // 1. get array of current user's assigned jobs (there may be more than one)
             // 2. then iterate over that array and get subtotal for each job

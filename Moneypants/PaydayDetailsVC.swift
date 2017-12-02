@@ -98,7 +98,7 @@ class PaydayDetailsVC: UIViewController, UICollectionViewDataSource, UICollectio
         
         let dailyJobsFiltered = Points.pointsArray.filter({ $0.user == currentUserName &&
             $0.itemCategory == "daily jobs" &&
-            $0.code == "C" &&
+            ($0.code == "C" || $0.code == "B") &&
             $0.itemDate >= previousPayday &&
             $0.itemDate < currentPayday })
         
@@ -113,23 +113,6 @@ class PaydayDetailsVC: UIViewController, UICollectionViewDataSource, UICollectio
             $0.code == "X" &&
             $0.itemDate >= previousPayday &&
             $0.itemDate < currentPayday })
-        
-        
-        
-        
-        
-        
-        // and what about the job bonus? Does that go here? How to calculate that?
-        // it happens on button tap for daily jobs. When user taps 'daily job', app runs program to see if that day is the seventh day since previous payday. If so, app checks to see if there are any 'x' marks in their points array for daily jobs. If not, then user gets a bonus. It's a Points item, and the code is "B". NOTE: make sure you erase it if user undoes job bonus with an "X". How to do that?
-        // question: what if user leaves daily job blank? does it automatically become unexcused?
-        
-        
-        
-        
-        
-        if unexcusedDailyJobs.isEmpty {
-            print("user should get their payday bonus...")
-        }
         
         let dailyHabitsFiltered = Points.pointsArray.filter({ $0.user == currentUserName &&
             $0.itemCategory == "daily habits" &&
@@ -162,7 +145,6 @@ class PaydayDetailsVC: UIViewController, UICollectionViewDataSource, UICollectio
         
         let unpaidFiltered = Points.pointsArray.filter({ $0.user == currentUserName &&
             $0.itemDate < previousPayday })
-        
         
         // create daily jobs points subtotal for current user
         var dailyJobsSubtotal: Int = 0
@@ -206,7 +188,7 @@ class PaydayDetailsVC: UIViewController, UICollectionViewDataSource, UICollectio
             unpaidSubtotal += item.valuePerTap
         }
         
-        paydayData = [("broom white", "daily jobs", dailyJobsSubtotal + dailyJobsExcusedSubtotal + dailyJobsUnexcusedSubtotal),
+        paydayData = [("broom", "daily jobs", dailyJobsSubtotal + dailyJobsExcusedSubtotal + dailyJobsUnexcusedSubtotal),
                       ("workout", "daily habits", dailyHabitsSubtotal),
                       ("lawnmower white", "weekly jobs", weeklyJobsSubtotal),
                       ("broom plus white", "other jobs", otherJobsSubtotal),

@@ -189,38 +189,6 @@ extension UserVC {
         print("\(substituteName) selected as substitute")
     }
     
-    func createNewPointsItemForWeeklyJobs(indexPath: IndexPath) {
-        // refresh selectedDate variable with current time
-        selectedDate = Calendar.current.date(byAdding: .day, value: selectedDateNumber, to: Date())
-        let newItemTapped = Points(user: currentUserName,
-                                   itemName: (usersWeeklyJobs?[indexPath.row].name)!,
-                                   itemCategory: "weekly jobs",
-                                   code: "C",
-                                   valuePerTap: weeklyJobsPointValue,
-                                   itemDate: selectedDate.timeIntervalSince1970)
-        
-        Points.pointsArray.append(newItemTapped)
-        
-        // add item to Firebase
-        ref.child("points").childByAutoId().setValue(["user" : currentUserName,
-                                                      "itemName" : (usersWeeklyJobs?[indexPath.row].name)!,
-                                                      "itemCategory" : "weekly jobs",
-                                                      "code" : "C",
-                                                      "valuePerTap" : weeklyJobsPointValue,
-                                                      "itemDate" : selectedDate.timeIntervalSince1970])
-        
-        // update user's income array & income label
-        for (index, item) in Income.currentIncomeArray.enumerated() {
-            if item.user == currentUserName {
-                Income.currentIncomeArray[index].currentPoints += weeklyJobsPointValue
-                incomeLabel.text = "$\(String(format: "%.2f", Double(Income.currentIncomeArray[index].currentPoints) / 100))"
-                updateProgressMeterHeights()
-            }
-        }
-        
-        updateUserIncomeOnFirebase()
-    }
-    
     func weeklyJobAlreadyCompletedAlert(indexPath: IndexPath) {
         let alert = UIAlertController(title: "Weekly Job", message: "The job '\(usersWeeklyJobs[indexPath.row].name)' has already been completed for the week.", preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "okay", style: .cancel, handler: { (action) in

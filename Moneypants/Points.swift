@@ -52,6 +52,6 @@ struct Points {
     // weekly jobs:     C, N
     // other jobs:      S, J
     // 
-    // where to put P and U
+    // where to put P and U?
     
 }
