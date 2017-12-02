@@ -82,10 +82,9 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
         customizeImages()
         updateFormattedDate()
-        checkAndSetDefaultBonusValues()
         checkIncome()
         prepHabitBonusSFX()
-        updateProgressMeters()
+        updateProgressMeters(animated: false)
         updateJobBonus()        // this also needs to go on main page and payday page, but I don't know how to do that...
     }
 
@@ -341,11 +340,8 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
             
             if dailyJobIsoArray.isEmpty {
                 createNewPointsItem(itemName: usersDailyJobs[indexPath.row].name, itemCategory: "daily jobs", code: "C", valuePerTap: dailyJobsPointValue)
-                updateProgressMeters()
+                updateProgressMeters(animated: true)
                 tableView.reloadData()
-
-                
-//                createNewPointsItemForDailyJobs(indexPath: indexPath)
 //                tableView.reloadRows(at: [indexPath], with: .automatic)
                 
                 // ------------------
@@ -368,43 +364,15 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                     // 6. and user has completed all their assigned jobs for the day (the last day of the pay period)
                     assignedDailyJobs.count == currentPayPeriodIsoArray.filter({ ($0.code == "C" || $0.code == "E") && Calendar.current.isDate(Date(timeIntervalSince1970: $0.itemDate), inSameDayAs: lastDayOfCurrentPayPeriod!) }).count {
                     createNewPointsItem(itemName: "job bonus", itemCategory: "daily jobs", code: "B", valuePerTap: jobAndHabitBonusValue)
-                    updateProgressMeters()
+                    updateProgressMeters(animated: true)
                 }
                 
                 // --------------------------------
-                // eighth day logic (payday logic): is in home VC as well
+                // eighth day logic (payday logic): is in viewDidLoad method
                 // --------------------------------
                 
                 // no need for default job bonus
                 // if on payday, user has no X's for the week AND user has no jobs bonus, then calculate bonus
-//                let previousPayPeriodIsoArray = Points.pointsArray.filter({ $0.user == currentUserName && $0.itemCategory == "daily jobs" && $0.itemDate >= FamilyData.calculatePayday().previous.timeIntervalSince1970 && $0.itemDate < FamilyData.calculatePayday().current.timeIntervalSince1970 && ($0.code == "X" || $0.code == "B") })
-//                
-//                if Calendar.current.isDate(Date(), inSameDayAs: FamilyData.calculatePayday().current) && previousPayPeriodIsoArray.isEmpty {
-//                    print("give that user a job bonus")
-//                }
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
                 
             } else if dailyJobIsoArray[0].code == "X" {
                 alertX(indexPath: indexPath, deselectRow: true)
@@ -430,7 +398,14 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                 Calendar.current.isDate(Date(timeIntervalSince1970: $0.itemDate), inSameDayAs: selectedDate) })
             
             if habitIsoArray.isEmpty {
-                createNewItemForDailyHabit(indexPath: indexPath)
+                var valuePerTap = 0
+                if indexPath.row == 0 { valuePerTap = priorityHabitPointValue }
+                else { valuePerTap = regularHabitPointValue }
+                
+                createNewPointsItem(itemName: usersDailyHabits[indexPath.row].name, itemCategory: "daily habits", code: "C", valuePerTap: valuePerTap)
+                updateProgressMeters(animated: true)
+                
+//                createNewItemForDailyHabit(indexPath: indexPath)
                 tableView.reloadData()
 //                tableView.reloadRows(at: [indexPath], with: .automatic)
             } else if habitIsoArray.first?.code == "N" {
@@ -472,16 +447,13 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                 // if selected date is in previous pay period and there are no weekly jobs done, then
                 if selectedDate.timeIntervalSince1970 >= FamilyData.calculatePayday().previous.timeIntervalSince1970 && selectedDate.timeIntervalSince1970 < FamilyData.calculatePayday().current.timeIntervalSince1970 && prevPayPeriod.isEmpty {
                     createNewPointsItem(itemName: usersWeeklyJobs[indexPath.row].name, itemCategory: "weekly jobs", code: "C", valuePerTap: weeklyJobsPointValue)
-                    updateProgressMeters()
-                    
-                    
+                    updateProgressMeters(animated: true)
                     
 //                    createNewPointsItemForWeeklyJobs(indexPath: indexPath)
                     tableView.reloadData()
                 } else if selectedDate.timeIntervalSince1970 >= FamilyData.calculatePayday().current.timeIntervalSince1970 && currentPayPeriod.isEmpty {
                     createNewPointsItem(itemName: usersWeeklyJobs[indexPath.row].name, itemCategory: "weekly jobs", code: "C", valuePerTap: weeklyJobsPointValue)
-                    updateProgressMeters()
-                    
+                    updateProgressMeters(animated: true)
                     
 //                    createNewPointsItemForWeeklyJobs(indexPath: indexPath)
                     tableView.reloadData()
@@ -527,7 +499,7 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
             }
         }
         
-        updateProgressMeterHeights()
+        updateProgressMeters(animated: true)
     }
     
     func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
@@ -785,7 +757,6 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
             selectedDateNumber! -= 1
             selectedDate = Calendar.current.date(byAdding: .day, value: selectedDateNumber, to: today)
             updateFormattedDate()
-            checkAndSetDefaultBonusValues()
         }
         tableView.reloadData()
     }
@@ -826,7 +797,6 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                 self.selectedDate = Calendar.current.date(byAdding: .day, value: self.selectedDateNumber, to: today)
                 self.updateFormattedDate()
                 self.tableView.reloadData()
-                self.checkAndSetDefaultBonusValues()
             } else {
                 self.incorrectPasscodeAlert()
             }
@@ -875,7 +845,7 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                         if incomeItem.user == self.currentUserName {
                             Income.currentIncomeArray[incomeIndex].currentPoints -= pointsItem.valuePerTap
                             incomeLabel.text = "$\(String(format: "%.2f", Double(Income.currentIncomeArray[incomeIndex].currentPoints) / 100))"
-                            updateProgressMeterHeights()
+                            updateProgressMeters(animated: true)
                         }
                     }
                     tableView.setEditing(false, animated: true)
@@ -941,7 +911,7 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                         for (incomeIndex, incomeItem) in Income.currentIncomeArray.enumerated() {
                             if incomeItem.user == self.currentUserName {
                                 self.incomeLabel.text = "$\(String(format: "%.2f", Double(Income.currentIncomeArray[incomeIndex].currentPoints) / 100))"
-                                self.updateProgressMeterHeights()
+                                self.updateProgressMeters(animated: true)
                             }
                         }
                         self.tableView.setEditing(false, animated: true)
@@ -1006,7 +976,7 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                     for (incomeIndex, incomeItem) in Income.currentIncomeArray.enumerated() {
                         if incomeItem.user == self.currentUserName {
                             self.incomeLabel.text = "$\(String(format: "%.2f", Double(Income.currentIncomeArray[incomeIndex].currentPoints) / 100))"
-                            self.updateProgressMeterHeights()
+                            self.updateProgressMeters(animated: true)
                         }
                     }
                 }
@@ -1020,19 +990,6 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         }))
         
         self.present(alert, animated: true, completion: nil)
-    }
-    
-    func updateProgressMeterHeights() {
-        let potentialWeeklyEarnings = FamilyData.adjustedNatlAvgYrlySpendingPerKid * 100 / 52
-        
-        habitProgressMeterHeight.constant = habitTotalProgressView.bounds.height * CGFloat(pointsEarnedInPayPeriod(previousOrCurrent: "current").habits) / CGFloat(jobAndHabitBonusValue)
-        totalProgressMeterHeight.constant = habitTotalProgressView.bounds.height * CGFloat(pointsEarnedInPayPeriod(previousOrCurrent: "current").total) / CGFloat(potentialWeeklyEarnings)
-            
-        UIView.animate(withDuration: 0.3) {
-            
-            // only animate progress view, not whole page (isolate the animation)
-            self.habitTotalProgressView.layoutIfNeeded()
-        }
     }
     
     func pointsEarnedInPayPeriod(previousOrCurrent: String) -> (dailyJobs: Int, habits: Int, weeklyJobs: Int, total: Int) {

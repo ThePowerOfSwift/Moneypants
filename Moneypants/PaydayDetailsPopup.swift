@@ -102,8 +102,6 @@ class PaydayDetailsPopup: UIViewController, UITableViewDelegate, UITableViewData
                     $0.itemName == isoArraySubtotals[indexPath.row].itemName &&
                     Calendar.current.isDate(Date(timeIntervalSince1970: $0.itemDate), inSameDayAs: payPeriodDay!) })
                 
-                print(dayIsoArray.first?.code ?? "\nno code for item")
-                
                 if dayIsoArray.first?.code == "C" || dayIsoArray.first?.code == "S" {
                     dayLabels[n].backgroundColor = UIColor(red: 125/255, green: 190/255, blue: 48/255, alpha: 1.0)  // green
                 } else if dayIsoArray.first?.code == "X" || dayIsoArray.first?.code == "F" {

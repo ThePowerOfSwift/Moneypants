@@ -90,7 +90,7 @@ extension UserVC {
                         if item.user == self.currentUserName {
                             Income.currentIncomeArray[index].currentPoints -= self.substituteFee
                             self.incomeLabel.text = "$\(String(format: "%.2f", Double(Income.currentIncomeArray[index].currentPoints) / 100))"
-                            self.updateProgressMeterHeights()
+                            self.updateProgressMeters(animated: true)
                         }
                     }
                     self.tableView.setEditing(false, animated: true)
@@ -216,7 +216,7 @@ extension UserVC {
             for (incomeIndex, incomeItem) in Income.currentIncomeArray.enumerated() {
                 if incomeItem.user == self.currentUserName {
                     self.incomeLabel.text = "$\(String(format: "%.2f", Double(Income.currentIncomeArray[incomeIndex].currentPoints) / 100))"
-                    self.updateProgressMeterHeights()
+                    self.updateProgressMeters(animated: true)
                 }
             }
             self.tableView.setEditing(false, animated: true)
