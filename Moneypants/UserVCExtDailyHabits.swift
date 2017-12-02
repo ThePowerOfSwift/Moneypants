@@ -257,37 +257,31 @@ extension UserVC {
         }
     }
     
-    func checkHabitsDefaultBonusValue() {
+    func checkAndSetDefaultBonusValues() {
         let currentPayPeriodBonusIsoArray = Points.pointsArray.filter({ $0.user == currentUserName &&
-            $0.itemCategory == "daily habits" &&
             $0.code == "B" &&
             $0.itemDate >= FamilyData.calculatePayday().current.timeIntervalSince1970 })
         
         let previousPayPeriodBonusIsoArray = Points.pointsArray.filter({ $0.user == currentUserName &&
-            $0.itemCategory == "daily habits" &&
             $0.code == "B" &&
             $0.itemDate >= FamilyData.calculatePayday().previous.timeIntervalSince1970 &&
             $0.itemDate < FamilyData.calculatePayday().current.timeIntervalSince1970 })
         
         // check to see if current pay period has bonus
-        if selectedDate.timeIntervalSince1970 >= FamilyData.calculatePayday().current.timeIntervalSince1970 {
-            if currentPayPeriodBonusIsoArray.isEmpty {
-                createZeroValueHabitBonusItem()
-                print("zero bonus item created")
-            } else {
-                print("current pay period already has bonus")
-            }
-        } else if selectedDate.timeIntervalSince1970 >= FamilyData.calculatePayday().previous.timeIntervalSince1970 && selectedDate.timeIntervalSince1970 < FamilyData.calculatePayday().current.timeIntervalSince1970 {
-            if previousPayPeriodBonusIsoArray.isEmpty {
-                createZeroValueHabitBonusItem()
-                print("zero bonus item created")
-            } else {
-                print("previous pay period already has bonus")  // not sure when this code would run...
-            }
+        if selectedDate.timeIntervalSince1970 >= FamilyData.calculatePayday().current.timeIntervalSince1970 &&
+            currentPayPeriodBonusIsoArray.filter({ $0.itemCategory == "daily habits" }).isEmpty {
+            
+            createZeroValueHabitBonus()
+            
+        } else if selectedDate.timeIntervalSince1970 >= FamilyData.calculatePayday().previous.timeIntervalSince1970 &&
+            selectedDate.timeIntervalSince1970 < FamilyData.calculatePayday().current.timeIntervalSince1970 &&
+            previousPayPeriodBonusIsoArray.filter({ $0.itemCategory == "daily habits" }).isEmpty {
+            
+            createZeroValueHabitBonus()
         }
     }
     
-    func createZeroValueHabitBonusItem() {
+    func createZeroValueHabitBonus() {
         // refresh selectedDate variable with selected time
         selectedDate = Calendar.current.date(byAdding: .day, value: selectedDateNumber, to: Date())
         let pointsArrayItem = Points(user: currentUserName,
@@ -301,12 +295,13 @@ extension UserVC {
         Points.pointsArray.append(pointsArrayItem)
         
         // add bonus to Firebase
-        ref.child("points").childByAutoId().setValue(["user" : currentUserName,
-                                                      "itemName" : "habit bonus",
-                                                      "itemCategory" : "daily habits",
-                                                      "code" : "B",
-                                                      "valuePerTap" : 0,
-                                                      "itemDate" : selectedDate.timeIntervalSince1970])
+        // this code is wrong. it sets the value, and instead it should update the value. need to fix.
+//        ref.child("points").childByAutoId().setValue(["user" : currentUserName,
+//                                                      "itemName" : "habit bonus",
+//                                                      "itemCategory" : "daily habits",
+//                                                      "code" : "B",
+//                                                      "valuePerTap" : 0,
+//                                                      "itemDate" : selectedDate.timeIntervalSince1970])
     }
     
     func checkIfUserStillEarnedBonusAndUpdateAccordingly() {

@@ -268,5 +268,86 @@ extension UserVC {
         
         updateUserIncomeOnFirebase()
     }
-
+    
+    
+    
+    
+    
+    
+    func createNewPointsItem(itemName: String, itemCategory: String, code: String, valuePerTap: Int) {
+        // refresh selectedDate variable with current time
+        selectedDate = Calendar.current.date(byAdding: .day, value: selectedDateNumber, to: Date())
+        let pointsArrayItem = Points(user: currentUserName,
+                                     itemName: itemName,      // previous was (usersDailyJobs?[indexPath.row].name)!
+                                     itemCategory: itemCategory,
+                                     code: code,
+                                     valuePerTap: valuePerTap,      // previous was dailyJobsPointValue
+                                     itemDate: selectedDate.timeIntervalSince1970)
+        
+        Points.pointsArray.append(pointsArrayItem)
+        
+        // add item to Firebase
+        // need to organize them in some way? perhaps by date? category?
+        ref.child("points").childByAutoId().setValue(["user" : currentUserName,
+                                                      "itemName" : itemName,
+                                                      "itemCategory" : itemCategory,
+                                                      "code" : code,
+                                                      "valuePerTap" : valuePerTap,
+                                                      "itemDate" : selectedDate.timeIntervalSince1970])
+        
+        for (index, item) in Income.currentIncomeArray.enumerated() {
+            if item.user == currentUserName {
+                Income.currentIncomeArray[index].currentPoints += valuePerTap
+                incomeLabel.text = "$\(String(format: "%.2f", Double(Income.currentIncomeArray[index].currentPoints) / 100))"
+                updateProgressMeterHeights()
+            }
+        }
+        
+        updateUserIncomeOnFirebase()
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+//    func createJobBonus() {
+//        // refresh selectedDate variable with current time
+//        selectedDate = Calendar.current.date(byAdding: .day, value: selectedDateNumber, to: Date())
+//        let pointsArrayItem = Points(user: currentUserName,
+//                                     itemName: "job bonus",
+//                                     itemCategory: "daily jobs",
+//                                     code: "B",
+//                                     valuePerTap: jobAndHabitBonusValue,
+//                                     itemDate: selectedDate.timeIntervalSince1970)
+//        
+//        Points.pointsArray.append(pointsArrayItem)
+//        
+//        // add item to Firebase
+//        // need to organize them in some way? perhaps by date? category?
+//        ref.child("points").childByAutoId().setValue(["user" : currentUserName,
+//                                                      "itemName" : "job bonus",
+//                                                      "itemCategory" : "daily jobs",
+//                                                      "code" : "B",
+//                                                      "valuePerTap" : jobAndHabitBonusValue,
+//                                                      "itemDate" : selectedDate.timeIntervalSince1970])
+//        
+//        for (index, item) in Income.currentIncomeArray.enumerated() {
+//            if item.user == currentUserName {
+//                Income.currentIncomeArray[index].currentPoints += jobAndHabitBonusValue
+//                incomeLabel.text = "$\(String(format: "%.2f", Double(Income.currentIncomeArray[index].currentPoints) / 100))"
+//                updateProgressMeterHeights()
+//            }
+//        }
+//        
+//        // update user's income on Firebase
+//        updateUserIncomeOnFirebase()
+//    }
 }

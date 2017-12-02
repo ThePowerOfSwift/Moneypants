@@ -35,8 +35,6 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     var weeklyJobsPointValue: Int!
     var jobAndHabitBonusValue: Int!
     var substituteFee: Int!
-//    var currentBonusSoundAlreadyPlayed: Bool!
-//    var previousBonusSoundAlreadyPlayed: Bool!
     
     var subFeeFormatted: String!
     var excusedTitle: String!
@@ -84,7 +82,7 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
         customizeImages()
         updateFormattedDate()
-        checkHabitsDefaultBonusValue()
+        checkAndSetDefaultBonusValues()
         checkIncome()
         prepHabitBonusSFX()
         updateProgressMeters()
@@ -335,19 +333,98 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         if indexPath.section == 0 {
             // get an array of this user in this category for this item on this day. If it doesn't exist, then create it w/ tap value = C.
             // if the array isn't empty, check the code. If it's X or E, it needs a parental pword, then it becomes C. Otherwise, do nothing
-            let currentUserCategoryItemDateArray = Points.pointsArray.filter({ $0.user == currentUserName &&
+            let dailyJobIsoArray = Points.pointsArray.filter({ $0.user == currentUserName &&
                 $0.itemCategory == "daily jobs" &&
                 $0.itemName == usersDailyJobs?[indexPath.row].name &&
                 Calendar.current.isDate(Date(timeIntervalSince1970: $0.itemDate), inSameDayAs: selectedDate) })
             
-            if currentUserCategoryItemDateArray.isEmpty {
+            if dailyJobIsoArray.isEmpty {
                 createNewPointsItemForDailyJobs(indexPath: indexPath)
                 tableView.reloadData()
 //                tableView.reloadRows(at: [indexPath], with: .automatic)
-                // if array isn't empty, check if numberOfTapsEX has an 'X' or an 'E'
-            } else if currentUserCategoryItemDateArray[0].code == "X" {
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                // check for job bonus (this will only ever happen either a. on the seventh day, or b. on the eighth day which is payday
+                
+                
+                // ------------------
+                // seventh day logic:
+                // ------------------
+                
+                // if selected date is last day of pay period, AND rest of current payday has no X's or B's, AND the count of the number of assigned jobs is the same as the number of completed jobs, or E's, then create job bonus, and then show flyover
+                
+                // 1. create array for current user in daily jobs for current pay period
+                let currentPayPeriodIsoArray = Points.pointsArray.filter({ $0.user == currentUserName && $0.itemCategory == "daily jobs" && $0.itemDate >= FamilyData.calculatePayday().current.timeIntervalSince1970 })
+                // 2. make sure current day is last day of pay period
+                let lastDayOfCurrentPayPeriod = Calendar.current.date(byAdding: .day, value: -1, to: FamilyData.calculatePayday().next)
+                // 3. get list of user's assigned daily jobs
+                let assignedDailyJobs = JobsAndHabits.finalDailyJobsArray.filter({ $0.assigned == currentUserName })
+                
+                // 4. if selected date is the last day of the current pay period
+                if Calendar.current.isDate(selectedDate, inSameDayAs: lastDayOfCurrentPayPeriod!) &&
+                    // 5. and the current pay period has no X's or B's
+                    !currentPayPeriodIsoArray.contains(where: { $0.code == "X" || $0.code == "B" }) &&
+                    // 6. and user has completed all their assigned jobs for the day (the last day of the pay period)
+                    assignedDailyJobs.count == currentPayPeriodIsoArray.filter({ $0.code == "C" || $0.code == "E" && Calendar.current.isDate(Date(timeIntervalSince1970: $0.itemDate), inSameDayAs: lastDayOfCurrentPayPeriod!) }).count {
+                    createNewPointsItem(itemName: "job bonus", itemCategory: "daily jobs", code: "B", valuePerTap: jobAndHabitBonusValue)
+                } else {
+                    print("no bonus for you!")
+                }
+                
+                
+                
+                
+                
+                
+                
+                
+                // --------------------------------
+                // eighth day logic (payday logic):
+                // --------------------------------
+                
+                // no need for default job bonus
+                // if on payday, user has no X's for the week AND user has no jobs bonus, then calculate bonus
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+            } else if dailyJobIsoArray[0].code == "X" {
                 alertX(indexPath: indexPath, deselectRow: true)
-            } else if currentUserCategoryItemDateArray[0].code == "E" {
+            } else if dailyJobIsoArray[0].code == "E" {
                 alertE(indexPath: indexPath, deselectRow: true)
                 // if array isn't empty and numberOfTapsEX isn't 'X' or 'E' (if array is just 'C')
             } else {
@@ -363,16 +440,16 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         if indexPath.section == 1 {
             // get an array of this user in this category for this item on this day. If it doesn't exist, then create it w/ tap value = C.
             // if the array isn't empty, check the code. If it's X or E, it needs a parental pword, then it becomes C. Otherwise, do nothing
-            let currentUserCategoryItemDateArray = Points.pointsArray.filter({ $0.user == currentUserName &&
+            let habitIsoArray = Points.pointsArray.filter({ $0.user == currentUserName &&
                 $0.itemCategory == "daily habits" &&
                 $0.itemName == usersDailyHabits?[indexPath.row].name &&
                 Calendar.current.isDate(Date(timeIntervalSince1970: $0.itemDate), inSameDayAs: selectedDate) })
             
-            if currentUserCategoryItemDateArray.isEmpty {
+            if habitIsoArray.isEmpty {
                 createNewItemForDailyHabit(indexPath: indexPath)
                 tableView.reloadData()
 //                tableView.reloadRows(at: [indexPath], with: .automatic)
-            } else if currentUserCategoryItemDateArray.first?.code == "N" {
+            } else if habitIsoArray.first?.code == "N" {
                 alertN(indexPath: indexPath, deselectRow: true, jobOrHabit: "habit")
             } else {
                 tableView.deselectRow(at: indexPath, animated: true)
@@ -388,12 +465,12 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         if indexPath.section == 2 {
             // get an array of this user in this category for this item on this day. If it doesn't exist, then create it w/ tap value = C.
             // if the array isn't empty, check the code. If it's X or E, it needs a parental pword, then it becomes C. Otherwise, do nothing
-            let currentUserCategoryItemDateArray = Points.pointsArray.filter({ $0.user == currentUserName &&
+            let weeklyJobIsoArray = Points.pointsArray.filter({ $0.user == currentUserName &&
                 $0.itemCategory == "weekly jobs" &&
                 $0.itemName == usersWeeklyJobs?[indexPath.row].name &&
                 Calendar.current.isDate(Date(timeIntervalSince1970: $0.itemDate), inSameDayAs: selectedDate) })
             
-            if currentUserCategoryItemDateArray.isEmpty {
+            if weeklyJobIsoArray.isEmpty {
                 // if weekly job is blank, still need to check if user has already done weekly job on another day
                 // need to find out which week user is trying to select: 1. previous pay period, and 2. current pay period
                 
@@ -420,9 +497,9 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                     tableView.reloadData()
                 }
 //                tableView.reloadRows(at: [indexPath], with: .automatic)
-            } else if currentUserCategoryItemDateArray.first?.code == "C" {
+            } else if weeklyJobIsoArray.first?.code == "C" {
                 tableView.deselectRow(at: indexPath, animated: true)
-            } else if currentUserCategoryItemDateArray.first?.code == "N" {
+            } else if weeklyJobIsoArray.first?.code == "N" {
                 alertN(indexPath: indexPath, deselectRow: true, jobOrHabit: "job")
             }
         }
@@ -535,17 +612,13 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
             let resetAction = UITableViewRowAction(style: .default, title: "         ", handler: { (action, indexPath) in
                 // ...check to see if iso array is empty. If so, don't let user reset anything b/c it will crash the app (b/c the array is empty)
                 if isoArrayForItem.isEmpty {
-                    print("iso array is empty. nothing to delete")
                     // do nothing
                     tableView.setEditing(false, animated: true)
                 } else {
-                    print("need to delete some stuff")
                     // need to check if item is 'X' or 'E', and if so, need parental password to reset to zero. Otherwise, user can reset 'C' to zero
                     if isoArrayForItem[0].code == "C" {
-                        print("item is marked with a C")
                         self.removeSelectedItemFromPointsArrayAndUpdateIncomeArray(indexPath: indexPath, category: "daily jobs", categoryArray: self.usersDailyJobs)
                     } else if isoArrayForItem.first?.code == "E" || isoArrayForItem.first?.code == "X" {
-                        print("itme is marked with E or X")
                         self.getParentalPasscodeThenResetToZero(indexPath: indexPath, category: "daily jobs", categoryArray: self.usersDailyJobs)
                     }
                 }
@@ -719,7 +792,7 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
             selectedDateNumber! -= 1
             selectedDate = Calendar.current.date(byAdding: .day, value: selectedDateNumber, to: today)
             updateFormattedDate()
-            checkHabitsDefaultBonusValue()
+            checkAndSetDefaultBonusValues()
         }
         tableView.reloadData()
     }
@@ -760,7 +833,7 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                 self.selectedDate = Calendar.current.date(byAdding: .day, value: self.selectedDateNumber, to: today)
                 self.updateFormattedDate()
                 self.tableView.reloadData()
-                self.checkHabitsDefaultBonusValue()
+                self.checkAndSetDefaultBonusValues()
             } else {
                 self.incorrectPasscodeAlert()
             }
@@ -773,7 +846,7 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     }
     
     func limitReachedAlert() {
-        let alert = UIAlertController(title: "Limit Reached", message: "You can only modify point values as far back as the previous pay period.", preferredStyle: .alert)
+        let alert = UIAlertController(title: "Limit Reached", message: "You can only go back to the beginning of the previous pay period.", preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "okay", style: .cancel, handler: { (action) in
             alert.dismiss(animated: true, completion: nil)
         }))
@@ -818,7 +891,7 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
             }
         }
     }
-    
+
     func getParentalPasscodeThenResetToZero(indexPath: IndexPath, category: String, categoryArray: [JobsAndHabits]) {
         let alert = UIAlertController(title: "Parental Passcode Required", message: "You must enter a parental passcode to override an excused or unexcused job.", preferredStyle: .alert)
         alert.addTextField(configurationHandler: { (textField) in
@@ -885,7 +958,7 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                 
                 // check array for value (if current chose 'none' as sub, there will be no "S" entry and the array will be empty)
                 let subIsoArray = Points.pointsArray.filter({ $0.code == "S" &&
-                    $0.itemCategory == category &&
+                    $0.itemCategory == "other jobs" &&      // previously was "category"
                     $0.itemName == "\(categoryArray[indexPath.row].name) (sub)" &&
                     Calendar.current.isDate(Date(timeIntervalSince1970: $0.itemDate), inSameDayAs: self.selectedDate) })
                 
@@ -900,7 +973,7 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                     // iterate over array to find item with code 'S' in current category with 'sub' in job name on this date (b/c there can only be one daily job with that name that has a sub)
                     for (pointsIndex2, pointsItem2) in Points.pointsArray.enumerated() {
                         if pointsItem2.code == "S" &&
-                            pointsItem2.itemCategory == category &&
+                            pointsItem2.itemCategory == "other jobs" &&      // previously was "category"
                             pointsItem2.itemName == "\(categoryArray[indexPath.row].name) (sub)" &&
                             Calendar.current.isDate(Date(timeIntervalSince1970: pointsItem2.itemDate), inSameDayAs: self.selectedDate) {
                             
