@@ -85,6 +85,21 @@ extension UserVC {
                     
                     Points.pointsArray.append(loseSubstitutionPoints)
                     
+                    // ----------------------------------------------
+                    // 4. remove user's job bonus if job is unexcused
+                    // ----------------------------------------------
+                    
+                    if assignEorX == "X" &&
+                        self.selectedDate.timeIntervalSince1970 >= FamilyData.calculatePayday().current.timeIntervalSince1970 {
+                        
+                        self.deleteJobBonus(previousOrCurrent: "current")
+                    } else if assignEorX == "X" &&
+                        self.selectedDate.timeIntervalSince1970 >= FamilyData.calculatePayday().previous.timeIntervalSince1970 &&
+                        self.selectedDate.timeIntervalSince1970 < FamilyData.calculatePayday().current.timeIntervalSince1970 {
+                        
+                        self.deleteJobBonus(previousOrCurrent: "previous")
+                    }
+                    
                     // subtract fee from Income array and update income label
                     for (index, item) in Income.currentIncomeArray.enumerated() {
                         if item.user == self.currentUserName {
@@ -209,8 +224,23 @@ extension UserVC {
                 }
             }
             
+            // ----------------------------------------------
+            // 4. remove user's job bonus if job is unexcused
+            // ----------------------------------------------
+            
+            if eORx == "X" &&
+                self.selectedDate.timeIntervalSince1970 >= FamilyData.calculatePayday().current.timeIntervalSince1970 {
+                
+                self.deleteJobBonus(previousOrCurrent: "current")
+            } else if eORx == "X" &&
+                self.selectedDate.timeIntervalSince1970 >= FamilyData.calculatePayday().previous.timeIntervalSince1970 &&
+                self.selectedDate.timeIntervalSince1970 < FamilyData.calculatePayday().current.timeIntervalSince1970 {
+                
+                self.deleteJobBonus(previousOrCurrent: "previous")
+            }
+            
             // --------------------------------------------------------------------------------
-            // 4. update the current user's income label last (after all calculations are done)
+            // 5. update the current user's income label last (after all calculations are done)
             // --------------------------------------------------------------------------------
             
             for (incomeIndex, incomeItem) in Income.currentIncomeArray.enumerated() {
@@ -237,14 +267,31 @@ extension UserVC {
         print("\(substituteName) selected as substitute")
     }
     
-    func updateJobBonus() {
-        // no need for default job bonus
-        // if on payday, user has no X's for the week AND user has no jobs bonus, then calculate bonus
-        let previousPayPeriodIsoArray = Points.pointsArray.filter({ $0.user == currentUserName && $0.itemCategory == "daily jobs" && $0.itemDate >= FamilyData.calculatePayday().previous.timeIntervalSince1970 && $0.itemDate < FamilyData.calculatePayday().current.timeIntervalSince1970 && ($0.code == "X" || $0.code == "B") })
-        
-        if Calendar.current.isDate(Date(), inSameDayAs: FamilyData.calculatePayday().current) && previousPayPeriodIsoArray.isEmpty {
-            print("give that user a job bonus")
-            createNewPointsItem(itemName: "job bonus", itemCategory: "daily jobs", code: "B", valuePerTap: jobAndHabitBonusValue)
+    func deleteJobBonus(previousOrCurrent: String) {
+        if previousOrCurrent == "current" {
+            if let pointsIndex = Points.pointsArray.index(where: { $0.user == self.currentUserName && $0.itemCategory == "daily jobs" && $0.code == "B" && $0.itemDate >= FamilyData.calculatePayday().current.timeIntervalSince1970 }) {
+                
+                // update user's income array & income label
+                if let index = Income.currentIncomeArray.index(where: { $0.user == self.currentUserName }) {
+                    Income.currentIncomeArray[index].currentPoints -= Points.pointsArray[pointsIndex].valuePerTap
+                    self.incomeLabel.text = "$\(String(format: "%.2f", Double(Income.currentIncomeArray[index].currentPoints) / 100))"
+                    self.updateProgressMeters(animated: true)
+                }
+                // and remove the bonus from the array
+                Points.pointsArray.remove(at: pointsIndex)
+            }
+        } else {
+            if let pointsIndex = Points.pointsArray.index(where: { $0.user == self.currentUserName && $0.itemCategory == "daily jobs" && $0.code == "B" && $0.itemDate >= FamilyData.calculatePayday().previous.timeIntervalSince1970 && $0.itemDate < FamilyData.calculatePayday().current.timeIntervalSince1970 }) {
+                
+                // update user's income array & income label
+                if let index = Income.currentIncomeArray.index(where: { $0.user == self.currentUserName }) {
+                    Income.currentIncomeArray[index].currentPoints -= Points.pointsArray[pointsIndex].valuePerTap
+                    self.incomeLabel.text = "$\(String(format: "%.2f", Double(Income.currentIncomeArray[index].currentPoints) / 100))"
+                    self.updateProgressMeters(animated: true)
+                }
+                // and remove the bonus from the array
+                Points.pointsArray.remove(at: pointsIndex)
+            }
         }
     }
 }

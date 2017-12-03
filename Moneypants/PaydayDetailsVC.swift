@@ -1,4 +1,5 @@
 import UIKit
+import Firebase
 
 class PaydayDetailsVC: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate {
     
@@ -9,6 +10,9 @@ class PaydayDetailsVC: UIViewController, UICollectionViewDataSource, UICollectio
     var currentUserName: String!
     var currentUserIncome: Int!
     
+    var firebaseUser: User!
+    var ref: DatabaseReference!
+    
     var paydayData: [(icon: String, category: String, amount: Int)] = []
 
     override func viewDidLoad() {
@@ -16,6 +20,9 @@ class PaydayDetailsVC: UIViewController, UICollectionViewDataSource, UICollectio
         
         paydayCollectionView.dataSource = self
         paydayCollectionView.delegate = self
+        
+        firebaseUser = Auth.auth().currentUser
+        ref = Database.database().reference().child("users").child(firebaseUser.uid)
         
         questionButton.layer.cornerRadius = questionButton.layer.bounds.height / 6.4
         questionButton.layer.masksToBounds = true
@@ -32,6 +39,7 @@ class PaydayDetailsVC: UIViewController, UICollectionViewDataSource, UICollectio
 //        currentUserIncome = Income.currentIncomeArray.filter({ $0.user == currentUserName }).first?.currentPoints
         totalEarningsLabel.text = "$\(String(format: "%.2f", Double(currentUserIncome!) / 100))"
         
+        Points.updateJobBonus()
         createIsoArraysAndSubtotalsForCategories()
     }
     

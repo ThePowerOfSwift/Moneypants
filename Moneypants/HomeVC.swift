@@ -23,7 +23,8 @@ class HomeVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UITa
         tableView.delegate = self
         tableView.dataSource = self
         tableView.tableFooterView = UIView()
-        checkForIncome()
+        createDefaultIncomeIfNecessary()
+        Points.updateJobBonus()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -70,7 +71,7 @@ class HomeVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UITa
     // functions
     // ---------
     
-    func checkForIncome() {
+    func createDefaultIncomeIfNecessary() {
         for user in MPUser.usersArray {
             let isoArray = Income.currentIncomeArray.filter({ $0.user == user.firstName })
             if isoArray.isEmpty {

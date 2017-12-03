@@ -144,27 +144,6 @@ extension UserVC {
         }
     }
     
-    func removeHabitBonus() {
-        // if user hasn't yet earned the 75% for the habit bonus...
-        if pointsEarnedInPayPeriod(previousOrCurrent: "current").habits < Int(Double(jobAndHabitBonusValue) * 0.75) {
-            // remove the bonus from the array (if it exists)
-            if let index = Points.pointsArray.index(where: { $0.user == currentUserName &&
-                $0.itemCategory == "daily habits" &&
-                $0.code == "B" &&
-                $0.itemDate >= FamilyData.calculatePayday().current.timeIntervalSince1970 }) {
-                
-                // remove bonus amount from Income array first before deleting item from array
-                print(Income.currentIncomeArray[MPUser.currentUser].currentPoints)
-                print(Points.pointsArray[index].valuePerTap)
-
-                Income.currentIncomeArray[MPUser.currentUser].currentPoints -= Points.pointsArray[index].valuePerTap
-                
-                // then remove item from array
-                Points.pointsArray.remove(at: index)
-            }
-        }
-    }
-    
     func displayHabitBonusFlyover() {
         habitBonusCenterConstraint.constant = -300
         habitBonusAmountLabel.text = "$\(String(format: "%.2f", Double(jobAndHabitBonusValue!) / 100))"

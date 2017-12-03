@@ -85,7 +85,7 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         checkIncome()
         prepHabitBonusSFX()
         updateProgressMeters(animated: false)
-        updateJobBonus()        // this also needs to go on main page and payday page, but I don't know how to do that...
+        Points.updateJobBonus()
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -352,8 +352,10 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                 
                 // 1. create array for current user in daily jobs for current pay period
                 let currentPayPeriodIsoArray = Points.pointsArray.filter({ $0.user == currentUserName && $0.itemCategory == "daily jobs" && $0.itemDate >= FamilyData.calculatePayday().current.timeIntervalSince1970 })
+                
                 // 2. make sure current day is last day of pay period
                 let lastDayOfCurrentPayPeriod = Calendar.current.date(byAdding: .day, value: -1, to: FamilyData.calculatePayday().next)
+                
                 // 3. get list of user's assigned daily jobs
                 let assignedDailyJobs = JobsAndHabits.finalDailyJobsArray.filter({ $0.assigned == currentUserName })
                 

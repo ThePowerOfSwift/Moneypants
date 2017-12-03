@@ -35,6 +35,51 @@ struct Points {
         }
     }
     
+    static func updateJobBonus() {
+        let firebaseUser = Auth.auth().currentUser
+        let ref = Database.database().reference().child("users").child((firebaseUser?.uid)!)
+        for user in MPUser.usersArray {
+            let jobAndHabitBonusValue = Int(Double(FamilyData.adjustedNatlAvgYrlySpendingPerKid) / 52 * 0.20 * 100)
+            
+            // if on payday, user has no X's for the week AND user has no jobs bonus, then calculate bonus
+            let previousPayPeriodIsoArray = Points.pointsArray.filter({ $0.user == user.firstName && $0.itemCategory == "daily jobs" && $0.itemDate >= FamilyData.calculatePayday().previous.timeIntervalSince1970 && $0.itemDate < FamilyData.calculatePayday().current.timeIntervalSince1970 && ($0.code == "X" || $0.code == "B") })
+            
+            if Date().timeIntervalSince1970 >= FamilyData.calculatePayday().current.timeIntervalSince1970 && previousPayPeriodIsoArray.isEmpty {
+                print("give \(user.firstName) a job bonus!")
+                
+                // create job bonus for last day of pay period (not first day of current pay period)
+                let selectedDate = Calendar.current.date(byAdding: .day, value: -1, to: FamilyData.calculatePayday().current)!
+                
+                let pointsArrayItem = Points(user: user.firstName,
+                                             itemName: "job bonus",
+                                             itemCategory: "daily jobs",
+                                             code: "B",
+                                             valuePerTap: jobAndHabitBonusValue,      // previous was dailyJobsPointValue
+                                             itemDate: selectedDate.timeIntervalSince1970)
+                
+                Points.pointsArray.append(pointsArrayItem)
+                
+                // add item to Firebase
+                // need to organize them in some way? perhaps by date? category?
+                ref.child("points").childByAutoId().setValue(["user" : user.firstName,
+                                                              "itemName" : "job bonus",
+                                                              "itemCategory" : "daily jobs",
+                                                              "code" : "B",
+                                                              "valuePerTap" : jobAndHabitBonusValue,
+                                                              "itemDate" : selectedDate.timeIntervalSince1970])
+                
+                for (index, item) in Income.currentIncomeArray.enumerated() {
+                    if item.user == user.firstName {
+                        Income.currentIncomeArray[index].currentPoints += jobAndHabitBonusValue
+                    }
+                }
+                
+                // update user income on Firebase
+                ref.child("mpIncome").updateChildValues([user.firstName : Income.currentIncomeArray[MPUser.currentUser].currentPoints])
+            }
+        }
+    }
+    
     // code:
     // C = completed (for daily jobs, daily habits, and weekly jobs)
     // E = excused (for daily jobs only)
