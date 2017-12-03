@@ -19,6 +19,7 @@ class PaydayVC: UIViewController, UICollectionViewDelegate, UICollectionViewData
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CustomCell", for: indexPath) as! PaydayCell
         cell.userName.text = MPUser.usersArray[indexPath.row].firstName
         cell.userImage.image = MPUser.usersArray[indexPath.row].photo
+        cell.paidBadge.layer.backgroundColor = UIColor.lightGray.cgColor
         return cell
     }
     

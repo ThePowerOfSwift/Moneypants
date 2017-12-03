@@ -201,8 +201,8 @@ class PaydayDetailsVC: UIViewController, UICollectionViewDataSource, UICollectio
                       ("lawnmower white", "weekly jobs", weeklyJobsSubtotal),
                       ("broom plus white", "other jobs", otherJobsSubtotal),
                       ("dollar minus white", "fees", feesSubtotal),
-                      ("shopping cart small white", "withdrawals", 0),
-                      ("dollar white", "unpaid", unpaidSubtotal)]
+                      ("dollar white", "unpaid", unpaidSubtotal),
+                      ("shopping cart small white", "withdrawals", 0)]
         
         if paydayData.filter({ $0.amount != 0 }).isEmpty {
             noDataAlert()

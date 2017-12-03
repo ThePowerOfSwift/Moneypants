@@ -735,7 +735,6 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "FeesDetailSegue" {
-            print("heading over to fees now!!!")
             let nextVC = segue.destination as! FeeVC
             nextVC.selectedDate = selectedDate
             nextVC.selectedDateNumber = selectedDateNumber
@@ -970,6 +969,8 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                             Income.currentIncomeArray[incomeIndex2].currentPoints -= substituteValue
                         }
                     }
+                    
+                    Points.updateJobBonus()
                     
                     // -------------------------------------------------------------------------------
                     // 3. update income label again in rare instance the sub was also the current user

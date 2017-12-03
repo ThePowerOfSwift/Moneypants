@@ -41,8 +41,6 @@ class PaydayDetailsPopup: UIViewController, UITableViewDelegate, UITableViewData
         
         createIsoArrayForCurrentCategory()
         changePopupWidthDependingOnScreenSize()
-        
-        print("J: ",isoArraySubtotals)
     }
     
     func changePopupWidthDependingOnScreenSize() {
