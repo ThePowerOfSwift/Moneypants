@@ -43,30 +43,30 @@
                                                 <rect key="frame" x="0.0" y="28" width="320" height="50"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="0Oa-y7-rqm" id="DzW-sI-8nE">
-                                                    <rect key="frame" x="0.0" y="0.0" width="320" height="49.5"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="320" height="49"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <subviews>
-                                                        <stackView opaque="NO" contentMode="scaleToFill" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="dqQ-Iu-b7p">
-                                                            <rect key="frame" x="8" y="12" width="304" height="24"/>
-                                                            <subviews>
-                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="tithing / donations and lots of other stuff" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="C6C-Zx-Vj4">
-                                                                    <rect key="frame" x="0.0" y="0.0" width="232.5" height="24"/>
-                                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                                    <nil key="textColor"/>
-                                                                    <nil key="highlightedColor"/>
-                                                                </label>
-                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="$258" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="aTu-eG-vhR">
-                                                                    <rect key="frame" x="248.5" y="0.0" width="55.5" height="24"/>
-                                                                    <fontDescription key="fontDescription" type="system" weight="black" pointSize="20"/>
-                                                                    <nil key="highlightedColor"/>
-                                                                </label>
-                                                            </subviews>
-                                                        </stackView>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="tithing / donations and lots of other stuff" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="C6C-Zx-Vj4">
+                                                            <rect key="frame" x="16" y="14" width="188" height="21"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                            <nil key="textColor"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="$258" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aTu-eG-vhR">
+                                                            <rect key="frame" x="204" y="12" width="100" height="24"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="width" constant="100" id="cFq-Iq-wjA"/>
+                                                            </constraints>
+                                                            <fontDescription key="fontDescription" type="system" weight="black" pointSize="20"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
                                                     </subviews>
                                                     <constraints>
-                                                        <constraint firstItem="dqQ-Iu-b7p" firstAttribute="leading" secondItem="DzW-sI-8nE" secondAttribute="leading" constant="8" id="FqD-z7-LSL"/>
-                                                        <constraint firstItem="dqQ-Iu-b7p" firstAttribute="centerY" secondItem="DzW-sI-8nE" secondAttribute="centerY" id="PGR-lh-gEh"/>
-                                                        <constraint firstAttribute="trailing" secondItem="dqQ-Iu-b7p" secondAttribute="trailing" constant="8" id="q0X-og-uCP"/>
+                                                        <constraint firstItem="C6C-Zx-Vj4" firstAttribute="centerY" secondItem="DzW-sI-8nE" secondAttribute="centerY" id="013-Jy-qzm"/>
+                                                        <constraint firstAttribute="trailing" secondItem="aTu-eG-vhR" secondAttribute="trailing" constant="16" id="4iY-OZ-NUO"/>
+                                                        <constraint firstItem="aTu-eG-vhR" firstAttribute="leading" secondItem="C6C-Zx-Vj4" secondAttribute="trailing" id="Hqg-kt-p4M"/>
+                                                        <constraint firstItem="aTu-eG-vhR" firstAttribute="centerY" secondItem="DzW-sI-8nE" secondAttribute="centerY" id="TXK-s6-hE4"/>
+                                                        <constraint firstItem="C6C-Zx-Vj4" firstAttribute="leading" secondItem="DzW-sI-8nE" secondAttribute="leading" constant="16" id="npC-Z7-xpK"/>
                                                     </constraints>
                                                 </tableViewCellContentView>
                                                 <connections>
@@ -88,30 +88,30 @@
                                                 <rect key="frame" x="0.0" y="28" width="320" height="50"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="ZWw-cc-bly" id="Qse-3Z-ZTX">
-                                                    <rect key="frame" x="0.0" y="0.0" width="320" height="49.5"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="320" height="49"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <subviews>
-                                                        <stackView opaque="NO" contentMode="scaleToFill" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="U8K-TY-WeB">
-                                                            <rect key="frame" x="8" y="12" width="304" height="24"/>
-                                                            <subviews>
-                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="tithing / donations and lots of other stuff" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DC8-0V-bSt">
-                                                                    <rect key="frame" x="0.0" y="0.0" width="232.5" height="24"/>
-                                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                                    <nil key="textColor"/>
-                                                                    <nil key="highlightedColor"/>
-                                                                </label>
-                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="$258" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="qAB-89-URN">
-                                                                    <rect key="frame" x="248.5" y="0.0" width="55.5" height="24"/>
-                                                                    <fontDescription key="fontDescription" type="system" weight="black" pointSize="20"/>
-                                                                    <nil key="highlightedColor"/>
-                                                                </label>
-                                                            </subviews>
-                                                        </stackView>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="tithing / donations and lots of other stuff" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DC8-0V-bSt">
+                                                            <rect key="frame" x="16" y="14" width="188" height="21"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                            <nil key="textColor"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="$258" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qAB-89-URN">
+                                                            <rect key="frame" x="204" y="12" width="100" height="24"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="width" constant="100" id="STm-fq-qnN"/>
+                                                            </constraints>
+                                                            <fontDescription key="fontDescription" type="system" weight="black" pointSize="20"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
                                                     </subviews>
                                                     <constraints>
-                                                        <constraint firstItem="U8K-TY-WeB" firstAttribute="leading" secondItem="Qse-3Z-ZTX" secondAttribute="leading" constant="8" id="1gu-Eu-KVK"/>
-                                                        <constraint firstAttribute="trailing" secondItem="U8K-TY-WeB" secondAttribute="trailing" constant="8" id="Kmk-1a-phr"/>
-                                                        <constraint firstItem="U8K-TY-WeB" firstAttribute="centerY" secondItem="Qse-3Z-ZTX" secondAttribute="centerY" id="ukR-Bo-dOa"/>
+                                                        <constraint firstItem="qAB-89-URN" firstAttribute="centerY" secondItem="Qse-3Z-ZTX" secondAttribute="centerY" id="0ck-OR-N88"/>
+                                                        <constraint firstItem="DC8-0V-bSt" firstAttribute="leading" secondItem="Qse-3Z-ZTX" secondAttribute="leading" constant="16" id="3o5-wP-CsN"/>
+                                                        <constraint firstItem="qAB-89-URN" firstAttribute="leading" secondItem="DC8-0V-bSt" secondAttribute="trailing" id="5xk-EA-kwI"/>
+                                                        <constraint firstAttribute="trailing" secondItem="qAB-89-URN" secondAttribute="trailing" constant="16" id="7K4-X9-Rdp"/>
+                                                        <constraint firstItem="DC8-0V-bSt" firstAttribute="centerY" secondItem="Qse-3Z-ZTX" secondAttribute="centerY" id="kyM-gV-kSH"/>
                                                     </constraints>
                                                 </tableViewCellContentView>
                                                 <connections>
@@ -133,30 +133,30 @@
                                                 <rect key="frame" x="0.0" y="28" width="320" height="50"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="TSu-0T-hsv" id="bor-gN-5X7">
-                                                    <rect key="frame" x="0.0" y="0.0" width="320" height="49.5"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="320" height="49"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <subviews>
-                                                        <stackView opaque="NO" contentMode="scaleToFill" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="Siy-Pj-o4M">
-                                                            <rect key="frame" x="8" y="12" width="304" height="24"/>
-                                                            <subviews>
-                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="tithing / donations and lots of other stuff" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Vpo-A7-aq3">
-                                                                    <rect key="frame" x="0.0" y="0.0" width="232.5" height="24"/>
-                                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                                    <nil key="textColor"/>
-                                                                    <nil key="highlightedColor"/>
-                                                                </label>
-                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="$258" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="UYA-le-hCO">
-                                                                    <rect key="frame" x="248.5" y="0.0" width="55.5" height="24"/>
-                                                                    <fontDescription key="fontDescription" type="system" weight="black" pointSize="20"/>
-                                                                    <nil key="highlightedColor"/>
-                                                                </label>
-                                                            </subviews>
-                                                        </stackView>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="tithing / donations and lots of other stuff" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Vpo-A7-aq3">
+                                                            <rect key="frame" x="16" y="14" width="188" height="21"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                            <nil key="textColor"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="$258" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UYA-le-hCO">
+                                                            <rect key="frame" x="204" y="12" width="100" height="24"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="width" constant="100" id="S6b-97-RZr"/>
+                                                            </constraints>
+                                                            <fontDescription key="fontDescription" type="system" weight="black" pointSize="20"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
                                                     </subviews>
                                                     <constraints>
-                                                        <constraint firstItem="Siy-Pj-o4M" firstAttribute="centerY" secondItem="bor-gN-5X7" secondAttribute="centerY" id="UHY-wQ-ucK"/>
-                                                        <constraint firstItem="Siy-Pj-o4M" firstAttribute="leading" secondItem="bor-gN-5X7" secondAttribute="leading" constant="8" id="aHE-wU-iMX"/>
-                                                        <constraint firstAttribute="trailing" secondItem="Siy-Pj-o4M" secondAttribute="trailing" constant="8" id="rVH-Ng-cNn"/>
+                                                        <constraint firstAttribute="trailing" secondItem="UYA-le-hCO" secondAttribute="trailing" constant="16" id="Kt5-LU-ROy"/>
+                                                        <constraint firstItem="UYA-le-hCO" firstAttribute="centerY" secondItem="bor-gN-5X7" secondAttribute="centerY" id="RM5-FV-6D3"/>
+                                                        <constraint firstItem="Vpo-A7-aq3" firstAttribute="leading" secondItem="bor-gN-5X7" secondAttribute="leading" constant="16" id="T7s-rg-TRm"/>
+                                                        <constraint firstItem="UYA-le-hCO" firstAttribute="leading" secondItem="Vpo-A7-aq3" secondAttribute="trailing" id="bmY-xP-aus"/>
+                                                        <constraint firstItem="Vpo-A7-aq3" firstAttribute="centerY" secondItem="bor-gN-5X7" secondAttribute="centerY" id="qwe-Nk-2TS"/>
                                                     </constraints>
                                                 </tableViewCellContentView>
                                                 <connections>
@@ -178,30 +178,30 @@
                                                 <rect key="frame" x="0.0" y="28" width="320" height="50"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Qjq-SQ-bdk" id="ADm-D1-xac">
-                                                    <rect key="frame" x="0.0" y="0.0" width="320" height="49.5"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="320" height="49"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <subviews>
-                                                        <stackView opaque="NO" contentMode="scaleToFill" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="RUL-m3-VEU">
-                                                            <rect key="frame" x="8" y="12" width="304" height="24"/>
-                                                            <subviews>
-                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="tithing / donations and lots of other stuff" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eYp-Xj-dfC">
-                                                                    <rect key="frame" x="0.0" y="0.0" width="232.5" height="24"/>
-                                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                                    <nil key="textColor"/>
-                                                                    <nil key="highlightedColor"/>
-                                                                </label>
-                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="$258" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="Hqb-tK-mZB">
-                                                                    <rect key="frame" x="248.5" y="0.0" width="55.5" height="24"/>
-                                                                    <fontDescription key="fontDescription" type="system" weight="black" pointSize="20"/>
-                                                                    <nil key="highlightedColor"/>
-                                                                </label>
-                                                            </subviews>
-                                                        </stackView>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="tithing / donations and lots of other stuff" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eYp-Xj-dfC">
+                                                            <rect key="frame" x="16" y="14" width="188" height="21"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                            <nil key="textColor"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="$11258" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Hqb-tK-mZB">
+                                                            <rect key="frame" x="204" y="12" width="100" height="24"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="width" constant="100" id="Ncr-Bw-9JT"/>
+                                                            </constraints>
+                                                            <fontDescription key="fontDescription" type="system" weight="black" pointSize="20"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
                                                     </subviews>
                                                     <constraints>
-                                                        <constraint firstItem="RUL-m3-VEU" firstAttribute="leading" secondItem="ADm-D1-xac" secondAttribute="leading" constant="8" id="MSp-hJ-XcM"/>
-                                                        <constraint firstItem="RUL-m3-VEU" firstAttribute="centerY" secondItem="ADm-D1-xac" secondAttribute="centerY" id="QXP-az-pAJ"/>
-                                                        <constraint firstAttribute="trailing" secondItem="RUL-m3-VEU" secondAttribute="trailing" constant="8" id="Uin-Zc-ajT"/>
+                                                        <constraint firstItem="Hqb-tK-mZB" firstAttribute="centerY" secondItem="ADm-D1-xac" secondAttribute="centerY" id="6lZ-jf-epK"/>
+                                                        <constraint firstItem="eYp-Xj-dfC" firstAttribute="leading" secondItem="ADm-D1-xac" secondAttribute="leading" constant="16" id="A4H-i9-6b7"/>
+                                                        <constraint firstItem="Hqb-tK-mZB" firstAttribute="leading" secondItem="eYp-Xj-dfC" secondAttribute="trailing" id="cCo-dc-bJm"/>
+                                                        <constraint firstItem="eYp-Xj-dfC" firstAttribute="centerY" secondItem="ADm-D1-xac" secondAttribute="centerY" id="d0J-sY-PUk"/>
+                                                        <constraint firstAttribute="trailing" secondItem="Hqb-tK-mZB" secondAttribute="trailing" constant="16" id="ddf-CS-Dj1"/>
                                                     </constraints>
                                                 </tableViewCellContentView>
                                                 <connections>
@@ -588,7 +588,7 @@
                                                         <state key="normal" image="piggy bank all gray"/>
                                                         <state key="selected" image="piggy bank pink"/>
                                                         <connections>
-                                                            <action selector="otherButtonTapper:" destination="rat-xa-53i" eventType="touchUpInside" id="WAb-vx-zsT"/>
+                                                            <action selector="otherButtonTapped:" destination="rat-xa-53i" eventType="touchUpInside" id="q9K-NI-0UH"/>
                                                         </connections>
                                                     </button>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="$178" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oLy-r0-L7o">
@@ -854,18 +854,29 @@
                     <size key="freeformSize" width="320" height="1200"/>
                     <connections>
                         <outlet property="clothingButton" destination="pHU-uo-pmk" id="VXF-d5-zRO"/>
+                        <outlet property="clothingTotal" destination="bFP-NI-EcL" id="2Se-yY-cUt"/>
                         <outlet property="donationsButton" destination="dEZ-kn-YZe" id="dRM-7P-Lnh"/>
+                        <outlet property="donationsTotal" destination="YIy-Su-VL4" id="d5N-oD-Fkr"/>
                         <outlet property="electronicsButton" destination="abA-SH-XUq" id="mBP-e9-wYw"/>
+                        <outlet property="electronicsTotal" destination="mfG-0G-IBO" id="pxJ-zX-LG2"/>
                         <outlet property="funMoneyButton" destination="eoR-V9-a8T" id="9kd-DZ-VLV"/>
+                        <outlet property="funMoneyTotal" destination="VaC-XK-nU0" id="e0g-ll-Iul"/>
                         <outlet property="musicArtButton" destination="oxY-ka-GY1" id="jb9-Qj-mPV"/>
+                        <outlet property="musicArtTotal" destination="gc3-jq-Joy" id="ZJB-Wb-rJx"/>
                         <outlet property="navBar" destination="6AL-yU-c8B" id="o8P-c1-jSh"/>
                         <outlet property="navBarTop" destination="Uvc-pa-QFx" id="twc-NH-gAs"/>
                         <outlet property="otherButton" destination="NiH-9T-mvy" id="L5G-LR-c3b"/>
+                        <outlet property="otherTotal" destination="oLy-r0-L7o" id="h9D-jZ-ZAI"/>
                         <outlet property="personalCareButton" destination="yPU-Ag-CLF" id="C64-VK-Za9"/>
+                        <outlet property="personalCareTotal" destination="iSw-Z9-EgF" id="ENs-ea-0g1"/>
                         <outlet property="savingsButton" destination="HUc-2z-mVN" id="8OG-RY-s38"/>
+                        <outlet property="savingsTotal" destination="Cuf-Kr-iaD" id="HML-Vr-zPb"/>
                         <outlet property="schoolButton" destination="ZDy-CE-nvG" id="GcZ-as-Bty"/>
+                        <outlet property="schoolTotal" destination="6hZ-dK-iTC" id="nCt-oV-FX9"/>
                         <outlet property="sportsDanceButton" destination="me9-XL-sSu" id="aeK-SZ-Z3S"/>
+                        <outlet property="sportsDanceTotal" destination="YTc-Tj-Zpy" id="UDo-wZ-rIN"/>
                         <outlet property="summerCampsButton" destination="USA-PI-c0c" id="yyW-d9-Xes"/>
+                        <outlet property="summerCampsTotal" destination="PEZ-db-Vco" id="Pb0-R3-Kxp"/>
                         <outlet property="tableView1" destination="eZx-oV-B2J" id="9FQ-NX-sL2"/>
                         <outlet property="tableView1Height" destination="Tp4-ZZ-0Yn" id="78K-L3-6CW"/>
                         <outlet property="tableView1Top" destination="yG1-m9-fKp" id="glo-j4-gYl"/>
@@ -879,11 +890,12 @@
                         <outlet property="tableView4Height" destination="P5O-sw-mqH" id="rQY-OS-voC"/>
                         <outlet property="tableView4Top" destination="ZBa-AF-KgQ" id="r1n-3h-gJD"/>
                         <outlet property="transportationButton" destination="tQ6-Ji-TLh" id="KKn-Kq-8IG"/>
+                        <outlet property="transportationTotal" destination="Vq2-x0-3uK" id="VDQ-vx-iW9"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="OVP-Pa-PcE" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="14031" y="3889"/>
+            <point key="canvasLocation" x="14030.625" y="3888.3802816901407"/>
         </scene>
         <!--Savannah-->
         <scene sceneID="Zlt-u0-AhO">
@@ -1022,7 +1034,7 @@
                                         <rect key="frame" x="0.0" y="28" width="320" height="50"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="9YO-5s-dW8" id="eTG-ZA-lye">
-                                            <rect key="frame" x="0.0" y="0.0" width="320" height="49.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="49"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="bAx-z4-7V1">
@@ -1202,7 +1214,7 @@
                                         <rect key="frame" x="0.0" y="28" width="320" height="50"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="OrV-8n-wHG" id="9k3-44-wxc">
-                                            <rect key="frame" x="0.0" y="0.0" width="320" height="49.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="49"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="251" text="-2200" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="9" translatesAutoresizingMaskIntoConstraints="NO" id="abK-mf-8Wu">
@@ -1809,7 +1821,7 @@
                                         <rect key="frame" x="0.0" y="28" width="320" height="50"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="vOy-cY-yxg" id="8CH-YC-QOn">
-                                            <rect key="frame" x="0.0" y="0.0" width="320" height="49.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="49"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="q7c-zy-Hzm">
@@ -2441,7 +2453,7 @@
                                         <rect key="frame" x="0.0" y="28" width="320" height="50"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="5fW-El-AMD" id="H2a-1f-n5z">
-                                            <rect key="frame" x="0.0" y="0.0" width="320" height="49.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="49"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="251" text="-2200" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="9" translatesAutoresizingMaskIntoConstraints="NO" id="aLO-Qg-g9c">
@@ -2587,7 +2599,7 @@
                                         <rect key="frame" x="0.0" y="28" width="320" height="50"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="TM6-qk-Hsu" id="pxz-3x-fB1">
-                                            <rect key="frame" x="0.0" y="0.0" width="320" height="49.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="49"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fI2-Md-jLq">
@@ -2734,7 +2746,7 @@
                                         <rect key="frame" x="0.0" y="78" width="320" height="50"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="XKg-Ah-nIN" id="LKW-hK-Xc1">
-                                            <rect key="frame" x="0.0" y="0.0" width="320" height="49.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="49"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="CIe-tn-b7a">
@@ -3005,7 +3017,7 @@
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ehx-dC-5JU" userLabel="Popup">
-                                    <rect key="frame" x="35" y="93" width="250" height="432.5"/>
+                                    <rect key="frame" x="35" y="93.5" width="250" height="432.5"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Earnings Progress" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="akJ-4S-yA9">
                                             <rect key="frame" x="16" y="57" width="218" height="27.5"/>
@@ -3131,7 +3143,7 @@ meet budget</string>
                                     </constraints>
                                 </view>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7do-mJ-m2O" userLabel="Popup">
-                                    <rect key="frame" x="110" y="44" width="100" height="100"/>
+                                    <rect key="frame" x="110" y="44.5" width="100" height="100"/>
                                     <color key="backgroundColor" red="0.94901960780000005" green="0.39607843139999999" blue="0.1333333333" alpha="1" colorSpace="calibratedRGB"/>
                                     <constraints>
                                         <constraint firstAttribute="width" constant="100" id="23v-1I-5dq"/>
@@ -3139,7 +3151,7 @@ meet budget</string>
                                     </constraints>
                                 </view>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="oRx-Y2-2XW" userLabel="Popup">
-                                    <rect key="frame" x="120" y="54" width="80" height="80"/>
+                                    <rect key="frame" x="120" y="54.5" width="80" height="80"/>
                                     <subviews>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="trophy black" translatesAutoresizingMaskIntoConstraints="NO" id="gaI-rb-bZ6">
                                             <rect key="frame" x="16" y="16" width="48" height="48"/>

@@ -1,9 +1,12 @@
 import UIKit
-import FirebaseAuth
+import Firebase
 
 class SettingsVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     @IBOutlet weak var tableView: UITableView!
+    var window: UIWindow?
+    var firebaseUser: User!
+    var ref: DatabaseReference!
 
     let settingsList: [(String, String)] = [("change household income", "Step1"),
                                             ("add / remove family members", "Users"),
@@ -15,6 +18,9 @@ class SettingsVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        firebaseUser = Auth.auth().currentUser
+        ref = Database.database().reference().child("users").child(firebaseUser.uid)
         
         tableView.tableFooterView = UIView()
         
@@ -75,6 +81,16 @@ class SettingsVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
             print(settingDescription, settingVC)
 //            let newViewController = Step1VC.self()
 //            self.navigationController?.pushViewController(newViewController, animated: true)
+            
+            self.window = UIWindow(frame: UIScreen.main.bounds)
+            let storyboard = UIStoryboard(name: "Setup", bundle: nil)
+            let initialViewController = storyboard.instantiateViewController(withIdentifier: "LoadingVC")
+            self.window?.rootViewController = initialViewController
+            self.window?.makeKeyAndVisible()
+            
+            FamilyData.setupProgress = 10
+            ref.updateChildValues(["setupProgress" : 10])
+            
         } else if indexPath.row == 1 {
             print(settingDescription)
         } else if indexPath.row == 2 {

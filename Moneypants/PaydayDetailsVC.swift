@@ -8,13 +8,14 @@ class PaydayDetailsVC: UIViewController, UICollectionViewDataSource, UICollectio
     @IBOutlet weak var questionButton: UIButton!
     
     var currentUserName: String!
-    var currentUserIncome: Int!
+    var previousPaydayEarnings: Int!
     
     var firebaseUser: User!
     var ref: DatabaseReference!
     
     var paydayData: [(icon: String, category: String, amount: Int)] = []
-
+    var totalEarningsFormatted: String!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -31,13 +32,13 @@ class PaydayDetailsVC: UIViewController, UICollectionViewDataSource, UICollectio
         navigationItem.title = currentUserName
         
         // get array of current user's income for all categories except withdrawals, and then total the amounts
-        currentUserIncome = Points.pointsArray.filter({ $0.user == currentUserName &&
+        previousPaydayEarnings = Points.pointsArray.filter({ $0.user == currentUserName &&
             $0.code != "W" &&
             $0.itemDate >= FamilyData.calculatePayday().previous.timeIntervalSince1970 &&
             $0.itemDate < FamilyData.calculatePayday().current.timeIntervalSince1970 }).reduce(0, { $0 + $1.valuePerTap })
         
-//        currentUserIncome = Income.currentIncomeArray.filter({ $0.user == currentUserName }).first?.currentPoints
-        totalEarningsLabel.text = "$\(String(format: "%.2f", Double(currentUserIncome!) / 100))"
+        totalEarningsFormatted = "$\(String(format: "%.2f", Double(previousPaydayEarnings!) / 100))"
+        totalEarningsLabel.text = totalEarningsFormatted
         
         Points.updateJobBonus()
         createIsoArraysAndSubtotalsForCategories()
@@ -86,6 +87,41 @@ class PaydayDetailsVC: UIViewController, UICollectionViewDataSource, UICollectio
         }
     }
     
+    @IBAction func payButtonTapped(_ sender: UIButton) {
+        // Left justify the alert bubble
+        let paragraphStyle = NSMutableParagraphStyle()
+        paragraphStyle.alignment = NSTextAlignment.left
+        
+        // Lengthy alert bubble
+        let tenPercentOfEarnings = Int((Double(previousPaydayEarnings) * 0.10).rounded(.up))
+        let remainingSeventyPercent = previousPaydayEarnings - (tenPercentOfEarnings * 3)       // remaining money after 10-10-10
+        
+        let messageText = NSMutableAttributedString(string: "\(currentUserName!) earned \(totalEarningsFormatted!). Be sure to compliment progress.\n\n\(MPUser.gender(user: MPUser.currentUser).his_her) money will be allocated like this:\n\n\t10% charity\t\t\t= $\(String(format: "%.2f", Double(tenPercentOfEarnings) / 100))\n\t10% personal money\t= $\(String(format: "%.2f", Double(tenPercentOfEarnings) / 100))\n\t10% savings\t\t\t= $\(String(format: "%.2f", Double(tenPercentOfEarnings) / 100))\n\n\t70% expenses\t\t= $\(String(format: "%.2f", Double(remainingSeventyPercent) / 100))\n\nWhen you are done paying \(currentUserName!), click 'okay'. This will zero out \(MPUser.gender(user: MPUser.currentUser).his_her.lowercased()) account for the pay period and mark \(MPUser.gender(user: MPUser.currentUser).him_her.lowercased()) as 'paid'.",
+            attributes: [NSParagraphStyleAttributeName : paragraphStyle,
+                         NSFontAttributeName : UIFont.systemFont(ofSize: 13.0),
+                         NSForegroundColorAttributeName : UIColor.black])
+        // Not sure what this does, but it works
+        let alert = UIAlertController(title: "\(currentUserName!)'s Payday", message: "", preferredStyle: .alert)
+        alert.setValue(messageText, forKey: "attributedMessage")
+        
+        // Button one: "okay"
+        alert.addAction(UIAlertAction(title: "cancel", style: .cancel, handler: { (action) in
+            alert.dismiss(animated: true, completion: nil)
+        }))
+        alert.addAction(UIAlertAction(title: "Okay. Pay \(currentUserName!) \(totalEarningsFormatted!)", style: .default, handler: { (action) in
+            self.allocateIncomeToEnvelopes()
+            self.markUserAsPaid()
+            
+            self.withdrawalDialogueIfNeeded()
+            _ = self.navigationController?.popViewController(animated: true)
+            
+            
+            
+            alert.dismiss(animated: true, completion: nil)
+        }))
+        present(alert, animated: true, completion: nil)
+    }
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "PaydayDetailsPopup" {
             let nextVC = segue.destination as! PaydayDetailsPopup
@@ -96,6 +132,32 @@ class PaydayDetailsVC: UIViewController, UICollectionViewDataSource, UICollectio
     // ---------
     // functions
     // ---------
+    
+    func withdrawalDialogueIfNeeded() {
+        let withdrawalsList = Points.pointsArray.filter({ $0.code == "W" && $0.itemDate >= FamilyData.calculatePayday().previous.timeIntervalSince1970 && $0.itemDate < FamilyData.calculatePayday().current.timeIntervalSince1970 })
+        
+        if !withdrawalsList.isEmpty {
+            let alert = UIAlertController(title: "Withdrawals", message: "\(currentUserName!) has some withdrawals to pay for:\n\n\(withdrawalsList)", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "These items are now paid", style: .default, handler: { (action) in
+                alert.dismiss(animated: true, completion: nil)
+            }))
+            alert.addAction(UIAlertAction(title: "cancel", style: .cancel, handler: { (action) in
+                alert.dismiss(animated: true, completion: nil)
+            }))
+            present(alert, animated: true, completion: nil)
+        }
+    }
+    
+    func markUserAsPaid() {
+        if let incomeIndex = Income.currentIncomeArray.index(where: { $0.user == currentUserName }) {
+            // create payday item for user and append to points array
+            let paydayItem = Points(user: currentUserName, itemName: "payday", itemCategory: "payday", code: "C", valuePerTap: -(previousPaydayEarnings), itemDate: Date().timeIntervalSince1970)
+            Points.pointsArray.append(paydayItem)
+            
+            // subtract payday amount from user's total income
+            Income.currentIncomeArray[incomeIndex].currentPoints -= previousPaydayEarnings
+        }
+    }
     
     func createIsoArraysAndSubtotalsForCategories() {
         // need to recalculate this to only include days since previous payday up to current payday (7 days)
@@ -211,10 +273,10 @@ class PaydayDetailsVC: UIViewController, UICollectionViewDataSource, UICollectio
     
     func noDataInCategoryAlert(indexPath: IndexPath) {
         let alert = UIAlertController(title: "No Data", message: "\(currentUserName!) has no transactions in '\(paydayData[indexPath.row].category)' for this payday period.", preferredStyle: .alert)
-                alert.addAction(UIAlertAction(title: "okay", style: .cancel, handler: { (action) in
-                    alert.dismiss(animated: true, completion: nil)
-                }))
-                present(alert, animated: true, completion: nil)
+        alert.addAction(UIAlertAction(title: "okay", style: .cancel, handler: { (action) in
+            alert.dismiss(animated: true, completion: nil)
+        }))
+        present(alert, animated: true, completion: nil)
     }
     
     func noDataAlert() {
@@ -223,6 +285,21 @@ class PaydayDetailsVC: UIViewController, UICollectionViewDataSource, UICollectio
             alert.dismiss(animated: true, completion: nil)
         }))
         present(alert, animated: true, completion: nil)
+    }
+    
+    func allocateIncomeToEnvelopes() {
+        // do all the math HERE for allocating income to the envelopes
+        for (budgetIndex, budgetItem) in Budget.budgetsArray.enumerated() {
+            if budgetItem.category == "donations" && budgetItem.ownerName == currentUserName {
+                Budget.budgetsArray[budgetIndex].currentValue += Int((Double(previousPaydayEarnings) * 0.10).rounded(.up))
+            }
+            if budgetItem.category == "savings" && budgetItem.ownerName == currentUserName {
+                Budget.budgetsArray[budgetIndex].currentValue += Int((Double(previousPaydayEarnings) * 0.10).rounded(.up))
+            }
+            if budgetItem.category == "fun money" && budgetItem.ownerName == currentUserName {
+                Budget.budgetsArray[budgetIndex].currentValue += Int((Double(previousPaydayEarnings) * 0.10).rounded(.up))
+            }
+        }
     }
 }
 

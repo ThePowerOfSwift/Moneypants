@@ -340,9 +340,12 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
             
             if dailyJobIsoArray.isEmpty {
                 createNewPointsItem(itemName: usersDailyJobs[indexPath.row].name, itemCategory: "daily jobs", code: "C", valuePerTap: dailyJobsPointValue)
-                updateProgressMeters(animated: true)
-                tableView.reloadData()
 //                tableView.reloadRows(at: [indexPath], with: .automatic)
+                
+                
+                /*
+                 
+                 // NOTE: Can't seem to get this to work on day before payday. It makes the daily job go blank and crashes the app...
                 
                 // ------------------
                 // seventh day logic:
@@ -362,12 +365,16 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                 // 4. if selected date is the last day of the current pay period
                 if Calendar.current.isDate(selectedDate, inSameDayAs: lastDayOfCurrentPayPeriod!) &&
                     // 5. and the current pay period has no X's or B's
-                    !currentPayPeriodIsoArray.contains(where: { $0.code == "X" || $0.code == "B" }) &&
+                    currentPayPeriodIsoArray.contains(where: { $0.code != "X" && $0.code != "B" }) &&
                     // 6. and user has completed all their assigned jobs for the day (the last day of the pay period)
                     assignedDailyJobs.count == currentPayPeriodIsoArray.filter({ ($0.code == "C" || $0.code == "E") && Calendar.current.isDate(Date(timeIntervalSince1970: $0.itemDate), inSameDayAs: lastDayOfCurrentPayPeriod!) }).count {
                     createNewPointsItem(itemName: "job bonus", itemCategory: "daily jobs", code: "B", valuePerTap: jobAndHabitBonusValue)
-                    updateProgressMeters(animated: true)
                 }
+                 */
+
+                
+                updateProgressMeters(animated: true)
+                tableView.reloadData()
                 
                 // --------------------------------
                 // eighth day logic (payday logic): is in viewDidLoad method
@@ -375,6 +382,8 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                 
                 // no need for default job bonus
                 // if on payday, user has no X's for the week AND user has no jobs bonus, then calculate bonus
+                
+ 
                 
             } else if dailyJobIsoArray[0].code == "X" {
                 alertX(indexPath: indexPath, deselectRow: true)

@@ -45,7 +45,7 @@ struct Points {
             let previousPayPeriodIsoArray = Points.pointsArray.filter({ $0.user == user.firstName && $0.itemCategory == "daily jobs" && $0.itemDate >= FamilyData.calculatePayday().previous.timeIntervalSince1970 && $0.itemDate < FamilyData.calculatePayday().current.timeIntervalSince1970 && ($0.code == "X" || $0.code == "B") })
             
             if Date().timeIntervalSince1970 >= FamilyData.calculatePayday().current.timeIntervalSince1970 && previousPayPeriodIsoArray.isEmpty {
-                print("give \(user.firstName) a job bonus!")
+//                print("give \(user.firstName) a job bonus!")
                 
                 // create job bonus for last day of pay period (not first day of current pay period)
                 let selectedDate = Calendar.current.date(byAdding: .day, value: -1, to: FamilyData.calculatePayday().current)!

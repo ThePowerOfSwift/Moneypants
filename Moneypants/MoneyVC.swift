@@ -28,6 +28,19 @@ class MoneyVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     @IBOutlet weak var savingsButton: UIButton!
     @IBOutlet weak var donationsButton: UIButton!
     
+    @IBOutlet weak var clothingTotal: UILabel!
+    @IBOutlet weak var personalCareTotal: UILabel!
+    @IBOutlet weak var sportsDanceTotal: UILabel!
+    @IBOutlet weak var musicArtTotal: UILabel!
+    @IBOutlet weak var schoolTotal: UILabel!
+    @IBOutlet weak var electronicsTotal: UILabel!
+    @IBOutlet weak var summerCampsTotal: UILabel!
+    @IBOutlet weak var transportationTotal: UILabel!
+    @IBOutlet weak var otherTotal: UILabel!
+    @IBOutlet weak var funMoneyTotal: UILabel!
+    @IBOutlet weak var savingsTotal: UILabel!
+    @IBOutlet weak var donationsTotal: UILabel!
+    
     // For Modal Presentation (from 'withdrawal' or 'spending' VC's)
     @IBOutlet weak var navBar: UINavigationItem!
     @IBOutlet weak var navBarTop: NSLayoutConstraint!
@@ -52,6 +65,42 @@ class MoneyVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         navBar.title = currentUserName
         print(withdrawalAmount ?? "no withdrawal amount")
         
+        setTableViewDelegates()
+        setTableViewHeights()
+        setButtonSelectionDefaults()
+        formatTotals()
+        
+    }
+    
+    func formatTotals() {
+        let clothingTotalAmount = Budget.budgetsArray.filter({ $0.ownerName == currentUserName && $0.category == "clothing" }).reduce(0, { $0 + $1.currentValue })
+        let personalCareTotalAmount = Budget.budgetsArray.filter({ $0.ownerName == currentUserName && $0.category == "personal care" }).reduce(0, { $0 + $1.currentValue })
+        let sportsDanceTotalAmount = Budget.budgetsArray.filter({ $0.ownerName == currentUserName && $0.category == "sports & dance" }).reduce(0, { $0 + $1.currentValue })
+        let musicArtTotalAmount = Budget.budgetsArray.filter({ $0.ownerName == currentUserName && $0.category == "music & art" }).reduce(0, { $0 + $1.currentValue })
+        let schoolTotalAmount = Budget.budgetsArray.filter({ $0.ownerName == currentUserName && $0.category == "school" }).reduce(0, { $0 + $1.currentValue })
+        let electronicsTotalAmount = Budget.budgetsArray.filter({ $0.ownerName == currentUserName && $0.category == "electronics" }).reduce(0, { $0 + $1.currentValue })
+        let summerCampsTotalAmount = Budget.budgetsArray.filter({ $0.ownerName == currentUserName && $0.category == "summer camps" }).reduce(0, { $0 + $1.currentValue })
+        let transportationTotalAmount = Budget.budgetsArray.filter({ $0.ownerName == currentUserName && $0.category == "transportation" }).reduce(0, { $0 + $1.currentValue })
+        let otherTotalAmount = Budget.budgetsArray.filter({ $0.ownerName == currentUserName && $0.category == "other" }).reduce(0, { $0 + $1.currentValue })
+        let funMoneyTotalAmount = Budget.budgetsArray.filter({ $0.ownerName == currentUserName && $0.category == "fun money" }).reduce(0, { $0 + $1.currentValue })
+        let savingsTotalAmount = Budget.budgetsArray.filter({ $0.ownerName == currentUserName && $0.category == "savings" }).reduce(0, { $0 + $1.currentValue })
+        let donationsTotalAmount = Budget.budgetsArray.filter({ $0.ownerName == currentUserName && $0.category == "donations" }).reduce(0, { $0 + $1.currentValue })
+        
+        clothingTotal.text = "$\(String(format: "%.2f", Double(clothingTotalAmount) / 100))"
+        personalCareTotal.text = "$\(String(format: "%.2f", Double(personalCareTotalAmount) / 100))"
+        sportsDanceTotal.text = "$\(String(format: "%.2f", Double(sportsDanceTotalAmount) / 100))"
+        musicArtTotal.text = "$\(String(format: "%.2f", Double(musicArtTotalAmount) / 100))"
+        schoolTotal.text = "$\(String(format: "%.2f", Double(schoolTotalAmount) / 100))"
+        electronicsTotal.text = "$\(String(format: "%.2f", Double(electronicsTotalAmount) / 100))"
+        summerCampsTotal.text = "$\(String(format: "%.2f", Double(summerCampsTotalAmount) / 100))"
+        transportationTotal.text = "$\(String(format: "%.2f", Double(transportationTotalAmount) / 100))"
+        otherTotal.text = "$\(String(format: "%.2f", Double(otherTotalAmount) / 100))"
+        funMoneyTotal.text = "$\(String(format: "%.2f", Double(funMoneyTotalAmount) / 100))"
+        savingsTotal.text = "$\(String(format: "%.2f", Double(savingsTotalAmount) / 100))"
+        donationsTotal.text = "$\(String(format: "%.2f", Double(donationsTotalAmount) / 100))"
+    }
+    
+    func setTableViewDelegates() {
         tableView1.delegate = self
         tableView1.dataSource = self
         tableView2.delegate = self
@@ -60,7 +109,9 @@ class MoneyVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         tableView3.dataSource = self
         tableView4.delegate = self
         tableView4.dataSource = self
-        
+    }
+    
+    func setTableViewHeights() {
         // Default view: table is hidden, buttons aren't selected
         tableView1.isHidden = true
         tableView1Top.constant = -(tableView1.bounds.height)
@@ -70,7 +121,9 @@ class MoneyVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         tableView3Top.constant = -(tableView3.bounds.height)
         tableView4.isHidden = true
         tableView4Top.constant = -(tableView4.bounds.height)
-
+    }
+    
+    func setButtonSelectionDefaults() {
         clothingButton.isSelected = false
         personalCareButton.isSelected = false
         sportsDanceButton.isSelected = false
@@ -94,25 +147,41 @@ class MoneyVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if (tableView == self.tableView1) {
+        if tableView == self.tableView1 {
             let cell = tableView1.dequeueReusableCell(withIdentifier: "CustomCell", for: indexPath) as! MoneyCell1
-            cell.dollarLabel.text = "\(tableViewBudgetItemNumbers?[indexPath.row].amount)"
-            cell.envelopeLabel.text = tableViewBudgetItemNames?[indexPath.row].expenseName
+            if let happy = tableViewBudgetItemNumbers?[indexPath.row].currentValue {
+                cell.dollarLabel.text = "\(happy)"
+            }
+            if let alsoHappy = tableViewBudgetItemNames?[indexPath.row].expenseName {
+                cell.envelopeLabel.text = alsoHappy
+            }
             return cell
-        } else if (tableView == self.tableView2) {
+        } else if tableView == self.tableView2 {
             let cell = tableView2.dequeueReusableCell(withIdentifier: "CustomCell", for: indexPath) as! MoneyCell2
-            cell.dollarLabel.text = "\(tableViewBudgetItemNumbers?[indexPath.row].amount)"
-            cell.envelopeLabel.text = tableViewBudgetItemNames?[indexPath.row].expenseName
+            if let happy = tableViewBudgetItemNumbers?[indexPath.row].currentValue {
+                cell.dollarLabel.text = "\(happy)"
+            }
+            if let alsoHappy = tableViewBudgetItemNames?[indexPath.row].expenseName {
+                cell.envelopeLabel.text = alsoHappy
+            }
             return cell
-        } else if (tableView == tableView3) {
+        } else if tableView == tableView3 {
             let cell = tableView3.dequeueReusableCell(withIdentifier: "CustomCell", for: indexPath) as! MoneyCell3
-            cell.dollarLabel.text = "\(tableViewBudgetItemNumbers?[indexPath.row].amount)"
-            cell.envelopeLabel.text = tableViewBudgetItemNames?[indexPath.row].expenseName
+            if let happy = tableViewBudgetItemNumbers?[indexPath.row].currentValue {
+                cell.dollarLabel.text = "\(happy)"
+            }
+            if let alsoHappy = tableViewBudgetItemNames?[indexPath.row].expenseName {
+                cell.envelopeLabel.text = alsoHappy
+            }
             return cell
         } else {
             let cell = tableView4.dequeueReusableCell(withIdentifier: "CustomCell", for: indexPath) as! MoneyCell4
-            cell.dollarLabel.text = "\(tableViewBudgetItemNumbers?[indexPath.row].amount)"
-            cell.envelopeLabel.text = tableViewBudgetItemNames?[indexPath.row].expenseName
+            if let happy = tableViewBudgetItemNumbers?[indexPath.row].currentValue {
+                cell.dollarLabel.text = "\(happy)"
+            }
+            if let alsoHappy = tableViewBudgetItemNames?[indexPath.row].expenseName {
+                cell.envelopeLabel.text = alsoHappy
+            }
             return cell
         }
     }
@@ -120,9 +189,6 @@ class MoneyVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         // iterate over the piggy banks and find which one is pink. That'll be the category, and then I can find the item from the row
         print(Budget.budgetsArray)
-        
-        
-        
         print(indexPath)
     }
     
@@ -132,7 +198,7 @@ class MoneyVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     @IBAction func clothingButtonTapped(_ sender: UIButton) {
         // filter expense array by current user, current category, and for all values more than zero
-        let clothingArray = Budget.budgetsArray.filter({ $0.ownerName == MPUser.usersArray[MPUser.currentUser].firstName && $0.category == "clothing" && $0.amount != 0 }).sorted(by: { $0.order < $1.order })
+        let clothingArray = Budget.budgetsArray.filter({ $0.ownerName == currentUserName && $0.category == "clothing" })
         tableViewRowCount = clothingArray.count             // update table data and deselect other buttons in row
         tableViewBudgetItemNumbers = clothingArray
         tableViewBudgetItemNames = clothingArray
@@ -173,7 +239,7 @@ class MoneyVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     @IBAction func personalCareButtonTapped(_ sender: UIButton) {
         // filter expense array by current user, current category, and for all values more than zero
-        let personalCareArray = Budget.budgetsArray.filter({ $0.ownerName == MPUser.usersArray[MPUser.currentUser].firstName && $0.category == "personal care" && $0.amount != 0 }).sorted(by: { $0.order < $1.order })
+        let personalCareArray = Budget.budgetsArray.filter({ $0.ownerName == currentUserName && $0.category == "personal care" })
         tableViewRowCount = personalCareArray.count             // update table data and deselect other buttons in row
         tableViewBudgetItemNumbers = personalCareArray
         tableViewBudgetItemNames = personalCareArray
@@ -214,7 +280,7 @@ class MoneyVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     @IBAction func sportsDanceButtonTapped(_ sender: UIButton) {
         // filter expense array by current user, current category, and for all values more than zero
-        let sportsDanceArray = Budget.budgetsArray.filter({ $0.ownerName == MPUser.usersArray[MPUser.currentUser].firstName && $0.category == "sports & dance" && $0.amount != 0 }).sorted(by: { $0.order < $1.order })
+        let sportsDanceArray = Budget.budgetsArray.filter({ $0.ownerName == currentUserName && $0.category == "sports & dance" })
         tableViewRowCount = sportsDanceArray.count             // update table data and deselect other buttons in row
         tableViewBudgetItemNumbers = sportsDanceArray
         tableViewBudgetItemNames = sportsDanceArray
@@ -259,10 +325,13 @@ class MoneyVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     @IBAction func musicArtButtonTapped(_ sender: UIButton) {
         // filter expense array by current user, current category, and for all values more than zero
-        let musicArtArray = Budget.budgetsArray.filter({ $0.ownerName == MPUser.usersArray[MPUser.currentUser].firstName && $0.category == "music & art" && $0.amount != 0 }).sorted(by: { $0.order < $1.order })
-        tableViewRowCount = musicArtArray.count             // update table data and deselect other buttons in row
-        tableViewBudgetItemNumbers = musicArtArray
-        tableViewBudgetItemNames = musicArtArray
+        let musicArray = Budget.budgetsArray.filter({ $0.ownerName == currentUserName && $0.category == "music & art" })
+        
+        
+//        let musicArtArray = Budget.budgetsArray.filter({ $0.ownerName == MPUser.usersArray[MPUser.currentUser].firstName && $0.category == "music & art" && $0.amount != 0 }).sorted(by: { $0.order < $1.order })
+        tableViewRowCount = musicArray.count             // update table data and deselect other buttons in row
+        tableViewBudgetItemNumbers = musicArray
+        tableViewBudgetItemNames = musicArray
         
         schoolButton.isSelected = false
         electronicsButton.isSelected = false
@@ -300,7 +369,7 @@ class MoneyVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
     @IBAction func schoolButtonTapped(_ sender: UIButton) {
         // filter expense array by current user, current category, and for all values more than zero
-        let schoolArray = Budget.budgetsArray.filter({ $0.ownerName == MPUser.usersArray[MPUser.currentUser].firstName && $0.category == "school" && $0.amount != 0 }).sorted(by: { $0.order < $1.order })
+        let schoolArray = Budget.budgetsArray.filter({ $0.ownerName == currentUserName && $0.category == "school" })
         tableViewRowCount = schoolArray.count             // update table data and deselect other buttons in row
         tableViewBudgetItemNumbers = schoolArray
         tableViewBudgetItemNames = schoolArray
@@ -341,7 +410,7 @@ class MoneyVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     @IBAction func electronicsButtonTapped(_ sender: UIButton) {
         // filter expense array by current user, current category, and for all values more than zero
-        let electronicsArray = Budget.budgetsArray.filter({ $0.ownerName == MPUser.usersArray[MPUser.currentUser].firstName && $0.category == "electronics" && $0.amount != 0 }).sorted(by: { $0.order < $1.order })
+        let electronicsArray = Budget.budgetsArray.filter({ $0.ownerName == currentUserName && $0.category == "electronics" })
         tableViewRowCount = electronicsArray.count             // update table data and deselect other buttons in row
         tableViewBudgetItemNumbers = electronicsArray
         tableViewBudgetItemNames = electronicsArray
@@ -386,7 +455,7 @@ class MoneyVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     @IBAction func summerCampButtonTapped(_ sender: UIButton) {
         // filter expense array by current user, current category, and for all values more than zero
-        let summerCampsArray = Budget.budgetsArray.filter({ $0.ownerName == MPUser.usersArray[MPUser.currentUser].firstName && $0.category == "summer camps" && $0.amount != 0 }).sorted(by: { $0.order < $1.order })
+        let summerCampsArray = Budget.budgetsArray.filter({ $0.ownerName == currentUserName && $0.category == "summer camps" })
         tableViewRowCount = summerCampsArray.count             // update table data and deselect other buttons in row
         tableViewBudgetItemNumbers = summerCampsArray
         tableViewBudgetItemNames = summerCampsArray
@@ -427,7 +496,7 @@ class MoneyVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     @IBAction func transportationButtonTapped(_ sender: UIButton) {
         // filter expense array by current user, current category, and for all values more than zero
-        let transportationArray = Budget.budgetsArray.filter({ $0.ownerName == MPUser.usersArray[MPUser.currentUser].firstName && $0.category == "transportation" && $0.amount != 0 }).sorted(by: { $0.order < $1.order })
+        let transportationArray = Budget.budgetsArray.filter({ $0.ownerName == currentUserName && $0.category == "transportation" })
         tableViewRowCount = transportationArray.count             // update table data and deselect other buttons in row
         tableViewBudgetItemNumbers = transportationArray
         tableViewBudgetItemNames = transportationArray
@@ -466,9 +535,9 @@ class MoneyVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         }
     }
     
-    @IBAction func otherButtonTapper(_ sender: UIButton) {
+    @IBAction func otherButtonTapped(_ sender: UIButton) {
         // filter expense array by current user, current category, and for all values more than zero
-        let otherArray = Budget.budgetsArray.filter({ $0.ownerName == MPUser.usersArray[MPUser.currentUser].firstName && $0.category == "other" && $0.amount != 0 }).sorted(by: { $0.order < $1.order })
+        let otherArray = Budget.budgetsArray.filter({ $0.ownerName == currentUserName && $0.category == "other" })
         tableViewRowCount = otherArray.count             // update table data and deselect other buttons in row
         tableViewBudgetItemNumbers = otherArray
         tableViewBudgetItemNames = otherArray
@@ -514,7 +583,7 @@ class MoneyVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     @IBAction func funMoneyButtonTapped(_ sender: UIButton) {
         // filter expense array by current user, current category, and for all values more than zero
-        let funMoneyArray = Budget.budgetsArray.filter({ $0.ownerName == MPUser.usersArray[MPUser.currentUser].firstName && $0.category == "fun money" && $0.amount != 0 }).sorted(by: { $0.order < $1.order })
+        let funMoneyArray = Budget.budgetsArray.filter({ $0.ownerName == currentUserName && $0.category == "fun money" })
         tableViewRowCount = funMoneyArray.count             // update table data and deselect other buttons in row
         tableViewBudgetItemNumbers = funMoneyArray
         tableViewBudgetItemNames = funMoneyArray
@@ -555,7 +624,7 @@ class MoneyVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     @IBAction func savingsButtonTapped(_ sender: UIButton) {
         // filter expense array by current user, current category, and for all values more than zero
-        let savingsArray = Budget.budgetsArray.filter({ $0.ownerName == MPUser.usersArray[MPUser.currentUser].firstName && $0.category == "savings" && $0.amount != 0 }).sorted(by: { $0.order < $1.order })
+        let savingsArray = Budget.budgetsArray.filter({ $0.ownerName == currentUserName && $0.category == "savings" })
         tableViewRowCount = savingsArray.count             // update table data and deselect other buttons in row
         tableViewBudgetItemNumbers = savingsArray
         tableViewBudgetItemNames = savingsArray
@@ -597,7 +666,7 @@ class MoneyVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     @IBAction func donationsButtonTapped(_ sender: UIButton) {
         // filter expense array by current user, current category, and for all values more than zero
-        let donationsArray = Budget.budgetsArray.filter({ $0.ownerName == MPUser.usersArray[MPUser.currentUser].firstName && $0.category == "donations" && $0.amount != 0 }).sorted(by: { $0.order < $1.order })
+        let donationsArray = Budget.budgetsArray.filter({ $0.ownerName == currentUserName && $0.category == "donations" })
         tableViewRowCount = donationsArray.count             // update table data and deselect other buttons in row
         tableViewBudgetItemNumbers = donationsArray
         tableViewBudgetItemNames = donationsArray

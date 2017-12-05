@@ -12,6 +12,7 @@ struct Budget {
     var finalPayment: String
     var totalNumberOfPayments: Int
     var order: Int
+    var currentValue: Int
     
     static var budgetsArray = [Budget]()
     
@@ -60,8 +61,9 @@ struct Budget {
                                         let finalPayment = value["finalPayment"] as! String
                                         let totalNumberOfPayments = value["totalNumberOfPayments"] as! Int
                                         let order = value["order"] as! Int
+                                        let currentValue = value["currentValue"] as! Int
                                         
-                                        let userBudget = Budget(ownerName: ownerName, expenseName: expenseName, category: category, amount: amount, hasDueDate: hasDueDate, firstPayment: firstPayment, repeats: repeats, finalPayment: finalPayment, totalNumberOfPayments: totalNumberOfPayments, order: order)
+                                        let userBudget = Budget(ownerName: ownerName, expenseName: expenseName, category: category, amount: amount, hasDueDate: hasDueDate, firstPayment: firstPayment, repeats: repeats, finalPayment: finalPayment, totalNumberOfPayments: totalNumberOfPayments, order: order, currentValue: currentValue)
                                         
                                         budgetsArray.append(userBudget)
                                     }

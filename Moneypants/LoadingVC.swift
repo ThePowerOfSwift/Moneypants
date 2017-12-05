@@ -7,7 +7,6 @@ class LoadingVC: UIViewController {
     @IBOutlet weak var progressView: UIProgressView!
     
     var loadingProgress: Double = 0
-    var window: UIWindow?
     var censusKidsMultiplier: Double!
 
     override func viewDidLoad() {
