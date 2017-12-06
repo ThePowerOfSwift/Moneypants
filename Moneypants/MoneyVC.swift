@@ -69,7 +69,6 @@ class MoneyVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         setTableViewHeights()
         setButtonSelectionDefaults()
         formatTotals()
-        
     }
     
     func formatTotals() {

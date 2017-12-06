@@ -550,8 +550,16 @@ class Step10ExpenseDetailVC: UITableViewController, UIPickerViewDelegate, UIPick
             let allowedCharacters = CharacterSet.decimalDigits
             let characterSet = CharacterSet(charactersIn: string)
             return allowedCharacters.isSuperset(of: characterSet)
+        } else {
+            if string.characters.count > 0 {
+                var allowedCharacters = CharacterSet.alphanumerics
+                allowedCharacters.insert(charactersIn: " -()") // "white space & hyphen"
+                
+                let unwantedStr = string.trimmingCharacters(in: allowedCharacters)
+                return unwantedStr.characters.count == 0
+            }
+            return true
         }
-        return true
     }
     
     func textFieldDidEndEditing(_ textField: UITextField) {

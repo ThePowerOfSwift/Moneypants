@@ -76,20 +76,33 @@ class SettingsVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let (settingDescription, settingVC) = settingsList[indexPath.row]
+        let (settingDescription, _) = settingsList[indexPath.row]
         if indexPath.row == 0 {
-            print(settingDescription, settingVC)
-//            let newViewController = Step1VC.self()
-//            self.navigationController?.pushViewController(newViewController, animated: true)
+            let alert = UIAlertController(title: "Change Household Income", message: "You have chosen 'change household income'. This will affect all of your settings and will require you to review the entire setup process after you modify your income.\n\nDo you wish to proceed?", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "continue", style: .default, handler: { _ in
+                let storyboard = UIStoryboard(name: "Setup", bundle: nil)
+                let navController: UINavigationController = storyboard.instantiateViewController(withIdentifier: "SetupNavController") as! UINavigationController
+                self.navigationController?.present(navController, animated: true, completion: nil)
+            }))
+            alert.addAction(UIAlertAction(title: "cancel", style: .cancel, handler: { _ in
+                alert.dismiss(animated: true, completion: nil)
+            }))
+            present(alert, animated: true, completion: nil)
             
+            
+            // WORKS KIND OF
+            /*
             self.window = UIWindow(frame: UIScreen.main.bounds)
             let storyboard = UIStoryboard(name: "Setup", bundle: nil)
             let initialViewController = storyboard.instantiateViewController(withIdentifier: "LoadingVC")
             self.window?.rootViewController = initialViewController
             self.window?.makeKeyAndVisible()
+            */
+            // END WORKS KIND OF
             
-            FamilyData.setupProgress = 10
-            ref.updateChildValues(["setupProgress" : 10])
+            
+            FamilyData.setupProgress = 1
+            ref.updateChildValues(["setupProgress" : 1])
             
         } else if indexPath.row == 1 {
             print(settingDescription)

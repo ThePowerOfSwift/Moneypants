@@ -25,8 +25,8 @@ class PaydayVC: UIViewController, UICollectionViewDelegate, UICollectionViewData
                 $0.itemCategory == "payday" &&
                 Calendar.current.isDateInToday(Date(timeIntervalSince1970: $0.itemDate)) })
             
-            // if user hasn't been paid AND it's been at least one day since payday, turn badge red
-            if alreadyPaidIso.isEmpty && Calendar.current.date(byAdding: .day, value: -1, to: Date())! > FamilyData.calculatePayday().current {
+            // if user hasn't been paid AND it's payday or later, turn badge red
+            if alreadyPaidIso.isEmpty && Date() >= FamilyData.calculatePayday().current {
                 paidBadgeColorArray.append(UIColor.red.cgColor)
             // if user has been paid today
             } else if !alreadyPaidIso.isEmpty && !paidTodayIso.isEmpty {
