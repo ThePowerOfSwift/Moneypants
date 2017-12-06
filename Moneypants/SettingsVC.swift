@@ -78,11 +78,13 @@ class SettingsVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let (settingDescription, _) = settingsList[indexPath.row]
         if indexPath.row == 0 {
-            let alert = UIAlertController(title: "Change Household Income", message: "You have chosen 'change household income'. This will affect all of your settings and will require you to review the entire setup process after you modify your income.\n\nDo you wish to proceed?", preferredStyle: .alert)
+            let alert = UIAlertController(title: "Change Household Income", message: "You have chosen 'change household income'. This will affect all of your settings and will require you to review the entire setup process and update users' budgets after you modify your income.\n\nDo you wish to proceed?", preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: "continue", style: .default, handler: { _ in
                 let storyboard = UIStoryboard(name: "Setup", bundle: nil)
                 let navController: UINavigationController = storyboard.instantiateViewController(withIdentifier: "SetupNavController") as! UINavigationController
                 self.navigationController?.present(navController, animated: true, completion: nil)
+                FamilyData.setupProgress = 1
+                self.ref.updateChildValues(["setupProgress" : 1])
             }))
             alert.addAction(UIAlertAction(title: "cancel", style: .cancel, handler: { _ in
                 alert.dismiss(animated: true, completion: nil)
@@ -100,9 +102,6 @@ class SettingsVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
             */
             // END WORKS KIND OF
             
-            
-            FamilyData.setupProgress = 1
-            ref.updateChildValues(["setupProgress" : 1])
             
         } else if indexPath.row == 1 {
             print(settingDescription)

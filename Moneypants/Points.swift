@@ -80,6 +80,21 @@ struct Points {
         }
     }
     
+    // round up numbers larger than 10, unless specifically told not to
+    static func formatMoney(amount: Int, rounded: Bool) -> String {
+        if rounded && amount < -999 {
+            return "-$\(Int((Double(abs(amount)) / 100).rounded(.up)))"
+        } else if rounded && amount >= -999 && amount < 0 {
+            return "-$\(String(format: "%.2f", Double(abs(amount)) / 100))"
+        } else if rounded && amount > 999 {
+            return "$\(Int((Double(amount) / 100).rounded(.up)))"
+        } else if !rounded && amount < 0 {
+            return "-$\(String(format: "%.2f", Double(abs(amount)) / 100))"
+        } else {
+            return "$\(String(format: "%.2f", Double(amount) / 100))"
+        }
+    }
+    
     // code:
     // C = completed (for daily jobs, daily habits, and weekly jobs)
     // E = excused (for daily jobs only)

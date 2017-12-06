@@ -288,18 +288,57 @@ class PaydayDetailsVC: UIViewController, UICollectionViewDataSource, UICollectio
     }
     
     func allocateIncomeToEnvelopes() {
+        // 1. get an iso array for current user and their budgeted items (items that aren't budgeted as zero)
+        let budgetIso = Budget.budgetsArray.filter({ $0.ownerName == currentUserName && $0.amount > 0 })
+        let tenPercentOfEarnings = Int((Double(previousPaydayEarnings) * 0.10).rounded(.up))
+        let remainingSeventyPercent = previousPaydayEarnings - (tenPercentOfEarnings * 3)
+        
         // do all the math HERE for allocating income to the envelopes
         for (budgetIndex, budgetItem) in Budget.budgetsArray.enumerated() {
             if budgetItem.category == "donations" && budgetItem.ownerName == currentUserName {
-                Budget.budgetsArray[budgetIndex].currentValue += Int((Double(previousPaydayEarnings) * 0.10).rounded(.up))
+                Budget.budgetsArray[budgetIndex].currentValue += tenPercentOfEarnings
             }
             if budgetItem.category == "savings" && budgetItem.ownerName == currentUserName {
-                Budget.budgetsArray[budgetIndex].currentValue += Int((Double(previousPaydayEarnings) * 0.10).rounded(.up))
+                Budget.budgetsArray[budgetIndex].currentValue += tenPercentOfEarnings
             }
             if budgetItem.category == "fun money" && budgetItem.ownerName == currentUserName {
-                Budget.budgetsArray[budgetIndex].currentValue += Int((Double(previousPaydayEarnings) * 0.10).rounded(.up))
+                Budget.budgetsArray[budgetIndex].currentValue += tenPercentOfEarnings
             }
         }
+        // determine if user can pay all their bills without parental help (this is actually done back in step 10 of setup)
+        // get list of bills with due dates (Father has two)
+        // get bill with most recent due date
+        // if there's enough money, pay that bill
+        // if not, pay what is available and that's it.
+        // then move on to next most recent due date bill
+        // if there's enough money, pay that bill
+        // if not, pay what is available
+        // if there's money left over after paying bills with due dates, fill other envelopes in current order (clothing, personal care, sports, music, etc.)
+        let billsWithDueDates = budgetIso.filter({ $0.hasDueDate == true }).sorted(by: { $0.firstPayment < $1.firstPayment })
+        // calculate how much money user should be putting into the first bill...
+        
+        for bill in billsWithDueDates {
+            // convert YYYYMMDD to just YYYYMM (make day first day of month)
+            let timestamp = bill.firstPayment
+            let formatter = DateFormatter()
+            formatter.dateFormat = "yyyyMMdd"
+            let convertedDateFromTimestamp = formatter.date(from: timestamp)
+            
+            // calculate how much money should go into the bill's envelope
+            // need to find out how many paydays will occur between now and when bill is due
+            let numberOfWeeks = convertedDateFromTimestamp?.weeks(from: Date())
+            
+        }
+        
+        
+        
+        
+
+        print(billsWithDueDates)
+        
+        
+        
+        print(remainingSeventyPercent)
     }
 }
 

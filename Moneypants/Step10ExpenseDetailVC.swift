@@ -43,7 +43,7 @@ class Step10ExpenseDetailVC: UITableViewController, UIPickerViewDelegate, UIPick
     var expense: Budget?               // passed from Step8OutsideIncomeVC
     var currentUserName: String!
     
-    let repeatOptions = ["never", "weekly", "monthly"]
+    let repeatOptions = ["never", "weekly", "monthly", "yearly"]
     let formatterForLabel = DateFormatter()
     let formatterForFirebase = DateFormatter()
     
@@ -400,21 +400,21 @@ class Step10ExpenseDetailVC: UITableViewController, UIPickerViewDelegate, UIPick
         let firstPayment = formatterForFirebase.date(from: firstPaymentDueDate!)
         let finalPayment = formatterForFirebase.date(from: finalPaymentDueDate!)
         if repeatsLabel.text == "weekly" {
-            let numberOfWeeks = finalPayment?.weeks(from: firstPayment!)
+            let numberOfWeeks = (finalPayment?.weeks(from: firstPayment!))! + 1
             if expenseNameTextField.text != "" && Int(expenseAmountTextField.text!) != nil {
-                totalNumberOfPaymentsLabel.text = "\(numberOfWeeks!)"
-                yearlyTotalLabel.text = "\(expenseNameTextField.text!) = $\(Int(expenseAmountTextField.text!)! * numberOfWeeks!)"
+                totalNumberOfPaymentsLabel.text = "\(numberOfWeeks)"
+                yearlyTotalLabel.text = "\(expenseNameTextField.text!) = $\(Int(expenseAmountTextField.text!)! * numberOfWeeks)"
             } else {
-                totalNumberOfPaymentsLabel.text = "\(numberOfWeeks!)"
+                totalNumberOfPaymentsLabel.text = "\(numberOfWeeks)"
                 yearlyTotalLabel.text = "\(expenseNameTextField.text!) = $0"
             }
         } else if repeatsLabel.text == "monthly" {
-            let numberOfMonths = finalPayment?.months(from: firstPayment!)
+            let numberOfMonths = (finalPayment?.months(from: firstPayment!))! + 1
             if expenseNameTextField.text != "" && Int(expenseAmountTextField.text!) != nil {
-                totalNumberOfPaymentsLabel.text = "\(numberOfMonths!)"
-                yearlyTotalLabel.text = "\(expenseNameTextField.text!) = $\(Int(expenseAmountTextField.text!)! * numberOfMonths!)"
+                totalNumberOfPaymentsLabel.text = "\(numberOfMonths)"
+                yearlyTotalLabel.text = "\(expenseNameTextField.text!) = $\(Int(expenseAmountTextField.text!)! * numberOfMonths)"
             } else {
-                totalNumberOfPaymentsLabel.text = "\(numberOfMonths!)"
+                totalNumberOfPaymentsLabel.text = "\(numberOfMonths)"
                 yearlyTotalLabel.text = "\(expenseNameTextField.text!) = $0"
             }
         } else {
