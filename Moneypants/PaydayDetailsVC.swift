@@ -324,7 +324,25 @@ class PaydayDetailsVC: UIViewController, UICollectionViewDataSource, UICollectio
             }
         }
         // determine if user can pay all their bills without parental help (this is actually done back in step 10 of setup)
-        // get list of bills with due dates (Father has two)
+        print(budgetIso)
+        
+        
+        
+        
+        
+        
+        let allBills = budgetIso.reduce(0, { $0 + ($1.amount * $1.totalNumberOfPayments) })
+        print("Q:",allBills)
+        
+        
+        
+        
+        
+        
+        
+        /*
+
+        // get list of bills with due dates (Father has two) first
         // get bill with most recent due date
         // if there's enough money, pay that bill
         // if not, pay what is available and that's it.
@@ -336,6 +354,9 @@ class PaydayDetailsVC: UIViewController, UICollectionViewDataSource, UICollectio
         // calculate how much money user should be putting into the first bill...
         
         for bill in billsWithDueDates {
+            // get total amount for year
+            print("R:",bill.amount / 365.26 * 7)
+            
             // convert YYYYMMDD to just YYYYMM (make day first day of month)
             let timestamp = bill.firstPayment
             let formatter = DateFormatter()
@@ -351,21 +372,20 @@ class PaydayDetailsVC: UIViewController, UICollectionViewDataSource, UICollectio
             let numberOfWeeksTilDue = startOfBillMonth?.weeks(from: FamilyData.calculatePayday().current)
             print("U:",numberOfWeeksTilDue)
             
-            
 //            let numberOfWeeks = convertedDateFromTimestamp?.weeks(from: FamilyData.calculatePayday().current)
 //            print("Q:",numberOfWeeks)
 //            print("R:",bill.amount / numberOfWeeks!)
         }
-        
+        */
         
         
         
 
-        print(billsWithDueDates)
-        
-        
-        
-        print(remainingSeventyPercent)
+//        print(billsWithDueDates)
+//        
+//        
+//        
+//        print(remainingSeventyPercent)
     }
 }
 

@@ -39,6 +39,8 @@ class Step1VC: UIViewController, UITextFieldDelegate {
             NSFontAttributeName : UIFont(name: "Arista2.0", size: 26)!]
         
         formatExistingIncome()
+        
+//        print("A:",FamilyData.householdIncome,"B:",FamilyData.natlAvgYrlySpendingPerKid,"C:",FamilyData.numberOfKids,"D:",FamilyData.censusKidsMultiplier(),"E:",FamilyData.adjustedNatlAvgYrlySpendingEntireFam,"F:",FamilyData.adjustedNatlAvgYrlySpendingPerKid,"G:",FamilyData.feeValueMultiplier,"H:",FamilyData.jobAndHabitBonusValue)
     }
     
     // ----------
@@ -47,12 +49,12 @@ class Step1VC: UIViewController, UITextFieldDelegate {
     
     @IBAction func didTapNextButton(_ sender: UIButton) {
         if incomeTextField.text != "" {     // check if field is empty
-            FamilyData.yearlyIncome = Int(incomeTextField.text!.components(separatedBy: [",", " "]).joined())!       // remove commas
-            if FamilyData.yearlyIncome < incomeMinimum || FamilyData.yearlyIncome > incomeMaximum {     // check if income is within range
+            FamilyData.householdIncome = Int(incomeTextField.text!.components(separatedBy: [",", " "]).joined())!       // remove commas
+            if FamilyData.householdIncome < incomeMinimum || FamilyData.householdIncome > incomeMaximum {     // check if income is within range
                 createIncomeAlert()
             } else {        // good to go!
                 performSegue(withIdentifier: "GoToStep2", sender: self)
-                ref.updateChildValues(["householdIncome" : FamilyData.yearlyIncome])
+                ref.updateChildValues(["householdIncome" : FamilyData.householdIncome])
                 // only update setup progress if user hasn't progressed past step 1
                 if FamilyData.setupProgress <= 1 {
                     FamilyData.setupProgress = 1
@@ -134,13 +136,13 @@ class Step1VC: UIViewController, UITextFieldDelegate {
     }
     
     func formatExistingIncome() {
-        if FamilyData.yearlyIncome == 0 {
+        if FamilyData.householdIncome == 0 {
             incomeTextField.text = ""
         } else {
             let formatter = NumberFormatter()
             formatter.groupingSeparator = ","
             formatter.numberStyle = .decimal
-            let formattedNumber = formatter.string(from: FamilyData.yearlyIncome as NSNumber)
+            let formattedNumber = formatter.string(from: FamilyData.householdIncome as NSNumber)
             
             incomeTextField.text = "\(formattedNumber!)"
         }

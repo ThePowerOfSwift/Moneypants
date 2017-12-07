@@ -89,10 +89,14 @@ struct Points {
             return "-$\(Int((Double(abs(amount)) / 100).rounded(.up)))"
         } else if rounded && amount >= -999 && amount < 0 {
             return "-$\(String(format: "%.2f", Double(abs(amount)) / 100))"
+        } else if rounded && amount == 0 {
+            return "$ -"
         } else if rounded && amount > 999 {
             return "$\(Int((Double(amount) / 100).rounded(.up)))"
         } else if !rounded && amount < 0 {
             return "-$\(String(format: "%.2f", Double(abs(amount)) / 100))"
+        } else if !rounded && amount == 0 {
+            return "$ -"
         } else {
             return "$\(String(format: "%.2f", Double(amount) / 100))"
         }

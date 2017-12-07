@@ -61,7 +61,6 @@ class LoadingVC: UIViewController {
                                                     self.activityIndicator.stopAnimating()
                                                     self.activityIndicator.hidesWhenStopped = true
                                                     print("user has completed setup. Loading home page...")
-                                                    self.updateFamilyDataNumbers()
                                                     self.performSegue(withIdentifier: "Home", sender: self)
                                                 } else {
                                                     self.performSegue(withIdentifier: "GoToStep1EnterIncome", sender: self)
@@ -76,26 +75,5 @@ class LoadingVC: UIViewController {
                 }
             }
         }
-    }
-    
-    func updateFamilyDataNumbers() {
-        var censusKidsMultiplier: Double = 0
-        // get secret formula %
-        let secretFormula = ((5.23788 * pow(0.972976, Double(FamilyData.yearlyIncome) / 1000) + 1.56139) / 100) as Double
-        let natlAvgYearlySpendingPerKid = Double(FamilyData.yearlyIncome) * secretFormula
-        let numberOfKids = MPUser.usersArray.filter({ return $0.childParent == "child" }).count
-        // adjust multiplier according to census data
-        if numberOfKids >= 3 {
-            censusKidsMultiplier = 0.76
-        } else if numberOfKids == 2 {
-            censusKidsMultiplier = 1
-        } else if numberOfKids <= 1 {
-            censusKidsMultiplier = 1.27
-        }
-        
-        // these two values are basis for all the family points
-        FamilyData.adjustedNatlAvgYrlySpendingEntireFam = Int(natlAvgYearlySpendingPerKid * censusKidsMultiplier * Double(MPUser.usersArray.count))
-        FamilyData.adjustedNatlAvgYrlySpendingPerKid = Int(natlAvgYearlySpendingPerKid * censusKidsMultiplier)
-        FamilyData.feeValueMultiplier = Int(Double(FamilyData.adjustedNatlAvgYrlySpendingPerKid / 52) * 0.20 / 7 * 100)
     }
 }

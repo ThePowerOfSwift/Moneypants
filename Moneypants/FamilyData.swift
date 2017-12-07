@@ -2,12 +2,30 @@ import Foundation
 import Firebase
 
 struct FamilyData {
-    static var yearlyIncome: Int = 0
+    static var householdIncome: Int = 0
     static var setupProgress: Int = 0
     static var paydayTime: String = ""
-    static var adjustedNatlAvgYrlySpendingEntireFam: Int = 0
-    static var adjustedNatlAvgYrlySpendingPerKid: Int = 0
-    static var feeValueMultiplier: Int = 0
+    
+    static let secretFormula = (5.23788 * pow(0.972976, Double(householdIncome) / 1000) + 1.56139) / 100
+    static let numberOfKids = MPUser.usersArray.filter({ $0.childParent == "child" }).count
+    
+    static func censusKidsMultiplier() -> Double {
+        if numberOfKids >= 3 {
+            return 0.76
+        } else if numberOfKids == 2 {
+            return 1
+        } else if numberOfKids <= 1 {
+            return 1.27
+        } else {
+            return 0
+        }
+    }
+    
+    static var natlAvgYrlySpendingPerKid = Double(householdIncome) * secretFormula
+    static var adjustedNatlAvgYrlySpendingEntireFam: Int = Int(FamilyData.natlAvgYrlySpendingPerKid * censusKidsMultiplier() * Double(MPUser.usersArray.count))
+    static var adjustedNatlAvgYrlySpendingPerKid: Int = Int(natlAvgYrlySpendingPerKid * censusKidsMultiplier())
+    static var feeValueMultiplier: Int = Int(Double(FamilyData.adjustedNatlAvgYrlySpendingPerKid) / 365.26 * 0.20 * 100)
+    static var jobAndHabitBonusValue: Int = Int(Double(adjustedNatlAvgYrlySpendingPerKid) / 52.18 * 0.20 * 100)
     
     static let fees = ["fighting", "lying", "stealing", "disobedience", "bad language"]
 
@@ -29,8 +47,8 @@ struct FamilyData {
         let ref = Database.database().reference().child("users").child((firebaseUser?.uid)!)
         ref.child("householdIncome").observeSingleEvent(of: .value, with: { (snapshot) in
             if let value = snapshot.value as? Int {
-                yearlyIncome = value
-                completion(yearlyIncome)
+                householdIncome = value
+                completion(householdIncome)
             } else {
                 completion(0)
             }

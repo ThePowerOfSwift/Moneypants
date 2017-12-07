@@ -31,8 +31,6 @@ class UserProgressPopupVC: UIViewController {
         
         weekLabel.text = "for the pay week ending \(formatter.string(from: FamilyData.calculatePayday().next))"
         
-        print(FamilyData.calculatePayday().next)
-        
         currentUserName = MPUser.usersArray[MPUser.currentUser].firstName
         
         jobAndHabitBonusValue = Int(Double(FamilyData.adjustedNatlAvgYrlySpendingPerKid) / 52 * 0.20 * 100)
