@@ -58,7 +58,8 @@ extension UserVC {
                                        itemCategory: "weekly jobs",
                                        code: "N",
                                        valuePerTap: 0,
-                                       itemDate: (self.selectedDate?.timeIntervalSince1970)!)
+                                       itemDate: (self.selectedDate?.timeIntervalSince1970)!,
+                                       paid: false)
                     
                     Points.pointsArray.append(noSub)
                     
@@ -121,7 +122,9 @@ extension UserVC {
                                    itemCategory: "weekly jobs",
                                    code: "N",
                                    valuePerTap: 0,
-                                   itemDate: (self.selectedDate?.timeIntervalSince1970)!)
+                                   itemDate: (self.selectedDate?.timeIntervalSince1970)!,
+                                   paid: false)
+                
                 Points.pointsArray.append(noSub)
                 
             // if array isn't empty, change the existing Points item to be zero and code "N", and subtract corresponding Income value from user's income
@@ -160,7 +163,8 @@ extension UserVC {
                                                  itemCategory: "other jobs",   // previously was "weekly jobs"
                                                  code: "S",
                                                  valuePerTap: self.weeklyJobsPointValue,
-                                                 itemDate: (self.selectedDate?.timeIntervalSince1970)!)
+                                                 itemDate: (self.selectedDate?.timeIntervalSince1970)!,
+                                                 paid: false)
             
             Points.pointsArray.append(earnedSubstitutionValue)
             

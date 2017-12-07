@@ -1057,7 +1057,8 @@ class UserVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                                      itemCategory: itemCategory,
                                      code: code,
                                      valuePerTap: valuePerTap,      // previous was dailyJobsPointValue
-                                     itemDate: selectedDate.timeIntervalSince1970)
+                                     itemDate: selectedDate.timeIntervalSince1970,
+                                     paid: false)
         
         Points.pointsArray.append(pointsArrayItem)
         

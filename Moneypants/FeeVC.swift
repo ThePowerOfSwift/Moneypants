@@ -99,7 +99,8 @@ class FeeVC: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate, UIT
                                  itemCategory: "fees",
                                  code: "F",
                                  valuePerTap: -(FamilyData.feeValueMultiplier),
-                                 itemDate: self.selectedDate.timeIntervalSince1970)
+                                 itemDate: self.selectedDate.timeIntervalSince1970,
+                                 paid: false)
                 
                 Points.pointsArray.append(fee)
                 

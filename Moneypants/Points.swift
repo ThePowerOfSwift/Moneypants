@@ -8,6 +8,7 @@ struct Points {
     var code: String
     var valuePerTap: Int
     var itemDate: Double
+    var paid: Bool
     
     static var pointsArray = [Points]()
     
@@ -24,8 +25,9 @@ struct Points {
                         let code = value["code"] as! String
                         let valuePerTap = value["valuePerTap"] as! Int
                         let itemDate = value["itemDate"] as! Double
+                        let paid = value["paid"] as! Bool
                         
-                        let pointsItem = Points(user: user, itemName: itemName, itemCategory: itemCategory, code: code, valuePerTap: valuePerTap, itemDate: itemDate)
+                        let pointsItem = Points(user: user, itemName: itemName, itemCategory: itemCategory, code: code, valuePerTap: valuePerTap, itemDate: itemDate, paid: paid)
                         
                         Points.pointsArray.append(pointsItem)
                         completion()
@@ -55,7 +57,8 @@ struct Points {
                                              itemCategory: "daily jobs",
                                              code: "B",
                                              valuePerTap: jobAndHabitBonusValue,      // previous was dailyJobsPointValue
-                                             itemDate: selectedDate.timeIntervalSince1970)
+                                             itemDate: selectedDate.timeIntervalSince1970,
+                                             paid: false)
                 
                 Points.pointsArray.append(pointsArrayItem)
                 
@@ -104,14 +107,9 @@ struct Points {
     // N = not complete (for habits and weekly jobs)
     // F = fee
     // B = bonus (for daily jobs and habits)
-    // P = paid (for payday items)
-    // U = unpaid
     
     // daily jobs:      C, E, X, B
     // daily habits:    C, N, B
     // weekly jobs:     C, N
     // other jobs:      S, J
-    // 
-    // where to put P and U?
-    
 }

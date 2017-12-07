@@ -81,7 +81,8 @@ extension UserVC {
                                                         itemCategory: "daily jobs",
                                                         code: assignEorX,
                                                         valuePerTap: -(self.substituteFee),
-                                                        itemDate: (self.selectedDate?.timeIntervalSince1970)!)
+                                                        itemDate: (self.selectedDate?.timeIntervalSince1970)!,
+                                                        paid: false)
                     
                     Points.pointsArray.append(loseSubstitutionPoints)
                     
@@ -186,7 +187,8 @@ extension UserVC {
                                                 itemCategory: "daily jobs",
                                                 code: eORx,
                                                 valuePerTap: -(self.substituteFee),
-                                                itemDate: (self.selectedDate?.timeIntervalSince1970)!)
+                                                itemDate: (self.selectedDate?.timeIntervalSince1970)!,
+                                                paid: false)
             
             Points.pointsArray.append(loseSubstitutionPoints)
             
@@ -197,11 +199,13 @@ extension UserVC {
             // MARK: changed "daily jobs" to "other jobs" for substitute
             
             // add fee and job value to substitute's Points array
-            let earnedSubstitutionFee = Points(user: substituteName, itemName: "\(self.usersDailyJobs[indexPath.row].name) (sub)",
+            let earnedSubstitutionFee = Points(user: substituteName,
+                                               itemName: "\(self.usersDailyJobs[indexPath.row].name) (sub)",
                                                itemCategory: "other jobs",      // previously was "daily jobs"
                                                code: "S",
                                                valuePerTap: (self.substituteFee + self.dailyJobsPointValue),
-                                               itemDate: (self.selectedDate?.timeIntervalSince1970)!)
+                                               itemDate: (self.selectedDate?.timeIntervalSince1970)!,
+                                               paid: false)
             
             Points.pointsArray.append(earnedSubstitutionFee)
             

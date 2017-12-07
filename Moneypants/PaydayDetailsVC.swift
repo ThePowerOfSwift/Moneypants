@@ -8,7 +8,9 @@ class PaydayDetailsVC: UIViewController, UICollectionViewDataSource, UICollectio
     @IBOutlet weak var questionButton: UIButton!
     
     var currentUserName: String!
-    var previousPaydayEarnings: Int!
+    var paydayEarnings: Int!
+    var previousPayday: TimeInterval!
+    var currentPayday: TimeInterval!
     
     var firebaseUser: User!
     var ref: DatabaseReference!
@@ -32,13 +34,16 @@ class PaydayDetailsVC: UIViewController, UICollectionViewDataSource, UICollectio
         navigationItem.title = currentUserName
         
         // get array of current user's income for all categories except withdrawals, and then total the amounts
-        previousPaydayEarnings = Points.pointsArray.filter({ $0.user == currentUserName &&
+        paydayEarnings = Points.pointsArray.filter({ $0.user == currentUserName &&
             $0.code != "W" &&
             $0.itemDate >= FamilyData.calculatePayday().previous.timeIntervalSince1970 &&
             $0.itemDate < FamilyData.calculatePayday().current.timeIntervalSince1970 }).reduce(0, { $0 + $1.valuePerTap })
         
-        totalEarningsFormatted = "$\(String(format: "%.2f", Double(previousPaydayEarnings!) / 100))"
+        totalEarningsFormatted = "$\(String(format: "%.2f", Double(paydayEarnings!) / 100))"
         totalEarningsLabel.text = totalEarningsFormatted
+        
+        previousPayday = FamilyData.calculatePayday().previous.timeIntervalSince1970
+        currentPayday = FamilyData.calculatePayday().current.timeIntervalSince1970
         
         Points.updateJobBonus()
         createIsoArraysAndSubtotalsForCategories()
@@ -93,8 +98,8 @@ class PaydayDetailsVC: UIViewController, UICollectionViewDataSource, UICollectio
         paragraphStyle.alignment = NSTextAlignment.left
         
         // Lengthy alert bubble
-        let tenPercentOfEarnings = Int((Double(previousPaydayEarnings) * 0.10).rounded(.up))
-        let remainingSeventyPercent = previousPaydayEarnings - (tenPercentOfEarnings * 3)       // remaining money after 10-10-10
+        let tenPercentOfEarnings = Int((Double(paydayEarnings) * 0.10).rounded(.up))
+        let remainingSeventyPercent = paydayEarnings - (tenPercentOfEarnings * 3)       // remaining money after 10-10-10
         
         let messageText = NSMutableAttributedString(string: "\(currentUserName!) earned \(totalEarningsFormatted!). Be sure to compliment progress.\n\n\(MPUser.gender(user: MPUser.currentUser).his_her) money will be allocated like this:\n\n\t10% charity\t\t\t= $\(String(format: "%.2f", Double(tenPercentOfEarnings) / 100))\n\t10% personal money\t= $\(String(format: "%.2f", Double(tenPercentOfEarnings) / 100))\n\t10% savings\t\t\t= $\(String(format: "%.2f", Double(tenPercentOfEarnings) / 100))\n\n\t70% expenses\t\t= $\(String(format: "%.2f", Double(remainingSeventyPercent) / 100))\n\nWhen you are done paying \(currentUserName!), click 'okay'. This will zero out \(MPUser.gender(user: MPUser.currentUser).his_her.lowercased()) account for the pay period and mark \(MPUser.gender(user: MPUser.currentUser).him_her.lowercased()) as 'paid'.",
             attributes: [NSParagraphStyleAttributeName : paragraphStyle,
@@ -151,21 +156,34 @@ class PaydayDetailsVC: UIViewController, UICollectionViewDataSource, UICollectio
     func markUserAsPaid() {
         if let incomeIndex = Income.currentIncomeArray.index(where: { $0.user == currentUserName }) {
             // create payday item for user and append to points array
-            let paydayItem = Points(user: currentUserName, itemName: "payday", itemCategory: "payday", code: "C", valuePerTap: -(previousPaydayEarnings), itemDate: Date().timeIntervalSince1970)
+            let paydayItem = Points(user: currentUserName,
+                                    itemName: "week ending \(FamilyData.calculatePayday().current.timeIntervalSince1970)",
+                                    itemCategory: "payday",
+                                    code: "C",
+                                    valuePerTap: -(paydayEarnings),
+                                    itemDate: Date().timeIntervalSince1970,
+                                    paid: true)
+            
             Points.pointsArray.append(paydayItem)
             
             // subtract payday amount from user's total income
-            Income.currentIncomeArray[incomeIndex].currentPoints -= previousPaydayEarnings
+            Income.currentIncomeArray[incomeIndex].currentPoints -= paydayEarnings
+        }
+        
+        // mark all payday items as 'paid' for current user
+        for (index, points) in Points.pointsArray.enumerated() {
+            if points.user == currentUserName &&
+                points.itemDate >= FamilyData.calculatePayday().previous.timeIntervalSince1970 &&
+                points.itemDate < FamilyData.calculatePayday().current.timeIntervalSince1970 {
+                
+                Points.pointsArray[index].paid = true
+            }
         }
     }
     
     func createIsoArraysAndSubtotalsForCategories() {
         // need to recalculate this to only include days since previous payday up to current payday (7 days)
         // what about excused and unexcused daily jobs? need to subtract those from this number
-        
-        let previousPayday = FamilyData.calculatePayday().previous.timeIntervalSince1970
-        let currentPayday = FamilyData.calculatePayday().current.timeIntervalSince1970
-        
         let dailyJobsFiltered = Points.pointsArray.filter({ $0.user == currentUserName &&
             $0.itemCategory == "daily jobs" &&
             ($0.code == "C" || $0.code == "B") &&
@@ -290,8 +308,8 @@ class PaydayDetailsVC: UIViewController, UICollectionViewDataSource, UICollectio
     func allocateIncomeToEnvelopes() {
         // 1. get an iso array for current user and their budgeted items (items that aren't budgeted as zero)
         let budgetIso = Budget.budgetsArray.filter({ $0.ownerName == currentUserName && $0.amount > 0 })
-        let tenPercentOfEarnings = Int((Double(previousPaydayEarnings) * 0.10).rounded(.up))
-        let remainingSeventyPercent = previousPaydayEarnings - (tenPercentOfEarnings * 3)
+        let tenPercentOfEarnings = Int((Double(paydayEarnings) * 0.10).rounded(.up))
+        let remainingSeventyPercent = paydayEarnings - (tenPercentOfEarnings * 3)
         
         // do all the math HERE for allocating income to the envelopes
         for (budgetIndex, budgetItem) in Budget.budgetsArray.enumerated() {
@@ -323,11 +341,20 @@ class PaydayDetailsVC: UIViewController, UICollectionViewDataSource, UICollectio
             let formatter = DateFormatter()
             formatter.dateFormat = "yyyyMMdd"
             let convertedDateFromTimestamp = formatter.date(from: timestamp)
+            let components = Calendar.current.dateComponents([.year, .month], from: convertedDateFromTimestamp!)
+            let startOfBillMonth = Calendar.current.date(from: components)
+            print("S:",startOfBillMonth)
             
             // calculate how much money should go into the bill's envelope
             // need to find out how many paydays will occur between now and when bill is due
-            let numberOfWeeks = convertedDateFromTimestamp?.weeks(from: Date())
+            print("T:",FamilyData.calculatePayday().current)
+            let numberOfWeeksTilDue = startOfBillMonth?.weeks(from: FamilyData.calculatePayday().current)
+            print("U:",numberOfWeeksTilDue)
             
+            
+//            let numberOfWeeks = convertedDateFromTimestamp?.weeks(from: FamilyData.calculatePayday().current)
+//            print("Q:",numberOfWeeks)
+//            print("R:",bill.amount / numberOfWeeks!)
         }
         
         

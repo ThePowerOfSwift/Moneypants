@@ -18,7 +18,8 @@ extension UserVC {
                                      itemCategory: "daily habits",
                                      code: "C",
                                      valuePerTap: valuePerTap,
-                                     itemDate: selectedDate.timeIntervalSince1970)
+                                     itemDate: selectedDate.timeIntervalSince1970,
+                                     paid: false)
         
         Points.pointsArray.append(pointsArrayItem)
         
@@ -48,7 +49,8 @@ extension UserVC {
                                  itemCategory: "daily habits",
                                  code: "N",
                                  valuePerTap: 0,
-                                 itemDate: selectedDate.timeIntervalSince1970)
+                                 itemDate: selectedDate.timeIntervalSince1970,
+                                 paid: false)
         
         Points.pointsArray.append(undoneHabit)
         tableView.setEditing(false, animated: true)

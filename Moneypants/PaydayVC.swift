@@ -51,8 +51,22 @@ class PaydayVC: UIViewController, UICollectionViewDelegate, UICollectionViewData
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        MPUser.currentUser = indexPath.row
-        performSegue(withIdentifier: "PaydayDetail", sender: self)
+        // if user has already been paid for the week, they can't be paid again
+        let alreadyPaidIso = Points.pointsArray.filter({ $0.user == MPUser.usersArray[indexPath.row].firstName &&
+            $0.itemCategory == "payday" &&
+            $0.itemDate >= FamilyData.calculatePayday().current.timeIntervalSince1970 &&
+            $0.itemDate < FamilyData.calculatePayday().next.timeIntervalSince1970 })
+        
+        if !alreadyPaidIso.isEmpty {
+            let alert = UIAlertController(title: "Payday", message: "\(MPUser.usersArray[indexPath.row].firstName) has already been paid.", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "okay", style: .cancel, handler: { (_) in
+                alert.dismiss(animated: true, completion: nil)
+            }))
+            present(alert, animated: true, completion: nil)
+        } else {
+            MPUser.currentUser = indexPath.row
+            performSegue(withIdentifier: "PaydayDetail", sender: self)
+        }
     }
 }
 
