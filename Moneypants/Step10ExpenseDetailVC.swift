@@ -43,7 +43,7 @@ class Step10ExpenseDetailVC: UITableViewController, UIPickerViewDelegate, UIPick
     var expense: Budget?               // passed from Step8OutsideIncomeVC
     var currentUserName: String!
     
-    let repeatOptions = ["never", "weekly", "monthly", "yearly"]
+    let repeatOptions = ["never", "weekly", "monthly"]
     let formatterForLabel = DateFormatter()
     let formatterForFirebase = DateFormatter()
     
@@ -154,7 +154,6 @@ class Step10ExpenseDetailVC: UITableViewController, UIPickerViewDelegate, UIPick
         repeatsLabel.text = repeatOptions[row]
         // get firstPayment info and convert it to NSDate...
         let firstPaymentDueDateNSDateFormat = formatterForFirebase.date(from: firstPaymentDueDate!)
-        let calendar = Calendar(identifier: Calendar.Identifier.gregorian)
 
         // -----------------
         // for weekly repeat
@@ -164,7 +163,7 @@ class Step10ExpenseDetailVC: UITableViewController, UIPickerViewDelegate, UIPick
             finalPaymentDueCellHeight = 44
             totalNumberOfPaymentsHeight = 44
             // add a week to first payment due date...
-            let aWeekFromFirstPayment = calendar.date(byAdding: Calendar.Component.day, value: 7, to: firstPaymentDueDateNSDateFormat!)
+            let aWeekFromFirstPayment = Calendar.current.date(byAdding: .day, value: 7, to: firstPaymentDueDateNSDateFormat!)
             // ...then format it for the label with an initial value
             finalPaymentDueDateLabel.text = formatterForLabel.string(from: aWeekFromFirstPayment!)
             finalPaymentDatePickerView.date = aWeekFromFirstPayment!
@@ -178,7 +177,7 @@ class Step10ExpenseDetailVC: UITableViewController, UIPickerViewDelegate, UIPick
             finalPaymentDueCellHeight = 44
             totalNumberOfPaymentsHeight = 44
             // add month to first payment due date...
-            let aMonthFromFirstPayment = calendar.date(byAdding: Calendar.Component.month, value: 1, to: firstPaymentDueDateNSDateFormat!)
+            let aMonthFromFirstPayment = Calendar.current.date(byAdding: .month, value: 1, to: firstPaymentDueDateNSDateFormat!)
             // ...then format it for the label
             finalPaymentDueDateLabel.text = formatterForLabel.string(from: aMonthFromFirstPayment!)
             finalPaymentDatePickerView.date = aMonthFromFirstPayment!
@@ -382,16 +381,6 @@ class Step10ExpenseDetailVC: UITableViewController, UIPickerViewDelegate, UIPick
             // show final payment as text in final payment text field (if there is one, otherwise make the date today)
             finalPaymentDueDateLabel.text = formatterForLabel.string(from: dateFromString2 ?? Date())
             
-            // calculate total at bottom
-//            if existingExpense.repeats == "monthly" {
-//                let numberOfMonths = dateFromString2?.months(from: dateFromString!)
-//                yearlyTotalLabel.text = "\(existingExpense.expenseName) = $\(existingExpense.amount * numberOfMonths!)"
-//            } else if existingExpense.repeats == "weekly" {
-//                let numberOfWeeks = dateFromString2?.weeks(from: dateFromString!)
-//                yearlyTotalLabel.text = "\(existingExpense.expenseName) = $\(existingExpense.amount * numberOfWeeks!)"
-//            } else {
-//                yearlyTotalLabel.text = "\(existingExpense.expenseName) = $\(existingExpense.amount)"
-//            }
             updateTotals()
         }
     }

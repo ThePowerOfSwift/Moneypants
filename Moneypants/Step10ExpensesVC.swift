@@ -72,6 +72,13 @@ class Step10ExpensesVC: UIViewController, UITableViewDelegate, UITableViewDataSo
     @IBOutlet weak var otherTableHeight: NSLayoutConstraint!
     @IBOutlet weak var otherTableView: UITableView!
     
+    @IBOutlet weak var savingsEnvelope: UIImageView!
+    @IBOutlet weak var savingsSubtotalLabel: UILabel!
+    @IBOutlet weak var savingsArrow: UIImageView!
+    @IBOutlet weak var savingsTableTop: NSLayoutConstraint!
+    @IBOutlet weak var savingsTableHeight: NSLayoutConstraint!
+    @IBOutlet weak var savingsTableView: UITableView!
+    
     @IBOutlet weak var funMoneyEnvelope: UIImageView!
     @IBOutlet weak var funMoneySubtotalLabel: UILabel!
     @IBOutlet weak var funMoneyArrow: UIImageView!
@@ -86,13 +93,6 @@ class Step10ExpensesVC: UIViewController, UITableViewDelegate, UITableViewDataSo
     @IBOutlet weak var donationsTableHeight: NSLayoutConstraint!
     @IBOutlet weak var donationsTableView: UITableView!
     
-    @IBOutlet weak var savingsEnvelope: UIImageView!
-    @IBOutlet weak var savingsSubtotalLabel: UILabel!
-    @IBOutlet weak var savingsArrow: UIImageView!
-    @IBOutlet weak var savingsTableTop: NSLayoutConstraint!
-    @IBOutlet weak var savingsTableHeight: NSLayoutConstraint!
-    @IBOutlet weak var savingsTableView: UITableView!
-    
     var firebaseUser: User!
     var ref: DatabaseReference!
     
@@ -100,9 +100,14 @@ class Step10ExpensesVC: UIViewController, UITableViewDelegate, UITableViewDataSo
 
     var currentUserName: String!
     var tenPercentOfUserIncome: Int!
+    var totalSum: Int!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        totalSum = 0
+        funMoneyArrow.isHidden = true       // user can't select this item, so hide the arrow
+        donationsArrow.isHidden = true      // user can't select this item, so hide the arrow
         
         firebaseUser = Auth.auth().currentUser
         ref = Database.database().reference().child("users").child(firebaseUser.uid)
@@ -114,10 +119,10 @@ class Step10ExpensesVC: UIViewController, UITableViewDelegate, UITableViewDataSo
         
         currentUserName = MPUser.usersArray[MPUser.currentUser].firstName
         navigationItem.title = MPUser.usersArray[MPUser.currentUser].firstName
-        tenPercentOfUserIncome = Int(Double(userTotalIncome) * 0.10)
+        tenPercentOfUserIncome = Int((Double(userTotalIncome) * 0.10).rounded(.up))
         
         fetchExpenses()
-        updateSubtotals()
+        updateSubtotalLabels()
         checkSetupNumber()
     }
     
@@ -135,116 +140,47 @@ class Step10ExpensesVC: UIViewController, UITableViewDelegate, UITableViewDataSo
         funMoneyTableView.reloadData()
         donationsTableView.reloadData()
         savingsTableView.reloadData()
-        updateSubtotals()
+        updateSubtotalLabels()
     }
     
-    func updateSubtotals() {
-        let sportsArray = Budget.budgetsArray.filter({ return $0.ownerName == currentUserName }).filter({ return $0.category == "sports & dance" })
-        var sportsSum: Int = 0
-        for expense in sportsArray {
-            sportsSum += expense.amount * expense.totalNumberOfPayments
+    override func viewDidAppear(_ animated: Bool) {
+        if totalSum == userTotalIncome {
+            let alert = UIAlertController(title: "Budget Balanced", message: "Excellent. Budget matches income. Tap 'next' to continue.", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "okay", style: .cancel, handler: { (action) in
+                alert.dismiss(animated: true, completion: nil)
+                self.nextButton.isEnabled = true
+            }))
+            present(alert, animated: true, completion: nil)
         }
-        if sportsSum == 0 {
-            sportsSubtotalLabel.text = "-"
-        } else {
-            sportsSubtotalLabel.text = "\(sportsSum)"
-        }
+    }
+    
+    func updateSubtotalLabels() {
+        let sportsSum = Budget.budgetsArray.filter({ $0.ownerName == currentUserName && $0.category == "sports & dance" }).reduce(0, { $0 + $1.amount * $1.totalNumberOfPayments })
+        if sportsSum == 0 { sportsSubtotalLabel.text = "-" } else { sportsSubtotalLabel.text = "\(sportsSum)" }
         
+        let musicArtSum = Budget.budgetsArray.filter({ $0.ownerName == currentUserName && $0.category == "music & art" }).reduce(0, { $0 + $1.amount * $1.totalNumberOfPayments })
+        if musicArtSum == 0 { musicArtSubtotalLabel.text = "-" } else { musicArtSubtotalLabel.text = "\(musicArtSum)" }
         
-        let musicArtArray = Budget.budgetsArray.filter({ return $0.ownerName == currentUserName }).filter({ return $0.category == "music & art" })
-        var musicArtSum: Int = 0
-        for expense in musicArtArray {
-            musicArtSum += expense.amount * expense.totalNumberOfPayments
-        }
-        if musicArtSum == 0 {
-            musicArtSubtotalLabel.text = "-"
-        } else {
-            musicArtSubtotalLabel.text = "\(musicArtSum)"
-        }
+        let schoolSum = Budget.budgetsArray.filter({ $0.ownerName == currentUserName && $0.category == "school" }).reduce(0, { $0 + $1.amount * $1.totalNumberOfPayments })
+        if schoolSum == 0 { schoolSubtotalLabel.text = "-" } else { schoolSubtotalLabel.text = "\(schoolSum)" }
         
+        let summerCampSum = Budget.budgetsArray.filter({ $0.ownerName == currentUserName && $0.category == "summer camps" }).reduce(0, { $0 + $1.amount * $1.totalNumberOfPayments })
+        if summerCampSum == 0 { summerCampSubtotalLabel.text = "-" } else { summerCampSubtotalLabel.text = "\(summerCampSum)" }
         
-        let schoolArray = Budget.budgetsArray.filter({ return $0.ownerName == currentUserName }).filter({ return $0.category == "school" })
-        var schoolSum: Int = 0
-        for expense in schoolArray {
-            schoolSum += expense.amount * expense.totalNumberOfPayments
-        }
-        if schoolSum == 0 {
-            schoolSubtotalLabel.text = "-"
-        } else {
-            schoolSubtotalLabel.text = "\(schoolSum)"
-        }
+        let clothingSum = Budget.budgetsArray.filter({ $0.ownerName == currentUserName && $0.category == "clothing" }).reduce(0, { $0 + $1.amount * $1.totalNumberOfPayments })
+        if clothingSum == 0 { clothingSubtotalLabel.text = "-" } else { clothingSubtotalLabel.text = "\(clothingSum)" }
         
+        let electronicsSum = Budget.budgetsArray.filter({ $0.ownerName == currentUserName && $0.category == "electronics" }).reduce(0, { $0 + $1.amount * $1.totalNumberOfPayments })
+        if electronicsSum == 0 { electronicsSubtotalLabel.text = "-" } else { electronicsSubtotalLabel.text = "\(electronicsSum)" }
         
-        let summerCampArray = Budget.budgetsArray.filter({ return $0.ownerName == currentUserName }).filter({ return $0.category == "summer camps" })
-        var summerCampSum: Int = 0
-        for expense in summerCampArray {
-            summerCampSum += expense.amount * expense.totalNumberOfPayments
-        }
-        if summerCampSum == 0 {
-            summerCampSubtotalLabel.text = "-"
-        } else {
-            summerCampSubtotalLabel.text = "\(summerCampSum)"
-        }
+        let transportationSum = Budget.budgetsArray.filter({ $0.ownerName == currentUserName && $0.category == "transportation" }).reduce(0, { $0 + $1.amount * $1.totalNumberOfPayments })
+        if transportationSum == 0 { transportationSubtotalLabel.text = "-" } else { transportationSubtotalLabel.text = "\(transportationSum)" }
+
+        let personalCareSum = Budget.budgetsArray.filter({ $0.ownerName == currentUserName && $0.category == "personal care" }).reduce(0, { $0 + $1.amount * $1.totalNumberOfPayments })
+        if personalCareSum == 0 { personalCareSubtotalLabel.text = "-" } else { personalCareSubtotalLabel.text = "\(personalCareSum)" }
         
-        
-        let clothingArray = Budget.budgetsArray.filter({ $0.ownerName == currentUserName && $0.category == "clothing" })
-        var clothingSum: Int = 0
-        for expense in clothingArray {
-            clothingSum += expense.amount * expense.totalNumberOfPayments
-        }
-        if clothingSum == 0 {
-            clothingSubtotalLabel.text = "-"
-        } else {
-            clothingSubtotalLabel.text = "\(clothingSum)"
-        }
-        
-        
-        let electronicsArray = Budget.budgetsArray.filter({ $0.ownerName == currentUserName && $0.category == "electronics" })
-        var electronicsSum: Int = 0
-        for expense in electronicsArray {
-            electronicsSum += expense.amount * expense.totalNumberOfPayments
-        }
-        if electronicsSum == 0 {
-            electronicsSubtotalLabel.text = "-"
-        } else {
-            electronicsSubtotalLabel.text = "\(electronicsSum)"
-        }
-        
-        
-        let transportationArray = Budget.budgetsArray.filter({ $0.ownerName == currentUserName && $0.category == "transportation" })
-        var transportationSum: Int = 0
-        for expense in transportationArray {
-            transportationSum += expense.amount * expense.totalNumberOfPayments
-        }
-        if transportationSum == 0 {
-            transportationSubtotalLabel.text = "-"
-        } else {
-            transportationSubtotalLabel.text = "\(transportationSum)"
-        }
-        
-        
-        let personalCareArray = Budget.budgetsArray.filter({ $0.ownerName == currentUserName && $0.category == "personal care" })
-        var personalCareSum: Int = 0
-        for expense in personalCareArray {
-            personalCareSum += expense.amount * expense.totalNumberOfPayments
-        }
-        if personalCareSum == 0 {
-            personalCareSubtotalLabel.text = "-"
-        } else {
-            personalCareSubtotalLabel.text = "\(personalCareSum)"
-        }
-        
-        
-        let otherArray = Budget.budgetsArray.filter({ $0.ownerName == currentUserName && $0.category == "other" })
-        var otherSum: Int = 0
-        for expense in otherArray {
-            otherSum += expense.amount * expense.totalNumberOfPayments
-        }
-        if otherSum == 0 {
-            otherSubtotalLabel.text = "-"
-        } else {
-            otherSubtotalLabel.text = "\(otherSum)"
-        }
+        let otherSum = Budget.budgetsArray.filter({ $0.ownerName == currentUserName && $0.category == "other" }).reduce(0, { $0 + $1.amount * $1.totalNumberOfPayments })
+        if otherSum == 0 { otherSubtotalLabel.text = "-" } else { otherSubtotalLabel.text = "\(otherSum)" }
         
         funMoneySubtotalLabel.text = "\(tenPercentOfUserIncome!)"
         donationsSubtotalLabel.text = "\(tenPercentOfUserIncome!)"
@@ -254,17 +190,15 @@ class Step10ExpensesVC: UIViewController, UITableViewDelegate, UITableViewDataSo
         // total sum
         // ---------
         
-        let budgetArray = Budget.budgetsArray.filter({ return $0.ownerName == currentUserName })
-        var totalSum: Int = 0
-        for budgetItem in budgetArray {
-            totalSum += budgetItem.amount * budgetItem.totalNumberOfPayments
-        }
+        totalSum = Budget.budgetsArray.filter({ return $0.ownerName == currentUserName }).reduce(0, { $0 + $1.amount * $1.totalNumberOfPayments })
+        
         if totalSum == tenPercentOfUserIncome * 3 {
             // show default instructions when only budget items are 10-10-10 items
             topLabel.text = "GOAL: get 'budget' to match 'income' by adding expenses to the envelopes below."
             topLabel.textColor = .black
             budgetLabel.textColor = .red
             nextButton.isEnabled = false
+            
         } else if totalSum == userTotalIncome {
             // collapse all tables
 //            hideTable(table: sportsTableView, topConstraint: sportsTableTop, arrow: sportsArrow, envelope: sportsEnvelope)
@@ -283,12 +217,7 @@ class Step10ExpensesVC: UIViewController, UITableViewDelegate, UITableViewDataSo
             topLabel.text = "Excellent! Budget matches income. Please tap 'next' to continue."
             topLabel.textColor = .black
             budgetLabel.textColor = .black
-            let alert = UIAlertController(title: "Budget Balanced", message: "Excellent. Budget matches income. Tap 'next' to continue.", preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: "okay", style: .cancel, handler: { (action) in
-                alert.dismiss(animated: true, completion: nil)
-                self.nextButton.isEnabled = true
-            }))
-            present(alert, animated: true, completion: nil)
+            nextButton.isEnabled = true
         } else if totalSum < userTotalIncome {
             topLabel.text = "You must still add more expenses. Please add $\(userTotalIncome - totalSum) to one or more expense envelopes."
             topLabel.textColor = .black
@@ -300,7 +229,7 @@ class Step10ExpensesVC: UIViewController, UITableViewDelegate, UITableViewDataSo
             budgetLabel.textColor = .red
             nextButton.isEnabled = false
         }
-        budgetLabel.text = "budget: $\(totalSum)"
+        budgetLabel.text = "budget: $\(totalSum!)"
     }
     
     func tableViewDelegatesAndDataSources() {
@@ -842,7 +771,22 @@ class Step10ExpensesVC: UIViewController, UITableViewDelegate, UITableViewDataSo
         if Budget.budgetsArray.filter({ $0.ownerName == currentUserName }).isEmpty {
             createDefaultExpenses()
         } else {
-            print(currentUserName,"already has a default budget")
+            print(currentUserName,"has a budget")
+            print(Budget.budgetsArray.filter({ $0.ownerName == currentUserName }))
+            for (budgetIndex, budgetItem) in Budget.budgetsArray.enumerated() {
+                if budgetItem.category == "fun money" {
+                    Budget.budgetsArray[budgetIndex].amount = tenPercentOfUserIncome
+                    ref.child("budgets").child(currentUserName).child("fun money 0").updateChildValues(["amount" : tenPercentOfUserIncome])
+                }
+                if budgetItem.category == "donations" {
+                    Budget.budgetsArray[budgetIndex].amount = tenPercentOfUserIncome
+                    ref.child("budgets").child(currentUserName).child("donations 0").updateChildValues(["amount" : tenPercentOfUserIncome])
+                }
+                if budgetItem.category == "savings" {
+                    Budget.budgetsArray[budgetIndex].amount = tenPercentOfUserIncome
+                    ref.child("budgets").child(currentUserName).child("savings 0").updateChildValues(["amount" : tenPercentOfUserIncome])
+                }
+            }
         }
     }
     
@@ -898,9 +842,9 @@ class Step10ExpensesVC: UIViewController, UITableViewDelegate, UITableViewDataSo
                                     Budget(ownerName: currentUserName, expenseName: "other #3", category: "other", amount: 0, hasDueDate: false, firstPayment: "none", repeats: "never", finalPayment: "none", totalNumberOfPayments: 1, order: 2, currentValue: 0),
                                     Budget(ownerName: currentUserName, expenseName: "other #4", category: "other", amount: 0, hasDueDate: false, firstPayment: "none", repeats: "never", finalPayment: "none", totalNumberOfPayments: 1, order: 3, currentValue: 0),
                                     Budget(ownerName: currentUserName, expenseName: "other #5", category: "other", amount: 0, hasDueDate: false, firstPayment: "none", repeats: "never", finalPayment: "none", totalNumberOfPayments: 1, order: 4, currentValue: 0),
-                                    Budget(ownerName: currentUserName, expenseName: "fun money", category: "fun money", amount: Int(tenPercentOfUserIncome), hasDueDate: false, firstPayment: "none", repeats: "never", finalPayment: "none", totalNumberOfPayments: 1, order: 0, currentValue: 0),
-                                    Budget(ownerName: currentUserName, expenseName: "charitable donations", category: "donations", amount: Int(tenPercentOfUserIncome), hasDueDate: false, firstPayment: "none", repeats: "never", finalPayment: "none", totalNumberOfPayments: 1, order: 0, currentValue: 0),
-                                    Budget(ownerName: currentUserName, expenseName: "enter savings goal", category: "savings", amount: Int(tenPercentOfUserIncome), hasDueDate: false, firstPayment: "none", repeats: "never", finalPayment: "none", totalNumberOfPayments: 1, order: 0, currentValue: 0)]
+                                    Budget(ownerName: currentUserName, expenseName: "fun money", category: "fun money", amount: tenPercentOfUserIncome, hasDueDate: false, firstPayment: "none", repeats: "never", finalPayment: "none", totalNumberOfPayments: 1, order: 0, currentValue: 0),
+                                    Budget(ownerName: currentUserName, expenseName: "charitable donations", category: "donations", amount: tenPercentOfUserIncome, hasDueDate: false, firstPayment: "none", repeats: "never", finalPayment: "none", totalNumberOfPayments: 1, order: 0, currentValue: 0),
+                                    Budget(ownerName: currentUserName, expenseName: "enter savings goal", category: "savings", amount: tenPercentOfUserIncome, hasDueDate: false, firstPayment: "none", repeats: "never", finalPayment: "none", totalNumberOfPayments: 1, order: 0, currentValue: 0)]
         
         // append local array with current user's expenses...
         Budget.budgetsArray += defaultbudgetsArray

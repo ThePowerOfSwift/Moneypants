@@ -4,6 +4,7 @@ import Firebase
 struct FamilyData {
     static var householdIncome: Int = 0
     static var setupProgress: Int = 0
+    static var budgetStartDate: TimeInterval?
     static var paydayTime: String = ""
     
     static let secretFormula = (5.23788 * pow(0.972976, Double(householdIncome) / 1000) + 1.56139) / 100
@@ -64,6 +65,19 @@ struct FamilyData {
                 completion(paydayTime)
             } else {
                 completion("")
+            }
+        })
+    }
+    
+    static func loadBudgetStartDateFromFirebase(completion: @escaping () -> ()) {
+        let firebaseUser = Auth.auth().currentUser
+        let ref = Database.database().reference().child("users").child((firebaseUser?.uid)!)
+        ref.child("budgetStartDate").observeSingleEvent(of: .value, with: { (snapshot) in
+            if let value = snapshot.value as? TimeInterval {
+                budgetStartDate = value
+                completion()
+            } else {
+                completion()
             }
         })
     }

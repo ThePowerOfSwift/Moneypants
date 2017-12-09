@@ -38,7 +38,6 @@ class Step7HabitsVC: UIViewController, UITableViewDataSource, UITableViewDelegat
         habitsTableView.tableFooterView = UIView()
         
         loadHabits()
-        
         checkSetupNumber()
     }
 
@@ -142,6 +141,23 @@ class Step7HabitsVC: UIViewController, UITableViewDataSource, UITableViewDelegat
         alert.addAction(UIAlertAction(title: "continue", style: .default, handler: { (action) in
             alert.dismiss(animated: true, completion: nil)
             MPUser.currentUser = (MPUser.usersArray.count - 1)          // start financial section with youngest user first
+            
+            // if no budget start date has been set, then set it for week from today when user taps "continue"
+            if FamilyData.budgetStartDate == nil {
+                print("no start date set yet. setting one now!")
+                FamilyData.budgetStartDate = Calendar.current.date(byAdding: .day, value: 7, to: Date())?.timeIntervalSince1970
+            } else {
+                // set family's budget period start date
+                let oneYearFromBudgetStartDate = Calendar.current.date(byAdding: .year, value: 1, to: Date(timeIntervalSince1970: FamilyData.budgetStartDate!))
+                if Date().timeIntervalSince1970 < (oneYearFromBudgetStartDate?.timeIntervalSince1970)! {
+                    print("no need to change budget. still within a year of original")
+                } else {
+                    print("budget is out of date. time to update!")
+                    FamilyData.budgetStartDate = Calendar.current.date(byAdding: .day, value: 7, to: Date())?.timeIntervalSince1970
+                }
+            }
+            
+            self.ref.updateChildValues(["budgetStartDate" : FamilyData.budgetStartDate!])
             self.selectUsersButton.isHidden = false
             self.performSegue(withIdentifier: "MemberIncome", sender: self)
         }))

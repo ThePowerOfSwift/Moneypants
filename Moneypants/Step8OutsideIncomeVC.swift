@@ -74,9 +74,6 @@ class Step8OutsideIncomeVC: UIViewController, UITextFieldDelegate {
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "IncomeSummary" {
-            let nextVC = segue.destination as! Step9IncomeSummaryVC
-            nextVC.yearlyOutsideIncome = calculateTotal()
-            
             if noButton.isSelected == true {
                 // reset all text fields to blank
                 mowingLawnsTextField.text = ""
@@ -89,6 +86,9 @@ class Step8OutsideIncomeVC: UIViewController, UITextFieldDelegate {
                 zeroOutLocalArray()
                 zeroOutFirebaseOutsideIncome()
             }
+            
+            let nextVC = segue.destination as! Step9IncomeSummaryVC
+            nextVC.yearlyOutsideIncome = calculateTotal()
         }
     }
     

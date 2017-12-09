@@ -16,7 +16,7 @@ class Step9IncomeSummaryVC: UIViewController {
     let numberFormatter = NumberFormatter()
     
     var yearlyOutsideIncome: Int!       // passed from Step8OutsideIncomeVC
-    var yearlyTotal: Int!
+    var totalIncomePerYear: Int!
     
     var currentUserName: String!
     var censusKidsMultiplier: Double!
@@ -57,7 +57,7 @@ class Step9IncomeSummaryVC: UIViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "MemberExpenses" {
             let nextVC = segue.destination as! Step10ExpensesVC
-            nextVC.userTotalIncome = yearlyTotal
+            nextVC.userTotalIncome = totalIncomePerYear / 100
         }
     }
     
@@ -91,18 +91,19 @@ class Step9IncomeSummaryVC: UIViewController {
         let outsideIncomePerWeek = Int(Double(yearlyOutsideIncome) / 52.18 * 100)
         let outsideIncomePerYear = yearlyOutsideIncome * 100
         let totalIncomePerWeek = homeIncomePerWeek + outsideIncomePerWeek
-        let totalIncomePerYear = homeIncomePerYear + outsideIncomePerYear
+        totalIncomePerYear = homeIncomePerYear + outsideIncomePerYear
         
+        
+        print("A:",homeIncomePerWeek,"B:",outsideIncomePerWeek,"C:",totalIncomePerWeek)
         
         let formatter = NumberFormatter()
         formatter.numberStyle = NumberFormatter.Style.decimal
         
-        
-        weeklyIncomeTotalLabel.text = "\(currentUserName!)'s potential weekly income is $\(formatter.string(from: NSNumber(value: homeIncomePerWeek / 100))!)."
+        weeklyIncomeTotalLabel.text = "\(currentUserName!)'s potential weekly income is \(Points.formatMoney(amount: totalIncomePerWeek, rounded: true))."
         homeIncomeLabel.text = "$\(formatter.string(from: NSNumber(value: homeIncomePerYear / 100))!) / year"
         outsideIncomeLabel.text = "$\(formatter.string(from: NSNumber(value: outsideIncomePerYear / 100))!) / year"
         totalIncomeLabel.text = "$\(formatter.string(from: NSNumber(value: totalIncomePerYear / 100))!) / year"
-        summaryLabel.text = "\(currentUserName!)'s total estimated yearly income is $\(formatter.string(from: NSNumber(value: totalIncomePerYear / 100))!) (about $\(formatter.string(from: NSNumber(value: totalIncomePerWeek / 100))!) per week.)"
+        summaryLabel.text = "\(currentUserName!)'s total estimated yearly income is $\(formatter.string(from: NSNumber(value: totalIncomePerYear / 100))!) (about \(Points.formatMoney(amount: totalIncomePerWeek, rounded: true)) per week.)"
     }
     
     @IBAction func showDetailsButtonTapped(_ sender: UIButton) {

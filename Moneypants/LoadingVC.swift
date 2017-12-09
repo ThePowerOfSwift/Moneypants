@@ -48,22 +48,26 @@ class LoadingVC: UIViewController {
                                         self.progressView.setProgress(0.8, animated: true)
                                         print("8. PAYDAY TIME:  ",paydayTime)
                                         
-                                        OutsideIncome.loadOutsideIncomeFromFirebase {
-                                            self.progressView.setProgress(0.9, animated: true)
-                                            print("9. OUTSIDE INCOME:  ",OutsideIncome.incomeArray.count)
+                                        FamilyData.loadBudgetStartDateFromFirebase {
+                                            print("8b. BUDGET START DATE: ", FamilyData.budgetStartDate ?? "no start date yet")
                                             
-                                            Budget.loadBudgetsFromFirebase {
-                                                self.progressView.setProgress(1.0, animated: true)
-                                                print("10. BUDGETS:  ",Budget.budgetsArray.count)
+                                            OutsideIncome.loadOutsideIncomeFromFirebase {
+                                                self.progressView.setProgress(0.9, animated: true)
+                                                print("9. OUTSIDE INCOME:  ",OutsideIncome.incomeArray.count)
                                                 
-                                                // if user has completed setup, go to home page
-                                                if FamilyData.setupProgress == 11 {
-                                                    self.activityIndicator.stopAnimating()
-                                                    self.activityIndicator.hidesWhenStopped = true
-                                                    print("user has completed setup. Loading home page...")
-                                                    self.performSegue(withIdentifier: "Home", sender: self)
-                                                } else {
-                                                    self.performSegue(withIdentifier: "GoToStep1EnterIncome", sender: self)
+                                                Budget.loadBudgetsFromFirebase {
+                                                    self.progressView.setProgress(1.0, animated: true)
+                                                    print("10. BUDGETS:  ",Budget.budgetsArray.count)
+                                                    
+                                                    // if user has completed setup, go to home page
+                                                    if FamilyData.setupProgress == 11 {
+                                                        self.activityIndicator.stopAnimating()
+                                                        self.activityIndicator.hidesWhenStopped = true
+                                                        print("user has completed setup. Loading home page...")
+                                                        self.performSegue(withIdentifier: "Home", sender: self)
+                                                    } else {
+                                                        self.performSegue(withIdentifier: "GoToStep1EnterIncome", sender: self)
+                                                    }
                                                 }
                                             }
                                         }
