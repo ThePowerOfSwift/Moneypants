@@ -1,7 +1,7 @@
 import UIKit
 import Firebase
 
-class Step10ExpenseDetailVC: UITableViewController, UIPickerViewDelegate, UIPickerViewDataSource, UITextFieldDelegate {
+class Step10BudgetsDetailVC: UITableViewController, UIPickerViewDelegate, UIPickerViewDataSource, UITextFieldDelegate {
     
     @IBOutlet weak var saveButton: UIBarButtonItem!
     @IBOutlet weak var cancelButton: UIBarButtonItem!
@@ -18,7 +18,7 @@ class Step10ExpenseDetailVC: UITableViewController, UIPickerViewDelegate, UIPick
     @IBOutlet weak var totalNumberOfPaymentsLabel: UILabel!
     @IBOutlet weak var yearlyTotalLabel: UILabel!
     
-    // for when user taps 'savings' from Step10ExpensesVC
+    // for when user taps 'savings' from Step10BudgetsVC
     @IBOutlet weak var expenseAmountCell: UITableViewCell!
     @IBOutlet weak var hasDueDateCell: UITableViewCell!
     @IBOutlet weak var expenseAmountDollarSignLabel: UILabel!
@@ -28,7 +28,7 @@ class Step10ExpenseDetailVC: UITableViewController, UIPickerViewDelegate, UIPick
     var expenseAmountDollarSignLabelColor = UIColor.black
     var hasDueDateLabelColor = UIColor.black
     var expenseAmountTextFieldColor = UIColor.black
-    // end for when user taps 'savings' from Step10ExpensesVC
+    // end for when user taps 'savings' from Step10BudgetsVC
     
     var firstPaymentDatePickerHeight: CGFloat = 0
     var repeatPickerHeight: CGFloat = 0
@@ -38,7 +38,7 @@ class Step10ExpenseDetailVC: UITableViewController, UIPickerViewDelegate, UIPick
     var firstPaymentDueTimestamp: TimeInterval!
     var finalPaymentDueTimestamp: TimeInterval!
     
-    var budgetItem: Budget?               // passed from Step10ExpensesVC
+    var budgetItem: Budget?               // passed from Step10BudgetsVC
     var currentUserName: String!
     
     let repeatOptions = ["never", "weekly", "monthly"]
@@ -60,13 +60,13 @@ class Step10ExpenseDetailVC: UITableViewController, UIPickerViewDelegate, UIPick
         
         totalNumberOfPaymentsLabel.text = "1"
         
-        // for when user taps 'savings' from Step10ExpensesVC
+        // for when user taps 'savings' from Step10BudgetsVC
         expenseAmountCell.isUserInteractionEnabled = expenseAmountCellIsEnabled
         hasDueDateCell.isUserInteractionEnabled = hasDueDateCellIsEnabled
         expenseAmountDollarSignLabel.textColor = expenseAmountDollarSignLabelColor
         expenseAmountTextField.textColor = expenseAmountTextFieldColor
         hasDueDateLabel.textColor = hasDueDateLabelColor
-        // end for when user taps 'savings' from Step10ExpensesVC
+        // end for when user taps 'savings' from Step10BudgetsVC
         
         expenseNameTextField.delegate = self
         expenseAmountTextField.delegate = self
@@ -102,6 +102,21 @@ class Step10ExpenseDetailVC: UITableViewController, UIPickerViewDelegate, UIPick
             let attributedString = NSMutableAttributedString(string: firstPaymentDueDateLabel.text!)
             attributedString.addAttribute(NSStrikethroughStyleAttributeName, value: 1, range: NSMakeRange(0, attributedString.length))
             firstPaymentDueDateLabel.attributedText = attributedString
+        }
+        
+        // if first payment is later than final payment, then adjust final payment to move forward accordingly.
+        if firstPaymentDueTimestamp >= finalPaymentDueTimestamp {
+            // if repeats label is monthly, move the final due date ahead at least a month
+            if repeatsLabel.text == "monthly" {
+                finalPaymentDueTimestamp = Calendar.current.date(byAdding: .month, value: 1, to: Date(timeIntervalSince1970: firstPaymentDueTimestamp))?.timeIntervalSince1970
+            // if repeats label is "weekly" or "none", move the final due date ahead at least a week
+            } else {
+                finalPaymentDueTimestamp = Calendar.current.date(byAdding: .day, value: 7, to: Date(timeIntervalSince1970: firstPaymentDueTimestamp))?.timeIntervalSince1970
+            }
+            // update pickerview to reflect new date
+            finalPaymentDatePickerView.date = Date(timeIntervalSince1970: finalPaymentDueTimestamp)
+            // update label to show user new updated date
+            finalPaymentDueDateLabel.text = formatterForLabel.string(from: Date(timeIntervalSince1970: finalPaymentDueTimestamp))
         }
         
         updateTotals()
@@ -299,11 +314,6 @@ class Step10ExpenseDetailVC: UITableViewController, UIPickerViewDelegate, UIPick
     
     @IBAction func saveButtonTapped(_ sender: UIBarButtonItem) {
         view.endEditing(true)
-        print("A:",FamilyData.budgetStartDate)
-        print("B:",FamilyData.budgetEndDate)
-        print("C:",firstPaymentDueTimestamp)
-        print("D:",finalPaymentDueTimestamp)
-        
         // 1. make sure name is not blank
         if expenseNameTextField.text == "" {
             blankNameAlert()
@@ -351,6 +361,10 @@ class Step10ExpenseDetailVC: UITableViewController, UIPickerViewDelegate, UIPick
                 firstPaymentDueTimestamp = FamilyData.calculatePayday().next.timeIntervalSince1970
                 firstPaymentDatePickerView.date = FamilyData.calculatePayday().next
                 firstPaymentDueDateLabel.text = formatterForLabel.string(from: FamilyData.calculatePayday().next)
+                
+                print("D:",FamilyData.calculatePayday().next.timeIntervalSince1970,FamilyData.calculatePayday().next)
+                print("E:",firstPaymentDueTimestamp,Date(timeIntervalSince1970: firstPaymentDueTimestamp))
+                
             } else {
                 firstPaymentDueTimestamp = existingExpense.firstPayment
                 firstPaymentDatePickerView.date = Date(timeIntervalSince1970: firstPaymentDueTimestamp)
@@ -544,7 +558,7 @@ class Step10ExpenseDetailVC: UITableViewController, UIPickerViewDelegate, UIPick
     // ------
     
     func finalDueDateOutsideBudgetRangeAlert() {
-        let alert = UIAlertController(title: "Due Date Error", message: "The selected due date is past the limits of the current yearly budget. Please choose a date that is before \(formatterForLabel.string(from: FamilyData.budgetEndDate!)).", preferredStyle: .alert)
+        let alert = UIAlertController(title: "Due Date Error", message: "The selected due date is past the limits of the current yearly budget.\n\nPlease choose a date that is on or before \(formatterForLabel.string(from: FamilyData.budgetEndDate!)).", preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "okay", style: .cancel, handler: { (stuff) in
             alert.dismiss(animated: true, completion: nil)
         }))
@@ -577,7 +591,7 @@ class Step10ExpenseDetailVC: UITableViewController, UIPickerViewDelegate, UIPick
     }
     
     func dueDateBeforeFirstPaydayErrorAlert() {
-        let alert = UIAlertController(title: "Due Date Error", message: "The due date cannot be before your first payday. Please choose a date after \(formatterForLabel.string(from: Date(timeIntervalSince1970: FamilyData.budgetStartDate!))).", preferredStyle: .alert)
+        let alert = UIAlertController(title: "Due Date Error", message: "The due date cannot be before your first payday. Please choose a date that is on or after \(formatterForLabel.string(from: Date(timeIntervalSince1970: FamilyData.budgetStartDate!))).", preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "okay", style: .default, handler: { (action) in
             alert.dismiss(animated: true, completion: {
             })

@@ -1,6 +1,6 @@
 import UIKit
 
-class Step10ExpenseVideoVC: UIViewController {
+class Step10BudgetsVideoVC: UIViewController {
     
     @IBOutlet weak var webView: UIWebView!
     

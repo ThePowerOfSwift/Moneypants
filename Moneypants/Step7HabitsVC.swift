@@ -142,10 +142,10 @@ class Step7HabitsVC: UIViewController, UITableViewDataSource, UITableViewDelegat
             alert.dismiss(animated: true, completion: nil)
             MPUser.currentUser = (MPUser.usersArray.count - 1)          // start financial section with youngest user first
             
-            // if no budget start date has been set, then set it for week from today when user taps "continue"
+            // if no budget start date has been set, then set it to be the same as next payday
             if FamilyData.budgetStartDate == nil {
                 print("no start date set yet. setting one now!")
-                FamilyData.budgetStartDate = Calendar.current.date(byAdding: .day, value: 7, to: Date())?.timeIntervalSince1970
+                FamilyData.budgetStartDate = FamilyData.calculatePayday().next.timeIntervalSince1970
             } else {
                 // set family's budget period start date
                 let oneYearFromBudgetStartDate = Calendar.current.date(byAdding: .year, value: 1, to: Date(timeIntervalSince1970: FamilyData.budgetStartDate!))
@@ -153,7 +153,7 @@ class Step7HabitsVC: UIViewController, UITableViewDataSource, UITableViewDelegat
                     print("no need to change budget. still within a year of original")
                 } else {
                     print("budget is out of date. time to update!")
-                    FamilyData.budgetStartDate = Calendar.current.date(byAdding: .day, value: 7, to: Date())?.timeIntervalSince1970
+                    FamilyData.budgetStartDate = FamilyData.calculatePayday().next.timeIntervalSince1970
                 }
             }
             

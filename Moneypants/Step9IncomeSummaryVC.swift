@@ -56,7 +56,7 @@ class Step9IncomeSummaryVC: UIViewController {
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "MemberExpenses" {
-            let nextVC = segue.destination as! Step10ExpensesVC
+            let nextVC = segue.destination as! Step10BudgetsVC
             nextVC.userTotalIncome = totalIncomePerYear / 100
         }
     }

@@ -1,6 +1,6 @@
 import UIKit
 
-class Step10ExpensePopupVC: UIViewController {
+class Step10BudgetsPopupVC: UIViewController {
     
     @IBOutlet weak var popupView: UIView!
     @IBOutlet weak var popupViewTop: UIView!

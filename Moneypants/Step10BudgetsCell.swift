@@ -1,6 +1,6 @@
 import UIKit
 
-class Step10ExpensesCell: UITableViewCell {
+class Step10BudgetsCell: UITableViewCell {
 
     @IBOutlet weak var expensesLabel: UILabel!
     @IBOutlet weak var expenseValue: UILabel!

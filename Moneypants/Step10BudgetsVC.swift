@@ -1,7 +1,7 @@
 import UIKit
 import Firebase
 
-class Step10ExpensesVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class Step10BudgetsVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     @IBOutlet weak var incomeLabel: UILabel!
     @IBOutlet weak var budgetLabel: UILabel!
@@ -113,7 +113,7 @@ class Step10ExpensesVC: UIViewController, UITableViewDelegate, UITableViewDataSo
         ref = Database.database().reference().child("users").child(firebaseUser.uid)
         
         incomeLabel.text = "income: $\(userTotalIncome!)"
-        nextButton.isEnabled = false
+//        nextButton.isEnabled = false
         
         tableViewDelegatesAndDataSources()
         
@@ -143,16 +143,16 @@ class Step10ExpensesVC: UIViewController, UITableViewDelegate, UITableViewDataSo
         updateSubtotalLabels()
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        if totalSum == userTotalIncome {
-            let alert = UIAlertController(title: "Budget Balanced", message: "Excellent. Budget matches income. Tap 'next' to continue.", preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: "okay", style: .cancel, handler: { (action) in
-                alert.dismiss(animated: true, completion: nil)
-                self.nextButton.isEnabled = true
-            }))
-            present(alert, animated: true, completion: nil)
-        }
-    }
+//    override func viewDidAppear(_ animated: Bool) {
+//        if totalSum == userTotalIncome {
+//            let alert = UIAlertController(title: "Budget Balanced", message: "Excellent. Budget matches income. Tap 'next' to continue.", preferredStyle: .alert)
+//            alert.addAction(UIAlertAction(title: "okay", style: .cancel, handler: { (action) in
+//                alert.dismiss(animated: true, completion: nil)
+//                self.nextButton.isEnabled = true
+//            }))
+//            present(alert, animated: true, completion: nil)
+//        }
+//    }
     
     func updateSubtotalLabels() {
         let sportsSum = Budget.budgetsArray.filter({ $0.ownerName == currentUserName && $0.category == "sports & dance" }).reduce(0, { $0 + $1.amount * $1.totalNumberOfPayments })
@@ -197,37 +197,18 @@ class Step10ExpensesVC: UIViewController, UITableViewDelegate, UITableViewDataSo
             topLabel.text = "GOAL: get 'budget' to match 'income' by adding expenses to the envelopes below."
             topLabel.textColor = .black
             budgetLabel.textColor = .red
-            nextButton.isEnabled = false
-            
         } else if totalSum == userTotalIncome {
-            // collapse all tables
-//            hideTable(table: sportsTableView, topConstraint: sportsTableTop, arrow: sportsArrow, envelope: sportsEnvelope)
-//            hideTable(table: musicArtTableView, topConstraint: musicArtTableTop, arrow: musicArtArrow, envelope: musicArtEnvelope)
-//            hideTable(table: schoolTableView, topConstraint: schoolTableTop, arrow: schoolArrow, envelope: schoolEnvelope)
-//            hideTable(table: summerCampTableView, topConstraint: summerCampTableTop, arrow: summerCampArrow, envelope: summerCampEnvelope)
-//            hideTable(table: clothingTableView, topConstraint: clothingTableTop, arrow: clothingArrow, envelope: clothingEnvelope)
-//            hideTable(table: electronicsTableView, topConstraint: electronicsTableTop, arrow: electronicsArrow, envelope: electronicsEnvelope)
-//            hideTable(table: transportationTableView, topConstraint: transportationTableTop, arrow: transportationArrow, envelope: transportationEnvelope)
-//            hideTable(table: personalCareTableView, topConstraint: personalCareTableTop, arrow: personalCareArrow, envelope: personalCareEnvelope)
-//            hideTable(table: otherTableView, topConstraint: otherTableTop, arrow: otherArrow, envelope: otherEnvelope)
-//            hideTable(table: funMoneyTableView, topConstraint: funMoneyTableTop, arrow: funMoneyArrow, envelope: funMoneyEnvelope)
-//            hideTable(table: donationsTableView, topConstraint: donationsTableTop, arrow: donationsArrow, envelope: donationsEnvelope)
-//            hideTable(table: savingsTableView, topConstraint: savingsTableTop, arrow: savingsArrow, envelope: savingsEnvelope)
-            
             topLabel.text = "Excellent! Budget matches income. Please tap 'next' to continue."
             topLabel.textColor = .black
             budgetLabel.textColor = .black
-            nextButton.isEnabled = true
         } else if totalSum < userTotalIncome {
-            topLabel.text = "You must still add more expenses. Please add $\(userTotalIncome - totalSum) to one or more expense envelopes."
+            topLabel.text = "You need to add more expenses. Please add $\(userTotalIncome - totalSum) to one or more expense envelopes."
             topLabel.textColor = .black
             budgetLabel.textColor = .red
-            nextButton.isEnabled = false
         } else {
-            topLabel.text = "You must remove some expenses. Please remove $\(totalSum - userTotalIncome) from one or more expense envelopes."
+            topLabel.text = "You need to remove some expenses. Please remove $\(totalSum - userTotalIncome) from one or more expense envelopes."
             topLabel.textColor = .red
             budgetLabel.textColor = .red
-            nextButton.isEnabled = false
         }
         budgetLabel.text = "budget: $\(totalSum!)"
     }
@@ -358,7 +339,7 @@ class Step10ExpensesVC: UIViewController, UITableViewDelegate, UITableViewDataSo
     }
     
     func formattedTableViewCell(table: UITableView, filteredCategory: String, indxPth: IndexPath) -> UITableViewCell {
-        let cell = table.dequeueReusableCell(withIdentifier: "expensesCell", for: indxPth) as! Step10ExpensesCell
+        let cell = table.dequeueReusableCell(withIdentifier: "expensesCell", for: indxPth) as! Step10BudgetsCell
         let array = Budget.budgetsArray.filter({ return $0.ownerName == currentUserName && $0.category == filteredCategory }).sorted(by: { $0.order < $1.order })
         cell.expensesLabel.text = "\(array[indxPth.row].expenseName)"
         if array[indxPth.row].amount == 0 {
@@ -427,11 +408,11 @@ class Step10ExpensesVC: UIViewController, UITableViewDelegate, UITableViewDataSo
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "EditExpense" {
             let navigationVC = segue.destination as! UINavigationController
-            let nextVC = navigationVC.topViewController as! Step10ExpenseDetailVC
+            let nextVC = navigationVC.topViewController as! Step10BudgetsDetailVC
             nextVC.budgetItem = sender as? Budget
         } else if segue.identifier == "ShowSavings" {
             let navigationVC = segue.destination as! UINavigationController
-            let nextVC = navigationVC.topViewController as! Step10ExpenseDetailVC
+            let nextVC = navigationVC.topViewController as! Step10BudgetsDetailVC
             nextVC.budgetItem = sender as? Budget
             nextVC.expenseAmountCellIsEnabled = false
             nextVC.hasDueDateCellIsEnabled = false
@@ -442,19 +423,47 @@ class Step10ExpensesVC: UIViewController, UITableViewDelegate, UITableViewDataSo
     }
     
     @IBAction func nextButtonTapped(_ sender: UIButton) {
-        // if we're not at last family member, move on to the next oldest one
-        if MPUser.currentUser != 0 {
-            MPUser.currentUser -= 1
-            let storyboard = UIStoryboard(name: "Setup", bundle: nil)
-            let vc = storyboard.instantiateViewController(withIdentifier: "Step8OutsideIncomeVC")
-            navigationController?.pushViewController(vc, animated: true)
-            
-        // we're at last user in array (oldest member of family)
-        } else if MPUser.currentUser == 0 {
-            // give user opportunity to review family members or move on
-            // reveal 'select user' button
-            reviewOrContinueAlert()
+        // if user's budget isn't balanced, give an error message
+        if totalSum != userTotalIncome {
+            budgetNotBalancedAlert()
+        } else {
+            // if we're not at last family member, move on to the next oldest one
+            if MPUser.currentUser != 0 {
+                MPUser.currentUser -= 1
+                let storyboard = UIStoryboard(name: "Setup", bundle: nil)
+                let vc = storyboard.instantiateViewController(withIdentifier: "Step8OutsideIncomeVC")
+                navigationController?.pushViewController(vc, animated: true)
+                
+                // we're at last user in array (oldest member of family)
+            } else if MPUser.currentUser == 0 {
+                // give user opportunity to review family members or move on
+                // reveal 'select user' button
+                reviewOrContinueAlert()
+            }
         }
+    }
+    
+    func budgetNotBalancedAlert() {
+        var alertTitle: String!
+        var alertMessage: String!
+        
+        if totalSum == tenPercentOfUserIncome * 3 {
+            // show default instructions when only budget items are 10-10-10 items
+            alertTitle = "Budget Goal"
+            alertMessage = "The goal of this page is to get 'budget' to match 'income' by adding your yearly expenses to the envelopes."
+        } else if totalSum < userTotalIncome {
+            alertTitle = "Budget Not Balanced"
+            alertMessage = "You need to add more expenses. Please add $\(userTotalIncome - totalSum) to one or more expense envelopes."
+        } else {
+            alertTitle = "Budget Not Balanced"
+            alertMessage = "You need to remove some expenses. Please remove $\(totalSum - userTotalIncome) from one or more expense envelopes."
+        }
+        
+        let alert = UIAlertController(title: alertTitle, message: alertMessage, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "okay", style: .cancel, handler: { (stuff) in
+            alert.dismiss(animated: true, completion: nil)
+        }))
+        present(alert, animated: true, completion: nil)
     }
     
     @IBAction func selectUserButtonTapped(_ sender: UIButton) {
