@@ -35,17 +35,14 @@ class Step10ExpenseDetailVC: UITableViewController, UIPickerViewDelegate, UIPick
     var finalPaymentDueCellHeight: CGFloat = 0
     var finalPaymentDatePickerHeight: CGFloat = 0
     var totalNumberOfPaymentsHeight: CGFloat = 0
-    var firstPaymentDueDate: String?
-    var finalPaymentDueDate: String?
-    var firstPaymentDueDateHasError: Bool = false       // for checking for valid due date
-    var finalPaymentDueDateError: Bool = false          // for checking for valid date
+    var firstPaymentDueTimestamp: TimeInterval!
+    var finalPaymentDueTimestamp: TimeInterval!
     
-    var expense: Budget?               // passed from Step8OutsideIncomeVC
+    var budgetItem: Budget?               // passed from Step10ExpensesVC
     var currentUserName: String!
     
     let repeatOptions = ["never", "weekly", "monthly"]
     let formatterForLabel = DateFormatter()
-    let formatterForFirebase = DateFormatter()
     
     var firebaseUser: User!
     var ref: DatabaseReference!
@@ -53,12 +50,13 @@ class Step10ExpenseDetailVC: UITableViewController, UIPickerViewDelegate, UIPick
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        hasDueDateCell.selectionStyle = .none
+        
         firebaseUser = Auth.auth().currentUser
         ref = Database.database().reference().child("users").child(firebaseUser.uid)
         
         formatterForLabel.dateStyle = DateFormatter.Style.medium                        // Shows how date is displayed
-        formatterForLabel.timeStyle = DateFormatter.Style.none                          // No time, just date
-        formatterForFirebase.dateFormat = "yyyyMMdd"                                    // convert datepicker text into Int for Firebase storage
+//        formatterForLabel.timeStyle = DateFormatter.Style.none                          // No time, just date
         
         totalNumberOfPaymentsLabel.text = "1"
         
@@ -77,8 +75,6 @@ class Step10ExpenseDetailVC: UITableViewController, UIPickerViewDelegate, UIPick
         repeatsPickerView.delegate = self
         hasDueDateSwitch.onTintColor = UIColor(red: 125/255, green: 190/255, blue: 48/255, alpha: 1.0)  // green
         
-//        firstPaymentDatePickerView.minimumDate = Date()
-        
         currentUserName = MPUser.usersArray[MPUser.currentUser].firstName
         navigationItem.title = currentUserName!
         
@@ -86,7 +82,7 @@ class Step10ExpenseDetailVC: UITableViewController, UIPickerViewDelegate, UIPick
         // edit exisiting expense
         // ----------------------
         
-        loadExistingExpenseData()
+        loadExistingBudgetData()
     }
     
     // ------------
@@ -94,40 +90,35 @@ class Step10ExpenseDetailVC: UITableViewController, UIPickerViewDelegate, UIPick
     // ------------
     
     @IBAction func firstPaymentDueDateChanged(_ sender: UIDatePicker) {
+        // take date from datepicker and format it to short date format for display on label
         firstPaymentDueDateLabel.text = formatterForLabel.string(from: sender.date)
-        firstPaymentDueDate = formatterForFirebase.string(from: sender.date)
-        updateTotals()
         
-        let today = Int(formatterForFirebase.string(from: Date()))
-        let selectedDate = Int(firstPaymentDueDate!)
+        // take data from datepicker and format it for Firebase
+        firstPaymentDueTimestamp = sender.date.timeIntervalSince1970
         
-        if today! > selectedDate! {
+        // make sure first payment is AFTER first payday
+        if firstPaymentDueTimestamp < FamilyData.calculatePayday().next.timeIntervalSince1970 {
             // user has selected a start date that is in the past
             let attributedString = NSMutableAttributedString(string: firstPaymentDueDateLabel.text!)
             attributedString.addAttribute(NSStrikethroughStyleAttributeName, value: 1, range: NSMakeRange(0, attributedString.length))
             firstPaymentDueDateLabel.attributedText = attributedString
-            // set first payment with value of error for checking when saving
-            firstPaymentDueDateHasError = true
-        } else {
-            firstPaymentDueDateHasError = false
         }
+        
+        updateTotals()
     }
     
     @IBAction func finalPaymentDueDateChanged(_ sender: UIDatePicker) {
         finalPaymentDueDateLabel.text = formatterForLabel.string(from: sender.date)
-        finalPaymentDueDate = formatterForFirebase.string(from: sender.date)
-        updateTotals()
+        finalPaymentDueTimestamp = sender.date.timeIntervalSince1970
         
-        if firstPaymentDueDate! > finalPaymentDueDate! {
+        if firstPaymentDueTimestamp > finalPaymentDueTimestamp {
             // user has selected a start date that is in the past
             let attributedString = NSMutableAttributedString(string: finalPaymentDueDateLabel.text!)
             attributedString.addAttribute(NSStrikethroughStyleAttributeName, value: 1, range: NSMakeRange(0, attributedString.length))
             finalPaymentDueDateLabel.attributedText = attributedString
-            // set first payment with value of error for checking when saving
-            finalPaymentDueDateError = true
-        } else {
-            finalPaymentDueDateError = false
         }
+        
+        updateTotals()
     }
     
     // -------------
@@ -152,8 +143,6 @@ class Step10ExpenseDetailVC: UITableViewController, UIPickerViewDelegate, UIPick
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         repeatsLabel.text = repeatOptions[row]
-        // get firstPayment info and convert it to NSDate...
-        let firstPaymentDueDateNSDateFormat = formatterForFirebase.date(from: firstPaymentDueDate!)
 
         // -----------------
         // for weekly repeat
@@ -163,11 +152,11 @@ class Step10ExpenseDetailVC: UITableViewController, UIPickerViewDelegate, UIPick
             finalPaymentDueCellHeight = 44
             totalNumberOfPaymentsHeight = 44
             // add a week to first payment due date...
-            let aWeekFromFirstPayment = Calendar.current.date(byAdding: .day, value: 7, to: firstPaymentDueDateNSDateFormat!)
+            let aWeekFromFirstPayment = Calendar.current.date(byAdding: .day, value: 7, to: Date(timeIntervalSince1970: firstPaymentDueTimestamp))
             // ...then format it for the label with an initial value
             finalPaymentDueDateLabel.text = formatterForLabel.string(from: aWeekFromFirstPayment!)
             finalPaymentDatePickerView.date = aWeekFromFirstPayment!
-            finalPaymentDueDate = formatterForFirebase.string(from: aWeekFromFirstPayment!)
+            finalPaymentDueTimestamp = aWeekFromFirstPayment?.timeIntervalSince1970
             
         // ------------------
         // for monthly repeat
@@ -177,11 +166,11 @@ class Step10ExpenseDetailVC: UITableViewController, UIPickerViewDelegate, UIPick
             finalPaymentDueCellHeight = 44
             totalNumberOfPaymentsHeight = 44
             // add month to first payment due date...
-            let aMonthFromFirstPayment = Calendar.current.date(byAdding: .month, value: 1, to: firstPaymentDueDateNSDateFormat!)
+            let aMonthFromFirstPayment = Calendar.current.date(byAdding: .month, value: 1, to: Date(timeIntervalSince1970: firstPaymentDueTimestamp))
             // ...then format it for the label
             finalPaymentDueDateLabel.text = formatterForLabel.string(from: aMonthFromFirstPayment!)
             finalPaymentDatePickerView.date = aMonthFromFirstPayment!
-            finalPaymentDueDate = formatterForFirebase.string(from: aMonthFromFirstPayment!)
+            finalPaymentDueTimestamp = aMonthFromFirstPayment?.timeIntervalSince1970
             
         // -------------
         // for no repeat
@@ -310,25 +299,33 @@ class Step10ExpenseDetailVC: UITableViewController, UIPickerViewDelegate, UIPick
     
     @IBAction func saveButtonTapped(_ sender: UIBarButtonItem) {
         view.endEditing(true)
+        print("A:",FamilyData.budgetStartDate)
+        print("B:",FamilyData.budgetEndDate)
+        print("C:",firstPaymentDueTimestamp)
+        print("D:",finalPaymentDueTimestamp)
+        
         // 1. make sure name is not blank
         if expenseNameTextField.text == "" {
             blankNameAlert()
         // 2. then make sure amount is not blank
         } else if expenseAmountTextField.text == "" {
             blankAmountAlert()
-        // 3. make sure first payment due is after today's date (not in the past)
-        } else if firstPaymentDueDateHasError {
-            firstDateErrorAlert()
-        // 4. make sure final payment due is after first payment
-        } else if finalPaymentDueDateError {
-            finalDateErrorAlert()
-        // 5. then make sure name is not duplicate
+        // 3. make sure first payment due is after first payday date
+        } else if firstPaymentDueTimestamp < FamilyData.calculatePayday().next.timeIntervalSince1970 {
+            dueDateBeforeFirstPaydayErrorAlert()
+        // 4. make sure first payment is BEFORE final payment
+        } else if firstPaymentDueTimestamp > finalPaymentDueTimestamp {
+            finalPaymentBeforeFirstPaymentErrorAlert()
+        // 5. make sure chosen due dates fall within the 1-year budget period
+        } else if firstPaymentDueTimestamp > (FamilyData.budgetEndDate?.timeIntervalSince1970)! || finalPaymentDueTimestamp > (FamilyData.budgetEndDate?.timeIntervalSince1970)! {
+            finalDueDateOutsideBudgetRangeAlert()
+        // 6. then make sure name is not duplicate
         } else {
-            if expense?.expenseName == expenseNameTextField.text {
+            if budgetItem?.expenseName == expenseNameTextField.text {
                 updateBudgetInfo()
                 dismiss(animated: true, completion: nil)
             } else {
-                let dupArray = Budget.budgetsArray.filter({ $0.ownerName == currentUserName && $0.category == expense?.category })
+                let dupArray = Budget.budgetsArray.filter({ $0.ownerName == currentUserName && $0.category == budgetItem?.category })
                 if dupArray.contains(where: { $0.expenseName == expenseNameTextField.text }) {
                     duplicateNameAlert()
                 } else {
@@ -343,19 +340,22 @@ class Step10ExpenseDetailVC: UITableViewController, UIPickerViewDelegate, UIPick
     // Functions
     // ---------
     
-    func loadExistingExpenseData() {
-        if let existingExpense = expense {
+    func loadExistingBudgetData() {
+        if let existingExpense = budgetItem {
             expenseNameTextField.text = existingExpense.expenseName
             expenseAmountTextField.text = "\(existingExpense.amount)"
             hasDueDateSwitch.isOn = existingExpense.hasDueDate
             
-            // update First Payment Due Date Picker with correct date (if there is one, otherwise make the date today's date)
-            firstPaymentDueDate = "\(existingExpense.firstPayment)"
-            let dateFromString = formatterForFirebase.date(from: firstPaymentDueDate!)
-            firstPaymentDatePickerView.date = dateFromString ?? Date()
-            
-            // show first payment as text in first payment text field (if there is one, otherwise make the date today)
-            firstPaymentDueDateLabel.text = formatterForLabel.string(from: dateFromString ?? Date())
+            // if first payment is '0', make first payment the same as next payday. Otherwise, return the 'first payment' values for the budget item
+            if existingExpense.firstPayment == 0 {
+                firstPaymentDueTimestamp = FamilyData.calculatePayday().next.timeIntervalSince1970
+                firstPaymentDatePickerView.date = FamilyData.calculatePayday().next
+                firstPaymentDueDateLabel.text = formatterForLabel.string(from: FamilyData.calculatePayday().next)
+            } else {
+                firstPaymentDueTimestamp = existingExpense.firstPayment
+                firstPaymentDatePickerView.date = Date(timeIntervalSince1970: firstPaymentDueTimestamp)
+                firstPaymentDueDateLabel.text = formatterForLabel.string(from: Date(timeIntervalSince1970: firstPaymentDueTimestamp))
+            }
             
             repeatsLabel.text = existingExpense.repeats
             if existingExpense.repeats != "never" {
@@ -373,23 +373,34 @@ class Step10ExpenseDetailVC: UITableViewController, UIPickerViewDelegate, UIPick
                 }
             }
             
-            // update Final Payment Due Date Picker with correct date (if there is one, otherwise make the date today's date)
-            finalPaymentDueDate = "\(existingExpense.finalPayment)"
-            let dateFromString2 = formatterForFirebase.date(from: finalPaymentDueDate!)
-            finalPaymentDatePickerView.date = dateFromString2 ?? Date()
+            // if last payment is '0', make last payment the same as first payment plus a week / month. Otherwise, return the 'last payment' values for the budget item
+            let timeAddedToFirstPayment: Date!
+            if existingExpense.repeats == "monthly" {
+                timeAddedToFirstPayment = Calendar.current.date(byAdding: .month, value: 1, to: Date(timeIntervalSince1970: firstPaymentDueTimestamp))
+            } else {
+                timeAddedToFirstPayment = Calendar.current.date(byAdding: .day, value: 7, to: Date(timeIntervalSince1970: firstPaymentDueTimestamp))
+            }
             
-            // show final payment as text in final payment text field (if there is one, otherwise make the date today)
-            finalPaymentDueDateLabel.text = formatterForLabel.string(from: dateFromString2 ?? Date())
+            // if last payment is '0', make last payment the same as first payment plus a week / month. Otherwise, return the 'last payment' values for the budget item
+            if existingExpense.finalPayment == 0 {
+                finalPaymentDueTimestamp = timeAddedToFirstPayment.timeIntervalSince1970
+                finalPaymentDatePickerView.date = timeAddedToFirstPayment
+                finalPaymentDueDateLabel.text = formatterForLabel.string(from: timeAddedToFirstPayment)
+            } else {
+                finalPaymentDueTimestamp = existingExpense.finalPayment
+                finalPaymentDatePickerView.date = Date(timeIntervalSince1970: finalPaymentDueTimestamp)
+                finalPaymentDueDateLabel.text = formatterForLabel.string(from: Date(timeIntervalSince1970: finalPaymentDueTimestamp))
+            }
             
             updateTotals()
         }
     }
     
     func updateTotals() {
-        let firstPayment = formatterForFirebase.date(from: firstPaymentDueDate!)
-        let finalPayment = formatterForFirebase.date(from: finalPaymentDueDate!)
+        let firstPayment = Date(timeIntervalSince1970: firstPaymentDueTimestamp)
+        let finalPayment = Date(timeIntervalSince1970: finalPaymentDueTimestamp)
         if repeatsLabel.text == "weekly" {
-            let numberOfWeeks = (finalPayment?.weeks(from: firstPayment!))! + 1
+            let numberOfWeeks = finalPayment.weeks(from: firstPayment) + 1
             if expenseNameTextField.text != "" && Int(expenseAmountTextField.text!) != nil {
                 totalNumberOfPaymentsLabel.text = "\(numberOfWeeks)"
                 yearlyTotalLabel.text = "\(expenseNameTextField.text!) = $\(Int(expenseAmountTextField.text!)! * numberOfWeeks)"
@@ -398,7 +409,7 @@ class Step10ExpenseDetailVC: UITableViewController, UIPickerViewDelegate, UIPick
                 yearlyTotalLabel.text = "\(expenseNameTextField.text!) = $0"
             }
         } else if repeatsLabel.text == "monthly" {
-            let numberOfMonths = (finalPayment?.months(from: firstPayment!))! + 1
+            let numberOfMonths = finalPayment.months(from: firstPayment) + 1
             if expenseNameTextField.text != "" && Int(expenseAmountTextField.text!) != nil {
                 totalNumberOfPaymentsLabel.text = "\(numberOfMonths)"
                 yearlyTotalLabel.text = "\(expenseNameTextField.text!) = $\(Int(expenseAmountTextField.text!)! * numberOfMonths)"
@@ -411,71 +422,133 @@ class Step10ExpenseDetailVC: UITableViewController, UIPickerViewDelegate, UIPick
         }
     }
     
+    // only called when user taps 'save'
     func updateBudgetInfo() {
         for (index, item) in Budget.budgetsArray.enumerated() {
-            if item.ownerName == currentUserName && item.expenseName == expense?.expenseName && item.category == expense?.category {
+            if item.ownerName == currentUserName && item.expenseName == budgetItem?.expenseName && item.category == budgetItem?.category {
                 // update local array...
                 Budget.budgetsArray[index].expenseName = expenseNameTextField.text!
                 Budget.budgetsArray[index].amount = Int(expenseAmountTextField.text!)!
                 // ...and update Firebase (get snapshot of all budget items for current user, then sort by category and then by name)
-                ref.child("budgets").child(currentUserName).child("\((expense?.category)!) \((expense?.order)!)").updateChildValues(["expenseName" : expenseNameTextField.text!,
-                                                                                                                                     "amount" : Int(expenseAmountTextField.text!)!])
+                ref.child("budgets")
+                    .child(currentUserName)
+                    .child("\((budgetItem?.category)!) \((budgetItem?.order)!)")
+                    .updateChildValues(["expenseName" : expenseNameTextField.text!,
+                                        "amount" : Int(expenseAmountTextField.text!)!])
+                
                 // if expense amount is zero, nuke all the data
                 if expenseAmountTextField.text == "0" {
                     Budget.budgetsArray[index].hasDueDate = false
-                    Budget.budgetsArray[index].firstPayment = "none"
+                    Budget.budgetsArray[index].firstPayment = 0
                     Budget.budgetsArray[index].repeats = "never"
-                    Budget.budgetsArray[index].finalPayment = "none"
+                    Budget.budgetsArray[index].finalPayment = 0
                     Budget.budgetsArray[index].totalNumberOfPayments = 1
                     // ...and update Firebase
-                    ref.child("budgets").child(currentUserName).child("\((expense?.category)!) \((expense?.order)!)").updateChildValues(["hasDueDate" : false,
-                                                                                                                                         "firstPayment" : "none",
-                                                                                                                                         "repeats" : "never",
-                                                                                                                                         "finalPayment" : "none",
-                                                                                                                                         "totalNumberOfPayments" : 1])
+                    ref.child("budgets")
+                        .child(currentUserName)
+                        .child("\((budgetItem?.category)!) \((budgetItem?.order)!)")
+                        .updateChildValues(["hasDueDate" : false,
+                                            "firstPayment" : 0,
+                                            "repeats" : "never",
+                                            "finalPayment" : 0,
+                                            "totalNumberOfPayments" : 1])
+                    
                 // if expense has due date...
                 } else if hasDueDateSwitch.isOn {
                     Budget.budgetsArray[index].hasDueDate = true
-                    Budget.budgetsArray[index].firstPayment = firstPaymentDueDate!
+                    Budget.budgetsArray[index].firstPayment = firstPaymentDueTimestamp!
                     // ...and update Firebase
-                    ref.child("budgets").child(currentUserName).child("\((expense?.category)!) \((expense?.order)!)").updateChildValues(["hasDueDate" : true,
-                                                                                                                                         "firstPayment" : firstPaymentDueDate!])
+                    ref.child("budgets")
+                        .child(currentUserName)
+                        .child("\((budgetItem?.category)!) \((budgetItem?.order)!)")
+                        .updateChildValues(["hasDueDate" : true,
+                                            "firstPayment" : firstPaymentDueTimestamp!])
+                    
                     // ...with repeat
                     if repeatsLabel.text != "never" {
                         Budget.budgetsArray[index].repeats = repeatsLabel.text!
-                        Budget.budgetsArray[index].finalPayment = finalPaymentDueDate!
+                        Budget.budgetsArray[index].finalPayment = finalPaymentDueTimestamp!
                         Budget.budgetsArray[index].totalNumberOfPayments = Int(totalNumberOfPaymentsLabel.text!)!
                         // ...and udpate Firebase
-                        ref.child("budgets").child(currentUserName).child("\((expense?.category)!) \((expense?.order)!)").updateChildValues(["repeats" : repeatsLabel.text!,
-                                                                                                                                             "finalPayment" : finalPaymentDueDate!,
-                                                                                                                                             "totalNumberOfPayments" : Int(totalNumberOfPaymentsLabel.text!)!])
+                        ref.child("budgets")
+                            .child(currentUserName)
+                            .child("\((budgetItem?.category)!) \((budgetItem?.order)!)")
+                            .updateChildValues(["repeats" : repeatsLabel.text!,
+                                                "finalPayment" : finalPaymentDueTimestamp!,
+                                                "totalNumberOfPayments" : Int(totalNumberOfPaymentsLabel.text!)!])
+                        
                     // ...without repeat
                     } else {
                         Budget.budgetsArray[index].repeats = "never"
-                        Budget.budgetsArray[index].finalPayment = "none"
+                        Budget.budgetsArray[index].finalPayment = 0
                         Budget.budgetsArray[index].totalNumberOfPayments = 1
                         // ...and update Firebase
-                        ref.child("budgets").child(currentUserName).child("\((expense?.category)!) \((expense?.order)!)").updateChildValues(["repeats" : "never",
-                                                                                                                                             "finalPayment" : "none",
-                                                                                                                                             "totalNumberOfPayments" : 1])
+                        ref.child("budgets")
+                            .child(currentUserName)
+                            .child("\((budgetItem?.category)!) \((budgetItem?.order)!)")
+                            .updateChildValues(["repeats" : "never",
+                                                "finalPayment" : 0,
+                                                "totalNumberOfPayments" : 1])
                     }
                     
                 // if expense has no due date
                 } else {
                     Budget.budgetsArray[index].hasDueDate = false
-                    Budget.budgetsArray[index].firstPayment = "none"
+                    Budget.budgetsArray[index].firstPayment = 0
                     Budget.budgetsArray[index].repeats = "never"
-                    Budget.budgetsArray[index].finalPayment = "none"
+                    Budget.budgetsArray[index].finalPayment = 0
                     Budget.budgetsArray[index].totalNumberOfPayments = 1
                     // ...and update Firebase
-                    ref.child("budgets").child(currentUserName).child("\((expense?.category)!) \((expense?.order)!)").updateChildValues(["hasDueDate" : false,
-                                                                                                                                         "firstPayment" : "none",
-                                                                                                                                         "repeats" : "never",
-                                                                                                                                         "finalPayment" : "none",
-                                                                                                                                         "totalNumberOfPayments" : 1])
+                    ref.child("budgets")
+                        .child(currentUserName)
+                        .child("\((budgetItem?.category)!) \((budgetItem?.order)!)")
+                        .updateChildValues(["hasDueDate" : false,
+                                            "firstPayment" : 0,
+                                            "repeats" : "never",
+                                            "finalPayment" : 0,
+                                            "totalNumberOfPayments" : 1])
                 }
             }
         }
+    }
+    
+    @IBAction func hasDueDateSwitchTapped(_ sender: UISwitch) {
+        view.endEditing(true)
+        tableView.beginUpdates()
+        tableView.endUpdates()
+    }
+
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        if textField == expenseAmountTextField {
+            let allowedCharacters = CharacterSet.decimalDigits
+            let characterSet = CharacterSet(charactersIn: string)
+            return allowedCharacters.isSuperset(of: characterSet)
+        } else {
+            if string.characters.count > 0 {
+                var allowedCharacters = CharacterSet.alphanumerics
+                allowedCharacters.insert(charactersIn: " -()#&") // "white space & hyphen"
+                
+                let unwantedStr = string.trimmingCharacters(in: allowedCharacters)
+                return unwantedStr.characters.count == 0
+            }
+            return true
+        }
+    }
+    
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        updateTotals()
+    }
+    
+    // ------
+    // Alerts
+    // ------
+    
+    func finalDueDateOutsideBudgetRangeAlert() {
+        let alert = UIAlertController(title: "Due Date Error", message: "The selected due date is past the limits of the current yearly budget. Please choose a date that is before \(formatterForLabel.string(from: FamilyData.budgetEndDate!)).", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "okay", style: .cancel, handler: { (stuff) in
+            alert.dismiss(animated: true, completion: nil)
+        }))
+        present(alert, animated: true, completion: nil)
     }
     
     func blankNameAlert() {
@@ -503,8 +576,8 @@ class Step10ExpenseDetailVC: UITableViewController, UIPickerViewDelegate, UIPick
         present(alert, animated: true, completion: nil)
     }
     
-    func firstDateErrorAlert() {
-        let alert = UIAlertController(title: "First Due Date", message: "The first payment due date cannot be in the past.", preferredStyle: .alert)
+    func dueDateBeforeFirstPaydayErrorAlert() {
+        let alert = UIAlertController(title: "Due Date Error", message: "The due date cannot be before your first payday. Please choose a date after \(formatterForLabel.string(from: Date(timeIntervalSince1970: FamilyData.budgetStartDate!))).", preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "okay", style: .default, handler: { (action) in
             alert.dismiss(animated: true, completion: {
             })
@@ -512,47 +585,13 @@ class Step10ExpenseDetailVC: UITableViewController, UIPickerViewDelegate, UIPick
         present(alert, animated: true, completion: nil)
     }
     
-    func finalDateErrorAlert() {
+    func finalPaymentBeforeFirstPaymentErrorAlert() {
         let alert = UIAlertController(title: "Final Due Date", message: "The final payment cannot be due before the first payment is due.", preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "okay", style: .default, handler: { (action) in
             alert.dismiss(animated: true, completion: {
             })
         }))
         present(alert, animated: true, completion: nil)
-    }
-    
-    @IBAction func hasDueDateSwitchTapped(_ sender: UISwitch) {
-        
-        if firstPaymentDueDate == "none" {
-            // make first payment due date equal to today
-            firstPaymentDueDate = formatterForFirebase.string(from: Date())
-        }
-
-        view.endEditing(true)
-        tableView.beginUpdates()
-        tableView.endUpdates()
-    }
-
-    // only allow entry of numbers, nothing else
-    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        if textField == expenseAmountTextField {
-            let allowedCharacters = CharacterSet.decimalDigits
-            let characterSet = CharacterSet(charactersIn: string)
-            return allowedCharacters.isSuperset(of: characterSet)
-        } else {
-            if string.characters.count > 0 {
-                var allowedCharacters = CharacterSet.alphanumerics
-                allowedCharacters.insert(charactersIn: " -()") // "white space & hyphen"
-                
-                let unwantedStr = string.trimmingCharacters(in: allowedCharacters)
-                return unwantedStr.characters.count == 0
-            }
-            return true
-        }
-    }
-    
-    func textFieldDidEndEditing(_ textField: UITextField) {
-        updateTotals()
     }
 }
 

@@ -7,9 +7,9 @@ struct Budget {
     var category: String
     var amount: Int
     var hasDueDate: Bool
-    var firstPayment: String
+    var firstPayment: TimeInterval
     var repeats: String
-    var finalPayment: String
+    var finalPayment: TimeInterval
     var totalNumberOfPayments: Int
     var order: Int
     var currentValue: Int
@@ -56,9 +56,9 @@ struct Budget {
                                         let category = value["category"] as! String
                                         let amount = value["amount"] as! Int
                                         let hasDueDate = value["hasDueDate"] as! Bool
-                                        let firstPayment = value["firstPayment"] as! String
+                                        let firstPayment = value["firstPayment"] as! TimeInterval
                                         let repeats = value["repeats"] as! String
-                                        let finalPayment = value["finalPayment"] as! String
+                                        let finalPayment = value["finalPayment"] as! TimeInterval
                                         let totalNumberOfPayments = value["totalNumberOfPayments"] as! Int
                                         let order = value["order"] as! Int
                                         let currentValue = value["currentValue"] as! Int

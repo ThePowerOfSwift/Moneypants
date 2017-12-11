@@ -82,6 +82,8 @@ struct FamilyData {
         })
     }
     
+    static let budgetEndDate = Calendar.current.date(byAdding: .year, value: 1, to: Date(timeIntervalSince1970: budgetStartDate!))
+    
     static func calculatePayday() -> (previous: Date, current: Date, next: Date) {
         // extract day of week from paydayTime
         let daysOfWeek = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
