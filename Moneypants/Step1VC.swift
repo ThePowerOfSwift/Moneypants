@@ -41,6 +41,19 @@ class Step1VC: UIViewController, UITextFieldDelegate {
         formatExistingIncome()
         
 //        print("A:",FamilyData.householdIncome,"B:",FamilyData.natlAvgYrlySpendingPerKid,"C:",FamilyData.numberOfKids,"D:",FamilyData.censusKidsMultiplier(),"E:",FamilyData.adjustedNatlAvgYrlySpendingEntireFam,"F:",FamilyData.adjustedNatlAvgYrlySpendingPerKid,"G:",FamilyData.feeValueMultiplier,"H:",FamilyData.jobAndHabitBonusValue)
+        
+//        let testArray = Budget.budgetsArray.filter({ $0.hasDueDate == true && $0.firstPayment < FamilyData.calculatePayday().next.timeIntervalSince1970 })
+//        
+//        var budgetErrorArray: [String] = []
+//        for item in testArray {
+//            let arrayItem = ("\(item.ownerName): \(item.category) >>> \(item.expenseName)")
+//            budgetErrorArray.append(arrayItem)
+//        }
+//        
+//        print(budgetErrorArray)
+        
+        
+        
     }
     
     // ----------

@@ -109,9 +109,11 @@ class Step10BudgetsDetailVC: UITableViewController, UIPickerViewDelegate, UIPick
             // if repeats label is monthly, move the final due date ahead at least a month
             if repeatsLabel.text == "monthly" {
                 finalPaymentDueTimestamp = Calendar.current.date(byAdding: .month, value: 1, to: Date(timeIntervalSince1970: firstPaymentDueTimestamp))?.timeIntervalSince1970
-            // if repeats label is "weekly" or "none", move the final due date ahead at least a week
-            } else {
+            // if repeats label is "weekly" move the final due date ahead at least a week
+            } else if repeatsLabel.text == "weekly" {
                 finalPaymentDueTimestamp = Calendar.current.date(byAdding: .day, value: 7, to: Date(timeIntervalSince1970: firstPaymentDueTimestamp))?.timeIntervalSince1970
+            } else {
+                finalPaymentDueTimestamp = firstPaymentDueTimestamp
             }
             // update pickerview to reflect new date
             finalPaymentDatePickerView.date = Date(timeIntervalSince1970: finalPaymentDueTimestamp)
@@ -391,15 +393,24 @@ class Step10BudgetsDetailVC: UITableViewController, UIPickerViewDelegate, UIPick
             let timeAddedToFirstPayment: Date!
             if existingExpense.repeats == "monthly" {
                 timeAddedToFirstPayment = Calendar.current.date(byAdding: .month, value: 1, to: Date(timeIntervalSince1970: firstPaymentDueTimestamp))
-            } else {
+            } else if existingExpense.repeats == "weekly" {
                 timeAddedToFirstPayment = Calendar.current.date(byAdding: .day, value: 7, to: Date(timeIntervalSince1970: firstPaymentDueTimestamp))
+            } else {
+                timeAddedToFirstPayment = Date(timeIntervalSince1970: firstPaymentDueTimestamp)
             }
             
             // if last payment is '0', make last payment the same as first payment plus a week / month. Otherwise, return the 'last payment' values for the budget item
             if existingExpense.finalPayment == 0 {
+                
+                print("yup, final payment is zero")
+                
                 finalPaymentDueTimestamp = timeAddedToFirstPayment.timeIntervalSince1970
                 finalPaymentDatePickerView.date = timeAddedToFirstPayment
                 finalPaymentDueDateLabel.text = formatterForLabel.string(from: timeAddedToFirstPayment)
+                
+                print(finalPaymentDueTimestamp)
+                print(timeAddedToFirstPayment)
+                
             } else {
                 finalPaymentDueTimestamp = existingExpense.finalPayment
                 finalPaymentDatePickerView.date = Date(timeIntervalSince1970: finalPaymentDueTimestamp)
